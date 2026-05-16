@@ -16,7 +16,7 @@ Real-time video conferencing app (Google Meet–style). Full-stack TypeScript. R
 
 ```
 apps/
-  api/    NestJS monolith-modular (Fastify)
+  server/ NestJS monolith-modular (Fastify)
   web/    Next.js 15 App Router
   e2e/    Playwright browser tests
 packages/
@@ -113,10 +113,10 @@ pnpm typecheck                  # turbo: tsc --noEmit everywhere
 pnpm lint                       # turbo: eslint everywhere
 pnpm format                     # prettier --write across repo
 
-# API-specific (from apps/api or root via --filter)
-pnpm --filter @open-meet/api prisma:generate
-pnpm --filter @open-meet/api prisma:migrate
-pnpm --filter @open-meet/api prisma:studio
+# API-specific (from apps/server or root via --filter)
+pnpm --filter @open-meet/server prisma:generate
+pnpm --filter @open-meet/server prisma:migrate
+pnpm --filter @open-meet/server prisma:studio
 
 # Infra
 docker compose up -d            # postgres, redis, livekit, coturn, mailhog
@@ -126,7 +126,7 @@ docker compose logs -f livekit
 ## Env files
 
 - Root `.env.example` documents every variable
-- `apps/api/.env` — backend secrets (dev defaults committed for local-only)
+- `apps/server/.env` — backend secrets (dev defaults committed for local-only)
 - `apps/web/.env.local` — frontend public vars
 - Add `.env.example` entry FIRST whenever you introduce a new env var
 
@@ -139,9 +139,9 @@ docker compose logs -f livekit
 | Env zod schemas | `packages/config/src/env.ts` |
 | API response envelope shape | `packages/types/src/api.ts` |
 | Meeting code generation | `packages/utils/src/code.ts` |
-| Prisma schema | `apps/api/prisma/schema.prisma` |
-| NestJS global pipe/filter/interceptor | `apps/api/src/common/` |
-| API entry point | `apps/api/src/main.ts` |
+| Prisma schema | `apps/server/prisma/schema.prisma` |
+| NestJS global pipe/filter/interceptor | `apps/server/src/common/` |
+| API entry point | `apps/server/src/main.ts` |
 | Next.js entry | `apps/web/app/layout.tsx` |
 | Typed API client | `apps/web/lib/api.ts` |
 | Zustand stores | `apps/web/stores/` |

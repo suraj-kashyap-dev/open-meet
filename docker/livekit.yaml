@@ -11,7 +11,7 @@ rtc:
   port_range_start: 50000
   port_range_end: 50100
 
-# Single key pair for dev — must match LIVEKIT_API_KEY / LIVEKIT_API_SECRET in apps/api/.env
+# Single key pair for dev — must match LIVEKIT_API_KEY / LIVEKIT_API_SECRET in apps/server/.env
 keys:
   devkey: secret
 

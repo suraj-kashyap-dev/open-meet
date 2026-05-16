@@ -38,7 +38,7 @@ pnpm install
 
 The repo ships dev defaults so the app boots without manual setup, but the canonical reference is `./.env.example`. Two files are read:
 
-- `apps/api/.env` — backend secrets (already pre-filled for local dev)
+- `apps/server/.env` — backend secrets (already pre-filled for local dev)
 - `apps/web/.env.local` — frontend public vars (already pre-filled for local dev)
 
 If you change any value, update `./.env.example` at the same time so onboarding stays in sync.
@@ -116,7 +116,7 @@ docker compose down -v               # nuke containers AND data volumes (fresh D
 ## 4. Apply database migrations
 
 ```bash
-pnpm --filter @open-meet/api prisma:migrate dev --name init
+pnpm --filter @open-meet/server prisma:migrate dev --name init
 ```
 
 This creates the `User`, `Meeting`, `Participant`, `Message`, `Recording` tables and runs `prisma generate`.
@@ -130,7 +130,7 @@ pnpm dev          # turbo: runs api + web in parallel
 Or separately:
 
 ```bash
-pnpm --filter @open-meet/api dev      # http://localhost:3001 (Swagger at /api/docs)
+pnpm --filter @open-meet/server dev      # http://localhost:3001 (Swagger at /api/docs)
 pnpm --filter @open-meet/web dev      # http://localhost:3000
 ```
 
@@ -143,8 +143,8 @@ Open http://localhost:3000, register a new account, and click **New meeting**.
 ### Unit (Vitest)
 
 ```bash
-pnpm --filter @open-meet/api test           # service unit tests
-pnpm --filter @open-meet/api test:watch
+pnpm --filter @open-meet/server test           # service unit tests
+pnpm --filter @open-meet/server test:watch
 ```
 
 Current coverage: `AuthService` (6), `MeetingsService` (8), `LiveKitService` (3).
@@ -185,7 +185,7 @@ pnpm --filter @open-meet/e2e test:ui
 ```
 open-meet/
 ├── apps/
-│   ├── api/                       NestJS + Fastify backend
+│   ├── server/                    NestJS + Fastify backend
 │   │   ├── prisma/                schema.prisma + migrations
 │   │   └── src/
 │   │       ├── main.ts            bootstrap (Fastify, Swagger, cookies, RedisIoAdapter)
@@ -238,11 +238,11 @@ open-meet/
 | Typecheck (all) | `pnpm typecheck` |
 | Lint (all) | `pnpm lint` |
 | Format | `pnpm format` |
-| Unit tests | `pnpm --filter @open-meet/api test` |
+| Unit tests | `pnpm --filter @open-meet/server test` |
 | E2E tests | `pnpm --filter @open-meet/e2e test` |
-| Prisma Studio | `pnpm --filter @open-meet/api prisma:studio` |
-| Prisma generate | `pnpm --filter @open-meet/api prisma:generate` |
-| Reset DB | `pnpm --filter @open-meet/api prisma:reset` |
+| Prisma Studio | `pnpm --filter @open-meet/server prisma:studio` |
+| Prisma generate | `pnpm --filter @open-meet/server prisma:generate` |
+| Reset DB | `pnpm --filter @open-meet/server prisma:reset` |
 | Bring up infra | `docker compose up -d` |
 | Tear down infra | `docker compose down` |
 | Tail a service | `docker compose logs -f livekit` |
@@ -334,7 +334,7 @@ Event names and payload types live in `@open-meet/types/socket` — single sourc
 
 **`error during connect: open //./pipe/dockerDesktopLinuxEngine`** — Docker Desktop isn't running. Start it (see [3a](#3a-make-sure-the-docker-engine-is-running)) and wait for the engine to come up before retrying any `docker` command.
 
-**Port 5432 / 6379 / 7880 already in use** — another local Postgres/Redis/LiveKit instance is bound to the port. Stop the conflicting service or change the host-side port mapping in `docker-compose.yml` (e.g. `"5433:5432"`) and update `DATABASE_URL` in `apps/api/.env` to match.
+**Port 5432 / 6379 / 7880 already in use** — another local Postgres/Redis/LiveKit instance is bound to the port. Stop the conflicting service or change the host-side port mapping in `docker-compose.yml` (e.g. `"5433:5432"`) and update `DATABASE_URL` in `apps/server/.env` to match.
 
 **`pnpm install` ignores build scripts** — Approved native modules (Prisma, argon2, sharp, swc) are listed under `onlyBuiltDependencies` in `pnpm-workspace.yaml`. If a new native dep is added, append it there and run `pnpm rebuild <pkg>`.
 
@@ -342,7 +342,7 @@ Event names and payload types live in `@open-meet/types/socket` — single sourc
 
 **Migrations fail with `database "openmeet" does not exist`** — Wait for the Postgres healthcheck (`docker compose ps` should show `(healthy)`), then re-run the migrate command.
 
-**LiveKit webhook 403** — In dev the secret defaults to `secret` (matching `apps/api/.env` → `LIVEKIT_API_SECRET`). If you change one, change both.
+**LiveKit webhook 403** — In dev the secret defaults to `secret` (matching `apps/server/.env` → `LIVEKIT_API_SECRET`). If you change one, change both.
 
 ---
 
