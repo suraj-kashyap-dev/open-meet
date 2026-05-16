@@ -17,7 +17,8 @@ import {
 
 import { useCurrentUser } from '@/hooks/client/use-auth';
 import { useMeetingSocket } from '@/hooks/client/use-socket';
-import { useChatStore, useMeetingStore } from '@/store/client';
+import { useChatStore, useMeetingStore, useUIStore } from '@/store/client';
+import { cn } from '@/lib/shared/cn';
 import { ChatPanel } from './chat-panel';
 import { KnockNotifier } from './knock-notifier';
 import { MeetingControls } from './meeting-controls';
@@ -40,6 +41,18 @@ export function MeetingShell({ code, meeting }: Props) {
   const lowerHand = useMeetingStore((s) => s.lowerHand);
   const addMessage = useChatStore((s) => s.add);
   const pushReaction = useChatStore((s) => s.pushReaction);
+
+  const isChatOpen = useChatStore((s) => s.isOpen);
+  const setChatOpen = useChatStore((s) => s.setOpen);
+  const isParticipantsOpen = useUIStore((s) => s.participantsOpen);
+  const setParticipantsOpen = useUIStore((s) => s.setParticipantsOpen);
+
+  const activePanel: 'chat' | 'participants' | null = isChatOpen
+    ? 'chat'
+    : isParticipantsOpen
+      ? 'participants'
+      : null;
+  const sidebarOpen = activePanel !== null;
 
   useEffect(() => {
     setMeeting(meeting);
@@ -82,15 +95,34 @@ export function MeetingShell({ code, meeting }: Props) {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="flex-1 overflow-hidden bg-background p-4">
-        <VideoGrid />
+      <div className="flex min-h-0 flex-1">
+        <div className="min-w-0 flex-1 bg-background p-4">
+          <VideoGrid />
+        </div>
+
+        <aside
+          className={cn(
+            'shrink-0 overflow-hidden border-l border-border bg-card',
+            'transition-[width] duration-200 ease-out',
+            sidebarOpen ? 'w-full sm:w-96' : 'w-0',
+          )}
+          aria-hidden={! sidebarOpen}
+        >
+          <div className="h-full w-full sm:w-96">
+            {activePanel === 'chat' ? (
+              <ChatPanel code={code} socket={socket} onClose={() => setChatOpen(false)} />
+            ) : null}
+
+            {activePanel === 'participants' ? (
+              <ParticipantsPanel onClose={() => setParticipantsOpen(false)} />
+            ) : null}
+          </div>
+        </aside>
       </div>
 
       <MeetingControls code={code} socket={socket} hostId={meeting.hostId} />
 
       <ReactionOverlay />
-      <ChatPanel code={code} socket={socket} />
-      <ParticipantsPanel />
       {isHost ? <KnockNotifier socket={socket} code={code} /> : null}
     </div>
   );

@@ -295,7 +295,13 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         <ControlButton
           label="Chat"
           active={isChatOpen}
-          onClick={() => setChatOpen(! isChatOpen)}
+          onClick={() => {
+            if (isParticipantsOpen) {
+              setParticipantsOpen(false);
+            }
+
+            setChatOpen(! isChatOpen);
+          }}
         >
           <MessageSquare className="h-4 w-4" />
           {unread > 0 ? (
@@ -308,7 +314,13 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         <ControlButton
           label="Participants"
           active={isParticipantsOpen}
-          onClick={() => setParticipantsOpen(! isParticipantsOpen)}
+          onClick={() => {
+            if (isChatOpen) {
+              setChatOpen(false);
+            }
+
+            setParticipantsOpen(! isParticipantsOpen);
+          }}
         >
           <Users className="h-4 w-4" />
         </ControlButton>
