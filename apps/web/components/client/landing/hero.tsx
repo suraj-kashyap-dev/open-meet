@@ -12,7 +12,7 @@ import { ProductMockup } from './product-mockup';
 
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+    <section className="relative isolate overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-28">
       <div className="grid-backdrop pointer-events-none absolute inset-0 -z-10" aria-hidden />
       <div className="spotlight pointer-events-none absolute inset-0 -z-10" aria-hidden />
       <Spotlight />

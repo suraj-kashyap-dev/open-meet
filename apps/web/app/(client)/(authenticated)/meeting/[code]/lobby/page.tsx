@@ -6,5 +6,6 @@ interface Props {
 
 export default async function LobbyPage({ params }: Props) {
   const { code } = await params;
+
   return <LobbyClient code={code} />;
 }

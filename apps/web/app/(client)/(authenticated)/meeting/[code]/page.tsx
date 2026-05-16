@@ -6,5 +6,6 @@ interface Props {
 
 export default async function MeetingPage({ params }: Props) {
   const { code } = await params;
+
   return <MeetingClient code={code} />;
 }

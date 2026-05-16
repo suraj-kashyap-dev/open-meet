@@ -26,7 +26,7 @@ export function Footer() {
           </FooterCol>
 
           <FooterCol title="Resources">
-            <FooterLink href="#why">Why open-meet</FooterLink>
+            <FooterLink href="#why">Why Open Meet</FooterLink>
             <FooterLink href="http://localhost:3001/api/docs">API docs</FooterLink>
             <FooterLink href="https://github.com">GitHub</FooterLink>
           </FooterCol>

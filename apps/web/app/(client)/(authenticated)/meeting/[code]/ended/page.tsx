@@ -15,6 +15,7 @@ export default async function MeetingEndedPage({ params }: Props) {
       <div className="w-full rounded-2xl border border-border bg-card p-8 shadow-sm">
         <div className="space-y-1.5">
           <h1 className="text-2xl font-semibold tracking-tight">You left the meeting</h1>
+
           <p className="text-sm text-muted-foreground">
             You can rejoin if it&apos;s still in progress, or head back to your dashboard.
           </p>
@@ -26,15 +27,17 @@ export default async function MeetingEndedPage({ params }: Props) {
           <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
             Meeting code
           </span>
+
           <code className="rounded-md border border-border bg-muted px-2.5 py-1 font-mono text-sm">
             {code}
           </code>
         </div>
 
         <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-          <Button asChild variant="accent" size="lg" className="sm:flex-1">
+          <Button asChild size="lg" className="sm:flex-1">
             <Link href={`/meeting/${code}`}>Rejoin</Link>
           </Button>
+
           <Button asChild variant="outline" size="lg" className="sm:flex-1">
             <Link href="/dashboard">Back to dashboard</Link>
           </Button>

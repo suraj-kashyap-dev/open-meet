@@ -1,7 +1,7 @@
 'use client';
 
 import { useRoomContext } from '@livekit/components-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 import {
@@ -21,7 +21,6 @@ import { useChatStore, useMeetingStore } from '@/store/client';
 import { ChatPanel } from './chat-panel';
 import { KnockNotifier } from './knock-notifier';
 import { MeetingControls } from './meeting-controls';
-import { MeetingTimer } from './meeting-timer';
 import { ParticipantsPanel } from './participants-panel';
 import { ReactionOverlay } from './reaction-overlay';
 import { VideoGrid } from './video-grid';
@@ -41,7 +40,6 @@ export function MeetingShell({ code, meeting }: Props) {
   const lowerHand = useMeetingStore((s) => s.lowerHand);
   const addMessage = useChatStore((s) => s.add);
   const pushReaction = useChatStore((s) => s.pushReaction);
-  const [hostEnded, setHostEnded] = useState(false);
 
   useEffect(() => {
     setMeeting(meeting);
@@ -68,7 +66,6 @@ export function MeetingShell({ code, meeting }: Props) {
       lowerHand(h.userId);
     });
     socket.on(ServerEvent.MEETING_ENDED, (_payload: MeetingEndedPayload) => {
-      setHostEnded(true);
       toast.message('The host ended the meeting');
       void room.disconnect();
     });
@@ -89,7 +86,6 @@ export function MeetingShell({ code, meeting }: Props) {
         <VideoGrid />
       </div>
 
-      <MeetingTimer startedAt={meeting.startedAt ?? meeting.createdAt} hostEnded={hostEnded} />
       <MeetingControls code={code} socket={socket} hostId={meeting.hostId} />
 
       <ReactionOverlay />

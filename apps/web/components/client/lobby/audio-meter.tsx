@@ -17,11 +17,17 @@ export function AudioMeter({ stream, active, className }: Props) {
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (! stream || ! active) {
+    if (
+      ! stream 
+      || ! active
+    ) {
       setLevel(0);
+
       return;
     }
+
     const track = stream.getAudioTracks()[0];
+
     if (! track) {
       return;
     }
@@ -39,21 +45,29 @@ export function AudioMeter({ stream, active, className }: Props) {
 
     const tick = () => {
       analyser.getByteFrequencyData(buf);
+
       let sum = 0;
+
       for (let i = 0; i < buf.length; i++) {
         sum += buf[i]!;
       }
+
       const avg = sum / buf.length / 255;
+
       setLevel((prev) => prev * 0.6 + avg * 0.4);
+
       rafRef.current = requestAnimationFrame(tick);
     };
+
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
       }
+
       source.disconnect();
+
       void ctx.close();
     };
   }, [stream, active]);

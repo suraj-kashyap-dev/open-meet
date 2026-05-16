@@ -147,17 +147,37 @@
     }
   }
 
+  @keyframes overlay-hide {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
   @keyframes content-show {
     from {
       opacity: 0;
-      translate: -50% -48%;
-      scale: 0.96;
+      transform: translate3d(-50%, -50%, 0) scale(0.97);
     }
 
     to {
       opacity: 1;
-      translate: -50% -50%;
-      scale: 1;
+      transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+  }
+
+  @keyframes content-hide {
+    from {
+      opacity: 1;
+      transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(0.97);
     }
   }
 
@@ -230,11 +250,23 @@
   }
 
   .animate-overlay-show {
-    animation: overlay-show 150ms ease-out;
+    animation: overlay-show 120ms ease-out;
+    will-change: opacity;
+  }
+
+  .animate-overlay-hide {
+    animation: overlay-hide 100ms ease-in;
+    will-change: opacity;
   }
 
   .animate-content-show {
-    animation: content-show 200ms ease-out;
+    animation: content-show 140ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .animate-content-hide {
+    animation: content-hide 100ms ease-in;
+    will-change: transform, opacity;
   }
 
   .animate-slide-right {
@@ -346,4 +378,62 @@ html:not(.dark) [data-lk-theme='default'] {
   --lk-control-active-hover-bg: var(--lk-bg5);
   --lk-box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
   --lk-drop-shadow: rgba(0, 0, 0, 0.18) 0px 0px 24px;
+}
+
+/*
+ * Unified video-tile chip style — every floating overlay on a participant
+ * tile (name pill, mic/camera muted indicator, connection quality, focus
+ * toggle) shares the same dark-glass pill look as the in-meeting LIVE timer.
+ * Always dark glass — these sit on top of video, theme of the app doesn't
+ * change the contrast requirement.
+ */
+[data-lk-theme='default'] .lk-participant-metadata {
+  right: 0.625rem;
+  bottom: 0.625rem;
+  left: 0.625rem;
+  gap: 0.375rem;
+}
+
+[data-lk-theme='default'] .lk-participant-metadata-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+[data-lk-theme='default'] .lk-participant-metadata-item * {
+  color: inherit;
+}
+
+[data-lk-theme='default'] .lk-participant-tile .lk-focus-toggle-button {
+  top: 0.625rem;
+  right: 0.625rem;
+  padding: 0.375rem;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+}
+
+[data-lk-theme='default'] .lk-connection-quality {
+  display: none !important;
+}
+
+/*
+ * Video-muted placeholder — keep it dark in light mode too so the
+ * silhouette stays visible against a contrasted background.
+ */
+html:not(.dark) [data-lk-theme='default'] .lk-participant-placeholder {
+  background-color: #18181b;
+  color: #fafafa;
 }

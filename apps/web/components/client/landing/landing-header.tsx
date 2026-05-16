@@ -7,13 +7,17 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { useCurrentUser } from '@/hooks/client/use-auth';
 
-export function LandingHeader() {
+interface Props {
+  initialSession?: boolean;
+}
+
+export function LandingHeader({ initialSession = false }: Props) {
   const { data: user } = useCurrentUser();
-  
-  const isLoggedIn = !! user;
+
+  const isLoggedIn = user !== undefined ? user !== null : initialSession;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/60 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight">
           <Logo className="h-7 w-7 shadow-sm" />
@@ -37,7 +41,7 @@ export function LandingHeader() {
             href="#why"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            Why open-meet
+            Why Open Meet
           </a>
         </nav>
 

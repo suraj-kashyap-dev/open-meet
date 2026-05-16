@@ -65,7 +65,7 @@ export function Stats() {
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6">
         <header className="flex flex-col items-center gap-3 text-center">
           <span className="rounded-full border border-border bg-card/60 px-3 py-1 text-xs uppercase tracking-widest text-muted-foreground">
-            Why open-meet
+            Why Open Meet
           </span>
           <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             Built for the way your team actually works.

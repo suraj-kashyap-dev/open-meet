@@ -1,12 +1,13 @@
 'use client';
 
-import { ArrowRight, Check, Copy, Lock, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Check, Copy, Lock, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { useCurrentUser } from '@/hooks/client/use-auth';
 import { useMediaDevices } from '@/hooks/client/use-media-devices';
 import { useMeeting } from '@/hooks/client/use-meetings';
@@ -14,30 +15,6 @@ import { ApiClientError } from '@/lib/shared/api';
 
 import { DeviceSelector } from './device-selector';
 import { LobbyPreview } from './lobby-preview';
-
-interface PanelProps {
-  eyebrow?: string;
-  title?: string;
-  children: React.ReactNode;
-}
-
-function Panel({ eyebrow, title, children }: PanelProps) {
-  return (
-    <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-      {eyebrow || title ? (
-        <header className="mb-4 space-y-0.5">
-          {eyebrow ? (
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-              {eyebrow}
-            </p>
-          ) : null}
-          {title ? <h3 className="text-sm font-semibold tracking-tight">{title}</h3> : null}
-        </header>
-      ) : null}
-      {children}
-    </section>
-  );
-}
 
 export function LobbyClient({ code }: { code: string }) {
   const router = useRouter();
@@ -122,33 +99,48 @@ export function LobbyClient({ code }: { code: string }) {
           </section>
 
           <aside className="flex flex-col gap-4">
-            <Panel eyebrow="Meeting" title="Share this code">
-              <div className="flex items-center gap-2">
-                <code className="min-w-0 flex-1 truncate rounded-md border border-border bg-muted px-3 py-2 font-mono text-sm">
-                  {meeting.code}
-                </code>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={onCopyLink}
-                  aria-label="Copy meeting link"
-                  className="shrink-0"
-                >
-                  {copied ? (
-                    <Check className="h-4 w-4 text-success" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
+            <section className="rounded-2xl border border-border bg-card shadow-sm">
+              <div className="space-y-2.5 p-5">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  Meeting code
+                </p>
+                <div className="flex items-center gap-2">
+                  <code className="min-w-0 flex-1 truncate rounded-md border border-border bg-muted px-3 py-2 font-mono text-sm">
+                    {meeting.code}
+                  </code>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={onCopyLink}
+                    aria-label="Copy meeting link"
+                    className="shrink-0"
+                  >
+                    {copied ? (
+                      <Check className="h-4 w-4 text-success" />
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
-            </Panel>
 
-            <Panel eyebrow="Devices" title="Check your audio & video">
-              <DeviceSelector media={media} />
-            </Panel>
+              <Separator />
+
+              <div className="space-y-4 p-5">
+                <header className="space-y-0.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    Devices
+                  </p>
+                  <h3 className="text-sm font-semibold tracking-tight">
+                    Check your audio & video
+                  </h3>
+                </header>
+                <DeviceSelector media={media} />
+              </div>
+            </section>
 
             <div className="hidden space-y-2 pt-1 lg:block">
-              <Button onClick={onJoin} className="group w-full" variant="accent" size="lg">
+              <Button onClick={onJoin} className="group w-full" size="lg">
                 Join now
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
@@ -170,7 +162,7 @@ export function LobbyClient({ code }: { code: string }) {
           >
             Cancel
           </Link>
-          <Button onClick={onJoin} className="group flex-1" variant="accent" size="lg">
+          <Button onClick={onJoin} className="group flex-1" size="lg">
             Join now
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>
