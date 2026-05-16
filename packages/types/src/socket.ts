@@ -67,6 +67,7 @@ export interface KnockCancelledPayload {
 export interface ChatSendPayload {
   meetingCode: string;
   content: string;
+  attachmentIds?: string[];
 }
 export interface ReactionSendPayload {
   meetingCode: string;

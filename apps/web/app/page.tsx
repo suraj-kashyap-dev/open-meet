@@ -23,15 +23,15 @@ export default async function LandingPage() {
       <LandingHeader initialSession={hasSession} />
 
       <main className="flex-1">
-        <Hero />
+        <Hero initialSession={hasSession} />
 
         <FeaturesBento />
-        
+
         <HowItWorks />
-        
+
         <Stats />
-        
-        <FinalCta />
+
+        <FinalCta initialSession={hasSession} />
       </main>
       
       <Footer />

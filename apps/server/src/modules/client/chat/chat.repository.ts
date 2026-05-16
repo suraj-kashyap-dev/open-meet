@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import type { Message } from '@prisma/client';
+import type { Attachment, Message } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
 export type MessageWithSender = Message & {
   sender: { id: string; name: string; avatar: string | null };
+  attachments: Attachment[];
 };
 
 @Injectable()
@@ -20,6 +21,17 @@ export class ChatRepository {
       data: input,
       include: {
         sender: { select: { id: true, name: true, avatar: true } },
+        attachments: true,
+      },
+    });
+  }
+
+  findById(id: string): Promise<MessageWithSender | null> {
+    return this.prisma.message.findUnique({
+      where: { id },
+      include: {
+        sender: { select: { id: true, name: true, avatar: true } },
+        attachments: true,
       },
     });
   }
@@ -31,6 +43,7 @@ export class ChatRepository {
       take: limit,
       include: {
         sender: { select: { id: true, name: true, avatar: true } },
+        attachments: true,
       },
     });
   }

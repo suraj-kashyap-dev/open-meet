@@ -14,13 +14,13 @@ async function registerAndWait(page: Page, name: string) {
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill('correct horse battery');
   await page.getByRole('button', { name: 'Create account' }).click();
-  await page.waitForURL(/\/dashboard$/, { timeout: 15_000 });
+  await page.waitForURL(/\/app$/, { timeout: 15_000 });
 }
 
 test.describe('meeting flow', () => {
   test.skip(! fullStack, 'requires API + docker stack — set RUN_FULL_E2E=1');
 
-  test('register lands on dashboard', async ({ page }) => {
+  test('register lands on app', async ({ page }) => {
     await registerAndWait(page, 'Ada Lovelace');
     await expect(
       page.getByRole('heading', { name: /(morning|afternoon|evening|up late).*ada/i }),
@@ -111,10 +111,10 @@ test.describe('meeting flow', () => {
     await registerAndWait(page, 'Ada');
 
     await page.goto('/login', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveURL(/\/dashboard$/, { timeout: 10_000 });
+    await expect(page).toHaveURL(/\/app$/, { timeout: 10_000 });
 
     await page.goto('/register', { waitUntil: 'domcontentloaded' });
-    await expect(page).toHaveURL(/\/dashboard$/, { timeout: 10_000 });
+    await expect(page).toHaveURL(/\/app$/, { timeout: 10_000 });
   });
 
   // Regression: an authenticated request returning 401 (e.g. session expired or

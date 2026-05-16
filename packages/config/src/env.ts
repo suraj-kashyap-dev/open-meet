@@ -19,6 +19,18 @@ export const apiEnvSchema = z.object({
   DEFAULT_ADMIN_PASSWORD: z.string().min(8).default('admin12345'),
   DEFAULT_ADMIN_NAME: z.string().min(1).default('Site Admin'),
 
+  // Attachment storage — uses S3 when S3_BUCKET is set, otherwise local disk.
+  S3_BUCKET: z.string().optional(),
+  S3_REGION: z.string().default('us-east-1'),
+  S3_ENDPOINT: z.string().optional(),
+  S3_ACCESS_KEY_ID: z.string().optional(),
+  S3_SECRET_ACCESS_KEY: z.string().optional(),
+  S3_PUBLIC_URL: z.string().optional(),
+  S3_FORCE_PATH_STYLE: z.coerce.boolean().default(false),
+  LOCAL_STORAGE_DIR: z.string().default('./uploads'),
+  UPLOAD_MAX_SIZE_BYTES: z.coerce.number().int().positive().default(25 * 1024 * 1024),
+  API_PUBLIC_URL: z.string().url().default('http://localhost:3001'),
+
   LIVEKIT_API_KEY: z.string().min(1),
   LIVEKIT_API_SECRET: z.string().min(1),
   LIVEKIT_HOST: z.string().min(1),

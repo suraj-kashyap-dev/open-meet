@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import { Dashboard } from '@/components/client/dashboard/dashboard';
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'App',
 };
 
-export default function DashboardPage() {
+export default function AppPage() {
   return <Dashboard />;
 }

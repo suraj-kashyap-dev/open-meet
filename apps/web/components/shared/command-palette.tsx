@@ -128,9 +128,9 @@ export function CommandPalette() {
           <>
             <CommandSeparator />
             <CommandGroup heading={user.name}>
-              <CommandItem onSelect={() => runAction(() => router.push('/dashboard'))}>
+              <CommandItem onSelect={() => runAction(() => router.push('/app'))}>
                 <User className="h-4 w-4" />
-                Dashboard
+                Open app
               </CommandItem>
               <CommandItem
                 onSelect={() => runAction(() => logout.mutate())}

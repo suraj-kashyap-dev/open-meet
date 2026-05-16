@@ -1,5 +1,7 @@
+import { Github, Video } from 'lucide-react';
 import Link from 'next/link';
-import { Video } from 'lucide-react';
+
+import { GITHUB_URL } from '@/lib/shared/constants';
 
 export function Footer() {
   return (
@@ -11,8 +13,9 @@ export function Footer() {
               <span className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground text-background">
                 <Video className="h-4 w-4" aria-hidden />
               </span>
-              open-meet
+              Open Meet
             </Link>
+
             <p className="max-w-xs text-sm text-muted-foreground">
               Open-source video conferencing for teams that move fast.
             </p>
@@ -25,16 +28,26 @@ export function Footer() {
             <FooterLink href="#how">How it works</FooterLink>
           </FooterCol>
 
-          <FooterCol title="Resources">
-            <FooterLink href="#why">Why Open Meet</FooterLink>
-            <FooterLink href="http://localhost:3001/api/docs">API docs</FooterLink>
-            <FooterLink href="https://github.com">GitHub</FooterLink>
+          <FooterCol title="Open source">
+            <FooterLink href={GITHUB_URL}>GitHub repo</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>MIT license</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/issues`}>Issues</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/blob/main/README.md`}>Self-host guide</FooterLink>
           </FooterCol>
         </div>
 
         <div className="flex flex-col items-start justify-between gap-2 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} open-meet · MIT licensed</span>
-          <span>Built with Next.js, NestJS, and LiveKit</span>
+          <span>© {new Date().getFullYear()} open-meet · MIT licensed · Built with Next.js, NestJS &amp; LiveKit</span>
+
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+          >
+            <Github className="h-3.5 w-3.5" />
+            Star us on GitHub
+          </a>
         </div>
       </div>
     </footer>
@@ -51,6 +64,21 @@ function FooterCol({ title, children }: { title: string; children: React.ReactNo
 }
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const isExternal = href.startsWith('http');
+
+  if (isExternal) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
     <Link
       href={href}

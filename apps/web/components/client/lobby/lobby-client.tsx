@@ -145,8 +145,8 @@ export function LobbyClient({ code }: { code: string }) {
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <p className="text-center text-xs text-muted-foreground">
-                <Link href="/dashboard" className="hover:text-foreground hover:underline">
-                  Back to dashboard
+                <Link href="/app" className="hover:text-foreground hover:underline">
+                  Back to app
                 </Link>
               </p>
             </div>
@@ -157,7 +157,7 @@ export function LobbyClient({ code }: { code: string }) {
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/85 px-4 py-3 backdrop-blur-md lg:hidden">
         <div className="mx-auto flex max-w-6xl items-center gap-3">
           <Link
-            href="/dashboard"
+            href="/app"
             className="text-xs text-muted-foreground hover:text-foreground hover:underline"
           >
             Cancel

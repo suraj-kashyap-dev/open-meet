@@ -8,6 +8,7 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import fastifyCookie from '@fastify/cookie';
+import fastifyMultipart from '@fastify/multipart';
 
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
@@ -29,6 +30,11 @@ async function bootstrap(): Promise<void> {
   const cookieSecret = config.getOrThrow<string>('JWT_ACCESS_SECRET');
 
   await app.register(fastifyCookie, { secret: cookieSecret });
+
+  const uploadMaxSize = config.getOrThrow<number>('UPLOAD_MAX_SIZE_BYTES');
+  await app.register(fastifyMultipart, {
+    limits: { fileSize: uploadMaxSize, files: 1 },
+  });
 
   app.setGlobalPrefix('api');
 

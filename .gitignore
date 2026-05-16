@@ -34,3 +34,7 @@ coverage/
 
 # Prisma
 **/prisma/migrations/dev.db*
+
+# Local attachment storage (LOCAL_STORAGE_DIR default)
+uploads/
+apps/server/uploads/

@@ -12,10 +12,10 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-  { value: 42, suffix: 'ms', label: 'Median latency', hint: 'p50 round-trip on a global LiveKit cluster' },
-  { value: 99.95, suffix: '%', label: 'Uptime', hint: 'Last 90 days across all regions' },
-  { value: 100, label: 'Participants', hint: 'Per room on the free tier' },
-  { value: 0, label: 'Downloads', hint: 'It’s just a browser tab' },
+  { value: 100, suffix: '%', label: 'Open source', hint: 'MIT licensed — read, fork, and audit every line' },
+  { value: 0, label: 'Vendor lock-in', hint: 'Run it on your own infra. Your data stays with you.' },
+  { value: 0, label: 'Hidden fees', hint: 'Bring your own LiveKit and Postgres — no SaaS contracts' },
+  { value: 1, label: 'Command to deploy', hint: 'docker compose up brings up the entire stack' },
 ];
 
 function AnimatedNumber({ to, prefix, suffix }: { to: number; prefix?: string; suffix?: string }) {
@@ -68,7 +68,7 @@ export function Stats() {
             Why Open Meet
           </span>
           <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            Built for the way your team actually works.
+            Built in the open. Yours to run, fork, and ship.
           </h2>
         </header>
 

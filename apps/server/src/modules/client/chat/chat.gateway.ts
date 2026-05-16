@@ -338,13 +338,23 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ): Promise<{ delivered: true }> {
     const user = this.requireUser(client);
     const meeting = await this.meetings.findRawByCode(body.meetingCode);
+
     if (! meeting) {
       throw new WsException('Meeting not found');
     }
+
+    const trimmedContent = body.content.trim();
+    const attachmentIds = body.attachmentIds ?? [];
+
+    if (trimmedContent.length === 0 && attachmentIds.length === 0) {
+      throw new WsException('Message must have content or at least one attachment');
+    }
+
     const message = await this.chat.send({
       meetingId: meeting.id,
       senderId: user.id,
-      content: body.content,
+      content: trimmedContent,
+      attachmentIds,
     });
     this.server.to(body.meetingCode).emit(ServerEvent.CHAT_MESSAGE, message);
     return { delivered: true };

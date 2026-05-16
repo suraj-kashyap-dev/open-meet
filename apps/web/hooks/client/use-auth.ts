@@ -100,7 +100,7 @@ export function useLogin() {
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);
-      router.replace('/dashboard');
+      router.replace('/app');
     },
   });
 }
@@ -113,7 +113,7 @@ export function useRegister() {
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);
-      router.replace('/dashboard');
+      router.replace('/app');
     },
   });
 }

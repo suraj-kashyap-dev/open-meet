@@ -98,7 +98,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
 
       setStatus('denied');
       toast.error('The host declined your request to join.');
-      setTimeout(() => router.replace('/dashboard'), 1800);
+      setTimeout(() => router.replace('/app'), 1800);
     };
 
     if (socket.connected) {
@@ -125,7 +125,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
   }, [socket, code, onAdmitted, router]);
 
   const cancel = () => {
-    router.replace('/dashboard');
+    router.replace('/app');
   };
 
   const heading =
@@ -180,7 +180,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
               Cancel
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/dashboard">Back to dashboard</Link>
+              <Link href="/app">Back to app</Link>
             </Button>
           </div>
         </div>

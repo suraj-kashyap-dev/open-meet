@@ -13,6 +13,8 @@ import { MeetingsModule } from './modules/client/meetings/meetings.module';
 import { LiveKitModule } from './integrations/livekit/livekit.module';
 import { ChatModule } from './modules/client/chat/chat.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { StorageModule } from './storage/storage.module';
+import { UploadsModule } from './modules/uploads/uploads.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { AdminModule } from './modules/admin/admin.module';
     LiveKitModule,
     ChatModule,
     AdminModule,
+    StorageModule,
+    UploadsModule,
   ],
   controllers: [AppController],
   providers: [

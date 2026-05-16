@@ -153,7 +153,10 @@
       "Bash(pnpm --filter @open-meet/web add twemoji)",
       "Bash(pnpm --filter @open-meet/web add -D @types/twemoji)",
       "Bash(pnpm --filter @open-meet/web add emoji-picker-react)",
-      "Bash(pnpm --filter @open-meet/web add @radix-ui/react-popover)"
+      "Bash(pnpm --filter @open-meet/web add @radix-ui/react-popover)",
+      "Bash(pnpm --filter @open-meet/server add @aws-sdk/client-s3 @fastify/multipart)",
+      "Bash(pnpm --filter @open-meet/e2e typecheck)",
+      "Bash(xargs grep *)"
     ]
   }
 }

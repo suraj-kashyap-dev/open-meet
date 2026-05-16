@@ -1,4 +1,4 @@
-import { IsBoolean, IsString, MaxLength, MinLength } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsBoolean, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class SendMessageGatewayDto {
   @IsString()
@@ -7,9 +7,14 @@ export class SendMessageGatewayDto {
   meetingCode!: string;
 
   @IsString()
-  @MinLength(1)
   @MaxLength(2000)
   content!: string;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(10)
+  @IsString({ each: true })
+  attachmentIds?: string[];
 }
 
 export class JoinRoomGatewayDto {

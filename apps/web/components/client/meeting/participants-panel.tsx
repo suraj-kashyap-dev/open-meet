@@ -47,6 +47,7 @@ export function ParticipantsPanel({ onClose }: Props) {
               .slice(0, 2)
               .join('')
               .toUpperCase();
+
             const isHost = p.identity === meeting?.hostId;
             const hasHand = Boolean(raisedHands[p.identity]);
 

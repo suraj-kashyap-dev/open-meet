@@ -64,7 +64,7 @@ export function AppHeader() {
                   <span className="hidden text-sm sm:inline">{user.name}</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[14rem]">
+              <DropdownMenuContent align="end" className="min-w-56">
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col">
                     <span className="font-medium">{user.name}</span>

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import type { MessageDto } from '@open-meet/types';
 
+import { UploadsService } from '../../uploads/uploads.service';
 import {
   ChatRepository,
   type MessageWithSender,
@@ -9,15 +10,29 @@ import {
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly chat: ChatRepository) {}
+  constructor(
+    private readonly chat: ChatRepository,
+    private readonly uploads: UploadsService,
+  ) {}
 
   async send(input: {
     meetingId: string;
     senderId: string;
     content: string;
+    attachmentIds?: string[];
   }): Promise<MessageDto> {
-    const message = await this.chat.create(input);
-    return this.toDto(message);
+    const message = await this.chat.create({
+      meetingId: input.meetingId,
+      senderId: input.senderId,
+      content: input.content,
+    });
+
+    if (input.attachmentIds && input.attachmentIds.length > 0) {
+      await this.uploads.claim(input.attachmentIds, input.senderId, message.id);
+    }
+
+    const refreshed = await this.chat.findById(message.id);
+    return this.toDto(refreshed ?? message);
   }
 
   async history(meetingId: string): Promise<MessageDto[]> {
@@ -36,6 +51,7 @@ export class ChatService {
         avatar: m.sender.avatar,
       },
       sentAt: m.sentAt.toISOString(),
+      attachments: m.attachments.map((a) => this.uploads.toDto(a)),
     };
   }
 }
