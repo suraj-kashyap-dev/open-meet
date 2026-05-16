@@ -24,4 +24,11 @@ export class AuthRepository {
       data: { ...input, email: input.email.toLowerCase() },
     });
   }
+
+  update(id: string, data: { name?: string }): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data,
+    });
+  }
 }

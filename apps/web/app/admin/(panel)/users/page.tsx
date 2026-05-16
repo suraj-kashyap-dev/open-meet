@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react';
 
 import type { AdminUserDto } from '@open-meet/types';
 
-import { DataTable } from '@/components/admin/data-table/data-table';
+import { DataTable } from '@/components/shared/data-table/data-table';
 import { DeleteUserDialog } from '@/components/admin/users/delete-user-dialog';
 import { EditUserDialog } from '@/components/admin/users/edit-user-dialog';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';

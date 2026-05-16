@@ -27,3 +27,8 @@ export interface SendMessageDto {
   content: string;
   attachmentIds?: string[];
 }
+
+export interface MessagePageDto {
+  items: MessageDto[];
+  nextCursor: string | null;
+}

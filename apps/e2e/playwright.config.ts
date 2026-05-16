@@ -4,7 +4,7 @@ const WEB_URL = process.env.E2E_WEB_URL ?? 'http://localhost:3000';
 const isCI = !!process.env.CI;
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests/e2e',
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 1,

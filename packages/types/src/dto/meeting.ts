@@ -47,3 +47,38 @@ export interface PresenceDto {
   isHandRaised: boolean;
   isSpeaking: boolean;
 }
+
+export interface HistoryParticipantPreviewDto {
+  id: string;
+  name: string;
+  avatar: string | null;
+}
+
+export interface MeetingHistoryItemDto {
+  id: string;
+  code: string;
+  title: string | null;
+  status: MeetingStatus;
+  startedAt: string | null;
+  endedAt: string | null;
+  createdAt: string;
+  durationMinutes: number | null;
+  isHost: boolean;
+  hostName: string;
+  participantCount: number;
+  participantsPreview: HistoryParticipantPreviewDto[];
+  messageCount: number;
+  attachmentCount: number;
+}
+
+export interface MeetingHistoryListResponseDto {
+  items: MeetingHistoryItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface MeetingMessagesQueryDto {
+  cursor?: string;
+  limit?: number;
+}

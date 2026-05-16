@@ -156,7 +156,28 @@
       "Bash(pnpm --filter @open-meet/web add @radix-ui/react-popover)",
       "Bash(pnpm --filter @open-meet/server add @aws-sdk/client-s3 @fastify/multipart)",
       "Bash(pnpm --filter @open-meet/e2e typecheck)",
-      "Bash(xargs grep *)"
+      "Bash(xargs grep *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm remove *)",
+      "Bash(pnpm --filter @open-meet/web test)",
+      "Bash(mkdir -p apps/web/components/shared/data-table)",
+      "Bash(cp apps/web/components/admin/data-table/data-table.tsx apps/web/components/shared/data-table/data-table.tsx)",
+      "Bash(rm -rf apps/web/components/admin/data-table)",
+      "Bash(xargs -0 grep -l '@/components/admin/data-table')",
+      "Bash(xargs -0 sed -i 's#@/components/admin/data-table/data-table#@/components/shared/data-table/data-table#g')",
+      "Bash(mv apps/web/tests/setup.ts apps/e2e/tests/unit/setup.ts)",
+      "Bash(mv apps/web/tests/test-utils.tsx apps/e2e/tests/unit/test-utils.tsx)",
+      "Bash(mv apps/web/tests/mocks apps/e2e/tests/unit/mocks)",
+      "Bash(mv apps/web/tests/unit/smoke.spec.ts apps/e2e/tests/unit/web/smoke.spec.ts)",
+      "Bash(mv apps/web/tests/unit/lib apps/e2e/tests/unit/web/lib)",
+      "Bash(pnpm --filter @open-meet/e2e test:unit)",
+      "Bash(git mv *)",
+      "Bash(pnpm --filter @open-meet/e2e exec playwright test --list)",
+      "Bash(mkdir -p \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/\\(account\\)/history/[code]\")",
+      "Bash(mv \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/history/[code]/page.tsx\" \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/\\(account\\)/history/[code]/page.tsx\")",
+      "Bash(rmdir \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/history/[code]\")",
+      "Bash(curl -s -o /dev/null -w \"web=%{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"api=%{http_code}\\\\n\" http://localhost:3001/api/health)"
     ]
   }
 }

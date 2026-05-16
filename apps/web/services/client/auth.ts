@@ -12,4 +12,6 @@ export const authApi = {
   refresh: () => api.post<{ refreshed: true }>('/auth/refresh'),
 
   me: (signal?: AbortSignal) => api.get<UserDto>('/auth/me', { signal }),
+
+  updateMe: (input: { name: string }) => api.patch<UserDto>('/auth/me', input),
 };

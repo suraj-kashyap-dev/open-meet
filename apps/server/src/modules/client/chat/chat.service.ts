@@ -40,6 +40,30 @@ export class ChatService {
     return messages.map((m) => this.toDto(m));
   }
 
+  async pagedHistory(
+    meetingId: string,
+    options: { cursor?: string; limit?: number },
+  ): Promise<{ items: MessageDto[]; nextCursor: string | null }> {
+    const limit = Math.min(100, Math.max(1, options.limit ?? 50));
+
+    const rows = await this.chat.listMeetingHistory({
+      meetingId,
+      cursor: options.cursor,
+      limit: limit + 1,
+    });
+
+    const hasMore = rows.length > limit;
+    const slice = hasMore ? rows.slice(rows.length - limit) : rows;
+    const firstInSlice = slice[0];
+    const nextCursor =
+      hasMore && firstInSlice ? firstInSlice.sentAt.toISOString() : null;
+
+    return {
+      items: slice.map((m) => this.toDto(m)),
+      nextCursor,
+    };
+  }
+
   private toDto(m: MessageWithSender): MessageDto {
     return {
       id: m.id,

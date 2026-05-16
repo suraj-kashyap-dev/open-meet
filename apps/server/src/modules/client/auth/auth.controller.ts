@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Patch,
   Post,
   Req,
   Res,
@@ -21,6 +22,7 @@ import { Public } from '../../../common/decorators/public.decorator';
 import { AuthService, type IssuedTokens } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 const ACCESS_COOKIE = 'access_token';
 const REFRESH_COOKIE = 'refresh_token';
@@ -101,6 +103,15 @@ export class AuthController {
   @ApiOperation({ summary: 'Return the currently authenticated user' })
   async me(@CurrentUser() user: RequestUser): Promise<UserDto> {
     return this.auth.getUserDtoById(user.id);
+  }
+
+  @Patch('me')
+  @ApiOperation({ summary: 'Update the authenticated user’s profile' })
+  async updateMe(
+    @CurrentUser() user: RequestUser,
+    @Body() dto: UpdateProfileDto,
+  ): Promise<UserDto> {
+    return this.auth.updateProfile(user.id, dto);
   }
 
   private setAuthCookies(res: FastifyReply, tokens: IssuedTokens): void {

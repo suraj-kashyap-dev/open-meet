@@ -112,4 +112,59 @@ export class MeetingsRepository {
       select: { hostId: true },
     });
   }
+
+  isParticipant(meetingId: string, userId: string): Promise<{ id: string } | null> {
+    return this.prisma.participant.findUnique({
+      where: { meetingId_userId: { meetingId, userId } },
+      select: { id: true },
+    });
+  }
+
+  listHistoryForUser(params: {
+    userId: string;
+    skip: number;
+    take: number;
+  }) {
+    return this.prisma.meeting.findMany({
+      where: {
+        participants: { some: { userId: params.userId } },
+      },
+      orderBy: [
+        { startedAt: { sort: 'desc', nulls: 'last' } },
+        { createdAt: 'desc' },
+      ],
+      skip: params.skip,
+      take: params.take,
+      include: {
+        host: { select: { id: true, name: true, avatar: true } },
+        participants: {
+          take: 6,
+          orderBy: { joinedAt: 'asc' },
+          include: {
+            user: { select: { id: true, name: true, avatar: true } },
+          },
+        },
+        _count: {
+          select: {
+            participants: true,
+            messages: true,
+          },
+        },
+      },
+    });
+  }
+
+  countHistoryForUser(userId: string): Promise<number> {
+    return this.prisma.meeting.count({
+      where: {
+        participants: { some: { userId } },
+      },
+    });
+  }
+
+  countAttachmentsForMeeting(meetingId: string): Promise<number> {
+    return this.prisma.attachment.count({
+      where: { message: { meetingId } },
+    });
+  }
 }

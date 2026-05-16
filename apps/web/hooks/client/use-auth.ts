@@ -118,6 +118,17 @@ export function useRegister() {
   });
 }
 
+export function useUpdateProfile() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: authApi.updateMe,
+    onSuccess: (user) => {
+      writeCachedUser(user);
+      qc.setQueryData(ME_KEY, user);
+    },
+  });
+}
+
 export function useLogout() {
   const router = useRouter();
   const qc = useQueryClient();

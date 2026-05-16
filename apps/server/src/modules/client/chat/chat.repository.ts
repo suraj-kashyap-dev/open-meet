@@ -47,4 +47,25 @@ export class ChatRepository {
       },
     });
   }
+
+  async listMeetingHistory(params: {
+    meetingId: string;
+    cursor?: string;
+    limit: number;
+  }): Promise<MessageWithSender[]> {
+    const rows = await this.prisma.message.findMany({
+      where: {
+        meetingId: params.meetingId,
+        ...(params.cursor ? { sentAt: { lt: new Date(params.cursor) } } : {}),
+      },
+      orderBy: { sentAt: 'desc' },
+      take: params.limit,
+      include: {
+        sender: { select: { id: true, name: true, avatar: true } },
+        attachments: true,
+      },
+    });
+
+    return rows.reverse();
+  }
 }

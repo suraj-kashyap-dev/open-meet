@@ -143,6 +143,24 @@ export class AuthService {
     return this.toDto(user);
   }
 
+  async updateProfile(id: string, input: { name?: string }): Promise<UserDto> {
+    const existing = await this.users.findById(id);
+
+    if (! existing) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'User not found',
+      });
+    }
+
+    const trimmedName = input.name?.trim();
+    const updated = await this.users.update(id, {
+      name: trimmedName && trimmedName.length > 0 ? trimmedName : undefined,
+    });
+
+    return this.toDto(updated);
+  }
+
   private async issueTokens(
     userId: string,
     email: string,

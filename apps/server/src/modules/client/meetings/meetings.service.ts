@@ -141,6 +141,78 @@ export class MeetingsService {
     return meeting.hostId === userId;
   }
 
+  async getHistory(
+    userId: string,
+    query: { page?: number; pageSize?: number },
+  ): Promise<{
+    items: Array<{
+      meeting: {
+        id: string;
+        code: string;
+        title: string | null;
+        hostId: string;
+        status: MeetingStatus;
+        startedAt: Date | null;
+        endedAt: Date | null;
+        createdAt: Date;
+        host: { id: string; name: string; avatar: string | null };
+        participants: ParticipantWithUser[];
+        _count: { participants: number; messages: number };
+      };
+      attachmentCount: number;
+    }>;
+    total: number;
+    page: number;
+    pageSize: number;
+  }> {
+    const page = Math.max(1, query.page ?? 1);
+    const pageSize = Math.min(50, Math.max(1, query.pageSize ?? 20));
+
+    const [rows, total] = await Promise.all([
+      this.meetings.listHistoryForUser({
+        userId,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.meetings.countHistoryForUser(userId),
+    ]);
+
+    const items = await Promise.all(
+      rows.map(async (meeting) => ({
+        meeting,
+        attachmentCount: await this.meetings.countAttachmentsForMeeting(meeting.id),
+      })),
+    );
+
+    return { items, total, page, pageSize };
+  }
+
+  async assertParticipant(code: string, userId: string): Promise<{ meetingId: string }> {
+    const meeting = await this.meetings.findByCode(code);
+
+    if (! meeting) {
+      throw new NotFoundException({
+        code: ApiErrorCode.MEETING_NOT_FOUND,
+        message: `Meeting "${code}" does not exist`,
+      });
+    }
+
+    if (meeting.hostId === userId) {
+      return { meetingId: meeting.id };
+    }
+
+    const participant = await this.meetings.isParticipant(meeting.id, userId);
+
+    if (! participant) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.MEETING_FORBIDDEN,
+        message: 'You did not participate in this meeting',
+      });
+    }
+
+    return { meetingId: meeting.id };
+  }
+
   async findRawByCode(code: string): Promise<{ id: string; hostId: string; status: MeetingStatus } | null> {
     const meeting = await this.meetings.findByCode(code);
     if (! meeting) {

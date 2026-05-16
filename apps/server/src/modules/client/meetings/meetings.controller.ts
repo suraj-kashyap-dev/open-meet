@@ -6,16 +6,20 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import type {
   MeetingDto,
+  MeetingHistoryItemDto,
+  MeetingHistoryListResponseDto,
   ParticipantDto,
 } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
+import { HistoryQueryDto } from './dto/history-query.dto';
 import { MeetingsService } from './meetings.service';
 
 @ApiTags('meetings')
@@ -30,6 +34,50 @@ export class MeetingsController {
     @CurrentUser() user: RequestUser,
   ): Promise<MeetingDto> {
     return this.meetings.create(user.id, dto.title);
+  }
+
+  @Get('history')
+  @ApiOperation({ summary: 'Paginated history of meetings you participated in' })
+  async history(
+    @Query() query: HistoryQueryDto,
+    @CurrentUser() user: RequestUser,
+  ): Promise<MeetingHistoryListResponseDto> {
+    const { items, total, page, pageSize } = await this.meetings.getHistory(user.id, query);
+
+    return {
+      items: items.map(({ meeting, attachmentCount }): MeetingHistoryItemDto => {
+        const startedAt = meeting.startedAt;
+        const endedAt = meeting.endedAt;
+        const durationMinutes =
+          startedAt && endedAt
+            ? Math.max(0, Math.round((endedAt.getTime() - startedAt.getTime()) / 60_000))
+            : null;
+
+        return {
+          id: meeting.id,
+          code: meeting.code,
+          title: meeting.title,
+          status: meeting.status,
+          startedAt: startedAt?.toISOString() ?? null,
+          endedAt: endedAt?.toISOString() ?? null,
+          createdAt: meeting.createdAt.toISOString(),
+          durationMinutes,
+          isHost: meeting.hostId === user.id,
+          hostName: meeting.host.name,
+          participantCount: meeting._count.participants,
+          participantsPreview: meeting.participants.map((p) => ({
+            id: p.user.id,
+            name: p.user.name,
+            avatar: p.user.avatar,
+          })),
+          messageCount: meeting._count.messages,
+          attachmentCount,
+        };
+      }),
+      total,
+      page,
+      pageSize,
+    };
   }
 
   @Get(':code')

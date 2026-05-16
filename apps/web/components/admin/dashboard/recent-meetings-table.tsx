@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import type { RecentMeetingDto } from '@open-meet/types';
 
-import { DataTable } from '@/components/admin/data-table/data-table';
+import { DataTable } from '@/components/shared/data-table/data-table';
 import { cn } from '@/lib/shared/cn';
 
 function statusClasses(status: RecentMeetingDto['status']): string {

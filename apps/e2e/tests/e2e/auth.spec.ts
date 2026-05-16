@@ -4,7 +4,6 @@ test.describe('auth form validation', () => {
   test('login form blocks submission with an invalid email', async ({ page }) => {
     await page.goto('/login');
     await page.waitForLoadState('networkidle');
-    // Wait for React hydration — the form must be interactive before we click submit.
     await page.locator('form').waitFor({ state: 'visible' });
     await expect(page.getByRole('button', { name: 'Sign in' })).toBeEnabled();
 
