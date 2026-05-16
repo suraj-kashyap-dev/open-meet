@@ -1,0 +1,29 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useEffect, type ReactNode } from 'react';
+
+import { useCurrentUser } from '@/hooks/client/use-auth';
+
+/**
+ * Inverse of AuthGuard — used on /login and /register. If the user is
+ * already authenticated we bounce them to /dashboard so they can't
+ * accidentally land on the auth screens.
+ */
+export function GuestGuard({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const { data: user } = useCurrentUser();
+  const isAuthed = !! user;
+
+  useEffect(() => {
+    if (isAuthed) {
+      router.replace('/dashboard');
+    }
+  }, [isAuthed, router]);
+
+  if (isAuthed) {
+    return null;
+  }
+
+  return <>{children}</>;
+}

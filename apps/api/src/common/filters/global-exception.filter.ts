@@ -53,13 +53,18 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
       if (typeof response === 'object' && response !== null) {
         const r = response as Record<string, unknown>;
-        if (typeof r.message === 'string') message = r.message;
-        else if (Array.isArray(r.message)) {
+
+        if (typeof r.message === 'string') {
+          message = r.message;
+        } else if (Array.isArray(r.message)) {
           message = 'Validation failed';
           code = ApiErrorCode.VALIDATION_FAILED;
           details = r.message;
         }
-        if (typeof r.code === 'string') code = r.code;
+
+        if (typeof r.code === 'string') {
+          code = r.code;
+        }
       } else if (typeof response === 'string') {
         message = response;
       }

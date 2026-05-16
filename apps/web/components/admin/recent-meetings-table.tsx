@@ -1,6 +1,6 @@
 import type { RecentMeetingDto } from '@open-meet/types';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/shared/cn';
 
 interface Props {
   meetings: RecentMeetingDto[];

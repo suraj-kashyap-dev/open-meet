@@ -3,7 +3,7 @@
 import { LogOut, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
-import { Logo } from '@/components/brand/logo';
+import { Logo } from '@/components/shared/logo';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { useAdminLogout, useCurrentAdmin } from '@/hooks/use-admin-auth';
+import { useAdminLogout, useCurrentAdmin } from '@/hooks/admin/use-admin-auth';
 
 function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);

@@ -4,7 +4,7 @@ import { Command as CommandPrimitive } from 'cmdk';
 import { Search } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/shared/cn';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 export const Command = forwardRef<

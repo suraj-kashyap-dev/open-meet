@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 
-import { Providers } from '@/components/providers';
+import { Providers } from '@/components/shared/providers';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 

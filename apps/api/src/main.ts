@@ -12,7 +12,7 @@ import fastifyCookie from '@fastify/cookie';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
-import { RedisIoAdapter } from './ws/redis-io.adapter';
+import { RedisIoAdapter } from './websocket/redis-io.adapter';
 import type { ApiEnv } from '@open-meet/config';
 
 async function bootstrap(): Promise<void> {
@@ -48,6 +48,7 @@ async function bootstrap(): Promise<void> {
   );
 
   app.useGlobalFilters(new GlobalExceptionFilter());
+
   app.useGlobalInterceptors(new TransformInterceptor(app.get(Reflector)));
 
   app.useWebSocketAdapter(new RedisIoAdapter(app));
@@ -74,10 +75,13 @@ async function bootstrap(): Promise<void> {
   }
 }
 
-bootstrap().catch((err) => {
-  console.error('[bootstrap] failed:', err);
-  if (err instanceof Error && err.stack) {
-    console.error(err.stack);
-  }
-  process.exit(1);
-});
+bootstrap()
+  .catch(err => {
+    console.error('[bootstrap] failed:', err);
+
+    if (err instanceof Error && err.stack) {
+      console.error(err.stack);
+    }
+
+    process.exit(1);
+  });

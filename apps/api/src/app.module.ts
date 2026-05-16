@@ -3,15 +3,15 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
-import { envValidate } from './common/config/env.config';
+import { envValidate } from './config/env.config';
 import { AppController } from './app.controller';
-import { PrismaModule } from './prisma/prisma.module';
-import { RedisModule } from './redis/redis.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
-import { MeetingsModule } from './modules/meetings/meetings.module';
-import { LiveKitModule } from './modules/livekit/livekit.module';
-import { ChatModule } from './modules/chat/chat.module';
+import { PrismaModule } from './database/prisma.module';
+import { RedisModule } from './integrations/redis/redis.module';
+import { AuthModule } from './modules/client/auth/auth.module';
+import { JwtAuthGuard } from './modules/client/auth/guards/jwt-auth.guard';
+import { MeetingsModule } from './modules/client/meetings/meetings.module';
+import { LiveKitModule } from './integrations/livekit/livekit.module';
+import { ChatModule } from './modules/client/chat/chat.module';
 import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
@@ -38,4 +38,5 @@ import { AdminModule } from './modules/admin/admin.module';
     { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
 })
+
 export class AppModule {}

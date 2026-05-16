@@ -11,8 +11,7 @@ import type { ApiSuccess } from '@open-meet/types';
 import { SKIP_TRANSFORM_KEY } from '../decorators/skip-transform.decorator';
 
 @Injectable()
-export class TransformInterceptor<T = unknown>
-  implements NestInterceptor<T, ApiSuccess<T> | T>
+export class TransformInterceptor<T = unknown> implements NestInterceptor<T, ApiSuccess<T> | T>
 {
   constructor(private readonly reflector: Reflector) {}
 

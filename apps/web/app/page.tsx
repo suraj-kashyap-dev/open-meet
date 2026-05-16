@@ -1,10 +1,10 @@
-import { FeaturesBento } from '@/components/landing/features-bento';
-import { FinalCta } from '@/components/landing/final-cta';
-import { Footer } from '@/components/landing/footer';
-import { Hero } from '@/components/landing/hero';
-import { HowItWorks } from '@/components/landing/how-it-works';
-import { LandingHeader } from '@/components/landing/landing-header';
-import { Stats } from '@/components/landing/stats';
+import { FeaturesBento } from '@/components/client/landing/features-bento';
+import { FinalCta } from '@/components/client/landing/final-cta';
+import { Footer } from '@/components/client/landing/footer';
+import { Hero } from '@/components/client/landing/hero';
+import { HowItWorks } from '@/components/client/landing/how-it-works';
+import { LandingHeader } from '@/components/client/landing/landing-header';
+import { Stats } from '@/components/client/landing/stats';
 
 export default function LandingPage() {
   return (

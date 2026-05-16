@@ -9,8 +9,8 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAdminLogin } from '@/hooks/use-admin-auth';
-import { ApiClientError } from '@/lib/api';
+import { useAdminLogin } from '@/hooks/admin/use-admin-auth';
+import { ApiClientError } from '@/lib/shared/api';
 
 const schema = z.object({
   email: z.string().email('Enter a valid email'),

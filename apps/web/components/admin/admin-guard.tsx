@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 
-import { useCurrentAdmin } from '@/hooks/use-admin-auth';
+import { useCurrentAdmin } from '@/hooks/admin/use-admin-auth';
 
 export function AdminGuard({ children }: { children: ReactNode }) {
   const router = useRouter();

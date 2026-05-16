@@ -6,12 +6,12 @@ import { CalendarRange, MessageSquare, Radio, Users } from 'lucide-react';
 import { RecentMeetingsTable } from '@/components/admin/recent-meetings-table';
 import { StatCard } from '@/components/admin/stat-card';
 import { TrendCard } from '@/components/admin/trend-card';
-import { adminApi } from '@/lib/api/admin';
+import { adminAnalyticsApi } from '@/services/admin/analytics';
 
 export default function AdminOverviewPage() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['admin', 'overview'],
-    queryFn: ({ signal }) => adminApi.overview(signal),
+    queryFn: ({ signal }) => adminAnalyticsApi.overview(signal),
     refetchInterval: 30_000,
   });
 

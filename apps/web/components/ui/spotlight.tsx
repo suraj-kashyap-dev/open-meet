@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useEffect, useRef } from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@/lib/shared/cn';
 
 interface SpotlightProps {
   className?: string;

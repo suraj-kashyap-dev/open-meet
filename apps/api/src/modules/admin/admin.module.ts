@@ -2,24 +2,24 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { AdminAuthController } from './admin-auth.controller';
-import { AdminAuthService } from './admin-auth.service';
-import { AdminBootstrapService } from './admin-bootstrap.service';
+import { AdminAuthController } from './auth/auth.controller';
+import { AdminAuthService } from './auth/auth.service';
+import { AdminJwtStrategy } from './auth/strategies/admin-jwt.strategy';
+import { AdminAnalyticsController } from './analytics/analytics.controller';
+import { AdminAnalyticsService } from './analytics/analytics.service';
+import { AdminAnalyticsRepository } from './analytics/analytics.repository';
 import { AdminRepository } from './admin.repository';
-import { AdminJwtStrategy } from './admin.strategy';
-import { AdminStatsController } from './admin-stats.controller';
-import { AdminStatsRepository } from './admin-stats.repository';
-import { AdminStatsService } from './admin-stats.service';
+import { AdminBootstrapService } from './bootstrap.service';
 
 @Module({
   imports: [PassportModule, JwtModule.register({})],
-  controllers: [AdminAuthController, AdminStatsController],
+  controllers: [AdminAuthController, AdminAnalyticsController],
   providers: [
     AdminAuthService,
     AdminRepository,
     AdminJwtStrategy,
-    AdminStatsService,
-    AdminStatsRepository,
+    AdminAnalyticsService,
+    AdminAnalyticsRepository,
     AdminBootstrapService,
   ],
 })
