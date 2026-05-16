@@ -89,3 +89,21 @@ enum ParticipantRole {
   HOST
   GUEST
 }
+
+model Admin {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         AdminRole @default(ADMIN)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLoginAt  DateTime?
+
+  @@index([email])
+}
+
+enum AdminRole {
+  SUPERADMIN
+  ADMIN
+}

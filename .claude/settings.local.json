@@ -68,7 +68,10 @@
       "Bash(docker exec meetclone-postgres *)",
       "Bash(pnpm --filter @open-meet/web exec tsc --noEmit)",
       "Bash(pnpm --filter @open-meet/web lint)",
-      "Bash(pnpm --filter @open-meet/types build)"
+      "Bash(pnpm --filter @open-meet/types build)",
+      "Bash(pnpm --filter @open-meet/api prisma migrate dev --name add_admin_model --schema=prisma/schema.prisma)",
+      "Bash(pnpm --filter @open-meet/config build)",
+      "Bash(pnpm admin:create --email admin@open-meet.local --password admin12345 --name \"Site Admin\" --role SUPERADMIN)"
     ]
   }
 }

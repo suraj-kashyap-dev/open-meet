@@ -12,6 +12,13 @@ export const apiEnvSchema = z.object({
   JWT_ACCESS_EXPIRY: z.string().default('15m'),
   JWT_REFRESH_EXPIRY: z.string().default('7d'),
 
+  ADMIN_JWT_ACCESS_SECRET: z.string().min(16),
+  ADMIN_JWT_ACCESS_EXPIRY: z.string().default('2h'),
+
+  DEFAULT_ADMIN_EMAIL: z.string().email().default('admin@open-meet.local'),
+  DEFAULT_ADMIN_PASSWORD: z.string().min(8).default('admin12345'),
+  DEFAULT_ADMIN_NAME: z.string().min(1).default('Site Admin'),
+
   LIVEKIT_API_KEY: z.string().min(1),
   LIVEKIT_API_SECRET: z.string().min(1),
   LIVEKIT_HOST: z.string().min(1),

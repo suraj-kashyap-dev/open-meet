@@ -12,6 +12,7 @@ import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { MeetingsModule } from './modules/meetings/meetings.module';
 import { LiveKitModule } from './modules/livekit/livekit.module';
 import { ChatModule } from './modules/chat/chat.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ChatModule } from './modules/chat/chat.module';
     MeetingsModule,
     LiveKitModule,
     ChatModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [
