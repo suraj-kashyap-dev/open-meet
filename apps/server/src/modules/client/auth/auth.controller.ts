@@ -20,6 +20,7 @@ import { CurrentUser, type RequestUser } from '../../../common/decorators/curren
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AuthService, type IssuedTokens } from './auth.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -106,12 +107,26 @@ export class AuthController {
   }
 
   @Patch('me')
-  @ApiOperation({ summary: 'Update the authenticated user’s profile' })
+  @ApiOperation({ summary: "Update the authenticated user's profile" })
   async updateMe(
     @CurrentUser() user: RequestUser,
     @Body() dto: UpdateProfileDto,
   ): Promise<UserDto> {
     return this.auth.updateProfile(user.id, dto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('me/password')
+  @ApiOperation({ summary: "Change the authenticated user's password" })
+  async changePassword(
+    @CurrentUser() user: RequestUser,
+    @Body() dto: ChangePasswordDto,
+    @Res({ passthrough: true }) res: FastifyReply,
+  ): Promise<{ changed: true }> {
+    const result = await this.auth.changePassword(user.id, dto);
+
+    this.clearAuthCookies(res);
+    return result;
   }
 
   private setAuthCookies(res: FastifyReply, tokens: IssuedTokens): void {

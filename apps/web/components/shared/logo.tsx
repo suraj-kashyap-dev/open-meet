@@ -14,8 +14,25 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
       aria-label={title}
       className={cn('shrink-0', className)}
     >
-      <rect x="4" y="4" width="16" height="16" rx="4" className="fill-foreground" />
-      <rect x="12" y="12" width="16" height="16" rx="4" className="fill-accent" />
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="5"
+        className="fill-foreground"
+      />
+
+      <rect
+        x="11"
+        y="11"
+        width="18"
+        height="18"
+        rx="5"
+        className="fill-accent"
+      />
+
+      <path d="M17 15.5 L25 20 L17 24.5 Z" fill="#ffffff" />
     </svg>
   );
 }
@@ -28,8 +45,26 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden
       className={cn('shrink-0', className)}
     >
-      <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" opacity="0.5" />
-      <rect x="12" y="12" width="16" height="16" rx="4" fill="currentColor" />
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="5"
+        fill="currentColor"
+        opacity="0.5"
+      />
+
+      <rect
+        x="11"
+        y="11"
+        width="18"
+        height="18"
+        rx="5"
+        fill="currentColor"
+      />
+
+      <path d="M17 15.5 L25 20 L17 24.5 Z" fill="var(--background)" />
     </svg>
   );
 }

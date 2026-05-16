@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   UnauthorizedException,
@@ -8,14 +9,28 @@ import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { createHash, randomBytes } from 'node:crypto';
 
-import type { UserDto } from '@open-meet/types';
-import { ApiErrorCode } from '@open-meet/types';
+import type {
+  MeetingPreferencesDto,
+  PrivacySettingsDto,
+  UserDto,
+} from '@open-meet/types';
+import {
+  ApiErrorCode,
+  DEFAULT_MEETING_PREFERENCES,
+  DEFAULT_PRIVACY_SETTINGS,
+} from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
 import { RedisService } from '../../../integrations/redis/redis.service';
 import { AuthRepository } from './auth.repository';
 import type { RegisterDto } from './dto/register.dto';
 import type { LoginDto } from './dto/login.dto';
+import type {
+  MeetingPreferencesInputDto,
+  PrivacySettingsInputDto,
+  UpdateProfileDto,
+} from './dto/update-profile.dto';
+import type { ChangePasswordDto } from './dto/change-password.dto';
 
 interface AccessTokenPayload {
   sub: string;
@@ -33,6 +48,19 @@ export interface IssuedTokens {
   refreshToken: string;
   refreshTtlMs: number;
   accessTtlMs: number;
+}
+
+interface UserRow {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string | null;
+  timezone: string;
+  language: string;
+  bio: string | null;
+  meetingPreferences: unknown;
+  privacySettings: unknown;
+  createdAt: Date;
 }
 
 @Injectable()
@@ -143,7 +171,7 @@ export class AuthService {
     return this.toDto(user);
   }
 
-  async updateProfile(id: string, input: { name?: string }): Promise<UserDto> {
+  async updateProfile(id: string, input: UpdateProfileDto): Promise<UserDto> {
     const existing = await this.users.findById(id);
 
     if (! existing) {
@@ -153,12 +181,126 @@ export class AuthService {
       });
     }
 
+    const data: Record<string, unknown> = {};
+
     const trimmedName = input.name?.trim();
-    const updated = await this.users.update(id, {
-      name: trimmedName && trimmedName.length > 0 ? trimmedName : undefined,
-    });
+
+    if (trimmedName && trimmedName.length > 0) {
+      data.name = trimmedName;
+    }
+
+    if (input.avatar !== undefined) {
+      const trimmed = input.avatar?.trim();
+      data.avatar = trimmed && trimmed.length > 0 ? trimmed : null;
+    }
+
+    if (input.timezone !== undefined) {
+      data.timezone = input.timezone.trim() || 'UTC';
+    }
+
+    if (input.language !== undefined) {
+      data.language = input.language.trim() || 'en';
+    }
+
+    if (input.bio !== undefined) {
+      const trimmed = input.bio?.trim();
+      data.bio = trimmed && trimmed.length > 0 ? trimmed : null;
+    }
+
+    if (input.meetingPreferences !== undefined) {
+      data.meetingPreferences = this.mergeMeetingPreferences(
+        existing.meetingPreferences,
+        input.meetingPreferences,
+      );
+    }
+
+    if (input.privacySettings !== undefined) {
+      data.privacySettings = this.mergePrivacySettings(
+        existing.privacySettings,
+        input.privacySettings,
+      );
+    }
+
+    const updated = await this.users.update(id, data);
 
     return this.toDto(updated);
+  }
+
+  async changePassword(id: string, dto: ChangePasswordDto): Promise<{ changed: true }> {
+    const user = await this.users.findById(id);
+
+    if (! user) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'User not found',
+      });
+    }
+
+    const valid = await argon2.verify(user.passwordHash, dto.currentPassword);
+
+    if (! valid) {
+      throw new BadRequestException({
+        code: ApiErrorCode.INVALID_CREDENTIALS,
+        message: 'Current password is incorrect',
+      });
+    }
+
+    if (dto.currentPassword === dto.newPassword) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'New password must differ from the current one',
+      });
+    }
+
+    const passwordHash = await argon2.hash(dto.newPassword, { type: argon2.argon2id });
+
+    await this.users.update(id, { passwordHash });
+
+    await this.revokeAllForUser(id);
+
+    return { changed: true };
+  }
+
+  private mergeMeetingPreferences(
+    existing: unknown,
+    patch: MeetingPreferencesInputDto,
+  ): MeetingPreferencesDto {
+    const current = this.toMeetingPreferences(existing);
+
+    return {
+      ...current,
+      ...Object.fromEntries(
+        Object.entries(patch).filter(([, value]) => value !== undefined),
+      ),
+    };
+  }
+
+  private mergePrivacySettings(
+    existing: unknown,
+    patch: PrivacySettingsInputDto,
+  ): PrivacySettingsDto {
+    const current = this.toPrivacySettings(existing);
+
+    return {
+      ...current,
+      ...Object.fromEntries(
+        Object.entries(patch).filter(([, value]) => value !== undefined),
+      ),
+    };
+  }
+
+  private toMeetingPreferences(value: unknown): MeetingPreferencesDto {
+    if (value && typeof value === 'object' && ! Array.isArray(value)) {
+      return { ...DEFAULT_MEETING_PREFERENCES, ...(value as object) } as MeetingPreferencesDto;
+    }
+    return { ...DEFAULT_MEETING_PREFERENCES };
+  }
+
+  private toPrivacySettings(value: unknown): PrivacySettingsDto {
+    if (value && typeof value === 'object' && ! Array.isArray(value)) {
+      return { ...DEFAULT_PRIVACY_SETTINGS, ...(value as object) } as PrivacySettingsDto;
+    }
+    return { ...DEFAULT_PRIVACY_SETTINGS };
   }
 
   private async issueTokens(
@@ -199,18 +341,17 @@ export class AuthService {
     };
   }
 
-  private toDto(u: {
-    id: string;
-    name: string;
-    email: string;
-    avatar: string | null;
-    createdAt: Date;
-  }): UserDto {
+  private toDto(u: UserRow): UserDto {
     return {
       id: u.id,
       name: u.name,
       email: u.email,
       avatar: u.avatar,
+      timezone: u.timezone,
+      language: u.language,
+      bio: u.bio,
+      meetingPreferences: this.toMeetingPreferences(u.meetingPreferences),
+      privacySettings: this.toPrivacySettings(u.privacySettings),
       createdAt: u.createdAt.toISOString(),
     };
   }

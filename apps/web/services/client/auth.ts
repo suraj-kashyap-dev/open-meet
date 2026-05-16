@@ -1,11 +1,18 @@
-import type { AuthResponseDto, UserDto } from '@open-meet/types';
+import type {
+  AuthResponseDto,
+  ChangePasswordDto,
+  UpdateProfileDto,
+  UserDto,
+} from '@open-meet/types';
 
 import { api } from '@/lib/shared/api';
 
 export const authApi = {
-  register: (input: { name: string; email: string; password: string }) => api.post<AuthResponseDto>('/auth/register', input),
+  register: (input: { name: string; email: string; password: string }) =>
+    api.post<AuthResponseDto>('/auth/register', input),
 
-  login: (input: { email: string; password: string }) => api.post<AuthResponseDto>('/auth/login', input),
+  login: (input: { email: string; password: string }) =>
+    api.post<AuthResponseDto>('/auth/login', input),
 
   logout: () => api.post<{ loggedOut: true }>('/auth/logout'),
 
@@ -13,5 +20,8 @@ export const authApi = {
 
   me: (signal?: AbortSignal) => api.get<UserDto>('/auth/me', { signal }),
 
-  updateMe: (input: { name: string }) => api.patch<UserDto>('/auth/me', input),
+  updateMe: (input: UpdateProfileDto) => api.patch<UserDto>('/auth/me', input),
+
+  changePassword: (input: ChangePasswordDto) =>
+    api.post<{ changed: true }>('/auth/me/password', input),
 };

@@ -129,6 +129,20 @@ export function useUpdateProfile() {
   });
 }
 
+export function useChangePassword() {
+  const router = useRouter();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: authApi.changePassword,
+    onSuccess: () => {
+      writeCachedUser(null);
+      qc.setQueryData(ME_KEY, null);
+      qc.clear();
+      router.replace('/login?password=changed');
+    },
+  });
+}
+
 export function useLogout() {
   const router = useRouter();
   const qc = useQueryClient();

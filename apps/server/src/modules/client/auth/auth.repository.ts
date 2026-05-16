@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { User } from '@prisma/client';
+import { Prisma, type User } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
@@ -25,7 +25,7 @@ export class AuthRepository {
     });
   }
 
-  update(id: string, data: { name?: string }): Promise<User> {
+  update(id: string, data: Prisma.UserUpdateInput): Promise<User> {
     return this.prisma.user.update({
       where: { id },
       data,

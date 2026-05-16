@@ -177,7 +177,15 @@
       "Bash(mv \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/history/[code]/page.tsx\" \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/\\(account\\)/history/[code]/page.tsx\")",
       "Bash(rmdir \"C:/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/\\(client\\)/\\(authenticated\\)/history/[code]\")",
       "Bash(curl -s -o /dev/null -w \"web=%{http_code}\\\\n\" http://localhost:3000)",
-      "Bash(curl -s -o /dev/null -w \"api=%{http_code}\\\\n\" http://localhost:3001/api/health)"
+      "Bash(curl -s -o /dev/null -w \"api=%{http_code}\\\\n\" http://localhost:3001/api/health)",
+      "Bash(RUN_FULL_E2E=1 E2E_NO_WEB_SERVER=1 pnpm test:e2e --workers=1 --reporter=list)",
+      "Bash(E2E_NO_WEB_SERVER=1 pnpm test:e2e tests/e2e/smoke.spec.ts --workers=1 --reporter=list)",
+      "Bash(RUN_FULL_E2E=1 E2E_NO_WEB_SERVER=1 pnpm test:e2e --workers=2 --reporter=list)",
+      "Bash(echo \"tsc=$?\")",
+      "Bash(echo \"lint=$?\")",
+      "Bash(pnpm test:unit)",
+      "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
+      "Bash(RUN_FULL_E2E=1 E2E_NO_WEB_SERVER=1 pnpm test:e2e tests/e2e/profile.spec.ts --workers=2 --reporter=list)"
     ]
   }
 }

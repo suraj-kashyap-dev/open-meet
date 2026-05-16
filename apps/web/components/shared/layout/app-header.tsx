@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ChevronDown, History, LogOut, User } from 'lucide-react';
 
 import { Logo } from '@/components/shared/logo';
@@ -32,7 +31,6 @@ function initialsOf(name: string): string {
 }
 
 export function AppHeader() {
-  const router = useRouter();
   const { data: user } = useCurrentUser();
   const logout = useLogout();
   const initials = user ? initialsOf(user.name) : '?';
@@ -59,7 +57,7 @@ export function AppHeader() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="group h-10 gap-2 rounded-full border border-transparent px-1.5 pr-2.5 transition-colors hover:border-border hover:bg-muted/60 data-[state=open]:border-border data-[state=open]:bg-muted/60"
+                  className="group h-10 gap-2 rounded-md border border-transparent px-1.5 pr-2.5 transition-colors hover:border-border hover:bg-muted/60 data-[state=open]:border-border data-[state=open]:bg-muted/60"
                 >
                   <Avatar className="h-7 w-7 ring-2 ring-background">
                     <AvatarFallback className="bg-accent/15 text-xs font-semibold text-accent">
@@ -88,13 +86,11 @@ export function AppHeader() {
                   </div>
                 </div>
 
-                <div className="p-1.5">
-                  <DropdownMenuItem
-                    onSelect={(e) => {
-                      e.preventDefault();
-                      router.push('/profile');
-                    }}
-                    className="gap-3 rounded-md px-2.5 py-2"
+                <div className="flex flex-col p-1.5">
+                  <Link
+                    role="menuitem"
+                    href="/profile"
+                    className="flex items-center gap-3 rounded-md px-2.5 py-2 outline-none transition-colors hover:bg-muted focus-visible:bg-muted"
                   >
                     <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
                       <User className="h-4 w-4" />
@@ -103,14 +99,12 @@ export function AppHeader() {
                       <span className="text-sm font-medium">Profile</span>
                       <span className="text-xs text-muted-foreground">Edit your account details</span>
                     </span>
-                  </DropdownMenuItem>
+                  </Link>
 
-                  <DropdownMenuItem
-                    onSelect={(e) => {
-                      e.preventDefault();
-                      router.push('/history');
-                    }}
-                    className="gap-3 rounded-md px-2.5 py-2"
+                  <Link
+                    role="menuitem"
+                    href="/history"
+                    className="flex items-center gap-3 rounded-md px-2.5 py-2 outline-none transition-colors hover:bg-muted focus-visible:bg-muted"
                   >
                     <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
                       <History className="h-4 w-4" />
@@ -119,7 +113,7 @@ export function AppHeader() {
                       <span className="text-sm font-medium">Meeting history</span>
                       <span className="text-xs text-muted-foreground">Past meetings, chats and files</span>
                     </span>
-                  </DropdownMenuItem>
+                  </Link>
                 </div>
 
                 <DropdownMenuSeparator className="m-0" />

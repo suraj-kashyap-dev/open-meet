@@ -23,7 +23,7 @@ const steps = [
     icon: <Users className="h-5 w-5" />,
     title: 'Talk like you mean it',
     body:
-      'HD video, screen share, chat, reactions, raise-hand — everything you expect, nothing you don’t.',
+      `HD video, screen share, chat, reactions, raise-hand — everything you expect, nothing you don't.`,
   },
 ];
 

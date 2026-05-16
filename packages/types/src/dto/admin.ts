@@ -60,6 +60,9 @@ export interface AdminUserDto {
   name: string;
   email: string;
   avatar: string | null;
+  timezone: string;
+  language: string;
+  bio: string | null;
   createdAt: string;
   meetingsHosted: number;
   meetingsAttended: number;
@@ -81,4 +84,9 @@ export interface AdminUserListResponseDto {
 export interface AdminUpdateUserDto {
   name?: string;
   email?: string;
+  avatar?: string | null;
+  timezone?: string;
+  language?: string;
+  bio?: string | null;
+  newPassword?: string;
 }

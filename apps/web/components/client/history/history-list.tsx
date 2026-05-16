@@ -7,12 +7,14 @@ import {
   ChevronRight,
   Crown,
   ExternalLink,
+  Hourglass,
   MessageSquare,
   Paperclip,
+  Users,
+  Video,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 
 import type { MeetingHistoryItemDto } from '@open-meet/types';
 
@@ -67,10 +69,20 @@ function formatDuration(min: number | null): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
+function formatTotalDuration(totalMinutes: number): string {
+  if (totalMinutes < 60) {
+    return `${totalMinutes}m`;
+  }
+
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+
+  return m === 0 ? `${h}h` : `${h}h ${m}m`;
+}
+
 const column = createColumnHelper<MeetingHistoryItemDto>();
 
 export function HistoryList() {
-  const router = useRouter();
   const [page, setPage] = useState(1);
   const { data, isLoading, isFetching, error } = useHistoryList(page, PAGE_SIZE);
 
@@ -84,20 +96,26 @@ export function HistoryList() {
           const title = item.title ?? `Meeting on ${formatStartedAt(item.startedAt ?? item.createdAt)}`;
 
           return (
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <p className="truncate text-sm font-medium">{title}</p>
-                {item.isHost ? (
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
-                    <Crown className="h-3 w-3" />
-                    Host
-                  </span>
-                ) : null}
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+                <Video className="h-4 w-4" />
+              </span>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="truncate text-sm font-medium">{title}</p>
+                  {item.isHost ? (
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
+                      <Crown className="h-3 w-3" />
+                      Host
+                    </span>
+                  ) : null}
+                </div>
+                <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                  <span className="font-mono">{item.code}</span>
+                  <span className="mx-1.5 text-muted-foreground/50">·</span>
+                  {item.isHost ? 'hosted by you' : `hosted by ${item.hostName}`}
+                </p>
               </div>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                <span className="font-mono">{item.code}</span> · hosted by{' '}
-                {item.isHost ? 'you' : item.hostName}
-              </p>
             </div>
           );
         },
@@ -202,10 +220,7 @@ export function HistoryList() {
         cell: ({ row }) => (
           <div className="flex justify-end">
             <Button asChild size="sm" variant="ghost">
-              <Link
-                href={`/history/${row.original.code}`}
-                onClick={(e) => e.stopPropagation()}
-              >
+              <Link href={`/history/${row.original.code}`}>
                 Open
                 <ExternalLink className="h-3.5 w-3.5" />
               </Link>
@@ -223,79 +238,156 @@ export function HistoryList() {
   const to = Math.min(total, page * PAGE_SIZE);
   const items = data?.items ?? [];
 
+  const totals = useMemo(() => {
+    const acc = {
+      hosted: 0,
+      participants: 0,
+      durationMin: 0,
+      messages: 0,
+    };
+
+    for (const item of items) {
+      if (item.isHost) {
+        acc.hosted += 1;
+      }
+      acc.participants += item.participantCount;
+      acc.durationMin += item.durationMinutes ?? 0;
+      acc.messages += item.messageCount;
+    }
+
+    return acc;
+  }, [items]);
+
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:py-10">
-      <header className="space-y-1">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+    <div className="flex flex-col gap-6">
+      <header className="flex flex-col gap-1.5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
           Activity
         </p>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Meeting history</h1>
           {total > 0 ? (
             <span className="text-sm text-muted-foreground">
-              {total.toLocaleString()} total
+              {total.toLocaleString()} {total === 1 ? 'meeting' : 'meetings'} total
             </span>
           ) : null}
         </div>
-        <p className="text-sm text-muted-foreground">
-          Every meeting you hosted or joined, with chat and shared files preserved.
+        <p className="max-w-2xl text-sm text-muted-foreground">
+          Every meeting you hosted or joined — with chat, attachments, and the
+          participant list preserved.
         </p>
       </header>
 
       {error ? (
-        <p className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-sm text-destructive">
+        <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6 text-sm text-destructive">
           Failed to load your meeting history.
-        </p>
+        </div>
       ) : (
-        <DataTable
-          data={items}
-          columns={columns}
-          isLoading={isLoading}
-          emptyMessage={
-            <div className="flex flex-col items-center gap-2 py-6">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                <CalendarRange className="h-4 w-4" />
-              </span>
-              <p className="text-sm font-medium">No meetings yet</p>
-              <p className="text-xs text-muted-foreground">
-                Once you host or join a meeting, it&apos;ll show up here.
-              </p>
-            </div>
-          }
-          onRowClick={(row) => router.push(`/history/${row.original.code}`)}
-        />
-      )}
+        <>
+          {items.length > 0 ? (
+            <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <StatCard
+                icon={<Video className="h-4 w-4" />}
+                label="On this page"
+                value={items.length.toString()}
+              />
+              <StatCard
+                icon={<Crown className="h-4 w-4" />}
+                label="Hosted by you"
+                value={totals.hosted.toString()}
+              />
+              <StatCard
+                icon={<Hourglass className="h-4 w-4" />}
+                label="Total time"
+                value={totals.durationMin > 0 ? formatTotalDuration(totals.durationMin) : '—'}
+              />
+              <StatCard
+                icon={<Users className="h-4 w-4" />}
+                label="Participants"
+                value={totals.participants.toString()}
+              />
+            </section>
+          ) : null}
 
-      {pageCount > 1 ? (
-        <footer className="flex items-center justify-between text-sm">
-          <p className="text-muted-foreground">
-            Showing {from}–{to} of {total}
-          </p>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page <= 1 || isFetching}
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Previous
-            </Button>
-            <span className="text-xs text-muted-foreground">
-              Page {page} of {pageCount}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page >= pageCount || isFetching}
-              onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
-            >
-              Next
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </footer>
-      ) : null}
-    </main>
+          <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+            {items.length > 0 || isLoading ? (
+              <DataTable
+                data={items}
+                columns={columns}
+                isLoading={isLoading}
+                emptyMessage="No meetings on this page."
+                className="rounded-none border-0 shadow-none"
+              />
+            ) : (
+              <EmptyState />
+            )}
+          </section>
+
+          {pageCount > 1 ? (
+            <footer className="flex items-center justify-between text-sm">
+              <p className="text-muted-foreground">
+                Showing {from}–{to} of {total}
+              </p>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page <= 1 || isFetching}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                  Previous
+                </Button>
+                <span className="text-xs text-muted-foreground">
+                  Page {page} of {pageCount}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page >= pageCount || isFetching}
+                  onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
+                >
+                  Next
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </footer>
+          ) : null}
+        </>
+      )}
+    </div>
+  );
+}
+
+function StatCard({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-border bg-card px-4 py-3.5 shadow-sm">
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent/10 text-accent">
+          {icon}
+        </span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.14em]">{label}</span>
+      </div>
+      <p className="mt-2 text-xl font-semibold tabular-nums tracking-tight">{value}</p>
+    </div>
+  );
+}
+
+function EmptyState() {
+  return (
+    <div className="flex flex-col items-center gap-3 px-6 py-16 text-center">
+      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
+        <CalendarRange className="h-6 w-6" />
+      </span>
+      <div className="flex flex-col gap-1">
+        <p className="text-base font-medium">No meetings yet</p>
+        <p className="text-sm text-muted-foreground">
+          Once you host or join a meeting, it&apos;ll show up here.
+        </p>
+      </div>
+      <Button asChild className="mt-2">
+        <Link href="/app">Start a meeting</Link>
+      </Button>
+    </div>
   );
 }

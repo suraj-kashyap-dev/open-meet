@@ -28,61 +28,74 @@ export function AccountSidebar() {
   const { data: user } = useCurrentUser();
 
   return (
-    <aside className="flex shrink-0 flex-col gap-4 border-b border-border bg-card p-4 lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:w-72 lg:border-b-0 lg:border-r lg:overflow-y-auto">
-      {user ? (
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-background/40 p-3">
-          <Avatar className="h-10 w-10">
-            <AvatarFallback className="bg-accent/15 text-sm font-semibold text-accent">
-              {initialsOf(user.name)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-medium">{user.name}</p>
-            <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+    <aside className="shrink-0 lg:w-64 xl:w-72">
+      <div className="lg:sticky lg:top-[4.5rem] flex flex-col gap-4">
+        {user ? (
+          <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm">
+            <Avatar className="h-11 w-11 ring-2 ring-background">
+              <AvatarFallback className="bg-accent/15 text-sm font-semibold text-accent">
+                {initialsOf(user.name)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold">{user.name}</p>
+              <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+            </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
 
-      <nav>
-        <p className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-          Account
-        </p>
-        <ul className="space-y-0.5">
-          {accountNav.map((item) => {
-            const Icon = item.icon;
-            const active = isAccountActive(pathname, item.href);
+        <nav className="rounded-2xl border border-border bg-card p-2 shadow-sm">
+          <p className="px-3 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+            Account
+          </p>
+          <ul className="flex flex-col gap-0.5">
+            {accountNav.map((item) => {
+              const Icon = item.icon;
+              const active = isAccountActive(pathname, item.href);
 
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    'flex items-start gap-3 rounded-md px-2 py-2 text-sm transition-colors',
-                    active
-                      ? 'bg-accent/10 font-medium text-accent'
-                      : 'text-foreground/80 hover:bg-muted hover:text-foreground',
-                  )}
-                >
-                  <Icon className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span className="flex flex-col">
-                    <span>{item.label}</span>
-                    {item.description ? (
-                      <span
-                        className={cn(
-                          'text-xs',
-                          active ? 'text-accent/80' : 'text-muted-foreground',
-                        )}
-                      >
-                        {item.description}
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      'group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors',
+                      active
+                        ? 'bg-accent/10 text-accent'
+                        : 'text-foreground/80 hover:bg-muted hover:text-foreground',
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors',
+                        active
+                          ? 'bg-accent/15 text-accent'
+                          : 'bg-muted text-muted-foreground group-hover:bg-background',
+                      )}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className={cn('truncate font-medium', active ? '' : 'text-foreground')}>
+                        {item.label}
                       </span>
-                    ) : null}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+                      {item.description ? (
+                        <span
+                          className={cn(
+                            'truncate text-xs',
+                            active ? 'text-accent/80' : 'text-muted-foreground',
+                          )}
+                        >
+                          {item.description}
+                        </span>
+                      ) : null}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </aside>
   );
 }
