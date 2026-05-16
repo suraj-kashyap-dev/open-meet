@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect } from 'react';
 
+import { Twemoji } from '@/components/shared/twemoji';
 import { useChatStore } from '@/store/client';
 
 export function ReactionOverlay() {
@@ -35,7 +36,7 @@ export function ReactionOverlay() {
             transition={{ duration: 1.4, ease: 'easeOut' }}
             className="flex items-center gap-2 rounded-full bg-card/90 px-3 py-1.5 text-sm shadow-lg backdrop-blur"
           >
-            <span className="text-2xl">{r.emoji}</span>
+            <Twemoji emoji={r.emoji} size={28} className="h-7 w-7" />
             <span className="text-xs text-muted-foreground">{r.name}</span>
           </motion.div>
         ))}

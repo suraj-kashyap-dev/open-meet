@@ -149,7 +149,11 @@
       "Bash(rm -rf \"apps/web/app/\\(client\\)/\\(authenticated\\)/meeting\")",
       "Bash(xargs -0 sed -i -E \"s#/meeting/\\\\\\\\\\\\$\\\\{\\([^}]+\\)\\\\}/lobby#/\\\\\\\\\\\\$\\\\{\\\\1\\\\}/lobby#g; s#/meeting/\\\\\\\\\\\\$\\\\{\\([^}]+\\)\\\\}/ended#/\\\\\\\\\\\\$\\\\{\\\\1\\\\}#g; s#/meeting/\\\\\\\\\\\\$\\\\{\\([^}]+\\)\\\\}#/\\\\\\\\\\\\$\\\\{\\\\1\\\\}#g\")",
       "Bash(rm -rf apps/web/.next/types)",
-      "Bash(grep -rn '/meeting/\\\\${' apps/web/app apps/web/components)"
+      "Bash(grep -rn '/meeting/\\\\${' apps/web/app apps/web/components)",
+      "Bash(pnpm --filter @open-meet/web add twemoji)",
+      "Bash(pnpm --filter @open-meet/web add -D @types/twemoji)",
+      "Bash(pnpm --filter @open-meet/web add emoji-picker-react)",
+      "Bash(pnpm --filter @open-meet/web add @radix-ui/react-popover)"
     ]
   }
 }

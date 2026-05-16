@@ -4,6 +4,11 @@ import {
   useLocalParticipant,
   useRoomContext,
 } from '@livekit/components-react';
+import EmojiPicker, {
+  EmojiStyle,
+  Theme as EmojiPickerTheme,
+  type EmojiClickData,
+} from 'emoji-picker-react';
 import {
   Check,
   Copy,
@@ -23,6 +28,7 @@ import {
   VideoOff,
   X,
 } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -37,12 +43,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Tooltip,
   TooltipContent,
@@ -55,8 +56,6 @@ import type { MeetingSocket } from '@/hooks/client/use-socket';
 import { useChatStore, useUIStore } from '@/store/client';
 import { ApiClientError } from '@/lib/shared/api';
 import { meetingsApi } from '@/services/client/meetings';
-
-const REACTION_EMOJIS = ['👍', '❤️', '😂', '🎉', '👏', '🔥'] as const;
 
 interface Props {
   code: string;
@@ -82,6 +81,12 @@ export function MeetingControls({ code, socket, hostId }: Props) {
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [endAllOpen, setEndAllOpen] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [reactionPickerOpen, setReactionPickerOpen] = useState(false);
+
+  const { resolvedTheme } = useTheme();
+
+  const pickerTheme =
+    resolvedTheme === 'dark' ? EmojiPickerTheme.DARK : EmojiPickerTheme.LIGHT;
 
   const isHost = user?.id === hostId;
   const micEnabled = isMicrophoneEnabled;
@@ -151,6 +156,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     }
 
     setScreenBusy(true);
+
     try {
       await localParticipant.setScreenShareEnabled(! isScreenSharing);
     } catch (err) {
@@ -176,11 +182,14 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     if (! socket) {
       return;
     }
+    
     if (handRaised) {
       socket.emit(ClientEvent.HAND_LOWER, { meetingCode: code });
+    
       setHandRaised(false);
     } else {
       socket.emit(ClientEvent.HAND_RAISE, { meetingCode: code });
+      
       setHandRaised(true);
     }
   };
@@ -189,15 +198,20 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     if (! socket) {
       return;
     }
+
     socket.emit(ClientEvent.REACTION_SEND, { meetingCode: code, emoji });
   };
 
   const onCopyLink = async () => {
     const url = `${window.location.origin}/${code}`;
+    
     try {
       await navigator.clipboard.writeText(url);
+    
       setCopied(true);
+    
       toast.success('Meeting link copied');
+    
       setTimeout(() => setCopied(false), 1800);
     } catch {
       toast.error('Could not copy link');
@@ -206,11 +220,13 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
   const confirmLeave = async () => {
     setLeaving(true);
+    
     try {
       await meetingsApi.leave(code);
     } catch {
       // best-effort
     }
+    
     await room.disconnect();
   };
 
@@ -254,29 +270,33 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <MonitorUp className="h-4 w-4" />
         </ControlButton>
 
-        <DropdownMenu>
+        <Popover open={reactionPickerOpen} onOpenChange={setReactionPickerOpen}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <DropdownMenuTrigger asChild>
+              <PopoverTrigger asChild>
                 <Button size="icon" variant="ghost" aria-label="React">
                   <Smile className="h-4 w-4" />
                 </Button>
-              </DropdownMenuTrigger>
+              </PopoverTrigger>
             </TooltipTrigger>
             <TooltipContent>React</TooltipContent>
           </Tooltip>
-          <DropdownMenuContent side="top" className="flex gap-1 p-1">
-            {REACTION_EMOJIS.map((emoji) => (
-              <DropdownMenuItem
-                key={emoji}
-                onSelect={() => sendReaction(emoji)}
-                className="text-xl"
-              >
-                {emoji}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+          <PopoverContent side="top" align="center" className="border-0 p-0 shadow-xl">
+            <EmojiPicker
+              onEmojiClick={(data: EmojiClickData) => {
+                sendReaction(data.emoji);
+                setReactionPickerOpen(false);
+              }}
+              emojiStyle={EmojiStyle.TWITTER}
+              theme={pickerTheme}
+              height={400}
+              width={340}
+              previewConfig={{ showPreview: false }}
+              skinTonesDisabled
+              lazyLoadEmojis
+            />
+          </PopoverContent>
+        </Popover>
 
         <ControlButton
           label={handRaised ? 'Lower hand' : 'Raise hand'}
