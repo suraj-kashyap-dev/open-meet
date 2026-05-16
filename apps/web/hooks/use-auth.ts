@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 import type { UserDto } from '@open-meet/types';
 
@@ -42,12 +43,34 @@ function writeCachedUser(user: UserDto | null): void {
 }
 
 /**
- * Returns the authenticated user, or null if signed out.
+ * Mounted once at the app root (Providers). After hydration completes it
+ * primes the user-query cache from localStorage so subsequent renders show
+ * the cached user immediately, without causing a server/client hydration
+ * mismatch (the very first render still matches whatever the server sent).
+ */
+export function useAuthBootstrap(): void {
+  const qc = useQueryClient();
+  useEffect(() => {
+    const cached = readCachedUser();
+    if (! cached) {
+      return;
+    }
+    // Only prime if the cache is empty — don't clobber a fresh fetch result.
+    const current = qc.getQueryData<UserDto | null>(ME_KEY);
+    if (current === undefined) {
+      qc.setQueryData(ME_KEY, cached);
+    }
+  }, [qc]);
+}
+
+/**
+ * Returns the authenticated user, or null if signed out, or undefined while
+ * the very first /auth/me round-trip is in flight on a cold start.
  *
- * On first paint after a hard reload, we seed from localStorage so the
- * header doesn't briefly flash "Sign in / Get started" for logged-in
- * users while /auth/me is in flight. The query then revalidates in the
- * background and corrects the value if the session has actually expired.
+ * The query is intentionally NOT pre-populated from localStorage here —
+ * doing so synchronously on the client breaks hydration because the server
+ * has no access to localStorage. See `useAuthBootstrap` above which primes
+ * the cache *after* hydration completes.
  */
 export function useCurrentUser() {
   return useQuery<UserDto | null>({
@@ -65,7 +88,6 @@ export function useCurrentUser() {
         throw err;
       }
     },
-    initialData: () => readCachedUser() ?? undefined,
     staleTime: 60_000,
   });
 }
@@ -101,11 +123,13 @@ export function useLogout() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: authApi.logout,
-    onSuccess: () => {
+    // Local cleanup must happen even if the server-side logout call fails
+    // (e.g. session already invalidated, network blip).
+    onSettled: () => {
       writeCachedUser(null);
       qc.setQueryData(ME_KEY, null);
       qc.clear();
-      router.replace('/');
+      router.replace('/login');
     },
   });
 }

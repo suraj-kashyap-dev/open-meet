@@ -13,13 +13,16 @@ export class RedisService implements OnModuleDestroy {
 
   constructor(config: ConfigService<ApiEnv, true>) {
     const url = config.getOrThrow<string>('REDIS_URL');
+
     this.clientInstance = new Redis(url, {
       lazyConnect: false,
       maxRetriesPerRequest: null,
     });
+
     this.clientInstance.on('connect', () => {
       this.logger.log('Redis connected');
     });
+
     this.clientInstance.on('error', (err) => {
       this.logger.error(`Redis error: ${err.message}`);
     });
@@ -37,14 +40,15 @@ export class RedisService implements OnModuleDestroy {
     return this.clientInstance;
   }
 
-  /** Lazy-create a separate pub/sub pair (Socket.IO Redis adapter needs duplicates). */
   pubSubPair(): { pub: Redis; sub: Redis } {
     if (! this.pubInstance) {
       this.pubInstance = this.clientInstance.duplicate();
     }
+
     if (! this.subInstance) {
       this.subInstance = this.clientInstance.duplicate();
     }
+
     return { pub: this.pubInstance, sub: this.subInstance };
   }
 }

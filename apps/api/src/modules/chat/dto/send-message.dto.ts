@@ -1,4 +1,4 @@
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import { IsBoolean, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class SendMessageGatewayDto {
   @IsString()
@@ -29,4 +29,19 @@ export class ReactionGatewayDto {
   @MinLength(1)
   @MaxLength(32)
   emoji!: string;
+}
+
+export class KnockRespondGatewayDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(64)
+  meetingCode!: string;
+
+  @IsString()
+  @MinLength(1)
+  @MaxLength(64)
+  userId!: string;
+
+  @IsBoolean()
+  admit!: boolean;
 }

@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { LogOut, Video } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 
+import { Logo } from '@/components/brand/logo';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -31,13 +32,11 @@ export function AppHeader() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <Link
-          href="/dashboard"
+          href="/"
           className="flex items-center gap-2 text-sm font-semibold tracking-tight"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground text-background shadow-sm">
-            <Video className="h-4 w-4" aria-hidden />
-          </span>
-          <span>open-meet</span>
+          <Logo className="h-7 w-7 shadow-sm" />
+          <span>Open Meet</span>
         </Link>
 
         <div className="flex items-center gap-2">

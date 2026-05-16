@@ -294,3 +294,45 @@
       0 8px 24px -8px rgba(0, 0, 0, 0.6);
   }
 }
+
+/*
+ * LiveKit ships a single hardcoded dark palette under [data-lk-theme="default"].
+ * Re-map its CSS variables to our light tokens when the app isn't in dark mode
+ * so the meeting screen actually follows the theme toggle.
+ */
+html:not(.dark) [data-lk-theme='default'] {
+  color-scheme: light;
+  --lk-bg: #fafafa;
+  --lk-bg2: #ffffff;
+  --lk-bg3: #f4f4f5;
+  --lk-bg4: #e4e4e7;
+  --lk-bg5: #d4d4d8;
+  --lk-fg: #09090b;
+  --lk-fg2: #18181b;
+  --lk-fg3: #27272a;
+  --lk-fg4: #3f3f46;
+  --lk-fg5: #52525b;
+  --lk-border-color: rgba(0, 0, 0, 0.08);
+  --lk-accent-fg: #ffffff;
+  --lk-accent-bg: #3b82f6;
+  --lk-accent2: #2563eb;
+  --lk-accent3: #1d4ed8;
+  --lk-accent4: #1e40af;
+  --lk-danger-fg: #ffffff;
+  --lk-danger: #ef4444;
+  --lk-danger2: #dc2626;
+  --lk-danger3: #b91c1c;
+  --lk-danger4: #991b1b;
+  --lk-success-fg: #ffffff;
+  --lk-success: #10b981;
+  --lk-success2: #059669;
+  --lk-success3: #047857;
+  --lk-success4: #065f46;
+  --lk-control-fg: var(--lk-fg);
+  --lk-control-bg: var(--lk-bg2);
+  --lk-control-hover-bg: var(--lk-bg3);
+  --lk-control-active-bg: var(--lk-bg4);
+  --lk-control-active-hover-bg: var(--lk-bg5);
+  --lk-box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+  --lk-drop-shadow: rgba(0, 0, 0, 0.18) 0px 0px 24px;
+}

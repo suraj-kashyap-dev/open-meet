@@ -46,6 +46,7 @@ async function bootstrap(): Promise<void> {
       transformOptions: { enableImplicitConversion: true },
     }),
   );
+
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor(app.get(Reflector)));
 
@@ -58,13 +59,19 @@ async function bootstrap(): Promise<void> {
       .setVersion('0.1.0')
       .addCookieAuth('access_token')
       .build();
+
     const document = SwaggerModule.createDocument(app, swagger);
+
     SwaggerModule.setup('api/docs', app, document);
   }
 
   await app.listen({ port, host: '0.0.0.0' });
+
   Logger.log(`API listening on http://localhost:${port}/api`, 'Bootstrap');
-  if (!isProd) Logger.log(`Swagger UI at http://localhost:${port}/api/docs`, 'Bootstrap');
+
+  if (! isProd) {
+    Logger.log(`Swagger UI at http://localhost:${port}/api/docs`, 'Bootstrap');
+  }
 }
 
 bootstrap().catch((err) => {

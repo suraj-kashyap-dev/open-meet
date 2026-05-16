@@ -7,8 +7,10 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: isCI,
-  retries: isCI ? 2 : 0,
-  workers: isCI ? 1 : undefined,
+  retries: isCI ? 2 : 1,
+  // Cap parallelism — the dev server + a single API throttler bucket get
+  // contended with 6 workers all hammering /auth/me + mutations at once.
+  workers: isCI ? 1 : 2,
   reporter: [['html', { open: 'never' }], ['list']],
   timeout: 30_000,
   expect: { timeout: 5_000 },

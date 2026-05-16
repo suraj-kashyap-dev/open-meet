@@ -15,9 +15,11 @@ import {
   type ReactionReceivedPayload,
 } from '@open-meet/types';
 
+import { useCurrentUser } from '@/hooks/use-auth';
 import { useMeetingSocket } from '@/hooks/use-socket';
 import { useChatStore, useMeetingStore } from '@/stores';
 import { ChatPanel } from './chat-panel';
+import { KnockNotifier } from './knock-notifier';
 import { MeetingControls } from './meeting-controls';
 import { MeetingTimer } from './meeting-timer';
 import { ParticipantsPanel } from './participants-panel';
@@ -32,6 +34,8 @@ interface Props {
 export function MeetingShell({ code, meeting }: Props) {
   const room = useRoomContext();
   const { socket } = useMeetingSocket();
+  const { data: user } = useCurrentUser();
+  const isHost = user?.id === meeting.hostId;
   const setMeeting = useMeetingStore((s) => s.setMeeting);
   const raiseHand = useMeetingStore((s) => s.raiseHand);
   const lowerHand = useMeetingStore((s) => s.lowerHand);
@@ -91,6 +95,7 @@ export function MeetingShell({ code, meeting }: Props) {
       <ReactionOverlay />
       <ChatPanel code={code} socket={socket} />
       <ParticipantsPanel />
+      {isHost ? <KnockNotifier socket={socket} code={code} /> : null}
     </div>
   );
 }

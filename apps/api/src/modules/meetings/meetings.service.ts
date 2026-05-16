@@ -27,6 +27,7 @@ export class MeetingsService {
     let attempt = 0;
     while (attempt < 5) {
       const code = generateMeetingCode((n) => new Uint8Array(randomBytes(n)));
+      
       try {
         const meeting = await this.meetings.create({
           code,

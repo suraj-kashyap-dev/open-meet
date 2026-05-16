@@ -23,9 +23,11 @@ export class RedisIoAdapter extends IoAdapter {
       ...options,
       cors: options?.cors ?? { origin: true, credentials: true },
     }) as { adapter: (adapter: RedisAdapter) => unknown };
+
     if (this.redisAdapter) {
       server.adapter(this.redisAdapter);
     }
+    
     return server;
   }
 }

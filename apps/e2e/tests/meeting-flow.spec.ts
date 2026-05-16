@@ -4,8 +4,10 @@ const fullStack = !!process.env.RUN_FULL_E2E;
 
 async function registerAndWait(page: Page, name: string) {
   const email = `ada+${Date.now()}+${Math.random().toString(36).slice(2, 6)}@example.com`;
-  await page.goto('/register');
-  await page.waitForLoadState('networkidle');
+  // Next.js dev server sometimes never fires the 'load' event under load; only
+  // wait for DOM ready, then bridge to React readiness with our hydration marker.
+  await page.goto('/register', { waitUntil: 'domcontentloaded' });
+  await page.locator('html[data-hydrated="true"]').waitFor({ timeout: 10_000 });
   await expect(page.getByRole('button', { name: 'Create account' })).toBeEnabled();
 
   await page.getByLabel('Name').fill(name);
@@ -20,7 +22,9 @@ test.describe('meeting flow', () => {
 
   test('register lands on dashboard', async ({ page }) => {
     await registerAndWait(page, 'Ada Lovelace');
-    await expect(page.getByRole('heading', { name: /ready to talk/i })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /(morning|afternoon|evening|up late).*ada/i }),
+    ).toBeVisible();
     await expect(page.getByRole('button', { name: 'New meeting' })).toBeEnabled();
   });
 
@@ -88,5 +92,59 @@ test.describe('meeting flow', () => {
     // And the signed-out CTAs must NOT be present.
     await expect(page.locator('header').getByRole('link', { name: 'Sign in' })).toHaveCount(0);
     await expect(page.locator('header').getByRole('link', { name: /get started/i })).toHaveCount(0);
+  });
+
+  test('logout redirects to /login and clears the cached user', async ({ page }) => {
+    await registerAndWait(page, 'Ada');
+
+    // Open the user menu, click "Sign out".
+    await page.locator('header').getByRole('button', { name: /ada/i }).click();
+    await page.getByRole('menuitem', { name: /sign out/i }).click();
+
+    await expect(page).toHaveURL(/\/login$/, { timeout: 10_000 });
+    // localStorage cache must be wiped so subsequent visits don't show a stale user.
+    const cached = await page.evaluate(() => window.localStorage.getItem('open-meet:user'));
+    expect(cached).toBeNull();
+  });
+
+  test('logged-in user cannot land on /login or /register', async ({ page }) => {
+    await registerAndWait(page, 'Ada');
+
+    await page.goto('/login', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveURL(/\/dashboard$/, { timeout: 10_000 });
+
+    await page.goto('/register', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveURL(/\/dashboard$/, { timeout: 10_000 });
+  });
+
+  // Regression: an authenticated request returning 401 (e.g. session expired or
+  // cookies cleared elsewhere) must clear the cached user and bounce to /login.
+  test('401 on an authenticated request redirects to /login', async ({ page, context }) => {
+    await registerAndWait(page, 'Ada');
+
+    // Wipe the auth cookies behind React's back to simulate an expired session.
+    await context.clearCookies();
+
+    // Trigger a fetch from inside the page so the api wrapper fires the
+    // unauthorized event. /api/auth/me is whitelisted (guest case), so we hit
+    // POST /meetings instead — needs auth, will 401.
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+    await page.evaluate(async (api: string) => {
+      await fetch(`${api}/api/meetings`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({}),
+      });
+    }, apiUrl);
+
+    // The web app uses a different client, but the global event listener is the
+    // same. To exercise the same path the real client uses, click "New meeting"
+    // from the dashboard which hits POST /meetings via the typed client.
+    await page.getByRole('button', { name: 'New meeting' }).click();
+
+    await expect(page).toHaveURL(/\/login$/, { timeout: 10_000 });
+    const cached = await page.evaluate(() => window.localStorage.getItem('open-meet:user'));
+    expect(cached).toBeNull();
   });
 });

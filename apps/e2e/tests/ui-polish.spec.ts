@@ -5,7 +5,6 @@ test.describe('UI polish — landing, theme, palette', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    // Wait for next-themes to attach the class on hydration.
     await expect.poll(() => page.evaluate(() => document.documentElement.className)).toMatch(
       /dark|light/,
     );
@@ -26,11 +25,10 @@ test.describe('UI polish — landing, theme, palette', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    // Trust strip was removed; assert the remaining four sections render.
     await expect(page.getByRole('heading', { name: /remote team actually needs/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /signed-out to face-to-face/i })).toBeVisible();
     await expect(page.getByRole('heading', { name: /way your team actually works/i })).toBeVisible();
-    // Footer is well below the fold; scroll the page to find it.
+
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await expect(page.locator('footer').getByText(/MIT licensed/i)).toBeVisible({
       timeout: 10_000,
@@ -39,7 +37,9 @@ test.describe('UI polish — landing, theme, palette', () => {
 
   test('hero CTA links go to the right places', async ({ page }) => {
     await page.goto('/');
+
     const startFree = page.locator('main').getByRole('link', { name: /start free/i }).first();
+
     await expect(startFree).toHaveAttribute('href', '/register');
   });
 });

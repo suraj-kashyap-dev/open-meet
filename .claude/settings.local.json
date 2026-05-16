@@ -53,7 +53,22 @@
       "Bash(rm -f page.tsx)",
       "Read(//c/c/Users/SURAJ KASHYAP/OneDrive/Desktop/open-meet/apps/web/app/**)",
       "Bash(curl -sf http://localhost:3000 -o /dev/null)",
-      "PowerShell(Stop-Process *)"
+      "PowerShell(Stop-Process *)",
+      "Bash(rm -f cookies.txt)",
+      "Bash(curl -s -c cookies.txt -X POST http://localhost:3001/api/auth/register -H 'Content-Type: application/json' -d '{\"name\":\"Test\",\"email\":\"__TRACKED_VAR__\",\"password\":\"correct horse battery\"}' -o /dev/null -w 'register: %{http_code}\\\\n')",
+      "Bash(curl -s -b cookies.txt -X POST http://localhost:3001/api/meetings -H 'Content-Type: application/json' -d '{}' -o /dev/null -w 'create:   %{http_code}\\\\n')",
+      "Bash(curl -s -b cookies.txt -X POST http://localhost:3001/api/meetings -H 'Content-Type: application/json' -d '{}' -w '\\\\n')",
+      "Bash(awk '{print $5}')",
+      "Bash(xargs -I {} powershell.exe -Command \"Stop-Process -Id {} -Force -ErrorAction SilentlyContinue\")",
+      "Bash(curl -s http://localhost:3000 -w \"\\\\nweb %{http_code}\\\\n\" -o /dev/null)",
+      "Bash(RUN_FULL_E2E=1 pnpm --filter @open-meet/e2e test meeting-flow)",
+      "Bash(powershell *)",
+      "Bash(docker version *)",
+      "Bash(pnpm prisma *)",
+      "Bash(docker exec meetclone-postgres *)",
+      "Bash(pnpm --filter @open-meet/web exec tsc --noEmit)",
+      "Bash(pnpm --filter @open-meet/web lint)",
+      "Bash(pnpm --filter @open-meet/types build)"
     ]
   }
 }

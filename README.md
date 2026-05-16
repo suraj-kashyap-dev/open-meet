@@ -1,6 +1,6 @@
 # open-meet
 
-Real-time video conferencing — Google Meet–style — built on a fully TypeScript stack.
+Real-time video conferencing for distributed teams, built on a fully TypeScript stack.
 
 - **Frontend:** Next.js 15 (App Router) · React 19 · Tailwind v4 · shadcn/ui · TanStack Query v5 · Zustand v5 · `@livekit/components-react` · socket.io-client
 - **API:** NestJS v11 on Fastify · Prisma v6 · argon2 + JWT (httpOnly cookies, refresh rotation in Redis) · `@nestjs/throttler` · `@nestjs/swagger`
@@ -45,6 +45,35 @@ If you change any value, update `./.env.example` at the same time so onboarding 
 
 ## 3. Start the infrastructure stack
 
+### 3a. Make sure the Docker engine is running
+
+The API will crash on boot with `PrismaClientInitializationError: Can't reach database server at localhost:5432` if Postgres isn't up — and Postgres only runs once the Docker engine itself is running.
+
+**Windows / macOS** — open Docker Desktop and wait until the whale icon in the tray shows **Engine running** (status bar at the bottom-left turns green). You can also launch it from a terminal:
+
+```powershell
+# Windows (PowerShell)
+Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+```
+
+```bash
+# macOS
+open -a Docker
+```
+
+```bash
+# Linux (systemd)
+sudo systemctl start docker
+```
+
+Verify the engine is reachable before continuing:
+
+```bash
+docker info        # should print server info, not a connect error
+```
+
+### 3b. Bring the stack up
+
 From the repo root:
 
 ```bash
@@ -53,15 +82,36 @@ docker compose up -d
 
 Brings up:
 
-| Service | Port(s) | Purpose |
-|---|---|---|
-| `postgres` | 5432 | Primary DB (`meetclone`) |
-| `redis` | 6379 | Sessions, refresh tokens, Socket.IO adapter |
-| `livekit` | 7880 (WS), 7881, 7882/udp | SFU |
-| `coturn` | 3478, 5349, 49160-49200/udp | STUN/TURN |
-| `mailhog` | 1025 (SMTP), 8025 (UI) | Dev email catcher → http://localhost:8025 |
+| Service | Container | Port(s) | Purpose |
+|---|---|---|---|
+| `postgres` | `openmeet-postgres` | 5432 | Primary DB (`openmeet`) |
+| `redis` | `openmeet-redis` | 6379 | Sessions, refresh tokens, Socket.IO adapter |
+| `livekit` | `openmeet-livekit` | 7880 (WS), 7881, 7882/udp | SFU |
+| `coturn` | `openmeet-coturn` | 3478, 5349, 49160-49200/udp | STUN/TURN |
+| `mailhog` | `openmeet-mailhog` | 1025 (SMTP), 8025 (UI) | Dev email catcher → http://localhost:8025 |
 
-Check health: `docker compose ps`
+### 3c. Wait for health and verify
+
+```bash
+docker compose ps
+```
+
+`postgres`, `redis`, and `livekit` should report `(healthy)` before you start the API. If any service is still `starting`, wait a few seconds and re-run. Typical first-boot is ~10–20 s while Postgres initialises the data volume.
+
+### 3d. Useful service commands
+
+```bash
+docker compose up -d                 # start everything (idempotent)
+docker compose up -d postgres redis  # start a subset
+docker compose ps                    # status + health
+docker compose logs -f livekit       # tail a single service
+docker compose restart postgres      # restart one service
+docker compose stop                  # stop containers, keep volumes
+docker compose down                  # stop + remove containers (volumes kept)
+docker compose down -v               # nuke containers AND data volumes (fresh DB)
+```
+
+> The compose project is named `openmeet` (see `docker-compose.yml`), so containers are prefixed `openmeet-*` and the project shows up as `openmeet` in Docker Desktop.
 
 ## 4. Apply database migrations
 
@@ -280,13 +330,17 @@ Event names and payload types live in `@open-meet/types/socket` — single sourc
 
 ## Troubleshooting
 
-**`error during connect: open //./pipe/dockerDesktopLinuxEngine`** — Docker Desktop isn't running. Start it.
+**`PrismaClientInitializationError: Can't reach database server at localhost:5432`** — Postgres isn't accepting connections. Either the Docker engine isn't running or the `postgres` container hasn't started yet. Run `docker info` (must succeed), then `docker compose up -d` and wait for `docker compose ps` to show `postgres` as `(healthy)` before starting the API.
+
+**`error during connect: open //./pipe/dockerDesktopLinuxEngine`** — Docker Desktop isn't running. Start it (see [3a](#3a-make-sure-the-docker-engine-is-running)) and wait for the engine to come up before retrying any `docker` command.
+
+**Port 5432 / 6379 / 7880 already in use** — another local Postgres/Redis/LiveKit instance is bound to the port. Stop the conflicting service or change the host-side port mapping in `docker-compose.yml` (e.g. `"5433:5432"`) and update `DATABASE_URL` in `apps/api/.env` to match.
 
 **`pnpm install` ignores build scripts** — Approved native modules (Prisma, argon2, sharp, swc) are listed under `onlyBuiltDependencies` in `pnpm-workspace.yaml`. If a new native dep is added, append it there and run `pnpm rebuild <pkg>`.
 
 **Camera/mic permission denied in Playwright** — The Chromium project in `apps/e2e/playwright.config.ts` sets `permissions: ['camera', 'microphone']` and launches with `--use-fake-ui-for-media-stream`. If a test still hangs, confirm those flags reach the browser (no profile overrides).
 
-**Migrations fail with `database "meetclone" does not exist`** — Wait for the Postgres healthcheck (`docker compose ps` should show `(healthy)`), then re-run the migrate command.
+**Migrations fail with `database "openmeet" does not exist`** — Wait for the Postgres healthcheck (`docker compose ps` should show `(healthy)`), then re-run the migrate command.
 
 **LiveKit webhook 403** — In dev the secret defaults to `secret` (matching `apps/api/.env` → `LIVEKIT_API_SECRET`). If you change one, change both.
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { io, type Socket } from 'socket.io-client';
 
 import type { ClientToServerEvents, ServerToClientEvents } from '@open-meet/types';
@@ -11,7 +11,7 @@ import { env } from '@/lib/env';
 export type MeetingSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
 export function useMeetingSocket(enabled: boolean = true): { socket: MeetingSocket | null } {
-  const socketRef = useRef<MeetingSocket | null>(null);
+  const [socket, setSocket] = useState<MeetingSocket | null>(null);
 
   useEffect(() => {
     if (! enabled) {
@@ -19,19 +19,19 @@ export function useMeetingSocket(enabled: boolean = true): { socket: MeetingSock
     }
 
     const url = `${env.NEXT_PUBLIC_WS_URL}${SocketNamespace}`;
-    const socket: MeetingSocket = io(url, {
+    const next: MeetingSocket = io(url, {
       withCredentials: true,
       transports: ['websocket', 'polling'],
       autoConnect: true,
     });
 
-    socketRef.current = socket;
+    setSocket(next);
 
     return () => {
-      socket.disconnect();
-      socketRef.current = null;
+      next.disconnect();
+      setSocket(null);
     };
   }, [enabled]);
 
-  return { socket: socketRef.current };
+  return { socket };
 }
