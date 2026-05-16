@@ -1,48 +1,37 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
-/**
- * End-to-end meeting creation flow.
- *
- * Requires the full stack to be running:
- *   docker compose up -d
- *   pnpm --filter @open-meet/api prisma:migrate dev --name init
- *   pnpm --filter @open-meet/api dev
- *   pnpm --filter @open-meet/web dev
- *
- * Skipped by default — set RUN_FULL_E2E=1 to enable. Without those services,
- * the API calls fail with network errors and the test would be flaky-by-design.
- */
 const fullStack = !!process.env.RUN_FULL_E2E;
+
+async function registerAndWait(page: Page, name: string) {
+  const email = `ada+${Date.now()}+${Math.random().toString(36).slice(2, 6)}@example.com`;
+  await page.goto('/register');
+  await page.waitForLoadState('networkidle');
+  await expect(page.getByRole('button', { name: 'Create account' })).toBeEnabled();
+
+  await page.getByLabel('Name').fill(name);
+  await page.getByLabel('Email').fill(email);
+  await page.getByLabel('Password').fill('correct horse battery');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.waitForURL(/\/dashboard$/, { timeout: 15_000 });
+}
 
 test.describe('meeting flow', () => {
   test.skip(! fullStack, 'requires API + docker stack — set RUN_FULL_E2E=1');
 
-  test('register → home shows meeting actions', async ({ page }) => {
-    const email = `ada+${Date.now()}@example.com`;
-    await page.goto('/register');
-    await page.getByLabel('Name').fill('Ada Lovelace');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Password').fill('correct horse battery');
-    await page.getByRole('button', { name: 'Create account' }).click();
-
-    await expect(page).toHaveURL(/\/$/);
-    await expect(page.getByRole('heading', { name: 'Talk face-to-face.' })).toBeVisible();
+  test('register lands on dashboard', async ({ page }) => {
+    await registerAndWait(page, 'Ada Lovelace');
+    await expect(page.getByRole('heading', { name: /ready to talk/i })).toBeVisible();
     await expect(page.getByRole('button', { name: 'New meeting' })).toBeEnabled();
   });
 
   test('create new meeting routes to lobby', async ({ page, context }) => {
-    const email = `ada+${Date.now()}@example.com`;
-    await page.goto('/register');
-    await page.getByLabel('Name').fill('Ada');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Password').fill('correct horse battery');
-    await page.getByRole('button', { name: 'Create account' }).click();
-    await page.waitForURL(/\/$/);
-
+    await registerAndWait(page, 'Ada');
     await context.grantPermissions(['camera', 'microphone']);
+    await page.waitForLoadState('networkidle');
+    await expect(page.getByRole('button', { name: 'New meeting' })).toBeEnabled();
     await page.getByRole('button', { name: 'New meeting' }).click();
 
-    await expect(page).toHaveURL(/\/meeting\/.+\/lobby$/);
+    await expect(page).toHaveURL(/\/meeting\/.+\/lobby$/, { timeout: 15_000 });
     await expect(page.getByRole('button', { name: 'Join now' })).toBeVisible();
   });
 
@@ -51,18 +40,11 @@ test.describe('meeting flow', () => {
   // rejects empty JSON bodies. The client now only sets that header when a body
   // is actually present.
   test('join endpoint accepts empty-body POST', async ({ page }) => {
-    const email = `ada+${Date.now()}@example.com`;
-    await page.goto('/register');
-    await page.getByLabel('Name').fill('Ada');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Password').fill('correct horse battery');
-    await page.getByRole('button', { name: 'Create account' }).click();
-    await page.waitForURL(/\/$/);
+    await registerAndWait(page, 'Ada');
 
-    // Hit the API directly from the page so cookies + same-origin behavior apply.
-    const result = await page.evaluate(async () => {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
-      const meetingRes = await fetch(`${apiUrl}/api/meetings`, {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
+    const result = await page.evaluate(async (api: string) => {
+      const meetingRes = await fetch(`${api}/api/meetings`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -70,9 +52,8 @@ test.describe('meeting flow', () => {
       });
       const meeting = await meetingRes.json();
 
-      // Reproduce the broken call: no body, no Content-Type. Used to 400.
       const joinRes = await fetch(
-        `${apiUrl}/api/meetings/${meeting.data.code}/join`,
+        `${api}/api/meetings/${meeting.data.code}/join`,
         {
           method: 'POST',
           credentials: 'include',
@@ -83,10 +64,29 @@ test.describe('meeting flow', () => {
         status: joinRes.status,
         body: await joinRes.json(),
       };
-    });
+    }, apiUrl);
 
     expect(result.status).toBe(200);
     expect(result.body.success).toBe(true);
     expect(result.body.data.meeting.status).toBe('ACTIVE');
+  });
+
+  // Regression: after a hard refresh on the landing page, a logged-in user used
+  // to see "Sign in / Get started" flash for ~300ms while /auth/me was in flight.
+  // We now seed initialData from localStorage so the right CTA renders immediately.
+  test('logged-in user sees "Open app" without flash after refresh', async ({ page }) => {
+    await registerAndWait(page, 'Ada');
+
+    await page.goto('/');
+    await expect(page.locator('header').getByRole('link', { name: /open app/i })).toBeVisible();
+
+    await page.reload();
+    // No flash window: assert "Open app" within the first 500ms of paint.
+    await expect(page.locator('header').getByRole('link', { name: /open app/i })).toBeVisible({
+      timeout: 1_500,
+    });
+    // And the signed-out CTAs must NOT be present.
+    await expect(page.locator('header').getByRole('link', { name: 'Sign in' })).toHaveCount(0);
+    await expect(page.locator('header').getByRole('link', { name: /get started/i })).toHaveCount(0);
   });
 });

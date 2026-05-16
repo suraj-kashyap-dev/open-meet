@@ -25,13 +25,21 @@ import { RegisterDto } from './dto/register.dto';
 const ACCESS_COOKIE = 'access_token';
 const REFRESH_COOKIE = 'refresh_token';
 
+const IS_PROD = process.env.NODE_ENV === 'production';
+const AUTH_THROTTLE = {
+  default: {
+    limit: IS_PROD ? 5 : 200,
+    ttl: IS_PROD ? 15 * 60_000 : 60_000,
+  },
+};
+
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly auth: AuthService) {}
 
   @Public()
-  @Throttle({ default: { limit: 5, ttl: 15 * 60_000 } })
+  @Throttle(AUTH_THROTTLE)
   @Post('register')
   @ApiOperation({ summary: 'Create a new account' })
   async register(
@@ -44,7 +52,7 @@ export class AuthController {
   }
 
   @Public()
-  @Throttle({ default: { limit: 5, ttl: 15 * 60_000 } })
+  @Throttle(AUTH_THROTTLE)
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @ApiOperation({ summary: 'Authenticate with email + password' })

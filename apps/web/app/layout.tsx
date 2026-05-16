@@ -1,19 +1,32 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
 export const metadata: Metadata = {
-  title: 'open-meet',
-  description: 'Real-time video conferencing',
+  metadataBase: new URL('http://localhost:3000'),
+  title: {
+    default: 'open-meet · Live video for teams that ship',
+    template: '%s · open-meet',
+  },
+  description:
+    'Real-time video conferencing for distributed teams. No downloads, no friction — open a link and start talking.',
+  keywords: ['video conferencing', 'meetings', 'webrtc', 'team collaboration'],
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-background text-foreground antialiased">
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <Providers>
           {children}
           <Toaster position="bottom-right" />
