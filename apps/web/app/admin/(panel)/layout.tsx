@@ -1,15 +1,12 @@
 import type { ReactNode } from 'react';
 
-import { AdminGuard } from '@/components/admin/admin-guard';
-import { AdminHeader } from '@/components/admin/admin-header';
+import { AdminGuard } from '@/components/admin/auth/admin-guard';
+import { AdminShell } from '@/components/admin/layout/admin-shell';
 
 export default function AdminPanelLayout({ children }: { children: ReactNode }) {
   return (
     <AdminGuard>
-      <div className="min-h-screen">
-        <AdminHeader />
-        {children}
-      </div>
+      <AdminShell>{children}</AdminShell>
     </AdminGuard>
   );
 }

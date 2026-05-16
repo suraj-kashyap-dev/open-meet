@@ -119,6 +119,15 @@
     text-rendering: optimizeLegibility;
   }
 
+  :where(a[href], button, [role='button'], summary, label[for]):not(:disabled):not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+
+  :where(button, input, select, textarea, [role='button'])[disabled],
+  :where(button, input, select, textarea, [role='button'])[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
   ::selection {
     background-color: var(--color-accent);
     color: var(--color-accent-foreground);
@@ -141,12 +150,14 @@
   @keyframes content-show {
     from {
       opacity: 0;
-      transform: translate(-50%, -48%) scale(0.96);
+      translate: -50% -48%;
+      scale: 0.96;
     }
 
     to {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      translate: -50% -50%;
+      scale: 1;
     }
   }
 

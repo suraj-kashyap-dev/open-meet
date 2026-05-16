@@ -15,8 +15,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
   title: {
-    default: 'open-meet · Live video for teams that ship',
-    template: '%s · open-meet',
+    default: 'Open Meet · Live video for teams that ship',
+    template: '%s · Open Meet',
   },
   description:
     'Real-time video conferencing for distributed teams. No downloads, no friction — open a link and start talking.',

@@ -54,3 +54,31 @@ export interface AdminStatsOverviewDto {
   };
   recentMeetings: RecentMeetingDto[];
 }
+
+export interface AdminUserDto {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string | null;
+  createdAt: string;
+  meetingsHosted: number;
+  meetingsAttended: number;
+}
+
+export interface AdminUserListQuery {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+}
+
+export interface AdminUserListResponseDto {
+  items: AdminUserDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface AdminUpdateUserDto {
+  name?: string;
+  email?: string;
+}

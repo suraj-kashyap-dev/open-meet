@@ -6,15 +6,10 @@ import { cn } from '@/lib/shared/cn';
 
 const buttonVariants = cva(
   [
-    // base
-    'relative inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium',
-    // transitions — keep snappy (100–150ms) so the press registers visually
+    'relative inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium',
     'transition-[transform,opacity,background-color,box-shadow,border-color] duration-150 ease-out',
-    // focus
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-    // press feedback — universal across variants. Scale-down + brightness on active.
     'active:scale-[0.97] active:brightness-95',
-    // disabled
     'disabled:pointer-events-none disabled:opacity-50',
   ].join(' '),
   {

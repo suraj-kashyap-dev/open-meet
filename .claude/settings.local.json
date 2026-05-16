@@ -134,7 +134,15 @@
       "Bash(rm -rf apps/backend/node_modules apps/backend/dist apps/backend/.turbo)",
       "Bash(cp -r apps/backend apps/server)",
       "Bash(rm -rf apps/server/node_modules apps/server/dist apps/server/.turbo)",
-      "Bash(rm -rf apps/backend)"
+      "Bash(rm -rf apps/backend)",
+      "Bash(mkdir -p layout auth dashboard)",
+      "Bash(mv admin-guard.tsx auth/admin-guard.tsx)",
+      "Bash(mv admin-login-form.tsx auth/admin-login-form.tsx)",
+      "Bash(mv admin-header.tsx layout/admin-header.tsx)",
+      "Bash(mv stat-card.tsx dashboard/stat-card.tsx)",
+      "Bash(xargs -0 sed -i -E \"s#@/components/admin/admin-guard#@/components/admin/auth/admin-guard#g; s#@/components/admin/admin-login-form#@/components/admin/auth/admin-login-form#g; s#@/components/admin/admin-header#@/components/admin/layout/admin-header#g; s#@/components/admin/stat-card#@/components/admin/dashboard/stat-card#g; s#@/components/admin/trend-card#@/components/admin/dashboard/trend-card#g; s#@/components/admin/recent-meetings-table#@/components/admin/dashboard/recent-meetings-table#g\")",
+      "Bash(pnpm --filter @open-meet/web add @tanstack/react-table)",
+      "Bash(pnpm --filter @open-meet/server typecheck)"
     ]
   }
 }

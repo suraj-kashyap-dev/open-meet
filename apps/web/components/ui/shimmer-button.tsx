@@ -20,7 +20,7 @@ export const ShimmerButton = forwardRef<HTMLButtonElement, ShimmerButtonProps>(
       <Comp
         ref={ref}
         className={cn(
-          'group relative inline-flex h-11 items-center justify-center gap-2 overflow-hidden rounded-md px-6 text-sm font-medium shadow-sm',
+          'group relative inline-flex h-11 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-md px-6 text-sm font-medium shadow-sm',
           'bg-foreground text-background',
           // snap transitions on press so the click registers visually
           'transition-[transform,box-shadow,opacity] duration-150 ease-out',

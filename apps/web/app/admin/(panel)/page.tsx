@@ -3,9 +3,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { CalendarRange, MessageSquare, Radio, Users } from 'lucide-react';
 
-import { RecentMeetingsTable } from '@/components/admin/recent-meetings-table';
-import { StatCard } from '@/components/admin/stat-card';
-import { TrendCard } from '@/components/admin/trend-card';
+import { RecentMeetingsTable } from '@/components/admin/dashboard/recent-meetings-table';
+import { StatCard } from '@/components/admin/dashboard/stat-card';
+import { TrendCard } from '@/components/admin/dashboard/trend-card';
 import { adminAnalyticsApi } from '@/services/admin/analytics';
 
 export default function AdminOverviewPage() {

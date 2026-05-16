@@ -1,8 +1,8 @@
 import { Logo } from '@/components/shared/logo';
-import { AdminLoginForm } from '@/components/admin/admin-login-form';
+import { AdminLoginForm } from '@/components/admin/auth/admin-login-form';
 
 export const metadata = {
-  title: 'Sign in · Console',
+  title: 'Admin sign in · Open Meet',
 };
 
 export default function AdminLoginPage() {
@@ -11,7 +11,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
           <Logo className="h-7 w-7" />
-          <span>Open Meet Console</span>
+          <span>Open Meet</span>
         </div>
 
         <div className="space-y-6 rounded-2xl border border-border bg-card p-7 shadow-sm">
