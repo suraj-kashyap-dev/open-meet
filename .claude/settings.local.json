@@ -142,7 +142,14 @@
       "Bash(mv stat-card.tsx dashboard/stat-card.tsx)",
       "Bash(xargs -0 sed -i -E \"s#@/components/admin/admin-guard#@/components/admin/auth/admin-guard#g; s#@/components/admin/admin-login-form#@/components/admin/auth/admin-login-form#g; s#@/components/admin/admin-header#@/components/admin/layout/admin-header#g; s#@/components/admin/stat-card#@/components/admin/dashboard/stat-card#g; s#@/components/admin/trend-card#@/components/admin/dashboard/trend-card#g; s#@/components/admin/recent-meetings-table#@/components/admin/dashboard/recent-meetings-table#g\")",
       "Bash(pnpm --filter @open-meet/web add @tanstack/react-table)",
-      "Bash(pnpm --filter @open-meet/server typecheck)"
+      "Bash(pnpm --filter @open-meet/server typecheck)",
+      "Bash(mkdir -p \"apps/web/app/\\(client\\)/\\(authenticated\\)/[code]/lobby\")",
+      "Bash(cp \"apps/web/app/\\(client\\)/\\(authenticated\\)/meeting/[code]/page.tsx\" \"apps/web/app/\\(client\\)/\\(authenticated\\)/[code]/page.tsx\")",
+      "Bash(cp \"apps/web/app/\\(client\\)/\\(authenticated\\)/meeting/[code]/lobby/page.tsx\" \"apps/web/app/\\(client\\)/\\(authenticated\\)/[code]/lobby/page.tsx\")",
+      "Bash(rm -rf \"apps/web/app/\\(client\\)/\\(authenticated\\)/meeting\")",
+      "Bash(xargs -0 sed -i -E \"s#/meeting/\\\\\\\\\\\\$\\\\{\\([^}]+\\)\\\\}/lobby#/\\\\\\\\\\\\$\\\\{\\\\1\\\\}/lobby#g; s#/meeting/\\\\\\\\\\\\$\\\\{\\([^}]+\\)\\\\}/ended#/\\\\\\\\\\\\$\\\\{\\\\1\\\\}#g; s#/meeting/\\\\\\\\\\\\$\\\\{\\([^}]+\\)\\\\}#/\\\\\\\\\\\\$\\\\{\\\\1\\\\}#g\")",
+      "Bash(rm -rf apps/web/.next/types)",
+      "Bash(grep -rn '/meeting/\\\\${' apps/web/app apps/web/components)"
     ]
   }
 }

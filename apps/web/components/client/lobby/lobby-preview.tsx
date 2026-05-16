@@ -1,7 +1,7 @@
 'use client';
 
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -38,13 +38,20 @@ function initialsOf(name: string): string {
 }
 
 export function LobbyPreview({ media, displayName }: Props) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const stream = media.stream;
 
-  useEffect(() => {
-    if (videoRef.current && media.stream) {
-      videoRef.current.srcObject = media.stream;
-    }
-  }, [media.stream]);
+  const attachStream = useCallback(
+    (el: HTMLVideoElement | null) => {
+      if (! el) {
+        return;
+      }
+
+      if (el.srcObject !== stream) {
+        el.srcObject = stream;
+      }
+    },
+    [stream],
+  );
 
   const showVideo = media.cameraEnabled && Boolean(media.stream);
   const initials = initialsOf(displayName);
@@ -54,7 +61,7 @@ export function LobbyPreview({ media, displayName }: Props) {
       <div className="relative isolate aspect-video w-full overflow-hidden rounded-2xl border border-border bg-zinc-950 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
         {showVideo ? (
           <video
-            ref={videoRef}
+            ref={attachStream}
             autoPlay
             muted
             playsInline

@@ -29,7 +29,10 @@ export function AppHeader() {
       .toUpperCase() ?? '?';
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl">
+    <header
+      data-hide-in-fullscreen
+      className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl"
+    >
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"

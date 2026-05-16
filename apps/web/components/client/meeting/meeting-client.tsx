@@ -13,6 +13,7 @@ import { useCurrentUser } from '@/hooks/client/use-auth';
 import { ApiClientError } from '@/lib/shared/api';
 import { livekitApi } from '@/services/client/livekit';
 import { meetingsApi } from '@/services/client/meetings';
+import { EndedView } from './ended-view';
 import { MeetingShell } from './meeting-shell';
 import { WaitingRoom } from './waiting-room';
 
@@ -25,6 +26,7 @@ export function MeetingClient({ code }: { code: string }) {
   const [meeting, setMeeting] = useState<MeetingDto | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [guestStage, setGuestStage] = useState<GuestStage>('lookup');
+  const [ended, setEnded] = useState(false);
 
   useEffect(() => {
     if (! user || userLoading) {
@@ -98,6 +100,10 @@ export function MeetingClient({ code }: { code: string }) {
     void proceedToRoom();
   }, [proceedToRoom]);
 
+  if (ended && meeting) {
+    return <EndedView code={code} />;
+  }
+
   if (error) {
     return (
       <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
@@ -139,8 +145,12 @@ export function MeetingClient({ code }: { code: string }) {
       video={true}
       data-lk-theme="default"
       style={{ height: 'calc(100vh - 3.5rem)' }}
+      options={{
+        publishDefaults: { stopMicTrackOnMute: false },
+        stopLocalTrackOnUnpublish: false,
+      }}
       onDisconnected={() => {
-        router.replace(`/meeting/${code}/ended`);
+        setEnded(true);
       }}
     >
       <MeetingShell code={code} meeting={meeting} />

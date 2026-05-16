@@ -35,7 +35,7 @@ export function LobbyClient({ code }: { code: string }) {
       return;
     }
 
-    const url = `${window.location.origin}/meeting/${meeting.code}`;
+    const url = `${window.location.origin}/${meeting.code}`;
 
     try {
       await navigator.clipboard.writeText(url);
@@ -49,7 +49,7 @@ export function LobbyClient({ code }: { code: string }) {
 
   const onJoin = () => {
     media.stop();
-    router.push(`/meeting/${code}`);
+    router.push(`/${code}`);
   };
 
   if (isLoading) {

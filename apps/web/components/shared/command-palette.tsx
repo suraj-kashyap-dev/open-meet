@@ -58,7 +58,7 @@ export function CommandPalette() {
   const onCreateMeeting = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
-      router.push(`/meeting/${meeting.code}/lobby`);
+      router.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
       toast.error(message);
@@ -71,7 +71,7 @@ export function CommandPalette() {
       toast.error('Type a meeting code first');
       return;
     }
-    router.push(`/meeting/${trimmed}/lobby`);
+    router.push(`/${trimmed}/lobby`);
   };
 
   return (

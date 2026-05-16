@@ -48,7 +48,7 @@ export function Dashboard() {
   const onCreate = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
-      router.push(`/meeting/${meeting.code}/lobby`);
+      router.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message =
         err instanceof ApiClientError ? err.message : 'Could not create meeting';
@@ -63,7 +63,7 @@ export function Dashboard() {
       toast.error('Enter a meeting code');
       return;
     }
-    router.push(`/meeting/${trimmed}/lobby`);
+    router.push(`/${trimmed}/lobby`);
   };
 
   const firstName = user?.name?.split(' ')[0] ?? 'there';

@@ -437,3 +437,11 @@ html:not(.dark) [data-lk-theme='default'] .lk-participant-placeholder {
   background-color: #18181b;
   color: #fafafa;
 }
+
+html:fullscreen [data-hide-in-fullscreen] {
+  display: none !important;
+}
+
+html:fullscreen [data-lk-theme='default'] {
+  height: 100vh !important;
+}
