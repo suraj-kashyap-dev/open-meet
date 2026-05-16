@@ -32,14 +32,17 @@ export const webPublicEnvSchema = z.object({
 
 export type WebPublicEnv = z.infer<typeof webPublicEnvSchema>;
 
-export function parseApiEnv(env: NodeJS.ProcessEnv | Record<string, string | undefined>): ApiEnv {
+export function parseApiEnv(env: Record<string, string | undefined>): ApiEnv {
   const result = apiEnvSchema.safeParse(env);
-  if (!result.success) {
+
+  if (! result.success) {
     const issues = result.error.issues
       .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
       .join('\n');
+
     throw new Error(`Invalid API environment variables:\n${issues}`);
   }
+
   return result.data;
 }
 
@@ -47,11 +50,14 @@ export function parseWebPublicEnv(
   env: Record<string, string | undefined>,
 ): WebPublicEnv {
   const result = webPublicEnvSchema.safeParse(env);
-  if (!result.success) {
+
+  if (! result.success) {
     const issues = result.error.issues
       .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
       .join('\n');
+
     throw new Error(`Invalid web public environment variables:\n${issues}`);
   }
+
   return result.data;
 }

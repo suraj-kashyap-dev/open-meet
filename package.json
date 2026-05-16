@@ -1,5 +1,5 @@
 {
-  "name": "google-meet-clone",
+  "name": "open-meet",
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@10.16.0",
@@ -26,5 +26,17 @@
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@prisma/engines",
+      "@scarf/scarf",
+      "argon2",
+      "esbuild",
+      "msgpackr-extract",
+      "prisma"
+    ]
   }
 }

@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id @default(cuid())
+  name           String
+  email          String        @unique
+  passwordHash   String
+  avatar         String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  meetings       Participant[]
+  messages       Message[]
+  hostedMeetings Meeting[]     @relation("host")
+
+  @@index([email])
+}
+
+model Meeting {
+  id           String        @id @default(cuid())
+  code         String        @unique
+  title        String?
+  hostId       String
+  host         User          @relation("host", fields: [hostId], references: [id], onDelete: Cascade)
+  status       MeetingStatus @default(WAITING)
+  settings     Json          @default("{}")
+  startedAt    DateTime?
+  endedAt      DateTime?
+  createdAt    DateTime      @default(now())
+  participants Participant[]
+  messages     Message[]
+  recordings   Recording[]
+
+  @@index([hostId])
+  @@index([status])
+}
+
+model Participant {
+  id        String          @id @default(cuid())
+  meetingId String
+  meeting   Meeting         @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      ParticipantRole @default(GUEST)
+  joinedAt  DateTime        @default(now())
+  leftAt    DateTime?
+
+  @@unique([meetingId, userId])
+  @@index([meetingId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  meetingId String
+  meeting   Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content   String
+  sentAt    DateTime @default(now())
+
+  @@index([meetingId, sentAt])
+}
+
+model Recording {
+  id        String   @id @default(cuid())
+  meetingId String
+  meeting   Meeting  @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  url       String
+  duration  Int
+  size      BigInt
+  createdAt DateTime @default(now())
+
+  @@index([meetingId])
+}
+
+enum MeetingStatus {
+  WAITING
+  ACTIVE
+  ENDED
+}
+
+enum ParticipantRole {
+  HOST
+  GUEST
+}

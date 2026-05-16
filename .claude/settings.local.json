@@ -4,7 +4,14 @@
       "Bash(pnpm --version)",
       "Bash(docker --version)",
       "Bash(git --version)",
-      "Bash(pnpm install *)"
+      "Bash(pnpm install *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm build *)",
+      "Bash(pnpm lint *)",
+      "Bash(docker info *)",
+      "Bash(docker compose *)",
+      "Bash(cmd.exe //c start \"\" \"C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe\")",
+      "Bash(pnpm rebuild *)"
     ]
   }
 }
