@@ -129,7 +129,12 @@
       "Bash(cp \"apps/web/app/\\(client\\)/layout.tsx\" \"apps/web/app/\\(client\\)/\\(authenticated\\)/layout.tsx\")",
       "Bash(mkdir -p apps/web/app/admin/auth/login)",
       "Bash(cp \"apps/web/app/admin/login/page.tsx\" \"apps/web/app/admin/auth/login/page.tsx\")",
-      "Bash(rm -rf apps/web/app/admin/login)"
+      "Bash(rm -rf apps/web/app/admin/login)",
+      "Bash(cp -r apps/api apps/backend)",
+      "Bash(rm -rf apps/backend/node_modules apps/backend/dist apps/backend/.turbo)",
+      "Bash(cp -r apps/backend apps/server)",
+      "Bash(rm -rf apps/server/node_modules apps/server/dist apps/server/.turbo)",
+      "Bash(rm -rf apps/backend)"
     ]
   }
 }
