@@ -12,23 +12,23 @@ import fastifyCookie from '@fastify/cookie';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { RedisIoAdapter } from './ws/redis-io.adapter';
 import type { ApiEnv } from '@open-meet/config';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({ trustProxy: true, logger: false }),
-    { bufferLogs: true },
+    { bufferLogs: false, abortOnError: false },
   );
 
-  const config = app.get(ConfigService<ApiEnv, true>);
-  const port = config.get('PORT', { infer: true });
-  const frontendUrl = config.get('FRONTEND_URL', { infer: true });
-  const isProd = config.get('NODE_ENV', { infer: true }) === 'production';
+  const config = app.get<ConfigService<ApiEnv, true>>(ConfigService);
+  const port = config.getOrThrow<number>('PORT');
+  const frontendUrl = config.getOrThrow<string>('FRONTEND_URL');
+  const isProd = config.getOrThrow<string>('NODE_ENV') === 'production';
+  const cookieSecret = config.getOrThrow<string>('JWT_ACCESS_SECRET');
 
-  await app.register(fastifyCookie, {
-    secret: config.get('JWT_ACCESS_SECRET', { infer: true }),
-  });
+  await app.register(fastifyCookie, { secret: cookieSecret });
 
   app.setGlobalPrefix('api');
 
@@ -49,7 +49,9 @@ async function bootstrap(): Promise<void> {
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor(app.get(Reflector)));
 
-  if (!isProd) {
+  app.useWebSocketAdapter(new RedisIoAdapter(app));
+
+  if (! isProd) {
     const swagger = new DocumentBuilder()
       .setTitle('open-meet API')
       .setDescription('Google Meet clone — REST + WebSocket API')
@@ -66,6 +68,9 @@ async function bootstrap(): Promise<void> {
 }
 
 bootstrap().catch((err) => {
-  Logger.error(err, 'Bootstrap');
+  console.error('[bootstrap] failed:', err);
+  if (err instanceof Error && err.stack) {
+    console.error(err.stack);
+  }
   process.exit(1);
 });

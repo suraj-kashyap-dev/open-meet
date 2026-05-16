@@ -1,0 +1,22 @@
+{
+  "name": "@open-meet/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "install:browsers": "playwright install --with-deps chromium",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "clean": "rimraf playwright-report test-results .turbo"
+  },
+  "devDependencies": {
+    "@open-meet/types": "workspace:*",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.5",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.3"
+  }
+}

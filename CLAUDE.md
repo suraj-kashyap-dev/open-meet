@@ -10,7 +10,7 @@ Real-time video conferencing app (Google Meet–style). Full-stack TypeScript. R
 
 **Infra** — PostgreSQL 16 · Redis 7 (ioredis) · LiveKit (Docker) · coturn (Docker) · MailHog (dev)
 
-**Tooling** — pnpm workspaces · Turborepo v2 · ESLint v9 flat config · Prettier v3 · Vitest + Supertest · husky + lint-staged
+**Tooling** — pnpm workspaces · Turborepo v2 · ESLint v9 flat config · Prettier v3 · Vitest + Supertest (unit + API e2e) · **Playwright (browser e2e)** in `apps/e2e/` · husky + lint-staged
 
 ## Repo layout
 
@@ -18,6 +18,7 @@ Real-time video conferencing app (Google Meet–style). Full-stack TypeScript. R
 apps/
   api/    NestJS monolith-modular (Fastify)
   web/    Next.js 15 App Router
+  e2e/    Playwright browser tests
 packages/
   types/  Shared DTOs, socket events, API envelope (@open-meet/types)
   config/ Zod env schemas (@open-meet/config)
@@ -144,6 +145,24 @@ docker compose logs -f livekit
 | Next.js entry | `apps/web/app/layout.tsx` |
 | Typed API client | `apps/web/lib/api.ts` |
 | Zustand stores | `apps/web/stores/` |
+
+## Testing discipline — non-negotiable
+
+**Every feature and every bug fix ships with tests. End-to-end.**
+
+- **Unit tests (Vitest)** live next to source as `<name>.spec.ts`. Required for every service, repository, util, guard, pipe, and React component with non-trivial logic.
+- **Browser e2e tests (Playwright)** live in `apps/e2e/tests/`. Required for every user-visible flow change: auth, create/join meeting, in-call controls, chat, reactions, host actions, end-meeting flow.
+- For a **bug fix**: write a failing regression test FIRST, then fix.
+- Before declaring any step or task done, both must pass:
+  ```bash
+  pnpm test                              # unit (all workspaces)
+  pnpm --filter @open-meet/e2e test      # Playwright
+  ```
+- Playwright browser binaries are not auto-installed. Run once after `pnpm install`:
+  ```bash
+  pnpm --filter @open-meet/e2e install:browsers
+  ```
+- Playwright's `webServer` auto-starts `apps/web` in dev. For real LiveKit/socket flows the infra stack must be up first (`docker compose up -d`).
 
 ## Build order reference
 The spec defines a strict 15-step build order. We're past STEPs 1–4 + 9 (scaffolding). Feature steps remaining: 5 (auth), 6 (meetings), 7 (livekit), 8 (ws gateway), 10 (auth pages), 11 (home+lobby), 12 (meeting room), 13 (controls), 14 (chat+reactions), 15 (host controls + polish).

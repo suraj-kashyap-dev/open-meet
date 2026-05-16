@@ -1,0 +1,230 @@
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import * as argon2 from 'argon2';
+import { createHash, randomBytes } from 'node:crypto';
+
+import type { UserDto } from '@open-meet/types';
+import { ApiErrorCode } from '@open-meet/types';
+import type { ApiEnv } from '@open-meet/config';
+
+import { RedisService } from '../../redis/redis.service';
+import { AuthRepository } from './auth.repository';
+import type { RegisterDto } from './dto/register.dto';
+import type { LoginDto } from './dto/login.dto';
+
+interface AccessTokenPayload {
+  sub: string;
+  email: string;
+  name: string;
+}
+
+interface RefreshTokenPayload {
+  sub: string;
+  jti: string;
+}
+
+export interface IssuedTokens {
+  accessToken: string;
+  refreshToken: string;
+  refreshTtlMs: number;
+  accessTtlMs: number;
+}
+
+@Injectable()
+export class AuthService {
+  private readonly refreshTtlSeconds = 60 * 60 * 24 * 7; // 7d in seconds
+
+  constructor(
+    private readonly users: AuthRepository,
+    private readonly jwt: JwtService,
+    private readonly config: ConfigService<ApiEnv, true>,
+    private readonly redis: RedisService,
+  ) {}
+
+  async register(dto: RegisterDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
+    const existing = await this.users.findByEmail(dto.email);
+    if (existing) {
+      throw new ConflictException({
+        code: ApiErrorCode.EMAIL_TAKEN,
+        message: 'An account with this email already exists',
+      });
+    }
+
+    const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
+    const user = await this.users.create({
+      name: dto.name,
+      email: dto.email,
+      passwordHash,
+    });
+    const tokens = await this.issueTokens(user.id, user.email, user.name);
+    return { user: this.toDto(user), tokens };
+  }
+
+  async login(dto: LoginDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
+    const user = await this.users.findByEmail(dto.email);
+    if (!user) throw this.invalidCredentials();
+
+    const valid = await argon2.verify(user.passwordHash, dto.password);
+    if (!valid) throw this.invalidCredentials();
+
+    const tokens = await this.issueTokens(user.id, user.email, user.name);
+    return { user: this.toDto(user), tokens };
+  }
+
+  async refresh(refreshToken: string): Promise<IssuedTokens> {
+    let payload: RefreshTokenPayload;
+    try {
+      payload = await this.jwt.verifyAsync<RefreshTokenPayload>(refreshToken, {
+        secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+      });
+    } catch {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.TOKEN_INVALID,
+        message: 'Refresh token is invalid or expired',
+      });
+    }
+
+    const key = this.refreshKey(payload.sub, payload.jti);
+    const stored = await this.redis.client.get(key);
+    if (!stored) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.TOKEN_INVALID,
+        message: 'Refresh token has been revoked',
+      });
+    }
+
+    if (stored !== this.hashToken(refreshToken)) {
+      // token reuse — invalidate everything for this user (best-effort)
+      await this.revokeAllForUser(payload.sub);
+      throw new UnauthorizedException({
+        code: ApiErrorCode.TOKEN_INVALID,
+        message: 'Refresh token reuse detected',
+      });
+    }
+
+    await this.redis.client.del(key);
+
+    const user = await this.users.findById(payload.sub);
+    if (!user) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'User no longer exists',
+      });
+    }
+
+    return this.issueTokens(user.id, user.email, user.name);
+  }
+
+  async logout(refreshToken: string | undefined): Promise<void> {
+    if (!refreshToken) return;
+    try {
+      const payload = await this.jwt.verifyAsync<RefreshTokenPayload>(refreshToken, {
+        secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+      });
+      await this.redis.client.del(this.refreshKey(payload.sub, payload.jti));
+    } catch {
+      // Silent: logout should be best-effort
+    }
+  }
+
+  async getUserDtoById(id: string): Promise<UserDto> {
+    const user = await this.users.findById(id);
+    if (!user) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'User not found',
+      });
+    }
+    return this.toDto(user);
+  }
+
+  private async issueTokens(
+    userId: string,
+    email: string,
+    name: string,
+  ): Promise<IssuedTokens> {
+    const accessTtl = this.config.getOrThrow<string>('JWT_ACCESS_EXPIRY');
+    const refreshTtl = this.config.getOrThrow<string>('JWT_REFRESH_EXPIRY');
+    const accessTtlMs = this.parseTtlMs(accessTtl);
+    const refreshTtlMs = this.parseTtlMs(refreshTtl);
+
+    const accessPayload: AccessTokenPayload = { sub: userId, email, name };
+    const accessToken = await this.jwt.signAsync(accessPayload, {
+      secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET'),
+      expiresIn: Math.floor(accessTtlMs / 1000),
+    });
+
+    const jti = randomBytes(16).toString('hex');
+    const refreshPayload: RefreshTokenPayload = { sub: userId, jti };
+    const refreshToken = await this.jwt.signAsync(refreshPayload, {
+      secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+      expiresIn: Math.floor(refreshTtlMs / 1000),
+    });
+
+    await this.redis.client.set(
+      this.refreshKey(userId, jti),
+      this.hashToken(refreshToken),
+      'EX',
+      this.refreshTtlSeconds,
+    );
+
+    return {
+      accessToken,
+      refreshToken,
+      accessTtlMs,
+      refreshTtlMs,
+    };
+  }
+
+  private toDto(u: {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string | null;
+    createdAt: Date;
+  }): UserDto {
+    return {
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      avatar: u.avatar,
+      createdAt: u.createdAt.toISOString(),
+    };
+  }
+
+  private refreshKey(userId: string, jti: string): string {
+    return `auth:refresh:${userId}:${jti}`;
+  }
+
+  private hashToken(token: string): string {
+    return createHash('sha256').update(token).digest('hex');
+  }
+
+  private async revokeAllForUser(userId: string): Promise<void> {
+    const stream = this.redis.client.scanStream({ match: `auth:refresh:${userId}:*` });
+    for await (const keys of stream) {
+      if (keys.length) await this.redis.client.del(keys);
+    }
+  }
+
+  private invalidCredentials(): UnauthorizedException {
+    return new UnauthorizedException({
+      code: ApiErrorCode.INVALID_CREDENTIALS,
+      message: 'Invalid email or password',
+    });
+  }
+
+  private parseTtlMs(ttl: string): number {
+    const match = /^(\d+)([smhd])$/.exec(ttl);
+    if (!match || !match[1] || !match[2]) return 0;
+    const n = parseInt(match[1], 10);
+    const unit = match[2];
+    const mult: Record<string, number> = { s: 1000, m: 60_000, h: 3_600_000, d: 86_400_000 };
+    return n * (mult[unit] ?? 0);
+  }
+}

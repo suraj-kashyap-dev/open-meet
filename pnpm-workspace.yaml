@@ -11,3 +11,5 @@ onlyBuiltDependencies:
   - "esbuild"
   - "msgpackr-extract"
   - "prisma"
+  - "sharp"
+  - "@swc/core"
