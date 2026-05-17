@@ -38,3 +38,6 @@ coverage/
 # Local attachment storage (LOCAL_STORAGE_DIR default)
 uploads/
 apps/server/uploads/
+
+# Claude Code local settings
+.claude/

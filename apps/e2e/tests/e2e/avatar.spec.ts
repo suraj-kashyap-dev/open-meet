@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { registerNewUser } from './helpers/auth';
-
-const fullStack = !! process.env.RUN_FULL_E2E;
+import { installMockApi } from './helpers/mock-api';
 
 // 1×1 transparent PNG (smallest valid PNG we can ship in-process).
 const PNG_1X1 = Buffer.from(
@@ -11,7 +10,9 @@ const PNG_1X1 = Buffer.from(
 );
 
 test.describe('avatar upload', () => {
-  test.skip(! fullStack, 'requires API stack — set RUN_FULL_E2E=1');
+  test.beforeEach(async ({ page }) => {
+    await installMockApi(page);
+  });
 
   test('uploading a PNG sets the user avatar and survives a reload', async ({ page }) => {
     await registerNewUser(page);
@@ -34,8 +35,14 @@ test.describe('avatar upload', () => {
 
     await expect(page.getByText('Avatar updated')).toBeVisible({ timeout: 10_000 });
 
-    // The profile-image section now shows a Remove button when an avatar is set.
-    await expect(page.getByRole('button', { name: /Remove/i })).toBeVisible();
+    // The pencil overlay now opens a menu with Replace + Remove once an avatar is set.
+    const editTrigger = page.getByRole('button', { name: /edit profile picture/i });
+    await expect(editTrigger).toBeVisible();
+    await editTrigger.click();
+    await expect(page.getByRole('menuitem', { name: /replace/i })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: /remove/i })).toBeVisible();
+    // Dismiss the menu before reloading.
+    await page.keyboard.press('Escape');
 
     // After reload the avatar URL is still rendered (img element with avatars/ in src).
     await page.reload();
@@ -63,7 +70,7 @@ test.describe('avatar upload', () => {
     ).toBeVisible();
   });
 
-  test('removing the avatar clears it everywhere', async ({ page }) => {
+  test('removing the avatar via the dropdown clears it everywhere', async ({ page }) => {
     await registerNewUser(page);
 
     await page.goto('/profile');
@@ -77,14 +84,18 @@ test.describe('avatar upload', () => {
     });
 
     await expect(page.getByText('Avatar updated')).toBeVisible({ timeout: 10_000 });
-    await expect(page.getByRole('button', { name: /Remove/i })).toBeVisible();
 
-    // Then remove.
-    await page.getByRole('button', { name: /Remove/i }).click();
+    // Open the dropdown and pick Remove.
+    await page.getByRole('button', { name: /edit profile picture/i }).click();
+    await page.getByRole('menuitem', { name: /remove/i }).click();
     await expect(page.getByText('Avatar removed')).toBeVisible({ timeout: 10_000 });
 
-    // No avatar => Remove button disappears, only Upload remains.
-    await expect(page.getByRole('button', { name: /Remove/i })).toHaveCount(0);
-    await expect(page.getByRole('button', { name: /^Upload$/ })).toBeVisible();
+    // With no avatar the overlay button reverts to the "upload" affordance.
+    await expect(
+      page.getByRole('button', { name: /upload profile picture/i }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: /edit profile picture/i }),
+    ).toHaveCount(0);
   });
 });

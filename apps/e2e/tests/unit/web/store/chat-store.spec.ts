@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import type { MessageDto } from '@open-meet/types';
 
-import { useChatStore } from '@/store/client/chat-store';
+import { useChatStore } from '@/features/meeting/stores/chat-store';
 
 function makeMessage(overrides: Partial<MessageDto> = {}): MessageDto {
   return {

@@ -21,9 +21,10 @@ type MediaState = ReturnType<typeof useMediaDevices>;
 interface Props {
   media: MediaState;
   displayName: string;
+  avatar?: string | null;
 }
 
-export function LobbyPreview({ media, displayName }: Props) {
+export function LobbyPreview({ media, displayName, avatar }: Props) {
   const stream = media.stream;
 
   const attachStream = useCallback(
@@ -55,7 +56,7 @@ export function LobbyPreview({ media, displayName }: Props) {
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black">
             <UserAvatar
-              user={{ name: displayName }}
+              user={{ name: displayName, avatar }}
               size="4xl"
               className="h-24 w-24 ring-2 ring-white/10 sm:h-28 sm:w-28"
               fallbackClassName="bg-zinc-800 text-3xl font-medium text-zinc-100"

@@ -2,6 +2,7 @@
 
 import {
   ParticipantTile,
+  useIsMuted,
   useTracks,
   type TrackReferenceOrPlaceholder,
 } from '@livekit/components-react';
@@ -9,6 +10,8 @@ import { Track } from 'livekit-client';
 import { Hand } from 'lucide-react';
 import { useMemo } from 'react';
 
+import { UserAvatar } from '@/components/shared/user-avatar';
+import { parseParticipantMetadata } from '@/features/meeting/lib/participant-metadata';
 import { useMeetingStore } from '@/features/meeting/stores';
 import { cn } from '@/lib/cn';
 
@@ -46,7 +49,13 @@ interface TileProps {
 
 function Tile({ track, raisedHands, className }: TileProps) {
   const identity = track.participant.identity;
-  const hasHand = Boolean(raisedHands[identity]) && track.source === Track.Source.Camera;
+  const isCamera = track.source === Track.Source.Camera;
+  const hasHand = Boolean(raisedHands[identity]) && isCamera;
+  const isMuted = useIsMuted(track);
+  const showAvatar = isCamera && isMuted;
+
+  const displayName = track.participant.name ?? identity;
+  const { avatar } = parseParticipantMetadata(track.participant.metadata);
 
   return (
     <div
@@ -56,6 +65,17 @@ function Tile({ track, raisedHands, className }: TileProps) {
       )}
     >
       <ParticipantTile trackRef={track} className="h-full w-full" />
+
+      {showAvatar ? (
+        <div className="pointer-events-none absolute inset-x-0 top-0 bottom-9 flex items-center justify-center bg-zinc-950">
+          <UserAvatar
+            user={{ name: displayName, avatar }}
+            size="4xl"
+            className="h-24 w-24 ring-2 ring-white/10 sm:h-28 sm:w-28"
+            fallbackClassName="bg-zinc-800 text-3xl font-medium text-zinc-100"
+          />
+        </div>
+      ) : null}
 
       {hasHand ? (
         <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-warning/90 text-background">

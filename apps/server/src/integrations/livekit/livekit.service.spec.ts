@@ -5,16 +5,28 @@ import { MeetingStatus } from '@prisma/client';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 
 import { LiveKitService } from './livekit.service';
+import { AuthRepository } from '../../modules/client/auth/auth.repository';
+import { AvatarsService } from '../../modules/client/auth/avatars.service';
 import { MeetingsService } from '../../modules/client/meetings/meetings.service';
 
 describe('LiveKitService', () => {
   let service: LiveKitService;
   let meetings: { findRawByCode: ReturnType<typeof vi.fn>; end: ReturnType<typeof vi.fn> };
+  let users: { findById: ReturnType<typeof vi.fn> };
+  let avatars: { resolveUrl: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     meetings = {
       findRawByCode: vi.fn(),
       end: vi.fn(),
+    };
+
+    users = {
+      findById: vi.fn().mockResolvedValue(null),
+    };
+
+    avatars = {
+      resolveUrl: vi.fn().mockReturnValue(null),
     };
 
     const config = {
@@ -37,6 +49,8 @@ describe('LiveKitService', () => {
         LiveKitService,
         { provide: ConfigService, useValue: config },
         { provide: MeetingsService, useValue: meetings },
+        { provide: AuthRepository, useValue: users },
+        { provide: AvatarsService, useValue: avatars },
       ],
     }).compile();
 

@@ -6,6 +6,7 @@ import { Crown, Hand, Mic, MicOff, Video, VideoOff, X } from 'lucide-react';
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { parseParticipantMetadata } from '@/features/meeting/lib/participant-metadata';
 import { useMeetingStore } from '@/features/meeting/stores';
 
 interface Props {
@@ -43,6 +44,7 @@ export function ParticipantsPanel({ onClose }: Props) {
           {participants.map((p) => {
             const isHost = p.identity === meeting?.hostId;
             const hasHand = Boolean(raisedHands[p.identity]);
+            const { avatar } = parseParticipantMetadata(p.metadata);
 
             return (
               <li
@@ -51,7 +53,7 @@ export function ParticipantsPanel({ onClose }: Props) {
               >
                 <div className="flex items-center gap-3">
                   <UserAvatar
-                    user={{ name: p.name ?? p.identity }}
+                    user={{ name: p.name ?? p.identity, avatar }}
                     size="md"
                     fallbackClassName="bg-muted text-muted-foreground"
                   />

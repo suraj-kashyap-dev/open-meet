@@ -14,6 +14,8 @@ import {
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import type { MeetingSocket } from '@/features/meeting/hooks/use-socket';
+import { useNotification } from '@/hooks/use-notification';
+import { useSound } from '@/hooks/use-sound';
 
 interface PendingKnock {
   userId: string;
@@ -29,6 +31,8 @@ interface Props {
 
 export function KnockNotifier({ socket, code }: Props) {
   const [pending, setPending] = useState<PendingKnock[]>([]);
+  const knockSound = useSound('knock');
+  const notification = useNotification();
 
   useEffect(() => {
     if (! socket) {
@@ -44,6 +48,11 @@ export function KnockNotifier({ socket, code }: Props) {
         return [...prev, payload];
       });
       toast.message(`${payload.name} is asking to join`);
+      knockSound.play();
+      notification.notify(`${payload.name} wants to join`, {
+        body: 'Open the meeting to let them in.',
+        tag: `knock-${code}`,
+      });
     };
 
     const onCancelled = (payload: KnockCancelledPayload) => {
@@ -57,7 +66,7 @@ export function KnockNotifier({ socket, code }: Props) {
       socket.off(ServerEvent.KNOCK_REQUESTED, onRequested);
       socket.off(ServerEvent.KNOCK_CANCELLED, onCancelled);
     };
-  }, [socket]);
+  }, [socket, code, knockSound, notification]);
 
   const respond = (userId: string, admit: boolean) => {
     if (! socket) {

@@ -17,6 +17,8 @@ import type { ApiEnv } from '@open-meet/config';
 import type { LiveKitTokenResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
+import { AuthRepository } from '../../modules/client/auth/auth.repository';
+import { AvatarsService } from '../../modules/client/auth/avatars.service';
 import { MeetingsService } from '../../modules/client/meetings/meetings.service';
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 4;
@@ -29,6 +31,8 @@ export class LiveKitService {
   constructor(
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly meetings: MeetingsService,
+    private readonly users: AuthRepository,
+    private readonly avatars: AvatarsService,
   ) {
     this.webhookReceiver = new WebhookReceiver(
       this.config.getOrThrow<string>('LIVEKIT_API_KEY'),
@@ -70,12 +74,16 @@ export class LiveKitService {
       grant.roomCreate = true;
     }
 
+    const user = await this.users.findById(input.userId);
+    const avatarUrl = this.avatars.resolveUrl(user?.avatarKey ?? null);
+
     const accessToken = new AccessToken(
       this.config.getOrThrow<string>('LIVEKIT_API_KEY'),
       this.config.getOrThrow<string>('LIVEKIT_API_SECRET'),
       {
         identity: input.userId,
         name: input.name,
+        metadata: JSON.stringify({ avatar: avatarUrl }),
         ttl: TOKEN_TTL_SECONDS,
       },
     );

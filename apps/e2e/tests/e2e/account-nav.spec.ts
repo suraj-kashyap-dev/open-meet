@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/test';
 
 import { registerNewUser } from './helpers/auth';
-
-const fullStack = !! process.env.RUN_FULL_E2E;
+import { installMockApi } from './helpers/mock-api';
 
 test.describe('account navigation — header dropdown + sidebar', () => {
-  test.skip(! fullStack, 'requires API stack — set RUN_FULL_E2E=1');
+  test.beforeEach(async ({ page }) => {
+    await installMockApi(page);
+  });
 
   test('dropdown surfaces user identity + Profile / History / Sign out', async ({ page }) => {
     const user = await registerNewUser(page, 'Ada Lovelace');
@@ -75,7 +76,9 @@ test.describe('account navigation — header dropdown + sidebar', () => {
     await page.goto('/');
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    // No sidebar with "Account" section header on the dashboard.
-    await expect(page.getByText('Account', { exact: true })).toHaveCount(0);
+    // The account sidebar nav owns the "Account" eyebrow + Profile / Settings /
+    // Meeting history items. Footer links also use the word "Account" so we
+    // anchor on the nav element specifically.
+    await expect(page.locator('nav').filter({ hasText: 'Account' })).toHaveCount(0);
   });
 });

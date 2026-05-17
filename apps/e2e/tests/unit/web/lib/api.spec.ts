@@ -1,7 +1,7 @@
 import { HttpResponse, http } from 'msw';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { ApiClientError, UNAUTHORIZED_EVENT, api } from '@/lib/shared/api';
+import { ApiClientError, UNAUTHORIZED_EVENT, api } from '@/lib/api/client';
 
 import { server } from '../../mocks/server';
 

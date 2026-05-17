@@ -2,16 +2,19 @@
 
 import { ArrowRight, Check, Copy, Lock, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useUserSettings } from '@/features/account/hooks/use-settings';
 import { useCurrentUser } from '@/features/auth/hooks/use-auth';
 import { useMediaDevices } from '@/features/lobby/hooks/use-media-devices';
 import { useMeeting } from '@/features/meeting/hooks/use-meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
+
+import { saveJoinPreferences } from '@/features/lobby/lib/join-preferences';
 
 import { DeviceSelector } from './device-selector';
 import { LobbyPreview } from './lobby-preview';
@@ -21,7 +24,9 @@ export function LobbyClient({ code }: { code: string }) {
   const media = useMediaDevices();
   const { data: meeting, error, isLoading } = useMeeting(code);
   const { data: user } = useCurrentUser();
+  const { data: settings } = useUserSettings();
   const [copied, setCopied] = useState(false);
+  const appliedDefaults = useRef(false);
 
   useEffect(() => {
     if (error instanceof ApiClientError && error.code === 'MEETING_NOT_FOUND') {
@@ -29,6 +34,22 @@ export function LobbyClient({ code }: { code: string }) {
       nav.replace('/');
     }
   }, [error, nav]);
+
+  // Apply the user's saved meeting defaults once the media stream is ready.
+  // Guarded by a ref so a settings refetch can't clobber a manual toggle.
+  useEffect(() => {
+    if (appliedDefaults.current || ! settings || ! media.stream) {
+      return;
+    }
+    appliedDefaults.current = true;
+    const prefs = settings.meetingPreferences;
+    if (prefs.defaultMicMuted) {
+      void media.setMicEnabled(false);
+    }
+    if (prefs.defaultCameraOff) {
+      void media.setCameraEnabled(false);
+    }
+  }, [settings, media]);
 
   const onCopyLink = async () => {
     if (! meeting) {
@@ -48,6 +69,10 @@ export function LobbyClient({ code }: { code: string }) {
   };
 
   const onJoin = () => {
+    saveJoinPreferences(code, {
+      micEnabled: media.micEnabled,
+      cameraEnabled: media.cameraEnabled,
+    });
     media.stop();
     nav.push(`/${code}`);
   };
@@ -83,7 +108,7 @@ export function LobbyClient({ code }: { code: string }) {
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
           <section className="space-y-4">
-            <LobbyPreview media={media} displayName={displayName} />
+            <LobbyPreview media={media} displayName={displayName} avatar={user?.avatar ?? null} />
 
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1">

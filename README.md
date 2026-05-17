@@ -1,351 +1,225 @@
-# open-meet
+<div align="center">
 
-Real-time video conferencing for distributed teams, built on a fully TypeScript stack.
+# 🎥 Open Meet
 
-- **Frontend:** Next.js 15 (App Router) · React 19 · Tailwind v4 · shadcn/ui · TanStack Query v5 · Zustand v5 · `@livekit/components-react` · socket.io-client
-- **API:** NestJS v11 on Fastify · Prisma v6 · argon2 + JWT (httpOnly cookies, refresh rotation in Redis) · `@nestjs/throttler` · `@nestjs/swagger`
-- **Realtime media:** LiveKit (Docker) · coturn (Docker)
-- **Realtime app:** Socket.IO v4 with `@socket.io/redis-adapter` (multi-instance ready)
-- **Infra:** PostgreSQL 16 · Redis 7 · MailHog (dev)
-- **Tooling:** pnpm workspaces · Turborepo v2 · ESLint v9 flat config · Prettier 3 · Vitest + Supertest · Playwright
+**Self-hostable, real-time video conferencing for distributed teams.**
+Full-stack TypeScript · LiveKit SFU · multi-instance ready.
+
+<sub>
+  <img alt="Node 22" src="https://img.shields.io/badge/Node-22%20LTS-3c873a?logo=node.js&logoColor=white"/>
+  <img alt="Next.js 15" src="https://img.shields.io/badge/Next.js-15-black?logo=next.js&logoColor=white"/>
+  <img alt="NestJS 11" src="https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs&logoColor=white"/>
+  <img alt="LiveKit" src="https://img.shields.io/badge/LiveKit-SFU-FF5C5C"/>
+  <img alt="Prisma 6" src="https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white"/>
+  <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white"/>
+  <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-blue"/>
+</sub>
+
+<br/>
+
+![Dashboard](docs/screenshots/03-dashboard.png)
+
+</div>
 
 ---
 
-## Prerequisites
+## ✨ Highlights
 
-| Tool | Version | Notes |
-|---|---|---|
-| Node.js | ≥ 20 (22 LTS recommended) | |
-| pnpm | ≥ 9 | `npm i -g pnpm` |
-| Docker Desktop | latest | Required for Postgres, Redis, LiveKit, coturn, MailHog |
-| Git | any | |
-
-A modern browser (Chrome/Edge/Firefox) for WebRTC.
+| | |
+|---|---|
+| 🚀 **Instant rooms** | One-click `xxxx-xxxx-xxxx` meeting codes, room-scoped JWT tokens, host transfer on the way. |
+| 🎛️ **Real pre-join** | Lobby with camera preview, device pickers, mic level meter, and persisted defaults. |
+| 💬 **Realtime chat** | Socket.IO `/meeting` namespace, fanned out via `@socket.io/redis-adapter` so the API scales horizontally. |
+| ✋ **Reactions & raise hand** | Live overlay reactions, raised-hand indicator surfaced in tiles and the participants panel. |
+| 🔐 **Hardened auth** | `argon2` hashing, httpOnly access + refresh cookies, refresh-token rotation hashed in Redis, throttling on `/api/auth/*`. |
+| 🧰 **Typed end-to-end** | One `@open-meet/types` package shared between API + Web for DTOs, socket events, and response envelopes. |
+| 🧪 **Tested** | Vitest unit suites for services + repositories, Playwright E2E for every user-visible flow. |
+| 📦 **Self-hostable** | Bring-your-own Postgres, Redis, LiveKit, coturn — all wired in `docker-compose.yml`. |
 
 ---
 
-## 1. Install
+## 🧭 Tour
+
+<table>
+  <tr>
+    <td width="50%"><img alt="Sign in" src="docs/screenshots/01-login.png"/></td>
+    <td width="50%"><img alt="Sign up" src="docs/screenshots/02-register.png"/></td>
+  </tr>
+  <tr>
+    <td><b>Sign in</b><br/><sub>Cookies-based JWT (15 m access · 7 d refresh). Refresh rotates on use.</sub></td>
+    <td><b>Sign up</b><br/><sub>Zod-validated form. <code>argon2</code> hashed at rest.</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img alt="Dashboard" src="docs/screenshots/03-dashboard.png"/></td>
+  </tr>
+  <tr>
+    <td colspan="2"><b>Dashboard</b><br/><sub>One-click meeting create, code-to-join field, history rail.</sub></td>
+  </tr>
+  <tr>
+    <td><img alt="Lobby" src="docs/screenshots/04-lobby.png"/></td>
+    <td><img alt="Meeting" src="docs/screenshots/05-meeting.png"/></td>
+  </tr>
+  <tr>
+    <td><b>Lobby</b><br/><sub>Camera preview, device pickers, mic level, persisted defaults. Camera-off shows your avatar.</sub></td>
+    <td><b>Meeting</b><br/><sub><code>useTracks([Camera, ScreenShare])</code> grid with raised-hand badges and reactions overlay.</sub></td>
+  </tr>
+  <tr>
+    <td><img alt="Participants" src="docs/screenshots/06-participants.png"/></td>
+    <td><img alt="Chat" src="docs/screenshots/07-chat.png"/></td>
+  </tr>
+  <tr>
+    <td><b>Participants</b><br/><sub>Host crown, mic/camera state per-participant, raised-hand indicator.</sub></td>
+    <td><b>Chat</b><br/><sub>WS-backed, persisted to Postgres, history rehydrates on rejoin.</sub></td>
+  </tr>
+</table>
+
+---
+
+## 🧱 Architecture
+
+```mermaid
+flowchart LR
+  B[Browser<br/>Next.js 15 + LiveKit React] -- httpOnly cookies --> A[NestJS API<br/>Fastify · Prisma]
+  B == media (WebRTC) ==> L[LiveKit SFU]
+  B -. Socket.IO /meeting .-> A
+  A --- P[(PostgreSQL 16)]
+  A --- R[(Redis 7)]
+  L --- T[coturn STUN/TURN]
+  A -. webhook .- L
+```
+
+- **Browser** publishes/subscribes to media via LiveKit's React SDK; chat & presence over Socket.IO.
+- **API** mints short-lived (4 h) LiveKit JWTs, persists meetings/participants/messages, and acts as the WS authority.
+- **Redis** backs the Socket.IO adapter (so multiple API replicas stay in sync) and stores hashed refresh tokens.
+- **LiveKit** is the SFU; **coturn** handles NAT traversal.
+
+---
+
+## 🚀 Quick start
 
 ```bash
-git clone <your-fork-url> open-meet
-cd open-meet
+# 1 · install
 pnpm install
-```
 
-> First-time install runs the Prisma postinstall to generate the typed client.
-
-## 2. Configure environment
-
-The repo ships dev defaults so the app boots without manual setup. Each app has its own example file as the canonical reference:
-
-- `apps/server/.env.example` → copy to `apps/server/.env` (backend secrets, already pre-filled for local dev)
-- `apps/web/.env.example` → copy to `apps/web/.env.local` (frontend public vars, already pre-filled for local dev)
-
-If you change any value, update the matching `.env.example` at the same time so onboarding stays in sync.
-
-## 3. Start the infrastructure stack
-
-### 3a. Make sure the Docker engine is running
-
-The API will crash on boot with `PrismaClientInitializationError: Can't reach database server at localhost:5432` if Postgres isn't up — and Postgres only runs once the Docker engine itself is running.
-
-**Windows / macOS** — open Docker Desktop and wait until the whale icon in the tray shows **Engine running** (status bar at the bottom-left turns green). You can also launch it from a terminal:
-
-```powershell
-# Windows (PowerShell)
-Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
-```
-
-```bash
-# macOS
-open -a Docker
-```
-
-```bash
-# Linux (systemd)
-sudo systemctl start docker
-```
-
-Verify the engine is reachable before continuing:
-
-```bash
-docker info        # should print server info, not a connect error
-```
-
-### 3b. Bring the stack up
-
-From the repo root:
-
-```bash
+# 2 · spin up infra (postgres, redis, livekit, coturn, mailhog)
 docker compose up -d
-```
 
-Brings up:
-
-| Service | Container | Port(s) | Purpose |
-|---|---|---|---|
-| `postgres` | `openmeet-postgres` | 5432 | Primary DB (`openmeet`) |
-| `redis` | `openmeet-redis` | 6379 | Sessions, refresh tokens, Socket.IO adapter |
-| `livekit` | `openmeet-livekit` | 7880 (WS), 7881, 7882/udp | SFU |
-| `coturn` | `openmeet-coturn` | 3478, 5349, 49160-49200/udp | STUN/TURN |
-| `mailhog` | `openmeet-mailhog` | 1025 (SMTP), 8025 (UI) | Dev email catcher → http://localhost:8025 |
-
-### 3c. Wait for health and verify
-
-```bash
-docker compose ps
-```
-
-`postgres`, `redis`, and `livekit` should report `(healthy)` before you start the API. If any service is still `starting`, wait a few seconds and re-run. Typical first-boot is ~10–20 s while Postgres initialises the data volume.
-
-### 3d. Useful service commands
-
-```bash
-docker compose up -d                 # start everything (idempotent)
-docker compose up -d postgres redis  # start a subset
-docker compose ps                    # status + health
-docker compose logs -f livekit       # tail a single service
-docker compose restart postgres      # restart one service
-docker compose stop                  # stop containers, keep volumes
-docker compose down                  # stop + remove containers (volumes kept)
-docker compose down -v               # nuke containers AND data volumes (fresh DB)
-```
-
-> The compose project is named `openmeet` (see `docker-compose.yml`), so containers are prefixed `openmeet-*` and the project shows up as `openmeet` in Docker Desktop.
-
-## 4. Apply database migrations
-
-```bash
+# 3 · apply schema
 pnpm --filter @open-meet/server prisma:migrate dev --name init
+
+# 4 · run both apps
+pnpm dev
 ```
 
-This creates the `User`, `Meeting`, `Participant`, `Message`, `Recording` tables and runs `prisma generate`.
+Open **<http://localhost:3000>** → register → **New meeting**. Swagger lives at **<http://localhost:3001/api/docs>**.
 
-## 5. Run the apps in dev mode
-
-```bash
-pnpm dev          # turbo: runs api + web in parallel
-```
-
-Or separately:
-
-```bash
-pnpm --filter @open-meet/server dev      # http://localhost:3001 (Swagger at /api/docs)
-pnpm --filter @open-meet/web dev      # http://localhost:3000
-```
-
-Open http://localhost:3000, register a new account, and click **New meeting**.
+> Requires **Node 22 LTS**, **pnpm ≥ 9**, **Docker Desktop**. Dev defaults are committed; copy `.env.example` → `.env` per app to customise.
 
 ---
 
-## Testing
-
-### Unit (Vitest)
+## 🧪 Testing
 
 ```bash
-pnpm --filter @open-meet/server test           # service unit tests
-pnpm --filter @open-meet/server test:watch
-```
-
-Current coverage: `AuthService` (6), `MeetingsService` (8), `LiveKitService` (3).
-
-### End-to-end (Playwright)
-
-First-time browser binaries install (~500 MB, one-time):
-
-```bash
-pnpm --filter @open-meet/e2e install:browsers
-```
-
-Run smoke + form-validation tests (no backend needed):
-
-```bash
-pnpm --filter @open-meet/e2e test
-```
-
-Run the full meeting-creation flow (requires Docker stack + API running):
-
-```bash
-RUN_FULL_E2E=1 pnpm --filter @open-meet/e2e test
-```
-
-Playwright's `webServer` will auto-start `apps/web` in dev — make sure port 3000 is free.
-
-Headed / debug:
-
-```bash
-pnpm --filter @open-meet/e2e test:headed
-pnpm --filter @open-meet/e2e test:ui
+pnpm --filter @open-meet/server test                  # vitest — services, repositories, guards
+pnpm --filter @open-meet/e2e install:browsers         # one-time Playwright deps
+pnpm --filter @open-meet/e2e test                     # unit + browser e2e
+pnpm --filter @open-meet/e2e screenshots              # regenerate docs/screenshots/*
 ```
 
 ---
 
-## Project structure
-
-```
-open-meet/
-├── apps/
-│   ├── server/                    NestJS + Fastify backend
-│   │   ├── prisma/                schema.prisma + migrations
-│   │   └── src/
-│   │       ├── main.ts            bootstrap (Fastify, Swagger, cookies, RedisIoAdapter)
-│   │       ├── app.module.ts      global guards: JwtAuth + Throttler
-│   │       ├── common/            decorators, filters, interceptors, pipes
-│   │       ├── prisma/            PrismaService (lifecycle-managed)
-│   │       ├── redis/             ioredis singleton + pub/sub pair
-│   │       ├── ws/                RedisIoAdapter for Socket.IO scale-out
-│   │       └── modules/
-│   │           ├── auth/          register/login/refresh/logout/me + JWT strategy
-│   │           ├── meetings/      create/get/join/leave/end + participants
-│   │           ├── livekit/       token mint + webhook
-│   │           └── chat/          WS gateway, message persistence, WsJwtGuard
-│   ├── web/                       Next.js 15 frontend
-│   │   ├── app/
-│   │   │   ├── (auth)/            login + register
-│   │   │   └── (app)/             AuthGuard-protected: home, meeting/[code]/*
-│   │   ├── components/
-│   │   │   ├── ui/                shadcn/ui primitives
-│   │   │   ├── auth/              login/register forms, auth guard
-│   │   │   ├── home/              create + join actions
-│   │   │   ├── layout/            app header
-│   │   │   ├── lobby/             camera preview, device selector
-│   │   │   └── meeting/           VideoGrid, Controls, Chat, Participants, Reactions
-│   │   ├── hooks/                 use-auth, use-meetings, use-socket, use-media-devices
-│   │   ├── lib/                   typed API client (cookies, error envelope)
-│   │   └── stores/                Zustand (meeting, chat, ui)
-│   └── e2e/                       Playwright tests
-│       └── tests/                 smoke, auth, meeting-flow
-├── packages/
-│   ├── types/                     shared DTOs + socket event types (@open-meet/types)
-│   ├── config/                    zod env schemas (@open-meet/config)
-│   └── utils/                     pure helpers — meeting code gen, duration fmt
-├── docker/                        livekit.yaml, coturn.conf
-├── docker-compose.yml
-├── turbo.json
-├── pnpm-workspace.yaml
-└── CLAUDE.md                      conventions for future Claude Code sessions
-```
-
----
-
-## Common commands
+<details>
+<summary><b>📜 Common commands</b></summary>
 
 | Task | Command |
 |---|---|
-| Install | `pnpm install` |
 | Dev (both apps) | `pnpm dev` |
-| Build (all) | `pnpm build` |
-| Typecheck (all) | `pnpm typecheck` |
-| Lint (all) | `pnpm lint` |
-| Format | `pnpm format` |
-| Unit tests | `pnpm --filter @open-meet/server test` |
+| Build / typecheck / lint | `pnpm build` · `pnpm typecheck` · `pnpm lint` |
+| Unit tests (server) | `pnpm --filter @open-meet/server test` |
 | E2E tests | `pnpm --filter @open-meet/e2e test` |
+| Refresh screenshots | `pnpm --filter @open-meet/e2e screenshots` |
 | Prisma Studio | `pnpm --filter @open-meet/server prisma:studio` |
-| Prisma generate | `pnpm --filter @open-meet/server prisma:generate` |
 | Reset DB | `pnpm --filter @open-meet/server prisma:reset` |
-| Bring up infra | `docker compose up -d` |
-| Tear down infra | `docker compose down` |
 | Tail a service | `docker compose logs -f livekit` |
 
----
+</details>
 
-## How the call surface works
+<details>
+<summary><b>🗂️ Project structure</b></summary>
 
-1. **Sign in** — `POST /api/auth/login` sets two httpOnly cookies: `access_token` (15m) and `refresh_token` (7d, path-scoped to `/api/auth`). Refresh rotates the token and persists the new hash in Redis.
-2. **Create meeting** — `POST /api/meetings` returns a 12-char `xxxx-xxxx-xxxx` code (collision-retry up to 5x).
-3. **Lobby** — `/meeting/[code]/lobby` does pre-join with `navigator.mediaDevices.getUserMedia` (camera/mic preview + device pickers). Stops the preview before joining.
-4. **Join** — `/meeting/[code]` calls `POST /meetings/:code/join` (upserts Participant + transitions WAITING → ACTIVE), then `POST /livekit/token` to mint a room-scoped JWT (4h TTL, `roomAdmin: true` for the host only).
-5. **Media** — `<LiveKitRoom>` from `@livekit/components-react` connects to the SFU; tiles render via `useTracks([Camera, ScreenShare])`. Audio rendering by `<RoomAudioRenderer />`.
-6. **Chat + presence** — Socket.IO connects on the `/meeting` namespace. `WsJwtGuard` authenticates from cookies on handshake. Events flow through `@socket.io/redis-adapter` so multi-instance API works out of the box.
-7. **End for all** — host-only `POST /meetings/:code/end` sets status to ENDED, emits `meeting:ended` via the gateway, and clients call `room.disconnect()` → `/meeting/[code]/ended`.
-
----
-
-## API surface
-
-All responses use this envelope (enforced globally):
-
-```json
-{ "success": true, "data": { ... }, "meta": { "timestamp": "..." } }
+```
+apps/
+  server/   NestJS + Fastify · Prisma · LiveKit token mint · Socket.IO gateway
+  web/      Next.js 15 App Router · LiveKit React · Zustand · TanStack Query
+  e2e/      Playwright (browser) + Vitest (web unit)
+packages/
+  types/    Shared DTOs + socket events (@open-meet/types)
+  config/   Zod env schemas (@open-meet/config)
+  utils/    Pure helpers — meeting code gen, duration fmt
+docker/     livekit.yaml, coturn.conf
 ```
 
-Errors:
+</details>
 
-```json
-{ "success": false, "error": { "code": "MEETING_NOT_FOUND", "message": "...", "statusCode": 404 } }
-```
+<details>
+<summary><b>🔁 How a call works</b></summary>
+
+1. **Sign in** — `POST /api/auth/login` sets `access_token` (15 m) + `refresh_token` (7 d) cookies. Refresh rotates and is stored hashed in Redis.
+2. **Create meeting** — `POST /api/meetings` returns a `xxxx-xxxx-xxxx` code (collision-retry up to 5×).
+3. **Lobby** — `/[code]/lobby` runs `getUserMedia` for a pre-join preview and persists mic/camera choices.
+4. **Join** — `POST /api/meetings/:code/join` (upsert participant) → `POST /api/livekit/token` (room-scoped JWT, 4 h, `roomAdmin: true` for host).
+5. **Media** — `<LiveKitRoom>` connects to the SFU; `useTracks([Camera, ScreenShare])` renders tiles; `<RoomAudioRenderer />` plays remote audio.
+6. **Chat / presence** — Socket.IO `/meeting` namespace, authed on handshake via `WsJwtGuard`, fanned out by `@socket.io/redis-adapter`.
+7. **End for all** — host-only `POST /api/meetings/:code/end` flips status to `ENDED`, emits `meeting:ended`, clients disconnect → `/[code]/ended`.
+
+</details>
+
+<details>
+<summary><b>🌐 API surface</b></summary>
+
+All responses use the envelope `{ success, data, meta }` (or `{ success: false, error }`), enforced by a global interceptor + exception filter.
 
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
-| GET | `/api/health` | public | Liveness probe |
-| POST | `/api/auth/register` | public | Create user, set cookies |
-| POST | `/api/auth/login` | public | Verify creds, set cookies |
-| POST | `/api/auth/refresh` | public¹ | Rotate refresh token |
-| POST | `/api/auth/logout` | required | Invalidate refresh + clear cookies |
-| GET | `/api/auth/me` | required | Current user |
-| POST | `/api/meetings` | required | Create meeting |
-| GET | `/api/meetings/:code` | required | Get meeting |
-| POST | `/api/meetings/:code/join` | required | Join (upsert participant) |
-| POST | `/api/meetings/:code/leave` | required | Mark left |
-| POST | `/api/meetings/:code/end` | required + host | End for all |
-| GET | `/api/meetings/:code/participants` | required | Active participants |
-| POST | `/api/livekit/token` | required | Mint LiveKit room token |
-| POST | `/api/livekit/webhook` | LiveKit signature | Webhook (`room_finished`, etc.) |
+| `POST` | `/api/auth/register` | public | Create user |
+| `POST` | `/api/auth/login` | public | Set cookies |
+| `POST` | `/api/auth/refresh` | refresh-cookie | Rotate refresh |
+| `POST` | `/api/auth/logout` | required | Invalidate + clear |
+| `GET` | `/api/auth/me` | required | Current user |
+| `POST` | `/api/meetings` | required | Create |
+| `GET` | `/api/meetings/:code` | required | Get |
+| `POST` | `/api/meetings/:code/join` | required | Upsert participant |
+| `POST` | `/api/meetings/:code/leave` | required | Mark left |
+| `POST` | `/api/meetings/:code/end` | host | End for all |
+| `GET` | `/api/meetings/:code/participants` | required | Active list |
+| `POST` | `/api/livekit/token` | required | Room token |
+| `POST` | `/api/livekit/webhook` | LiveKit signature | Lifecycle events |
 
-¹ Refresh route reads the refresh cookie; the access cookie is not required.
+</details>
 
-Full interactive docs at **http://localhost:3001/api/docs** when the API is running.
+<details>
+<summary><b>📡 WebSocket events (<code>/meeting</code> namespace)</b></summary>
 
----
+**Client → Server** — `meeting:join`, `meeting:leave`, `chat:send`, `reaction:send`, `hand:raise`, `hand:lower`
 
-## WebSocket events (`/meeting` namespace)
+**Server → Client** — `meeting:participant-joined`, `meeting:participant-left`, `meeting:ended`, `chat:message`, `reaction:received`, `hand:raised`, `hand:lowered`, `presence:update`
 
-Client → Server:
+Payload types live in `@open-meet/types/socket` — single source of truth for both apps.
 
-| Event | Payload |
-|---|---|
-| `meeting:join` | `{ meetingCode }` |
-| `meeting:leave` | `{ meetingCode }` |
-| `chat:send` | `{ meetingCode, content }` |
-| `reaction:send` | `{ meetingCode, emoji }` |
-| `hand:raise` | `{ meetingCode }` |
-| `hand:lower` | `{ meetingCode }` |
+</details>
 
-Server → Client:
+<details>
+<summary><b>🛟 Troubleshooting</b></summary>
 
-| Event | Payload |
-|---|---|
-| `meeting:participant-joined` | `{ participant }` |
-| `meeting:participant-left` | `{ participantId }` |
-| `meeting:ended` | `{ endedAt }` |
-| `chat:message` | `{ id, content, sender, sentAt, meetingId }` |
-| `reaction:received` | `{ emoji, senderId, senderName }` |
-| `hand:raised` | `{ userId, name }` |
-| `hand:lowered` | `{ userId }` |
-| `presence:update` | `{ participants[] }` |
+- **`PrismaClientInitializationError`** — Docker engine or the `postgres` container isn't up. Run `docker info`, then `docker compose up -d` and wait for `(healthy)`.
+- **Port 5432 / 6379 / 7880 in use** — change the host-side port in `docker-compose.yml` and `DATABASE_URL`.
+- **Camera/mic blocked in Playwright** — the chromium project sets `permissions: ['camera', 'microphone']` and `--use-fake-ui-for-media-stream`; check those flags reach the browser.
+- **LiveKit webhook 403** — `LIVEKIT_API_SECRET` must match `apps/server/.env` ↔ `docker/livekit.yaml`.
 
-Event names and payload types live in `@open-meet/types/socket` — single source of truth shared by both apps.
+</details>
 
 ---
 
-## Troubleshooting
-
-**`PrismaClientInitializationError: Can't reach database server at localhost:5432`** — Postgres isn't accepting connections. Either the Docker engine isn't running or the `postgres` container hasn't started yet. Run `docker info` (must succeed), then `docker compose up -d` and wait for `docker compose ps` to show `postgres` as `(healthy)` before starting the API.
-
-**`error during connect: open //./pipe/dockerDesktopLinuxEngine`** — Docker Desktop isn't running. Start it (see [3a](#3a-make-sure-the-docker-engine-is-running)) and wait for the engine to come up before retrying any `docker` command.
-
-**Port 5432 / 6379 / 7880 already in use** — another local Postgres/Redis/LiveKit instance is bound to the port. Stop the conflicting service or change the host-side port mapping in `docker-compose.yml` (e.g. `"5433:5432"`) and update `DATABASE_URL` in `apps/server/.env` to match.
-
-**`pnpm install` ignores build scripts** — Approved native modules (Prisma, argon2, sharp, swc) are listed under `onlyBuiltDependencies` in `pnpm-workspace.yaml`. If a new native dep is added, append it there and run `pnpm rebuild <pkg>`.
-
-**Camera/mic permission denied in Playwright** — The Chromium project in `apps/e2e/playwright.config.ts` sets `permissions: ['camera', 'microphone']` and launches with `--use-fake-ui-for-media-stream`. If a test still hangs, confirm those flags reach the browser (no profile overrides).
-
-**Migrations fail with `database "openmeet" does not exist`** — Wait for the Postgres healthcheck (`docker compose ps` should show `(healthy)`), then re-run the migrate command.
-
-**LiveKit webhook 403** — In dev the secret defaults to `secret` (matching `apps/server/.env` → `LIVEKIT_API_SECRET`). If you change one, change both.
-
----
-
-## License
-
-MIT (or whatever you ship under). Update this section when you pick one.
+<div align="center">
+<sub>Built with TypeScript end-to-end. MIT licensed.</sub>
+</div>

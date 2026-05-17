@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import type { LiveKitTokenResponseDto, MeetingDto } from '@open-meet/types';
 
 import { useCurrentUser } from '@/features/auth/hooks/use-auth';
+import { consumeJoinPreferences } from '@/features/lobby/lib/join-preferences';
 import { ApiClientError } from '@/lib/api/client';
 import { livekitApi } from '@/features/meeting/services/livekit';
 import { meetingsApi } from '@/features/meeting/services/meetings';
@@ -27,6 +28,7 @@ export function MeetingClient({ code }: { code: string }) {
   const [error, setError] = useState<string | null>(null);
   const [guestStage, setGuestStage] = useState<GuestStage>('lookup');
   const [ended, setEnded] = useState(false);
+  const [joinPrefs] = useState(() => consumeJoinPreferences(code));
 
   useEffect(() => {
     if (! user || userLoading) {
@@ -141,8 +143,8 @@ export function MeetingClient({ code }: { code: string }) {
       token={token.token}
       serverUrl={token.url}
       connect={true}
-      audio={true}
-      video={true}
+      audio={joinPrefs?.micEnabled ?? true}
+      video={joinPrefs?.cameraEnabled ?? true}
       data-lk-theme="default"
       style={{ height: 'calc(100vh - 3.5rem)' }}
       options={{

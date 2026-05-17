@@ -1,7 +1,8 @@
 'use client';
 
 import { useRoomContext } from '@livekit/components-react';
-import { useEffect } from 'react';
+import { RoomEvent } from 'livekit-client';
+import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 
 import {
@@ -18,8 +19,10 @@ import {
 import { useCurrentUser } from '@/features/auth/hooks/use-auth';
 import { useMeetingSocket } from '@/features/meeting/hooks/use-socket';
 import { useChatStore, useMeetingStore } from '@/features/meeting/stores';
-import { useUIStore } from '@/stores';
+import { useNotification } from '@/hooks/use-notification';
+import { useSound } from '@/hooks/use-sound';
 import { cn } from '@/lib/cn';
+import { useUIStore } from '@/stores';
 import { ChatPanel } from './chat-panel';
 import { KnockNotifier } from './knock-notifier';
 import { MeetingControls } from './meeting-controls';
@@ -48,6 +51,13 @@ export function MeetingShell({ code, meeting }: Props) {
   const isParticipantsOpen = useUIStore((s) => s.participantsOpen);
   const setParticipantsOpen = useUIStore((s) => s.setParticipantsOpen);
 
+  const joinSound = useSound('join');
+  const leaveSound = useSound('leave');
+  const messageSound = useSound('message');
+  const reactionSound = useSound('reaction');
+  const notification = useNotification();
+  const settledAt = useRef<number>(Date.now());
+
   const activePanel: 'chat' | 'participants' | null = isChatOpen
     ? 'chat'
     : isParticipantsOpen
@@ -68,9 +78,19 @@ export function MeetingShell({ code, meeting }: Props) {
 
     socket.on(ServerEvent.CHAT_MESSAGE, (msg: ChatMessagePayload) => {
       addMessage(msg);
+      if (msg.sender.id !== user?.id) {
+        messageSound.play();
+        notification.notify(msg.sender.name || 'New message', {
+          body: msg.content,
+          tag: `chat-${code}`,
+        });
+      }
     });
     socket.on(ServerEvent.REACTION_RECEIVED, (r: ReactionReceivedPayload) => {
       pushReaction(r.emoji, r.senderName);
+      if (r.senderId !== user?.id) {
+        reactionSound.play();
+      }
     });
     socket.on(ServerEvent.HAND_RAISED, (h: HandRaisedPayload) => {
       raiseHand(h.userId, h.name);
@@ -92,7 +112,36 @@ export function MeetingShell({ code, meeting }: Props) {
       socket.off(ServerEvent.MEETING_ENDED);
       socket.emit(ClientEvent.MEETING_LEAVE, { meetingCode: code });
     };
-  }, [socket, code, addMessage, pushReaction, raiseHand, lowerHand, room]);
+  }, [socket, code, addMessage, pushReaction, raiseHand, lowerHand, room, user?.id, messageSound, reactionSound, notification]);
+
+  // LiveKit participant join / leave sounds. Suppress for the first ~1.2s
+  // after mount so existing participants firing as "Connected" on initial
+  // sync don't unleash a flurry of chimes.
+  useEffect(() => {
+    if (! room) {
+      return;
+    }
+    settledAt.current = Date.now() + 1200;
+
+    const onConnected = () => {
+      if (Date.now() >= settledAt.current) {
+        joinSound.play();
+      }
+    };
+    const onDisconnected = () => {
+      if (Date.now() >= settledAt.current) {
+        leaveSound.play();
+      }
+    };
+
+    room.on(RoomEvent.ParticipantConnected, onConnected);
+    room.on(RoomEvent.ParticipantDisconnected, onDisconnected);
+
+    return () => {
+      room.off(RoomEvent.ParticipantConnected, onConnected);
+      room.off(RoomEvent.ParticipantDisconnected, onDisconnected);
+    };
+  }, [room, joinSound, leaveSound]);
 
   return (
     <div className="relative flex h-full flex-col">

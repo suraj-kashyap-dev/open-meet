@@ -24,6 +24,13 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { useUpdateUserSettings } from '@/features/account/hooks/use-settings';
 import { ApiClientError } from '@/lib/api/client';
+import {
+  ensureNotificationPermission,
+  notificationsSupported,
+} from '@/lib/notifications';
+import { playSound } from '@/lib/sounds';
+import { Button } from '@/components/ui/button';
+import { Volume2 } from 'lucide-react';
 
 import { FormActions } from './form-actions';
 
@@ -127,22 +134,47 @@ export function MeetingPreferences({
       </Row>
 
       <Row
-        title="Join sound"
-        description="Hear a soft chime when someone joins."
+        title="Meeting sounds"
+        description="Chimes on join, leave, chat, reactions, and knocks."
       >
-        <Switch
-          checked={values.enableJoinSound}
-          onCheckedChange={(c) => setValue('enableJoinSound', c, { shouldDirty: true })}
-        />
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label="Preview sound"
+            onClick={() => void playSound('join')}
+            disabled={! values.enableJoinSound}
+          >
+            <Volume2 className="h-4 w-4" />
+          </Button>
+          <Switch
+            checked={values.enableJoinSound}
+            onCheckedChange={(c) => setValue('enableJoinSound', c, { shouldDirty: true })}
+          />
+        </div>
       </Row>
 
       <Row
         title="Browser notifications"
-        description="Get notified about chat, reactions, and invites."
+        description="Get notified about chat and admit requests when this tab isn't focused."
       >
         <Switch
           checked={values.enableNotifications}
-          onCheckedChange={(c) => setValue('enableNotifications', c, { shouldDirty: true })}
+          onCheckedChange={async (c) => {
+            if (c) {
+              if (! notificationsSupported()) {
+                toast.error('Notifications are not supported in this browser');
+                return;
+              }
+              const permission = await ensureNotificationPermission();
+              if (permission !== 'granted') {
+                toast.error('Permission denied — enable notifications in your browser settings');
+                return;
+              }
+            }
+            setValue('enableNotifications', c, { shouldDirty: true });
+          }}
         />
       </Row>
 
