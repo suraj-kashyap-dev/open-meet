@@ -14,9 +14,9 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { StorageService } from '../../../storage/storage.service';
+import { type StorageService } from '../../../storage/storage.service';
 import {
-  MeetingsRepository,
+  type MeetingsRepository,
   type ParticipantWithUser,
 } from './meetings.repository';
 

@@ -4,8 +4,8 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { type ConfigService } from '@nestjs/config';
+import { type JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { createHash, randomBytes } from 'node:crypto';
 
@@ -13,9 +13,9 @@ import type { UserDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { RedisService } from '../../../integrations/redis/redis.service';
-import { AuthRepository } from './auth.repository';
-import { AvatarsService } from './avatars.service';
+import { type RedisService } from '../../../integrations/redis/redis.service';
+import { type AuthRepository } from './auth.repository';
+import { type AvatarsService } from './avatars.service';
 import type { RegisterDto } from './dto/register.dto';
 import type { LoginDto } from './dto/login.dto';
 import type { UpdateProfileDto } from './dto/update-profile.dto';

@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { type ConfigService } from '@nestjs/config';
+import { type JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 
 import type { AdminDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { AdminRepository } from '../admin.repository';
+import { type AdminRepository } from '../admin.repository';
 import type { AdminLoginDto } from './dto/admin-login.dto';
 
 interface AdminAccessPayload {

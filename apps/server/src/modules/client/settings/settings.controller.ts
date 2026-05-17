@@ -8,8 +8,8 @@ import {
   type RequestUser,
 } from '../../../common/decorators/current-user.decorator';
 
-import { SettingsService } from './settings.service';
-import { UpdateUserSettingsBodyDto } from './dto/update-settings.dto';
+import { type SettingsService } from './settings.service';
+import { type UpdateUserSettingsBodyDto } from './dto/update-settings.dto';
 
 @ApiTags('auth')
 @Controller('auth/me/settings')

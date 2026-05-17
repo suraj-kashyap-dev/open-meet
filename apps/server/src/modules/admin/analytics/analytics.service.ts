@@ -6,7 +6,7 @@ import type {
   RecentMeetingDto,
 } from '@open-meet/types';
 
-import { AdminAnalyticsRepository } from './analytics.repository';
+import { type AdminAnalyticsRepository } from './analytics.repository';
 
 const DAY_MS = 86_400_000;
 

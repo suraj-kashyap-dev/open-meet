@@ -9,8 +9,8 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { StorageService } from '../../../storage/storage.service';
-import { AdminUsersRepository, type UserWithCounts } from './users.repository';
+import { type StorageService } from '../../../storage/storage.service';
+import { type AdminUsersRepository, type UserWithCounts } from './users.repository';
 
 const DEFAULT_PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 100;

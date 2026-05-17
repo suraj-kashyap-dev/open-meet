@@ -1,11 +1,11 @@
 import { Logger, UseGuards } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { type ConfigService } from '@nestjs/config';
+import { type JwtService } from '@nestjs/jwt';
 import {
   MessageBody,
   ConnectedSocket,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
+  type OnGatewayConnection,
+  type OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -29,13 +29,13 @@ import {
 } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { ChatService } from './chat.service';
-import { MeetingsService } from '../meetings/meetings.service';
+import { type ChatService } from './chat.service';
+import { type MeetingsService } from '../meetings/meetings.service';
 import {
-  JoinRoomGatewayDto,
-  KnockRespondGatewayDto,
-  ReactionGatewayDto,
-  SendMessageGatewayDto,
+  type JoinRoomGatewayDto,
+  type KnockRespondGatewayDto,
+  type ReactionGatewayDto,
+  type SendMessageGatewayDto,
 } from './dto/send-message.dto';
 import { WsJwtGuard } from './ws-jwt.guard';
 import {

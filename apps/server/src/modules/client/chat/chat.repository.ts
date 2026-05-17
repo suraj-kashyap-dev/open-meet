@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { Attachment, Message } from '@prisma/client';
 
-import { PrismaService } from '../../../database/prisma.service';
+import { type PrismaService } from '../../../database/prisma.service';
 
 export type MessageWithSender = Message & {
   sender: { id: string; name: string; avatarKey: string | null };

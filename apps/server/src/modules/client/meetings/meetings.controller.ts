@@ -18,9 +18,9 @@ import type {
 } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
-import { CreateMeetingDto } from './dto/create-meeting.dto';
-import { HistoryQueryDto } from './dto/history-query.dto';
-import { MeetingsService } from './meetings.service';
+import { type CreateMeetingDto } from './dto/create-meeting.dto';
+import { type HistoryQueryDto } from './dto/history-query.dto';
+import { type MeetingsService } from './meetings.service';
 
 @ApiTags('meetings')
 @Controller('meetings')

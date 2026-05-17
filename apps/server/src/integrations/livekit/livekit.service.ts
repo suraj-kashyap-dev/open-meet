@@ -4,7 +4,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { type ConfigService } from '@nestjs/config';
 import { MeetingStatus } from '@prisma/client';
 import {
   AccessToken,
@@ -17,9 +17,9 @@ import type { ApiEnv } from '@open-meet/config';
 import type { LiveKitTokenResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { AuthRepository } from '../../modules/client/auth/auth.repository';
-import { AvatarsService } from '../../modules/client/auth/avatars.service';
-import { MeetingsService } from '../../modules/client/meetings/meetings.service';
+import { type AuthRepository } from '../../modules/client/auth/auth.repository';
+import { type AvatarsService } from '../../modules/client/auth/avatars.service';
+import { type MeetingsService } from '../../modules/client/meetings/meetings.service';
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 4;
 

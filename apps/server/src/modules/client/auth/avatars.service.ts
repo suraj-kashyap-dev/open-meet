@@ -6,14 +6,14 @@ import {
   UnauthorizedException,
   UnsupportedMediaTypeException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { type ConfigService } from '@nestjs/config';
 import { randomBytes } from 'node:crypto';
 
 import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode, type UserDto } from '@open-meet/types';
 
-import { StorageService } from '../../../storage/storage.service';
-import { AuthRepository } from './auth.repository';
+import { type StorageService } from '../../../storage/storage.service';
+import { type AuthRepository } from './auth.repository';
 
 const ALLOWED_AVATAR_MIMES: Record<string, string> = {
   'image/png': 'png',

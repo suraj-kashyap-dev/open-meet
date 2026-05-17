@@ -181,17 +181,21 @@ test.describe('user settings', () => {
   }) => {
     await context.grantPermissions(['notifications']);
 
-    // Simulate the browser already having decided "granted" so the toggle
-    // doesn't actually try to surface the permission prompt.
+    // Replace the whole Notification class so the toggle's permission probe
+    // resolves to "granted" without depending on the host browser's UI prompt.
     await page.addInitScript(() => {
-      try {
-        Object.defineProperty(Notification, 'permission', {
-          configurable: true,
-          get: () => 'granted',
-        });
-      } catch {
-        /* some browsers won't allow redefinition — toggle still works */
+      class StubNotification {
+        static permission: NotificationPermission = 'granted';
+        static requestPermission(): Promise<NotificationPermission> {
+          return Promise.resolve('granted');
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        constructor(_title: string, _options?: NotificationOptions) {
+          /* no-op */
+        }
       }
+      (window as unknown as { Notification: typeof StubNotification }).Notification =
+        StubNotification;
     });
 
     await registerNewUser(page);
@@ -221,18 +225,21 @@ test.describe('user settings', () => {
   test('Browser notifications — refuses to enable when permission is denied', async ({
     page,
   }) => {
-    // Stub the API on every navigation so the toggle's permission probe lands
-    // on a hard "denied" without spawning a real OS prompt.
+    // Same trick as above but pin the permission to denied so the toggle is
+    // forced down the rejection branch.
     await page.addInitScript(() => {
-      try {
-        Object.defineProperty(Notification, 'permission', {
-          configurable: true,
-          get: () => 'denied',
-        });
-        Notification.requestPermission = async () => 'denied';
-      } catch {
-        /* ignore */
+      class StubNotification {
+        static permission: NotificationPermission = 'denied';
+        static requestPermission(): Promise<NotificationPermission> {
+          return Promise.resolve('denied');
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        constructor(_title: string, _options?: NotificationOptions) {
+          /* no-op */
+        }
       }
+      (window as unknown as { Notification: typeof StubNotification }).Notification =
+        StubNotification;
     });
 
     await registerNewUser(page);
@@ -377,7 +384,7 @@ test.describe('settings runtime application — lobby', () => {
     await page.locator('html[data-hydrated="true"]').waitFor();
     await page.getByRole('button', { name: /new meeting/i }).first().click();
 
-    await page.waitForURL(/\/[a-z-]+\/lobby$/, { timeout: 30_000 });
+    await page.waitForURL(/\/[a-z0-9-]+\/lobby$/, { timeout: 30_000 });
     await page.locator('html[data-hydrated="true"]').waitFor();
 
     // Once the lobby applies the setting the mic button flips to "off" state.
@@ -401,7 +408,7 @@ test.describe('settings runtime application — lobby', () => {
     await page.locator('html[data-hydrated="true"]').waitFor();
     await page.getByRole('button', { name: /new meeting/i }).first().click();
 
-    await page.waitForURL(/\/[a-z-]+\/lobby$/, { timeout: 30_000 });
+    await page.waitForURL(/\/[a-z0-9-]+\/lobby$/, { timeout: 30_000 });
     await page.locator('html[data-hydrated="true"]').waitFor();
 
     await expect(page.getByRole('button', { name: 'Turn on camera' })).toBeVisible({

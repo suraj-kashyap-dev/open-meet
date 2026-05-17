@@ -3,7 +3,7 @@ import type { UserSettings } from '@prisma/client';
 
 import type { UserSettingsDto } from '@open-meet/types';
 
-import { SettingsRepository } from './settings.repository';
+import { type SettingsRepository } from './settings.repository';
 import type { UpdateUserSettingsBodyDto } from './dto/update-settings.dto';
 
 @Injectable()

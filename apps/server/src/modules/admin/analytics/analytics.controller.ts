@@ -6,7 +6,7 @@ import type { AdminStatsOverviewDto } from '@open-meet/types';
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
-import { AdminAnalyticsService } from './analytics.service';
+import { type AdminAnalyticsService } from './analytics.service';
 
 @ApiTags('admin-analytics')
 @Controller('admin/analytics')

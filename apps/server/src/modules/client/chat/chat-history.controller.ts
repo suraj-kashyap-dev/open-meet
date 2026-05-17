@@ -7,10 +7,10 @@ import {
   CurrentUser,
   type RequestUser,
 } from '../../../common/decorators/current-user.decorator';
-import { MessagesHistoryQueryDto } from '../meetings/dto/history-query.dto';
-import { MeetingsService } from '../meetings/meetings.service';
+import { type MessagesHistoryQueryDto } from '../meetings/dto/history-query.dto';
+import { type MeetingsService } from '../meetings/meetings.service';
 
-import { ChatService } from './chat.service';
+import { type ChatService } from './chat.service';
 
 @ApiTags('meetings')
 @Controller('meetings')

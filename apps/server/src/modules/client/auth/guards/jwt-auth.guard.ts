@@ -3,7 +3,7 @@ import {
   UnauthorizedException,
   type ExecutionContext,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
+import { type Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 
 import { ApiErrorCode } from '@open-meet/types';

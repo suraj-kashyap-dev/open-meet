@@ -17,9 +17,9 @@ import type { AdminUserDto, AdminUserListResponseDto } from '@open-meet/types';
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
-import { AdminListUsersQueryDto } from './dto/list-users-query.dto';
-import { AdminUpdateUserBodyDto } from './dto/update-user.dto';
-import { AdminUsersService } from './users.service';
+import { type AdminListUsersQueryDto } from './dto/list-users-query.dto';
+import { type AdminUpdateUserBodyDto } from './dto/update-user.dto';
+import { type AdminUsersService } from './users.service';
 
 @ApiTags('admin-users')
 @Controller('admin/users')
