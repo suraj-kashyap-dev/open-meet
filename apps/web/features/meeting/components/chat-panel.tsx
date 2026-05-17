@@ -38,31 +38,6 @@ interface Props {
 const GROUP_WINDOW_MS = 2 * 60_000;
 const MAX_ATTACHMENTS = 5;
 
-function startOfDay(date: Date): number {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-}
-
-function formatDateDivider(iso: string): string {
-  const now = new Date();
-  const today = startOfDay(now);
-  const yesterday = today - 86_400_000;
-  const messageDay = startOfDay(new Date(iso));
-
-  if (messageDay === today) {
-    return 'Today';
-  }
-
-  if (messageDay === yesterday) {
-    return 'Yesterday';
-  }
-
-  return new Date(iso).toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    year: now.getFullYear() === new Date(iso).getFullYear() ? undefined : 'numeric',
-  });
-}
-
 function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString(undefined, {
     hour: '2-digit',
@@ -82,52 +57,35 @@ function formatBytes(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-type Row =
-  | { kind: 'divider'; key: string; label: string }
-  | {
-      kind: 'message';
-      key: string;
-      message: MessageDto;
-      isMe: boolean;
-      isGroupHead: boolean;
-      isGroupTail: boolean;
-    };
+interface Row {
+  key: string;
+  message: MessageDto;
+  isMe: boolean;
+  isGroupHead: boolean;
+  isGroupTail: boolean;
+}
 
 function buildRows(messages: MessageDto[], currentUserId: string | undefined): Row[] {
   const rows: Row[] = [];
-  let lastDay: number | null = null;
 
   for (let i = 0; i < messages.length; i++) {
     const m = messages[i]!;
-    const day = startOfDay(new Date(m.sentAt));
-
-    if (lastDay !== day) {
-      rows.push({
-        kind: 'divider',
-        key: `divider-${day}`,
-        label: formatDateDivider(m.sentAt),
-      });
-      lastDay = day;
-    }
-
     const prev = messages[i - 1];
     const next = messages[i + 1];
     const isMe = m.sender.id === currentUserId;
+    const sentAtMs = new Date(m.sentAt).getTime();
 
     const sameSenderAsPrev =
       prev !== undefined &&
       prev.sender.id === m.sender.id &&
-      startOfDay(new Date(prev.sentAt)) === day &&
-      new Date(m.sentAt).getTime() - new Date(prev.sentAt).getTime() < GROUP_WINDOW_MS;
+      sentAtMs - new Date(prev.sentAt).getTime() < GROUP_WINDOW_MS;
 
     const sameSenderAsNext =
       next !== undefined &&
       next.sender.id === m.sender.id &&
-      startOfDay(new Date(next.sentAt)) === day &&
-      new Date(next.sentAt).getTime() - new Date(m.sentAt).getTime() < GROUP_WINDOW_MS;
+      new Date(next.sentAt).getTime() - sentAtMs < GROUP_WINDOW_MS;
 
     rows.push({
-      kind: 'message',
       key: m.id,
       message: m,
       isMe,
@@ -479,18 +437,6 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           ) : (
             <ul className="space-y-1">
               {rows.map((row) => {
-                if (row.kind === 'divider') {
-                  return (
-                    <li key={row.key} className="flex items-center gap-3 px-2 py-3">
-                      <span className="h-px flex-1 bg-border" />
-                      <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                        {row.label}
-                      </span>
-                      <span className="h-px flex-1 bg-border" />
-                    </li>
-                  );
-                }
-
                 const { message: m, isMe, isGroupHead, isGroupTail } = row;
 
                 return (

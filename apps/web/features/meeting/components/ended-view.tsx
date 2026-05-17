@@ -1,16 +1,16 @@
 'use client';
 
 import { Home, RotateCcw } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 
 const COUNTDOWN_SECONDS = 60;
 
 export function EndedView({ code }: { code: string }) {
-  const router = useRouter();
+  const nav = useNavigateTransition();
 
   const [secs, setSecs] = useState(COUNTDOWN_SECONDS);
 
@@ -24,18 +24,18 @@ export function EndedView({ code }: { code: string }) {
 
   useEffect(() => {
     if (secs === 0) {
-      router.replace('/');
+      nav.replace('/');
     }
-  }, [secs, router]);
+  }, [secs, nav]);
 
   const rejoin = () => {
-    router.replace(`/${code}`);
+    nav.replace(`/${code}`);
 
     window.location.reload();
   };
 
   const goHome = () => {
-    router.replace('/');
+    nav.replace('/');
   };
 
   return (
@@ -62,14 +62,14 @@ export function EndedView({ code }: { code: string }) {
         </div>
 
         <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-          <Button onClick={rejoin} size="lg" className="sm:flex-1">
+          <Button onClick={rejoin} disabled={nav.isNavigating} size="lg" className="sm:flex-1">
             <RotateCcw className="h-4 w-4" />
-            Rejoin
+            {nav.isNavigating ? 'Rejoining…' : 'Rejoin'}
           </Button>
-          
-          <Button onClick={goHome} variant="outline" size="lg" className="sm:flex-1">
+
+          <Button onClick={goHome} disabled={nav.isNavigating} variant="outline" size="lg" className="sm:flex-1">
             <Home className="h-4 w-4" />
-            Go home
+            {nav.isNavigating ? 'Leaving…' : 'Go home'}
           </Button>
         </div>
 

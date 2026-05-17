@@ -10,7 +10,6 @@ import {
   Video,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -26,12 +25,13 @@ import {
 } from '@/components/ui/command';
 import { useCurrentUser, useLogout } from '@/features/auth/hooks/use-auth';
 import { useCreateMeeting } from '@/features/meeting/hooks/use-meetings';
+import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState('');
-  const router = useRouter();
+  const nav = useNavigateTransition();
   const { data: user } = useCurrentUser();
   const { setTheme, resolvedTheme } = useTheme();
   const createMeeting = useCreateMeeting();
@@ -58,7 +58,7 @@ export function CommandPalette() {
   const onCreateMeeting = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
-      router.push(`/${meeting.code}/lobby`);
+      nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
       toast.error(message);
@@ -71,7 +71,7 @@ export function CommandPalette() {
       toast.error('Type a meeting code first');
       return;
     }
-    router.push(`/${trimmed}/lobby`);
+    nav.push(`/${trimmed}/lobby`);
   };
 
   return (
@@ -128,7 +128,7 @@ export function CommandPalette() {
           <>
             <CommandSeparator />
             <CommandGroup heading={user.name}>
-              <CommandItem onSelect={() => runAction(() => router.push('/'))}>
+              <CommandItem onSelect={() => runAction(() => nav.push('/'))}>
                 <User className="h-4 w-4" />
                 Home
               </CommandItem>

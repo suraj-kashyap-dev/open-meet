@@ -1,7 +1,6 @@
 'use client';
 
 import { ArrowRight, Plus, Video } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -11,17 +10,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { useCreateMeeting } from '@/features/meeting/hooks/use-meetings';
+import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 
 export function HomeActions() {
-  const router = useRouter();
+  const nav = useNavigateTransition();
   const createMeeting = useCreateMeeting();
   const [code, setCode] = useState('');
+
+  const creating = createMeeting.isPending || nav.isNavigating;
 
   const onCreate = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
-      router.push(`/${meeting.code}/lobby`);
+      nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message =
         err instanceof ApiClientError ? err.message : 'Could not create meeting';
@@ -36,7 +38,7 @@ export function HomeActions() {
       toast.error('Enter a meeting code');
       return;
     }
-    router.push(`/${trimmed}/lobby`);
+    nav.push(`/${trimmed}/lobby`);
   };
 
   return (
@@ -59,10 +61,10 @@ export function HomeActions() {
           <ShimmerButton
             type="button"
             onClick={onCreate}
-            disabled={createMeeting.isPending}
+            disabled={creating}
             className="mt-auto w-full"
           >
-            {createMeeting.isPending ? (
+            {creating ? (
               <>Creating…</>
             ) : (
               <>
@@ -100,8 +102,8 @@ export function HomeActions() {
                 className="font-mono"
               />
             </div>
-            <Button type="submit" variant="outline" className="w-full">
-              Join
+            <Button type="submit" variant="outline" className="w-full" disabled={nav.isNavigating}>
+              {nav.isNavigating ? 'Joining…' : 'Join'}
             </Button>
           </form>
         </CardContent>

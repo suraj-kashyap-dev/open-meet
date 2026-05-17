@@ -2,7 +2,6 @@
 
 import { ArrowRight, Check, Copy, Lock, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -11,13 +10,14 @@ import { Separator } from '@/components/ui/separator';
 import { useCurrentUser } from '@/features/auth/hooks/use-auth';
 import { useMediaDevices } from '@/features/lobby/hooks/use-media-devices';
 import { useMeeting } from '@/features/meeting/hooks/use-meetings';
+import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 
 import { DeviceSelector } from './device-selector';
 import { LobbyPreview } from './lobby-preview';
 
 export function LobbyClient({ code }: { code: string }) {
-  const router = useRouter();
+  const nav = useNavigateTransition();
   const media = useMediaDevices();
   const { data: meeting, error, isLoading } = useMeeting(code);
   const { data: user } = useCurrentUser();
@@ -26,9 +26,9 @@ export function LobbyClient({ code }: { code: string }) {
   useEffect(() => {
     if (error instanceof ApiClientError && error.code === 'MEETING_NOT_FOUND') {
       toast.error('Meeting not found');
-      router.replace('/');
+      nav.replace('/');
     }
-  }, [error, router]);
+  }, [error, nav]);
 
   const onCopyLink = async () => {
     if (! meeting) {
@@ -49,7 +49,7 @@ export function LobbyClient({ code }: { code: string }) {
 
   const onJoin = () => {
     media.stop();
-    router.push(`/${code}`);
+    nav.push(`/${code}`);
   };
 
   if (isLoading) {
@@ -140,8 +140,8 @@ export function LobbyClient({ code }: { code: string }) {
             </section>
 
             <div className="hidden space-y-2 pt-1 lg:block">
-              <Button onClick={onJoin} className="group w-full" size="lg">
-                Join now
+              <Button onClick={onJoin} disabled={nav.isNavigating} className="group w-full" size="lg">
+                {nav.isNavigating ? 'Joining…' : 'Join now'}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <p className="text-center text-xs text-muted-foreground">
@@ -162,8 +162,8 @@ export function LobbyClient({ code }: { code: string }) {
           >
             Cancel
           </Link>
-          <Button onClick={onJoin} className="group flex-1" size="lg">
-            Join now
+          <Button onClick={onJoin} disabled={nav.isNavigating} className="group flex-1" size="lg">
+            {nav.isNavigating ? 'Joining…' : 'Join now'}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </div>

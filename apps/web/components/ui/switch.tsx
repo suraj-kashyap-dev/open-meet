@@ -6,7 +6,7 @@ import { forwardRef } from 'react';
 import { cn } from '@/lib/cn';
 
 export const Switch = forwardRef<
-  React.ElementRef<typeof SwitchPrimitive.Root>,
+  React.ComponentRef<typeof SwitchPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <SwitchPrimitive.Root

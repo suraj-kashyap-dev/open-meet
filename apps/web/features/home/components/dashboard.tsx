@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -32,6 +31,7 @@ import { Spotlight } from '@/components/ui/spotlight';
 import { useCurrentUser } from '@/features/auth/hooks/use-auth';
 import { useHistoryList } from '@/features/history/hooks/use-history';
 import { useCreateMeeting } from '@/features/meeting/hooks/use-meetings';
+import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 import { cn } from '@/lib/cn';
 
@@ -45,7 +45,7 @@ const fadeUp = {
 };
 
 export function Dashboard() {
-  const router = useRouter();
+  const nav = useNavigateTransition();
   const { data: user } = useCurrentUser();
   const createMeeting = useCreateMeeting();
   const history = useHistoryList(1, 5);
@@ -54,7 +54,7 @@ export function Dashboard() {
   const onCreate = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
-      router.push(`/${meeting.code}/lobby`);
+      nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message =
         err instanceof ApiClientError ? err.message : 'Could not create meeting';
@@ -73,7 +73,7 @@ export function Dashboard() {
       return;
     }
 
-    router.push(`/${trimmed}/lobby`);
+    nav.push(`/${trimmed}/lobby`);
   };
 
   const firstName = user?.name?.split(' ')[0] ?? 'there';
@@ -120,7 +120,8 @@ export function Dashboard() {
             onCodeChange={setCode}
             onCreate={onCreate}
             onJoin={onJoin}
-            isCreating={createMeeting.isPending}
+            isCreating={createMeeting.isPending || nav.isNavigating}
+            isJoining={nav.isNavigating && ! createMeeting.isPending}
           />
         </motion.div>
 
@@ -168,9 +169,10 @@ interface ActionCardProps {
   onCreate: () => void | Promise<void>;
   onJoin: (e: React.FormEvent) => void;
   isCreating: boolean;
+  isJoining: boolean;
 }
 
-function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating }: ActionCardProps) {
+function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating, isJoining }: ActionCardProps) {
   return (
     <Card className="group relative overflow-hidden border-border/60 bg-card/60 backdrop-blur transition-all duration-300 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10">
       <div
@@ -284,10 +286,10 @@ function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating }: Action
               type="submit"
               variant="outline"
               size="lg"
-              disabled={! code.trim()}
+              disabled={! code.trim() || isJoining}
               className="sm:min-w-[110px]"
             >
-              Join
+              {isJoining ? 'Joining…' : 'Join'}
             </Button>
           </form>
         </div>
