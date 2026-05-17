@@ -17,10 +17,7 @@ export function AudioMeter({ stream, active, className }: Props) {
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (
-      ! stream 
-      || ! active
-    ) {
+    if (!stream || !active) {
       setLevel(0);
 
       return;
@@ -28,7 +25,7 @@ export function AudioMeter({ stream, active, className }: Props) {
 
     const track = stream.getAudioTracks()[0];
 
-    if (! track) {
+    if (!track) {
       return;
     }
 

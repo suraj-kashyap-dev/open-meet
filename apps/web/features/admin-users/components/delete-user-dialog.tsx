@@ -28,7 +28,7 @@ export function DeleteUserDialog({ user, onClose }: Props) {
   const pending = del.isPending;
 
   const onConfirm = async () => {
-    if (! user) {
+    if (!user) {
       return;
     }
 
@@ -37,20 +37,20 @@ export function DeleteUserDialog({ user, onClose }: Props) {
       toast.success(`Deleted ${user.email}`);
       onClose();
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Could not delete user';
+      const message = err instanceof ApiClientError ? err.message : 'Could not delete user';
       toast.error(message);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={(o) => (! o ? onClose() : undefined)}>
+    <Dialog open={open} onOpenChange={(o) => (!o ? onClose() : undefined)}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete user?</DialogTitle>
           <DialogDescription>
-            This permanently removes <span className="font-medium text-foreground">{user?.email}</span> and
-            all meetings they hosted, participated in, and messages they sent. This cannot be undone.
+            This permanently removes{' '}
+            <span className="font-medium text-foreground">{user?.email}</span> and all meetings they
+            hosted, participated in, and messages they sent. This cannot be undone.
           </DialogDescription>
         </DialogHeader>
 

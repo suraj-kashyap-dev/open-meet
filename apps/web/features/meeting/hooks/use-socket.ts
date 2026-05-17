@@ -14,7 +14,7 @@ export function useMeetingSocket(enabled: boolean = true): { socket: MeetingSock
   const [socket, setSocket] = useState<MeetingSocket | null>(null);
 
   useEffect(() => {
-    if (! enabled) {
+    if (!enabled) {
       return;
     }
 

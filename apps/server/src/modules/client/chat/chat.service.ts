@@ -4,10 +4,7 @@ import type { MessageDto } from '@open-meet/types';
 
 import { type StorageService } from '../../../storage/storage.service';
 import { type UploadsService } from '../../uploads/uploads.service';
-import {
-  type ChatRepository,
-  type MessageWithSender,
-} from './chat.repository';
+import { type ChatRepository, type MessageWithSender } from './chat.repository';
 
 @Injectable()
 export class ChatService {
@@ -57,8 +54,7 @@ export class ChatService {
     const hasMore = rows.length > limit;
     const slice = hasMore ? rows.slice(rows.length - limit) : rows;
     const firstInSlice = slice[0];
-    const nextCursor =
-      hasMore && firstInSlice ? firstInSlice.sentAt.toISOString() : null;
+    const nextCursor = hasMore && firstInSlice ? firstInSlice.sentAt.toISOString() : null;
 
     return {
       items: slice.map((m) => this.toDto(m)),

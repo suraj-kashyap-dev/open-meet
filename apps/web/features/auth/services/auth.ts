@@ -33,17 +33,11 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
     }
 
     xhr.onload = () => {
-      const isJson = (xhr.getResponseHeader('content-type') ?? '').includes(
-        'application/json',
-      );
+      const isJson = (xhr.getResponseHeader('content-type') ?? '').includes('application/json');
 
-      if (! isJson) {
+      if (!isJson) {
         reject(
-          new ApiClientError(
-            'INVALID_RESPONSE',
-            xhr.status,
-            `Unexpected response: ${xhr.status}`,
-          ),
+          new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
         );
         return;
       }
@@ -63,7 +57,7 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
         error?: { code: string; message: string; statusCode: number };
       };
 
-      if (! envelope.success || ! envelope.data) {
+      if (!envelope.success || !envelope.data) {
         const err = envelope.error;
         reject(
           new ApiClientError(

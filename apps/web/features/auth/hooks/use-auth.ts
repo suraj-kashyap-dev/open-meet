@@ -18,7 +18,7 @@ function readCachedUser(): UserDto | null {
   }
   try {
     const raw = window.localStorage.getItem(CACHE_KEY);
-    if (! raw) {
+    if (!raw) {
       return null;
     }
     return JSON.parse(raw) as UserDto;
@@ -52,7 +52,7 @@ export function useAuthBootstrap(): void {
   const qc = useQueryClient();
   useEffect(() => {
     const cached = readCachedUser();
-    if (! cached) {
+    if (!cached) {
       return;
     }
     // Only prime if the cache is empty — don't clobber a fresh fetch result.

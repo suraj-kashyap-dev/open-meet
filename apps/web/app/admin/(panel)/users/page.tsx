@@ -65,15 +65,11 @@ export default function AdminUsersPage() {
       }),
       column.accessor('meetingsHosted', {
         header: () => <span className="block text-right">Hosted</span>,
-        cell: (info) => (
-          <span className="block text-right tabular-nums">{info.getValue()}</span>
-        ),
+        cell: (info) => <span className="block text-right tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('meetingsAttended', {
         header: () => <span className="block text-right">Attended</span>,
-        cell: (info) => (
-          <span className="block text-right tabular-nums">{info.getValue()}</span>
-        ),
+        cell: (info) => <span className="block text-right tabular-nums">{info.getValue()}</span>,
       }),
       column.display({
         id: 'actions',
@@ -87,9 +83,7 @@ export default function AdminUsersPage() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setEditing(row.original)}>
-                  Edit
-                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setEditing(row.original)}>Edit</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="text-destructive focus:text-destructive"
@@ -119,9 +113,7 @@ export default function AdminUsersPage() {
         </p>
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Users</h1>
-          <span className="text-sm text-muted-foreground">
-            {total.toLocaleString()} total
-          </span>
+          <span className="text-sm text-muted-foreground">{total.toLocaleString()} total</span>
         </div>
       </header>
 
@@ -139,7 +131,7 @@ export default function AdminUsersPage() {
             className="pl-9"
           />
         </div>
-        {isFetching && ! isLoading ? (
+        {isFetching && !isLoading ? (
           <span className="text-xs text-muted-foreground">Refreshing…</span>
         ) : null}
       </div>

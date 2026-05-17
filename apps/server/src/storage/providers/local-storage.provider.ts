@@ -32,14 +32,14 @@ export class LocalStorageProvider implements StorageProvider {
     const parts = key.split('/');
 
     for (const part of parts) {
-      if (! SAFE_SEGMENT.test(part)) {
+      if (!SAFE_SEGMENT.test(part)) {
         throw new Error(`Invalid storage key segment: ${part}`);
       }
     }
 
     const target = resolve(this.rootDir, ...parts);
 
-    if (! target.startsWith(this.rootDir + sep) && target !== this.rootDir) {
+    if (!target.startsWith(this.rootDir + sep) && target !== this.rootDir) {
       throw new Error('Storage key escapes root directory');
     }
 
@@ -69,7 +69,7 @@ export class LocalStorageProvider implements StorageProvider {
     try {
       const stats = await stat(target);
 
-      if (! stats.isFile()) {
+      if (!stats.isFile()) {
         return null;
       }
 

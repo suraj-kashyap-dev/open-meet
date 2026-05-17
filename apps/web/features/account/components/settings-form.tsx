@@ -12,7 +12,7 @@ export function SettingsForm() {
   const { data: user, isLoading: userLoading } = useCurrentUser();
   const { data: settings, isLoading: settingsLoading } = useUserSettings();
 
-  if (userLoading || ! user) {
+  if (userLoading || !user) {
     return (
       <div className="flex h-64 items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
@@ -22,7 +22,6 @@ export function SettingsForm() {
 
   return (
     <div className="flex flex-col gap-6 pb-10">
-
       <PageHeader
         eyebrow="Account"
         title="Settings"
@@ -47,17 +46,13 @@ export function SettingsForm() {
         )}
       </SectionCard>
 
-      <SectionCard
-        title="Privacy"
-        description="Control what others see and how your data is used."
-      >
+      <SectionCard title="Privacy" description="Control what others see and how your data is used.">
         {settingsLoading ? (
           <p className="text-xs text-muted-foreground">Loading…</p>
         ) : (
           <PrivacySettings settings={settings} />
         )}
       </SectionCard>
-
     </div>
   );
 }

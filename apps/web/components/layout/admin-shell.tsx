@@ -32,7 +32,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         <AdminTopbar
           onOpenSidebar={() => setMobileOpen(true)}
           desktopSidebarOpen={desktopSidebarOpen}
-          onToggleDesktopSidebar={() => setDesktopSidebarOpen((open) => ! open)}
+          onToggleDesktopSidebar={() => setDesktopSidebarOpen((open) => !open)}
         />
         <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
       </div>

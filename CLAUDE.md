@@ -29,6 +29,7 @@ docker/   livekit.yaml, coturn.conf
 ## Non-negotiable conventions
 
 ### TypeScript
+
 - `strict: true` everywhere, `noUncheckedIndexedAccess: true`
 - No implicit `any` — use `unknown` and narrow it
 - Type-only imports: `import type { … }`
@@ -36,7 +37,9 @@ docker/   livekit.yaml, coturn.conf
 - **Enums**: real TS `enum` only in NestJS DTOs that need class-validator; in shared/frontend code use `as const` objects
 
 ### NestJS module pattern
+
 Every module:
+
 ```
 modules/<name>/
   <name>.module.ts
@@ -47,6 +50,7 @@ modules/<name>/
   guards/                 # if needed
   strategies/             # passport strategies
 ```
+
 - Constructor injection only
 - Controllers MUST go through services, services MUST go through repositories
 - Never inject `PrismaService` into a controller or service that isn't a repository
@@ -54,17 +58,23 @@ modules/<name>/
 - Response shape is enforced globally by `TransformInterceptor` — controllers return raw data, not envelopes
 
 ### Response envelope (enforced globally)
+
 Success:
+
 ```json
 { "success": true, "data": { … }, "meta": { "timestamp": "…" } }
 ```
+
 Error:
+
 ```json
 { "success": false, "error": { "code": "MEETING_NOT_FOUND", "message": "…", "statusCode": 404 } }
 ```
+
 Errors flow through `GlobalExceptionFilter`. Use `HttpException` subclasses, never throw raw objects.
 
 ### Auth
+
 - argon2 for password hashing (NOT bcrypt)
 - Access JWT 15m, refresh JWT 7d — both in **httpOnly cookies** (never localStorage)
 - Refresh token rotation: old refresh invalidated on use, stored hashed in Redis
@@ -73,17 +83,20 @@ Errors flow through `GlobalExceptionFilter`. Use `HttpException` subclasses, nev
 - CORS: explicit `FRONTEND_URL` origin, NEVER wildcard
 
 ### LiveKit
+
 - Token: `roomJoin + canPublish + canSubscribe` always; `roomAdmin` only for HOST
 - TTL 4h, identity = `userId`, name = `user.name`
 - Webhooks: verify `X-Livekit-Signature` header before processing
 
 ### WebSocket gateway
+
 - Single `ChatGateway` on namespace `/meeting`
 - `WsJwtGuard` runs on `handleConnection` (auth before any subscribe)
 - Redis adapter (`@socket.io/redis-adapter`) so emits fan out across API instances
 - Event names live in `@open-meet/types` — DON'T inline strings
 
 ### React / Next.js
+
 - Server Components by default; `"use client"` only when needed
 - Data fetching = TanStack Query (NOT `useEffect`)
 - Forms = react-hook-form + zod
@@ -92,14 +105,16 @@ Errors flow through `GlobalExceptionFilter`. Use `HttpException` subclasses, nev
 - All API calls go through `lib/api.ts` (typed fetch wrapper, `credentials: 'include'`)
 
 ### Security
+
 - Validate every external input (class-validator on backend, zod on frontend forms)
 - LiveKit tokens are room-scoped and short-lived (4h)
 - Rate-limit `/api/auth/*` (5 / 15min / IP)
 - WS connections authenticated on connect via `WsJwtGuard`
 
 ### Code style
+
 - Prefer editing existing files over creating new ones
-- No comments unless the *why* is non-obvious
+- No comments unless the _why_ is non-obvious
 - No backwards-compat shims; if removing code, delete it
 - No `useEffect` for data fetching
 
@@ -133,19 +148,19 @@ docker compose logs -f livekit
 
 ## What lives where
 
-| Concern | Location |
-|---|---|
-| Shared DTO/types | `packages/types/src/` |
-| Socket event names + payloads | `packages/types/src/socket.ts` |
-| Env zod schemas | `packages/config/src/env.ts` |
-| API response envelope shape | `packages/types/src/api.ts` |
-| Meeting code generation | `packages/utils/src/code.ts` |
-| Prisma schema | `apps/server/prisma/schema.prisma` |
-| NestJS global pipe/filter/interceptor | `apps/server/src/common/` |
-| API entry point | `apps/server/src/main.ts` |
-| Next.js entry | `apps/web/app/layout.tsx` |
-| Typed API client | `apps/web/lib/api.ts` |
-| Zustand stores | `apps/web/stores/` |
+| Concern                               | Location                           |
+| ------------------------------------- | ---------------------------------- |
+| Shared DTO/types                      | `packages/types/src/`              |
+| Socket event names + payloads         | `packages/types/src/socket.ts`     |
+| Env zod schemas                       | `packages/config/src/env.ts`       |
+| API response envelope shape           | `packages/types/src/api.ts`        |
+| Meeting code generation               | `packages/utils/src/code.ts`       |
+| Prisma schema                         | `apps/server/prisma/schema.prisma` |
+| NestJS global pipe/filter/interceptor | `apps/server/src/common/`          |
+| API entry point                       | `apps/server/src/main.ts`          |
+| Next.js entry                         | `apps/web/app/layout.tsx`          |
+| Typed API client                      | `apps/web/lib/api.ts`              |
+| Zustand stores                        | `apps/web/stores/`                 |
 
 ## Testing discipline — non-negotiable
 
@@ -166,6 +181,7 @@ docker compose logs -f livekit
 - Playwright's `webServer` auto-starts `apps/web` in dev. For real LiveKit/socket flows the infra stack must be up first (`docker compose up -d`).
 
 ## Build order reference
+
 The spec defines a strict 15-step build order. We're past STEPs 1–4 + 9 (scaffolding). Feature steps remaining: 5 (auth), 6 (meetings), 7 (livekit), 8 (ws gateway), 10 (auth pages), 11 (home+lobby), 12 (meeting room), 13 (controls), 14 (chat+reactions), 15 (host controls + polish).
 
 Complete each step fully, run `pnpm build` from root, before moving to the next. Don't skip ahead.

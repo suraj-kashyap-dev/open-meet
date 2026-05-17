@@ -28,7 +28,11 @@ function makeUser(overrides: Partial<{ id: string; email: string; name: string }
 
 describe('AuthService', () => {
   let service: AuthService;
-  let repo: { findByEmail: ReturnType<typeof vi.fn>; findById: ReturnType<typeof vi.fn>; create: ReturnType<typeof vi.fn> };
+  let repo: {
+    findByEmail: ReturnType<typeof vi.fn>;
+    findById: ReturnType<typeof vi.fn>;
+    create: ReturnType<typeof vi.fn>;
+  };
   let jwt: { signAsync: ReturnType<typeof vi.fn>; verifyAsync: ReturnType<typeof vi.fn> };
   let redisStore: Map<string, string>;
   let redis: {
@@ -48,7 +52,9 @@ describe('AuthService', () => {
       create: vi.fn(),
     };
     jwt = {
-      signAsync: vi.fn().mockImplementation(async (payload: object) => `signed.${JSON.stringify(payload)}`),
+      signAsync: vi
+        .fn()
+        .mockImplementation(async (payload: object) => `signed.${JSON.stringify(payload)}`),
       verifyAsync: vi.fn(),
     };
     redis = {
@@ -118,8 +124,9 @@ describe('AuthService', () => {
   describe('register', () => {
     it('hashes password and returns dto + tokens', async () => {
       repo.findByEmail.mockResolvedValue(null);
-      repo.create.mockImplementation(async (data: { passwordHash: string; email: string; name: string }) =>
-        makeUser({ email: data.email, name: data.name }),
+      repo.create.mockImplementation(
+        async (data: { passwordHash: string; email: string; name: string }) =>
+          makeUser({ email: data.email, name: data.name }),
       );
 
       const result = await service.register({

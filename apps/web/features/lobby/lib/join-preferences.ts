@@ -31,7 +31,7 @@ export function consumeJoinPreferences(code: string): JoinPreferences | null {
   try {
     const raw = window.sessionStorage.getItem(k);
 
-    if (! raw) {
+    if (!raw) {
       return null;
     }
 

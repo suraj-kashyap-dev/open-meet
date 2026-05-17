@@ -10,7 +10,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
   const { data: user, isLoading } = useCurrentUser();
 
   useEffect(() => {
-    if (! isLoading && ! user) {
+    if (!isLoading && !user) {
       router.replace('/login');
     }
   }, [isLoading, user, router]);
@@ -23,7 +23,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
     );
   }
 
-  if (! user) {
+  if (!user) {
     return null;
   }
 

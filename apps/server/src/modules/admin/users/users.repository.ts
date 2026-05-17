@@ -21,7 +21,7 @@ export class AdminUsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   private whereFromSearch(search?: string): Prisma.UserWhereInput {
-    if (! search) {
+    if (!search) {
       return {};
     }
 

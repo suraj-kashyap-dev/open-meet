@@ -8,10 +8,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import type { UserSettingsDto } from '@open-meet/types';
-import {
-  DEFAULT_MEETING_PREFERENCES,
-  MeetingDefaultView,
-} from '@open-meet/types';
+import { DEFAULT_MEETING_PREFERENCES, MeetingDefaultView } from '@open-meet/types';
 
 import { Label } from '@/components/ui/label';
 import {
@@ -24,10 +21,7 @@ import {
 import { Switch } from '@/components/ui/switch';
 import { useUpdateUserSettings } from '@/features/account/hooks/use-settings';
 import { ApiClientError } from '@/lib/api/client';
-import {
-  ensureNotificationPermission,
-  notificationsSupported,
-} from '@/lib/notifications';
+import { ensureNotificationPermission, notificationsSupported } from '@/lib/notifications';
 import { playSound } from '@/lib/sounds';
 import { Button } from '@/components/ui/button';
 import { Volume2 } from 'lucide-react';
@@ -48,11 +42,7 @@ function messageFromError(err: unknown, fallback: string): string {
   return err instanceof ApiClientError ? err.message : fallback;
 }
 
-export function MeetingPreferences({
-  settings,
-}: {
-  settings: UserSettingsDto | undefined;
-}) {
+export function MeetingPreferences({ settings }: { settings: UserSettingsDto | undefined }) {
   const updateSettings = useUpdateUserSettings();
 
   const current = settings?.meetingPreferences ?? DEFAULT_MEETING_PREFERENCES;
@@ -86,7 +76,6 @@ export function MeetingPreferences({
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-
       <Row
         title="Join muted by default"
         description="Start every meeting with your microphone off."
@@ -97,10 +86,7 @@ export function MeetingPreferences({
         />
       </Row>
 
-      <Row
-        title="Camera off by default"
-        description="Keep your camera off until you turn it on."
-      >
+      <Row title="Camera off by default" description="Keep your camera off until you turn it on.">
         <Switch
           checked={values.defaultCameraOff}
           onCheckedChange={(c) => setValue('defaultCameraOff', c, { shouldDirty: true })}
@@ -133,10 +119,7 @@ export function MeetingPreferences({
         </div>
       </Row>
 
-      <Row
-        title="Meeting sounds"
-        description="Chimes on join, leave, chat, reactions, and knocks."
-      >
+      <Row title="Meeting sounds" description="Chimes on join, leave, chat, reactions, and knocks.">
         <div className="flex items-center gap-2">
           <Button
             type="button"
@@ -144,7 +127,7 @@ export function MeetingPreferences({
             size="icon"
             aria-label="Preview sound"
             onClick={() => void playSound('join')}
-            disabled={! values.enableJoinSound}
+            disabled={!values.enableJoinSound}
           >
             <Volume2 className="h-4 w-4" />
           </Button>
@@ -163,7 +146,7 @@ export function MeetingPreferences({
           checked={values.enableNotifications}
           onCheckedChange={async (c) => {
             if (c) {
-              if (! notificationsSupported()) {
+              if (!notificationsSupported()) {
                 toast.error('Notifications are not supported in this browser');
                 return;
               }
@@ -181,11 +164,8 @@ export function MeetingPreferences({
       <FormActions
         pending={pending}
         dirty={isDirty}
-        onReset={() =>
-          reset(settings?.meetingPreferences ?? DEFAULT_MEETING_PREFERENCES)
-        }
+        onReset={() => reset(settings?.meetingPreferences ?? DEFAULT_MEETING_PREFERENCES)}
       />
-
     </form>
   );
 }

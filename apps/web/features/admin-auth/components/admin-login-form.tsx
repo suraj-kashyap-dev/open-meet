@@ -35,8 +35,7 @@ export function AdminLoginForm() {
     try {
       await login.mutateAsync(values);
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Failed to sign in';
+      const message = err instanceof ApiClientError ? err.message : 'Failed to sign in';
       toast.error(message);
     }
   });
@@ -54,9 +53,7 @@ export function AdminLoginForm() {
           placeholder="admin@open-meet.local"
           {...register('email')}
         />
-        {errors.email ? (
-          <p className="text-xs text-destructive">{errors.email.message}</p>
-        ) : null}
+        {errors.email ? <p className="text-xs text-destructive">{errors.email.message}</p> : null}
       </div>
 
       <div className="space-y-1.5">
@@ -73,7 +70,11 @@ export function AdminLoginForm() {
       </div>
 
       <Button type="submit" variant="accent" size="lg" className="w-full" disabled={pending}>
-        {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
+        {pending ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <ShieldCheck className="h-4 w-4" />
+        )}
         {pending ? 'Signing in…' : 'Sign in to console'}
       </Button>
     </form>

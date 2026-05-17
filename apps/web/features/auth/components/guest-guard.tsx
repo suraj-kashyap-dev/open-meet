@@ -13,7 +13,7 @@ import { useCurrentUser } from '@/features/auth/hooks/use-auth';
 export function GuestGuard({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { data: user } = useCurrentUser();
-  const isAuthed = !! user;
+  const isAuthed = !!user;
 
   useEffect(() => {
     if (isAuthed) {

@@ -27,7 +27,7 @@ export class RedisIoAdapter extends IoAdapter {
     if (this.redisAdapter) {
       server.adapter(this.redisAdapter);
     }
-    
+
     return server;
   }
 }

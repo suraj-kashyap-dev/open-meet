@@ -2,11 +2,7 @@
 
 import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
-import type {
-  MeetingDto,
-  MeetingHistoryListResponseDto,
-  MessagePageDto,
-} from '@open-meet/types';
+import type { MeetingDto, MeetingHistoryListResponseDto, MessagePageDto } from '@open-meet/types';
 
 import { historyApi } from '@/features/history/services/history';
 import { meetingsApi } from '@/features/meeting/services/meetings';

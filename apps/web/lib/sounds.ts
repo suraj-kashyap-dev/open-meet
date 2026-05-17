@@ -16,9 +16,10 @@ function ensureCtx(): AudioContext | null {
   }
 
   const Ctor: typeof AudioContext | undefined =
-    window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    window.AudioContext ??
+    (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
 
-  if (! Ctor) {
+  if (!Ctor) {
     return null;
   }
 
@@ -35,7 +36,7 @@ async function tryLoadFile(ctx: AudioContext, name: SoundName): Promise<AudioBuf
   try {
     const res = await fetch(`/sounds/${name}.mp3`, { cache: 'force-cache' });
 
-    if (! res.ok) {
+    if (!res.ok) {
       fileCache.set(name, null);
       return null;
     }
@@ -102,10 +103,7 @@ function playSynth(ctx: AudioContext, tones: ToneSpec[], volume: number): void {
     const release = tone.duration - attack;
     env.gain.setValueAtTime(0, now + tone.startOffset);
     env.gain.linearRampToValueAtTime(volume, now + tone.startOffset + attack);
-    env.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + tone.startOffset + attack + release,
-    );
+    env.gain.exponentialRampToValueAtTime(0.0001, now + tone.startOffset + attack + release);
 
     osc.connect(env).connect(filter);
     osc.start(now + tone.startOffset);
@@ -131,15 +129,13 @@ const SYNTH_RECIPES: Record<SoundName, ToneSpec[]> = {
     { freq: 220.0, startOffset: 0.14, duration: 0.08 },
   ],
 
-  reaction: [
-    { freq: 660.0, startOffset: 0, endFreq: 990.0, duration: 0.14 },
-  ],
+  reaction: [{ freq: 660.0, startOffset: 0, endFreq: 990.0, duration: 0.14 }],
 };
 
 export async function playSound(name: SoundName, volume: number = 0.08): Promise<void> {
   const ctx = ensureCtx();
 
-  if (! ctx) {
+  if (!ctx) {
     return;
   }
 
@@ -152,14 +148,14 @@ export async function playSound(name: SoundName, volume: number = 0.08): Promise
   }
 
   const file = await tryLoadFile(ctx, name);
-  
+
   if (file) {
     playBuffer(ctx, file, volume);
-    
+
     return;
   }
 
   const recipe = SYNTH_RECIPES[name];
-  
+
   playSynth(ctx, recipe, volume);
 }

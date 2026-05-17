@@ -65,9 +65,7 @@ test.describe('avatar upload', () => {
       buffer: Buffer.from('not an image'),
     });
 
-    await expect(
-      page.getByText(/Avatar must be a PNG, JPEG, WebP, or GIF/i),
-    ).toBeVisible();
+    await expect(page.getByText(/Avatar must be a PNG, JPEG, WebP, or GIF/i)).toBeVisible();
   });
 
   test('removing the avatar via the dropdown clears it everywhere', async ({ page }) => {
@@ -91,11 +89,7 @@ test.describe('avatar upload', () => {
     await expect(page.getByText('Avatar removed')).toBeVisible({ timeout: 10_000 });
 
     // With no avatar the overlay button reverts to the "upload" affordance.
-    await expect(
-      page.getByRole('button', { name: /upload profile picture/i }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('button', { name: /edit profile picture/i }),
-    ).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /upload profile picture/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /edit profile picture/i })).toHaveCount(0);
   });
 });

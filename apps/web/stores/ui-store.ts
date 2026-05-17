@@ -11,7 +11,7 @@ interface UIState {
 export const useUIStore = create<UIState>((set, get) => ({
   participantsOpen: false,
   toggleParticipants: () => {
-    set({ participantsOpen: ! get().participantsOpen });
+    set({ participantsOpen: !get().participantsOpen });
   },
   setParticipantsOpen: (open) => {
     set({ participantsOpen: open });

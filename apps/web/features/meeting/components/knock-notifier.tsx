@@ -35,7 +35,7 @@ export function KnockNotifier({ socket, code }: Props) {
   const notification = useNotification();
 
   useEffect(() => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 
@@ -69,7 +69,7 @@ export function KnockNotifier({ socket, code }: Props) {
   }, [socket, code, knockSound, notification]);
 
   const respond = (userId: string, admit: boolean) => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 

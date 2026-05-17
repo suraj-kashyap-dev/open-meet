@@ -35,21 +35,14 @@ export function LoginForm() {
     try {
       await login.mutateAsync(values);
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Something went wrong';
+      const message = err instanceof ApiClientError ? err.message : 'Something went wrong';
 
       toast.error(message);
     }
   });
 
   return (
-    <form
-      onSubmit={onSubmit}
-      method="post"
-      action="#"
-      className="space-y-5"
-      noValidate
-    >
+    <form onSubmit={onSubmit} method="post" action="#" className="space-y-5" noValidate>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
 
@@ -67,9 +60,7 @@ export function LoginForm() {
           />
         </div>
 
-        {errors.email ? (
-          <p className="text-xs text-destructive">{errors.email.message}</p>
-        ) : null}
+        {errors.email ? <p className="text-xs text-destructive">{errors.email.message}</p> : null}
       </div>
 
       <div className="space-y-2">
@@ -89,7 +80,7 @@ export function LoginForm() {
 
           <button
             type="button"
-            onClick={() => setShowPassword((prev) => ! prev)}
+            onClick={() => setShowPassword((prev) => !prev)}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
             aria-pressed={showPassword}
             className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"

@@ -64,18 +64,13 @@ const schema = z.object({
   email: z.string().email('Enter a valid email').max(254),
   timezone: z.string().min(1).max(64),
   language: z.string().min(1).max(8),
-  bio: z
-    .string()
-    .trim()
-    .max(500, 'Bio is too long')
-    .optional()
-    .or(z.literal('')),
+  bio: z.string().trim().max(500, 'Bio is too long').optional().or(z.literal('')),
   newPassword: z
     .string()
     .max(128, 'Too long')
     .optional()
     .or(z.literal(''))
-    .refine((v) => ! v || v.length >= 8, {
+    .refine((v) => !v || v.length >= 8, {
       message: 'At least 8 characters',
     }),
 });
@@ -126,7 +121,7 @@ export function EditUserDialog({ user, onClose }: Props) {
   const tzOptions = useMemo(() => {
     const list = [...TIMEZONES];
 
-    if (timezone && ! list.includes(timezone)) {
+    if (timezone && !list.includes(timezone)) {
       list.unshift(timezone);
     }
 
@@ -134,7 +129,7 @@ export function EditUserDialog({ user, onClose }: Props) {
   }, [timezone]);
 
   const onSubmit = handleSubmit(async (values) => {
-    if (! user) {
+    if (!user) {
       return;
     }
 
@@ -174,8 +169,7 @@ export function EditUserDialog({ user, onClose }: Props) {
       toast.success('User updated');
       onClose();
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Could not update user';
+      const message = err instanceof ApiClientError ? err.message : 'Could not update user';
 
       toast.error(message);
     }
@@ -184,7 +178,7 @@ export function EditUserDialog({ user, onClose }: Props) {
   const pending = isSubmitting || update.isPending;
 
   return (
-    <Dialog open={open} onOpenChange={(o) => (! o ? onClose() : undefined)}>
+    <Dialog open={open} onOpenChange={(o) => (!o ? onClose() : undefined)}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Edit user</DialogTitle>
@@ -194,7 +188,6 @@ export function EditUserDialog({ user, onClose }: Props) {
         </DialogHeader>
 
         <form onSubmit={onSubmit} className="flex max-h-[70vh] flex-col gap-6 overflow-y-auto pr-1">
-
           <DialogSection title="Account">
             <div className="flex items-center gap-4">
               <UserAvatar
@@ -221,12 +214,7 @@ export function EditUserDialog({ user, onClose }: Props) {
               <div className="space-y-1.5">
                 <Label htmlFor="email">Email</Label>
 
-                <Input
-                  id="email"
-                  type="email"
-                  autoComplete="off"
-                  {...register('email')}
-                />
+                <Input id="email" type="email" autoComplete="off" {...register('email')} />
 
                 {errors.email ? (
                   <p className="text-xs text-destructive">{errors.email.message}</p>
@@ -242,9 +230,7 @@ export function EditUserDialog({ user, onClose }: Props) {
 
                 <Select
                   value={timezone}
-                  onValueChange={(v) =>
-                    setValue('timezone', v, { shouldDirty: true })
-                  }
+                  onValueChange={(v) => setValue('timezone', v, { shouldDirty: true })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Pick a timezone" />
@@ -265,9 +251,7 @@ export function EditUserDialog({ user, onClose }: Props) {
 
                 <Select
                   value={language}
-                  onValueChange={(v) =>
-                    setValue('language', v, { shouldDirty: true })
-                  }
+                  onValueChange={(v) => setValue('language', v, { shouldDirty: true })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Pick a language" />
@@ -295,16 +279,9 @@ export function EditUserDialog({ user, onClose }: Props) {
                 </span>
               </div>
 
-              <Textarea
-                id="bio"
-                rows={3}
-                placeholder="Optional"
-                {...register('bio')}
-              />
+              <Textarea id="bio" rows={3} placeholder="Optional" {...register('bio')} />
 
-              {errors.bio ? (
-                <p className="text-xs text-destructive">{errors.bio.message}</p>
-              ) : null}
+              {errors.bio ? <p className="text-xs text-destructive">{errors.bio.message}</p> : null}
             </div>
           </DialogSection>
 
@@ -336,12 +313,7 @@ export function EditUserDialog({ user, onClose }: Props) {
             Cancel
           </Button>
 
-          <Button
-            type="button"
-            variant="accent"
-            disabled={pending || ! isDirty}
-            onClick={onSubmit}
-          >
+          <Button type="button" variant="accent" disabled={pending || !isDirty} onClick={onSubmit}>
             {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {pending ? 'Saving…' : 'Save changes'}
           </Button>
@@ -351,13 +323,7 @@ export function EditUserDialog({ user, onClose }: Props) {
   );
 }
 
-function DialogSection({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactNode;
-}) {
+function DialogSection({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="flex flex-col gap-4">
       <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">

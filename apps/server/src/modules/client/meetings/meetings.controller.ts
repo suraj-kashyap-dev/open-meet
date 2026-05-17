@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import type {
@@ -100,20 +91,14 @@ export class MeetingsController {
   @Post(':code/leave')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Leave the meeting' })
-  async leave(
-    @Param('code') code: string,
-    @CurrentUser() user: RequestUser,
-  ): Promise<void> {
+  async leave(@Param('code') code: string, @CurrentUser() user: RequestUser): Promise<void> {
     await this.meetings.leave(code, user.id);
   }
 
   @Post(':code/end')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'End the meeting (host only)' })
-  async end(
-    @Param('code') code: string,
-    @CurrentUser() user: RequestUser,
-  ): Promise<MeetingDto> {
+  async end(@Param('code') code: string, @CurrentUser() user: RequestUser): Promise<MeetingDto> {
     return this.meetings.end(code, user.id);
   }
 

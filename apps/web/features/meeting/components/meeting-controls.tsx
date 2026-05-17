@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  useLocalParticipant,
-  useRoomContext,
-} from '@livekit/components-react';
+import { useLocalParticipant, useRoomContext } from '@livekit/components-react';
 import EmojiPicker, {
   EmojiStyle,
   Theme as EmojiPickerTheme,
@@ -44,12 +41,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCurrentUser } from '@/features/auth/hooks/use-auth';
 import { useEndMeeting } from '@/features/meeting/hooks/use-meetings';
 import type { MeetingSocket } from '@/features/meeting/hooks/use-socket';
@@ -86,8 +78,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
   const { resolvedTheme } = useTheme();
 
-  const pickerTheme =
-    resolvedTheme === 'dark' ? EmojiPickerTheme.DARK : EmojiPickerTheme.LIGHT;
+  const pickerTheme = resolvedTheme === 'dark' ? EmojiPickerTheme.DARK : EmojiPickerTheme.LIGHT;
 
   const isHost = user?.id === hostId;
   const micEnabled = isMicrophoneEnabled;
@@ -127,7 +118,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     setMicBusy(true);
 
     try {
-      await localParticipant.setMicrophoneEnabled(! micEnabled);
+      await localParticipant.setMicrophoneEnabled(!micEnabled);
     } catch (err) {
       toast.error(`Could not toggle microphone: ${(err as Error).message}`);
     } finally {
@@ -141,9 +132,9 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     }
 
     setCameraBusy(true);
-    
+
     try {
-      await localParticipant.setCameraEnabled(! cameraEnabled);
+      await localParticipant.setCameraEnabled(!cameraEnabled);
     } catch (err) {
       toast.error(`Could not toggle camera: ${(err as Error).message}`);
     } finally {
@@ -159,7 +150,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     setScreenBusy(true);
 
     try {
-      await localParticipant.setScreenShareEnabled(! isScreenSharing);
+      await localParticipant.setScreenShareEnabled(!isScreenSharing);
     } catch (err) {
       toast.error(`Could not toggle screen share: ${(err as Error).message}`);
     } finally {
@@ -180,23 +171,23 @@ export function MeetingControls({ code, socket, hostId }: Props) {
   };
 
   const toggleHand = () => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
-    
+
     if (handRaised) {
       socket.emit(ClientEvent.HAND_LOWER, { meetingCode: code });
-    
+
       setHandRaised(false);
     } else {
       socket.emit(ClientEvent.HAND_RAISE, { meetingCode: code });
-      
+
       setHandRaised(true);
     }
   };
 
   const sendReaction = (emoji: string) => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 
@@ -205,14 +196,14 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
   const onCopyLink = async () => {
     const url = `${window.location.origin}/${code}`;
-    
+
     try {
       await navigator.clipboard.writeText(url);
-    
+
       setCopied(true);
-    
+
       toast.success('Meeting link copied');
-    
+
       setTimeout(() => setCopied(false), 1800);
     } catch {
       toast.error('Could not copy link');
@@ -221,13 +212,13 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
   const confirmLeave = async () => {
     setLeaving(true);
-    
+
     try {
       await meetingsApi.leave(code);
     } catch {
       // best-effort
     }
-    
+
     await room.disconnect();
   };
 
@@ -238,8 +229,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       await room.disconnect();
     } catch (err) {
       setLeaving(false);
-      const message =
-        err instanceof ApiClientError ? err.message : 'Could not end meeting';
+      const message = err instanceof ApiClientError ? err.message : 'Could not end meeting';
       toast.error(message);
     }
   };
@@ -249,7 +239,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       <footer className="flex items-center justify-center gap-2 border-t border-border bg-card/80 px-4 py-3 backdrop-blur">
         <ControlButton
           label={micEnabled ? 'Mute' : 'Unmute'}
-          active={! micEnabled}
+          active={!micEnabled}
           onClick={toggleMic}
         >
           {micEnabled ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
@@ -257,7 +247,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
         <ControlButton
           label={cameraEnabled ? 'Stop video' : 'Start video'}
-          active={! cameraEnabled}
+          active={!cameraEnabled}
           onClick={toggleCamera}
         >
           {cameraEnabled ? <Video className="h-4 w-4" /> : <VideoOff className="h-4 w-4" />}
@@ -304,11 +294,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           active={handRaised}
           onClick={toggleHand}
         >
-          {handRaised ? (
-            <HandMetal className="h-4 w-4" />
-          ) : (
-            <Hand className="h-4 w-4" />
-          )}
+          {handRaised ? <HandMetal className="h-4 w-4" /> : <Hand className="h-4 w-4" />}
         </ControlButton>
 
         <div className="mx-2 h-6 w-px bg-border" />
@@ -321,7 +307,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               setParticipantsOpen(false);
             }
 
-            setChatOpen(! isChatOpen);
+            setChatOpen(!isChatOpen);
           }}
         >
           <MessageSquare className="h-4 w-4" />
@@ -340,7 +326,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               setChatOpen(false);
             }
 
-            setParticipantsOpen(! isParticipantsOpen);
+            setParticipantsOpen(!isParticipantsOpen);
           }}
         >
           <Users className="h-4 w-4" />
@@ -354,11 +340,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           label={isFullscreen ? 'Exit full screen' : 'Full screen'}
           onClick={toggleFullscreen}
         >
-          {isFullscreen ? (
-            <Minimize2 className="h-4 w-4" />
-          ) : (
-            <Maximize2 className="h-4 w-4" />
-          )}
+          {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
         </ControlButton>
 
         <div className="mx-2 h-6 w-px bg-border" />
@@ -414,8 +396,8 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             </div>
 
             <p className="text-xs text-muted-foreground">
-              Anyone with this link will be asked for permission to join. The host approves
-              every guest.
+              Anyone with this link will be asked for permission to join. The host approves every
+              guest.
             </p>
           </div>
 
@@ -432,8 +414,8 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <DialogHeader>
             <DialogTitle>Leave this meeting?</DialogTitle>
             <DialogDescription>
-              You&apos;ll be removed from the call. The meeting continues for everyone else,
-              and you can rejoin while it&apos;s still in progress.
+              You&apos;ll be removed from the call. The meeting continues for everyone else, and you
+              can rejoin while it&apos;s still in progress.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

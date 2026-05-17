@@ -55,7 +55,9 @@ function fail(code: string, message: string, status: number): JsonResponse {
 }
 
 function rand(len: number = 8): string {
-  return Math.random().toString(36).slice(2, 2 + len);
+  return Math.random()
+    .toString(36)
+    .slice(2, 2 + len);
 }
 
 function makeUser(overrides: Partial<UserDto> = {}): UserDto {
@@ -77,7 +79,7 @@ function randomMeetingCode(): string {
 }
 
 function parseJsonBody(raw: string | null): Record<string, unknown> {
-  if (! raw) {
+  if (!raw) {
     return {};
   }
   try {
@@ -138,7 +140,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
     if (method === 'POST' && path.endsWith('/api/auth/login')) {
       const body = parseJsonBody(req.postData()) as { email?: string };
-      if (! state.user) {
+      if (!state.user) {
         state.user = makeUser({ email: body.email ?? `mock+${rand(6)}@example.test` });
       }
       return reply(ok({ user: state.user }));
@@ -151,7 +153,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
     if (method === 'GET' && path.endsWith('/api/auth/me')) {
       const u = requireUser();
-      if (! u) {
+      if (!u) {
         return reply(fail('UNAUTHORIZED', 'No session', 401));
       }
       return reply(ok(u));
@@ -159,7 +161,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
     if (method === 'PATCH' && path.endsWith('/api/auth/me')) {
       const u = requireUser();
-      if (! u) {
+      if (!u) {
         return reply(fail('UNAUTHORIZED', 'No session', 401));
       }
       const updates = parseJsonBody(req.postData());
@@ -173,7 +175,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
     if (method === 'POST' && path.endsWith('/api/auth/me/avatar')) {
       const u = requireUser();
-      if (! u) {
+      if (!u) {
         return reply(fail('UNAUTHORIZED', 'No session', 401));
       }
       state.user = { ...u, avatar: `/avatars/${u.id}-${rand(4)}.png` };
@@ -182,7 +184,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
     if (method === 'DELETE' && path.endsWith('/api/auth/me/avatar')) {
       const u = requireUser();
-      if (! u) {
+      if (!u) {
         return reply(fail('UNAUTHORIZED', 'No session', 401));
       }
       state.user = { ...u, avatar: null };
@@ -219,7 +221,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
     if (method === 'POST' && path.endsWith('/api/meetings')) {
       const u = requireUser();
-      if (! u) {
+      if (!u) {
         return reply(fail('UNAUTHORIZED', 'No session', 401));
       }
       const body = parseJsonBody(req.postData()) as { title?: string };
@@ -238,15 +240,17 @@ export async function installMockApi(page: Page): Promise<MockState> {
       return reply(ok(meeting, 201));
     }
 
-    const codeMatch = path.match(/^.*\/api\/meetings\/([a-zA-Z0-9-]+)(?:\/(join|leave|end|participants))?$/);
+    const codeMatch = path.match(
+      /^.*\/api\/meetings\/([a-zA-Z0-9-]+)(?:\/(join|leave|end|participants))?$/,
+    );
     if (codeMatch) {
       const [, code, sub] = codeMatch;
       const safeCode = code!;
       let meeting = state.meetings.get(safeCode);
 
       // GET /api/meetings/:code
-      if (method === 'GET' && ! sub) {
-        if (! meeting) {
+      if (method === 'GET' && !sub) {
+        if (!meeting) {
           // Allow tests that "join by code" via the dashboard input — they
           // expect the code to resolve, so synthesize one.
           meeting = {
@@ -266,7 +270,7 @@ export async function installMockApi(page: Page): Promise<MockState> {
 
       // POST /api/meetings/:code/join
       if (method === 'POST' && sub === 'join') {
-        if (! meeting) {
+        if (!meeting) {
           meeting = {
             id: `meeting-${safeCode}`,
             code: safeCode,

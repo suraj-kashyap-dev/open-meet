@@ -22,7 +22,7 @@ afterAll(() => {
 });
 
 if (typeof window !== 'undefined') {
-  if (! window.matchMedia) {
+  if (!window.matchMedia) {
     window.matchMedia = vi.fn().mockImplementation((query: string) => ({
       matches: false,
       media: query,
@@ -35,7 +35,7 @@ if (typeof window !== 'undefined') {
     }));
   }
 
-  if (! window.ResizeObserver) {
+  if (!window.ResizeObserver) {
     window.ResizeObserver = class {
       observe = vi.fn();
       unobserve = vi.fn();
@@ -43,7 +43,7 @@ if (typeof window !== 'undefined') {
     } as unknown as typeof ResizeObserver;
   }
 
-  if (! window.IntersectionObserver) {
+  if (!window.IntersectionObserver) {
     window.IntersectionObserver = class {
       root = null;
       rootMargin = '';

@@ -6,10 +6,7 @@ export interface NewUser {
   password: string;
 }
 
-export async function registerNewUser(
-  page: Page,
-  name = 'Ada Lovelace',
-): Promise<NewUser> {
+export async function registerNewUser(page: Page, name = 'Ada Lovelace'): Promise<NewUser> {
   const email = `e2e+${Date.now()}+${Math.random().toString(36).slice(2, 6)}@example.com`;
   const password = 'correct horse battery';
 
@@ -32,7 +29,9 @@ export async function registerNewUser(
   // Wait for the dashboard greeting — proves AuthGuard has resolved and the
   // Dashboard component has mounted with its event handlers attached.
   await expect(
-    page.getByRole('heading', { level: 1 }).filter({ hasText: /(morning|afternoon|evening|up late)/i }),
+    page
+      .getByRole('heading', { level: 1 })
+      .filter({ hasText: /(morning|afternoon|evening|up late)/i }),
   ).toBeVisible({ timeout: 15_000 });
 
   return { name, email, password };

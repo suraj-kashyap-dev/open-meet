@@ -47,17 +47,13 @@ async function serverRequest<TData>(
   });
 
   const contentType = res.headers.get('content-type') ?? '';
-  if (! contentType.includes('application/json')) {
-    throw new ApiClientError(
-      'INVALID_RESPONSE',
-      res.status,
-      `Unexpected response: ${res.status}`,
-    );
+  if (!contentType.includes('application/json')) {
+    throw new ApiClientError('INVALID_RESPONSE', res.status, `Unexpected response: ${res.status}`);
   }
 
   const json = (await res.json()) as ApiResponse<TData>;
 
-  if (! res.ok || ! json.success) {
+  if (!res.ok || !json.success) {
     const errBody = (json as ApiError).error;
     throw new ApiClientError(
       errBody?.code ?? 'UNKNOWN',
@@ -73,12 +69,21 @@ async function serverRequest<TData>(
 export const serverApi = {
   get: <TData>(path: string, opts?: Omit<ServerRequestOptions, 'method' | 'body'>) =>
     serverRequest<TData>(path, { ...opts, method: 'GET' }),
-  post: <TData>(path: string, body?: unknown, opts?: Omit<ServerRequestOptions, 'method' | 'body'>) =>
-    serverRequest<TData>(path, { ...opts, method: 'POST', body }),
-  patch: <TData>(path: string, body?: unknown, opts?: Omit<ServerRequestOptions, 'method' | 'body'>) =>
-    serverRequest<TData>(path, { ...opts, method: 'PATCH', body }),
-  put: <TData>(path: string, body?: unknown, opts?: Omit<ServerRequestOptions, 'method' | 'body'>) =>
-    serverRequest<TData>(path, { ...opts, method: 'PUT', body }),
+  post: <TData>(
+    path: string,
+    body?: unknown,
+    opts?: Omit<ServerRequestOptions, 'method' | 'body'>,
+  ) => serverRequest<TData>(path, { ...opts, method: 'POST', body }),
+  patch: <TData>(
+    path: string,
+    body?: unknown,
+    opts?: Omit<ServerRequestOptions, 'method' | 'body'>,
+  ) => serverRequest<TData>(path, { ...opts, method: 'PATCH', body }),
+  put: <TData>(
+    path: string,
+    body?: unknown,
+    opts?: Omit<ServerRequestOptions, 'method' | 'body'>,
+  ) => serverRequest<TData>(path, { ...opts, method: 'PUT', body }),
   delete: <TData>(path: string, opts?: Omit<ServerRequestOptions, 'method' | 'body'>) =>
     serverRequest<TData>(path, { ...opts, method: 'DELETE' }),
 };

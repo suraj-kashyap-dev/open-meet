@@ -40,11 +40,11 @@ export function AvatarUploader({ user }: { user: UserDto }) {
     const file = event.target.files?.[0];
     event.target.value = '';
 
-    if (! file) {
+    if (!file) {
       return;
     }
 
-    if (! AVATAR_MIMES.includes(file.type)) {
+    if (!AVATAR_MIMES.includes(file.type)) {
       toast.error('Avatar must be a PNG, JPEG, WebP, or GIF image');
       return;
     }

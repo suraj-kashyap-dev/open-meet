@@ -15,15 +15,7 @@ import type { useMediaDevices } from '@/features/lobby/hooks/use-media-devices';
 
 type MediaState = ReturnType<typeof useMediaDevices>;
 
-function Field({
-  icon,
-  label,
-  children,
-}: {
-  icon: ReactNode;
-  label: string;
-  children: ReactNode;
-}) {
+function Field({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
     <div className="space-y-1.5">
       <Label className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.08em] text-muted-foreground">

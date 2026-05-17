@@ -52,7 +52,7 @@ export function TopProgress() {
 
       // For path-change-only bursts (no pending fetch yet), schedule a
       // graceful finish after ~420ms so the bar doesn't stick.
-      if (startBurst && ! pending) {
+      if (startBurst && !pending) {
         if (completeRef.current !== null) {
           window.clearTimeout(completeRef.current);
         }
@@ -83,10 +83,7 @@ export function TopProgress() {
   }, [pending, pathPulse]);
 
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-0.5"
-    >
+    <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-0.5">
       <div
         className="h-full origin-left bg-gradient-to-r from-accent via-accent to-accent/70 shadow-[0_0_8px_var(--color-accent)] transition-all duration-300 ease-out"
         style={{

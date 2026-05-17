@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-  type ExecutionContext,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException, type ExecutionContext } from '@nestjs/common';
 import { type Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 

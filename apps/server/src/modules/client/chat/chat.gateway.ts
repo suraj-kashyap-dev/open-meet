@@ -38,10 +38,7 @@ import {
   type SendMessageGatewayDto,
 } from './dto/send-message.dto';
 import { WsJwtGuard } from './ws-jwt.guard';
-import {
-  extractAccessTokenFromSocket,
-  type SocketUser,
-} from './ws-auth.util';
+import { extractAccessTokenFromSocket, type SocketUser } from './ws-auth.util';
 
 type AuthSocket = Socket & { data: { user?: SocketUser } };
 
@@ -81,7 +78,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private knocksFor(code: string): Map<string, KnockEntry> {
     let bucket = this.pendingKnocks.get(code);
 
-    if (! bucket) {
+    if (!bucket) {
       bucket = new Map();
       this.pendingKnocks.set(code, bucket);
     }
@@ -92,7 +89,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private removeKnock(code: string, userId: string): KnockEntry | null {
     const bucket = this.pendingKnocks.get(code);
 
-    if (! bucket) {
+    if (!bucket) {
       return null;
     }
 
@@ -114,7 +111,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleConnection(client: AuthSocket): Promise<void> {
     try {
       const token = extractAccessTokenFromSocket(client);
-      if (! token) {
+      if (!token) {
         throw new Error('No token');
       }
       const payload = await this.jwt.verifyAsync<{
@@ -138,7 +135,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleDisconnect(client: AuthSocket): Promise<void> {
     const user = client.data?.user;
-    if (! user) {
+    if (!user) {
       return;
     }
 
@@ -179,7 +176,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private async denyAllPending(code: string, reason: KnockDenyReason): Promise<void> {
     const bucket = this.pendingKnocks.get(code);
 
-    if (! bucket) {
+    if (!bucket) {
       return;
     }
 
@@ -245,7 +242,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = this.requireUser(client);
     const meeting = await this.meetings.findRawByCode(body.meetingCode);
 
-    if (! meeting) {
+    if (!meeting) {
       throw new WsException('Meeting not found');
     }
 
@@ -253,7 +250,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       throw new WsException('Host does not need to knock');
     }
 
-    if (! (await this.hasHostPresent(body.meetingCode))) {
+    if (!(await this.hasHostPresent(body.meetingCode))) {
       const payload: KnockResolvedPayload = {
         admit: false,
         reason: KnockDenyReason.NO_HOST_PRESENT,
@@ -306,7 +303,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = this.requireUser(client);
     const meeting = await this.meetings.findRawByCode(body.meetingCode);
 
-    if (! meeting) {
+    if (!meeting) {
       throw new WsException('Meeting not found');
     }
 
@@ -316,7 +313,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     const entry = this.removeKnock(body.meetingCode, body.userId);
 
-    if (! entry) {
+    if (!entry) {
       return { responded: true };
     }
 
@@ -339,7 +336,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const user = this.requireUser(client);
     const meeting = await this.meetings.findRawByCode(body.meetingCode);
 
-    if (! meeting) {
+    if (!meeting) {
       throw new WsException('Meeting not found');
     }
 
@@ -399,7 +396,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   private requireUser(client: AuthSocket): SocketUser {
     const user = client.data?.user;
-    if (! user) {
+    if (!user) {
       throw new WsException('Unauthenticated');
     }
     return user;

@@ -141,7 +141,7 @@ export class AuthController {
     @CurrentUser() user: RequestUser,
     @Req() req: FastifyRequest,
   ): Promise<UserDto> {
-    if (! req.isMultipart()) {
+    if (!req.isMultipart()) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'Expected multipart/form-data',
@@ -150,7 +150,7 @@ export class AuthController {
 
     const part = await req.file();
 
-    if (! part) {
+    if (!part) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'No file provided',

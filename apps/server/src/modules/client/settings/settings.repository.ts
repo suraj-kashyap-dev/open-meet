@@ -19,10 +19,7 @@ export class SettingsRepository {
     });
   }
 
-  update(
-    userId: string,
-    data: Prisma.UserSettingsUncheckedUpdateInput,
-  ): Promise<UserSettings> {
+  update(userId: string, data: Prisma.UserSettingsUncheckedUpdateInput): Promise<UserSettings> {
     return this.prisma.userSettings.upsert({
       where: { userId },
       create: { ...(data as Prisma.UserSettingsUncheckedCreateInput), userId },

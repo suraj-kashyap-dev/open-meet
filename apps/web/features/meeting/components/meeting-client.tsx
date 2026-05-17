@@ -31,7 +31,7 @@ export function MeetingClient({ code }: { code: string }) {
   const [joinPrefs] = useState(() => consumeJoinPreferences(code));
 
   useEffect(() => {
-    if (! user || userLoading) {
+    if (!user || userLoading) {
       return;
     }
 
@@ -55,8 +55,7 @@ export function MeetingClient({ code }: { code: string }) {
           return;
         }
 
-        const message =
-          err instanceof ApiClientError ? err.message : 'Failed to load meeting';
+        const message = err instanceof ApiClientError ? err.message : 'Failed to load meeting';
         setError(message);
         toast.error(message);
 
@@ -80,19 +79,18 @@ export function MeetingClient({ code }: { code: string }) {
       const lkToken = await livekitApi.token({ meetingCode: code });
       setToken(lkToken);
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Failed to join meeting';
+      const message = err instanceof ApiClientError ? err.message : 'Failed to join meeting';
       setError(message);
       toast.error(message);
     }
   }, [code]);
 
   useEffect(() => {
-    if (! meeting || ! user) {
+    if (!meeting || !user) {
       return;
     }
 
-    if (user.id === meeting.hostId && ! token && ! error) {
+    if (user.id === meeting.hostId && !token && !error) {
       void proceedToRoom();
     }
   }, [meeting, user, token, error, proceedToRoom]);
@@ -114,7 +112,7 @@ export function MeetingClient({ code }: { code: string }) {
     );
   }
 
-  if (! meeting || ! user) {
+  if (!meeting || !user) {
     return (
       <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
@@ -124,13 +122,11 @@ export function MeetingClient({ code }: { code: string }) {
 
   const isHost = user.id === meeting.hostId;
 
-  if (! isHost && guestStage !== 'admitted') {
-    return (
-      <WaitingRoom code={code} displayName={user.name} onAdmitted={onGuestAdmitted} />
-    );
+  if (!isHost && guestStage !== 'admitted') {
+    return <WaitingRoom code={code} displayName={user.name} onAdmitted={onGuestAdmitted} />;
   }
 
-  if (! token) {
+  if (!token) {
     return (
       <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />

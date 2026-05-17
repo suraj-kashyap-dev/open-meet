@@ -22,7 +22,7 @@ export function useNotification(): { notify: (title: string, opts?: NotifyOption
 
   const fire = useCallback(
     (title: string, opts?: NotifyOptions) => {
-      if (! enabled) {
+      if (!enabled) {
         return;
       }
       notify(title, opts);

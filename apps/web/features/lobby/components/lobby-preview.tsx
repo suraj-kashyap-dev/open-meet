@@ -5,12 +5,7 @@ import { useCallback } from 'react';
 
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/cn';
 import type { useMediaDevices } from '@/features/lobby/hooks/use-media-devices';
 
@@ -29,7 +24,7 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
 
   const attachStream = useCallback(
     (el: HTMLVideoElement | null) => {
-      if (! el) {
+      if (!el) {
         return;
       }
 
@@ -84,20 +79,14 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
               <Button
                 variant={media.micEnabled ? 'ghost' : 'destructive'}
                 size="icon"
-                onClick={() => media.setMicEnabled(! media.micEnabled)}
+                onClick={() => media.setMicEnabled(!media.micEnabled)}
                 aria-label={media.micEnabled ? 'Mute microphone' : 'Unmute microphone'}
                 className={cn(
                   'h-11 w-11 rounded-full border border-white/15 backdrop-blur-md',
-                  media.micEnabled
-                    ? 'bg-white/15 text-white hover:bg-white/25'
-                    : '',
+                  media.micEnabled ? 'bg-white/15 text-white hover:bg-white/25' : '',
                 )}
               >
-                {media.micEnabled ? (
-                  <Mic className="h-5 w-5" />
-                ) : (
-                  <MicOff className="h-5 w-5" />
-                )}
+                {media.micEnabled ? <Mic className="h-5 w-5" /> : <MicOff className="h-5 w-5" />}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -110,13 +99,11 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
               <Button
                 variant={media.cameraEnabled ? 'ghost' : 'destructive'}
                 size="icon"
-                onClick={() => media.setCameraEnabled(! media.cameraEnabled)}
+                onClick={() => media.setCameraEnabled(!media.cameraEnabled)}
                 aria-label={media.cameraEnabled ? 'Turn off camera' : 'Turn on camera'}
                 className={cn(
                   'h-11 w-11 rounded-full border border-white/15 backdrop-blur-md',
-                  media.cameraEnabled
-                    ? 'bg-white/15 text-white hover:bg-white/25'
-                    : '',
+                  media.cameraEnabled ? 'bg-white/15 text-white hover:bg-white/25' : '',
                 )}
               >
                 {media.cameraEnabled ? (

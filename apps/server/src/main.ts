@@ -1,9 +1,6 @@
 import 'reflect-metadata';
 import { NestFactory, Reflector } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  type NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -59,7 +56,7 @@ async function bootstrap(): Promise<void> {
 
   app.useWebSocketAdapter(new RedisIoAdapter(app));
 
-  if (! isProd) {
+  if (!isProd) {
     const swagger = new DocumentBuilder()
       .setTitle('open-meet API')
       .setDescription('Google Meet clone — REST + WebSocket API')
@@ -76,18 +73,17 @@ async function bootstrap(): Promise<void> {
 
   Logger.log(`API listening on http://localhost:${port}/api`, 'Bootstrap');
 
-  if (! isProd) {
+  if (!isProd) {
     Logger.log(`Swagger UI at http://localhost:${port}/api/docs`, 'Bootstrap');
   }
 }
 
-bootstrap()
-  .catch(err => {
-    console.error('[bootstrap] failed:', err);
+bootstrap().catch((err) => {
+  console.error('[bootstrap] failed:', err);
 
-    if (err instanceof Error && err.stack) {
-      console.error(err.stack);
-    }
+  if (err instanceof Error && err.stack) {
+    console.error(err.stack);
+  }
 
-    process.exit(1);
-  });
+  process.exit(1);
+});

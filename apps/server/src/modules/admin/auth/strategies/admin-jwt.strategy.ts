@@ -26,8 +26,7 @@ export class AdminJwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
   constructor(config: ConfigService<ApiEnv, true>) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        (req: FastifyRequest) =>
-          (req.cookies?.[ADMIN_ACCESS_COOKIE] as string | undefined) ?? null,
+        (req: FastifyRequest) => (req.cookies?.[ADMIN_ACCESS_COOKIE] as string | undefined) ?? null,
       ]),
       ignoreExpiration: false,
       secretOrKey: config.getOrThrow<string>('ADMIN_JWT_ACCESS_SECRET'),
@@ -35,7 +34,7 @@ export class AdminJwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
   }
 
   validate(payload: AdminJwtPayload): AdminRequestUser {
-    if (! payload.sub) {
+    if (!payload.sub) {
       throw new UnauthorizedException({
         code: ApiErrorCode.TOKEN_INVALID,
         message: 'Invalid admin token payload',

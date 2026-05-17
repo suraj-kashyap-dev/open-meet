@@ -83,7 +83,7 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
   const tzOptions = useMemo(() => {
     const list = [...TIMEZONES];
 
-    if (timezone && ! list.includes(timezone)) {
+    if (timezone && !list.includes(timezone)) {
       list.unshift(timezone);
     }
 
@@ -101,9 +101,7 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
-
       <div className="grid gap-4 sm:grid-cols-2">
-
         <div className="space-y-1.5">
           <Label>Timezone</Label>
 
@@ -145,7 +143,6 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
             </SelectContent>
           </Select>
         </div>
-
       </div>
 
       <FormActions
@@ -153,7 +150,6 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
         dirty={isDirty}
         onReset={() => reset({ timezone: user.timezone, language: user.language })}
       />
-
     </form>
   );
 }

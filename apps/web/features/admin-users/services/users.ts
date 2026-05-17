@@ -24,10 +24,7 @@ function toQueryString(params: Record<string, string | number | undefined>): str
 
 export const adminUsersApi = {
   list: (query: AdminUserListQuery, signal?: AbortSignal) =>
-    api.get<AdminUserListResponseDto>(
-      `/admin/users${toQueryString({ ...query })}`,
-      { signal },
-    ),
+    api.get<AdminUserListResponseDto>(`/admin/users${toQueryString({ ...query })}`, { signal }),
 
   get: (id: string, signal?: AbortSignal) =>
     api.get<AdminUserDto>(`/admin/users/${id}`, { signal }),

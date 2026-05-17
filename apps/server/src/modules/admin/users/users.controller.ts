@@ -42,10 +42,7 @@ export class AdminUsersController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a user' })
-  update(
-    @Param('id') id: string,
-    @Body() dto: AdminUpdateUserBodyDto,
-  ): Promise<AdminUserDto> {
+  update(@Param('id') id: string, @Body() dto: AdminUpdateUserBodyDto): Promise<AdminUserDto> {
     return this.users.update(id, dto);
   }
 

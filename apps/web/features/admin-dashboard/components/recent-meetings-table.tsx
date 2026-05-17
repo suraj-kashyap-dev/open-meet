@@ -21,7 +21,7 @@ function statusClasses(status: RecentMeetingDto['status']): string {
 }
 
 function formatRelative(iso: string | null): string {
-  if (! iso) {
+  if (!iso) {
     return '—';
   }
 
@@ -67,9 +67,7 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
       }),
       column.accessor('participantCount', {
         header: () => <span className="block text-right">Participants</span>,
-        cell: (info) => (
-          <span className="block text-right tabular-nums">{info.getValue()}</span>
-        ),
+        cell: (info) => <span className="block text-right tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('durationMinutes', {
         header: () => <span className="block text-right">Duration</span>,

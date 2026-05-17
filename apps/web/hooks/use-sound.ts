@@ -15,7 +15,7 @@ export function useSound(name: SoundName): { play: () => void } {
   const enabled = settings?.meetingPreferences?.enableJoinSound ?? true;
 
   const play = useCallback(() => {
-    if (! enabled) {
+    if (!enabled) {
       return;
     }
     void playSound(name);

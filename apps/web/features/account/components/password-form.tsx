@@ -15,10 +15,7 @@ import { ApiClientError } from '@/lib/api/client';
 const schema = z
   .object({
     currentPassword: z.string().min(1, 'Required'),
-    newPassword: z
-      .string()
-      .min(8, 'At least 8 characters')
-      .max(128, 'Too long'),
+    newPassword: z.string().min(8, 'At least 8 characters').max(128, 'Too long'),
     confirmPassword: z.string().min(1, 'Required'),
   })
   .refine((d) => d.newPassword === d.confirmPassword, {
@@ -67,9 +64,7 @@ export function PasswordForm() {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
-
       <div className="grid gap-4 sm:grid-cols-3">
-
         <div className="space-y-1.5">
           <Label htmlFor="currentPassword">Current password</Label>
 
@@ -114,7 +109,6 @@ export function PasswordForm() {
             <p className="text-xs text-destructive">{errors.confirmPassword.message}</p>
           ) : null}
         </div>
-
       </div>
 
       <div className="mt-2 flex items-center justify-between gap-3 border-t border-border pt-4">
@@ -127,21 +121,18 @@ export function PasswordForm() {
             type="button"
             variant="ghost"
             size="sm"
-            disabled={! isDirty || pending}
-            onClick={() =>
-              reset({ currentPassword: '', newPassword: '', confirmPassword: '' })
-            }
+            disabled={!isDirty || pending}
+            onClick={() => reset({ currentPassword: '', newPassword: '', confirmPassword: '' })}
           >
             Clear
           </Button>
 
-          <Button type="submit" size="sm" disabled={! isDirty || pending}>
+          <Button type="submit" size="sm" disabled={!isDirty || pending}>
             {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {pending ? 'Changing…' : 'Change password'}
           </Button>
         </div>
       </div>
-
     </form>
   );
 }

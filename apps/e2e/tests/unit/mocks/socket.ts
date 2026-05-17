@@ -22,7 +22,7 @@ export function createMockSocket(): MockSocket {
   };
 
   const remove = (event: string, cb?: Listener) => {
-    if (! cb) {
+    if (!cb) {
       listeners.delete(event);
       return;
     }
@@ -46,7 +46,7 @@ export function createMockSocket(): MockSocket {
     __trigger(event, ...args) {
       const set = listeners.get(event);
 
-      if (! set) {
+      if (!set) {
         return;
       }
 

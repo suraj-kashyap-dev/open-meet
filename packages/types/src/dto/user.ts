@@ -3,8 +3,7 @@ export const MeetingDefaultView = {
   SPEAKER: 'SPEAKER',
 } as const;
 
-export type MeetingDefaultView =
-  (typeof MeetingDefaultView)[keyof typeof MeetingDefaultView];
+export type MeetingDefaultView = (typeof MeetingDefaultView)[keyof typeof MeetingDefaultView];
 
 export const ProfileVisibility = {
   PUBLIC: 'PUBLIC',
@@ -12,8 +11,7 @@ export const ProfileVisibility = {
   PRIVATE: 'PRIVATE',
 } as const;
 
-export type ProfileVisibility =
-  (typeof ProfileVisibility)[keyof typeof ProfileVisibility];
+export type ProfileVisibility = (typeof ProfileVisibility)[keyof typeof ProfileVisibility];
 
 export interface MeetingPreferencesDto {
   defaultMicMuted: boolean;

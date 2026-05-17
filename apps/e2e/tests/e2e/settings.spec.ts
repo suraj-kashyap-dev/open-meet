@@ -70,7 +70,10 @@ test.describe('user settings', () => {
     await page.goto('/profile');
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    await page.getByRole('link', { name: /Settings/ }).first().click();
+    await page
+      .getByRole('link', { name: /Settings/ })
+      .first()
+      .click();
     await page.waitForURL(/\/settings$/);
 
     await expect(page.getByRole('heading', { name: 'Settings', level: 1 })).toBeVisible();
@@ -176,21 +179,15 @@ test.describe('user settings', () => {
     );
   });
 
-  test('Browser notifications — turns on when permission is granted', async ({
-    page,
-    context,
-  }) => {
+  test('Browser notifications — turns on when permission is granted', async ({ page, context }) => {
     await context.grantPermissions(['notifications']);
 
-    // Replace the whole Notification class so the toggle's permission probe
-    // resolves to "granted" without depending on the host browser's UI prompt.
     await page.addInitScript(() => {
       class StubNotification {
         static permission: NotificationPermission = 'granted';
         static requestPermission(): Promise<NotificationPermission> {
           return Promise.resolve('granted');
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         constructor(_title: string, _options?: NotificationOptions) {
           /* no-op */
         }
@@ -204,9 +201,6 @@ test.describe('user settings', () => {
 
     const toggle = rowFor(page, 'Browser notifications').getByRole('switch');
 
-    // Default is on. Commit "off" first so the subsequent flip-on is a real
-    // dirty change (react-hook-form clears dirty when the field returns to
-    // its default value, which would otherwise disable the Save button).
     if ((await toggle.getAttribute('aria-checked')) === 'true') {
       await toggle.click();
       await expect(toggle).toHaveAttribute('aria-checked', 'false');
@@ -221,14 +215,13 @@ test.describe('user settings', () => {
     await page.reload();
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    await expect(
-      rowFor(page, 'Browser notifications').getByRole('switch'),
-    ).toHaveAttribute('aria-checked', 'true');
+    await expect(rowFor(page, 'Browser notifications').getByRole('switch')).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
   });
 
-  test('Browser notifications — refuses to enable when permission is denied', async ({
-    page,
-  }) => {
+  test('Browser notifications — refuses to enable when permission is denied', async ({ page }) => {
     // Same trick as above but pin the permission to denied so the toggle is
     // forced down the rejection branch.
     await page.addInitScript(() => {
@@ -237,7 +230,6 @@ test.describe('user settings', () => {
         static requestPermission(): Promise<NotificationPermission> {
           return Promise.resolve('denied');
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         constructor(_title: string, _options?: NotificationOptions) {
           /* no-op */
         }
@@ -260,9 +252,9 @@ test.describe('user settings', () => {
     const startState = await toggle.getAttribute('aria-checked');
     await toggle.click();
 
-    await expect(
-      page.getByText(/permission denied|not supported/i).first(),
-    ).toBeVisible({ timeout: 5_000 });
+    await expect(page.getByText(/permission denied|not supported/i).first()).toBeVisible({
+      timeout: 5_000,
+    });
 
     await expect(toggle).toHaveAttribute('aria-checked', startState!);
   });
@@ -299,9 +291,10 @@ test.describe('user settings', () => {
     await page.reload();
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    await expect(
-      rowFor(page, 'Show email to participants').getByRole('switch'),
-    ).toHaveAttribute('aria-checked', initial === 'true' ? 'false' : 'true');
+    await expect(rowFor(page, 'Show email to participants').getByRole('switch')).toHaveAttribute(
+      'aria-checked',
+      initial === 'true' ? 'false' : 'true',
+    );
   });
 
   test('Privacy — profile visibility persists across reload', async ({ page }) => {
@@ -317,9 +310,7 @@ test.describe('user settings', () => {
     await page.reload();
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    await expect(rowFor(page, 'Profile visibility').getByRole('combobox')).toContainText(
-      'Private',
-    );
+    await expect(rowFor(page, 'Profile visibility').getByRole('combobox')).toContainText('Private');
   });
 
   test('Localization — timezone change persists across reload', async ({ page }) => {
@@ -386,16 +377,19 @@ test.describe('settings runtime application — lobby', () => {
 
     await page.goto('/');
     await page.locator('html[data-hydrated="true"]').waitFor();
-    await page.getByRole('button', { name: /new meeting/i }).first().click();
+    await page
+      .getByRole('button', { name: /new meeting/i })
+      .first()
+      .click();
 
     await page.waitForURL(/\/[a-z0-9-]+\/lobby$/, { timeout: 30_000 });
     await page.locator('html[data-hydrated="true"]').waitFor();
 
     // Once the lobby applies the setting the mic button flips to "off" state.
     // The aria-label encodes the *next* action, so an off mic reads "Unmute microphone".
-    await expect(
-      page.getByRole('button', { name: 'Unmute microphone' }),
-    ).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole('button', { name: 'Unmute microphone' })).toBeVisible({
+      timeout: 15_000,
+    });
   });
 
   test('defaultCameraOff is applied when entering the lobby', async ({ page }) => {
@@ -410,7 +404,10 @@ test.describe('settings runtime application — lobby', () => {
 
     await page.goto('/');
     await page.locator('html[data-hydrated="true"]').waitFor();
-    await page.getByRole('button', { name: /new meeting/i }).first().click();
+    await page
+      .getByRole('button', { name: /new meeting/i })
+      .first()
+      .click();
 
     await page.waitForURL(/\/[a-z0-9-]+\/lobby$/, { timeout: 30_000 });
     await page.locator('html[data-hydrated="true"]').waitFor();

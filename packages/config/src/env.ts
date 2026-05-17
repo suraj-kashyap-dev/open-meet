@@ -28,7 +28,11 @@ export const apiEnvSchema = z.object({
   S3_PUBLIC_URL: z.string().optional(),
   S3_FORCE_PATH_STYLE: z.coerce.boolean().default(false),
   LOCAL_STORAGE_DIR: z.string().default('./uploads'),
-  UPLOAD_MAX_SIZE_BYTES: z.coerce.number().int().positive().default(25 * 1024 * 1024),
+  UPLOAD_MAX_SIZE_BYTES: z.coerce
+    .number()
+    .int()
+    .positive()
+    .default(25 * 1024 * 1024),
   API_PUBLIC_URL: z.string().url().default('http://localhost:3001'),
 
   LIVEKIT_API_KEY: z.string().min(1),
@@ -54,7 +58,7 @@ export type WebPublicEnv = z.infer<typeof webPublicEnvSchema>;
 export function parseApiEnv(env: Record<string, string | undefined>): ApiEnv {
   const result = apiEnvSchema.safeParse(env);
 
-  if (! result.success) {
+  if (!result.success) {
     const issues = result.error.issues
       .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
       .join('\n');
@@ -65,12 +69,10 @@ export function parseApiEnv(env: Record<string, string | undefined>): ApiEnv {
   return result.data;
 }
 
-export function parseWebPublicEnv(
-  env: Record<string, string | undefined>,
-): WebPublicEnv {
+export function parseWebPublicEnv(env: Record<string, string | undefined>): WebPublicEnv {
   const result = webPublicEnvSchema.safeParse(env);
 
-  if (! result.success) {
+  if (!result.success) {
     const issues = result.error.issues
       .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
       .join('\n');

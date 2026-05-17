@@ -89,7 +89,6 @@ export function useMediaDevices(): UseMediaDevicesResult {
       navigator.mediaDevices.removeEventListener('devicechange', handler);
       stop();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const selectVideo = useCallback(

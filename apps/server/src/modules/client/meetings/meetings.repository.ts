@@ -120,19 +120,12 @@ export class MeetingsRepository {
     });
   }
 
-  listHistoryForUser(params: {
-    userId: string;
-    skip: number;
-    take: number;
-  }) {
+  listHistoryForUser(params: { userId: string; skip: number; take: number }) {
     return this.prisma.meeting.findMany({
       where: {
         participants: { some: { userId: params.userId } },
       },
-      orderBy: [
-        { startedAt: { sort: 'desc', nulls: 'last' } },
-        { createdAt: 'desc' },
-      ],
+      orderBy: [{ startedAt: { sort: 'desc', nulls: 'last' } }, { createdAt: 'desc' }],
       skip: params.skip,
       take: params.take,
       include: {

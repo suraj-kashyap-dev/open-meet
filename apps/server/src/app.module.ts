@@ -44,5 +44,4 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
 })
-
 export class AppModule {}

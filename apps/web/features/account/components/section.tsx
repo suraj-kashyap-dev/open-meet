@@ -12,9 +12,7 @@ export function SectionCard({ title, description, children }: SectionCardProps) 
       <header className="border-b border-border px-6 py-4">
         <h2 className="text-sm font-semibold tracking-tight">{title}</h2>
 
-        {description ? (
-          <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
-        ) : null}
+        {description ? <p className="mt-0.5 text-xs text-muted-foreground">{description}</p> : null}
       </header>
 
       <div className="px-6 py-5">{children}</div>

@@ -27,14 +27,13 @@ export function UnauthorizedBridge() {
       try {
         window.localStorage.removeItem(CACHE_KEY);
       } catch {
+        /* private mode / quota — nothing to do */
       }
 
       qc.setQueryData(ME_KEY, null);
 
       const isPublic =
-        pathname === '/' ||
-        pathname.startsWith('/login') ||
-        pathname.startsWith('/register');
+        pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/register');
 
       if (isPublic) {
         return;
@@ -46,7 +45,7 @@ export function UnauthorizedBridge() {
     };
 
     window.addEventListener(UNAUTHORIZED_EVENT, handler);
-    
+
     return () => {
       window.removeEventListener(UNAUTHORIZED_EVENT, handler);
     };

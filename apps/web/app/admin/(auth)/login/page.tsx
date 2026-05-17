@@ -26,7 +26,10 @@ export default function AdminLoginPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          Looking for the user app? <a href="/" className="underline hover:text-foreground">Go to Open Meet</a>
+          Looking for the user app?{' '}
+          <a href="/" className="underline hover:text-foreground">
+            Go to Open Meet
+          </a>
         </p>
       </div>
     </main>

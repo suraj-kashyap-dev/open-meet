@@ -47,21 +47,17 @@ async function request<TData>(path: string, options: RequestOptions = {}): Promi
   });
 
   const contentType = res.headers.get('content-type') ?? '';
-  if (! contentType.includes('application/json')) {
+  if (!contentType.includes('application/json')) {
     if (res.status === 401) {
       emitUnauthorized(path);
     }
-    
-    throw new ApiClientError(
-      'INVALID_RESPONSE',
-      res.status,
-      `Unexpected response: ${res.status}`,
-    );
+
+    throw new ApiClientError('INVALID_RESPONSE', res.status, `Unexpected response: ${res.status}`);
   }
 
   const json = (await res.json()) as ApiResponse<TData>;
 
-  if (! res.ok || ! json.success) {
+  if (!res.ok || !json.success) {
     const errBody = (json as ApiError).error;
     const status = errBody?.statusCode ?? res.status;
 
@@ -84,9 +80,7 @@ function emitUnauthorized(path: string): void {
   if (typeof window === 'undefined') {
     return;
   }
-  window.dispatchEvent(
-    new CustomEvent(UNAUTHORIZED_EVENT, { detail: { path } }),
-  );
+  window.dispatchEvent(new CustomEvent(UNAUTHORIZED_EVENT, { detail: { path } }));
 }
 
 export const api = {

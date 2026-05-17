@@ -11,11 +11,6 @@
       "@/*": ["../web/*"]
     }
   },
-  "include": [
-    "tests/**/*",
-    "playwright.config.ts",
-    "vitest.config.ts",
-    "fixtures/**/*"
-  ],
+  "include": ["tests/**/*", "playwright.config.ts", "vitest.config.ts", "fixtures/**/*"],
   "exclude": ["node_modules", "playwright-report", "test-results"]
 }

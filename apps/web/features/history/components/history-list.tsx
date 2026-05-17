@@ -27,7 +27,7 @@ import { cn } from '@/lib/cn';
 const PAGE_SIZE = 20;
 
 function formatStartedAt(iso: string | null): string {
-  if (! iso) {
+  if (!iso) {
     return '—';
   }
 
@@ -79,7 +79,8 @@ export function HistoryList() {
         header: 'Meeting',
         cell: ({ row }) => {
           const item = row.original;
-          const title = item.title ?? `Meeting on ${formatStartedAt(item.startedAt ?? item.createdAt)}`;
+          const title =
+            item.title ?? `Meeting on ${formatStartedAt(item.startedAt ?? item.createdAt)}`;
 
           return (
             <div className="flex min-w-0 items-center gap-3">
@@ -258,8 +259,8 @@ export function HistoryList() {
           ) : null}
         </div>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          Every meeting you hosted or joined — with chat, attachments, and the
-          participant list preserved.
+          Every meeting you hosted or joined — with chat, attachments, and the participant list
+          preserved.
         </p>
       </header>
 

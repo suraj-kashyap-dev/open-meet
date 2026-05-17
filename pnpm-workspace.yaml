@@ -1,15 +1,15 @@
 packages:
-  - "apps/*"
-  - "packages/*"
+  - 'apps/*'
+  - 'packages/*'
 
 onlyBuiltDependencies:
-  - "@nestjs/core"
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@scarf/scarf"
-  - "argon2"
-  - "esbuild"
-  - "msgpackr-extract"
-  - "prisma"
-  - "sharp"
-  - "@swc/core"
+  - '@nestjs/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@scarf/scarf'
+  - 'argon2'
+  - 'esbuild'
+  - 'msgpackr-extract'
+  - 'prisma'
+  - 'sharp'
+  - '@swc/core'

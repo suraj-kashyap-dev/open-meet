@@ -10,14 +10,14 @@ export function notificationsSupported(): boolean {
 }
 
 export function notificationsPermission(): NotificationPermission {
-  if (! notificationsSupported()) {
+  if (!notificationsSupported()) {
     return 'denied';
   }
   return Notification.permission;
 }
 
 export async function ensureNotificationPermission(): Promise<NotificationPermission> {
-  if (! notificationsSupported()) {
+  if (!notificationsSupported()) {
     return 'denied';
   }
   if (Notification.permission === 'granted' || Notification.permission === 'denied') {
@@ -38,14 +38,14 @@ interface NotifyOptions {
 }
 
 export function notify(title: string, opts: NotifyOptions = {}): void {
-  if (! notificationsSupported() || Notification.permission !== 'granted') {
+  if (!notificationsSupported() || Notification.permission !== 'granted') {
     return;
   }
-  // Skip if the user is already looking at the page — in-app toasts/sounds
-  // handle that case and a second OS notification would be noisy.
+
   if (typeof document !== 'undefined' && document.visibilityState === 'visible') {
     return;
   }
+
   try {
     new Notification(title, {
       body: opts.body,

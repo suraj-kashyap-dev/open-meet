@@ -7,7 +7,9 @@ import { StorageService } from '../../../storage/storage.service';
 import { MeetingsService } from './meetings.service';
 import { MeetingsRepository } from './meetings.repository';
 
-function meeting(overrides: Partial<{ id: string; code: string; hostId: string; status: MeetingStatus }> = {}) {
+function meeting(
+  overrides: Partial<{ id: string; code: string; hostId: string; status: MeetingStatus }> = {},
+) {
   return {
     id: 'm1',
     code: 'abcd-efgh-ijkl',

@@ -43,7 +43,7 @@ export class AdminUsersService {
   async getById(id: string): Promise<AdminUserDto> {
     const user = await this.users.findById(id);
 
-    if (! user) {
+    if (!user) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
         message: `User "${id}" not found`,
@@ -56,7 +56,7 @@ export class AdminUsersService {
   async update(id: string, dto: AdminUpdateUserDto): Promise<AdminUserDto> {
     const existing = await this.users.findById(id);
 
-    if (! existing) {
+    if (!existing) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
         message: `User "${id}" not found`,
@@ -108,7 +108,7 @@ export class AdminUsersService {
   async delete(id: string): Promise<{ deleted: true }> {
     const existing = await this.users.findById(id);
 
-    if (! existing) {
+    if (!existing) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
         message: `User "${id}" not found`,

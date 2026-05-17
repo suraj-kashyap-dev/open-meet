@@ -25,16 +25,16 @@ Full-stack TypeScript · LiveKit SFU · multi-instance ready.
 
 ## ✨ Highlights
 
-| | |
-|---|---|
-| 🚀 **Instant rooms** | One-click `xxxx-xxxx-xxxx` meeting codes, room-scoped JWT tokens, host transfer on the way. |
-| 🎛️ **Real pre-join** | Lobby with camera preview, device pickers, mic level meter, and persisted defaults. |
-| 💬 **Realtime chat** | Socket.IO `/meeting` namespace, fanned out via `@socket.io/redis-adapter` so the API scales horizontally. |
-| ✋ **Reactions & raise hand** | Live overlay reactions, raised-hand indicator surfaced in tiles and the participants panel. |
-| 🔐 **Hardened auth** | `argon2` hashing, httpOnly access + refresh cookies, refresh-token rotation hashed in Redis, throttling on `/api/auth/*`. |
-| 🧰 **Typed end-to-end** | One `@open-meet/types` package shared between API + Web for DTOs, socket events, and response envelopes. |
-| 🧪 **Tested** | Vitest unit suites for services + repositories, Playwright E2E for every user-visible flow. |
-| 📦 **Self-hostable** | Bring-your-own Postgres, Redis, LiveKit, coturn — all wired in `docker-compose.yml`. |
+|                               |                                                                                                                           |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 🚀 **Instant rooms**          | One-click `xxxx-xxxx-xxxx` meeting codes, room-scoped JWT tokens, host transfer on the way.                               |
+| 🎛️ **Real pre-join**          | Lobby with camera preview, device pickers, mic level meter, and persisted defaults.                                       |
+| 💬 **Realtime chat**          | Socket.IO `/meeting` namespace, fanned out via `@socket.io/redis-adapter` so the API scales horizontally.                 |
+| ✋ **Reactions & raise hand** | Live overlay reactions, raised-hand indicator surfaced in tiles and the participants panel.                               |
+| 🔐 **Hardened auth**          | `argon2` hashing, httpOnly access + refresh cookies, refresh-token rotation hashed in Redis, throttling on `/api/auth/*`. |
+| 🧰 **Typed end-to-end**       | One `@open-meet/types` package shared between API + Web for DTOs, socket events, and response envelopes.                  |
+| 🧪 **Tested**                 | Vitest unit suites for services + repositories, Playwright E2E for every user-visible flow.                               |
+| 📦 **Self-hostable**          | Bring-your-own Postgres, Redis, LiveKit, coturn — all wired in `docker-compose.yml`.                                      |
 
 ---
 

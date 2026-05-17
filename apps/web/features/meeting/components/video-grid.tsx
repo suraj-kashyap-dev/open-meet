@@ -59,10 +59,7 @@ function Tile({ track, raisedHands, className }: TileProps) {
 
   return (
     <div
-      className={cn(
-        'relative overflow-hidden rounded-lg border border-border bg-muted',
-        className,
-      )}
+      className={cn('relative overflow-hidden rounded-lg border border-border bg-muted', className)}
     >
       <ParticipantTile trackRef={track} className="h-full w-full" />
 
@@ -154,12 +151,7 @@ export function VideoGrid() {
   }
 
   return (
-    <div
-      className={cn(
-        'grid h-full w-full auto-rows-fr gap-3',
-        gridClass(cameras.length),
-      )}
-    >
+    <div className={cn('grid h-full w-full auto-rows-fr gap-3', gridClass(cameras.length))}>
       {cameras.map((track) => (
         <Tile
           key={`${track.participant.identity}-${track.source}`}

@@ -2,10 +2,8 @@ interface ParticipantMetadata {
   avatar: string | null;
 }
 
-export function parseParticipantMetadata(
-  raw: string | undefined,
-): ParticipantMetadata {
-  if (! raw) {
+export function parseParticipantMetadata(raw: string | undefined): ParticipantMetadata {
+  if (!raw) {
     return { avatar: null };
   }
 

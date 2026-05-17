@@ -47,7 +47,7 @@ export class AvatarsService {
   }
 
   async upload({ userId, buffer, mime }: UploadInput): Promise<{ key: string }> {
-    if (! buffer || buffer.length === 0) {
+    if (!buffer || buffer.length === 0) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'Avatar file is empty',
@@ -63,7 +63,7 @@ export class AvatarsService {
 
     const ext = ALLOWED_AVATAR_MIMES[mime];
 
-    if (! ext) {
+    if (!ext) {
       throw new UnsupportedMediaTypeException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: `Avatar must be a PNG, JPEG, WebP, or GIF image (got ${mime})`,
@@ -72,7 +72,7 @@ export class AvatarsService {
 
     const existing = await this.users.findById(userId);
 
-    if (! existing) {
+    if (!existing) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
@@ -99,14 +99,14 @@ export class AvatarsService {
   async remove(userId: string): Promise<void> {
     const existing = await this.users.findById(userId);
 
-    if (! existing) {
+    if (!existing) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
       });
     }
 
-    if (! existing.avatarKey) {
+    if (!existing.avatarKey) {
       return;
     }
 
@@ -115,14 +115,12 @@ export class AvatarsService {
     await this.users.update(userId, { avatarKey: null });
 
     this.storage.delete(previousKey).catch((err: unknown) => {
-      this.logger.warn(
-        `Failed to delete avatar "${previousKey}": ${(err as Error).message}`,
-      );
+      this.logger.warn(`Failed to delete avatar "${previousKey}": ${(err as Error).message}`);
     });
   }
 
   resolveUrl(avatarKey: string | null): string | null {
-    if (! avatarKey) {
+    if (!avatarKey) {
       return null;
     }
 

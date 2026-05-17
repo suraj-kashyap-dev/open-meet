@@ -1,9 +1,4 @@
-import {
-  type CanActivate,
-  Injectable,
-  Logger,
-  type ExecutionContext,
-} from '@nestjs/common';
+import { type CanActivate, Injectable, Logger, type ExecutionContext } from '@nestjs/common';
 import { type ConfigService } from '@nestjs/config';
 import { type JwtService } from '@nestjs/jwt';
 import { WsException } from '@nestjs/websockets';
@@ -31,7 +26,7 @@ export class WsJwtGuard implements CanActivate {
     }
 
     const token = extractAccessTokenFromSocket(socket);
-    if (! token) {
+    if (!token) {
       throw new WsException('Unauthenticated');
     }
 

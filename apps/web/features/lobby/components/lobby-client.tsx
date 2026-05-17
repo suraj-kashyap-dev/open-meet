@@ -38,7 +38,7 @@ export function LobbyClient({ code }: { code: string }) {
   // Apply the user's saved meeting defaults once the media stream is ready.
   // Guarded by a ref so a settings refetch can't clobber a manual toggle.
   useEffect(() => {
-    if (appliedDefaults.current || ! settings || ! media.stream) {
+    if (appliedDefaults.current || !settings || !media.stream) {
       return;
     }
     appliedDefaults.current = true;
@@ -52,7 +52,7 @@ export function LobbyClient({ code }: { code: string }) {
   }, [settings, media]);
 
   const onCopyLink = async () => {
-    if (! meeting) {
+    if (!meeting) {
       return;
     }
 
@@ -85,7 +85,7 @@ export function LobbyClient({ code }: { code: string }) {
     );
   }
 
-  if (! meeting) {
+  if (!meeting) {
     return null;
   }
 
@@ -156,16 +156,19 @@ export function LobbyClient({ code }: { code: string }) {
                   <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Devices
                   </p>
-                  <h3 className="text-sm font-semibold tracking-tight">
-                    Check your audio & video
-                  </h3>
+                  <h3 className="text-sm font-semibold tracking-tight">Check your audio & video</h3>
                 </header>
                 <DeviceSelector media={media} />
               </div>
             </section>
 
             <div className="hidden space-y-2 pt-1 lg:block">
-              <Button onClick={onJoin} disabled={nav.isNavigating} className="group w-full" size="lg">
+              <Button
+                onClick={onJoin}
+                disabled={nav.isNavigating}
+                className="group w-full"
+                size="lg"
+              >
                 {nav.isNavigating ? 'Joining…' : 'Join now'}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>

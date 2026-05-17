@@ -56,8 +56,7 @@ export function Dashboard() {
       const meeting = await createMeeting.mutateAsync({});
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Could not create meeting';
+      const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
 
       toast.error(message);
     }
@@ -68,7 +67,7 @@ export function Dashboard() {
 
     const trimmed = code.trim().toLowerCase();
 
-    if (! trimmed) {
+    if (!trimmed) {
       toast.error('Enter a meeting code');
       return;
     }
@@ -89,7 +88,6 @@ export function Dashboard() {
       <Spotlight />
 
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 sm:px-6">
-
         <motion.header
           initial="hidden"
           animate="visible"
@@ -99,8 +97,7 @@ export function Dashboard() {
           <DateBadge />
 
           <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-            {greetingLabel()},{' '}
-            <span className="gradient-text">{firstName}</span>
+            {greetingLabel()}, <span className="gradient-text">{firstName}</span>
           </h1>
 
           <p className="max-w-xl text-balance text-sm text-muted-foreground sm:text-base">
@@ -109,55 +106,30 @@ export function Dashboard() {
           </p>
         </motion.header>
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          custom={1}
-          variants={fadeUp}
-        >
+        <motion.div initial="hidden" animate="visible" custom={1} variants={fadeUp}>
           <ActionCard
             code={code}
             onCodeChange={setCode}
             onCreate={onCreate}
             onJoin={onJoin}
             isCreating={createMeeting.isPending || nav.isNavigating}
-            isJoining={nav.isNavigating && ! createMeeting.isPending}
+            isJoining={nav.isNavigating && !createMeeting.isPending}
           />
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          custom={2}
-          variants={fadeUp}
-        >
-          <RecentMeetings
-            items={recent}
-            total={totalMeetings}
-            isLoading={history.isLoading}
-          />
+        <motion.div initial="hidden" animate="visible" custom={2} variants={fadeUp}>
+          <RecentMeetings items={recent} total={totalMeetings} isLoading={history.isLoading} />
         </motion.div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            custom={3}
-            variants={fadeUp}
-          >
+          <motion.div initial="hidden" animate="visible" custom={3} variants={fadeUp}>
             <TipsCard />
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            custom={4}
-            variants={fadeUp}
-          >
+          <motion.div initial="hidden" animate="visible" custom={4} variants={fadeUp}>
             <ShortcutsCard />
           </motion.div>
         </div>
-
       </section>
     </main>
   );
@@ -172,7 +144,14 @@ interface ActionCardProps {
   isJoining: boolean;
 }
 
-function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating, isJoining }: ActionCardProps) {
+function ActionCard({
+  code,
+  onCodeChange,
+  onCreate,
+  onJoin,
+  isCreating,
+  isJoining,
+}: ActionCardProps) {
   return (
     <Card className="group relative overflow-hidden border-border/60 bg-card/60 backdrop-blur transition-all duration-300 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10">
       <div
@@ -186,7 +165,6 @@ function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating, isJoinin
       />
 
       <CardContent className="relative grid gap-8 p-7 md:grid-cols-[1fr_auto_1fr] md:items-stretch md:gap-0 md:p-0">
-
         <div className="flex flex-col justify-between gap-6 md:p-8">
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-accent/15 text-accent ring-1 ring-accent/20">
@@ -199,9 +177,7 @@ function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating, isJoinin
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Start a new meeting
-            </h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Start a new meeting</h2>
 
             <p className="text-sm text-muted-foreground">
               A fresh, shareable room. No setup — the link expires once the room is empty.
@@ -258,9 +234,7 @@ function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating, isJoinin
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Join with a code
-            </h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Join with a code</h2>
 
             <p className="text-sm text-muted-foreground">
               Paste the 12-character code your host shared with you.
@@ -286,14 +260,13 @@ function ActionCard({ code, onCodeChange, onCreate, onJoin, isCreating, isJoinin
               type="submit"
               variant="outline"
               size="lg"
-              disabled={! code.trim() || isJoining}
+              disabled={!code.trim() || isJoining}
               className="sm:min-w-[110px]"
             >
               {isJoining ? 'Joining…' : 'Join'}
             </Button>
           </form>
         </div>
-
       </CardContent>
     </Card>
   );
@@ -309,7 +282,6 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
   return (
     <Card className="border-border/60 bg-card/50 backdrop-blur">
       <CardContent className="flex flex-col gap-5 p-7">
-
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <History className="h-4 w-4 text-accent" />
@@ -346,15 +318,13 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
             ))}
           </ul>
         )}
-
       </CardContent>
     </Card>
   );
 }
 
 function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
-  const rejoinable =
-    item.status === MeetingStatus.ACTIVE || item.status === MeetingStatus.WAITING;
+  const rejoinable = item.status === MeetingStatus.ACTIVE || item.status === MeetingStatus.WAITING;
 
   const primaryHref = rejoinable ? `/${item.code}/lobby` : `/history/${item.code}`;
   const actionLabel = rejoinable ? 'Rejoin' : 'Open';
@@ -473,11 +443,7 @@ function CopyLinkButton({ code }: { code: string }) {
       aria-label="Copy meeting link"
       className="h-8 w-8 shrink-0 text-muted-foreground opacity-0 transition-opacity focus-visible:opacity-100 group-hover/row:opacity-100"
     >
-      {copied ? (
-        <Check className="h-4 w-4 text-success" />
-      ) : (
-        <Copy className="h-4 w-4" />
-      )}
+      {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
     </Button>
   );
 }
@@ -531,7 +497,7 @@ function DateBadge() {
     };
   }, []);
 
-  if (! now) {
+  if (!now) {
     return <span className="h-5 w-40" aria-hidden />;
   }
 
@@ -582,7 +548,6 @@ function TipsCard() {
   return (
     <Card className="h-full border-border/60 bg-card/50 backdrop-blur">
       <CardContent className="flex h-full flex-col gap-4 p-7">
-
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-accent" />
 
@@ -614,7 +579,6 @@ function TipsCard() {
             </li>
           ))}
         </ul>
-
       </CardContent>
     </Card>
   );
@@ -624,7 +588,6 @@ function ShortcutsCard() {
   return (
     <Card className="h-full border-border/60 bg-card/50 backdrop-blur">
       <CardContent className="flex h-full flex-col gap-4 p-7">
-
         <div className="flex items-center gap-2">
           <Keyboard className="h-4 w-4 text-accent" />
 
@@ -643,7 +606,6 @@ function ShortcutsCard() {
         <p className="mt-auto text-xs text-muted-foreground">
           In-call shortcuts activate once you join a meeting.
         </p>
-
       </CardContent>
     </Card>
   );
@@ -690,7 +652,7 @@ function greetingLabel(): string {
 }
 
 function formatShortDate(iso: string | null): string {
-  if (! iso) {
+  if (!iso) {
     return '—';
   }
 

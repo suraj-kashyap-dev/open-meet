@@ -25,7 +25,9 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         (req: FastifyRequest) =>
           (req.cookies?.[ACCESS_COOKIE] as string | undefined) ??
           (ExtractJwt.fromAuthHeaderAsBearerToken()(
-            req as unknown as Parameters<ReturnType<typeof ExtractJwt.fromAuthHeaderAsBearerToken>>[0],
+            req as unknown as Parameters<
+              ReturnType<typeof ExtractJwt.fromAuthHeaderAsBearerToken>
+            >[0],
           ) as string | null),
       ]),
       ignoreExpiration: false,

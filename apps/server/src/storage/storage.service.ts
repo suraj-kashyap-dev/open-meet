@@ -43,9 +43,7 @@ export class StorageService {
         config.getOrThrow<string>('LOCAL_STORAGE_DIR'),
         config.getOrThrow<string>('API_PUBLIC_URL'),
       );
-      this.logger.log(
-        `Storage: local dir="${config.getOrThrow<string>('LOCAL_STORAGE_DIR')}"`,
-      );
+      this.logger.log(`Storage: local dir="${config.getOrThrow<string>('LOCAL_STORAGE_DIR')}"`);
     }
   }
 

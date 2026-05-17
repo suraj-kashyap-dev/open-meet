@@ -44,8 +44,9 @@ export function EndedView({ code }: { code: string }) {
         <div className="space-y-1.5">
           <h1 className="text-2xl font-semibold tracking-tight">You left the meeting</h1>
           <p className="text-sm text-muted-foreground">
-            Redirecting to home in <span className="font-medium tabular-nums text-foreground">{secs}s</span>.
-            You can rejoin if it&apos;s still in progress, or go home now.
+            Redirecting to home in{' '}
+            <span className="font-medium tabular-nums text-foreground">{secs}s</span>. You can
+            rejoin if it&apos;s still in progress, or go home now.
           </p>
         </div>
 
@@ -67,7 +68,13 @@ export function EndedView({ code }: { code: string }) {
             {nav.isNavigating ? 'Rejoining…' : 'Rejoin'}
           </Button>
 
-          <Button onClick={goHome} disabled={nav.isNavigating} variant="outline" size="lg" className="sm:flex-1">
+          <Button
+            onClick={goHome}
+            disabled={nav.isNavigating}
+            variant="outline"
+            size="lg"
+            className="sm:flex-1"
+          >
             <Home className="h-4 w-4" />
             {nav.isNavigating ? 'Leaving…' : 'Go home'}
           </Button>

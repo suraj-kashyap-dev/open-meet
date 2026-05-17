@@ -151,7 +151,7 @@ export class AuthService {
   async updateProfile(id: string, input: UpdateProfileDto): Promise<UserDto> {
     const existing = await this.users.findById(id);
 
-    if (! existing) {
+    if (!existing) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
@@ -187,7 +187,7 @@ export class AuthService {
   async changePassword(id: string, dto: ChangePasswordDto): Promise<{ changed: true }> {
     const user = await this.users.findById(id);
 
-    if (! user) {
+    if (!user) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
@@ -196,7 +196,7 @@ export class AuthService {
 
     const valid = await argon2.verify(user.passwordHash, dto.currentPassword);
 
-    if (! valid) {
+    if (!valid) {
       throw new BadRequestException({
         code: ApiErrorCode.INVALID_CREDENTIALS,
         message: 'Current password is incorrect',
@@ -219,11 +219,7 @@ export class AuthService {
     return { changed: true };
   }
 
-  private async issueTokens(
-    userId: string,
-    email: string,
-    name: string,
-  ): Promise<IssuedTokens> {
+  private async issueTokens(userId: string, email: string, name: string): Promise<IssuedTokens> {
     const accessTtl = this.config.getOrThrow<string>('JWT_ACCESS_EXPIRY');
     const refreshTtl = this.config.getOrThrow<string>('JWT_REFRESH_EXPIRY');
     const accessTtlMs = this.parseTtlMs(accessTtl);

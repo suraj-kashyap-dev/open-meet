@@ -18,12 +18,7 @@ import { FormActions } from './form-actions';
 
 const schema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100, 'Name is too long'),
-  bio: z
-    .string()
-    .trim()
-    .max(500, 'Bio is too long')
-    .optional()
-    .or(z.literal('')),
+  bio: z.string().trim().max(500, 'Bio is too long').optional().or(z.literal('')),
 });
 
 type Values = z.infer<typeof schema>;
@@ -71,9 +66,7 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
-
       <div className="grid gap-5 sm:grid-cols-2">
-
         <div className="space-y-1.5">
           <Label htmlFor="name">Display name</Label>
 
@@ -89,9 +82,7 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
           {errors.name ? (
             <p className="text-xs text-destructive">{errors.name.message}</p>
           ) : (
-            <p className="text-xs text-muted-foreground">
-              Shown in meetings and chats.
-            </p>
+            <p className="text-xs text-muted-foreground">Shown in meetings and chats.</p>
           )}
         </div>
 
@@ -111,7 +102,6 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
             Used for sign-in. Email changes aren't available yet.
           </p>
         </div>
-
       </div>
 
       <div className="space-y-1.5">
@@ -131,9 +121,7 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
           {...register('bio')}
         />
 
-        {errors.bio ? (
-          <p className="text-xs text-destructive">{errors.bio.message}</p>
-        ) : null}
+        {errors.bio ? <p className="text-xs text-destructive">{errors.bio.message}</p> : null}
       </div>
 
       <FormActions
@@ -141,7 +129,6 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
         dirty={isDirty}
         onReset={() => reset({ name: user.name, bio: user.bio ?? '' })}
       />
-
     </form>
   );
 }

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { registerNewUser } from './helpers/auth';
 
-const fullStack = !! process.env.RUN_FULL_E2E;
+const fullStack = !!process.env.RUN_FULL_E2E;
 
 test.describe('auth — form validation', () => {
   test('login blocks submission with an invalid email', async ({ page }) => {
@@ -49,13 +49,15 @@ test.describe('auth — form validation', () => {
 });
 
 test.describe('auth — happy paths', () => {
-  test.skip(! fullStack, 'requires API stack — set RUN_FULL_E2E=1');
+  test.skip(!fullStack, 'requires API stack — set RUN_FULL_E2E=1');
 
   test('register creates a session and lands on the dashboard', async ({ page }) => {
     const user = await registerNewUser(page, 'Ada Lovelace');
 
     await expect(
-      page.getByRole('heading', { name: new RegExp(`(morning|afternoon|evening|up late).*ada`, 'i') }),
+      page.getByRole('heading', {
+        name: new RegExp(`(morning|afternoon|evening|up late).*ada`, 'i'),
+      }),
     ).toBeVisible();
 
     // Cached user is persisted to localStorage for hydration-flash protection.
@@ -88,7 +90,10 @@ test.describe('auth — happy paths', () => {
     await page.waitForURL((url) => new URL(url).pathname === '/', { timeout: 15_000 });
   });
 
-  test('expired session: 401 on protected request redirects to /login', async ({ page, context }) => {
+  test('expired session: 401 on protected request redirects to /login', async ({
+    page,
+    context,
+  }) => {
     await registerNewUser(page, 'Ada');
 
     // Wipe cookies behind React's back to simulate expiry.

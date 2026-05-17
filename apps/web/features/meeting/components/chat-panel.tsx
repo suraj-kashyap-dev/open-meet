@@ -13,11 +13,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-import {
-  ClientEvent,
-  type AttachmentDto,
-  type MessageDto,
-} from '@open-meet/types';
+import { ClientEvent, type AttachmentDto, type MessageDto } from '@open-meet/types';
 
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
@@ -89,8 +85,8 @@ function buildRows(messages: MessageDto[], currentUserId: string | undefined): R
       key: m.id,
       message: m,
       isMe,
-      isGroupHead: ! sameSenderAsPrev,
-      isGroupTail: ! sameSenderAsNext,
+      isGroupHead: !sameSenderAsPrev,
+      isGroupTail: !sameSenderAsNext,
     });
   }
 
@@ -129,7 +125,6 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
         rel="noopener noreferrer"
         className="block max-w-xs overflow-hidden rounded-lg border border-border"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt=""
@@ -177,9 +172,7 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
       </span>
 
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-medium">
-          {a.url.split('/').pop()}
-        </span>
+        <span className="block truncate text-sm font-medium">{a.url.split('/').pop()}</span>
         <span className="block text-xs text-muted-foreground">
           {a.mime} · {formatBytes(a.size)}
         </span>
@@ -207,7 +200,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   const isPinnedToBottom = useCallback(() => {
     const el = scrollRef.current;
 
-    if (! el) {
+    if (!el) {
       return true;
     }
 
@@ -218,7 +211,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   const scrollToBottom = useCallback((smooth = true) => {
     const el = scrollRef.current;
 
-    if (! el) {
+    if (!el) {
       return;
     }
 
@@ -239,7 +232,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   useEffect(() => {
     const el = scrollRef.current;
 
-    if (! el) {
+    if (!el) {
       return;
     }
 
@@ -256,7 +249,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   const adjustTextareaHeight = useCallback(() => {
     const el = textareaRef.current;
 
-    if (! el) {
+    if (!el) {
       return;
     }
 
@@ -278,12 +271,11 @@ export function ChatPanel({ code, socket, onClose }: Props) {
         }
       });
     };
-    // We intentionally only run on unmount.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Intentionally runs only on unmount — staged file URLs are cleaned up there.
   }, []);
 
   const stageFiles = (files: FileList | null) => {
-    if (! files || files.length === 0) {
+    if (!files || files.length === 0) {
       return;
     }
 
@@ -318,9 +310,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
         const attachment = await uploadAttachment(item.file, {
           onProgress: (loaded, total) => {
             const pct = total > 0 ? (loaded / total) * 100 : 0;
-            setStaged((prev) =>
-              prev.map((s) => (s.id === item.id ? { ...s, progress: pct } : s)),
-            );
+            setStaged((prev) => prev.map((s) => (s.id === item.id ? { ...s, progress: pct } : s)));
           },
         });
 
@@ -332,9 +322,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
       } catch (err) {
         const message = err instanceof ApiClientError ? err.message : 'Upload failed';
         setStaged((prev) =>
-          prev.map((s) =>
-            s.id === item.id ? { ...s, status: 'failed', error: message } : s,
-          ),
+          prev.map((s) => (s.id === item.id ? { ...s, status: 'failed', error: message } : s)),
         );
         toast.error(message);
       }
@@ -354,7 +342,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   };
 
   const send = async () => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 
@@ -389,15 +377,13 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && ! e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       void send();
     }
   };
 
-  const hasReadyContent =
-    text.trim().length > 0 ||
-    staged.some((s) => s.status === 'ready');
+  const hasReadyContent = text.trim().length > 0 || staged.some((s) => s.status === 'ready');
   const hasInflight = staged.some((s) => s.status === 'uploading');
 
   return (
@@ -448,11 +434,9 @@ export function ChatPanel({ code, socket, onClose }: Props) {
                       isGroupHead ? 'pt-2' : 'pt-0.5',
                     )}
                   >
-                    {! isMe ? (
+                    {!isMe ? (
                       <div className="w-7 shrink-0">
-                        {isGroupTail ? (
-                          <UserAvatar user={m.sender} size="sm" />
-                        ) : null}
+                        {isGroupTail ? <UserAvatar user={m.sender} size="sm" /> : null}
                       </div>
                     ) : null}
 
@@ -539,12 +523,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
                 className="relative flex items-center gap-2 rounded-md border border-border bg-card p-1.5 pr-2"
               >
                 {s.previewUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={s.previewUrl}
-                    alt=""
-                    className="h-10 w-10 rounded object-cover"
-                  />
+                  <img src={s.previewUrl} alt="" className="h-10 w-10 rounded object-cover" />
                 ) : (
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-muted text-muted-foreground">
                     <FileIcon className="h-4 w-4" />
@@ -552,14 +531,12 @@ export function ChatPanel({ code, socket, onClose }: Props) {
                 )}
 
                 <div className="flex min-w-0 flex-col">
-                  <span className="max-w-[10rem] truncate text-xs font-medium">
-                    {s.file.name}
-                  </span>
+                  <span className="max-w-[10rem] truncate text-xs font-medium">{s.file.name}</span>
                   <span className="text-[10px] text-muted-foreground">
                     {s.status === 'uploading'
                       ? `Uploading… ${Math.round(s.progress)}%`
                       : s.status === 'failed'
-                        ? s.error ?? 'Failed'
+                        ? (s.error ?? 'Failed')
                         : formatBytes(s.file.size)}
                   </span>
                 </div>
@@ -652,10 +629,14 @@ export function ChatPanel({ code, socket, onClose }: Props) {
         <Button
           type="submit"
           size="icon"
-          disabled={! hasReadyContent || hasInflight || sending}
+          disabled={!hasReadyContent || hasInflight || sending}
           aria-label="Send message"
         >
-          {hasInflight ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+          {hasInflight ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <Send className="h-4 w-4" />
+          )}
         </Button>
       </form>
     </div>

@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  LogOut,
-  Moon,
-  Plus,
-  Search,
-  Sun,
-  User,
-  Video,
-} from 'lucide-react';
+import { LogOut, Moon, Plus, Search, Sun, User, Video } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -41,7 +33,7 @@ export function CommandPalette() {
     const onKey = (e: KeyboardEvent) => {
       if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((v) => ! v);
+        setOpen((v) => !v);
       }
     };
     window.addEventListener('keydown', onKey);
@@ -67,7 +59,7 @@ export function CommandPalette() {
 
   const onJoin = () => {
     const trimmed = code.trim().toLowerCase();
-    if (! trimmed) {
+    if (!trimmed) {
       toast.error('Type a meeting code first');
       return;
     }

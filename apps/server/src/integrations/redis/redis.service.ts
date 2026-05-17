@@ -41,11 +41,11 @@ export class RedisService implements OnModuleDestroy {
   }
 
   pubSubPair(): { pub: Redis; sub: Redis } {
-    if (! this.pubInstance) {
+    if (!this.pubInstance) {
       this.pubInstance = this.clientInstance.duplicate();
     }
 
-    if (! this.subInstance) {
+    if (!this.subInstance) {
       this.subInstance = this.clientInstance.duplicate();
     }
 

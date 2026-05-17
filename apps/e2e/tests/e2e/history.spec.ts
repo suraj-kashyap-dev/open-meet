@@ -2,11 +2,11 @@ import { expect, test } from '@playwright/test';
 
 import { registerNewUser } from './helpers/auth';
 
-const fullStack = !! process.env.RUN_FULL_E2E;
+const fullStack = !!process.env.RUN_FULL_E2E;
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
 
 test.describe('meeting history', () => {
-  test.skip(! fullStack, 'requires API stack — set RUN_FULL_E2E=1');
+  test.skip(!fullStack, 'requires API stack — set RUN_FULL_E2E=1');
 
   test('shows empty state for a brand-new user', async ({ page }) => {
     await registerNewUser(page, 'Ada');
@@ -48,7 +48,11 @@ test.describe('meeting history', () => {
     await expect(codeCell.first()).toBeVisible({ timeout: 10_000 });
 
     // Click the row's "Open" action to go to the detail page.
-    await page.getByRole('row').filter({ hasText: code }).getByRole('link', { name: 'Open' }).click();
+    await page
+      .getByRole('row')
+      .filter({ hasText: code })
+      .getByRole('link', { name: 'Open' })
+      .click();
 
     await expect(page).toHaveURL(new RegExp(`/history/${code}$`), { timeout: 10_000 });
 

@@ -26,10 +26,7 @@ export function AppHeader() {
       className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl"
     >
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-sm font-semibold tracking-tight"
-        >
+        <Link href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight">
           <Logo className="h-7 w-7 shadow-sm" />
           <span>Open Meet</span>
         </Link>
@@ -50,11 +47,7 @@ export function AppHeader() {
                 </Button>
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent
-                align="end"
-                sideOffset={8}
-                className="w-72 overflow-hidden p-0"
-              >
+              <DropdownMenuContent align="end" sideOffset={8} className="w-72 overflow-hidden p-0">
                 <div className="flex items-center gap-3 border-b border-border bg-muted/30 p-4">
                   <UserAvatar user={user} size="xl" className="ring-2 ring-background" />
                   <div className="min-w-0 flex-1">
@@ -74,7 +67,9 @@ export function AppHeader() {
                       </span>
                       <span className="flex flex-1 flex-col">
                         <span className="text-sm font-medium">Profile</span>
-                        <span className="text-xs text-muted-foreground">Edit your account details</span>
+                        <span className="text-xs text-muted-foreground">
+                          Edit your account details
+                        </span>
                       </span>
                     </Link>
                   </DropdownMenuItem>
@@ -89,7 +84,9 @@ export function AppHeader() {
                       </span>
                       <span className="flex flex-1 flex-col">
                         <span className="text-sm font-medium">Settings</span>
-                        <span className="text-xs text-muted-foreground">Defaults, privacy, language</span>
+                        <span className="text-xs text-muted-foreground">
+                          Defaults, privacy, language
+                        </span>
                       </span>
                     </Link>
                   </DropdownMenuItem>

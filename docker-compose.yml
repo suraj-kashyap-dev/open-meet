@@ -6,7 +6,7 @@ services:
     container_name: meetclone-postgres
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_DB: meetclone
       POSTGRES_USER: postgres
@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d meetclone"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d meetclone']
       interval: 5s
       timeout: 3s
       retries: 10
@@ -25,12 +25,12 @@ services:
     container_name: meetclone-redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
-    command: ["redis-server", "--appendonly", "yes"]
+      - '6379:6379'
+    command: ['redis-server', '--appendonly', 'yes']
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
       timeout: 3s
       retries: 10
@@ -41,17 +41,17 @@ services:
     container_name: meetclone-livekit
     restart: unless-stopped
     ports:
-      - "7880:7880"
-      - "7881:7881"
-      - "7882:7882/udp"
+      - '7880:7880'
+      - '7881:7881'
+      - '7882:7882/udp'
     volumes:
       - ./docker/livekit.yaml:/etc/livekit.yaml:ro
-    command: ["--config", "/etc/livekit.yaml", "--dev", "--bind", "0.0.0.0"]
+    command: ['--config', '/etc/livekit.yaml', '--dev', '--bind', '0.0.0.0']
     depends_on:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:7880/"]
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:7880/']
       interval: 10s
       timeout: 5s
       retries: 6
@@ -64,22 +64,22 @@ services:
     # NOTE: spec calls for network_mode: host, which is Linux-only.
     # Using explicit port mappings so this also works on Windows/macOS Docker Desktop.
     ports:
-      - "3478:3478/tcp"
-      - "3478:3478/udp"
-      - "5349:5349/tcp"
-      - "5349:5349/udp"
-      - "49160-49200:49160-49200/udp"
+      - '3478:3478/tcp'
+      - '3478:3478/udp'
+      - '5349:5349/tcp'
+      - '5349:5349/udp'
+      - '49160-49200:49160-49200/udp'
     volumes:
       - ./docker/coturn.conf:/etc/coturn/turnserver.conf:ro
-    command: ["-c", "/etc/coturn/turnserver.conf"]
+    command: ['-c', '/etc/coturn/turnserver.conf']
 
   mailhog:
     image: mailhog/mailhog:latest
     container_name: meetclone-mailhog
     restart: unless-stopped
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - '1025:1025'
+      - '8025:8025'
 
 volumes:
   postgres_data:

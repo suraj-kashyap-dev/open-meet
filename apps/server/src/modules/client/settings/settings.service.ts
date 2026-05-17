@@ -16,10 +16,7 @@ export class SettingsService {
     return this.toDto(row);
   }
 
-  async update(
-    userId: string,
-    input: UpdateUserSettingsBodyDto,
-  ): Promise<UserSettingsDto> {
+  async update(userId: string, input: UpdateUserSettingsBodyDto): Promise<UserSettingsDto> {
     const data: Record<string, unknown> = {};
 
     if (input.meetingPreferences) {

@@ -8,10 +8,7 @@ interface UploadOptions {
   signal?: AbortSignal;
 }
 
-export function uploadAttachment(
-  file: File,
-  options: UploadOptions = {},
-): Promise<AttachmentDto> {
+export function uploadAttachment(file: File, options: UploadOptions = {}): Promise<AttachmentDto> {
   return new Promise((resolve, reject) => {
     const url = `${env.NEXT_PUBLIC_API_URL}/api/uploads`;
     const form = new FormData();
@@ -32,13 +29,9 @@ export function uploadAttachment(
     xhr.onload = () => {
       const isJson = (xhr.getResponseHeader('content-type') ?? '').includes('application/json');
 
-      if (! isJson) {
+      if (!isJson) {
         reject(
-          new ApiClientError(
-            'INVALID_RESPONSE',
-            xhr.status,
-            `Unexpected response: ${xhr.status}`,
-          ),
+          new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
         );
         return;
       }
@@ -48,9 +41,7 @@ export function uploadAttachment(
       try {
         body = JSON.parse(xhr.responseText);
       } catch {
-        reject(
-          new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'),
-        );
+        reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
         return;
       }
 
@@ -60,7 +51,7 @@ export function uploadAttachment(
         error?: { code: string; message: string; statusCode: number };
       };
 
-      if (! envelope.success || ! envelope.data) {
+      if (!envelope.success || !envelope.data) {
         const err = envelope.error;
         reject(
           new ApiClientError(

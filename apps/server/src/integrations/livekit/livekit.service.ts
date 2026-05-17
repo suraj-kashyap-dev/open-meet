@@ -1,9 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { type ConfigService } from '@nestjs/config';
 import { MeetingStatus } from '@prisma/client';
 import {
@@ -46,7 +41,7 @@ export class LiveKitService {
     name: string;
   }): Promise<LiveKitTokenResponseDto> {
     const meeting = await this.meetings.findRawByCode(input.meetingCode);
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${input.meetingCode}" does not exist`,
@@ -100,7 +95,7 @@ export class LiveKitService {
   }
 
   async receiveWebhook(rawBody: string, authHeader: string | undefined): Promise<WebhookEvent> {
-    if (! authHeader) {
+    if (!authHeader) {
       throw new ForbiddenException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'Missing LiveKit signature header',
@@ -127,7 +122,7 @@ export class LiveKitService {
 
     if (event.event === 'room_finished' && event.room?.name) {
       const meeting = await this.meetings.findRawByCode(event.room.name);
-      if (! meeting) {
+      if (!meeting) {
         return;
       }
       if (meeting.status !== MeetingStatus.ENDED) {

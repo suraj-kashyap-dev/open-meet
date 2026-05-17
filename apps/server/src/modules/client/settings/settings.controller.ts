@@ -3,10 +3,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { UserSettingsDto } from '@open-meet/types';
 
-import {
-  CurrentUser,
-  type RequestUser,
-} from '../../../common/decorators/current-user.decorator';
+import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 
 import { type SettingsService } from './settings.service';
 import { type UpdateUserSettingsBodyDto } from './dto/update-settings.dto';
@@ -17,7 +14,7 @@ export class SettingsController {
   constructor(private readonly settings: SettingsService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Read the current user\'s meeting + privacy settings' })
+  @ApiOperation({ summary: "Read the current user's meeting + privacy settings" })
   async get(@CurrentUser() user: RequestUser): Promise<UserSettingsDto> {
     return this.settings.getForUser(user.id);
   }

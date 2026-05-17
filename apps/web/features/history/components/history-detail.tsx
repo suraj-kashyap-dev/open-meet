@@ -35,7 +35,7 @@ function formatTime(iso: string): string {
 }
 
 function formatStartedAt(iso: string | null): string {
-  if (! iso) {
+  if (!iso) {
     return '—';
   }
 
@@ -110,8 +110,8 @@ function buildRows(messages: MessageDto[], currentUserId: string | undefined): R
       key: m.id,
       message: m,
       isMe,
-      isGroupHead: ! sameSenderAsPrev,
-      isGroupTail: ! sameSenderAsNext,
+      isGroupHead: !sameSenderAsPrev,
+      isGroupTail: !sameSenderAsNext,
     });
   }
 
@@ -127,13 +127,7 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
         rel="noopener noreferrer"
         className="block max-w-xs overflow-hidden rounded-lg border border-border"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={a.url}
-          alt=""
-          className="block max-h-72 w-full object-cover"
-          loading="lazy"
-        />
+        <img src={a.url} alt="" className="block max-h-72 w-full object-cover" loading="lazy" />
       </a>
     );
   }
@@ -161,9 +155,7 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
       </span>
 
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-medium">
-          {a.url.split('/').pop()}
-        </span>
+        <span className="block truncate text-sm font-medium">{a.url.split('/').pop()}</span>
         <span className="block text-xs text-muted-foreground">
           {a.mime} · {formatBytes(a.size)}
         </span>
@@ -202,7 +194,7 @@ export function HistoryDetail({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
 
   const messages = useMemo<MessageDto[]>(() => {
-    if (! data) {
+    if (!data) {
       return [];
     }
 
@@ -237,7 +229,7 @@ export function HistoryDetail({ code }: { code: string }) {
   }, [messages]);
 
   useEffect(() => {
-    if (messages.length === 0 || ! scrollRef.current) {
+    if (messages.length === 0 || !scrollRef.current) {
       return;
     }
 
@@ -249,7 +241,7 @@ export function HistoryDetail({ code }: { code: string }) {
   }, [data?.pages.length, messages.length]);
 
   const copyCode = async () => {
-    if (! meeting) {
+    if (!meeting) {
       return;
     }
 
@@ -273,7 +265,7 @@ export function HistoryDetail({ code }: { code: string }) {
     );
   }
 
-  if (meetingLoading || ! meeting) {
+  if (meetingLoading || !meeting) {
     return (
       <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -305,7 +297,12 @@ export function HistoryDetail({ code }: { code: string }) {
   return (
     <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
       <div>
-        <Button asChild variant="ghost" size="sm" className="-ml-2 h-8 gap-1.5 px-2 text-muted-foreground">
+        <Button
+          asChild
+          variant="ghost"
+          size="sm"
+          className="-ml-2 h-8 gap-1.5 px-2 text-muted-foreground"
+        >
           <Link href="/history">
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to history
@@ -317,9 +314,7 @@ export function HistoryDetail({ code }: { code: string }) {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h1 className="truncate text-xl font-semibold tracking-tight sm:text-2xl">
-                {title}
-              </h1>
+              <h1 className="truncate text-xl font-semibold tracking-tight sm:text-2xl">{title}</h1>
               <span
                 className={cn(
                   'inline-flex shrink-0 items-center rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider',
@@ -358,7 +353,12 @@ export function HistoryDetail({ code }: { code: string }) {
           >
             <Hash className="h-3.5 w-3.5 text-muted-foreground" />
             <span className="font-mono text-sm tracking-tight">{meeting.code}</span>
-            <Copy className={cn('h-3.5 w-3.5 transition-colors', copied ? 'text-success' : 'text-muted-foreground')} />
+            <Copy
+              className={cn(
+                'h-3.5 w-3.5 transition-colors',
+                copied ? 'text-success' : 'text-muted-foreground',
+              )}
+            />
           </button>
         </div>
 
@@ -464,11 +464,9 @@ export function HistoryDetail({ code }: { code: string }) {
                         isGroupHead ? 'pt-2' : 'pt-0.5',
                       )}
                     >
-                      {! isMe ? (
+                      {!isMe ? (
                         <div className="w-7 shrink-0">
-                          {isGroupTail ? (
-                            <UserAvatar user={m.sender} size="sm" />
-                          ) : null}
+                          {isGroupTail ? <UserAvatar user={m.sender} size="sm" /> : null}
                         </div>
                       ) : null}
 

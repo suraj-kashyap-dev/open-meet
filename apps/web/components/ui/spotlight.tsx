@@ -23,7 +23,7 @@ export function Spotlight({ className }: SpotlightProps) {
 
   useEffect(() => {
     const el = ref.current;
-    if (! el) {
+    if (!el) {
       return;
     }
     const onMove = (e: MouseEvent) => {
@@ -40,10 +40,7 @@ export function Spotlight({ className }: SpotlightProps) {
   return (
     <div
       ref={ref}
-      className={cn(
-        'pointer-events-none absolute inset-0 overflow-hidden',
-        className,
-      )}
+      className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}
     >
       <motion.div className="absolute inset-0" style={{ background }} />
     </div>

@@ -23,7 +23,10 @@ export function AdminSidebar({ open }: Props) {
       )}
     >
       <div className="flex h-14 items-center gap-2 border-b border-border px-4">
-        <Link href="/admin" className="flex items-center gap-2 text-sm font-semibold tracking-tight">
+        <Link
+          href="/admin"
+          className="flex items-center gap-2 text-sm font-semibold tracking-tight"
+        >
           <Logo className="h-7 w-7" />
           <span>Open Meet</span>
         </Link>

@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import type {
-  AdminStatsOverviewDto,
-  DailyCountPoint,
-  RecentMeetingDto,
-} from '@open-meet/types';
+import type { AdminStatsOverviewDto, DailyCountPoint, RecentMeetingDto } from '@open-meet/types';
 
 import { type AdminAnalyticsRepository } from './analytics.repository';
 

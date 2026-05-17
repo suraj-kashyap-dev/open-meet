@@ -23,9 +23,7 @@ export interface AdminNavSection {
 export const adminNav: AdminNavSection[] = [
   {
     label: 'Overview',
-    items: [
-      { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    ],
+    items: [{ label: 'Dashboard', href: '/admin', icon: LayoutDashboard }],
   },
   {
     label: 'Manage',
@@ -36,15 +34,11 @@ export const adminNav: AdminNavSection[] = [
   },
   {
     label: 'Insights',
-    items: [
-      { label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-    ],
+    items: [{ label: 'Analytics', href: '/admin/analytics', icon: BarChart3 }],
   },
   {
     label: 'System',
-    items: [
-      { label: 'Settings', href: '/admin/settings', icon: Settings },
-    ],
+    items: [{ label: 'Settings', href: '/admin/settings', icon: Settings }],
   },
 ];
 

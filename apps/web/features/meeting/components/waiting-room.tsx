@@ -36,7 +36,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
   const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 
@@ -52,7 +52,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
       }
 
       retryTimerRef.current = setTimeout(() => {
-        if (admittedRef.current || ! socket.connected) {
+        if (admittedRef.current || !socket.connected) {
           return;
         }
 
@@ -104,7 +104,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
       socket.off('connect', sendKnock);
       socket.off(ServerEvent.KNOCK_RESOLVED, onResolved);
 
-      if (! admittedRef.current && knockSentRef.current && socket.connected) {
+      if (!admittedRef.current && knockSentRef.current && socket.connected) {
         socket.emit(ClientEvent.MEETING_KNOCK_CANCEL, { meetingCode: code });
       }
     };

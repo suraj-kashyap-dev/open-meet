@@ -70,7 +70,7 @@ export function MeetingShell({ code, meeting }: Props) {
   }, [meeting, setMeeting]);
 
   useEffect(() => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 
@@ -112,13 +112,25 @@ export function MeetingShell({ code, meeting }: Props) {
       socket.off(ServerEvent.MEETING_ENDED);
       socket.emit(ClientEvent.MEETING_LEAVE, { meetingCode: code });
     };
-  }, [socket, code, addMessage, pushReaction, raiseHand, lowerHand, room, user?.id, messageSound, reactionSound, notification]);
+  }, [
+    socket,
+    code,
+    addMessage,
+    pushReaction,
+    raiseHand,
+    lowerHand,
+    room,
+    user?.id,
+    messageSound,
+    reactionSound,
+    notification,
+  ]);
 
   // LiveKit participant join / leave sounds. Suppress for the first ~1.2s
   // after mount so existing participants firing as "Connected" on initial
   // sync don't unleash a flurry of chimes.
   useEffect(() => {
-    if (! room) {
+    if (!room) {
       return;
     }
     settledAt.current = Date.now() + 1200;
@@ -156,7 +168,7 @@ export function MeetingShell({ code, meeting }: Props) {
             'transition-[width] duration-200 ease-out',
             sidebarOpen ? 'w-full sm:w-96' : 'w-0',
           )}
-          aria-hidden={! sidebarOpen}
+          aria-hidden={!sidebarOpen}
         >
           <div className="h-full w-full sm:w-96">
             {activePanel === 'chat' ? (

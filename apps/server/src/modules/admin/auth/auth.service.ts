@@ -29,18 +29,16 @@ export class AdminAuthService {
     private readonly config: ConfigService<ApiEnv, true>,
   ) {}
 
-  async login(
-    dto: AdminLoginDto,
-  ): Promise<{ admin: AdminDto; tokens: IssuedAdminTokens }> {
+  async login(dto: AdminLoginDto): Promise<{ admin: AdminDto; tokens: IssuedAdminTokens }> {
     const admin = await this.admins.findByEmail(dto.email);
 
-    if (! admin) {
+    if (!admin) {
       throw this.invalidCredentials();
     }
 
     const valid = await argon2.verify(admin.passwordHash, dto.password);
 
-    if (! valid) {
+    if (!valid) {
       throw this.invalidCredentials();
     }
 
@@ -52,7 +50,7 @@ export class AdminAuthService {
   async getAdminDtoById(id: string): Promise<AdminDto> {
     const admin = await this.admins.findById(id);
 
-    if (! admin) {
+    if (!admin) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'Admin not found',
@@ -105,7 +103,7 @@ export class AdminAuthService {
   private parseTtlMs(ttl: string): number {
     const match = /^(\d+)([smhd])$/.exec(ttl);
 
-    if (! match || ! match[1] || ! match[2]) {
+    if (!match || !match[1] || !match[2]) {
       return 0;
     }
 

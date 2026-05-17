@@ -25,8 +25,7 @@ export function HomeActions() {
       const meeting = await createMeeting.mutateAsync({});
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : 'Could not create meeting';
+      const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
       toast.error(message);
     }
   };
@@ -34,7 +33,7 @@ export function HomeActions() {
   const onJoin = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = code.trim().toLowerCase();
-    if (! trimmed) {
+    if (!trimmed) {
       toast.error('Enter a meeting code');
       return;
     }
@@ -83,9 +82,7 @@ export function HomeActions() {
           </div>
           <div className="space-y-1">
             <h2 className="text-lg font-medium">Join with a code</h2>
-            <p className="text-sm text-muted-foreground">
-              Paste the link or 12-character code.
-            </p>
+            <p className="text-sm text-muted-foreground">Paste the link or 12-character code.</p>
           </div>
           <form onSubmit={onJoin} className="mt-auto space-y-3">
             <div className="space-y-2">

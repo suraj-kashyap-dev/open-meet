@@ -1,9 +1,7 @@
 const JOIN_CODE_ALPHABET = 'abcdefghijkmnpqrstuvwxyz23456789';
 const JOIN_CODE_LENGTH = 12;
 
-export function generateMeetingCode(
-  randomBytes: (n: number) => Uint8Array,
-): string {
+export function generateMeetingCode(randomBytes: (n: number) => Uint8Array): string {
   const bytes = randomBytes(JOIN_CODE_LENGTH);
   let out = '';
   for (let i = 0; i < JOIN_CODE_LENGTH; i++) {

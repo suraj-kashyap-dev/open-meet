@@ -41,11 +41,7 @@ function messageFromError(err: unknown, fallback: string): string {
   return err instanceof ApiClientError ? err.message : fallback;
 }
 
-export function PrivacySettings({
-  settings,
-}: {
-  settings: UserSettingsDto | undefined;
-}) {
+export function PrivacySettings({ settings }: { settings: UserSettingsDto | undefined }) {
   const updateSettings = useUpdateUserSettings();
 
   const current = settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS;
@@ -79,11 +75,7 @@ export function PrivacySettings({
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-
-      <Row
-        title="Profile visibility"
-        description="Who can see your profile outside of meetings."
-      >
+      <Row title="Profile visibility" description="Who can see your profile outside of meetings.">
         <div className="w-56">
           <Label className="sr-only">Profile visibility</Label>
 
@@ -102,9 +94,7 @@ export function PrivacySettings({
             <SelectContent>
               <SelectItem value={ProfileVisibility.PUBLIC}>Public</SelectItem>
 
-              <SelectItem value={ProfileVisibility.PARTICIPANTS_ONLY}>
-                Participants only
-              </SelectItem>
+              <SelectItem value={ProfileVisibility.PARTICIPANTS_ONLY}>Participants only</SelectItem>
 
               <SelectItem value={ProfileVisibility.PRIVATE}>Private</SelectItem>
             </SelectContent>
@@ -118,9 +108,7 @@ export function PrivacySettings({
       >
         <Switch
           checked={values.showEmailToParticipants}
-          onCheckedChange={(c) =>
-            setValue('showEmailToParticipants', c, { shouldDirty: true })
-          }
+          onCheckedChange={(c) => setValue('showEmailToParticipants', c, { shouldDirty: true })}
         />
       </Row>
 
@@ -130,9 +118,7 @@ export function PrivacySettings({
       >
         <Switch
           checked={values.allowDirectMessages}
-          onCheckedChange={(c) =>
-            setValue('allowDirectMessages', c, { shouldDirty: true })
-          }
+          onCheckedChange={(c) => setValue('allowDirectMessages', c, { shouldDirty: true })}
         />
       </Row>
 
@@ -149,11 +135,8 @@ export function PrivacySettings({
       <FormActions
         pending={pending}
         dirty={isDirty}
-        onReset={() =>
-          reset(settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS)
-        }
+        onReset={() => reset(settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS)}
       />
-
     </form>
   );
 }

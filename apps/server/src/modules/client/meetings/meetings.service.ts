@@ -8,17 +8,11 @@ import { MeetingStatus } from '@prisma/client';
 import { randomBytes } from 'node:crypto';
 
 import { generateMeetingCode } from '@open-meet/utils';
-import type {
-  MeetingDto,
-  ParticipantDto,
-} from '@open-meet/types';
+import type { MeetingDto, ParticipantDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
 import { type StorageService } from '../../../storage/storage.service';
-import {
-  type MeetingsRepository,
-  type ParticipantWithUser,
-} from './meetings.repository';
+import { type MeetingsRepository, type ParticipantWithUser } from './meetings.repository';
 
 @Injectable()
 export class MeetingsService {
@@ -35,7 +29,7 @@ export class MeetingsService {
     let attempt = 0;
     while (attempt < 5) {
       const code = generateMeetingCode((n) => new Uint8Array(randomBytes(n)));
-      
+
       try {
         const meeting = await this.meetings.create({
           code,
@@ -60,7 +54,7 @@ export class MeetingsService {
 
   async getByCode(code: string): Promise<MeetingDto> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
@@ -69,12 +63,15 @@ export class MeetingsService {
     return this.toDto(meeting);
   }
 
-  async join(code: string, userId: string): Promise<{
+  async join(
+    code: string,
+    userId: string,
+  ): Promise<{
     meeting: MeetingDto;
     participant: ParticipantDto;
   }> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
@@ -102,7 +99,7 @@ export class MeetingsService {
 
   async leave(code: string, userId: string): Promise<void> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       return;
     }
     await this.meetings.markParticipantLeft(meeting.id, userId);
@@ -110,7 +107,7 @@ export class MeetingsService {
 
   async end(code: string, requesterId: string): Promise<MeetingDto> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
@@ -131,7 +128,7 @@ export class MeetingsService {
 
   async listParticipants(code: string): Promise<ParticipantDto[]> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
@@ -143,7 +140,7 @@ export class MeetingsService {
 
   async isHost(code: string, userId: string): Promise<boolean> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       return false;
     }
     return meeting.hostId === userId;
@@ -198,7 +195,7 @@ export class MeetingsService {
   async assertParticipant(code: string, userId: string): Promise<{ meetingId: string }> {
     const meeting = await this.meetings.findByCode(code);
 
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
@@ -211,7 +208,7 @@ export class MeetingsService {
 
     const participant = await this.meetings.isParticipant(meeting.id, userId);
 
-    if (! participant) {
+    if (!participant) {
       throw new ForbiddenException({
         code: ApiErrorCode.MEETING_FORBIDDEN,
         message: 'You did not participate in this meeting',
@@ -221,9 +218,11 @@ export class MeetingsService {
     return { meetingId: meeting.id };
   }
 
-  async findRawByCode(code: string): Promise<{ id: string; hostId: string; status: MeetingStatus } | null> {
+  async findRawByCode(
+    code: string,
+  ): Promise<{ id: string; hostId: string; status: MeetingStatus } | null> {
     const meeting = await this.meetings.findByCode(code);
-    if (! meeting) {
+    if (!meeting) {
       return null;
     }
     return {

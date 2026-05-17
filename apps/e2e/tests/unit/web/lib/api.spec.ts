@@ -114,11 +114,13 @@ describe('api client', () => {
 
   it('throws INVALID_RESPONSE when the server returns non-JSON', async () => {
     server.use(
-      http.get(`${API}/broken`, () =>
-        new HttpResponse('plain text', {
-          status: 200,
-          headers: { 'Content-Type': 'text/plain' },
-        }),
+      http.get(
+        `${API}/broken`,
+        () =>
+          new HttpResponse('plain text', {
+            status: 200,
+            headers: { 'Content-Type': 'text/plain' },
+          }),
       ),
     );
 

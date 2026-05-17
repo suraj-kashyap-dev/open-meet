@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 
 import { registerNewUser } from './helpers/auth';
 
-const fullStack = !! process.env.RUN_FULL_E2E;
+const fullStack = !!process.env.RUN_FULL_E2E;
 
 /**
  * The profile page renders several settings sections; each one has its own
@@ -14,7 +14,7 @@ function personalForm(page: Page) {
 }
 
 test.describe('profile page', () => {
-  test.skip(! fullStack, 'requires API stack — set RUN_FULL_E2E=1');
+  test.skip(!fullStack, 'requires API stack — set RUN_FULL_E2E=1');
 
   test('renders current name, email, and sidebar', async ({ page }) => {
     const user = await registerNewUser(page, 'Ada Lovelace');
@@ -40,7 +40,9 @@ test.describe('profile page', () => {
     await page.locator('html[data-hydrated="true"]').waitFor();
 
     await page.getByLabel('Display name').fill('  ');
-    await personalForm(page).getByRole('button', { name: /save changes/i }).click();
+    await personalForm(page)
+      .getByRole('button', { name: /save changes/i })
+      .click();
 
     await expect(page.getByText('Name is required')).toBeVisible();
   });
@@ -52,7 +54,9 @@ test.describe('profile page', () => {
     await page.locator('html[data-hydrated="true"]').waitFor();
 
     await page.getByLabel('Display name').fill('Grace Hopper');
-    await personalForm(page).getByRole('button', { name: /save changes/i }).click();
+    await personalForm(page)
+      .getByRole('button', { name: /save changes/i })
+      .click();
 
     await expect(page.getByText('Profile updated')).toBeVisible({ timeout: 10_000 });
 
@@ -75,9 +79,7 @@ test.describe('profile page', () => {
 
     await expect(page.getByLabel('Display name')).toHaveValue(user.name);
     // Save should be disabled again because nothing is dirty.
-    await expect(
-      personalForm(page).getByRole('button', { name: /save changes/i }),
-    ).toBeDisabled();
+    await expect(personalForm(page).getByRole('button', { name: /save changes/i })).toBeDisabled();
   });
 
   test('profile no longer accepts an avatar URL field', async ({ page }) => {
