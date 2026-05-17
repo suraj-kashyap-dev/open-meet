@@ -8,7 +8,7 @@ rtc:
   port_range_end: 50100
 
 keys:
-  devkey: secret
+  APIYxBCdbXpEkU: _zfDKs8taY-rzqQrXsvBO-_Snc-K-NUvT6nXSc_4-WM
 
 redis:
   address: redis:6379

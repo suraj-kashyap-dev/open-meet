@@ -9,24 +9,16 @@ export const apiEnvSchema = z.object({
 
   JWT_ACCESS_SECRET: z.string().min(16),
   JWT_REFRESH_SECRET: z.string().min(16),
-  JWT_ACCESS_EXPIRY: z.string().default('15m'),
+  JWT_ACCESS_EXPIRY: z.string().default('7d'),
   JWT_REFRESH_EXPIRY: z.string().default('7d'),
 
   ADMIN_JWT_ACCESS_SECRET: z.string().min(16),
   ADMIN_JWT_ACCESS_EXPIRY: z.string().default('2h'),
 
-  DEFAULT_ADMIN_EMAIL: z.string().email().default('admin@open-meet.local'),
+  DEFAULT_ADMIN_EMAIL: z.string().email().default('admin@example.com'),
   DEFAULT_ADMIN_PASSWORD: z.string().min(8).default('admin12345'),
-  DEFAULT_ADMIN_NAME: z.string().min(1).default('Site Admin'),
+  DEFAULT_ADMIN_NAME: z.string().min(1).default('Example'),
 
-  // Attachment storage — uses S3 when S3_BUCKET is set, otherwise local disk.
-  S3_BUCKET: z.string().optional(),
-  S3_REGION: z.string().default('us-east-1'),
-  S3_ENDPOINT: z.string().optional(),
-  S3_ACCESS_KEY_ID: z.string().optional(),
-  S3_SECRET_ACCESS_KEY: z.string().optional(),
-  S3_PUBLIC_URL: z.string().optional(),
-  S3_FORCE_PATH_STYLE: z.coerce.boolean().default(false),
   LOCAL_STORAGE_DIR: z.string().default('./uploads'),
   UPLOAD_MAX_SIZE_BYTES: z.coerce
     .number()

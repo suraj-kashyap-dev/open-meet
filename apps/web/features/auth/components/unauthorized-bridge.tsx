@@ -24,6 +24,13 @@ export function UnauthorizedBridge() {
         return;
       }
 
+      const isAdminRequest = failedPath.startsWith('/admin/');
+      const isOnAdminPage = pathname.startsWith('/admin');
+
+      if (isAdminRequest || isOnAdminPage) {
+        return;
+      }
+
       try {
         window.localStorage.removeItem(CACHE_KEY);
       } catch {

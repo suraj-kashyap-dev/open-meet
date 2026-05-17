@@ -6,7 +6,6 @@
     "types": ["node", "@playwright/test", "vitest/globals"],
     "noEmit": true,
     "noUncheckedIndexedAccess": false,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["../web/*"]
     }

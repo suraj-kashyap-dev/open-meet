@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { createReadStream } from 'node:fs';
 import { mkdir, stat, unlink, writeFile } from 'node:fs/promises';
-import { join, resolve, sep } from 'node:path';
+import { resolve, sep } from 'node:path';
 
 import type {
   PutInput,
@@ -94,10 +94,5 @@ export class LocalStorageProvider implements StorageProvider {
         throw err;
       }
     }
-  }
-
-  // Avoid an unused-import warning when we eventually swap to a different impl.
-  protected withJoin(...args: string[]): string {
-    return join(...args);
   }
 }

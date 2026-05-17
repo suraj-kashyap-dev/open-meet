@@ -76,7 +76,7 @@ Errors flow through `GlobalExceptionFilter`. Use `HttpException` subclasses, nev
 ### Auth
 
 - argon2 for password hashing (NOT bcrypt)
-- Access JWT 15m, refresh JWT 7d — both in **httpOnly cookies** (never localStorage)
+- Access JWT 7d, refresh JWT 7d — both in **httpOnly cookies** (never localStorage)
 - Refresh token rotation: old refresh invalidated on use, stored hashed in Redis
 - `@Public()` skips `JwtAuthGuard`; `@CurrentUser()` reads `req.user`
 - `@nestjs/throttler`: 5 req / 15 min per IP on `/api/auth/*`
