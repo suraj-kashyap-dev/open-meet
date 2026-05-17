@@ -376,22 +376,38 @@ function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProp
     return null;
   }
 
+  const soonCount = items.filter((i) => minutesUntil(i.scheduledFor) <= 15).length;
+  const total = items.length;
+
   return (
-    <Card className="border-border/60 bg-card/50 backdrop-blur">
-      <CardContent className="flex flex-col gap-5 p-7">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <CalendarClock className="h-4 w-4 text-accent" />
+    <Card className="relative overflow-hidden border-border/60 bg-card/50 backdrop-blur">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-accent/[0.06] blur-3xl"
+      />
 
-            <h3 className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
-              Coming up
-            </h3>
+      <CardContent className="relative flex flex-col gap-5 p-6 sm:p-7">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2.5">
+              <h3 className="text-xl font-semibold tracking-tight">Coming up</h3>
 
-            {items.length > 0 ? (
-              <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
-                {items.length.toLocaleString()}
-              </span>
-            ) : null}
+              {soonCount > 0 ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                  </span>
+                  {soonCount} starting soon
+                </span>
+              ) : null}
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              {total > 0
+                ? `Showing your next ${total} scheduled meeting${total === 1 ? '' : 's'}`
+                : 'Your scheduled meetings will appear here'}
+            </p>
           </div>
 
           <Button size="sm" variant="ghost" className="text-xs" onClick={onSchedule}>
@@ -403,7 +419,7 @@ function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProp
         {isLoading ? (
           <UpcomingSkeleton />
         ) : (
-          <ul className="flex flex-col divide-y divide-border/60">
+          <ul className="-mx-2 flex flex-col">
             {items.map((item) => (
               <UpcomingRow key={item.id} item={item} />
             ))}
@@ -418,70 +434,152 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
   const when = new Date(item.scheduledFor);
   const title = item.title ?? `Meeting on ${formatScheduledDate(when)}`;
   const repeats = item.recurrence ? recurrenceLabel(item.recurrence) : null;
+  const isStartingSoon = minutesUntil(item.scheduledFor) <= 15;
 
   return (
-    <li className="group/up relative flex items-center gap-1">
+    <li className="group/row relative isolate flex items-center gap-2 rounded-xl px-2.5 py-3 transition-colors duration-200 hover:bg-muted/50 sm:px-3">
       <Link
         href={`/${item.code}/lobby`}
         aria-label={`Join ${title}`}
-        className="flex flex-1 items-center gap-4 rounded-md px-2 py-3 outline-none transition-colors hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-accent"
+        className="flex min-w-0 flex-1 items-center gap-3.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
-        <span className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-md bg-muted ring-1 ring-border">
-          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">
+        <span
+          className={cn(
+            'flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-md bg-muted ring-1 ring-border transition-colors',
+            isStartingSoon && 'bg-accent/10 ring-accent/30',
+          )}
+        >
+          <span
+            className={cn(
+              'text-[9px] font-semibold uppercase tracking-wider text-muted-foreground',
+              isStartingSoon && 'text-accent',
+            )}
+          >
             {when.toLocaleString(undefined, { month: 'short' })}
           </span>
 
-          <span className="text-sm font-semibold leading-none tabular-nums">{when.getDate()}</span>
+          <span
+            className={cn(
+              'text-sm font-semibold leading-none tabular-nums',
+              isStartingSoon && 'text-accent',
+            )}
+          >
+            {when.getDate()}
+          </span>
         </span>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="truncate text-sm font-medium">{title}</p>
+            <p className="truncate text-[15px] font-semibold tracking-tight">{title}</p>
 
             {item.isHost ? (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-md bg-warning/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warning">
                 <Crown className="h-3 w-3" />
                 Host
               </span>
             ) : null}
 
             {repeats ? (
-              <span className="inline-flex shrink-0 items-center rounded-full border border-border bg-muted/60 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+              <span className="inline-flex shrink-0 items-center rounded-md bg-muted px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 {repeats}
               </span>
             ) : null}
           </div>
 
-          <p className="mt-0.5 truncate text-xs text-muted-foreground">
-            {formatScheduledDate(when)}
-            {item.durationMin ? <> · {formatDurationShort(item.durationMin)}</> : null}
-            {item.inviteeCount > 0 ? <> · {item.inviteeCount} invited</> : null}
-          </p>
-        </div>
+          <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
+            <span className="font-mono text-[11px] tracking-tight text-foreground/65">
+              {item.code}
+            </span>
 
-        <span className="hidden shrink-0 items-center gap-1 text-xs font-medium text-accent sm:inline-flex">
-          Join
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/up:translate-x-0.5" />
-        </span>
+            <span aria-hidden>·</span>
+
+            <span>{formatScheduledDate(when)}</span>
+
+            {item.durationMin ? (
+              <>
+                <span className="hidden sm:inline" aria-hidden>
+                  ·
+                </span>
+
+                <span className="hidden tabular-nums sm:inline-flex">
+                  {formatDurationShort(item.durationMin)}
+                </span>
+              </>
+            ) : null}
+
+            {item.inviteeCount > 0 ? (
+              <>
+                <span className="hidden sm:inline" aria-hidden>
+                  ·
+                </span>
+
+                <span className="hidden tabular-nums sm:inline-flex">
+                  {item.inviteeCount} invited
+                </span>
+              </>
+            ) : null}
+          </div>
+        </div>
       </Link>
 
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        asChild
-        aria-label="Download .ics"
-        className="h-8 w-8 shrink-0 text-muted-foreground opacity-0 transition-opacity focus-visible:opacity-100 group-hover/up:opacity-100"
-      >
-        <a
-          href={meetingsApi.icsUrl(item.code)}
-          download={`${item.code}.ics`}
-          onClick={(e) => e.stopPropagation()}
+      <div className="relative flex h-8 shrink-0 items-center">
+        <div
+          aria-hidden
+          className="flex items-center gap-2 pr-2 transition-opacity duration-200 group-hover/row:pointer-events-none group-hover/row:opacity-0"
         >
-          <Download className="h-4 w-4" />
-        </a>
-      </Button>
+          {isStartingSoon ? (
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              Soon
+            </span>
+          ) : (
+            <span className="text-right text-xs tabular-nums text-muted-foreground">
+              {formatTimeUntil(when)}
+            </span>
+          )}
+        </div>
+
+        <div className="absolute inset-y-0 right-0 flex items-center gap-0.5 opacity-0 transition-opacity duration-200 group-hover/row:opacity-100">
+          <RowIcsButton code={item.code} />
+
+          <Link
+            href={`/${item.code}/lobby`}
+            aria-label="Join"
+            title="Join"
+            className={cn(
+              'inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground',
+              isStartingSoon && 'text-accent hover:bg-accent/10 hover:text-accent',
+            )}
+          >
+            <ArrowRight className="h-4 w-4 transition-transform group-hover/row:translate-x-0.5" />
+          </Link>
+        </div>
+      </div>
     </li>
+  );
+}
+
+function RowIcsButton({ code }: { code: string }) {
+  return (
+    <Button
+      asChild
+      variant="ghost"
+      size="icon"
+      aria-label="Download .ics"
+      title="Add to calendar"
+      className="h-8 w-8 shrink-0 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
+    >
+      <a
+        href={meetingsApi.icsUrl(code)}
+        download={`${code}.ics`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Download className="h-3.5 w-3.5" />
+      </a>
+    </Button>
   );
 }
 
@@ -1131,6 +1229,42 @@ function formatDuration(min: number | null): string {
   const m = min % 60;
 
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
+}
+
+function minutesUntil(iso: string): number {
+  return Math.round((new Date(iso).getTime() - Date.now()) / 60_000);
+}
+
+function formatTimeUntil(d: Date): string {
+  const diffMs = d.getTime() - Date.now();
+
+  if (diffMs <= 0) {
+    return 'now';
+  }
+
+  const min = Math.round(diffMs / 60_000);
+
+  if (min < 60) {
+    return `in ${min}m`;
+  }
+
+  const hr = Math.round(min / 60);
+
+  if (hr < 24) {
+    return `in ${hr}h`;
+  }
+
+  const days = Math.round(hr / 24);
+
+  if (days < 7) {
+    return `in ${days}d`;
+  }
+
+  if (days < 30) {
+    return `in ${Math.round(days / 7)}w`;
+  }
+
+  return `in ${Math.round(days / 30)}mo`;
 }
 
 function formatScheduledDate(d: Date): string {

@@ -5,28 +5,31 @@ import { RegisterForm } from '@/features/web/auth/components/register-form';
 import { Logo } from '@/components/shared/logo';
 
 export const metadata: Metadata = {
-  title: 'Create account · open-meet',
+  title: 'Create account · Open Meet',
 };
 
 export default function RegisterPage() {
   return (
-    <div className="space-y-7">
-      <div className="flex flex-col items-center gap-4 text-center">
-        <Link href="/" aria-label="Open Meet — back to home">
-          <Logo className="h-10 w-10" />
-        </Link>
-
-        <div className="space-y-1.5">
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Create your account</h1>
-          <p className="text-sm text-muted-foreground">Set up open-meet in a few seconds</p>
-        </div>
+    <div className="w-full max-w-sm">
+      <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
+        <Logo className="h-7 w-7" />
+        <span>Open Meet</span>
       </div>
 
-      <RegisterForm />
+      <div className="space-y-6 rounded-2xl border border-border bg-card p-7 shadow-sm">
+        <header className="space-y-1">
+          <h1 className="text-xl font-semibold tracking-tight">Create account</h1>
+          <p className="text-sm text-muted-foreground">
+            Set up Open Meet in a few seconds.
+          </p>
+        </header>
 
-      <p className="text-center text-sm text-muted-foreground">
+        <RegisterForm />
+      </div>
+
+      <p className="mt-6 text-center text-xs text-muted-foreground">
         Already have an account?{' '}
-        <Link href="/login" className="font-medium text-foreground hover:underline">
+        <Link href="/login" className="underline hover:text-foreground">
           Sign in
         </Link>
       </p>

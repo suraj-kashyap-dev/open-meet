@@ -63,6 +63,21 @@ export class AdminAnalyticsRepository {
     });
   }
 
+  upcomingMeetings(limit: number, from: Date) {
+    return this.prisma.meeting.findMany({
+      where: {
+        scheduledFor: { gte: from },
+        status: { not: MeetingStatus.ENDED },
+      },
+      orderBy: { scheduledFor: 'asc' },
+      take: limit,
+      include: {
+        host: { select: { name: true, email: true } },
+        _count: { select: { invites: true } },
+      },
+    });
+  }
+
   async averageMeetingMinutes(): Promise<{ avgMinutes: number; total: number }> {
     const status = MeetingStatus.ENDED;
 

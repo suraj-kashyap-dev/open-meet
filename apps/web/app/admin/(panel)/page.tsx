@@ -6,6 +6,7 @@ import { CalendarRange, MessageSquare, Radio, Users } from 'lucide-react';
 import { RecentMeetingsTable } from '@/features/admin/dashboard/components/recent-meetings-table';
 import { StatCard } from '@/features/admin/dashboard/components/stat-card';
 import { TrendCard } from '@/features/admin/dashboard/components/trend-card';
+import { UpcomingMeetingsTable } from '@/features/admin/dashboard/components/upcoming-meetings-table';
 import { adminAnalyticsApi } from '@/features/admin/analytics/services/analytics';
 
 export default function AdminOverviewPage() {
@@ -71,6 +72,8 @@ export default function AdminOverviewPage() {
         <TrendCard title="New signups" series={data.trends.signups} />
         <TrendCard title="New meetings" series={data.trends.meetings} />
       </section>
+
+      <UpcomingMeetingsTable meetings={data.upcomingMeetings} />
 
       <RecentMeetingsTable meetings={data.recentMeetings} />
     </main>

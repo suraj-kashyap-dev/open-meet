@@ -5,6 +5,7 @@ import type {
   AdminDeepAnalyticsDto,
   AdminStatsOverviewDto,
   AdminTopHostDto,
+  AdminUpcomingMeetingDto,
   DailyCountPoint,
   RecentMeetingDto,
 } from '@open-meet/types';
@@ -24,6 +25,17 @@ interface MeetingWithHostAndCount {
   _count: { participants: number };
 }
 
+interface UpcomingMeetingWithHostAndInvites {
+  id: string;
+  code: string;
+  title: string | null;
+  scheduledFor: Date | null;
+  durationMin: number | null;
+  recurrence: string | null;
+  host: { name: string; email: string };
+  _count: { invites: number };
+}
+
 @Injectable()
 export class AdminAnalyticsService {
   constructor(private readonly stats: AdminAnalyticsRepository) {}
@@ -41,6 +53,7 @@ export class AdminAnalyticsService {
       signupRows,
       meetingRows,
       recentMeetings,
+      upcomingMeetings,
     ] = await Promise.all([
       this.stats.countUsers(),
       this.stats.countMeetings(),
@@ -49,6 +62,7 @@ export class AdminAnalyticsService {
       this.stats.dailyUserSignups(fourteenDaysAgo),
       this.stats.dailyMeetings(fourteenDaysAgo),
       this.stats.recentMeetings(10),
+      this.stats.upcomingMeetings(10, now),
     ]);
 
     return {
@@ -58,6 +72,21 @@ export class AdminAnalyticsService {
         meetings: this.fillDailySeries(meetingRows, fourteenDaysAgo, now),
       },
       recentMeetings: recentMeetings.map((m) => this.toRecentDto(m)),
+      upcomingMeetings: upcomingMeetings.map((m) => this.toUpcomingDto(m)),
+    };
+  }
+
+  private toUpcomingDto(m: UpcomingMeetingWithHostAndInvites): AdminUpcomingMeetingDto {
+    return {
+      id: m.id,
+      code: m.code,
+      title: m.title,
+      hostName: m.host.name,
+      hostEmail: m.host.email,
+      scheduledFor: m.scheduledFor?.toISOString() ?? new Date().toISOString(),
+      durationMin: m.durationMin,
+      recurrence: m.recurrence,
+      inviteeCount: m._count.invites,
     };
   }
 

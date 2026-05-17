@@ -2,7 +2,7 @@
 
 import { ArrowRight, CalendarClock, Check, Copy, Download, Loader2, X } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -17,10 +17,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useScheduleMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { ApiClientError } from '@/lib/api/client';
+import { cn } from '@/lib/cn';
 
 interface ScheduleMeetingDialogProps {
   open: boolean;
@@ -49,9 +49,13 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
   const [startAt, setStartAt] = useState(defaultStart);
   const [durationMin, setDurationMin] = useState(30);
   const [recurrence, setRecurrence] = useState('none');
-  const [inviteesRaw, setInviteesRaw] = useState('');
+  const [invitees, setInvitees] = useState<string[]>([]);
+  const [inviteeInput, setInviteeInput] = useState('');
+  const [inviteeFocused, setInviteeFocused] = useState(false);
   const [result, setResult] = useState<ScheduledResult | null>(null);
   const [copied, setCopied] = useState(false);
+
+  const inviteeInputRef = useRef<HTMLInputElement>(null);
 
   const schedule = useScheduleMeeting();
 
@@ -60,9 +64,105 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     setStartAt(nextRoundedHour());
     setDurationMin(30);
     setRecurrence('none');
-    setInviteesRaw('');
+    setInvitees([]);
+    setInviteeInput('');
     setResult(null);
     setCopied(false);
+  };
+
+  const commitInvitees = (raw: string): boolean => {
+    const candidates = raw
+      .split(/[,;\s\n]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+
+    if (candidates.length === 0) {
+      return false;
+    }
+
+    const invalid: string[] = [];
+    const next = [...invitees];
+    const seen = new Set(next.map((e) => e.toLowerCase()));
+
+    for (const email of candidates) {
+      if (! isValidEmail(email)) {
+        invalid.push(email);
+        continue;
+      }
+
+      const key = email.toLowerCase();
+
+      if (seen.has(key)) {
+        continue;
+      }
+
+      seen.add(key);
+      next.push(email);
+    }
+
+    if (invalid.length > 0) {
+      toast.error(`Not a valid email: ${invalid.join(', ')}`);
+    }
+
+    setInvitees(next);
+
+    return invalid.length === 0;
+  };
+
+  const removeInviteeAt = (idx: number) => {
+    setInvitees((prev) => prev.filter((_, i) => i !== idx));
+  };
+
+  const onInviteeKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ',' || e.key === 'Tab') {
+      if (inviteeInput.trim().length === 0) {
+        if (e.key === 'Tab') {
+          return;
+        }
+
+        e.preventDefault();
+        return;
+      }
+
+      e.preventDefault();
+
+      if (commitInvitees(inviteeInput)) {
+        setInviteeInput('');
+      }
+
+      return;
+    }
+
+    if (e.key === 'Backspace' && inviteeInput.length === 0 && invitees.length > 0) {
+      e.preventDefault();
+      removeInviteeAt(invitees.length - 1);
+    }
+  };
+
+  const onInviteePaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    const text = e.clipboardData.getData('text');
+
+    if (! /[,;\s\n]/.test(text)) {
+      return;
+    }
+
+    e.preventDefault();
+
+    if (commitInvitees(text)) {
+      setInviteeInput('');
+    }
+  };
+
+  const onInviteeBlur = () => {
+    setInviteeFocused(false);
+
+    if (inviteeInput.trim().length === 0) {
+      return;
+    }
+
+    if (commitInvitees(inviteeInput)) {
+      setInviteeInput('');
+    }
   };
 
   const handleOpenChange = (next: boolean) => {
@@ -95,7 +195,17 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       return;
     }
 
-    const invitees = parseEmails(inviteesRaw);
+    const pending = inviteeInput.trim();
+    let finalInvitees = invitees;
+
+    if (pending.length > 0) {
+      if (! commitInvitees(pending)) {
+        return;
+      }
+
+      finalInvitees = dedupeEmails([...invitees, pending]);
+      setInviteeInput('');
+    }
 
     try {
       const meeting = await schedule.mutateAsync({
@@ -103,7 +213,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
         scheduledFor: scheduledFor.toISOString(),
         durationMin,
         recurrence: recurrence === 'none' ? null : recurrence,
-        invitees,
+        invitees: finalInvitees,
       });
 
       setResult({
@@ -112,8 +222,8 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
         scheduledFor: meeting.scheduledFor ?? scheduledFor.toISOString(),
       });
 
-      if (invitees.length > 0) {
-        toast.success(`Scheduled — invites sent to ${invitees.length} guest${invitees.length === 1 ? '' : 's'}`);
+      if (finalInvitees.length > 0) {
+        toast.success(`Scheduled — invites sent to ${finalInvitees.length} guest${finalInvitees.length === 1 ? '' : 's'}`);
       } else {
         toast.success('Meeting scheduled');
       }
@@ -232,16 +342,46 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
               <Label htmlFor="meeting-invitees">
                 Invite guests <span className="text-muted-foreground">(optional)</span>
               </Label>
-              <Textarea
+
+              <Input
+                ref={inviteeInputRef}
                 id="meeting-invitees"
-                value={inviteesRaw}
-                onChange={(e) => setInviteesRaw(e.target.value)}
-                placeholder="alice@example.com, bob@example.com"
-                rows={2}
+                type="text"
+                value={inviteeInput}
+                onChange={(e) => setInviteeInput(e.target.value)}
+                onKeyDown={onInviteeKeyDown}
+                onPaste={onInviteePaste}
+                onFocus={() => setInviteeFocused(true)}
+                onBlur={onInviteeBlur}
+                placeholder="alice@example.com"
+                className={cn(inviteeFocused && 'ring-2 ring-ring')}
               />
+
               <p className="text-xs text-muted-foreground">
-                Comma or newline separated. They will get an email with the invite + .ics file.
+                Press Enter or comma after each email. They will get an email with the invite + .ics file.
               </p>
+
+              {invitees.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {invitees.map((email, idx) => (
+                    <span
+                      key={`${email}-${idx}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/15 py-1 pl-3 pr-1.5 text-xs font-medium text-foreground"
+                    >
+                      {email}
+
+                      <button
+                        type="button"
+                        onClick={() => removeInviteeAt(idx)}
+                        className="inline-flex h-4 w-4 items-center justify-center rounded-full text-muted-foreground hover:bg-accent/30 hover:text-foreground"
+                        aria-label={`Remove ${email}`}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             <DialogFooter>
@@ -359,11 +499,26 @@ function nextRoundedHour(): string {
   );
 }
 
-function parseEmails(raw: string): string[] {
-  return raw
-    .split(/[,\n]/)
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
+function isValidEmail(value: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function dedupeEmails(list: string[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+
+  for (const email of list) {
+    const key = email.toLowerCase();
+
+    if (seen.has(key)) {
+      continue;
+    }
+
+    seen.add(key);
+    out.push(email);
+  }
+
+  return out;
 }
 
 function formatDuration(min: number): string {

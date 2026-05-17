@@ -41,6 +41,18 @@ export interface RecentMeetingDto {
   participantCount: number;
 }
 
+export interface AdminUpcomingMeetingDto {
+  id: string;
+  code: string;
+  title: string | null;
+  hostName: string;
+  hostEmail: string;
+  scheduledFor: string;
+  durationMin: number | null;
+  recurrence: string | null;
+  inviteeCount: number;
+}
+
 export interface AdminStatsOverviewDto {
   totals: {
     users: number;
@@ -53,6 +65,7 @@ export interface AdminStatsOverviewDto {
     meetings: DailyCountPoint[];
   };
   recentMeetings: RecentMeetingDto[];
+  upcomingMeetings: AdminUpcomingMeetingDto[];
 }
 
 export interface AdminUserDto {

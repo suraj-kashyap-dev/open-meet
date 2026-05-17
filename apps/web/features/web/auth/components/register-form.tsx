@@ -1,8 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
-import { useState } from 'react';
+import { Loader2, UserPlus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -24,13 +23,14 @@ type FormValues = z.infer<typeof schema>;
 export function RegisterForm() {
   const register = useRegister();
 
-  const [showPassword, setShowPassword] = useState(false);
-
   const {
     register: r,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: { name: '', email: '', password: '' },
+  });
 
   const onSubmit = handleSubmit(async (values) => {
     try {
@@ -42,73 +42,31 @@ export function RegisterForm() {
     }
   });
 
+  const pending = isSubmitting || register.isPending;
+
   return (
-    <form onSubmit={onSubmit} method="post" action="#" className="space-y-5" noValidate>
-      <div className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-5" noValidate>
+      <div className="space-y-1.5">
         <Label htmlFor="name">Name</Label>
-
-        <div className="relative">
-          <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-          <Input
-            id="name"
-            autoComplete="name"
-            placeholder="Your name"
-            aria-invalid={Boolean(errors.name)}
-            className="h-11 pl-9"
-            {...r('name')}
-          />
-        </div>
-
+        <Input id="name" autoComplete="name" placeholder="Your name" {...r('name')} />
         {errors.name ? <p className="text-xs text-destructive">{errors.name.message}</p> : null}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label htmlFor="email">Email</Label>
-
-        <div className="relative">
-          <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-          <Input
-            id="email"
-            type="email"
-            autoComplete="email"
-            placeholder="you@example.com"
-            aria-invalid={Boolean(errors.email)}
-            className="h-11 pl-9"
-            {...r('email')}
-          />
-        </div>
-
+        <Input
+          id="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          {...r('email')}
+        />
         {errors.email ? <p className="text-xs text-destructive">{errors.email.message}</p> : null}
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label htmlFor="password">Password</Label>
-
-        <div className="relative">
-          <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-
-          <Input
-            id="password"
-            type={showPassword ? 'text' : 'password'}
-            autoComplete="new-password"
-            aria-invalid={Boolean(errors.password)}
-            className="h-11 pl-9 pr-10"
-            {...r('password')}
-          />
-
-          <button
-            type="button"
-            onClick={() => setShowPassword((prev) => !prev)}
-            aria-label={showPassword ? 'Hide password' : 'Show password'}
-            aria-pressed={showPassword}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          </button>
-        </div>
-
+        <Input id="password" type="password" autoComplete="new-password" {...r('password')} />
         {errors.password ? (
           <p className="text-xs text-destructive">{errors.password.message}</p>
         ) : (
@@ -116,13 +74,9 @@ export function RegisterForm() {
         )}
       </div>
 
-      <Button
-        type="submit"
-        size="lg"
-        className="h-11 w-full"
-        disabled={isSubmitting || register.isPending}
-      >
-        {register.isPending ? 'Creating…' : 'Create account'}
+      <Button type="submit" size="lg" className="w-full" disabled={pending}>
+        {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
+        {pending ? 'Creating…' : 'Create account'}
       </Button>
     </form>
   );
