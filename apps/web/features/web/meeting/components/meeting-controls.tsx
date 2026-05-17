@@ -32,7 +32,7 @@ import {
   X,
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { ClientEvent } from '@open-meet/types';
@@ -95,6 +95,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
   const [endAllOpen, setEndAllOpen] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [reactionPickerOpen, setReactionPickerOpen] = useState(false);
+  const lastReactionAtRef = useRef(0);
 
   const { resolvedTheme } = useTheme();
 
@@ -276,10 +277,17 @@ export function MeetingControls({ code, socket, hostId }: Props) {
   };
 
   const sendReaction = (emoji: string) => {
-    if (!socket) {
+    if (! socket) {
       return;
     }
 
+    const now = Date.now();
+
+    if (now - lastReactionAtRef.current < 250) {
+      return;
+    }
+
+    lastReactionAtRef.current = now;
     socket.emit(ClientEvent.REACTION_SEND, { meetingCode: code, emoji });
   };
 

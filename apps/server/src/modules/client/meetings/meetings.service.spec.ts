@@ -1,8 +1,10 @@
 import { Test, type TestingModule } from '@nestjs/testing';
+import { ConfigService } from '@nestjs/config';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 
+import { MailService } from '../../../integrations/mail/mail.service';
 import { StorageService } from '../../../storage/storage.service';
 import { MeetingsService } from './meetings.service';
 import { MeetingsRepository } from './meetings.repository';
@@ -61,11 +63,32 @@ describe('MeetingsService', () => {
       publicUrl: (key: string) => `https://cdn.test/${key}`,
     };
 
+    const mail = {
+      send: vi.fn(),
+    };
+
+    const config = {
+      getOrThrow: vi.fn((key: string) => {
+        if (key === 'FRONTEND_URL') {
+          return 'http://localhost:3000';
+        }
+
+        if (key === 'MAIL_FROM') {
+          return 'open-meet <noreply@open-meet.local>';
+        }
+
+        return '';
+      }),
+      get: vi.fn(),
+    };
+
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         MeetingsService,
         { provide: MeetingsRepository, useValue: repo },
         { provide: StorageService, useValue: storage },
+        { provide: MailService, useValue: mail },
+        { provide: ConfigService, useValue: config },
       ],
     }).compile();
 

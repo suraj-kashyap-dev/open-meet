@@ -31,14 +31,31 @@ export function CommandPalette() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((v) => !v);
+      if (e.repeat) {
+        return;
       }
+
+      if (e.altKey || e.shiftKey) {
+        return;
+      }
+
+      if (! (e.metaKey || e.ctrlKey)) {
+        return;
+      }
+
+      if (e.code !== 'KeyK') {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen((v) => ! v);
     };
-    window.addEventListener('keydown', onKey);
+
+    window.addEventListener('keydown', onKey, { capture: true });
+
     return () => {
-      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('keydown', onKey, { capture: true });
     };
   }, []);
 
@@ -59,10 +76,12 @@ export function CommandPalette() {
 
   const onJoin = () => {
     const trimmed = code.trim().toLowerCase();
-    if (!trimmed) {
+
+    if (! trimmed) {
       toast.error('Type a meeting code first');
       return;
     }
+
     nav.push(`/${trimmed}/lobby`);
   };
 
@@ -80,8 +99,9 @@ export function CommandPalette() {
           <CommandItem onSelect={() => runAction(onCreateMeeting)}>
             <Plus className="h-4 w-4" />
             New meeting
-            <CommandShortcut>⌘N</CommandShortcut>
+            <CommandShortcut>↵</CommandShortcut>
           </CommandItem>
+
           {code.trim().length > 0 ? (
             <CommandItem onSelect={() => runAction(onJoin)}>
               <Video className="h-4 w-4" />

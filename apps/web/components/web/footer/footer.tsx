@@ -35,15 +35,20 @@ export function Footer() {
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-30" />
 
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-14 sm:px-6 sm:py-16">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
-          <div className="col-span-2 flex flex-col gap-5 md:col-span-5">
+          <div className="col-span-2 flex flex-col gap-6 md:col-span-5">
             <Link
               href="/"
               className="inline-flex w-fit items-center gap-2.5 text-base font-semibold tracking-tight"
             >
               <Logo className="h-9 w-9 shadow-sm" />
+
               <span className="text-lg">Open Meet</span>
+
+              <span className="ml-1 inline-flex items-center rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                v0.1
+              </span>
             </Link>
 
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
@@ -72,13 +77,19 @@ export function Footer() {
               </Button>
             </div>
 
-            <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-success/30 bg-success/10 px-2.5 py-1 text-[11px] font-medium text-success">
+            <a
+              href={`${GITHUB_URL}#status`}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="group mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-success/30 bg-success/10 px-2.5 py-1 text-[11px] font-semibold text-success transition-colors hover:border-success/50 hover:bg-success/15"
+            >
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
               </span>
               All systems operational
-            </span>
+              <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
+            </a>
           </div>
 
           <FooterCol className="md:col-span-2" eyebrow="Navigate" title="Product" icon={LayoutGrid}>
@@ -107,17 +118,23 @@ export function Footer() {
           </FooterCol>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/40 px-5 py-4 backdrop-blur">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent/15 text-accent ring-1 ring-accent/20">
-                <Heart className="h-3.5 w-3.5" />
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/70 to-card/30 px-5 py-5 backdrop-blur sm:px-6">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/10 blur-3xl"
+          />
+
+          <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/20">
+                <Heart className="h-4 w-4" />
               </span>
 
               <div className="flex flex-col leading-tight">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                   Powered by
                 </span>
+
                 <span className="text-sm font-semibold tracking-tight">Built with open tech</span>
               </div>
             </div>
@@ -129,7 +146,7 @@ export function Footer() {
                     href={tool.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="group inline-flex items-center gap-1 rounded-full border border-border bg-background/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-background hover:text-foreground"
+                    className="group inline-flex items-center gap-1 rounded-lg border border-border/60 bg-background/60 px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-foreground/30 hover:bg-background hover:text-foreground hover:shadow-sm"
                   >
                     {tool.name}
                     <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -142,7 +159,9 @@ export function Footer() {
 
         <div className="flex flex-col-reverse items-start gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted-foreground">
-            <span className="font-medium">© {new Date().getFullYear()} Open Meet</span>
+            <span className="font-medium tracking-tight">
+              © {new Date().getFullYear()} Open Meet
+            </span>
 
             <span className="h-3 w-px bg-border" aria-hidden />
 
@@ -150,7 +169,7 @@ export function Footer() {
               href={`${GITHUB_URL}/blob/main/LICENSE`}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider transition-colors hover:border-foreground/30 hover:text-foreground"
+              className="inline-flex items-center gap-1 rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider transition-colors hover:border-foreground/30 hover:text-foreground"
             >
               MIT
             </a>
@@ -165,13 +184,15 @@ export function Footer() {
           </div>
 
           <a
-            href={GITHUB_URL}
+            href={`${GITHUB_URL}/releases`}
             target="_blank"
             rel="noreferrer noopener"
             className="group inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:border-foreground/30 hover:bg-card hover:text-foreground"
           >
             <Github className="h-3.5 w-3.5" />
-            <span>v0.1.0</span>
+
+            <span className="font-mono tracking-tight">v0.1.0</span>
+
             <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
           </a>
         </div>

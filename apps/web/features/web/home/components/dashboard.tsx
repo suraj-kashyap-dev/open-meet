@@ -3,14 +3,21 @@
 import {
   ArrowRight,
   Calendar,
+  CalendarClock,
   Check,
-  Clock,
-  Copy,
   Crown,
+  Download,
+  ExternalLink,
+  Hash,
   History,
+  Info,
   Keyboard,
+  Link2,
   Loader2,
+  MoreHorizontal,
   Plus,
+  Share2,
+  ShieldCheck,
   Sparkles,
   Users,
   Video,
@@ -24,15 +31,29 @@ import { MeetingStatus, type MeetingHistoryItemDto } from '@open-meet/types';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { Spotlight } from '@/components/ui/spotlight';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { ScheduleMeetingDialog } from '@/features/web/home/components/schedule-meeting-dialog';
 import { useHistoryList } from '@/features/web/history/hooks/use-history';
-import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
+import {
+  useCreateMeeting,
+  useUpcomingMeetings,
+} from '@/features/web/meeting/hooks/use-meetings';
+import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
+import type { UpcomingMeetingDto } from '@open-meet/types';
 import { cn } from '@/lib/cn';
 
 const fadeUp = {
@@ -49,8 +70,10 @@ export function Dashboard() {
   const { data: user } = useCurrentUser();
   const createMeeting = useCreateMeeting();
   const history = useHistoryList(1, 5);
+  const upcoming = useUpcomingMeetings();
   const [code, setCode] = useState('');
   const [intent, setIntent] = useState<'create' | 'join' | null>(null);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
 
   const onCreate = async () => {
     setIntent('create');
@@ -72,7 +95,7 @@ export function Dashboard() {
 
     const trimmed = code.trim().toLowerCase();
 
-    if (!trimmed) {
+    if (! trimmed) {
       toast.error('Enter a meeting code');
       return;
     }
@@ -108,7 +131,7 @@ export function Dashboard() {
 
           <p className="max-w-xl text-balance text-sm text-muted-foreground sm:text-base">
             Spin up a room in one click or hop into one with a code. Press{' '}
-            <KbdShortcut>⌘K</KbdShortcut> from anywhere to search.
+            <KbdShortcut>⌘ K</KbdShortcut> from anywhere to search.
           </p>
         </motion.header>
 
@@ -117,6 +140,7 @@ export function Dashboard() {
             code={code}
             onCodeChange={setCode}
             onCreate={onCreate}
+            onSchedule={() => setScheduleOpen(true)}
             onJoin={onJoin}
             isCreating={intent === 'create' && (createMeeting.isPending || nav.isNavigating)}
             isJoining={intent === 'join' && nav.isNavigating}
@@ -124,19 +148,29 @@ export function Dashboard() {
         </motion.div>
 
         <motion.div initial="hidden" animate="visible" custom={2} variants={fadeUp}>
+          <UpcomingMeetings
+            items={upcoming.data ?? []}
+            isLoading={upcoming.isLoading}
+            onSchedule={() => setScheduleOpen(true)}
+          />
+        </motion.div>
+
+        <motion.div initial="hidden" animate="visible" custom={3} variants={fadeUp}>
           <RecentMeetings items={recent} total={totalMeetings} isLoading={history.isLoading} />
         </motion.div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <motion.div initial="hidden" animate="visible" custom={3} variants={fadeUp}>
+          <motion.div initial="hidden" animate="visible" custom={4} variants={fadeUp}>
             <TipsCard />
           </motion.div>
 
-          <motion.div initial="hidden" animate="visible" custom={4} variants={fadeUp}>
+          <motion.div initial="hidden" animate="visible" custom={5} variants={fadeUp}>
             <ShortcutsCard />
           </motion.div>
         </div>
       </section>
+
+      <ScheduleMeetingDialog open={scheduleOpen} onOpenChange={setScheduleOpen} />
     </main>
   );
 }
@@ -145,6 +179,7 @@ interface ActionCardProps {
   code: string;
   onCodeChange: (value: string) => void;
   onCreate: () => void | Promise<void>;
+  onSchedule: () => void;
   onJoin: (e: React.FormEvent) => void;
   isCreating: boolean;
   isJoining: boolean;
@@ -154,6 +189,7 @@ function ActionCard({
   code,
   onCodeChange,
   onCreate,
+  onSchedule,
   onJoin,
   isCreating,
   isJoining,
@@ -170,19 +206,27 @@ function ActionCard({
         aria-hidden
       />
 
-      <CardContent className="relative grid gap-8 p-7 md:grid-cols-[1fr_auto_1fr] md:items-stretch md:gap-0 md:p-0">
-        <div className="flex flex-col justify-between gap-6 md:p-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-accent/15 text-accent ring-1 ring-accent/20">
-              <Video className="h-5 w-5" />
-            </div>
+      <CardContent className="relative grid gap-0 p-0 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
+        <div className="flex flex-col gap-6 p-6 md:p-8">
+          <div className="flex items-start justify-between gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/25">
+              <Video className="h-4 w-4" />
+            </span>
 
-            <span className="rounded-full border border-success/30 bg-success/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-success">
-              Instant · up to 100
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-success">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+              </span>
+              Instant
             </span>
           </div>
 
           <div className="flex flex-col gap-1.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              Start fresh
+            </p>
+
             <h2 className="text-2xl font-semibold tracking-tight">Start a new meeting</h2>
 
             <p className="text-sm text-muted-foreground">
@@ -190,56 +234,84 @@ function ActionCard({
             </p>
           </div>
 
-          <ShimmerButton
-            type="button"
-            onClick={onCreate}
-            disabled={isCreating}
-            className="w-full sm:w-auto sm:min-w-[180px]"
-          >
-            {isCreating ? (
-              <>
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                Creating…
-              </>
-            ) : (
-              <>
-                <Plus className="h-4 w-4" />
-                New meeting
-              </>
-            )}
-          </ShimmerButton>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-medium text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5">
+              <Users className="h-3 w-3" />
+              Up to 100
+            </span>
+            <span className="h-3 w-px bg-border" aria-hidden />
+            <span className="inline-flex items-center gap-1.5">
+              <ShieldCheck className="h-3 w-3 text-success" />
+              End-to-end secure
+            </span>
+          </div>
+
+          <div className="mt-auto flex flex-col gap-2 sm:flex-row sm:items-center">
+            <ShimmerButton
+              type="button"
+              onClick={onCreate}
+              disabled={isCreating}
+              className="w-full sm:w-auto sm:min-w-[180px]"
+            >
+              {isCreating ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Creating…
+                </>
+              ) : (
+                <>
+                  <Plus className="h-4 w-4" />
+                  New meeting
+                </>
+              )}
+            </ShimmerButton>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onSchedule}
+              className="w-full sm:w-auto"
+            >
+              <CalendarClock className="h-3.5 w-3.5" />
+              Schedule for later
+            </Button>
+          </div>
         </div>
 
         <div className="relative hidden self-stretch md:block" aria-hidden>
           <div className="absolute inset-y-8 left-1/2 w-px -translate-x-1/2 bg-border" />
 
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             or
           </span>
         </div>
 
-        <div className="flex h-px items-center md:hidden" aria-hidden>
+        <div className="flex h-px items-center px-6 md:hidden" aria-hidden>
           <div className="h-px flex-1 bg-border" />
 
-          <span className="mx-3 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+          <span className="mx-3 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             or
           </span>
 
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <div className="flex flex-col justify-between gap-6 md:p-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-muted ring-1 ring-border">
-              <ArrowRight className="h-5 w-5" />
-            </div>
+        <div className="flex flex-col gap-6 p-6 md:p-8">
+          <div className="flex items-start justify-between gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-muted-foreground ring-1 ring-border/60">
+              <ArrowRight className="h-4 w-4" />
+            </span>
 
-            <span className="rounded-full border border-border bg-muted px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-              Have a code?
+            <span className="inline-flex items-center rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              Have a code
             </span>
           </div>
 
           <div className="flex flex-col gap-1.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              Join in
+            </p>
+
             <h2 className="text-2xl font-semibold tracking-tight">Join with a code</h2>
 
             <p className="text-sm text-muted-foreground">
@@ -247,34 +319,187 @@ function ActionCard({
             </p>
           </div>
 
-          <form onSubmit={onJoin} className="flex flex-col gap-2 sm:flex-row">
+          <form onSubmit={onJoin} className="mt-auto flex flex-col gap-2 sm:flex-row">
             <Label htmlFor="join-code" className="sr-only">
               Meeting code
             </Label>
 
-            <Input
-              id="join-code"
-              value={code}
-              onChange={(e) => onCodeChange(e.target.value)}
-              placeholder="abcd-efgh-ijkl"
-              autoComplete="off"
-              spellCheck={false}
-              className="h-11 font-mono tracking-wide"
-            />
+            <div className="relative flex-1">
+              <Hash
+                aria-hidden
+                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground"
+              />
+              <Input
+                id="join-code"
+                value={code}
+                onChange={(e) => onCodeChange(e.target.value)}
+                placeholder="abcd-efgh-ijkl"
+                autoComplete="off"
+                spellCheck={false}
+                className="h-11 pl-9 font-mono tracking-wide"
+              />
+            </div>
 
             <Button
               type="submit"
-              variant="outline"
               size="lg"
-              disabled={!code.trim() || isJoining}
+              disabled={! code.trim() || isJoining}
               className="sm:min-w-[110px]"
             >
-              {isJoining ? 'Joining…' : 'Join'}
+              {isJoining ? (
+                <>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  Joining…
+                </>
+              ) : (
+                <>
+                  Join
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </>
+              )}
             </Button>
           </form>
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+interface UpcomingMeetingsProps {
+  items: UpcomingMeetingDto[];
+  isLoading: boolean;
+  onSchedule: () => void;
+}
+
+function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProps) {
+  if (! isLoading && items.length === 0) {
+    return null;
+  }
+
+  return (
+    <Card className="border-border/60 bg-card/50 backdrop-blur">
+      <CardContent className="flex flex-col gap-5 p-7">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <CalendarClock className="h-4 w-4 text-accent" />
+
+            <h3 className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
+              Coming up
+            </h3>
+
+            {items.length > 0 ? (
+              <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
+                {items.length.toLocaleString()}
+              </span>
+            ) : null}
+          </div>
+
+          <Button size="sm" variant="ghost" className="text-xs" onClick={onSchedule}>
+            <CalendarClock className="h-3.5 w-3.5" />
+            Schedule
+          </Button>
+        </div>
+
+        {isLoading ? (
+          <UpcomingSkeleton />
+        ) : (
+          <ul className="flex flex-col divide-y divide-border/60">
+            {items.map((item) => (
+              <UpcomingRow key={item.id} item={item} />
+            ))}
+          </ul>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
+  const when = new Date(item.scheduledFor);
+  const title = item.title ?? `Meeting on ${formatScheduledDate(when)}`;
+  const repeats = item.recurrence ? recurrenceLabel(item.recurrence) : null;
+
+  return (
+    <li className="group/up relative flex items-center gap-1">
+      <Link
+        href={`/${item.code}/lobby`}
+        aria-label={`Join ${title}`}
+        className="flex flex-1 items-center gap-4 rounded-md px-2 py-3 outline-none transition-colors hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-accent"
+      >
+        <span className="flex h-10 w-10 shrink-0 flex-col items-center justify-center rounded-md bg-muted ring-1 ring-border">
+          <span className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">
+            {when.toLocaleString(undefined, { month: 'short' })}
+          </span>
+
+          <span className="text-sm font-semibold leading-none tabular-nums">{when.getDate()}</span>
+        </span>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="truncate text-sm font-medium">{title}</p>
+
+            {item.isHost ? (
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
+                <Crown className="h-3 w-3" />
+                Host
+              </span>
+            ) : null}
+
+            {repeats ? (
+              <span className="inline-flex shrink-0 items-center rounded-full border border-border bg-muted/60 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                {repeats}
+              </span>
+            ) : null}
+          </div>
+
+          <p className="mt-0.5 truncate text-xs text-muted-foreground">
+            {formatScheduledDate(when)}
+            {item.durationMin ? <> · {formatDurationShort(item.durationMin)}</> : null}
+            {item.inviteeCount > 0 ? <> · {item.inviteeCount} invited</> : null}
+          </p>
+        </div>
+
+        <span className="hidden shrink-0 items-center gap-1 text-xs font-medium text-accent sm:inline-flex">
+          Join
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/up:translate-x-0.5" />
+        </span>
+      </Link>
+
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        asChild
+        aria-label="Download .ics"
+        className="h-8 w-8 shrink-0 text-muted-foreground opacity-0 transition-opacity focus-visible:opacity-100 group-hover/up:opacity-100"
+      >
+        <a
+          href={meetingsApi.icsUrl(item.code)}
+          download={`${item.code}.ics`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Download className="h-4 w-4" />
+        </a>
+      </Button>
+    </li>
+  );
+}
+
+function UpcomingSkeleton() {
+  return (
+    <ul className="flex flex-col divide-y divide-border/60">
+      {Array.from({ length: 2 }).map((_, i) => (
+        <li key={i} className="flex items-center gap-4 px-2 py-3">
+          <span className="shimmer h-10 w-10 rounded-md" />
+
+          <div className="flex flex-1 flex-col gap-2">
+            <span className="shimmer h-3 w-1/2 rounded" />
+
+            <span className="shimmer h-2.5 w-1/3 rounded" />
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -285,22 +510,37 @@ interface RecentMeetingsProps {
 }
 
 function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
+  const liveCount = items.filter((i) => i.status === MeetingStatus.ACTIVE).length;
+
   return (
-    <Card className="border-border/60 bg-card/50 backdrop-blur">
-      <CardContent className="flex flex-col gap-5 p-7">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <History className="h-4 w-4 text-accent" />
+    <Card className="relative overflow-hidden border-border/60 bg-card/50 backdrop-blur">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full bg-accent/[0.06] blur-3xl"
+      />
 
-            <h3 className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
-              Pick up where you left off
-            </h3>
+      <CardContent className="relative flex flex-col gap-5 p-6 sm:p-7">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2.5">
+              <h3 className="text-xl font-semibold tracking-tight">History</h3>
 
-            {total > 0 ? (
-              <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
-                {total.toLocaleString()}
-              </span>
-            ) : null}
+              {liveCount > 0 ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-success">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+                  </span>
+                  {liveCount} live
+                </span>
+              ) : null}
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              {total > 0
+                ? `Showing your last ${Math.min(items.length, total)} of ${total.toLocaleString()}`
+                : 'Your meetings will appear here'}
+            </p>
           </div>
 
           {items.length > 0 ? (
@@ -318,7 +558,7 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
         ) : items.length === 0 ? (
           <EmptyRecent />
         ) : (
-          <ul className="flex flex-col divide-y divide-border/60">
+          <ul className="-mx-2 flex flex-col">
             {items.map((item) => (
               <RecentRow key={item.id} item={item} />
             ))}
@@ -331,96 +571,134 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
 
 function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
   const rejoinable = item.status === MeetingStatus.ACTIVE || item.status === MeetingStatus.WAITING;
+  const isLive = item.status === MeetingStatus.ACTIVE;
 
   const primaryHref = rejoinable ? `/${item.code}/lobby` : `/history/${item.code}`;
   const actionLabel = rejoinable ? 'Rejoin' : 'Open';
   const title = item.title ?? `Meeting on ${formatShortDate(item.startedAt ?? item.createdAt)}`;
 
   return (
-    <li className="group/row relative flex items-center gap-1">
+    <li className="group/row relative isolate flex items-center gap-2 rounded-xl px-2.5 py-3 transition-colors duration-200 hover:bg-muted/50 sm:px-3">
       <Link
         href={primaryHref}
         aria-label={`${actionLabel} ${title}`}
-        className="flex flex-1 items-center gap-4 rounded-md px-2 py-3 outline-none transition-colors hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-accent"
+        className="flex min-w-0 flex-1 items-center gap-3.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-muted ring-1 ring-border">
-          <Video className="h-4 w-4 text-muted-foreground" />
-        </span>
+        <StatusIndicator status={item.status} />
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="truncate text-sm font-medium">{title}</p>
-
-            <StatusPill status={item.status} />
+            <p className="truncate text-[15px] font-semibold tracking-tight">{title}</p>
 
             {item.isHost ? (
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-md bg-warning/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warning">
                 <Crown className="h-3 w-3" />
                 Host
               </span>
             ) : null}
           </div>
 
-          <p className="mt-0.5 truncate text-xs text-muted-foreground">
-            <span className="font-mono">{item.code}</span>
-            <span className="mx-1.5">·</span>
-            {formatShortDate(item.startedAt ?? item.createdAt)}
-          </p>
+          <div className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
+            <span className="font-mono text-[11px] tracking-tight text-foreground/65">
+              {item.code}
+            </span>
+
+            <span aria-hidden>·</span>
+
+            <span>{formatShortDate(item.startedAt ?? item.createdAt)}</span>
+
+            <span className="hidden sm:inline" aria-hidden>
+              ·
+            </span>
+
+            <span className="hidden tabular-nums sm:inline-flex">
+              {item.participantCount} {item.participantCount === 1 ? 'person' : 'people'}
+            </span>
+
+            <span className="hidden sm:inline" aria-hidden>
+              ·
+            </span>
+
+            <span className="hidden tabular-nums sm:inline-flex">
+              {isLive ? 'ongoing' : formatDuration(item.durationMinutes)}
+            </span>
+          </div>
         </div>
-
-        <div className="hidden items-center gap-4 text-xs text-muted-foreground sm:flex">
-          <span className="inline-flex items-center gap-1 tabular-nums">
-            <Users className="h-3.5 w-3.5" />
-            {item.participantCount}
-          </span>
-
-          <span className="inline-flex items-center gap-1 tabular-nums">
-            <Clock className="h-3.5 w-3.5" />
-            {formatDuration(item.durationMinutes)}
-          </span>
-        </div>
-
-        <span
-          className={cn(
-            'hidden shrink-0 items-center gap-1 text-xs font-medium sm:inline-flex',
-            rejoinable ? 'text-accent' : 'text-muted-foreground',
-          )}
-        >
-          {actionLabel}
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/row:translate-x-0.5" />
-        </span>
       </Link>
 
-      {rejoinable ? <CopyLinkButton code={item.code} /> : null}
+      <div className="relative flex h-8 shrink-0 items-center">
+        <div
+          aria-hidden
+          className="flex items-center gap-2 pr-2 transition-opacity duration-200 group-hover/row:pointer-events-none group-hover/row:opacity-0"
+        >
+          {isLive ? (
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-success">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+              </span>
+              Live
+            </span>
+          ) : (
+            <span className="text-right text-xs tabular-nums text-muted-foreground">
+              {formatRelativeTime(item.startedAt ?? item.createdAt)}
+            </span>
+          )}
+        </div>
+
+        <div className="absolute inset-y-0 right-0 flex items-center gap-0.5 opacity-0 transition-opacity duration-200 group-hover/row:opacity-100">
+          <RowCopyButton code={item.code} />
+
+          <RowMoreMenu item={item} />
+
+          <Link
+            href={primaryHref}
+            aria-label={actionLabel}
+            title={actionLabel}
+            className={cn(
+              'inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground',
+              isLive && 'text-success hover:bg-success/10 hover:text-success',
+            )}
+          >
+            <ArrowRight className="h-4 w-4 transition-transform group-hover/row:translate-x-0.5" />
+          </Link>
+        </div>
+      </div>
     </li>
   );
 }
 
-function StatusPill({ status }: { status: MeetingStatus }) {
+function StatusIndicator({ status }: { status: MeetingStatus }) {
   if (status === MeetingStatus.ACTIVE) {
     return (
-      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-success">
-        <span className="relative flex h-1.5 w-1.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-        </span>
-        Live
+      <span
+        className="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center"
+        aria-label="Live"
+      >
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
+        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success shadow-[0_0_0_3px_rgba(16,185,129,0.18)]" />
       </span>
     );
   }
 
   if (status === MeetingStatus.WAITING) {
     return (
-      <span className="inline-flex shrink-0 items-center rounded-full border border-accent/30 bg-accent/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-accent">
-        Waiting
-      </span>
+      <span
+        className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-accent shadow-[0_0_0_3px_rgba(59,130,246,0.18)]"
+        aria-label="Waiting"
+      />
     );
   }
 
-  return null;
+  return (
+    <span
+      className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-muted-foreground/30 shadow-[0_0_0_3px_rgba(161,161,170,0.12)] transition-colors group-hover/row:bg-muted-foreground/60"
+      aria-label="Ended"
+    />
+  );
 }
 
-function CopyLinkButton({ code }: { code: string }) {
+function RowCopyButton({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
 
   const onCopy = async (e: React.MouseEvent) => {
@@ -447,10 +725,113 @@ function CopyLinkButton({ code }: { code: string }) {
       size="icon"
       onClick={onCopy}
       aria-label="Copy meeting link"
-      className="h-8 w-8 shrink-0 text-muted-foreground opacity-0 transition-opacity focus-visible:opacity-100 group-hover/row:opacity-100"
+      title="Copy meeting link"
+      className="h-8 w-8 shrink-0 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
     >
-      {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
+      {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Link2 className="h-3.5 w-3.5" />}
     </Button>
+  );
+}
+
+function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
+  const buildUrl = () =>
+    typeof window !== 'undefined' ? `${window.location.origin}/${item.code}` : `/${item.code}`;
+
+  const onCopyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(item.code);
+      toast.success('Meeting code copied');
+    } catch {
+      toast.error('Could not copy code');
+    }
+  };
+
+  const onCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(buildUrl());
+      toast.success('Meeting link copied');
+    } catch {
+      toast.error('Could not copy link');
+    }
+  };
+
+  const onShare = async () => {
+    const url = buildUrl();
+    const text = 'Join my meeting on Open Meet';
+
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ title: item.title ?? 'Open Meet', text, url });
+        return;
+      } catch (err) {
+        if ((err as DOMException)?.name === 'AbortError') {
+          return;
+        }
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(`${text}: ${url}`);
+      toast.success('Invite copied to clipboard');
+    } catch {
+      toast.error('Could not share meeting');
+    }
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          aria-label="More actions"
+          title="More actions"
+          className="h-8 w-8 shrink-0 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
+        >
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          {item.code}
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem asChild>
+          <Link href={`/${item.code}`} className="flex items-center gap-2">
+            <ExternalLink className="h-3.5 w-3.5" />
+            Open meeting
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <Link href={`/history/${item.code}`} className="flex items-center gap-2">
+            <Info className="h-3.5 w-3.5" />
+            View details
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem onSelect={onCopyCode}>
+          <Hash className="h-3.5 w-3.5" />
+          Copy code
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onSelect={onCopyLink}>
+          <Link2 className="h-3.5 w-3.5" />
+          Copy link
+        </DropdownMenuItem>
+
+        <DropdownMenuItem onSelect={onShare}>
+          <Share2 className="h-3.5 w-3.5" />
+          Share invite
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -503,7 +884,7 @@ function DateBadge() {
     };
   }, []);
 
-  if (!now) {
+  if (! now) {
     return <span className="h-5 w-40" aria-hidden />;
   }
 
@@ -529,7 +910,12 @@ function DateBadge() {
   );
 }
 
-const TIPS: { icon: React.ReactNode; title: string; body: string; accent: string }[] = [
+const TIPS: {
+  icon: React.ReactNode;
+  title: string;
+  body: string;
+  accent: string;
+}[] = [
   {
     icon: <Sparkles className="h-3.5 w-3.5" />,
     title: 'React without interrupting',
@@ -552,40 +938,32 @@ const TIPS: { icon: React.ReactNode; title: string; body: string; accent: string
 
 function TipsCard() {
   return (
-    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm backdrop-blur">
-      <div
-        className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-accent/10 blur-3xl"
-        aria-hidden
-      />
-
-      <CardContent className="relative flex h-full flex-col gap-5 p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/20">
-              <Sparkles className="h-4 w-4" />
-            </span>
-            <div className="flex flex-col leading-tight">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                Make every call better
-              </p>
-              <h3 className="text-base font-semibold tracking-tight">Quick tips</h3>
-            </div>
-          </div>
-
-          <span className="hidden rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground sm:inline-flex">
-            {TIPS.length}
+    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur">
+      <CardContent className="relative flex h-full flex-col gap-6 p-6">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20">
+            <Sparkles className="h-4 w-4" />
           </span>
+
+          <div className="flex flex-col leading-tight">
+            <h3 className="text-base font-semibold tracking-tight">Quick tips</h3>
+
+            <p className="text-xs text-muted-foreground">Small habits, smoother calls.</p>
+          </div>
         </div>
 
-        <ul className="flex flex-1 flex-col gap-2.5">
-          {TIPS.map((tip) => (
+        <ul className="flex flex-1 flex-col">
+          {TIPS.map((tip, i) => (
             <li
               key={tip.title}
-              className="group/tip flex items-start gap-3 rounded-xl border border-border/60 bg-background/40 p-3.5 transition-all hover:-translate-y-0.5 hover:border-border hover:bg-background/70 hover:shadow-sm"
+              className={cn(
+                'group/tip flex items-start gap-3.5 py-3.5',
+                i > 0 && 'border-t border-border/50',
+              )}
             >
               <span
                 className={cn(
-                  'mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ring-1',
+                  'mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-1 transition-transform group-hover/tip:scale-105',
                   tip.accent,
                 )}
               >
@@ -616,85 +994,49 @@ const SHORTCUTS: { keys: string[]; label: string; scope: 'global' | 'in-call' }[
 
 function ShortcutsCard() {
   return (
-    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm backdrop-blur">
-      <div
-        className="pointer-events-none absolute -bottom-16 -left-12 h-40 w-40 rounded-full bg-accent/5 blur-3xl"
-        aria-hidden
-      />
-
-      <CardContent className="relative flex h-full flex-col gap-5 p-6">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/20">
-              <Keyboard className="h-4 w-4" />
-            </span>
-            <div className="flex flex-col leading-tight">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                Go faster
-              </p>
-              <h3 className="text-base font-semibold tracking-tight">Shortcuts</h3>
-            </div>
-          </div>
-
-          <span className="hidden rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground sm:inline-flex">
-            {SHORTCUTS.length}
+    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur">
+      <CardContent className="relative flex h-full flex-col gap-6 p-6">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20">
+            <Keyboard className="h-4 w-4" />
           </span>
+
+          <div className="flex flex-col leading-tight">
+            <h3 className="text-base font-semibold tracking-tight">Shortcuts</h3>
+
+            <p className="text-xs text-muted-foreground">Move through the app without a mouse.</p>
+          </div>
         </div>
 
-        <ul className="flex flex-1 flex-col overflow-hidden rounded-xl border border-border/60 bg-background/30">
+        <ul className="flex flex-1 flex-col">
           {SHORTCUTS.map((shortcut, i) => (
-            <ShortcutRow
+            <li
               key={shortcut.label}
-              keys={shortcut.keys}
-              label={shortcut.label}
-              scope={shortcut.scope}
-              isLast={i === SHORTCUTS.length - 1}
-            />
+              className={cn(
+                'flex items-center justify-between gap-3 py-2.5',
+                i > 0 && 'border-t border-border/50',
+              )}
+            >
+              <div className="flex min-w-0 items-center gap-2">
+                <span className="truncate text-sm text-foreground/90">{shortcut.label}</span>
+
+                {shortcut.scope === 'in-call' ? (
+                  <span className="hidden rounded-md bg-muted px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted-foreground sm:inline-flex">
+                    in call
+                  </span>
+                ) : null}
+              </div>
+
+              <span className="flex shrink-0 items-center gap-1">
+                {shortcut.keys.map((k) => (
+                  <KbdShortcut key={k}>{k}</KbdShortcut>
+                ))}
+              </span>
+            </li>
           ))}
         </ul>
-
-        <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent/60" aria-hidden />
-          In-call shortcuts activate once you join a meeting.
-        </p>
       </CardContent>
     </Card>
-  );
-}
-
-function ShortcutRow({
-  keys,
-  label,
-  scope,
-  isLast,
-}: {
-  keys: string[];
-  label: string;
-  scope: 'global' | 'in-call';
-  isLast: boolean;
-}) {
-  return (
-    <li
-      className={cn(
-        'flex items-center justify-between gap-3 px-3 py-2.5 transition-colors hover:bg-muted/40',
-        !isLast && 'border-b border-border/50',
-      )}
-    >
-      <div className="flex min-w-0 items-center gap-2">
-        <span className="truncate text-sm text-foreground/90">{label}</span>
-        {scope === 'in-call' ? (
-          <span className="hidden rounded-full bg-muted px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted-foreground md:inline-flex">
-            in call
-          </span>
-        ) : null}
-      </div>
-
-      <span className="flex shrink-0 items-center gap-1">
-        {keys.map((k) => (
-          <KbdShortcut key={k}>{k}</KbdShortcut>
-        ))}
-      </span>
-    </li>
   );
 }
 
@@ -725,7 +1067,7 @@ function greetingLabel(): string {
 }
 
 function formatShortDate(iso: string | null): string {
-  if (!iso) {
+  if (! iso) {
     return '—';
   }
 
@@ -735,6 +1077,45 @@ function formatShortDate(iso: string | null): string {
     hour: 'numeric',
     minute: '2-digit',
   });
+}
+
+function formatRelativeTime(iso: string | null): string {
+  if (! iso) {
+    return '—';
+  }
+
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const min = Math.round(diffMs / 60_000);
+
+  if (min < 1) {
+    return 'just now';
+  }
+
+  if (min < 60) {
+    return `${min}m ago`;
+  }
+
+  const hr = Math.round(min / 60);
+
+  if (hr < 24) {
+    return `${hr}h ago`;
+  }
+
+  const days = Math.round(hr / 24);
+
+  if (days < 7) {
+    return `${days}d ago`;
+  }
+
+  if (days < 30) {
+    return `${Math.round(days / 7)}w ago`;
+  }
+
+  if (days < 365) {
+    return `${Math.round(days / 30)}mo ago`;
+  }
+
+  return `${Math.round(days / 365)}y ago`;
 }
 
 function formatDuration(min: number | null): string {
@@ -750,4 +1131,46 @@ function formatDuration(min: number | null): string {
   const m = min % 60;
 
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
+}
+
+function formatScheduledDate(d: Date): string {
+  return d.toLocaleString(undefined, {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
+
+function formatDurationShort(min: number): string {
+  if (min < 60) {
+    return `${min} min`;
+  }
+
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+
+  return m === 0 ? `${h}h` : `${h}h ${m}m`;
+}
+
+function recurrenceLabel(rrule: string): string | null {
+  const freq = rrule.match(/FREQ=([A-Z]+)/);
+
+  if (! freq) {
+    return 'Repeats';
+  }
+
+  switch (freq[1]) {
+    case 'DAILY':
+      return 'Daily';
+    case 'WEEKLY':
+      return 'Weekly';
+    case 'MONTHLY':
+      return 'Monthly';
+    case 'YEARLY':
+      return 'Yearly';
+    default:
+      return 'Repeats';
+  }
 }

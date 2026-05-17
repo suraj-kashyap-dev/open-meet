@@ -2,25 +2,30 @@ import {
   Body,
   Controller,
   Get,
+  Header,
   HttpCode,
   HttpStatus,
   Param,
   Patch,
   Post,
   Query,
+  Res,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import type { FastifyReply } from 'fastify';
 
 import type {
   MeetingDto,
   MeetingHistoryItemDto,
   MeetingHistoryListResponseDto,
   ParticipantDto,
+  UpcomingMeetingDto,
 } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { HistoryQueryDto } from './dto/history-query.dto';
+import { ScheduleMeetingApiDto } from './dto/schedule-meeting.dto';
 import { UpdateMeetingDto } from './dto/update-meeting.dto';
 import { MeetingsService } from './meetings.service';
 
@@ -36,6 +41,21 @@ export class MeetingsController {
     @CurrentUser() user: RequestUser,
   ): Promise<MeetingDto> {
     return this.meetings.create(user.id, dto.title);
+  }
+
+  @Post('schedule')
+  @ApiOperation({ summary: 'Schedule a meeting for a future time' })
+  async schedule(
+    @Body() dto: ScheduleMeetingApiDto,
+    @CurrentUser() user: RequestUser,
+  ): Promise<MeetingDto> {
+    return this.meetings.schedule(user, dto);
+  }
+
+  @Get('upcoming')
+  @ApiOperation({ summary: 'Upcoming scheduled meetings you host or are invited to' })
+  async upcoming(@CurrentUser() user: RequestUser): Promise<UpcomingMeetingDto[]> {
+    return this.meetings.getUpcoming(user);
   }
 
   @Get('history')
@@ -129,5 +149,14 @@ export class MeetingsController {
   @ApiOperation({ summary: 'List currently active participants' })
   async participants(@Param('code') code: string): Promise<ParticipantDto[]> {
     return this.meetings.listParticipants(code);
+  }
+
+  @Get(':code/ics')
+  @Header('Content-Type', 'text/calendar; charset=utf-8')
+  @ApiParam({ name: 'code', example: 'abcd-efgh-ijkl' })
+  @ApiOperation({ summary: 'Download .ics calendar file for a scheduled meeting' })
+  async ics(@Param('code') code: string, @Res() reply: FastifyReply): Promise<void> {
+    const { filename, content } = await this.meetings.getIcs(code);
+    void reply.header('Content-Disposition', `attachment; filename="${filename}"`).send(content);
   }
 }

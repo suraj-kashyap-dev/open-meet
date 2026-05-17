@@ -39,6 +39,13 @@ export const apiEnvSchema = z.object({
 
   SMTP_HOST: z.string().default('localhost'),
   SMTP_PORT: z.coerce.number().int().positive().default(1025),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASS: z.string().optional(),
+  SMTP_SECURE: z
+    .union([z.literal('true'), z.literal('false')])
+    .default('false')
+    .transform((v) => v === 'true'),
+  MAIL_FROM: z.string().default('open-meet <noreply@open-meet.local>'),
 });
 
 export type ApiEnv = z.infer<typeof apiEnvSchema>;

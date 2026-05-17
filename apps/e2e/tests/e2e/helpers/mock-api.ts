@@ -232,6 +232,9 @@ export async function installMockApi(page: Page): Promise<MockState> {
         title: body.title ?? null,
         hostId: u.id,
         status: MeetingStatus.WAITING,
+        scheduledFor: null,
+        recurrence: null,
+        durationMin: null,
         startedAt: null,
         endedAt: null,
         createdAt: new Date().toISOString(),
@@ -259,6 +262,9 @@ export async function installMockApi(page: Page): Promise<MockState> {
             title: null,
             hostId: state.user?.id ?? 'host',
             status: MeetingStatus.WAITING,
+            scheduledFor: null,
+            recurrence: null,
+            durationMin: null,
             startedAt: null,
             endedAt: null,
             createdAt: new Date().toISOString(),
@@ -277,6 +283,9 @@ export async function installMockApi(page: Page): Promise<MockState> {
             title: null,
             hostId: state.user?.id ?? 'host',
             status: MeetingStatus.WAITING,
+            scheduledFor: null,
+            recurrence: null,
+            durationMin: null,
             startedAt: null,
             endedAt: null,
             createdAt: new Date().toISOString(),
@@ -323,8 +332,21 @@ export async function installMockApi(page: Page): Promise<MockState> {
     }
 
     // ── livekit + everything else ──────────────────────────────────────────
-    if (method === 'GET' && path.includes('/api/livekit/token')) {
-      return reply(ok({ token: 'mock-token', url: 'wss://mock.livekit.test' }));
+    if (
+      (method === 'GET' || method === 'POST') &&
+      path.includes('/api/livekit/token')
+    ) {
+      // Non-routable IP (RFC 5737 TEST-NET-1) so the WebSocket attempt hangs
+      // rather than failing fast — keeps the meeting shell mounted for tests
+      // / screenshot captures instead of immediately flipping to EndedView.
+      return reply(ok({ token: 'mock-token', url: 'wss://192.0.2.1:7880' }));
+    }
+
+    if (
+      method === 'GET' &&
+      path.match(/\/api\/meetings\/[^/]+\/recording\/active$/)
+    ) {
+      return reply(ok({ recording: null }));
     }
 
     if (method === 'GET' && path.match(/\/api\/meetings\/[^/]+\/messages/)) {

@@ -12,6 +12,7 @@ import { JwtAuthGuard } from './modules/client/auth/guards/jwt-auth.guard';
 import { SettingsModule } from './modules/client/settings/settings.module';
 import { MeetingsModule } from './modules/client/meetings/meetings.module';
 import { LiveKitModule } from './integrations/livekit/livekit.module';
+import { MailModule } from './integrations/mail/mail.module';
 import { ChatModule } from './modules/client/chat/chat.module';
 import { RecordingModule } from './modules/client/recording/recording.module';
 import { AdminModule } from './modules/admin/admin.module';
@@ -30,6 +31,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     }),
     PrismaModule,
     RedisModule,
+    MailModule,
     AuthModule,
     SettingsModule,
     MeetingsModule,

@@ -1,3 +1,5 @@
+import { User } from 'lucide-react';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/cn';
 
@@ -40,6 +42,8 @@ export function UserAvatar({
   fallbackClassName,
   title,
 }: UserAvatarProps) {
+  const initials = initialsOf(user.name);
+
   return (
     <Avatar className={cn(SIZE[size], className)} title={title}>
       {user.avatar ? <AvatarImage src={user.avatar} alt={user.name} /> : null}
@@ -51,7 +55,7 @@ export function UserAvatar({
           fallbackClassName,
         )}
       >
-        {initialsOf(user.name)}
+        {initials ? initials : <User className="h-1/2 w-1/2 opacity-80" aria-hidden />}
       </AvatarFallback>
     </Avatar>
   );
@@ -61,7 +65,7 @@ export function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
 
   if (parts.length === 0) {
-    return '?';
+    return '';
   }
 
   if (parts.length === 1) {

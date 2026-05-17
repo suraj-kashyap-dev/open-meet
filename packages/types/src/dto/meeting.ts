@@ -19,15 +19,38 @@ export interface UpdateMeetingDto {
   title?: string | null;
 }
 
+export interface ScheduleMeetingDto {
+  title: string;
+  scheduledFor: string;
+  durationMin?: number;
+  recurrence?: string | null;
+  invitees?: string[];
+}
+
 export interface MeetingDto {
   id: string;
   code: string;
   title: string | null;
   hostId: string;
   status: MeetingStatus;
+  scheduledFor: string | null;
+  recurrence: string | null;
+  durationMin: number | null;
   startedAt: string | null;
   endedAt: string | null;
   createdAt: string;
+}
+
+export interface UpcomingMeetingDto {
+  id: string;
+  code: string;
+  title: string | null;
+  hostName: string;
+  isHost: boolean;
+  scheduledFor: string;
+  durationMin: number | null;
+  recurrence: string | null;
+  inviteeCount: number;
 }
 
 export interface ParticipantDto {

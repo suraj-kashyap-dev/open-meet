@@ -2,7 +2,13 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { MeetingDto, ParticipantDto, UpdateMeetingDto } from '@open-meet/types';
+import type {
+  MeetingDto,
+  ParticipantDto,
+  ScheduleMeetingDto,
+  UpcomingMeetingDto,
+  UpdateMeetingDto,
+} from '@open-meet/types';
 
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useMeetingStore } from '@/features/web/meeting/stores';
@@ -26,6 +32,25 @@ export function useParticipants(code: string | undefined) {
 
 export function useCreateMeeting() {
   return useMutation({ mutationFn: meetingsApi.create });
+}
+
+export function useScheduleMeeting() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (input: ScheduleMeetingDto) => meetingsApi.schedule(input),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['meetings', 'upcoming'] });
+    },
+  });
+}
+
+export function useUpcomingMeetings() {
+  return useQuery<UpcomingMeetingDto[]>({
+    queryKey: ['meetings', 'upcoming'],
+    queryFn: ({ signal }) => meetingsApi.upcoming(signal),
+    refetchInterval: 60_000,
+  });
 }
 
 export function useUpdateMeeting(code: string) {

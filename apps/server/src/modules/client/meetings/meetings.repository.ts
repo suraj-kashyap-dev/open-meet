@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import type { Meeting, Participant, User } from '@prisma/client';
+import type { Meeting, MeetingInvite, Participant, User } from '@prisma/client';
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
 export type ParticipantWithUser = Participant & {
   user: Pick<User, 'id' | 'name' | 'avatarKey'>;
+};
+
+export type UpcomingMeetingRow = Meeting & {
+  host: { id: string; name: string };
+  _count: { invites: number };
 };
 
 @Injectable()
@@ -33,6 +38,65 @@ export class MeetingsRepository {
             role: ParticipantRole.HOST,
           },
         },
+      },
+    });
+  }
+
+  createScheduled(data: {
+    code: string;
+    hostId: string;
+    title: string;
+    scheduledFor: Date;
+    durationMin: number | null;
+    recurrence: string | null;
+    invitees: string[];
+  }): Promise<Meeting & { invites: MeetingInvite[] }> {
+    return this.prisma.meeting.create({
+      data: {
+        code: data.code,
+        hostId: data.hostId,
+        title: data.title,
+        status: MeetingStatus.WAITING,
+        scheduledFor: data.scheduledFor,
+        durationMin: data.durationMin,
+        recurrence: data.recurrence,
+        participants: {
+          create: {
+            userId: data.hostId,
+            role: ParticipantRole.HOST,
+          },
+        },
+        invites: {
+          create: data.invitees.map((email) => ({ email })),
+        },
+      },
+      include: { invites: true },
+    });
+  }
+
+  markInviteSent(inviteId: string): Promise<MeetingInvite> {
+    return this.prisma.meetingInvite.update({
+      where: { id: inviteId },
+      data: { sentAt: new Date() },
+    });
+  }
+
+  listUpcomingForUser(
+    userId: string,
+    email: string,
+    fromDate: Date,
+  ): Promise<UpcomingMeetingRow[]> {
+    return this.prisma.meeting.findMany({
+      where: {
+        scheduledFor: { gte: fromDate },
+        status: { not: MeetingStatus.ENDED },
+        OR: [{ hostId: userId }, { invites: { some: { email } } }],
+      },
+      orderBy: { scheduledFor: 'asc' },
+      take: 20,
+      include: {
+        host: { select: { id: true, name: true } },
+        _count: { select: { invites: true } },
       },
     });
   }
