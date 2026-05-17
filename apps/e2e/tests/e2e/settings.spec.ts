@@ -29,7 +29,8 @@ async function saveMeetingPreferences(page: Page): Promise<void> {
     .getByRole('button', { name: /save changes/i })
     .click();
 
-  await expect(page.getByText('Meeting preferences updated')).toBeVisible({
+  // .first() tolerates earlier toasts that haven't auto-dismissed yet.
+  await expect(page.getByText('Meeting preferences updated').first()).toBeVisible({
     timeout: 10_000,
   });
 }
@@ -41,7 +42,7 @@ async function savePrivacy(page: Page): Promise<void> {
     .getByRole('button', { name: /save changes/i })
     .click();
 
-  await expect(page.getByText('Privacy settings updated')).toBeVisible({
+  await expect(page.getByText('Privacy settings updated').first()).toBeVisible({
     timeout: 10_000,
   });
 }
@@ -53,7 +54,7 @@ async function saveLocalization(page: Page): Promise<void> {
     .getByRole('button', { name: /save changes/i })
     .click();
 
-  await expect(page.getByText('Localization updated')).toBeVisible({
+  await expect(page.getByText('Localization updated').first()).toBeVisible({
     timeout: 10_000,
   });
 }
@@ -202,11 +203,14 @@ test.describe('user settings', () => {
     await goToSettings(page);
 
     const toggle = rowFor(page, 'Browser notifications').getByRole('switch');
-    const initial = await toggle.getAttribute('aria-checked');
 
-    if (initial === 'true') {
+    // Default is on. Commit "off" first so the subsequent flip-on is a real
+    // dirty change (react-hook-form clears dirty when the field returns to
+    // its default value, which would otherwise disable the Save button).
+    if ((await toggle.getAttribute('aria-checked')) === 'true') {
       await toggle.click();
       await expect(toggle).toHaveAttribute('aria-checked', 'false');
+      await saveMeetingPreferences(page);
     }
 
     await toggle.click();
