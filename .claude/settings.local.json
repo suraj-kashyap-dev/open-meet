@@ -185,7 +185,10 @@
       "Bash(echo \"lint=$?\")",
       "Bash(pnpm test:unit)",
       "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")",
-      "Bash(RUN_FULL_E2E=1 E2E_NO_WEB_SERVER=1 pnpm test:e2e tests/e2e/profile.spec.ts --workers=2 --reporter=list)"
+      "Bash(RUN_FULL_E2E=1 E2E_NO_WEB_SERVER=1 pnpm test:e2e tests/e2e/profile.spec.ts --workers=2 --reporter=list)",
+      "Bash(tasklist //FI \"IMAGENAME eq node.exe\")",
+      "Bash(pnpm --filter @open-meet/server test)",
+      "Bash(pnpm test *)"
     ]
   }
 }

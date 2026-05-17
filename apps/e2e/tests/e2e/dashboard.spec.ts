@@ -79,17 +79,4 @@ test.describe('dashboard', () => {
     expect(result.body.data.meeting.status).toBe('ACTIVE');
   });
 
-  test('logged-in landing shows "Open app" instantly after refresh (no flash)', async ({ page }) => {
-    await registerNewUser(page, 'Ada');
-
-    await page.goto('/');
-    await expect(page.locator('header').getByRole('link', { name: /open app/i })).toBeVisible();
-
-    await page.reload();
-    await expect(page.locator('header').getByRole('link', { name: /open app/i })).toBeVisible({
-      timeout: 1_500,
-    });
-    await expect(page.locator('header').getByRole('link', { name: 'Sign in' })).toHaveCount(0);
-    await expect(page.locator('header').getByRole('link', { name: 'Get started' })).toHaveCount(0);
-  });
 });

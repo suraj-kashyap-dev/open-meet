@@ -1,4 +1,4 @@
-import { History, User, type LucideIcon } from 'lucide-react';
+import { History, Settings, User, type LucideIcon } from 'lucide-react';
 
 export interface AccountNavItem {
   label: string;
@@ -13,6 +13,12 @@ export const accountNav: AccountNavItem[] = [
     href: '/profile',
     icon: User,
     description: 'Your account details',
+  },
+  {
+    label: 'Settings',
+    href: '/settings',
+    icon: Settings,
+    description: 'Defaults, privacy, language',
   },
   {
     label: 'Meeting history',

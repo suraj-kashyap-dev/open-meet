@@ -3,7 +3,7 @@
 import { useParticipants } from '@livekit/components-react';
 import { Crown, Hand, Mic, MicOff, Video, VideoOff, X } from 'lucide-react';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useMeetingStore } from '@/store/client';
@@ -41,13 +41,6 @@ export function ParticipantsPanel({ onClose }: Props) {
       <ScrollArea className="flex-1 px-4">
         <ul className="space-y-2 py-4">
           {participants.map((p) => {
-            const initials = (p.name ?? '?')
-              .split(' ')
-              .map((s) => s[0])
-              .slice(0, 2)
-              .join('')
-              .toUpperCase();
-
             const isHost = p.identity === meeting?.hostId;
             const hasHand = Boolean(raisedHands[p.identity]);
 
@@ -57,9 +50,11 @@ export function ParticipantsPanel({ onClose }: Props) {
                 className="flex items-center justify-between rounded-md border border-border bg-card/50 px-3 py-2"
               >
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-9 w-9">
-                    <AvatarFallback>{initials}</AvatarFallback>
-                  </Avatar>
+                  <UserAvatar
+                    user={{ name: p.name ?? p.identity }}
+                    size="md"
+                    fallbackClassName="bg-muted text-muted-foreground"
+                  />
 
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">

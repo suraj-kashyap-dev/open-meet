@@ -5,7 +5,7 @@ import { MeetingStatus, ParticipantRole } from '@prisma/client';
 import { PrismaService } from '../../../database/prisma.service';
 
 export type ParticipantWithUser = Participant & {
-  user: Pick<User, 'id' | 'name' | 'avatar'>;
+  user: Pick<User, 'id' | 'name' | 'avatarKey'>;
 };
 
 @Injectable()
@@ -46,7 +46,7 @@ export class MeetingsRepository {
         joinedAt: new Date(),
       },
       include: {
-        user: { select: { id: true, name: true, avatar: true } },
+        user: { select: { id: true, name: true, avatarKey: true } },
       },
     });
   }
@@ -91,7 +91,7 @@ export class MeetingsRepository {
         leftAt: null,
       },
       include: {
-        user: { select: { id: true, name: true, avatar: true } },
+        user: { select: { id: true, name: true, avatarKey: true } },
       },
       orderBy: { joinedAt: 'asc' },
     });
@@ -136,12 +136,12 @@ export class MeetingsRepository {
       skip: params.skip,
       take: params.take,
       include: {
-        host: { select: { id: true, name: true, avatar: true } },
+        host: { select: { id: true, name: true, avatarKey: true } },
         participants: {
           take: 6,
           orderBy: { joinedAt: 'asc' },
           include: {
-            user: { select: { id: true, name: true, avatar: true } },
+            user: { select: { id: true, name: true, avatarKey: true } },
           },
         },
         _count: {

@@ -4,7 +4,7 @@ import { ChevronRight, LogOut, Menu, PanelLeftClose, PanelLeftOpen } from 'lucid
 import { usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -50,20 +50,6 @@ function deriveCrumbs(pathname: string): Crumb[] {
 
   const segments = pathname.split('/').filter(Boolean);
   return segments.map((segment) => ({ label: segment }));
-}
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
 }
 
 interface Props {
@@ -140,11 +126,7 @@ export function AdminTopbar({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-10 gap-2 px-2 sm:px-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-accent/15 text-xs font-semibold text-accent">
-                    {initialsOf(admin.name)}
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar user={admin} size="md" className="h-8 w-8" />
                 <div className="hidden min-w-0 text-left sm:block">
                   <p className="truncate text-sm font-medium leading-none">{admin.name}</p>
                   <p className="truncate pt-1 text-xs text-muted-foreground">{admin.email}</p>

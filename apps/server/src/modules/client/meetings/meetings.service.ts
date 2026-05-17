@@ -14,6 +14,7 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
+import { StorageService } from '../../../storage/storage.service';
 import {
   MeetingsRepository,
   type ParticipantWithUser,
@@ -21,7 +22,14 @@ import {
 
 @Injectable()
 export class MeetingsService {
-  constructor(private readonly meetings: MeetingsRepository) {}
+  constructor(
+    private readonly meetings: MeetingsRepository,
+    private readonly storage: StorageService,
+  ) {}
+
+  private avatarUrl(key: string | null): string | null {
+    return key ? this.storage.publicUrl(key) : null;
+  }
 
   async create(hostId: string, title: string | undefined): Promise<MeetingDto> {
     let attempt = 0;
@@ -155,7 +163,7 @@ export class MeetingsService {
         startedAt: Date | null;
         endedAt: Date | null;
         createdAt: Date;
-        host: { id: string; name: string; avatar: string | null };
+        host: { id: string; name: string; avatarKey: string | null };
         participants: ParticipantWithUser[];
         _count: { participants: number; messages: number };
       };
@@ -253,11 +261,15 @@ export class MeetingsService {
       meetingId: p.meetingId,
       userId: p.userId,
       name: p.user.name,
-      avatar: p.user.avatar,
+      avatar: this.avatarUrl(p.user.avatarKey),
       role: p.role,
       joinedAt: p.joinedAt.toISOString(),
       leftAt: p.leftAt?.toISOString() ?? null,
     };
+  }
+
+  resolveAvatarUrl(avatarKey: string | null): string | null {
+    return this.avatarUrl(avatarKey);
   }
 
   private isUniqueViolation(err: unknown): boolean {

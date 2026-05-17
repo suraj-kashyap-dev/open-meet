@@ -4,7 +4,7 @@ import type { Attachment, Message } from '@prisma/client';
 import { PrismaService } from '../../../database/prisma.service';
 
 export type MessageWithSender = Message & {
-  sender: { id: string; name: string; avatar: string | null };
+  sender: { id: string; name: string; avatarKey: string | null };
   attachments: Attachment[];
 };
 
@@ -20,7 +20,7 @@ export class ChatRepository {
     return this.prisma.message.create({
       data: input,
       include: {
-        sender: { select: { id: true, name: true, avatar: true } },
+        sender: { select: { id: true, name: true, avatarKey: true } },
         attachments: true,
       },
     });
@@ -30,7 +30,7 @@ export class ChatRepository {
     return this.prisma.message.findUnique({
       where: { id },
       include: {
-        sender: { select: { id: true, name: true, avatar: true } },
+        sender: { select: { id: true, name: true, avatarKey: true } },
         attachments: true,
       },
     });
@@ -42,7 +42,7 @@ export class ChatRepository {
       orderBy: { sentAt: 'asc' },
       take: limit,
       include: {
-        sender: { select: { id: true, name: true, avatar: true } },
+        sender: { select: { id: true, name: true, avatarKey: true } },
         attachments: true,
       },
     });
@@ -61,7 +61,7 @@ export class ChatRepository {
       orderBy: { sentAt: 'desc' },
       take: params.limit,
       include: {
-        sender: { select: { id: true, name: true, avatar: true } },
+        sender: { select: { id: true, name: true, avatarKey: true } },
         attachments: true,
       },
     });

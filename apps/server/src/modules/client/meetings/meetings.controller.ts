@@ -68,7 +68,7 @@ export class MeetingsController {
           participantsPreview: meeting.participants.map((p) => ({
             id: p.user.id,
             name: p.user.name,
-            avatar: p.user.avatar,
+            avatar: this.meetings.resolveAvatarUrl(p.user.avatarKey),
           })),
           messageCount: meeting._count.messages,
           attachmentCount,

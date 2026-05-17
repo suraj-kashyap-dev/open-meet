@@ -11,27 +11,13 @@ import { useEffect, useMemo, useRef } from 'react';
 
 import type { AttachmentDto, MessageDto } from '@open-meet/types';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/hooks/client/use-auth';
 import { useHistoryMeeting, useHistoryMessages } from '@/hooks/client/use-history';
 import { cn } from '@/lib/shared/cn';
 
 const GROUP_WINDOW_MS = 2 * 60_000;
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
 
 function startOfDay(date: Date): number {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
@@ -323,7 +309,6 @@ export function HistoryDetail({ code }: { code: string }) {
                 }
 
                 const { message: m, isMe, isGroupHead, isGroupTail } = row;
-                const initials = initialsOf(m.sender.name);
 
                 return (
                   <li
@@ -337,11 +322,7 @@ export function HistoryDetail({ code }: { code: string }) {
                     {! isMe ? (
                       <div className="w-7 shrink-0">
                         {isGroupTail ? (
-                          <Avatar className="h-7 w-7">
-                            <AvatarFallback className="bg-accent/15 text-[10px] font-semibold text-accent">
-                              {initials}
-                            </AvatarFallback>
-                          </Avatar>
+                          <UserAvatar user={m.sender} size="sm" />
                         ) : null}
                       </div>
                     ) : null}

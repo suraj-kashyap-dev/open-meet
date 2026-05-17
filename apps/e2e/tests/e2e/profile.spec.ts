@@ -27,8 +27,9 @@ test.describe('profile page', () => {
     await expect(page.getByLabel('Email', { exact: true })).toHaveValue(user.email);
     await expect(page.getByLabel('Email', { exact: true })).toBeDisabled();
 
-    // Sidebar with Profile + Meeting history links is present.
+    // Sidebar with Profile + Settings + Meeting history links is present.
     await expect(page.getByRole('link', { name: /Profile/ })).toBeVisible();
+    await expect(page.getByRole('link', { name: /^Settings/ })).toBeVisible();
     await expect(page.getByRole('link', { name: /Meeting history/ })).toBeVisible();
   });
 
@@ -44,7 +45,7 @@ test.describe('profile page', () => {
     await expect(page.getByText('Name is required')).toBeVisible();
   });
 
-  test('saves a new name and updates the header avatar', async ({ page }) => {
+  test('saves a new name and reflects it in the header', async ({ page }) => {
     await registerNewUser(page, 'Ada Lovelace');
 
     await page.goto('/profile');
@@ -77,5 +78,17 @@ test.describe('profile page', () => {
     await expect(
       personalForm(page).getByRole('button', { name: /save changes/i }),
     ).toBeDisabled();
+  });
+
+  test('profile no longer accepts an avatar URL field', async ({ page }) => {
+    await registerNewUser(page);
+
+    await page.goto('/profile');
+    await page.locator('html[data-hydrated="true"]').waitFor();
+
+    // Old form had a URL input labeled "Avatar URL" — the upload section
+    // replaces it with a file-picker button. Confirm the old control is gone.
+    await expect(page.getByLabel('Avatar URL')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /^Upload$/ })).toBeVisible();
   });
 });

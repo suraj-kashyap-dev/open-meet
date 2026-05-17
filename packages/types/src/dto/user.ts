@@ -30,6 +30,11 @@ export interface PrivacySettingsDto {
   shareUsageData: boolean;
 }
 
+export interface UserSettingsDto {
+  meetingPreferences: MeetingPreferencesDto;
+  privacySettings: PrivacySettingsDto;
+}
+
 export const DEFAULT_MEETING_PREFERENCES: MeetingPreferencesDto = {
   defaultMicMuted: false,
   defaultCameraOff: false,
@@ -45,6 +50,11 @@ export const DEFAULT_PRIVACY_SETTINGS: PrivacySettingsDto = {
   shareUsageData: false,
 };
 
+export const DEFAULT_USER_SETTINGS: UserSettingsDto = {
+  meetingPreferences: DEFAULT_MEETING_PREFERENCES,
+  privacySettings: DEFAULT_PRIVACY_SETTINGS,
+};
+
 export interface UserDto {
   id: string;
   name: string;
@@ -53,17 +63,17 @@ export interface UserDto {
   timezone: string;
   language: string;
   bio: string | null;
-  meetingPreferences: MeetingPreferencesDto;
-  privacySettings: PrivacySettingsDto;
   createdAt: string;
 }
 
 export interface UpdateProfileDto {
   name?: string;
-  avatar?: string | null;
   timezone?: string;
   language?: string;
   bio?: string | null;
+}
+
+export interface UpdateUserSettingsDto {
   meetingPreferences?: Partial<MeetingPreferencesDto>;
   privacySettings?: Partial<PrivacySettingsDto>;
 }
@@ -71,4 +81,8 @@ export interface UpdateProfileDto {
 export interface ChangePasswordDto {
   currentPassword: string;
   newPassword: string;
+}
+
+export interface UploadAvatarResponseDto {
+  user: UserDto;
 }

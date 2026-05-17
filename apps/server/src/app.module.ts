@@ -9,6 +9,7 @@ import { PrismaModule } from './database/prisma.module';
 import { RedisModule } from './integrations/redis/redis.module';
 import { AuthModule } from './modules/client/auth/auth.module';
 import { JwtAuthGuard } from './modules/client/auth/guards/jwt-auth.guard';
+import { SettingsModule } from './modules/client/settings/settings.module';
 import { MeetingsModule } from './modules/client/meetings/meetings.module';
 import { LiveKitModule } from './integrations/livekit/livekit.module';
 import { ChatModule } from './modules/client/chat/chat.module';
@@ -29,6 +30,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     PrismaModule,
     RedisModule,
     AuthModule,
+    SettingsModule,
     MeetingsModule,
     LiveKitModule,
     ChatModule,

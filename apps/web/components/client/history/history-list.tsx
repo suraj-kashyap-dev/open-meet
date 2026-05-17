@@ -19,26 +19,12 @@ import { useMemo, useState, type ReactNode } from 'react';
 import type { MeetingHistoryItemDto } from '@open-meet/types';
 
 import { DataTable } from '@/components/shared/data-table/data-table';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import { useHistoryList } from '@/hooks/client/use-history';
 import { cn } from '@/lib/shared/cn';
 
 const PAGE_SIZE = 20;
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
 
 function formatStartedAt(iso: string | null): string {
   if (! iso) {
@@ -149,15 +135,14 @@ export function HistoryList() {
             <div className="flex items-center gap-3">
               <div className="flex items-center -space-x-2">
                 {displayedAvatars.map((p) => (
-                  <Avatar
+                  <UserAvatar
                     key={p.id}
-                    className="h-6 w-6 border-2 border-card"
+                    user={p}
+                    size="xs"
                     title={p.name}
-                  >
-                    <AvatarFallback className="bg-muted text-[10px] font-semibold text-muted-foreground">
-                      {initialsOf(p.name)}
-                    </AvatarFallback>
-                  </Avatar>
+                    className="border-2 border-card"
+                    fallbackClassName="bg-muted text-muted-foreground"
+                  />
                 ))}
                 {extra > 0 ? (
                   <span className="flex h-6 min-w-[1.5rem] items-center justify-center rounded-full border-2 border-card bg-muted px-1.5 text-[10px] font-medium text-muted-foreground">
@@ -386,7 +371,7 @@ function EmptyState() {
         </p>
       </div>
       <Button asChild className="mt-2">
-        <Link href="/app">Start a meeting</Link>
+        <Link href="/">Start a meeting</Link>
       </Button>
     </div>
   );

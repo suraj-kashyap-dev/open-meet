@@ -11,7 +11,7 @@ import {
   type KnockRequestedPayload,
 } from '@open-meet/types';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import type { MeetingSocket } from '@/hooks/client/use-socket';
 
@@ -20,20 +20,6 @@ interface PendingKnock {
   name: string;
   avatar: string | null;
   knockedAt: string;
-}
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
 }
 
 interface Props {
@@ -98,14 +84,7 @@ export function KnockNotifier({ socket, code }: Props) {
             key={knock.userId}
             className="flex items-center gap-3 rounded-xl border border-border bg-popover/95 p-3 shadow-lg backdrop-blur-md"
           >
-            <Avatar className="h-10 w-10 shrink-0">
-              {knock.avatar ? (
-                <AvatarImage src={knock.avatar} alt={knock.name} />
-              ) : null}
-              <AvatarFallback className="bg-accent/15 text-xs font-semibold text-accent">
-                {initialsOf(knock.name)}
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar user={knock} size="lg" className="shrink-0" />
 
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{knock.name}</p>

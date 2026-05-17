@@ -1,6 +1,8 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -20,6 +22,7 @@ import { CurrentUser, type RequestUser } from '../../../common/decorators/curren
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AuthService, type IssuedTokens } from './auth.service';
+import { AvatarsService } from './avatars.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -39,7 +42,10 @@ const AUTH_THROTTLE = {
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly avatars: AvatarsService,
+  ) {}
 
   @Public()
   @Throttle(AUTH_THROTTLE)
@@ -127,6 +133,48 @@ export class AuthController {
 
     this.clearAuthCookies(res);
     return result;
+  }
+
+  @Post('me/avatar')
+  @ApiOperation({ summary: "Upload (or replace) the authenticated user's profile image" })
+  async uploadAvatar(
+    @CurrentUser() user: RequestUser,
+    @Req() req: FastifyRequest,
+  ): Promise<UserDto> {
+    if (! req.isMultipart()) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Expected multipart/form-data',
+      });
+    }
+
+    const part = await req.file();
+
+    if (! part) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'No file provided',
+      });
+    }
+
+    const buffer = await part.toBuffer();
+
+    await this.avatars.upload({
+      userId: user.id,
+      buffer,
+      mime: part.mimetype || 'application/octet-stream',
+    });
+
+    return this.auth.getUserDtoById(user.id);
+  }
+
+  @Delete('me/avatar')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: "Remove the authenticated user's avatar" })
+  async deleteAvatar(@CurrentUser() user: RequestUser): Promise<UserDto> {
+    await this.avatars.remove(user.id);
+
+    return this.auth.getUserDtoById(user.id);
   }
 
   private setAuthCookies(res: FastifyReply, tokens: IssuedTokens): void {

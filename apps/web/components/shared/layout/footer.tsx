@@ -41,12 +41,6 @@ export function Footer() {
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              <Button asChild size="sm">
-                <Link href="/register">
-                  Get started — free
-                </Link>
-              </Button>
-
               <Button asChild size="sm" variant="outline">
                 <a
                   href={GITHUB_URL}
@@ -62,10 +56,9 @@ export function Footer() {
           </div>
 
           <FooterCol className="md:col-span-2" title="Product">
-            <FooterLink href="#features">Features</FooterLink>
-            <FooterLink href="#how">How it works</FooterLink>
-            <FooterLink href="/register">Get started</FooterLink>
-            <FooterLink href="/login">Sign in</FooterLink>
+            <FooterLink href="/">Dashboard</FooterLink>
+            <FooterLink href="/history">History</FooterLink>
+            <FooterLink href="/account">Account</FooterLink>
           </FooterCol>
 
           <FooterCol className="md:col-span-2" title="Resources">

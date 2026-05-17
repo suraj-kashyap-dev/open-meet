@@ -9,27 +9,16 @@ import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 import { createHash, randomBytes } from 'node:crypto';
 
-import type {
-  MeetingPreferencesDto,
-  PrivacySettingsDto,
-  UserDto,
-} from '@open-meet/types';
-import {
-  ApiErrorCode,
-  DEFAULT_MEETING_PREFERENCES,
-  DEFAULT_PRIVACY_SETTINGS,
-} from '@open-meet/types';
+import type { UserDto } from '@open-meet/types';
+import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
 import { RedisService } from '../../../integrations/redis/redis.service';
 import { AuthRepository } from './auth.repository';
+import { AvatarsService } from './avatars.service';
 import type { RegisterDto } from './dto/register.dto';
 import type { LoginDto } from './dto/login.dto';
-import type {
-  MeetingPreferencesInputDto,
-  PrivacySettingsInputDto,
-  UpdateProfileDto,
-} from './dto/update-profile.dto';
+import type { UpdateProfileDto } from './dto/update-profile.dto';
 import type { ChangePasswordDto } from './dto/change-password.dto';
 
 interface AccessTokenPayload {
@@ -50,25 +39,13 @@ export interface IssuedTokens {
   accessTtlMs: number;
 }
 
-interface UserRow {
-  id: string;
-  name: string;
-  email: string;
-  avatar: string | null;
-  timezone: string;
-  language: string;
-  bio: string | null;
-  meetingPreferences: unknown;
-  privacySettings: unknown;
-  createdAt: Date;
-}
-
 @Injectable()
 export class AuthService {
   private readonly refreshTtlSeconds = 60 * 60 * 24 * 7; // 7d in seconds
 
   constructor(
     private readonly users: AuthRepository,
+    private readonly avatars: AvatarsService,
     private readonly jwt: JwtService,
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly redis: RedisService,
@@ -90,7 +67,7 @@ export class AuthService {
       passwordHash,
     });
     const tokens = await this.issueTokens(user.id, user.email, user.name);
-    return { user: this.toDto(user), tokens };
+    return { user: this.avatars.toUserDto(user), tokens };
   }
 
   async login(dto: LoginDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
@@ -101,7 +78,7 @@ export class AuthService {
     if (!valid) throw this.invalidCredentials();
 
     const tokens = await this.issueTokens(user.id, user.email, user.name);
-    return { user: this.toDto(user), tokens };
+    return { user: this.avatars.toUserDto(user), tokens };
   }
 
   async refresh(refreshToken: string): Promise<IssuedTokens> {
@@ -168,7 +145,7 @@ export class AuthService {
         message: 'User not found',
       });
     }
-    return this.toDto(user);
+    return this.avatars.toUserDto(user);
   }
 
   async updateProfile(id: string, input: UpdateProfileDto): Promise<UserDto> {
@@ -189,11 +166,6 @@ export class AuthService {
       data.name = trimmedName;
     }
 
-    if (input.avatar !== undefined) {
-      const trimmed = input.avatar?.trim();
-      data.avatar = trimmed && trimmed.length > 0 ? trimmed : null;
-    }
-
     if (input.timezone !== undefined) {
       data.timezone = input.timezone.trim() || 'UTC';
     }
@@ -207,23 +179,9 @@ export class AuthService {
       data.bio = trimmed && trimmed.length > 0 ? trimmed : null;
     }
 
-    if (input.meetingPreferences !== undefined) {
-      data.meetingPreferences = this.mergeMeetingPreferences(
-        existing.meetingPreferences,
-        input.meetingPreferences,
-      );
-    }
-
-    if (input.privacySettings !== undefined) {
-      data.privacySettings = this.mergePrivacySettings(
-        existing.privacySettings,
-        input.privacySettings,
-      );
-    }
-
     const updated = await this.users.update(id, data);
 
-    return this.toDto(updated);
+    return this.avatars.toUserDto(updated);
   }
 
   async changePassword(id: string, dto: ChangePasswordDto): Promise<{ changed: true }> {
@@ -261,48 +219,6 @@ export class AuthService {
     return { changed: true };
   }
 
-  private mergeMeetingPreferences(
-    existing: unknown,
-    patch: MeetingPreferencesInputDto,
-  ): MeetingPreferencesDto {
-    const current = this.toMeetingPreferences(existing);
-
-    return {
-      ...current,
-      ...Object.fromEntries(
-        Object.entries(patch).filter(([, value]) => value !== undefined),
-      ),
-    };
-  }
-
-  private mergePrivacySettings(
-    existing: unknown,
-    patch: PrivacySettingsInputDto,
-  ): PrivacySettingsDto {
-    const current = this.toPrivacySettings(existing);
-
-    return {
-      ...current,
-      ...Object.fromEntries(
-        Object.entries(patch).filter(([, value]) => value !== undefined),
-      ),
-    };
-  }
-
-  private toMeetingPreferences(value: unknown): MeetingPreferencesDto {
-    if (value && typeof value === 'object' && ! Array.isArray(value)) {
-      return { ...DEFAULT_MEETING_PREFERENCES, ...(value as object) } as MeetingPreferencesDto;
-    }
-    return { ...DEFAULT_MEETING_PREFERENCES };
-  }
-
-  private toPrivacySettings(value: unknown): PrivacySettingsDto {
-    if (value && typeof value === 'object' && ! Array.isArray(value)) {
-      return { ...DEFAULT_PRIVACY_SETTINGS, ...(value as object) } as PrivacySettingsDto;
-    }
-    return { ...DEFAULT_PRIVACY_SETTINGS };
-  }
-
   private async issueTokens(
     userId: string,
     email: string,
@@ -338,21 +254,6 @@ export class AuthService {
       refreshToken,
       accessTtlMs,
       refreshTtlMs,
-    };
-  }
-
-  private toDto(u: UserRow): UserDto {
-    return {
-      id: u.id,
-      name: u.name,
-      email: u.email,
-      avatar: u.avatar,
-      timezone: u.timezone,
-      language: u.language,
-      bio: u.bio,
-      meetingPreferences: this.toMeetingPreferences(u.meetingPreferences),
-      privacySettings: this.toPrivacySettings(u.privacySettings),
-      createdAt: u.createdAt.toISOString(),
     };
   }
 

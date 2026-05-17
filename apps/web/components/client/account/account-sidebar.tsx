@@ -3,25 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { useCurrentUser } from '@/hooks/client/use-auth';
 import { cn } from '@/lib/shared/cn';
 
 import { accountNav, isAccountActive } from './nav-config';
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
 
 export function AccountSidebar() {
   const pathname = usePathname();
@@ -32,11 +18,7 @@ export function AccountSidebar() {
       <div className="lg:sticky lg:top-[4.5rem] flex flex-col gap-4">
         {user ? (
           <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 shadow-sm">
-            <Avatar className="h-11 w-11 ring-2 ring-background">
-              <AvatarFallback className="bg-accent/15 text-sm font-semibold text-accent">
-                {initialsOf(user.name)}
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar user={user} size="xl" className="ring-2 ring-background" />
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold">{user.name}</p>
               <p className="truncate text-xs text-muted-foreground">{user.email}</p>

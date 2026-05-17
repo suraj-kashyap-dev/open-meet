@@ -125,10 +125,11 @@ docker compose logs -f livekit
 
 ## Env files
 
-- Root `.env.example` documents every variable
+- `apps/server/.env.example` — documents every backend variable (mirrors `apiEnvSchema` in `packages/config/src/env.ts`)
+- `apps/web/.env.example` — documents every `NEXT_PUBLIC_*` variable (mirrors `webPublicEnvSchema`)
 - `apps/server/.env` — backend secrets (dev defaults committed for local-only)
 - `apps/web/.env.local` — frontend public vars
-- Add `.env.example` entry FIRST whenever you introduce a new env var
+- Add the matching `.env.example` entry FIRST whenever you introduce a new env var
 
 ## What lives where
 

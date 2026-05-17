@@ -3,6 +3,7 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 
+import { StorageService } from '../../../storage/storage.service';
 import { MeetingsService } from './meetings.service';
 import { MeetingsRepository } from './meetings.repository';
 
@@ -44,10 +45,15 @@ describe('MeetingsService', () => {
       listActiveParticipants: vi.fn(),
     };
 
+    const storage = {
+      publicUrl: (key: string) => `https://cdn.test/${key}`,
+    };
+
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         MeetingsService,
         { provide: MeetingsRepository, useValue: repo },
+        { provide: StorageService, useValue: storage },
       ],
     }).compile();
 
@@ -106,7 +112,7 @@ describe('MeetingsService', () => {
         role: ParticipantRole.GUEST,
         joinedAt: new Date('2026-01-01T01:00:00Z'),
         leftAt: null,
-        user: { id: 'u2', name: 'Bob', avatar: null },
+        user: { id: 'u2', name: 'Bob', avatarKey: null },
       });
       repo.markStarted.mockResolvedValue(meeting({ status: MeetingStatus.ACTIVE }));
 

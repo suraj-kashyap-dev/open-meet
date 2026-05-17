@@ -20,11 +20,6 @@ export class AdminUpdateUserBodyDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(2048)
-  avatar?: string | null;
-
-  @IsOptional()
-  @IsString()
   @MaxLength(64)
   timezone?: string;
 

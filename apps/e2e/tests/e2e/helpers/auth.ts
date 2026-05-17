@@ -28,7 +28,7 @@ export async function registerNewUser(
   await page.getByRole('button', { name: 'Create account' }).click();
   await registerResponse;
 
-  await page.waitForURL(/\/app$/, { timeout: 30_000 });
+  await page.waitForURL((url) => new URL(url).pathname === '/', { timeout: 30_000 });
   // Wait for the dashboard greeting — proves AuthGuard has resolved and the
   // Dashboard component has mounted with its event handlers attached.
   await expect(
@@ -47,7 +47,7 @@ export async function loginUser(page: Page, email: string, password: string): Pr
   await page.getByLabel('Password', { exact: true }).fill(password);
   await page.getByRole('button', { name: 'Sign in' }).click();
 
-  await page.waitForURL(/\/app$/, { timeout: 15_000 });
+  await page.waitForURL((url) => new URL(url).pathname === '/', { timeout: 15_000 });
 }
 
 /**

@@ -84,7 +84,6 @@ export interface AdminUserListResponseDto {
 export interface AdminUpdateUserDto {
   name?: string;
   email?: string;
-  avatar?: string | null;
   timezone?: string;
   language?: string;
   bio?: string | null;

@@ -13,23 +13,9 @@ import {
   type KnockResolvedPayload,
 } from '@open-meet/types';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import { useMeetingSocket } from '@/hooks/client/use-socket';
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
 
 type Status = 'connecting' | 'waiting' | 'awaiting-host' | 'denied';
 
@@ -98,7 +84,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
 
       setStatus('denied');
       toast.error('The host declined your request to join.');
-      setTimeout(() => router.replace('/app'), 1800);
+      setTimeout(() => router.replace('/'), 1800);
     };
 
     if (socket.connected) {
@@ -125,7 +111,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
   }, [socket, code, onAdmitted, router]);
 
   const cancel = () => {
-    router.replace('/app');
+    router.replace('/');
   };
 
   const heading =
@@ -156,11 +142,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
 
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
         <div className="mx-auto flex flex-col items-center gap-4">
-          <Avatar className="h-20 w-20">
-            <AvatarFallback className="bg-accent/15 text-xl font-semibold text-accent">
-              {initialsOf(displayName)}
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar user={{ name: displayName }} size="4xl" />
 
           <div className="space-y-1">
             <h1 className="text-xl font-semibold tracking-tight">{heading}</h1>
@@ -180,7 +162,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
               Cancel
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/app">Back to app</Link>
+              <Link href="/">Back to home</Link>
             </Button>
           </div>
         </div>

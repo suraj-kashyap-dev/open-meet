@@ -100,7 +100,7 @@ export function useLogin() {
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);
-      router.replace('/app');
+      router.replace('/');
     },
   });
 }
@@ -113,7 +113,7 @@ export function useRegister() {
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);
-      router.replace('/app');
+      router.replace('/');
     },
   });
 }
@@ -122,6 +122,28 @@ export function useUpdateProfile() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: authApi.updateMe,
+    onSuccess: (user) => {
+      writeCachedUser(user);
+      qc.setQueryData(ME_KEY, user);
+    },
+  });
+}
+
+export function useUploadAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (file: File) => authApi.uploadAvatar(file),
+    onSuccess: (user) => {
+      writeCachedUser(user);
+      qc.setQueryData(ME_KEY, user);
+    },
+  });
+}
+
+export function useDeleteAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => authApi.deleteAvatar(),
     onSuccess: (user) => {
       writeCachedUser(user);
       qc.setQueryData(ME_KEY, user);

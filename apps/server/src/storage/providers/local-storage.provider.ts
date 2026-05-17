@@ -17,8 +17,15 @@ export class LocalStorageProvider implements StorageProvider {
 
   private readonly rootDir: string;
 
-  constructor(rootDir: string) {
+  private readonly apiPublicUrl: string;
+
+  constructor(rootDir: string, apiPublicUrl: string) {
     this.rootDir = resolve(rootDir);
+    this.apiPublicUrl = apiPublicUrl.replace(/\/$/, '');
+  }
+
+  publicUrl(key: string): string {
+    return `${this.apiPublicUrl}/api/uploads/public/${key}`;
   }
 
   private resolveKey(key: string): string {

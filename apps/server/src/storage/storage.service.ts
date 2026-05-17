@@ -41,6 +41,7 @@ export class StorageService {
       this.kind = 'local';
       this.provider = new LocalStorageProvider(
         config.getOrThrow<string>('LOCAL_STORAGE_DIR'),
+        config.getOrThrow<string>('API_PUBLIC_URL'),
       );
       this.logger.log(
         `Storage: local dir="${config.getOrThrow<string>('LOCAL_STORAGE_DIR')}"`,
@@ -54,6 +55,10 @@ export class StorageService {
 
   put(input: PutInput): Promise<PutResult> {
     return this.provider.put(input);
+  }
+
+  publicUrl(key: string): string {
+    return this.provider.publicUrl(key);
   }
 
   read(key: string): Promise<ReadResult | null> {

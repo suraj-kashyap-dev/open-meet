@@ -7,6 +7,7 @@ import * as argon2 from 'argon2';
 
 import { AuthService } from './auth.service';
 import { AuthRepository } from './auth.repository';
+import { AvatarsService } from './avatars.service';
 import { RedisService } from '../../../integrations/redis/redis.service';
 
 function makeUser(overrides: Partial<{ id: string; email: string; name: string }> = {}) {
@@ -15,7 +16,10 @@ function makeUser(overrides: Partial<{ id: string; email: string; name: string }
     name: 'Ada',
     email: 'ada@example.com',
     passwordHash: 'hash',
-    avatar: null,
+    avatarKey: null,
+    timezone: 'UTC',
+    language: 'en',
+    bio: null,
     createdAt: new Date('2026-01-01T00:00:00Z'),
     updatedAt: new Date('2026-01-01T00:00:00Z'),
     ...overrides,
@@ -75,10 +79,33 @@ describe('AuthService', () => {
       },
     };
 
+    const avatars = {
+      toUserDto: (u: {
+        id: string;
+        name: string;
+        email: string;
+        avatarKey: string | null;
+        timezone: string;
+        language: string;
+        bio: string | null;
+        createdAt: Date;
+      }) => ({
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        avatar: u.avatarKey ? `https://cdn.test/${u.avatarKey}` : null,
+        timezone: u.timezone,
+        language: u.language,
+        bio: u.bio,
+        createdAt: u.createdAt.toISOString(),
+      }),
+    };
+
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         { provide: AuthRepository, useValue: repo },
+        { provide: AvatarsService, useValue: avatars },
         { provide: JwtService, useValue: jwt },
         { provide: ConfigService, useValue: config },
         { provide: RedisService, useValue: redis },

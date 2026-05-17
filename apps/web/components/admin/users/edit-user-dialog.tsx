@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 import type { AdminUpdateUserDto, AdminUserDto } from '@open-meet/types';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -62,12 +62,6 @@ const TIMEZONES: string[] = [
 const schema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100),
   email: z.string().email('Enter a valid email').max(254),
-  avatar: z
-    .string()
-    .trim()
-    .max(2048, 'Avatar URL is too long')
-    .optional()
-    .or(z.literal('')),
   timezone: z.string().min(1).max(64),
   language: z.string().min(1).max(8),
   bio: z
@@ -88,25 +82,10 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
-
 function defaultsFor(user: AdminUserDto | null): FormValues {
   return {
     name: user?.name ?? '',
     email: user?.email ?? '',
-    avatar: user?.avatar ?? '',
     timezone: user?.timezone ?? 'UTC',
     language: user?.language ?? 'en',
     bio: user?.bio ?? '',
@@ -141,7 +120,6 @@ export function EditUserDialog({ user, onClose }: Props) {
 
   const timezone = watch('timezone');
   const language = watch('language');
-  const avatar = watch('avatar');
   const name = watch('name');
   const bioValue = watch('bio') ?? '';
 
@@ -168,10 +146,6 @@ export function EditUserDialog({ user, onClose }: Props) {
 
     if (dirtyFields.email) {
       body.email = values.email;
-    }
-
-    if (dirtyFields.avatar) {
-      body.avatar = values.avatar?.trim() || null;
     }
 
     if (dirtyFields.timezone) {
@@ -223,29 +197,14 @@ export function EditUserDialog({ user, onClose }: Props) {
 
           <DialogSection title="Account">
             <div className="flex items-center gap-4">
-              <Avatar className="h-14 w-14">
-                {avatar ? <AvatarImage src={avatar} alt={name || ''} /> : null}
+              <UserAvatar
+                user={{ name: name || user?.name || '', avatar: user?.avatar }}
+                size="2xl"
+              />
 
-                <AvatarFallback className="bg-accent/15 text-base font-semibold text-accent">
-                  {initialsOf(name || user?.name || '')}
-                </AvatarFallback>
-              </Avatar>
-
-              <div className="flex-1 space-y-1.5">
-                <Label htmlFor="avatar">Avatar URL</Label>
-
-                <Input
-                  id="avatar"
-                  type="url"
-                  placeholder="https://example.com/me.png"
-                  autoComplete="off"
-                  {...register('avatar')}
-                />
-
-                {errors.avatar ? (
-                  <p className="text-xs text-destructive">{errors.avatar.message}</p>
-                ) : null}
-              </div>
+              <p className="text-xs text-muted-foreground">
+                Users manage their own profile image from the Profile page.
+              </p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">

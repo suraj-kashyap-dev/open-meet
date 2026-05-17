@@ -7,7 +7,7 @@ import { useCurrentUser } from '@/hooks/client/use-auth';
 
 /**
  * Inverse of AuthGuard — used on /login and /register. If the user is
- * already authenticated we bounce them to /app so they can't
+ * already authenticated we bounce them home so they can't
  * accidentally land on the auth screens.
  */
 export function GuestGuard({ children }: { children: ReactNode }) {
@@ -17,7 +17,7 @@ export function GuestGuard({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isAuthed) {
-      router.replace('/app');
+      router.replace('/');
     }
   }, [isAuthed, router]);
 

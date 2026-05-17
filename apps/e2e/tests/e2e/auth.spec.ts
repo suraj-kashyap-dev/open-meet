@@ -51,7 +51,7 @@ test.describe('auth — form validation', () => {
 test.describe('auth — happy paths', () => {
   test.skip(! fullStack, 'requires API stack — set RUN_FULL_E2E=1');
 
-  test('register creates a session and lands on /app', async ({ page }) => {
+  test('register creates a session and lands on the dashboard', async ({ page }) => {
     const user = await registerNewUser(page, 'Ada Lovelace');
 
     await expect(
@@ -76,16 +76,16 @@ test.describe('auth — happy paths', () => {
     expect(cached).toBeNull();
   });
 
-  test('logged-in user is bounced off /login and /register to /app', async ({ page }) => {
+  test('logged-in user is bounced off /login and /register to the dashboard', async ({ page }) => {
     await registerNewUser(page, 'Ada');
 
     await page.goto('/login', { waitUntil: 'domcontentloaded' });
     await page.locator('html[data-hydrated="true"]').waitFor();
-    await expect(page).toHaveURL(/\/app$/, { timeout: 15_000 });
+    await page.waitForURL((url) => new URL(url).pathname === '/', { timeout: 15_000 });
 
     await page.goto('/register', { waitUntil: 'domcontentloaded' });
     await page.locator('html[data-hydrated="true"]').waitFor();
-    await expect(page).toHaveURL(/\/app$/, { timeout: 15_000 });
+    await page.waitForURL((url) => new URL(url).pathname === '/', { timeout: 15_000 });
   });
 
   test('expired session: 401 on protected request redirects to /login', async ({ page, context }) => {

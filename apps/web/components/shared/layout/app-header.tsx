@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { ChevronDown, History, LogOut, User } from 'lucide-react';
+import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
 
 import { Logo } from '@/components/shared/logo';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,24 +16,9 @@ import {
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { useCurrentUser, useLogout } from '@/hooks/client/use-auth';
 
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
-
 export function AppHeader() {
   const { data: user } = useCurrentUser();
   const logout = useLogout();
-  const initials = user ? initialsOf(user.name) : '?';
 
   return (
     <header
@@ -59,11 +44,7 @@ export function AppHeader() {
                   variant="ghost"
                   className="group h-10 gap-2 rounded-md border border-transparent px-1.5 pr-2.5 transition-colors hover:border-border hover:bg-muted/60 data-[state=open]:border-border data-[state=open]:bg-muted/60"
                 >
-                  <Avatar className="h-7 w-7 ring-2 ring-background">
-                    <AvatarFallback className="bg-accent/15 text-xs font-semibold text-accent">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
+                  <UserAvatar user={user} size="sm" className="ring-2 ring-background" />
                   <span className="hidden text-sm font-medium sm:inline">{user.name}</span>
                   <ChevronDown className="h-3.5 w-3.5 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
                 </Button>
@@ -75,11 +56,7 @@ export function AppHeader() {
                 className="w-72 overflow-hidden p-0"
               >
                 <div className="flex items-center gap-3 border-b border-border bg-muted/30 p-4">
-                  <Avatar className="h-11 w-11 ring-2 ring-background">
-                    <AvatarFallback className="bg-accent/15 text-sm font-semibold text-accent">
-                      {initials}
-                    </AvatarFallback>
-                  </Avatar>
+                  <UserAvatar user={user} size="xl" className="ring-2 ring-background" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold">{user.name}</p>
                     <p className="truncate text-xs text-muted-foreground">{user.email}</p>
@@ -103,15 +80,15 @@ export function AppHeader() {
 
                   <Link
                     role="menuitem"
-                    href="/history"
+                    href="/settings"
                     className="flex items-center gap-3 rounded-md px-2.5 py-2 outline-none transition-colors hover:bg-muted focus-visible:bg-muted"
                   >
                     <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <History className="h-4 w-4" />
+                      <Settings className="h-4 w-4" />
                     </span>
                     <span className="flex flex-1 flex-col">
-                      <span className="text-sm font-medium">Meeting history</span>
-                      <span className="text-xs text-muted-foreground">Past meetings, chats and files</span>
+                      <span className="text-sm font-medium">Settings</span>
+                      <span className="text-xs text-muted-foreground">Defaults, privacy, language</span>
                     </span>
                   </Link>
                 </div>

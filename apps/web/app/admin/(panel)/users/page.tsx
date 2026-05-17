@@ -9,7 +9,7 @@ import type { AdminUserDto } from '@open-meet/types';
 import { DataTable } from '@/components/shared/data-table/data-table';
 import { DeleteUserDialog } from '@/components/admin/users/delete-user-dialog';
 import { EditUserDialog } from '@/components/admin/users/edit-user-dialog';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -22,20 +22,6 @@ import { Input } from '@/components/ui/input';
 import { useAdminUsers } from '@/hooks/admin/use-admin-users';
 
 const PAGE_SIZE = 20;
-
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
 
 function formatJoined(iso: string): string {
   return new Date(iso).toLocaleDateString(undefined, {
@@ -63,11 +49,7 @@ export default function AdminUsersPage() {
         header: 'User',
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
-            <Avatar className="h-9 w-9">
-              <AvatarFallback className="bg-accent/15 text-xs font-semibold text-accent">
-                {initialsOf(row.original.name)}
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar user={row.original} size="md" />
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{row.original.name}</p>
               <p className="truncate text-xs text-muted-foreground">{row.original.email}</p>

@@ -36,12 +36,12 @@ pnpm install
 
 ## 2. Configure environment
 
-The repo ships dev defaults so the app boots without manual setup, but the canonical reference is `./.env.example`. Two files are read:
+The repo ships dev defaults so the app boots without manual setup. Each app has its own example file as the canonical reference:
 
-- `apps/server/.env` — backend secrets (already pre-filled for local dev)
-- `apps/web/.env.local` — frontend public vars (already pre-filled for local dev)
+- `apps/server/.env.example` → copy to `apps/server/.env` (backend secrets, already pre-filled for local dev)
+- `apps/web/.env.example` → copy to `apps/web/.env.local` (frontend public vars, already pre-filled for local dev)
 
-If you change any value, update `./.env.example` at the same time so onboarding stays in sync.
+If you change any value, update the matching `.env.example` at the same time so onboarding stays in sync.
 
 ## 3. Start the infrastructure stack
 

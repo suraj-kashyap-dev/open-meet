@@ -9,6 +9,7 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
+import { StorageService } from '../../../storage/storage.service';
 import { AdminUsersRepository, type UserWithCounts } from './users.repository';
 
 const DEFAULT_PAGE_SIZE = 20;
@@ -16,7 +17,10 @@ const MAX_PAGE_SIZE = 100;
 
 @Injectable()
 export class AdminUsersService {
-  constructor(private readonly users: AdminUsersRepository) {}
+  constructor(
+    private readonly users: AdminUsersRepository,
+    private readonly storage: StorageService,
+  ) {}
 
   async list(query: AdminUserListQuery): Promise<AdminUserListResponseDto> {
     const page = Math.max(1, query.page ?? 1);
@@ -80,11 +84,6 @@ export class AdminUsersService {
       data.email = dto.email.toLowerCase();
     }
 
-    if (dto.avatar !== undefined) {
-      const trimmed = dto.avatar?.trim();
-      data.avatar = trimmed && trimmed.length > 0 ? trimmed : null;
-    }
-
     if (dto.timezone !== undefined) {
       data.timezone = dto.timezone.trim() || 'UTC';
     }
@@ -125,7 +124,7 @@ export class AdminUsersService {
       id: u.id,
       name: u.name,
       email: u.email,
-      avatar: u.avatar,
+      avatar: u.avatarKey ? this.storage.publicUrl(u.avatarKey) : null,
       timezone: u.timezone,
       language: u.language,
       bio: u.bio,

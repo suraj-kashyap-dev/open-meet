@@ -3,7 +3,7 @@
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
 import { useCallback } from 'react';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -23,20 +23,6 @@ interface Props {
   displayName: string;
 }
 
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-
-  if (parts.length === 0) {
-    return '?';
-  }
-
-  if (parts.length === 1) {
-    return parts[0]!.slice(0, 2).toUpperCase();
-  }
-
-  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase();
-}
-
 export function LobbyPreview({ media, displayName }: Props) {
   const stream = media.stream;
 
@@ -54,7 +40,6 @@ export function LobbyPreview({ media, displayName }: Props) {
   );
 
   const showVideo = media.cameraEnabled && Boolean(media.stream);
-  const initials = initialsOf(displayName);
 
   return (
     <TooltipProvider delayDuration={200}>
@@ -69,11 +54,12 @@ export function LobbyPreview({ media, displayName }: Props) {
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black">
-            <Avatar className="h-24 w-24 ring-2 ring-white/10 sm:h-28 sm:w-28">
-              <AvatarFallback className="bg-zinc-800 text-3xl font-medium text-zinc-100">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
+            <UserAvatar
+              user={{ name: displayName }}
+              size="4xl"
+              className="h-24 w-24 ring-2 ring-white/10 sm:h-28 sm:w-28"
+              fallbackClassName="bg-zinc-800 text-3xl font-medium text-zinc-100"
+            />
             <p className="text-sm text-zinc-400">Camera is off</p>
           </div>
         )}

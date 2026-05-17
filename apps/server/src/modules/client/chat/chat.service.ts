@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import type { MessageDto } from '@open-meet/types';
 
+import { StorageService } from '../../../storage/storage.service';
 import { UploadsService } from '../../uploads/uploads.service';
 import {
   ChatRepository,
@@ -13,6 +14,7 @@ export class ChatService {
   constructor(
     private readonly chat: ChatRepository,
     private readonly uploads: UploadsService,
+    private readonly storage: StorageService,
   ) {}
 
   async send(input: {
@@ -72,7 +74,7 @@ export class ChatService {
       sender: {
         id: m.sender.id,
         name: m.sender.name,
-        avatar: m.sender.avatar,
+        avatar: m.sender.avatarKey ? this.storage.publicUrl(m.sender.avatarKey) : null,
       },
       sentAt: m.sentAt.toISOString(),
       attachments: m.attachments.map((a) => this.uploads.toDto(a)),

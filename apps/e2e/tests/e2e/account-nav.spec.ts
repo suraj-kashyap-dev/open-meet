@@ -18,9 +18,10 @@ test.describe('account navigation — header dropdown + sidebar', () => {
     await expect(menu.getByText(user.name)).toBeVisible();
     await expect(menu.getByText(user.email)).toBeVisible();
 
-    // Action items
+    // Action items: Profile + Settings + Sign out (Meeting history lives in the sidebar only).
     await expect(page.getByRole('menuitem', { name: /^Profile/ })).toBeVisible();
-    await expect(page.getByRole('menuitem', { name: /Meeting history/ })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: /^Settings/ })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: /Meeting history/ })).toHaveCount(0);
     await expect(page.getByRole('menuitem', { name: /Sign out/ })).toBeVisible();
   });
 
@@ -36,13 +37,13 @@ test.describe('account navigation — header dropdown + sidebar', () => {
     await expect(page.getByRole('heading', { name: 'Profile', level: 1 })).toBeVisible();
   });
 
-  test('Meeting history menu item navigates to /history', async ({ page }) => {
+  test('Meeting history is reachable from the sidebar', async ({ page }) => {
     await registerNewUser(page, 'Ada');
+
+    await page.goto('/profile');
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    await page.locator('header').getByRole('button').last().click();
-    await expect(page.getByRole('menuitem', { name: /Meeting history/ })).toBeVisible();
-    await page.getByRole('menuitem', { name: /Meeting history/ }).click();
+    await page.getByRole('link', { name: /Meeting history/ }).click();
 
     await expect(page).toHaveURL(/\/history$/, { timeout: 10_000 });
     await expect(page.getByRole('heading', { name: 'Meeting history' })).toBeVisible();
@@ -71,10 +72,10 @@ test.describe('account navigation — header dropdown + sidebar', () => {
   test('sidebar is NOT present on the dashboard', async ({ page }) => {
     await registerNewUser(page, 'Ada');
 
-    await page.goto('/app');
+    await page.goto('/');
     await page.locator('html[data-hydrated="true"]').waitFor();
 
-    // No sidebar with "Account" section header on /app.
+    // No sidebar with "Account" section header on the dashboard.
     await expect(page.getByText('Account', { exact: true })).toHaveCount(0);
   });
 });
