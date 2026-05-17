@@ -8,8 +8,8 @@ import { CurrentUser, type RequestUser } from '../../common/decorators/current-u
 import { Public } from '../../common/decorators/public.decorator';
 import { SkipTransform } from '../../common/decorators/skip-transform.decorator';
 
-import { type LiveKitTokenDto } from './dto/livekit-token.dto';
-import { type LiveKitService } from './livekit.service';
+import { LiveKitTokenDto } from './dto/livekit-token.dto';
+import { LiveKitService } from './livekit.service';
 
 @ApiTags('livekit')
 @Controller('livekit')

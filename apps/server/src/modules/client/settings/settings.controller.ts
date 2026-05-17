@@ -5,8 +5,8 @@ import type { UserSettingsDto } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 
-import { type SettingsService } from './settings.service';
-import { type UpdateUserSettingsBodyDto } from './dto/update-settings.dto';
+import { SettingsService } from './settings.service';
+import { UpdateUserSettingsBodyDto } from './dto/update-settings.dto';
 
 @ApiTags('auth')
 @Controller('auth/me/settings')

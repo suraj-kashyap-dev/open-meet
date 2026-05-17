@@ -8,11 +8,11 @@ import type { AdminDto, AdminLoginResponseDto } from '@open-meet/types';
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AdminAuthGuard } from './guards/admin-auth.guard';
-import { type AdminAuthService, type IssuedAdminTokens } from './auth.service';
+import { AdminAuthService, type IssuedAdminTokens } from './auth.service';
 import { CurrentAdmin } from './decorators/current-admin.decorator';
 import { ADMIN_ACCESS_COOKIE } from './strategies/admin-jwt.strategy';
 import type { AdminRequestUser } from './strategies/admin-jwt.strategy';
-import { type AdminLoginDto } from './dto/admin-login.dto';
+import { AdminLoginDto } from './dto/admin-login.dto';
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 

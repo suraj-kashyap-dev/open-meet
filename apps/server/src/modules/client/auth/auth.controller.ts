@@ -16,17 +16,17 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { ApiErrorCode, type AuthResponseDto, type UserDto } from '@open-meet/types';
+import { ApiErrorCode, AuthResponseDto, UserDto } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { Public } from '../../../common/decorators/public.decorator';
 
-import { type AuthService, type IssuedTokens } from './auth.service';
-import { type AvatarsService } from './avatars.service';
-import { type ChangePasswordDto } from './dto/change-password.dto';
-import { type LoginDto } from './dto/login.dto';
-import { type RegisterDto } from './dto/register.dto';
-import { type UpdateProfileDto } from './dto/update-profile.dto';
+import { AuthService, type IssuedTokens } from './auth.service';
+import { AvatarsService } from './avatars.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 const ACCESS_COOKIE = 'access_token';
 const REFRESH_COOKIE = 'refresh_token';

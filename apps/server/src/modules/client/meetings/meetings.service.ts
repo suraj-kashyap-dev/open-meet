@@ -11,8 +11,8 @@ import { generateMeetingCode } from '@open-meet/utils';
 import type { MeetingDto, ParticipantDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { type StorageService } from '../../../storage/storage.service';
-import { type MeetingsRepository, type ParticipantWithUser } from './meetings.repository';
+import { StorageService } from '../../../storage/storage.service';
+import { MeetingsRepository, type ParticipantWithUser } from './meetings.repository';
 
 @Injectable()
 export class MeetingsService {

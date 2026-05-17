@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 import type { MessageDto } from '@open-meet/types';
 
-import { type StorageService } from '../../../storage/storage.service';
-import { type UploadsService } from '../../uploads/uploads.service';
-import { type ChatRepository, type MessageWithSender } from './chat.repository';
+import { StorageService } from '../../../storage/storage.service';
+import { UploadsService } from '../../uploads/uploads.service';
+import { ChatRepository, type MessageWithSender } from './chat.repository';
 
 @Injectable()
 export class ChatService {

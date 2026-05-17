@@ -1,10 +1,10 @@
 import { Injectable, Logger, type OnModuleInit } from '@nestjs/common';
-import { type ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { type PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
 export class AdminBootstrapService implements OnModuleInit {

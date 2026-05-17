@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-import type { AdminStatsOverviewDto, DailyCountPoint, RecentMeetingDto } from '@open-meet/types';
+import type {
+  AdminConcurrencyPointDto,
+  AdminDeepAnalyticsDto,
+  AdminStatsOverviewDto,
+  AdminTopHostDto,
+  DailyCountPoint,
+  RecentMeetingDto,
+} from '@open-meet/types';
 
-import { type AdminAnalyticsRepository } from './analytics.repository';
+import { AdminAnalyticsRepository } from './analytics.repository';
 
 const DAY_MS = 86_400_000;
 
@@ -104,5 +111,45 @@ export class AdminAnalyticsService {
 
   private toIsoDay(d: Date): string {
     return d.toISOString().slice(0, 10);
+  }
+
+  async deep(): Promise<AdminDeepAnalyticsDto> {
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * DAY_MS);
+
+    const [avg, hostsRows, concurrencyRows, dauRows] = await Promise.all([
+      this.stats.averageMeetingMinutes(),
+      this.stats.topHosts(10),
+      this.stats.peakConcurrencyByHour(thirtyDaysAgo),
+      this.stats.dailyActiveUsers(thirtyDaysAgo),
+    ]);
+
+    const concurrencyMap = new Map<number, number>();
+
+    for (const row of concurrencyRows) {
+      concurrencyMap.set(row.hour, Number(row.count));
+    }
+
+    const peakConcurrencyByHour: AdminConcurrencyPointDto[] = [];
+
+    for (let h = 0; h < 24; h++) {
+      peakConcurrencyByHour.push({ hour: h, count: concurrencyMap.get(h) ?? 0 });
+    }
+
+    const topHosts: AdminTopHostDto[] = hostsRows.map((h) => ({
+      id: h.id,
+      name: h.name,
+      email: h.email,
+      hostedCount: Number(h.hosted),
+      totalDurationMinutes: h.totalMinutes ? Math.round(Number(h.totalMinutes)) : 0,
+    }));
+
+    return {
+      averageMeetingMinutes: avg.avgMinutes,
+      totalCompletedMeetings: avg.total,
+      topHosts,
+      peakConcurrencyByHour,
+      dailyActiveUsers: this.fillDailySeries(dauRows, thirtyDaysAgo, now),
+    };
   }
 }

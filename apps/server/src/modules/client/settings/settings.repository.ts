@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma, UserSettings } from '@prisma/client';
 
-import { type PrismaService } from '../../../database/prisma.service';
+import { PrismaService } from '../../../database/prisma.service';
 
 @Injectable()
 export class SettingsRepository {

@@ -1,8 +1,9 @@
 import { ForbiddenException, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { type ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { MeetingStatus } from '@prisma/client';
 import {
   AccessToken,
+  RoomServiceClient,
   WebhookReceiver,
   type VideoGrant,
   type WebhookEvent,
@@ -12,9 +13,9 @@ import type { ApiEnv } from '@open-meet/config';
 import type { LiveKitTokenResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { type AuthRepository } from '../../modules/client/auth/auth.repository';
-import { type AvatarsService } from '../../modules/client/auth/avatars.service';
-import { type MeetingsService } from '../../modules/client/meetings/meetings.service';
+import { AuthRepository } from '../../modules/client/auth/auth.repository';
+import { AvatarsService } from '../../modules/client/auth/avatars.service';
+import { MeetingsService } from '../../modules/client/meetings/meetings.service';
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 4;
 
@@ -22,6 +23,7 @@ const TOKEN_TTL_SECONDS = 60 * 60 * 4;
 export class LiveKitService {
   private readonly logger = new Logger(LiveKitService.name);
   private readonly webhookReceiver: WebhookReceiver;
+  private readonly roomService: RoomServiceClient;
 
   constructor(
     private readonly config: ConfigService<ApiEnv, true>,
@@ -29,10 +31,27 @@ export class LiveKitService {
     private readonly users: AuthRepository,
     private readonly avatars: AvatarsService,
   ) {
-    this.webhookReceiver = new WebhookReceiver(
-      this.config.getOrThrow<string>('LIVEKIT_API_KEY'),
-      this.config.getOrThrow<string>('LIVEKIT_API_SECRET'),
+    const apiKey = this.config.getOrThrow<string>('LIVEKIT_API_KEY');
+    const apiSecret = this.config.getOrThrow<string>('LIVEKIT_API_SECRET');
+
+    this.webhookReceiver = new WebhookReceiver(apiKey, apiSecret);
+    this.roomService = new RoomServiceClient(
+      this.toHttpUrl(this.config.getOrThrow<string>('LIVEKIT_HOST')),
+      apiKey,
+      apiSecret,
     );
+  }
+
+  private toHttpUrl(wsUrl: string): string {
+    return wsUrl.replace(/^ws:/, 'http:').replace(/^wss:/, 'https:');
+  }
+
+  async closeRoom(meetingCode: string): Promise<void> {
+    await this.roomService.deleteRoom(meetingCode);
+  }
+
+  async removeParticipant(meetingCode: string, identity: string): Promise<void> {
+    await this.roomService.removeParticipant(meetingCode, identity);
   }
 
   async mintToken(input: {

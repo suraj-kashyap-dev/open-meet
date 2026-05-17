@@ -4,7 +4,7 @@ import {
   type ExecutionContext,
   type NestInterceptor,
 } from '@nestjs/common';
-import { type Reflector } from '@nestjs/core';
+import { Reflector } from '@nestjs/core';
 import { map, type Observable } from 'rxjs';
 
 import type { ApiSuccess } from '@open-meet/types';

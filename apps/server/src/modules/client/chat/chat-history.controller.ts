@@ -4,10 +4,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { MessagePageDto } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
-import { type MessagesHistoryQueryDto } from '../meetings/dto/history-query.dto';
-import { type MeetingsService } from '../meetings/meetings.service';
+import { MessagesHistoryQueryDto } from '../meetings/dto/history-query.dto';
+import { MeetingsService } from '../meetings/meetings.service';
 
-import { type ChatService } from './chat.service';
+import { ChatService } from './chat.service';
 
 @ApiTags('meetings')
 @Controller('meetings')

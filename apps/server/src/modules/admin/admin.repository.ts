@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import type { Admin } from '@prisma/client';
+import type { Admin, AdminRole } from '@prisma/client';
 
-import { type PrismaService } from '../../database/prisma.service';
+import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
 export class AdminRepository {
@@ -20,5 +20,26 @@ export class AdminRepository {
       where: { id },
       data: { lastLoginAt: new Date() },
     });
+  }
+
+  list(): Promise<Admin[]> {
+    return this.prisma.admin.findMany({ orderBy: [{ role: 'asc' }, { createdAt: 'asc' }] });
+  }
+
+  create(data: {
+    email: string;
+    name: string;
+    passwordHash: string;
+    role: AdminRole;
+  }): Promise<Admin> {
+    return this.prisma.admin.create({ data });
+  }
+
+  delete(id: string): Promise<Admin> {
+    return this.prisma.admin.delete({ where: { id } });
+  }
+
+  countByRole(role: AdminRole): Promise<number> {
+    return this.prisma.admin.count({ where: { role } });
   }
 }
