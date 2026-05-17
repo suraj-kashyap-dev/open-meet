@@ -73,7 +73,9 @@ async function runPrismaGenerateWithLockRecovery(): Promise<void> {
       }
 
       if (choice === 'skip') {
-        p.log.warn('Skipped prisma generate. Run it manually later: pnpm --filter @open-meet/server prisma:generate');
+        p.log.warn(
+          'Skipped prisma generate. Run it manually later: pnpm --filter @open-meet/server prisma:generate',
+        );
         return;
       }
     }
@@ -96,7 +98,7 @@ async function confirmForceWipe(): Promise<void> {
     initialValue: false,
   });
 
-  if (p.isCancel(confirmed) || ! confirmed) {
+  if (p.isCancel(confirmed) || !confirmed) {
     p.cancel('Installation aborted.');
     process.exit(0);
   }

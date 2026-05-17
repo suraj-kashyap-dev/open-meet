@@ -1,12 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-import {
-  SERVER_ENV,
-  SERVER_ENV_EXAMPLE,
-  WEB_ENV,
-  WEB_ENV_EXAMPLE,
-} from './paths.js';
+import { SERVER_ENV, SERVER_ENV_EXAMPLE, WEB_ENV, WEB_ENV_EXAMPLE } from './paths.js';
 import type { InstallAnswers } from './prompts.js';
 import type { GeneratedSecrets } from './secrets.js';
 

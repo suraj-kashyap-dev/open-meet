@@ -96,10 +96,7 @@ export class RecordingController {
   @HttpCode(HttpStatus.OK)
   @ApiParam({ name: 'code' })
   @ApiOperation({ summary: 'Stop the active recording (host only)' })
-  async stop(
-    @Param('code') code: string,
-    @CurrentUser() user: RequestUser,
-  ): Promise<RecordingDto> {
+  async stop(@Param('code') code: string, @CurrentUser() user: RequestUser): Promise<RecordingDto> {
     return this.service.stop(code, user.id);
   }
 

@@ -66,19 +66,12 @@ export function useHistoryRecordings(code: string | undefined) {
       if (!list || list.length === 0) {
         return false;
       }
-      const stillRunning = list.some(
-        (r) => r.status === 'RECORDING' || r.status === 'STOPPING',
-      );
+      const stillRunning = list.some((r) => r.status === 'RECORDING' || r.status === 'STOPPING');
       return stillRunning ? 5_000 : false;
     },
   });
 }
 
-export {
-  HISTORY_LIST_KEY,
-  HISTORY_MEETING_KEY,
-  HISTORY_MESSAGES_KEY,
-  HISTORY_RECORDINGS_KEY,
-};
+export { HISTORY_LIST_KEY, HISTORY_MEETING_KEY, HISTORY_MESSAGES_KEY, HISTORY_RECORDINGS_KEY };
 
 export type { MeetingHistoryListResponseDto };

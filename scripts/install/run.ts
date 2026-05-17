@@ -16,7 +16,7 @@ interface ExecError extends Error {
 }
 
 function bufferToString(value: Buffer | string | undefined): string {
-  if (! value) {
+  if (!value) {
     return '';
   }
 
@@ -24,7 +24,7 @@ function bufferToString(value: Buffer | string | undefined): string {
 }
 
 function fullErrorMessage(err: unknown): string {
-  if (! (err instanceof Error)) {
+  if (!(err instanceof Error)) {
     return String(err);
   }
 

@@ -1,8 +1,4 @@
-import type {
-  MeetingHistoryListResponseDto,
-  MessagePageDto,
-  RecordingDto,
-} from '@open-meet/types';
+import type { MeetingHistoryListResponseDto, MessagePageDto, RecordingDto } from '@open-meet/types';
 
 import { api } from '@/lib/api/client';
 

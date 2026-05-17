@@ -7,6 +7,7 @@ import EmojiPicker, {
   type EmojiClickData,
 } from 'emoji-picker-react';
 import {
+  AlertTriangle,
   Check,
   Circle,
   Copy,
@@ -22,6 +23,7 @@ import {
   MonitorUp,
   MoreVertical,
   PhoneOff,
+  Share2,
   Smile,
   Square,
   Users,
@@ -419,10 +421,6 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <Users className="h-4 w-4" />
         </ControlButton>
 
-        <ControlButton label="Meeting info" onClick={() => setInfoOpen(true)}>
-          <Info className="h-4 w-4" />
-        </ControlButton>
-
         <ControlButton
           label={isFullscreen ? 'Exit full screen' : 'Full screen'}
           onClick={toggleFullscreen}
@@ -432,124 +430,118 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
         <div className="mx-2 h-6 w-px bg-border" />
 
-        {isHost ? (
-          <DropdownMenu>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="relative"
-                    aria-label="More options"
+        <DropdownMenu>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost" className="relative" aria-label="More options">
+                  <MoreVertical className="h-4 w-4" />
+                  {isHost && activeRecording ? (
+                    <span
+                      aria-hidden
+                      className="absolute right-1.5 top-1.5 flex h-2 w-2 items-center justify-center"
+                    >
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive/70" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-destructive" />
+                    </span>
+                  ) : null}
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent>More options</TooltipContent>
+          </Tooltip>
+
+          <DropdownMenuContent align="end" side="top" className="w-64">
+            {isHost ? (
+              <>
+                <DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Host tools
+                </DropdownMenuLabel>
+
+                {!activeRecording ? (
+                  <DropdownMenuItem
+                    disabled={recordingBusy}
+                    onSelect={(event) => {
+                      event.preventDefault();
+                      setRecordingConfirmOpen(true);
+                    }}
+                    className="gap-2"
                   >
-                    <MoreVertical className="h-4 w-4" />
-                    {activeRecording ? (
-                      <span
-                        aria-hidden
-                        className="absolute right-1.5 top-1.5 flex h-2 w-2 items-center justify-center"
-                      >
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive/70" />
-                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-destructive" />
-                      </span>
-                    ) : null}
-                  </Button>
-                </DropdownMenuTrigger>
-              </TooltipTrigger>
-              <TooltipContent>More options</TooltipContent>
-            </Tooltip>
-
-            <DropdownMenuContent align="end" side="top" className="w-64">
-              <DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                Host tools
-              </DropdownMenuLabel>
-
-              {!activeRecording ? (
-                <DropdownMenuItem
-                  disabled={recordingBusy}
-                  onSelect={(event) => {
-                    event.preventDefault();
-                    setRecordingConfirmOpen(true);
-                  }}
-                  className="gap-2"
-                >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-                    {recordingBusy ? (
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                    ) : (
-                      <Circle className="h-3.5 w-3.5" />
-                    )}
-                  </span>
-                  <span className="flex flex-1 flex-col">
-                    <span className="text-sm font-medium">Start recording</span>
-                    <span className="text-[11px] text-muted-foreground">
-                      Captures everyone&apos;s video and audio
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+                      {recordingBusy ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <Circle className="h-3.5 w-3.5" />
+                      )}
                     </span>
-                  </span>
-                </DropdownMenuItem>
-              ) : activeRecording.status === 'STOPPING' ? (
-                <DropdownMenuItem
-                  disabled
-                  className="gap-2 data-[disabled]:opacity-100"
-                >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-warning/10 text-warning">
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  </span>
-                  <span className="flex flex-1 flex-col">
-                    <span className="text-sm font-medium">Stopping recording…</span>
-                    <span className="text-[11px] text-muted-foreground">
-                      Saving — appears in history when finished
-                    </span>
-                  </span>
-                </DropdownMenuItem>
-              ) : (
-                <DropdownMenuItem
-                  disabled={recordingBusy}
-                  onSelect={(event) => {
-                    event.preventDefault();
-                    void stopRecording();
-                  }}
-                  className="gap-2"
-                >
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-                    {recordingBusy ? (
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                    ) : (
-                      <Square className="h-3.5 w-3.5 fill-current" />
-                    )}
-                  </span>
-                  <span className="flex flex-1 flex-col">
-                    <span className="flex items-center gap-2 text-sm font-medium">
-                      Stop recording
-                      <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-destructive">
-                        <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-destructive" />
-                        REC <span className="font-mono">{recordingElapsed}</span>
+                    <span className="flex flex-1 flex-col">
+                      <span className="text-sm font-medium">Start recording</span>
+                      <span className="text-[11px] text-muted-foreground">
+                        Captures everyone&apos;s video and audio
                       </span>
                     </span>
-                    <span className="text-[11px] text-muted-foreground">
-                      Saves the recording to meeting history
+                  </DropdownMenuItem>
+                ) : activeRecording.status === 'STOPPING' ? (
+                  <DropdownMenuItem disabled className="gap-2 data-[disabled]:opacity-100">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-warning/10 text-warning">
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
                     </span>
-                  </span>
-                </DropdownMenuItem>
-              )}
+                    <span className="flex flex-1 flex-col">
+                      <span className="text-sm font-medium">Stopping recording…</span>
+                      <span className="text-[11px] text-muted-foreground">
+                        Saving — appears in history when finished
+                      </span>
+                    </span>
+                  </DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem
+                    disabled={recordingBusy}
+                    onSelect={(event) => {
+                      event.preventDefault();
+                      void stopRecording();
+                    }}
+                    className="gap-2"
+                  >
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+                      {recordingBusy ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <Square className="h-3.5 w-3.5 fill-current" />
+                      )}
+                    </span>
+                    <span className="flex flex-1 flex-col">
+                      <span className="flex items-center gap-2 text-sm font-medium">
+                        Stop recording
+                        <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-destructive">
+                          <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-destructive" />
+                          REC <span className="font-mono">{recordingElapsed}</span>
+                        </span>
+                      </span>
+                      <span className="text-[11px] text-muted-foreground">
+                        Saves the recording to meeting history
+                      </span>
+                    </span>
+                  </DropdownMenuItem>
+                )}
 
-              <DropdownMenuSeparator />
+                <DropdownMenuSeparator />
+              </>
+            ) : null}
 
-              <DropdownMenuItem
-                onSelect={(event) => {
-                  event.preventDefault();
-                  setInfoOpen(true);
-                }}
-                className="gap-2"
-              >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted">
-                  <Info className="h-3.5 w-3.5 text-muted-foreground" />
-                </span>
-                <span className="text-sm">Meeting details</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : null}
+            <DropdownMenuItem
+              onSelect={(event) => {
+                event.preventDefault();
+                setInfoOpen(true);
+              }}
+              className="gap-2"
+            >
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted">
+                <Info className="h-3.5 w-3.5 text-muted-foreground" />
+              </span>
+              <span className="text-sm">Meeting details</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {isHost ? (
           <Button
@@ -569,46 +561,47 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       </footer>
 
       <Dialog open={infoOpen} onOpenChange={setInfoOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Meeting details</DialogTitle>
-            <DialogDescription>
-              Share the code or link with anyone you want to invite.
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-4">
-            <div className="space-y-1.5">
-              <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-                Meeting code
-              </p>
-              <div className="flex items-center gap-2">
-                <code className="min-w-0 flex-1 truncate rounded-md border border-border bg-muted px-3 py-2 font-mono text-sm">
-                  {code}
-                </code>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={onCopyLink}
-                  aria-label="Copy meeting link"
-                >
-                  {copied ? (
-                    <Check className="h-4 w-4 text-success" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
+        <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+          <div className="flex flex-col items-center gap-3 px-6 pb-2 pt-7 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/15 text-accent ring-1 ring-accent/25">
+              <Share2 className="h-5 w-5" />
             </div>
 
-            <p className="text-xs text-muted-foreground">
-              Anyone with this link will be asked for permission to join. The host approves every
-              guest.
-            </p>
+            <DialogHeader className="space-y-1.5 text-center sm:text-center">
+              <DialogTitle className="text-xl">Meeting details</DialogTitle>
+              <DialogDescription className="text-balance">
+                Share the code or link with anyone you want to invite. The host approves every
+                guest.
+              </DialogDescription>
+            </DialogHeader>
           </div>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setInfoOpen(false)}>
+          <div className="space-y-2 px-6 py-5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              Meeting code
+            </p>
+            <div className="flex items-center gap-2">
+              <code className="min-w-0 flex-1 truncate rounded-lg border border-border bg-muted px-3 py-2.5 font-mono text-sm">
+                {code}
+              </code>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={onCopyLink}
+                aria-label="Copy meeting link"
+                className="shrink-0"
+              >
+                {copied ? (
+                  <Check className="h-4 w-4 text-success" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
+
+          <DialogFooter className="gap-2 border-t border-border bg-muted/30 px-6 py-4">
+            <Button variant="outline" onClick={() => setInfoOpen(false)} className="sm:min-w-24">
               Close
             </Button>
           </DialogFooter>
@@ -616,20 +609,32 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       </Dialog>
 
       <Dialog open={leaveOpen} onOpenChange={setLeaveOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Leave this meeting?</DialogTitle>
-            <DialogDescription>
-              You&apos;ll be removed from the call. The meeting continues for everyone else, and you
-              can rejoin while it&apos;s still in progress.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setLeaveOpen(false)} disabled={leaving}>
+        <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+          <div className="flex flex-col items-center gap-3 px-6 pb-2 pt-7 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-destructive/10 text-destructive ring-1 ring-destructive/20">
+              <PhoneOff className="h-5 w-5" />
+            </div>
+
+            <DialogHeader className="space-y-1.5 text-center sm:text-center">
+              <DialogTitle className="text-xl">Leave this meeting?</DialogTitle>
+              <DialogDescription className="text-balance">
+                You&apos;ll be removed from the call. The meeting continues for everyone else — you
+                can rejoin while it&apos;s still in progress.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <DialogFooter className="mt-4 gap-2 border-t border-border bg-muted/30 px-6 py-4">
+            <Button
+              variant="outline"
+              onClick={() => setLeaveOpen(false)}
+              disabled={leaving}
+              className="sm:min-w-24"
+            >
               Stay
             </Button>
             <Button variant="destructive" onClick={confirmLeave} disabled={leaving}>
-              <PhoneOff className="h-4 w-4" />
+              {leaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <PhoneOff className="h-4 w-4" />}
               {leaving ? 'Leaving…' : 'Leave meeting'}
             </Button>
           </DialogFooter>
@@ -637,20 +642,42 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       </Dialog>
 
       <Dialog open={endAllOpen} onOpenChange={setEndAllOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>End meeting for everyone?</DialogTitle>
-            <DialogDescription>
-              All participants will be disconnected immediately. This cannot be undone — anyone
-              wanting to continue will need to start a new meeting.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setEndAllOpen(false)} disabled={leaving}>
+        <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+          <div className="flex flex-col items-center gap-3 px-6 pb-2 pt-7 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-destructive/10 text-destructive ring-1 ring-destructive/20">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+
+            <DialogHeader className="space-y-1.5 text-center sm:text-center">
+              <DialogTitle className="text-xl">End meeting for everyone?</DialogTitle>
+              <DialogDescription className="text-balance">
+                All participants will be disconnected immediately. This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <ul className="mx-6 mt-4 space-y-2 rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm">
+            <li className="flex items-start gap-2 text-foreground/85">
+              <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
+              <span>Active recordings will stop and save to history.</span>
+            </li>
+            <li className="flex items-start gap-2 text-foreground/85">
+              <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
+              <span>Anyone wanting to continue will need a new meeting.</span>
+            </li>
+          </ul>
+
+          <DialogFooter className="mt-5 gap-2 border-t border-border bg-muted/30 px-6 py-4">
+            <Button
+              variant="outline"
+              onClick={() => setEndAllOpen(false)}
+              disabled={leaving}
+              className="sm:min-w-24"
+            >
               Cancel
             </Button>
             <Button variant="destructive" onClick={confirmEndForAll} disabled={leaving}>
-              <X className="h-4 w-4" />
+              {leaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
               {leaving ? 'Ending…' : 'End for all'}
             </Button>
           </DialogFooter>
@@ -658,37 +685,40 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       </Dialog>
 
       <Dialog open={recordingConfirmOpen} onOpenChange={setRecordingConfirmOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-                <Circle className="h-3.5 w-3.5 fill-current" />
-              </span>
-              Start recording this meeting?
-            </DialogTitle>
-            <DialogDescription>
-              Everyone will see a red <strong>Recording</strong> indicator and hear a chime when it
-              starts. The recording is saved to this meeting&apos;s history and only people who
-              were in the meeting can view it.
-            </DialogDescription>
-          </DialogHeader>
+        <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+          <div className="flex flex-col items-center gap-3 px-6 pb-2 pt-7 text-center">
+            <div className="relative flex h-12 w-12 items-center justify-center">
+              <span className="absolute inset-0 rounded-2xl bg-destructive/10" />
+              <span className="absolute inset-0 rounded-2xl ring-1 ring-destructive/20" />
+              <Circle className="relative h-5 w-5 fill-current text-destructive" />
+            </div>
 
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2">
-              <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
+            <DialogHeader className="space-y-1.5 text-center sm:text-center">
+              <DialogTitle className="text-xl">Start recording this meeting?</DialogTitle>
+              <DialogDescription className="text-balance">
+                Everyone will see a <strong className="font-semibold text-foreground">Recording</strong>{' '}
+                indicator and hear a chime. Only people who attended can view the recording afterwards.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <ul className="mx-6 mt-4 space-y-2 rounded-xl border border-border/60 bg-muted/30 p-4 text-sm">
+            <li className="flex items-start gap-2 text-foreground/85">
+              <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
               <span>Captures everyone&apos;s video, screen share, and audio.</span>
             </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
-              <span>Stops automatically when the meeting ends — you can also stop it manually.</span>
+            <li className="flex items-start gap-2 text-foreground/85">
+              <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
+              <span>Stops automatically when the meeting ends.</span>
             </li>
           </ul>
 
-          <DialogFooter>
+          <DialogFooter className="mt-5 gap-2 border-t border-border bg-muted/30 px-6 py-4">
             <Button
               variant="outline"
               onClick={() => setRecordingConfirmOpen(false)}
               disabled={recordingBusy}
+              className="sm:min-w-24"
             >
               Cancel
             </Button>
@@ -698,7 +728,6 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                 void confirmStartRecording();
               }}
               disabled={recordingBusy}
-              className="gap-2"
             >
               {recordingBusy ? (
                 <Loader2 className="h-4 w-4 animate-spin" />

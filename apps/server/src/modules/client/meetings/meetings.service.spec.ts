@@ -143,16 +143,16 @@ describe('MeetingsService', () => {
   describe('updateTitle', () => {
     it('only the host can rename', async () => {
       repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1' }));
-      await expect(
-        service.updateTitle('abcd-efgh-ijkl', 'u2', 'New title'),
-      ).rejects.toBeInstanceOf(ForbiddenException);
+      await expect(service.updateTitle('abcd-efgh-ijkl', 'u2', 'New title')).rejects.toBeInstanceOf(
+        ForbiddenException,
+      );
     });
 
     it('rejects renaming an ended meeting', async () => {
       repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1', status: MeetingStatus.ENDED }));
-      await expect(
-        service.updateTitle('abcd-efgh-ijkl', 'u1', 'New title'),
-      ).rejects.toBeInstanceOf(ForbiddenException);
+      await expect(service.updateTitle('abcd-efgh-ijkl', 'u1', 'New title')).rejects.toBeInstanceOf(
+        ForbiddenException,
+      );
     });
 
     it('trims and persists a new title', async () => {

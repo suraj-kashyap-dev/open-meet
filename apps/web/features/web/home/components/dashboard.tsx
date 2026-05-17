@@ -552,25 +552,40 @@ const TIPS: { icon: React.ReactNode; title: string; body: string; accent: string
 
 function TipsCard() {
   return (
-    <Card className="h-full border-border/60 bg-card/50 backdrop-blur">
-      <CardContent className="flex h-full flex-col gap-4 p-7">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-accent" />
+    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm backdrop-blur">
+      <div
+        className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-accent/10 blur-3xl"
+        aria-hidden
+      />
 
-          <h3 className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
-            Make every call better
-          </h3>
+      <CardContent className="relative flex h-full flex-col gap-5 p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/20">
+              <Sparkles className="h-4 w-4" />
+            </span>
+            <div className="flex flex-col leading-tight">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Make every call better
+              </p>
+              <h3 className="text-base font-semibold tracking-tight">Quick tips</h3>
+            </div>
+          </div>
+
+          <span className="hidden rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground sm:inline-flex">
+            {TIPS.length}
+          </span>
         </div>
 
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-1 flex-col gap-2.5">
           {TIPS.map((tip) => (
             <li
               key={tip.title}
-              className="flex items-start gap-3 rounded-lg border border-border/50 bg-background/50 p-3 transition-colors hover:border-border"
+              className="group/tip flex items-start gap-3 rounded-xl border border-border/60 bg-background/40 p-3.5 transition-all hover:-translate-y-0.5 hover:border-border hover:bg-background/70 hover:shadow-sm"
             >
               <span
                 className={cn(
-                  'mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md ring-1',
+                  'mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ring-1',
                   tip.accent,
                 )}
               >
@@ -578,9 +593,11 @@ function TipsCard() {
               </span>
 
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium leading-tight">{tip.title}</p>
+                <p className="text-sm font-semibold leading-tight tracking-tight text-foreground">
+                  {tip.title}
+                </p>
 
-                <p className="mt-0.5 text-xs text-muted-foreground">{tip.body}</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{tip.body}</p>
               </div>
             </li>
           ))}
@@ -590,26 +607,54 @@ function TipsCard() {
   );
 }
 
+const SHORTCUTS: { keys: string[]; label: string; scope: 'global' | 'in-call' }[] = [
+  { keys: ['⌘', 'K'], label: 'Open command palette', scope: 'global' },
+  { keys: ['⌘', 'M'], label: 'Mute / unmute mic', scope: 'in-call' },
+  { keys: ['⌘', 'E'], label: 'Toggle camera', scope: 'in-call' },
+  { keys: ['⌘', 'D'], label: 'Raise / lower hand', scope: 'in-call' },
+];
+
 function ShortcutsCard() {
   return (
-    <Card className="h-full border-border/60 bg-card/50 backdrop-blur">
-      <CardContent className="flex h-full flex-col gap-4 p-7">
-        <div className="flex items-center gap-2">
-          <Keyboard className="h-4 w-4 text-accent" />
+    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 shadow-sm backdrop-blur">
+      <div
+        className="pointer-events-none absolute -bottom-16 -left-12 h-40 w-40 rounded-full bg-accent/5 blur-3xl"
+        aria-hidden
+      />
 
-          <h3 className="text-sm font-medium uppercase tracking-widest text-muted-foreground">
-            Shortcuts
-          </h3>
+      <CardContent className="relative flex h-full flex-col gap-5 p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/20">
+              <Keyboard className="h-4 w-4" />
+            </span>
+            <div className="flex flex-col leading-tight">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Go faster
+              </p>
+              <h3 className="text-base font-semibold tracking-tight">Shortcuts</h3>
+            </div>
+          </div>
+
+          <span className="hidden rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground sm:inline-flex">
+            {SHORTCUTS.length}
+          </span>
         </div>
 
-        <ul className="flex flex-col gap-2.5 text-sm">
-          <ShortcutRow keys={['⌘', 'K']} label="Open command palette" />
-          <ShortcutRow keys={['⌘', 'M']} label="Mute / unmute mic" />
-          <ShortcutRow keys={['⌘', 'E']} label="Toggle camera" />
-          <ShortcutRow keys={['⌘', 'D']} label="Raise / lower hand" />
+        <ul className="flex flex-1 flex-col overflow-hidden rounded-xl border border-border/60 bg-background/30">
+          {SHORTCUTS.map((shortcut, i) => (
+            <ShortcutRow
+              key={shortcut.label}
+              keys={shortcut.keys}
+              label={shortcut.label}
+              scope={shortcut.scope}
+              isLast={i === SHORTCUTS.length - 1}
+            />
+          ))}
         </ul>
 
-        <p className="mt-auto text-xs text-muted-foreground">
+        <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent/60" aria-hidden />
           In-call shortcuts activate once you join a meeting.
         </p>
       </CardContent>
@@ -617,12 +662,34 @@ function ShortcutsCard() {
   );
 }
 
-function ShortcutRow({ keys, label }: { keys: string[]; label: string }) {
+function ShortcutRow({
+  keys,
+  label,
+  scope,
+  isLast,
+}: {
+  keys: string[];
+  label: string;
+  scope: 'global' | 'in-call';
+  isLast: boolean;
+}) {
   return (
-    <li className="flex items-center justify-between gap-3">
-      <span className="text-foreground/90">{label}</span>
+    <li
+      className={cn(
+        'flex items-center justify-between gap-3 px-3 py-2.5 transition-colors hover:bg-muted/40',
+        !isLast && 'border-b border-border/50',
+      )}
+    >
+      <div className="flex min-w-0 items-center gap-2">
+        <span className="truncate text-sm text-foreground/90">{label}</span>
+        {scope === 'in-call' ? (
+          <span className="hidden rounded-full bg-muted px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted-foreground md:inline-flex">
+            in call
+          </span>
+        ) : null}
+      </div>
 
-      <span className="flex items-center gap-1">
+      <span className="flex shrink-0 items-center gap-1">
         {keys.map((k) => (
           <KbdShortcut key={k}>{k}</KbdShortcut>
         ))}
@@ -633,7 +700,7 @@ function ShortcutRow({ keys, label }: { keys: string[]; label: string }) {
 
 function KbdShortcut({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-[24px] items-center justify-center gap-1 rounded border border-border bg-muted px-1.5 text-[11px] font-medium text-foreground">
+    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-md border border-border bg-card px-1.5 font-mono text-[10px] font-semibold text-foreground shadow-[0_1px_0_0_var(--color-border)]">
       {children}
     </kbd>
   );

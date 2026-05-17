@@ -21,11 +21,7 @@ import {
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useMeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { recordingApi } from '@/features/web/meeting/services/recording';
-import {
-  useChatStore,
-  useMeetingStore,
-  useRecordingStore,
-} from '@/features/web/meeting/stores';
+import { useChatStore, useMeetingStore, useRecordingStore } from '@/features/web/meeting/stores';
 import { useNotification } from '@/hooks/use-notification';
 import { useSound } from '@/hooks/use-sound';
 import { cn } from '@/lib/cn';
@@ -33,7 +29,7 @@ import { useUIStore } from '@/stores';
 import { ChatPanel } from './chat-panel';
 import { KnockNotifier } from './knock-notifier';
 import { MeetingControls } from './meeting-controls';
-import { MeetingTitleBar } from './meeting-title-bar';
+import { MeetingTopBar } from './meeting-top-bar';
 import { ParticipantsPanel } from './participants-panel';
 import { ReactionOverlay } from './reaction-overlay';
 import { RecordingBanner } from './recording-banner';
@@ -50,8 +46,6 @@ export function MeetingShell({ code, meeting }: Props) {
   const { data: user } = useCurrentUser();
   const isHost = user?.id === meeting.hostId;
   const setMeeting = useMeetingStore((s) => s.setMeeting);
-  const liveMeeting = useMeetingStore((s) => s.meeting);
-  const liveTitle = liveMeeting?.code === meeting.code ? liveMeeting.title : meeting.title;
   const raiseHand = useMeetingStore((s) => s.raiseHand);
   const lowerHand = useMeetingStore((s) => s.lowerHand);
   const addMessage = useChatStore((s) => s.add);
@@ -211,9 +205,10 @@ export function MeetingShell({ code, meeting }: Props) {
 
   return (
     <div className="relative flex h-full flex-col">
+      <MeetingTopBar code={code} canEdit={isHost} />
+
       <div className="flex min-h-0 flex-1">
         <div className="relative min-w-0 flex-1 bg-background p-4">
-          <MeetingTitleBar code={code} title={liveTitle} canEdit={isHost} />
           <RecordingBanner />
           <VideoGrid />
         </div>

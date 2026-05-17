@@ -118,7 +118,9 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
-      await expect(service.start('abcd-efgh-ijkl', 'u2')).rejects.toBeInstanceOf(ForbiddenException);
+      await expect(service.start('abcd-efgh-ijkl', 'u2')).rejects.toBeInstanceOf(
+        ForbiddenException,
+      );
       expect(startRoomCompositeEgress).not.toHaveBeenCalled();
     });
 
@@ -141,9 +143,7 @@ describe('RecordingService', () => {
       });
       repo.findRecordingForMeeting.mockResolvedValue(record());
 
-      await expect(service.start('abcd-efgh-ijkl', 'u1')).rejects.toThrow(
-        /already in progress/i,
-      );
+      await expect(service.start('abcd-efgh-ijkl', 'u1')).rejects.toThrow(/already in progress/i);
     });
 
     it('starts egress and persists row', async () => {
@@ -198,7 +198,9 @@ describe('RecordingService', () => {
       });
       repo.findActiveForMeeting.mockResolvedValue(null);
 
-      await expect(service.stop('abcd-efgh-ijkl', 'u1')).rejects.toBeInstanceOf(BadRequestException);
+      await expect(service.stop('abcd-efgh-ijkl', 'u1')).rejects.toBeInstanceOf(
+        BadRequestException,
+      );
     });
 
     it('calls egress.stopEgress and transitions to STOPPING', async () => {

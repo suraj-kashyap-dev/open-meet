@@ -26,7 +26,7 @@ export async function confirmOverwriteIfExists(
   serverEnvExists: boolean,
   webEnvExists: boolean,
 ): Promise<void> {
-  if (! serverEnvExists && ! webEnvExists) {
+  if (!serverEnvExists && !webEnvExists) {
     return;
   }
 
@@ -65,7 +65,7 @@ export async function collectAnswers(): Promise<InstallAnswers> {
           placeholder: 'admin@example.com',
           initialValue: 'admin@example.com',
           validate: (v) =>
-            ! /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? 'Enter a valid email' : undefined,
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? 'Enter a valid email' : undefined,
         }),
       adminPassword: () =>
         p.password({
@@ -78,7 +78,7 @@ export async function collectAnswers(): Promise<InstallAnswers> {
           message: 'PostgreSQL connection URL',
           placeholder: 'postgresql://postgres:postgres@localhost:5432/meetclone',
           initialValue: 'postgresql://postgres:postgres@localhost:5432/meetclone',
-          validate: (v) => (! v.startsWith('postgres') ? 'Must be a postgresql:// URL' : undefined),
+          validate: (v) => (!v.startsWith('postgres') ? 'Must be a postgresql:// URL' : undefined),
         }),
       redisUrl: () =>
         p.text({

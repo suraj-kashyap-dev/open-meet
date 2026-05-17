@@ -12,7 +12,7 @@ export class MeetingBus {
   }
 
   emit(room: string, event: string, payload: unknown): void {
-    if (! this.server) {
+    if (!this.server) {
       this.logger.warn(`emit("${event}") dropped — socket server not attached yet`);
 
       return;

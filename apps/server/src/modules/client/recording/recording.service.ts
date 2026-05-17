@@ -231,7 +231,10 @@ export class RecordingService {
     const fileInfo = info.fileResults[0];
     const durationMs = fileInfo ? Number(fileInfo.duration / NS_PER_MS) : 0;
     const sizeBytes = fileInfo ? fileInfo.size : BigInt(0);
-    const endedAt = fileInfo && fileInfo.endedAt > 0n ? new Date(Number(fileInfo.endedAt / NS_PER_MS)) : new Date();
+    const endedAt =
+      fileInfo && fileInfo.endedAt > 0n
+        ? new Date(Number(fileInfo.endedAt / NS_PER_MS))
+        : new Date();
 
     // EgressStatus enum: STARTING=0, ACTIVE=1, ENDING=2, COMPLETE=3, FAILED=4, ABORTED=5.
     const isFailure = info.status === 4 || info.status === 5;

@@ -14,6 +14,11 @@ import { cn } from '@/lib/cn';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyColumnDef<TData> = ColumnDef<TData, any>;
 
+interface ColumnMeta {
+  headerClassName?: string;
+  cellClassName?: string;
+}
+
 interface Props<TData> {
   data: TData[];
   columns: AnyColumnDef<TData>[];
@@ -21,6 +26,7 @@ interface Props<TData> {
   emptyMessage?: ReactNode;
   onRowClick?: (row: Row<TData>) => void;
   className?: string;
+  tableClassName?: string;
 }
 
 export function DataTable<TData>({
@@ -30,6 +36,7 @@ export function DataTable<TData>({
   emptyMessage = 'No results',
   onRowClick,
   className,
+  tableClassName,
 }: Props<TData>) {
   const table = useReactTable({
     data,
@@ -40,17 +47,28 @@ export function DataTable<TData>({
   return (
     <div className={cn('overflow-hidden rounded-2xl border border-border bg-card', className)}>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className={cn('w-full text-sm', tableClassName)}>
           <thead className="border-b border-border bg-muted/30 text-left text-xs uppercase tracking-wider text-muted-foreground">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th key={header.id} colSpan={header.colSpan} className="px-4 py-2.5 font-medium">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
-                  </th>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const meta = header.column.columnDef.meta as ColumnMeta | undefined;
+
+                  return (
+                    <th
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      className={cn(
+                        'whitespace-nowrap px-4 py-2.5 font-medium',
+                        meta?.headerClassName,
+                      )}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </th>
+                  );
+                })}
               </tr>
             ))}
           </thead>
@@ -83,11 +101,18 @@ export function DataTable<TData>({
                     onRowClick ? 'cursor-pointer hover:bg-muted/40' : 'hover:bg-muted/30',
                   )}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-3 align-middle">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const meta = cell.column.columnDef.meta as ColumnMeta | undefined;
+
+                    return (
+                      <td
+                        key={cell.id}
+                        className={cn('px-4 py-3 align-middle', meta?.cellClassName)}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))
             )}

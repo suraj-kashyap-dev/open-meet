@@ -120,7 +120,7 @@ export class LiveKitService {
   }
 
   async receiveWebhook(rawBody: string, authHeader: string | undefined): Promise<WebhookEvent> {
-    if (! authHeader) {
+    if (!authHeader) {
       throw new ForbiddenException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'Missing LiveKit signature header',
@@ -163,9 +163,9 @@ export class LiveKitService {
     }
 
     if (
-      event.event === 'egress_started'
-      || event.event === 'egress_updated' 
-      || event.event === 'egress_ended'
+      event.event === 'egress_started' ||
+      event.event === 'egress_updated' ||
+      event.event === 'egress_ended'
     ) {
       await this.handleEgress(event);
     }
@@ -174,7 +174,7 @@ export class LiveKitService {
   private async handleEgress(event: WebhookEvent): Promise<void> {
     const info = event.egressInfo;
 
-    if (! info) {
+    if (!info) {
       this.logger.warn(`Egress webhook had no egressInfo payload: ${event.event}`);
       return;
     }
@@ -188,18 +188,18 @@ export class LiveKitService {
       info,
     });
 
-    if (! record || event.event !== 'egress_ended') {
+    if (!record || event.event !== 'egress_ended') {
       return;
     }
 
     const meeting = await this.meetings.findRawByMeetingId(record.meetingId);
 
-    if (! meeting) {
+    if (!meeting) {
       return;
     }
 
     const dto = await this.recordings.toDto(record);
-    
+
     this.recordingEvents.emitStopped(meeting.code, dto);
   }
 }

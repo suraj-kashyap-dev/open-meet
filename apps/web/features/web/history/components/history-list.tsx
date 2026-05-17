@@ -77,6 +77,7 @@ export function HistoryList() {
       column.display({
         id: 'meeting',
         header: 'Meeting',
+        meta: { headerClassName: 'w-auto', cellClassName: 'min-w-[260px]' },
         cell: ({ row }) => {
           const item = row.original;
           const title =
@@ -87,7 +88,7 @@ export function HistoryList() {
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
                 <Video className="h-4 w-4" />
               </span>
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <p className="truncate text-sm font-medium">{title}</p>
                   {item.isHost ? (
@@ -110,6 +111,7 @@ export function HistoryList() {
       column.accessor((row) => row.startedAt ?? row.createdAt, {
         id: 'startedAt',
         header: 'Started',
+        meta: { headerClassName: 'w-[180px]', cellClassName: 'w-[180px]' },
         cell: (info) => (
           <span className="whitespace-nowrap text-sm text-muted-foreground">
             {formatStartedAt(info.getValue() ?? null)}
@@ -118,8 +120,9 @@ export function HistoryList() {
       }),
       column.accessor('durationMinutes', {
         header: 'Duration',
+        meta: { headerClassName: 'w-[100px]', cellClassName: 'w-[100px]' },
         cell: (info) => (
-          <span className="whitespace-nowrap text-sm text-muted-foreground">
+          <span className="whitespace-nowrap text-sm tabular-nums text-muted-foreground">
             {formatDuration(info.getValue())}
           </span>
         ),
@@ -127,6 +130,7 @@ export function HistoryList() {
       column.display({
         id: 'participants',
         header: 'Participants',
+        meta: { headerClassName: 'w-[180px]', cellClassName: 'w-[180px]' },
         cell: ({ row }) => {
           const item = row.original;
           const displayedAvatars = item.participantsPreview.slice(0, 4);
@@ -159,7 +163,9 @@ export function HistoryList() {
         },
       }),
       column.accessor('messageCount', {
+        id: 'activity',
         header: () => <span className="block text-right">Activity</span>,
+        meta: { headerClassName: 'w-[200px] text-right', cellClassName: 'w-[200px]' },
         cell: ({ row }) => {
           const item = row.original;
 
@@ -177,7 +183,7 @@ export function HistoryList() {
               ) : null}
               {item.recordingCount > 0 ? (
                 <span
-                  className="inline-flex items-center gap-1 rounded-full border border-destructive/30 bg-destructive/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-destructive"
+                  className="inline-flex shrink-0 items-center gap-1 rounded-full border border-destructive/30 bg-destructive/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-destructive"
                   title={`${item.recordingCount} recording${item.recordingCount === 1 ? '' : 's'}`}
                 >
                   <Video className="h-3 w-3" />
@@ -190,6 +196,7 @@ export function HistoryList() {
       }),
       column.accessor('status', {
         header: 'Status',
+        meta: { headerClassName: 'w-[110px]', cellClassName: 'w-[110px]' },
         cell: (info) => {
           const status = info.getValue();
 
@@ -212,6 +219,7 @@ export function HistoryList() {
       column.display({
         id: 'actions',
         header: () => <span className="sr-only">Actions</span>,
+        meta: { headerClassName: 'w-[100px]', cellClassName: 'w-[100px]' },
         cell: ({ row }) => (
           <div className="flex justify-end">
             <Button asChild size="sm" variant="ghost">
@@ -312,6 +320,7 @@ export function HistoryList() {
                 isLoading={isLoading}
                 emptyMessage="No meetings on this page."
                 className="rounded-none border-0 shadow-none"
+                tableClassName="min-w-[960px]"
               />
             ) : (
               <EmptyState />

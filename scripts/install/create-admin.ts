@@ -32,7 +32,7 @@ async function main(): Promise<void> {
   const password = process.env.DEFAULT_ADMIN_PASSWORD;
   const name = process.env.DEFAULT_ADMIN_NAME;
 
-  if (! email || ! password || ! name) {
+  if (!email || !password || !name) {
     throw new Error(
       'DEFAULT_ADMIN_EMAIL, DEFAULT_ADMIN_PASSWORD, and DEFAULT_ADMIN_NAME must be set.',
     );

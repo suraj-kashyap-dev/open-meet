@@ -266,11 +266,7 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
   };
 
   if (!canEdit) {
-    return (
-      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-        {display}
-      </h1>
-    );
+    return <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{display}</h1>;
   }
 
   if (!isEditing) {

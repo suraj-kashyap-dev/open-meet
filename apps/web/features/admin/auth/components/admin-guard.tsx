@@ -15,7 +15,7 @@ export function AdminGuard({ children }: { children: ReactNode }) {
     }
   }, [admin, isLoading, router]);
 
-  if (isLoading || ! admin) {
+  if (isLoading || !admin) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
