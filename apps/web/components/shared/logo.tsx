@@ -1,4 +1,4 @@
-import { cn } from '@/lib/shared/cn';
+import { cn } from '@/lib/cn';
 
 interface Props {
   className?: string;

@@ -9,7 +9,7 @@ import {
 } from '@tanstack/react-table';
 import { type ReactNode } from 'react';
 
-import { cn } from '@/lib/shared/cn';
+import { cn } from '@/lib/cn';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyColumnDef<TData> = ColumnDef<TData, any>;

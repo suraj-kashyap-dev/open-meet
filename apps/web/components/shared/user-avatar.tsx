@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { cn } from '@/lib/shared/cn';
+import { cn } from '@/lib/cn';
 
 export type UserAvatarSize =
   | 'xs'

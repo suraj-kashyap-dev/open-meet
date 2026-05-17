@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { HistoryList } from '@/components/client/history/history-list';
+import { HistoryList } from '@/features/history/components/history-list';
 
 export const metadata: Metadata = {
   title: 'Meeting history',

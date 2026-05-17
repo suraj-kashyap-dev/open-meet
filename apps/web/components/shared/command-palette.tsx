@@ -24,9 +24,9 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from '@/components/ui/command';
-import { useCurrentUser, useLogout } from '@/hooks/client/use-auth';
-import { useCreateMeeting } from '@/hooks/client/use-meetings';
-import { ApiClientError } from '@/lib/shared/api';
+import { useCurrentUser, useLogout } from '@/features/auth/hooks/use-auth';
+import { useCreateMeeting } from '@/features/meeting/hooks/use-meetings';
+import { ApiClientError } from '@/lib/api/client';
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);

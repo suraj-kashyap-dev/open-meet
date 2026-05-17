@@ -3,10 +3,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { CalendarRange, MessageSquare, Radio, Users } from 'lucide-react';
 
-import { RecentMeetingsTable } from '@/components/admin/dashboard/recent-meetings-table';
-import { StatCard } from '@/components/admin/dashboard/stat-card';
-import { TrendCard } from '@/components/admin/dashboard/trend-card';
-import { adminAnalyticsApi } from '@/services/admin/analytics';
+import { RecentMeetingsTable } from '@/features/admin-dashboard/components/recent-meetings-table';
+import { StatCard } from '@/features/admin-dashboard/components/stat-card';
+import { TrendCard } from '@/features/admin-dashboard/components/trend-card';
+import { adminAnalyticsApi } from '@/features/admin-analytics/services/analytics';
 
 export default function AdminOverviewPage() {
   const { data, isLoading, error } = useQuery({

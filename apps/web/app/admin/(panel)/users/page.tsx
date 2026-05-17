@@ -7,8 +7,8 @@ import { useMemo, useState } from 'react';
 import type { AdminUserDto } from '@open-meet/types';
 
 import { DataTable } from '@/components/shared/data-table/data-table';
-import { DeleteUserDialog } from '@/components/admin/users/delete-user-dialog';
-import { EditUserDialog } from '@/components/admin/users/edit-user-dialog';
+import { DeleteUserDialog } from '@/features/admin-users/components/delete-user-dialog';
+import { EditUserDialog } from '@/features/admin-users/components/edit-user-dialog';
 import { UserAvatar } from '@/components/shared/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { useAdminUsers } from '@/hooks/admin/use-admin-users';
+import { useAdminUsers } from '@/features/admin-users/hooks/use-admin-users';
 
 const PAGE_SIZE = 20;
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { AccountSidebar } from '@/components/client/account/account-sidebar';
+import { AccountSidebar } from '@/features/account/components/account-sidebar';
 
 export default function AccountLayout({ children }: { children: ReactNode }) {
   return (

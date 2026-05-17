@@ -3,14 +3,13 @@
   "compilerOptions": {
     "module": "CommonJS",
     "moduleResolution": "Node10",
-    "target": "ES2022",
-    "lib": ["ES2022"],
     "outDir": "./dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
     "noUncheckedIndexedAccess": false,
     "types": ["node"],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

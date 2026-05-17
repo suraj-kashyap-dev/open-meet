@@ -188,7 +188,14 @@
       "Bash(RUN_FULL_E2E=1 E2E_NO_WEB_SERVER=1 pnpm test:e2e tests/e2e/profile.spec.ts --workers=2 --reporter=list)",
       "Bash(tasklist //FI \"IMAGENAME eq node.exe\")",
       "Bash(pnpm --filter @open-meet/server test)",
-      "Bash(pnpm test *)"
+      "Bash(pnpm test *)",
+      "WebSearch",
+      "Bash(rmdir apps/web/components/admin/auth apps/web/components/admin/dashboard apps/web/components/admin/users apps/web/components/admin)",
+      "Bash(rmdir apps/web/components/client/account apps/web/components/client/auth apps/web/components/client/dashboard apps/web/components/client/history apps/web/components/client/home apps/web/components/client/lobby apps/web/components/client/meeting apps/web/components/client)",
+      "Bash(rmdir apps/web/hooks/admin apps/web/hooks/client apps/web/hooks)",
+      "Bash(rmdir apps/web/services/admin apps/web/services/client apps/web/services)",
+      "Bash(pnpm --filter @open-meet/server install --no-frozen-lockfile)",
+      "Bash(pnpm --filter @open-meet/types typecheck)"
     ]
   }
 }

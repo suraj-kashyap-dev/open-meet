@@ -1,4 +1,4 @@
-import { LobbyClient } from '@/components/client/lobby/lobby-client';
+import { LobbyClient } from '@/features/lobby/components/lobby-client';
 
 interface Props {
   params: Promise<{ code: string }>;

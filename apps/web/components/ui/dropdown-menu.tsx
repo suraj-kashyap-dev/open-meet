@@ -4,7 +4,7 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check } from 'lucide-react';
 import { forwardRef, type HTMLAttributes } from 'react';
 
-import { cn } from '@/lib/shared/cn';
+import { cn } from '@/lib/cn';
 
 export function DropdownMenu({
   modal = false,

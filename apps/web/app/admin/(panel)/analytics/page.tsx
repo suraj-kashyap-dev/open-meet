@@ -1,4 +1,4 @@
-import { ComingSoon } from '@/components/admin/layout/coming-soon';
+import { ComingSoon } from '@/components/layout/coming-soon';
 
 export const metadata = { title: 'Analytics · Admin' };
 

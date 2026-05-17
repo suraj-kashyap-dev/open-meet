@@ -3,7 +3,7 @@
 import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { cn } from '@/lib/shared/cn';
+import { cn } from '@/lib/cn';
 
 const SHOW_AFTER_PX = 400;
 
