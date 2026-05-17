@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { MeetingsModule } from '../meetings/meetings.module';
 import { UploadsModule } from '../../uploads/uploads.module';
+import { MeetingBusModule } from '../../../websocket/meeting-bus.module';
 
 import { ChatGateway } from './chat.gateway';
 import { ChatHistoryController } from './chat-history.controller';
@@ -11,7 +12,7 @@ import { ChatService } from './chat.service';
 import { WsJwtGuard } from './ws-jwt.guard';
 
 @Module({
-  imports: [MeetingsModule, UploadsModule, JwtModule.register({})],
+  imports: [MeetingsModule, UploadsModule, MeetingBusModule, JwtModule.register({})],
   controllers: [ChatHistoryController],
   providers: [ChatGateway, ChatService, ChatRepository, WsJwtGuard],
 })

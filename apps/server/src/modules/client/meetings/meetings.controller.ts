@@ -1,4 +1,14 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import type {
@@ -11,6 +21,7 @@ import type {
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { HistoryQueryDto } from './dto/history-query.dto';
+import { UpdateMeetingDto } from './dto/update-meeting.dto';
 import { MeetingsService } from './meetings.service';
 
 @ApiTags('meetings')
@@ -36,7 +47,7 @@ export class MeetingsController {
     const { items, total, page, pageSize } = await this.meetings.getHistory(user.id, query);
 
     return {
-      items: items.map(({ meeting, attachmentCount }): MeetingHistoryItemDto => {
+      items: items.map(({ meeting, attachmentCount, recordingCount }): MeetingHistoryItemDto => {
         const startedAt = meeting.startedAt;
         const endedAt = meeting.endedAt;
         const durationMinutes =
@@ -63,6 +74,7 @@ export class MeetingsController {
           })),
           messageCount: meeting._count.messages,
           attachmentCount,
+          recordingCount,
         };
       }),
       total,
@@ -76,6 +88,17 @@ export class MeetingsController {
   @ApiOperation({ summary: 'Look up a meeting by code' })
   async get(@Param('code') code: string): Promise<MeetingDto> {
     return this.meetings.getByCode(code);
+  }
+
+  @Patch(':code')
+  @ApiParam({ name: 'code', example: 'abcd-efgh-ijkl' })
+  @ApiOperation({ summary: 'Update a meeting (host only)' })
+  async update(
+    @Param('code') code: string,
+    @Body() dto: UpdateMeetingDto,
+    @CurrentUser() user: RequestUser,
+  ): Promise<MeetingDto> {
+    return this.meetings.updateTitle(code, user.id, dto.title);
   }
 
   @Post(':code/join')

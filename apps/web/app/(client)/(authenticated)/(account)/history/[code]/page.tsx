@@ -1,4 +1,4 @@
-import { HistoryDetail } from '@/features/history/components/history-detail';
+import { HistoryDetail } from '@/features/web/history/components/history-detail';
 
 interface Props {
   params: Promise<{ code: string }>;

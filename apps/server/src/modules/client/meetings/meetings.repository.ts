@@ -16,6 +16,10 @@ export class MeetingsRepository {
     return this.prisma.meeting.findUnique({ where: { code } });
   }
 
+  findById(id: string): Promise<Meeting | null> {
+    return this.prisma.meeting.findUnique({ where: { id } });
+  }
+
   create(data: { code: string; hostId: string; title?: string | null }): Promise<Meeting> {
     return this.prisma.meeting.create({
       data: {
@@ -48,6 +52,13 @@ export class MeetingsRepository {
       include: {
         user: { select: { id: true, name: true, avatarKey: true } },
       },
+    });
+  }
+
+  async updateTitle(meetingId: string, title: string | null): Promise<Meeting> {
+    return this.prisma.meeting.update({
+      where: { id: meetingId },
+      data: { title },
     });
   }
 
@@ -159,5 +170,22 @@ export class MeetingsRepository {
     return this.prisma.attachment.count({
       where: { message: { meetingId } },
     });
+  }
+
+  async countCompletedRecordingsByMeetingIds(meetingIds: string[]): Promise<Map<string, number>> {
+    if (meetingIds.length === 0) {
+      return new Map();
+    }
+
+    const rows = await this.prisma.recording.groupBy({
+      by: ['meetingId'],
+      where: {
+        meetingId: { in: meetingIds },
+        status: 'COMPLETED',
+      },
+      _count: { _all: true },
+    });
+
+    return new Map(rows.map((r) => [r.meetingId, r._count._all]));
   }
 }

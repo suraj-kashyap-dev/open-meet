@@ -7,6 +7,8 @@ import { LocalStorageProvider } from './providers/local-storage.provider';
 import type {
   PutInput,
   PutResult,
+  ReadRangeOptions,
+  ReadRangeResult,
   ReadResult,
   StorageProvider,
 } from './providers/storage-provider.interface';
@@ -34,6 +36,10 @@ export class StorageService {
 
   read(key: string): Promise<ReadResult | null> {
     return this.provider.read(key);
+  }
+
+  readRange(key: string, options: ReadRangeOptions): Promise<ReadRangeResult | null> {
+    return this.provider.readRange(key, options);
   }
 
   delete(key: string): Promise<void> {

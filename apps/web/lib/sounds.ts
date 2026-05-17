@@ -1,6 +1,6 @@
 'use client';
 
-export type SoundName = 'join' | 'leave' | 'message' | 'knock' | 'reaction';
+export type SoundName = 'join' | 'leave' | 'message' | 'knock' | 'reaction' | 'recording';
 
 let audioCtx: AudioContext | null = null;
 
@@ -130,6 +130,11 @@ const SYNTH_RECIPES: Record<SoundName, ToneSpec[]> = {
   ],
 
   reaction: [{ freq: 660.0, startOffset: 0, endFreq: 990.0, duration: 0.14 }],
+
+  recording: [
+    { freq: 660.0, startOffset: 0, duration: 0.14 },
+    { freq: 880.0, startOffset: 0.16, duration: 0.18 },
+  ],
 };
 
 export async function playSound(name: SoundName, volume: number = 0.08): Promise<void> {

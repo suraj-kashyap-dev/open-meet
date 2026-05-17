@@ -15,6 +15,10 @@ export interface CreateMeetingDto {
   title?: string;
 }
 
+export interface UpdateMeetingDto {
+  title?: string | null;
+}
+
 export interface MeetingDto {
   id: string;
   code: string;
@@ -69,6 +73,7 @@ export interface MeetingHistoryItemDto {
   participantsPreview: HistoryParticipantPreviewDto[];
   messageCount: number;
   attachmentCount: number;
+  recordingCount: number;
 }
 
 export interface MeetingHistoryListResponseDto {

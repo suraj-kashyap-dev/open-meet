@@ -24,11 +24,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { DeleteMeetingDialog } from '@/features/admin-meetings/components/delete-meeting-dialog';
-import { EndAllActiveDialog } from '@/features/admin-meetings/components/end-all-dialog';
-import { EndMeetingDialog } from '@/features/admin-meetings/components/end-meeting-dialog';
-import { MeetingDetailDialog } from '@/features/admin-meetings/components/meeting-detail-dialog';
-import { useAdminMeetings } from '@/features/admin-meetings/hooks/use-admin-meetings';
+import { DeleteMeetingDialog } from '@/features/admin/meetings/components/delete-meeting-dialog';
+import { EndAllActiveDialog } from '@/features/admin/meetings/components/end-all-dialog';
+import { EndMeetingDialog } from '@/features/admin/meetings/components/end-meeting-dialog';
+import { MeetingDetailDialog } from '@/features/admin/meetings/components/meeting-detail-dialog';
+import { useAdminMeetings } from '@/features/admin/meetings/hooks/use-admin-meetings';
 import { cn } from '@/lib/cn';
 
 const PAGE_SIZE = 20;

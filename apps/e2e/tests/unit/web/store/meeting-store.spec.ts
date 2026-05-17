@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import type { MeetingDto, PresenceDto } from '@open-meet/types';
 
-import { useMeetingStore } from '@/features/meeting/stores/meeting-store';
+import { useMeetingStore } from '@/features/web/meeting/stores/meeting-store';
 
 function makePresence(overrides: Partial<PresenceDto> = {}): PresenceDto {
   return {

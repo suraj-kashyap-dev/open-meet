@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 
-import { useUserSettings } from '@/features/account/hooks/use-settings';
+import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 import { notify } from '@/lib/notifications';
 
 interface NotifyOptions {

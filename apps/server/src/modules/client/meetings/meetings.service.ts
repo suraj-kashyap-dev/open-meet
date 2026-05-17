@@ -105,6 +105,42 @@ export class MeetingsService {
     await this.meetings.markParticipantLeft(meeting.id, userId);
   }
 
+  async updateTitle(
+    code: string,
+    requesterId: string,
+    rawTitle: string | null | undefined,
+  ): Promise<MeetingDto> {
+    const meeting = await this.meetings.findByCode(code);
+    if (!meeting) {
+      throw new NotFoundException({
+        code: ApiErrorCode.MEETING_NOT_FOUND,
+        message: `Meeting "${code}" does not exist`,
+      });
+    }
+    if (meeting.hostId !== requesterId) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.MEETING_FORBIDDEN,
+        message: 'Only the host can rename this meeting',
+      });
+    }
+    if (meeting.status === MeetingStatus.ENDED) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.MEETING_ENDED,
+        message: 'This meeting has already ended',
+      });
+    }
+
+    const trimmed = typeof rawTitle === 'string' ? rawTitle.trim() : null;
+    const nextTitle = trimmed === null || trimmed.length === 0 ? null : trimmed;
+
+    if (nextTitle === meeting.title) {
+      return this.toDto(meeting);
+    }
+
+    const updated = await this.meetings.updateTitle(meeting.id, nextTitle);
+    return this.toDto(updated);
+  }
+
   async end(code: string, requesterId: string): Promise<MeetingDto> {
     const meeting = await this.meetings.findByCode(code);
     if (!meeting) {
@@ -165,6 +201,7 @@ export class MeetingsService {
         _count: { participants: number; messages: number };
       };
       attachmentCount: number;
+      recordingCount: number;
     }>;
     total: number;
     page: number;
@@ -182,10 +219,14 @@ export class MeetingsService {
       this.meetings.countHistoryForUser(userId),
     ]);
 
+    const meetingIds = rows.map((m) => m.id);
+    const recordingCounts = await this.meetings.countCompletedRecordingsByMeetingIds(meetingIds);
+
     const items = await Promise.all(
       rows.map(async (meeting) => ({
         meeting,
         attachmentCount: await this.meetings.countAttachmentsForMeeting(meeting.id),
+        recordingCount: recordingCounts.get(meeting.id) ?? 0,
       })),
     );
 
@@ -227,6 +268,21 @@ export class MeetingsService {
     }
     return {
       id: meeting.id,
+      hostId: meeting.hostId,
+      status: meeting.status,
+    };
+  }
+
+  async findRawByMeetingId(
+    meetingId: string,
+  ): Promise<{ id: string; code: string; hostId: string; status: MeetingStatus } | null> {
+    const meeting = await this.meetings.findById(meetingId);
+    if (!meeting) {
+      return null;
+    }
+    return {
+      id: meeting.id,
+      code: meeting.code,
       hostId: meeting.hostId,
       status: meeting.status,
     };

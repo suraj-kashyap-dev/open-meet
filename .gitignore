@@ -41,3 +41,5 @@ apps/server/uploads/
 
 # Claude Code local settings
 .claude/
+
+TODO.md

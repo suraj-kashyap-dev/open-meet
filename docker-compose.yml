@@ -57,6 +57,29 @@ services:
       retries: 6
       start_period: 5s
 
+  livekit-egress:
+    image: livekit/egress:latest
+    container_name: meetclone-egress
+    restart: unless-stopped
+    # Egress writes recordings to /out inside the container. The mount target
+    # MUST match the API's LOCAL_STORAGE_DIR (default `./uploads` resolved
+    # from the apps/server working directory). Otherwise the API will look
+    # for the MP4 in apps/server/uploads/ while egress writes to ./uploads/.
+    volumes:
+      - ./apps/server/uploads:/out
+      - ./docker/egress.yaml:/etc/egress.yaml:ro
+    environment:
+      EGRESS_CONFIG_FILE: /etc/egress.yaml
+    depends_on:
+      redis:
+        condition: service_healthy
+      livekit:
+        condition: service_healthy
+    # The egress service launches headless Chromium; SYS_ADMIN is required by
+    # default. Drop or replace with SECCOMP profile in production.
+    cap_add:
+      - SYS_ADMIN
+
   coturn:
     image: coturn/coturn:latest
     container_name: meetclone-coturn

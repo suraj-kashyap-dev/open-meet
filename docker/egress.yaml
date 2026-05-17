@@ -1,0 +1,8 @@
+log_level: info
+api_key: APIYxBCdbXpEkU
+api_secret: _zfDKs8taY-rzqQrXsvBO-_Snc-K-NUvT6nXSc_4-WM
+ws_url: ws://livekit:7880
+redis:
+  address: redis:6379
+room_composite:
+  enabled: true

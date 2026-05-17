@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { LoginForm } from '@/features/auth/components/login-form';
+import { LoginForm } from '@/features/web/auth/components/login-form';
 import { Logo } from '@/components/shared/logo';
 
 export const metadata: Metadata = {

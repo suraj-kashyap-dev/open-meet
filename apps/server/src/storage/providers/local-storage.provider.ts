@@ -6,6 +6,8 @@ import { resolve, sep } from 'node:path';
 import type {
   PutInput,
   PutResult,
+  ReadRangeOptions,
+  ReadRangeResult,
   ReadResult,
   StorageProvider,
 } from './storage-provider.interface';
@@ -76,6 +78,43 @@ export class LocalStorageProvider implements StorageProvider {
       return {
         stream: createReadStream(target),
         size: stats.size,
+        mime: 'application/octet-stream',
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  async readRange(key: string, options: ReadRangeOptions): Promise<ReadRangeResult | null> {
+    let target: string;
+
+    try {
+      target = this.resolveKey(key);
+    } catch {
+      return null;
+    }
+
+    try {
+      const stats = await stat(target);
+
+      if (!stats.isFile()) {
+        return null;
+      }
+
+      const totalSize = stats.size;
+      const start = Math.max(0, options.start);
+      const end = Math.min(totalSize - 1, options.end);
+
+      if (start > end || start >= totalSize) {
+        return null;
+      }
+
+      return {
+        stream: createReadStream(target, { start, end }),
+        size: end - start + 1,
+        totalSize,
+        start,
+        end,
         mime: 'application/octet-stream',
       };
     } catch {

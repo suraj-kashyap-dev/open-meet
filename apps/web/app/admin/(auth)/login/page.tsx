@@ -1,5 +1,5 @@
 import { Logo } from '@/components/shared/logo';
-import { AdminLoginForm } from '@/features/admin-auth/components/admin-login-form';
+import { AdminLoginForm } from '@/features/admin/auth/components/admin-login-form';
 
 export const metadata = {
   title: 'Admin sign in · Open Meet',

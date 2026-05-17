@@ -8,7 +8,13 @@ import { MeetingsService } from './meetings.service';
 import { MeetingsRepository } from './meetings.repository';
 
 function meeting(
-  overrides: Partial<{ id: string; code: string; hostId: string; status: MeetingStatus }> = {},
+  overrides: Partial<{
+    id: string;
+    code: string;
+    hostId: string;
+    status: MeetingStatus;
+    title: string | null;
+  }> = {},
 ) {
   return {
     id: 'm1',
@@ -28,23 +34,27 @@ describe('MeetingsService', () => {
   let service: MeetingsService;
   let repo: {
     findByCode: ReturnType<typeof vi.fn>;
+    findById: ReturnType<typeof vi.fn>;
     create: ReturnType<typeof vi.fn>;
     upsertParticipant: ReturnType<typeof vi.fn>;
     markStarted: ReturnType<typeof vi.fn>;
     markEnded: ReturnType<typeof vi.fn>;
     markParticipantLeft: ReturnType<typeof vi.fn>;
     listActiveParticipants: ReturnType<typeof vi.fn>;
+    updateTitle: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(async () => {
     repo = {
       findByCode: vi.fn(),
+      findById: vi.fn(),
       create: vi.fn(),
       upsertParticipant: vi.fn(),
       markStarted: vi.fn(),
       markEnded: vi.fn(),
       markParticipantLeft: vi.fn(),
       listActiveParticipants: vi.fn(),
+      updateTitle: vi.fn(),
     };
 
     const storage = {
@@ -127,6 +137,47 @@ describe('MeetingsService', () => {
     it('rejects joining an ended meeting', async () => {
       repo.findByCode.mockResolvedValue(meeting({ status: MeetingStatus.ENDED }));
       await expect(service.join('abcd-efgh-ijkl', 'u2')).rejects.toBeInstanceOf(ForbiddenException);
+    });
+  });
+
+  describe('updateTitle', () => {
+    it('only the host can rename', async () => {
+      repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1' }));
+      await expect(
+        service.updateTitle('abcd-efgh-ijkl', 'u2', 'New title'),
+      ).rejects.toBeInstanceOf(ForbiddenException);
+    });
+
+    it('rejects renaming an ended meeting', async () => {
+      repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1', status: MeetingStatus.ENDED }));
+      await expect(
+        service.updateTitle('abcd-efgh-ijkl', 'u1', 'New title'),
+      ).rejects.toBeInstanceOf(ForbiddenException);
+    });
+
+    it('trims and persists a new title', async () => {
+      repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1' }));
+      repo.updateTitle.mockResolvedValue(meeting({ hostId: 'u1', title: 'Sprint sync' }));
+
+      const result = await service.updateTitle('abcd-efgh-ijkl', 'u1', '  Sprint sync  ');
+      expect(repo.updateTitle).toHaveBeenCalledWith('m1', 'Sprint sync');
+      expect(result.title).toBe('Sprint sync');
+    });
+
+    it('treats empty/whitespace as clearing the title', async () => {
+      repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1', title: 'Old' }));
+      repo.updateTitle.mockResolvedValue(meeting({ hostId: 'u1', title: null }));
+
+      const result = await service.updateTitle('abcd-efgh-ijkl', 'u1', '   ');
+      expect(repo.updateTitle).toHaveBeenCalledWith('m1', null);
+      expect(result.title).toBeNull();
+    });
+
+    it('skips a no-op write when title is unchanged', async () => {
+      repo.findByCode.mockResolvedValue(meeting({ hostId: 'u1', title: 'Same' }));
+      const result = await service.updateTitle('abcd-efgh-ijkl', 'u1', 'Same');
+      expect(repo.updateTitle).not.toHaveBeenCalled();
+      expect(result.title).toBe('Same');
     });
   });
 

@@ -33,6 +33,19 @@ async function bootstrap(): Promise<void> {
     limits: { fileSize: uploadMaxSize, files: 1 },
   });
 
+  // LiveKit sends webhooks with `Content-Type: application/webhook+json` —
+  // Fastify doesn't parse that by default, so req.body would be undefined and
+  // signature validation would silently fail. Register a raw-text parser so
+  // the original body is preserved byte-for-byte for the HMAC check.
+  const fastifyInstance = app.getHttpAdapter().getInstance();
+  fastifyInstance.addContentTypeParser(
+    'application/webhook+json',
+    { parseAs: 'string' },
+    (_req, body, done) => {
+      done(null, body);
+    },
+  );
+
   app.setGlobalPrefix('api');
 
   app.enableCors({

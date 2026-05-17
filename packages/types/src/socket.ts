@@ -1,4 +1,4 @@
-import type { MessageDto, ParticipantDto, PresenceDto } from './dto';
+import type { MessageDto, ParticipantDto, PresenceDto, RecordingDto } from './dto';
 
 export const SocketNamespace = '/meeting' as const;
 
@@ -27,6 +27,8 @@ export const ServerEvent = {
   HAND_RAISED: 'hand:raised',
   HAND_LOWERED: 'hand:lowered',
   PRESENCE_UPDATE: 'presence:update',
+  RECORDING_STARTED: 'recording:started',
+  RECORDING_STOPPED: 'recording:stopped',
 } as const;
 export type ServerEvent = (typeof ServerEvent)[keyof typeof ServerEvent];
 
@@ -102,6 +104,12 @@ export interface HandLoweredPayload {
 export interface PresenceUpdatePayload {
   participants: PresenceDto[];
 }
+export interface RecordingStartedPayload {
+  recording: RecordingDto;
+}
+export interface RecordingStoppedPayload {
+  recording: RecordingDto;
+}
 
 export interface ClientToServerEvents {
   [ClientEvent.MEETING_JOIN]: (payload: MeetingJoinPayload) => void;
@@ -127,4 +135,6 @@ export interface ServerToClientEvents {
   [ServerEvent.HAND_RAISED]: (payload: HandRaisedPayload) => void;
   [ServerEvent.HAND_LOWERED]: (payload: HandLoweredPayload) => void;
   [ServerEvent.PRESENCE_UPDATE]: (payload: PresenceUpdatePayload) => void;
+  [ServerEvent.RECORDING_STARTED]: (payload: RecordingStartedPayload) => void;
+  [ServerEvent.RECORDING_STOPPED]: (payload: RecordingStoppedPayload) => void;
 }

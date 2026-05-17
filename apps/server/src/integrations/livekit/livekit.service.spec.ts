@@ -8,6 +8,8 @@ import { LiveKitService } from './livekit.service';
 import { AuthRepository } from '../../modules/client/auth/auth.repository';
 import { AvatarsService } from '../../modules/client/auth/avatars.service';
 import { MeetingsService } from '../../modules/client/meetings/meetings.service';
+import { RecordingEvents } from '../../modules/client/recording/recording.events';
+import { RecordingService } from '../../modules/client/recording/recording.service';
 
 describe('LiveKitService', () => {
   let service: LiveKitService;
@@ -44,6 +46,16 @@ describe('LiveKitService', () => {
       },
     };
 
+    const recordings = {
+      handleEgressEvent: vi.fn(),
+      toDto: vi.fn(),
+    };
+
+    const recordingEvents = {
+      emitStarted: vi.fn(),
+      emitStopped: vi.fn(),
+    };
+
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         LiveKitService,
@@ -51,6 +63,8 @@ describe('LiveKitService', () => {
         { provide: MeetingsService, useValue: meetings },
         { provide: AuthRepository, useValue: users },
         { provide: AvatarsService, useValue: avatars },
+        { provide: RecordingService, useValue: recordings },
+        { provide: RecordingEvents, useValue: recordingEvents },
       ],
     }).compile();
 

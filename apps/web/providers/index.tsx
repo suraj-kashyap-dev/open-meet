@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import { useState, type ReactNode } from 'react';
 
-import { UnauthorizedBridge } from '@/features/auth/components/unauthorized-bridge';
+import { UnauthorizedBridge } from '@/features/web/auth/components/unauthorized-bridge';
 import { TopProgress } from '@/components/ui/top-progress';
 
 import { AuthBootstrap } from './auth-bootstrap';

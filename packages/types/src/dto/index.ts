@@ -4,3 +4,4 @@ export * from './meeting';
 export * from './chat';
 export * from './livekit';
 export * from './admin';
+export * from './recording';

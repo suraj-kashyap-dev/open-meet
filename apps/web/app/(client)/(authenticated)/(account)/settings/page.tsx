@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { SettingsForm } from '@/features/account/components/settings-form';
+import { SettingsForm } from '@/features/web/account/components/settings-form';
 
 export const metadata: Metadata = {
   title: 'Settings',

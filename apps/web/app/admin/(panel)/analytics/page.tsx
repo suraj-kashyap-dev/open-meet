@@ -6,8 +6,8 @@ import { Clock, TrendingUp, Trophy, Users } from 'lucide-react';
 import type { AdminConcurrencyPointDto, AdminTopHostDto } from '@open-meet/types';
 
 import { UserAvatar } from '@/components/shared/user-avatar';
-import { adminAnalyticsApi } from '@/features/admin-analytics/services/analytics';
-import { TrendCard } from '@/features/admin-dashboard/components/trend-card';
+import { adminAnalyticsApi } from '@/features/admin/analytics/services/analytics';
+import { TrendCard } from '@/features/admin/dashboard/components/trend-card';
 import { cn } from '@/lib/cn';
 
 function formatDuration(min: number): string {

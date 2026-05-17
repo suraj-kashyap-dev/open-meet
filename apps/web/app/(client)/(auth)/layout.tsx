@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { GuestGuard } from '@/features/auth/components/guest-guard';
+import { GuestGuard } from '@/features/web/auth/components/guest-guard';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (

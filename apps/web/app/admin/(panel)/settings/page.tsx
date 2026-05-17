@@ -16,11 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { InviteAdminDialog } from '@/features/admin-accounts/components/invite-admin-dialog';
+import { InviteAdminDialog } from '@/features/admin/accounts/components/invite-admin-dialog';
 import {
   useAdminAccounts,
   useDeleteAdminAccount,
-} from '@/features/admin-accounts/hooks/use-admin-accounts';
+} from '@/features/admin/accounts/hooks/use-admin-accounts';
 import { ApiClientError } from '@/lib/api/client';
 import { cn } from '@/lib/cn';
 

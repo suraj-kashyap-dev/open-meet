@@ -16,6 +16,8 @@ import { ApiErrorCode } from '@open-meet/types';
 import { AuthRepository } from '../../modules/client/auth/auth.repository';
 import { AvatarsService } from '../../modules/client/auth/avatars.service';
 import { MeetingsService } from '../../modules/client/meetings/meetings.service';
+import { RecordingEvents } from '../../modules/client/recording/recording.events';
+import { RecordingService } from '../../modules/client/recording/recording.service';
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 4;
 
@@ -30,6 +32,8 @@ export class LiveKitService {
     private readonly meetings: MeetingsService,
     private readonly users: AuthRepository,
     private readonly avatars: AvatarsService,
+    private readonly recordings: RecordingService,
+    private readonly recordingEvents: RecordingEvents,
   ) {
     const apiKey = this.config.getOrThrow<string>('LIVEKIT_API_KEY');
     const apiSecret = this.config.getOrThrow<string>('LIVEKIT_API_SECRET');
@@ -75,6 +79,7 @@ export class LiveKitService {
     }
 
     const isHost = meeting.hostId === input.userId;
+
     const grant: VideoGrant = {
       room: input.meetingCode,
       roomJoin: true,
@@ -101,6 +106,7 @@ export class LiveKitService {
         ttl: TOKEN_TTL_SECONDS,
       },
     );
+
     accessToken.addGrant(grant);
 
     const token = await accessToken.toJwt();
@@ -114,7 +120,7 @@ export class LiveKitService {
   }
 
   async receiveWebhook(rawBody: string, authHeader: string | undefined): Promise<WebhookEvent> {
-    if (!authHeader) {
+    if (! authHeader) {
       throw new ForbiddenException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'Missing LiveKit signature header',
@@ -122,10 +128,12 @@ export class LiveKitService {
     }
 
     let event: WebhookEvent;
+
     try {
       event = await this.webhookReceiver.receive(rawBody, authHeader);
     } catch (err) {
       this.logger.warn(`LiveKit webhook signature rejected: ${(err as Error).message}`);
+
       throw new ForbiddenException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'Invalid LiveKit signature',
@@ -133,6 +141,7 @@ export class LiveKitService {
     }
 
     await this.handleEvent(event);
+
     return event;
   }
 
@@ -141,12 +150,56 @@ export class LiveKitService {
 
     if (event.event === 'room_finished' && event.room?.name) {
       const meeting = await this.meetings.findRawByCode(event.room.name);
+
       if (!meeting) {
         return;
       }
+
       if (meeting.status !== MeetingStatus.ENDED) {
         await this.meetings.end(event.room.name, meeting.hostId);
       }
+
+      return;
     }
+
+    if (
+      event.event === 'egress_started'
+      || event.event === 'egress_updated' 
+      || event.event === 'egress_ended'
+    ) {
+      await this.handleEgress(event);
+    }
+  }
+
+  private async handleEgress(event: WebhookEvent): Promise<void> {
+    const info = event.egressInfo;
+
+    if (! info) {
+      this.logger.warn(`Egress webhook had no egressInfo payload: ${event.event}`);
+      return;
+    }
+
+    this.logger.log(
+      `Egress ${event.event} egressId=${info.egressId} status=${info.status} files=${info.fileResults.length}`,
+    );
+
+    const record = await this.recordings.handleEgressEvent({
+      name: event.event as 'egress_started' | 'egress_updated' | 'egress_ended',
+      info,
+    });
+
+    if (! record || event.event !== 'egress_ended') {
+      return;
+    }
+
+    const meeting = await this.meetings.findRawByMeetingId(record.meetingId);
+
+    if (! meeting) {
+      return;
+    }
+
+    const dto = await this.recordings.toDto(record);
+    
+    this.recordingEvents.emitStopped(meeting.code, dto);
   }
 }

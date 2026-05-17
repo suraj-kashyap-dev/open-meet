@@ -13,6 +13,11 @@ keys:
 redis:
   address: redis:6379
 
+webhook:
+  api_key: APIYxBCdbXpEkU
+  urls:
+    - http://host.docker.internal:3001/api/livekit/webhook
+
 turn:
   enabled: false
   # When promoting to staging/prod, point at coturn:

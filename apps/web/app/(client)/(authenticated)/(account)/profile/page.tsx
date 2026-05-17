@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { ProfileForm } from '@/features/account/components/profile-form';
+import { ProfileForm } from '@/features/web/account/components/profile-form';
 
 export const metadata: Metadata = {
   title: 'Profile',

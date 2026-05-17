@@ -1,5 +1,5 @@
-import { Dashboard } from '@/features/home/components/dashboard';
-import { Footer } from '@/components/layout/footer';
+import { Dashboard } from '@/features/web/home/components/dashboard';
+import { Footer } from '@/components/web/footer/footer';
 
 export default function HomePage() {
   return (

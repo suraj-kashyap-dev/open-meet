@@ -6,12 +6,15 @@ import {
   ConnectedSocket,
   type OnGatewayConnection,
   type OnGatewayDisconnect,
+  type OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
   WsException,
 } from '@nestjs/websockets';
 import type { Server, Socket } from 'socket.io';
+
+import { MeetingBus } from '../../../websocket/meeting-bus.service';
 
 import {
   ClientEvent,
@@ -60,7 +63,7 @@ const hostRoom = (code: string): string => `host:${code}`;
   },
 })
 @UseGuards(WsJwtGuard)
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   private readonly logger = new Logger(ChatGateway.name);
 
   private readonly pendingKnocks = new Map<string, Map<string, KnockEntry>>();
@@ -73,7 +76,12 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private readonly meetings: MeetingsService,
     private readonly jwt: JwtService,
     private readonly config: ConfigService<ApiEnv, true>,
+    private readonly bus: MeetingBus,
   ) {}
+
+  afterInit(server: Server): void {
+    this.bus.attach(server);
+  }
 
   private knocksFor(code: string): Map<string, KnockEntry> {
     let bucket = this.pendingKnocks.get(code);

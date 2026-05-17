@@ -1,4 +1,4 @@
-import { MeetingClient } from '@/features/meeting/components/meeting-client';
+import { MeetingClient } from '@/features/web/meeting/components/meeting-client';
 
 interface Props {
   params: Promise<{ code: string }>;

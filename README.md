@@ -95,23 +95,6 @@ pnpm dev
 
 Open **<http://localhost:3000>** → sign in with the admin you just created → **New meeting**. Swagger lives at **<http://localhost:3001/api/docs>**.
 
-### What `pnpm app:install` does
-
-The installer at `scripts/install.ts` walks you through the bootstrap interactively. It will:
-
-1. Prompt for **admin name, email, password**, plus the Postgres / Redis / frontend / API / LiveKit URLs (sensible defaults pre-filled).
-2. **Generate fresh secrets** with `crypto.randomBytes` and `base64url` encoding:
-   - `JWT_ACCESS_SECRET` · `JWT_REFRESH_SECRET` · `ADMIN_JWT_ACCESS_SECRET` (64 bytes each)
-   - `LIVEKIT_API_KEY` (LiveKit-conventional `API` + 12 chars) and `LIVEKIT_API_SECRET` (32 bytes)
-3. **Write `apps/server/.env`** and **`apps/web/.env.local`** from the committed `.env.example` templates, keeping the comments intact.
-4. **Update `docker/livekit.yaml`** so the LiveKit container, the API server, and the web client all share the same fresh `apiKey` / `apiSecret` pair.
-5. Run **`prisma generate`** and **`prisma migrate deploy`** against your Postgres (skippable if you'd rather do it later).
-6. **Create the first admin user** in the database (`argon2id` hashed, `SUPERADMIN` role) via `scripts/install/create-admin.ts`.
-
-If the installer detects existing env files, it asks before overwriting them. On Windows, if the Prisma query-engine DLL is locked (e.g. `pnpm dev` or Prisma Studio is open), the installer pauses and lets you retry after stopping the offending process.
-
-To re-run it cleanly, stop `pnpm dev` first, then `pnpm app:install` again.
-
 ### `--force`: complete reinstall (wipes the database)
 
 ```bash
