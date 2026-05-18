@@ -251,7 +251,7 @@ function ActionCard({
               type="button"
               onClick={onCreate}
               disabled={isCreating}
-              className="w-full sm:w-auto sm:min-w-[180px]"
+              className="w-full sm:w-auto sm:min-w-45"
             >
               {isCreating ? (
                 <>
@@ -344,7 +344,7 @@ function ActionCard({
               type="submit"
               size="lg"
               disabled={! code.trim() || isJoining}
-              className="sm:min-w-[110px]"
+              className="sm:min-w-27.5"
             >
               {isJoining ? (
                 <>
@@ -383,7 +383,7 @@ function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProp
     <Card className="relative overflow-hidden border-border/60 bg-card/50 backdrop-blur">
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-accent/[0.06] blur-3xl"
+        className="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-accent/6 blur-3xl"
       />
 
       <CardContent className="relative flex flex-col gap-5 p-6 sm:p-7">
@@ -614,7 +614,7 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
     <Card className="relative overflow-hidden border-border/60 bg-card/50 backdrop-blur">
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full bg-accent/[0.06] blur-3xl"
+        className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full bg-accent/6 blur-3xl"
       />
 
       <CardContent className="relative flex flex-col gap-5 p-6 sm:p-7">
@@ -1140,7 +1140,7 @@ function ShortcutsCard() {
 
 function KbdShortcut({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-md border border-border bg-card px-1.5 font-mono text-[10px] font-semibold text-foreground shadow-[0_1px_0_0_var(--color-border)]">
+    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-border bg-card px-1.5 font-mono text-[10px] font-semibold text-foreground shadow-[0_1px_0_0_var(--color-border)]">
       {children}
     </kbd>
   );

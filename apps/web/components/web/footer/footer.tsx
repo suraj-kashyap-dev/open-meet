@@ -27,11 +27,11 @@ export function Footer() {
     <footer className="relative isolate overflow-hidden bg-background">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-border to-transparent"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-32 left-1/2 -z-10 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-accent/5 blur-3xl"
+        className="pointer-events-none absolute -bottom-32 left-1/2 -z-10 h-72 w-160 -translate-x-1/2 rounded-full bg-accent/5 blur-3xl"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-30" />
 
@@ -118,7 +118,7 @@ export function Footer() {
           </FooterCol>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-card/70 to-card/30 px-5 py-5 backdrop-blur sm:px-6">
+        <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-card/70 to-card/30 px-5 py-5 backdrop-blur sm:px-6">
           <div
             aria-hidden
             className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/10 blur-3xl"

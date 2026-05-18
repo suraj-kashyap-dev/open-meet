@@ -250,7 +250,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[520px]">
+      <DialogContent className="sm:max-w-130">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CalendarClock className="h-4 w-4 text-accent" />

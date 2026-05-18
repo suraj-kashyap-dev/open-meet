@@ -409,7 +409,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         >
           <MessageSquare className="h-4 w-4" />
           {unread > 0 ? (
-            <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-accent px-1 text-[10px] text-accent-foreground">
+            <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] text-accent-foreground">
               {unread > 9 ? '9+' : unread}
             </span>
           ) : null}
@@ -490,7 +490,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                     </span>
                   </DropdownMenuItem>
                 ) : activeRecording.status === 'STOPPING' ? (
-                  <DropdownMenuItem disabled className="gap-2 data-[disabled]:opacity-100">
+                  <DropdownMenuItem disabled className="gap-2 data-disabled:opacity-100">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-warning/10 text-warning">
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
                     </span>

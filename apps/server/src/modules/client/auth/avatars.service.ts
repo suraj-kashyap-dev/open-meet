@@ -132,6 +132,7 @@ export class AvatarsService {
     name: string;
     email: string;
     avatarKey: string | null;
+    avatarUrl?: string | null;
     timezone: string;
     language: string;
     bio: string | null;
@@ -141,7 +142,7 @@ export class AvatarsService {
       id: u.id,
       name: u.name,
       email: u.email,
-      avatar: this.resolveUrl(u.avatarKey),
+      avatar: this.resolveUrl(u.avatarKey) ?? u.avatarUrl ?? null,
       timezone: u.timezone,
       language: u.language,
       bio: u.bio,

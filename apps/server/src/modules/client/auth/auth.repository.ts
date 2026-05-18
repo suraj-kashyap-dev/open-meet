@@ -15,9 +15,29 @@ export class AuthRepository {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
+  findByGoogleId(googleId: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { googleId } });
+  }
+
   create(input: { name: string; email: string; passwordHash: string }): Promise<User> {
     return this.prisma.user.create({
       data: { ...input, email: input.email.toLowerCase() },
+    });
+  }
+
+  createGoogleUser(input: {
+    name: string;
+    email: string;
+    googleId: string;
+    avatarUrl: string | null;
+  }): Promise<User> {
+    return this.prisma.user.create({
+      data: {
+        name: input.name,
+        email: input.email.toLowerCase(),
+        googleId: input.googleId,
+        avatarUrl: input.avatarUrl,
+      },
     });
   }
 

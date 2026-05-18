@@ -11,8 +11,10 @@ model User {
   id             String        @id @default(cuid())
   name           String
   email          String        @unique
-  passwordHash   String
+  passwordHash   String?
+  googleId       String?       @unique
   avatarKey      String?
+  avatarUrl      String?
   timezone       String        @default("UTC")
   language       String        @default("en")
   bio            String?
@@ -24,6 +26,7 @@ model User {
   hostedMeetings Meeting[]     @relation("host")
 
   @@index([email])
+  @@index([googleId])
 }
 
 model UserSettings {

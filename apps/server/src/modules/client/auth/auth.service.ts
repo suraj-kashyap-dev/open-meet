@@ -74,8 +74,42 @@ export class AuthService {
     const user = await this.users.findByEmail(dto.email);
     if (!user) throw this.invalidCredentials();
 
+    if (!user.passwordHash) throw this.invalidCredentials();
+
     const valid = await argon2.verify(user.passwordHash, dto.password);
     if (!valid) throw this.invalidCredentials();
+
+    const tokens = await this.issueTokens(user.id, user.email, user.name);
+    return { user: this.avatars.toUserDto(user), tokens };
+  }
+
+  async loginWithGoogle(profile: {
+    sub: string;
+    email: string;
+    name: string;
+    picture: string | null;
+  }): Promise<{ user: UserDto; tokens: IssuedTokens }> {
+    let user = await this.users.findByGoogleId(profile.sub);
+
+    if (!user) {
+      const byEmail = await this.users.findByEmail(profile.email);
+
+      if (byEmail) {
+        user = await this.users.update(byEmail.id, {
+          googleId: profile.sub,
+          avatarUrl: byEmail.avatarUrl ?? profile.picture,
+        });
+      } else {
+        user = await this.users.createGoogleUser({
+          name: profile.name,
+          email: profile.email,
+          googleId: profile.sub,
+          avatarUrl: profile.picture,
+        });
+      }
+    } else if (profile.picture && !user.avatarKey && user.avatarUrl !== profile.picture) {
+      user = await this.users.update(user.id, { avatarUrl: profile.picture });
+    }
 
     const tokens = await this.issueTokens(user.id, user.email, user.name);
     return { user: this.avatars.toUserDto(user), tokens };
@@ -191,6 +225,13 @@ export class AuthService {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
+      });
+    }
+
+    if (!user.passwordHash) {
+      throw new BadRequestException({
+        code: ApiErrorCode.INVALID_CREDENTIALS,
+        message: 'This account does not have a password. Sign in with Google instead.',
       });
     }
 

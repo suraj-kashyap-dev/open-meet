@@ -9,8 +9,11 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { AuthDivider } from '@/features/web/auth/components/auth-divider';
+import { GoogleSignInButton } from '@/features/web/auth/components/google-sign-in-button';
 import { useRegister } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
+import { env } from '@/lib/env';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required').max(120),
@@ -45,39 +48,68 @@ export function RegisterForm() {
   const pending = isSubmitting || register.isPending;
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5" noValidate>
-      <div className="space-y-1.5">
-        <Label htmlFor="name">Name</Label>
-        <Input id="name" autoComplete="name" placeholder="Your name" {...r('name')} />
-        {errors.name ? <p className="text-xs text-destructive">{errors.name.message}</p> : null}
-      </div>
+    <div className="space-y-5">
+      <form onSubmit={onSubmit} className="space-y-5" noValidate>
+        <div className="space-y-1.5">
+          <Label htmlFor="name">Name</Label>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          autoComplete="email"
-          placeholder="you@example.com"
-          {...r('email')}
-        />
-        {errors.email ? <p className="text-xs text-destructive">{errors.email.message}</p> : null}
-      </div>
+          <Input id="name" autoComplete="name" placeholder="Your name" {...r('name')} />
 
-      <div className="space-y-1.5">
-        <Label htmlFor="password">Password</Label>
-        <Input id="password" type="password" autoComplete="new-password" {...r('password')} />
-        {errors.password ? (
-          <p className="text-xs text-destructive">{errors.password.message}</p>
-        ) : (
-          <p className="text-xs text-muted-foreground">At least 8 characters.</p>
-        )}
-      </div>
+          {errors.name ? <p className="text-xs text-destructive">{errors.name.message}</p> : null}
+        </div>
 
-      <Button type="submit" size="lg" className="w-full" disabled={pending}>
-        {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
-        {pending ? 'Creating…' : 'Create account'}
-      </Button>
-    </form>
+        <div className="space-y-1.5">
+          <Label htmlFor="email">Email</Label>
+
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            {...r('email')}
+          />
+
+          {errors.email ? (
+            <p className="text-xs text-destructive">{errors.email.message}</p>
+          ) : null}
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="password">Password</Label>
+
+          <Input
+            id="password"
+            type="password"
+            placeholder="Password"
+            autoComplete="new-password"
+            {...r('password')}
+          />
+
+          {errors.password ? (
+            <p className="text-xs text-destructive">{errors.password.message}</p>
+          ) : (
+            <p className="text-xs text-muted-foreground">At least 8 characters.</p>
+          )}
+        </div>
+
+        <Button type="submit" size="lg" className="w-full" disabled={pending}>
+          {pending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <UserPlus className="h-4 w-4" />
+          )}
+
+          {pending ? 'Creating…' : 'Create account'}
+        </Button>
+      </form>
+
+      {env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED ? (
+        <>
+          <AuthDivider />
+
+          <GoogleSignInButton label="Sign up with Google" />
+        </>
+      ) : null}
+    </div>
   );
 }

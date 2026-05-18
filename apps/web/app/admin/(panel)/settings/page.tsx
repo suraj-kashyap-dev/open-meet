@@ -147,16 +147,6 @@ export default function AdminSettingsPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-dashed border-border bg-muted/20 p-6 text-sm text-muted-foreground">
-        <h2 className="text-base font-semibold tracking-tight text-foreground">
-          Workspace defaults
-        </h2>
-        <p className="mt-1">
-          Defaults for meeting titles, guest-join policy, and maximum meeting length. A pending
-          database migration needs to be applied before this section becomes editable.
-        </p>
-      </section>
-
       <InviteAdminDialog open={inviteOpen} onClose={() => setInviteOpen(false)} />
 
       <Dialog open={Boolean(deleting)} onOpenChange={(o) => (!o ? setDeleting(null) : null)}>

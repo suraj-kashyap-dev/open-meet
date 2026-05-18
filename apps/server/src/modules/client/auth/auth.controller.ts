@@ -6,16 +6,20 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Patch,
   Post,
+  Query,
   Req,
   Res,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode, AuthResponseDto, UserDto } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
@@ -24,12 +28,14 @@ import { Public } from '../../../common/decorators/public.decorator';
 import { AuthService, type IssuedTokens } from './auth.service';
 import { AvatarsService } from './avatars.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { GoogleOAuthService } from './google-oauth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
 const ACCESS_COOKIE = 'access_token';
 const REFRESH_COOKIE = 'refresh_token';
+const OAUTH_STATE_COOKIE = 'oauth_state';
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 const AUTH_THROTTLE = {
@@ -42,9 +48,13 @@ const AUTH_THROTTLE = {
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(
     private readonly auth: AuthService,
     private readonly avatars: AvatarsService,
+    private readonly google: GoogleOAuthService,
+    private readonly config: ConfigService<ApiEnv, true>,
   ) {}
 
   @Public()
@@ -92,6 +102,69 @@ export class AuthController {
     const tokens = await this.auth.refresh(refresh);
     this.setAuthCookies(res, tokens);
     return { refreshed: true };
+  }
+
+  @Public()
+  @Get('google')
+  @ApiOperation({ summary: 'Begin Google OAuth — redirects to Google consent screen' })
+  async googleStart(@Res() res: FastifyReply): Promise<void> {
+    const { url, state } = await this.google.buildAuthorizationUrl();
+
+    res.setCookie(OAUTH_STATE_COOKIE, state, {
+      httpOnly: true,
+      secure: IS_PROD,
+      sameSite: 'lax',
+      path: '/api/auth',
+      maxAge: 600,
+    });
+
+    await res.redirect(url, HttpStatus.FOUND);
+  }
+
+  @Public()
+  @Get('google/callback')
+  @ApiOperation({ summary: 'Google OAuth callback — exchanges code, issues cookies, redirects' })
+  async googleCallback(
+    @Query('code') code: string | undefined,
+    @Query('state') state: string | undefined,
+    @Query('error') error: string | undefined,
+    @Req() req: FastifyRequest,
+    @Res() res: FastifyReply,
+  ): Promise<void> {
+    const frontendUrl = this.config.getOrThrow<string>('FRONTEND_URL');
+    const cookieState = req.cookies?.[OAUTH_STATE_COOKIE];
+
+    res.clearCookie(OAUTH_STATE_COOKIE, { path: '/api/auth' });
+
+    if (error) {
+      this.logger.warn(`Google OAuth callback returned error: ${error}`);
+      await res.redirect(this.frontendErrorUrl(frontendUrl, 'google_denied'), HttpStatus.FOUND);
+      return;
+    }
+
+    if (!state || !cookieState || state !== cookieState) {
+      this.logger.warn('Google OAuth state mismatch between query and cookie');
+      await res.redirect(this.frontendErrorUrl(frontendUrl, 'state_mismatch'), HttpStatus.FOUND);
+      return;
+    }
+
+    if (!code) {
+      await res.redirect(this.frontendErrorUrl(frontendUrl, 'missing_code'), HttpStatus.FOUND);
+      return;
+    }
+
+    try {
+      await this.google.consumeState(state);
+      const profile = await this.google.exchangeCodeForProfile(code);
+      const { tokens } = await this.auth.loginWithGoogle(profile);
+      this.setAuthCookies(res, tokens);
+    } catch (err) {
+      this.logger.warn(`Google OAuth login failed: ${(err as Error).message}`);
+      await res.redirect(this.frontendErrorUrl(frontendUrl, 'login_failed'), HttpStatus.FOUND);
+      return;
+    }
+
+    await res.redirect(frontendUrl, HttpStatus.FOUND);
   }
 
   @HttpCode(HttpStatus.OK)
@@ -198,5 +271,11 @@ export class AuthController {
   private clearAuthCookies(res: FastifyReply): void {
     res.clearCookie(ACCESS_COOKIE, { path: '/' });
     res.clearCookie(REFRESH_COOKIE, { path: '/api/auth' });
+  }
+
+  private frontendErrorUrl(frontendUrl: string, reason: string): string {
+    const target = new URL('/login', frontendUrl);
+    target.searchParams.set('error', reason);
+    return target.toString();
   }
 }
