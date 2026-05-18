@@ -81,9 +81,7 @@ export function LoginForm() {
             {...register('email')}
           />
 
-          {errors.email ? (
-            <p className="text-xs text-destructive">{errors.email.message}</p>
-          ) : null}
+          {errors.email ? <p className="text-xs text-destructive">{errors.email.message}</p> : null}
         </div>
 
         <div className="space-y-1.5">

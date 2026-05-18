@@ -33,7 +33,10 @@ export function Footer() {
         aria-hidden
         className="pointer-events-none absolute -bottom-32 left-1/2 -z-10 h-72 w-160 -translate-x-1/2 rounded-full bg-accent/5 blur-3xl"
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-30" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-30"
+      />
 
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
@@ -98,12 +101,7 @@ export function Footer() {
             <FooterLink href="/account">Account</FooterLink>
           </FooterCol>
 
-          <FooterCol
-            className="md:col-span-2"
-            eyebrow="Learn"
-            title="Resources"
-            icon={BookOpen}
-          >
+          <FooterCol className="md:col-span-2" eyebrow="Learn" title="Resources" icon={BookOpen}>
             <FooterLink href={`${GITHUB_URL}/blob/main/README.md`}>Self-host guide</FooterLink>
             <FooterLink href={`${GITHUB_URL}#api-reference`}>API reference</FooterLink>
             <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>MIT license</FooterLink>

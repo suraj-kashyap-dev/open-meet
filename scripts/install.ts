@@ -37,7 +37,7 @@ async function runPrismaGenerateWithLockRecovery(): Promise<void> {
       await step(`Running prisma generate (attempt ${attempt})`, runPrismaGenerate);
       return;
     } catch (err) {
-      if (! (err instanceof PrismaDllLockedError)) {
+      if (!(err instanceof PrismaDllLockedError)) {
         throw err;
       }
 

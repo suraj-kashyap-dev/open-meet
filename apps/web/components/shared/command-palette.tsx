@@ -39,7 +39,7 @@ export function CommandPalette() {
         return;
       }
 
-      if (! (e.metaKey || e.ctrlKey)) {
+      if (!(e.metaKey || e.ctrlKey)) {
         return;
       }
 
@@ -49,7 +49,7 @@ export function CommandPalette() {
 
       e.preventDefault();
       e.stopPropagation();
-      setOpen((v) => ! v);
+      setOpen((v) => !v);
     };
 
     window.addEventListener('keydown', onKey, { capture: true });
@@ -77,7 +77,7 @@ export function CommandPalette() {
   const onJoin = () => {
     const trimmed = code.trim().toLowerCase();
 
-    if (! trimmed) {
+    if (!trimmed) {
       toast.error('Type a meeting code first');
       return;
     }

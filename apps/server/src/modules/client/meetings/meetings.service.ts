@@ -351,7 +351,7 @@ export class MeetingsService {
 
     const title = dto.title.trim();
 
-    if (! title) {
+    if (!title) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'title is required',
@@ -405,10 +405,7 @@ export class MeetingsService {
     });
   }
 
-  async getUpcoming(user: {
-    id: string;
-    email: string;
-  }): Promise<UpcomingMeetingDto[]> {
+  async getUpcoming(user: { id: string; email: string }): Promise<UpcomingMeetingDto[]> {
     const rows = await this.meetings.listUpcomingForUser(
       user.id,
       user.email.toLowerCase(),
@@ -421,14 +418,14 @@ export class MeetingsService {
   async getIcs(code: string): Promise<{ filename: string; content: string }> {
     const meeting = await this.meetings.findByCode(code);
 
-    if (! meeting) {
+    if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
       });
     }
 
-    if (! meeting.scheduledFor) {
+    if (!meeting.scheduledFor) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'This meeting is not scheduled',
@@ -437,7 +434,7 @@ export class MeetingsService {
 
     const host = await this.meetings.findById(meeting.id);
 
-    if (! host) {
+    if (!host) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
@@ -626,7 +623,7 @@ function uniqueEmails(input: string[]): string[] {
   for (const raw of input) {
     const normalized = raw.trim().toLowerCase();
 
-    if (! normalized) {
+    if (!normalized) {
       continue;
     }
 

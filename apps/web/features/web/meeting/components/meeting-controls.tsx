@@ -277,7 +277,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
   };
 
   const sendReaction = (emoji: string) => {
-    if (! socket) {
+    if (!socket) {
       return;
     }
 
@@ -599,11 +599,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                 aria-label="Copy meeting link"
                 className="shrink-0"
               >
-                {copied ? (
-                  <Check className="h-4 w-4 text-success" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}
+                {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
               </Button>
             </div>
           </div>
@@ -642,7 +638,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               Stay
             </Button>
             <Button variant="destructive" onClick={confirmLeave} disabled={leaving}>
-              {leaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <PhoneOff className="h-4 w-4" />}
+              {leaving ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <PhoneOff className="h-4 w-4" />
+              )}
               {leaving ? 'Leaving…' : 'Leave meeting'}
             </Button>
           </DialogFooter>
@@ -704,8 +704,9 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             <DialogHeader className="space-y-1.5 text-center sm:text-center">
               <DialogTitle className="text-xl">Start recording this meeting?</DialogTitle>
               <DialogDescription className="text-balance">
-                Everyone will see a <strong className="font-semibold text-foreground">Recording</strong>{' '}
-                indicator and hear a chime. Only people who attended can view the recording afterwards.
+                Everyone will see a{' '}
+                <strong className="font-semibold text-foreground">Recording</strong> indicator and
+                hear a chime. Only people who attended can view the recording afterwards.
               </DialogDescription>
             </DialogHeader>
           </div>

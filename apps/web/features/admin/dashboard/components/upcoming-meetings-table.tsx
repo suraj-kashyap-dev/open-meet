@@ -140,11 +140,7 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
         <h3 className="text-sm font-semibold tracking-tight">Coming up</h3>
         <span className="text-xs text-muted-foreground">{meetings.length}</span>
       </header>
-      <DataTable
-        data={meetings}
-        columns={columns}
-        emptyMessage="No scheduled meetings."
-      />
+      <DataTable data={meetings} columns={columns} emptyMessage="No scheduled meetings." />
     </section>
   );
 }

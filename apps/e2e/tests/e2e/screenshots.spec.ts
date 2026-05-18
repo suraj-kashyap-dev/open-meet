@@ -126,7 +126,10 @@ async function gotoMeeting(page: Page): Promise<void> {
   // has mounted. The mock LK URL points at a non-routable address so the WS
   // connection sits pending instead of failing fast, which keeps the shell on
   // screen instead of flipping to the EndedView.
-  await page.getByRole('button', { name: /^leave$/i }).first().waitFor({ timeout: 20_000 });
+  await page
+    .getByRole('button', { name: /^leave$/i })
+    .first()
+    .waitFor({ timeout: 20_000 });
   await page.waitForTimeout(300);
 }
 

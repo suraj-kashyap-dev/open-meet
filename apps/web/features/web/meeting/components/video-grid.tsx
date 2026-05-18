@@ -65,7 +65,7 @@ function Tile({ track, raisedHands, className }: TileProps) {
   const displayName = remoteName || localName || identity || 'Guest';
 
   const { avatar: metadataAvatar } = parseParticipantMetadata(track.participant.metadata);
-  const avatar = metadataAvatar ?? (isLocal ? currentUser?.avatar ?? null : null);
+  const avatar = metadataAvatar ?? (isLocal ? (currentUser?.avatar ?? null) : null);
 
   return (
     <div

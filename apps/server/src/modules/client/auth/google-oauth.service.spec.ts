@@ -4,7 +4,7 @@ import {
   ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { GoogleOAuthService } from './google-oauth.service';
 import { RedisService } from '../../../integrations/redis/redis.service';
@@ -83,9 +83,7 @@ describe('GoogleOAuthService', () => {
       const { url, state } = await svc.buildAuthorizationUrl();
       const parsed = new URL(url);
 
-      expect(parsed.origin + parsed.pathname).toBe(
-        'https://accounts.google.com/o/oauth2/v2/auth',
-      );
+      expect(parsed.origin + parsed.pathname).toBe('https://accounts.google.com/o/oauth2/v2/auth');
       expect(parsed.searchParams.get('client_id')).toBe('client-id');
       expect(parsed.searchParams.get('response_type')).toBe('code');
       expect(parsed.searchParams.get('redirect_uri')).toBe(
@@ -102,9 +100,7 @@ describe('GoogleOAuthService', () => {
         makeConfig({ GOOGLE_OAUTH_CLIENT_ID: undefined }),
         makeRedis().service,
       );
-      await expect(svc.buildAuthorizationUrl()).rejects.toBeInstanceOf(
-        ServiceUnavailableException,
-      );
+      await expect(svc.buildAuthorizationUrl()).rejects.toBeInstanceOf(ServiceUnavailableException);
     });
   });
 
@@ -140,10 +136,10 @@ describe('GoogleOAuthService', () => {
         const url = typeof input === 'string' ? input : input.toString();
 
         if (url.includes('oauth2.googleapis.com/token')) {
-          return new Response(
-            JSON.stringify({ access_token: 'ya29.token', expires_in: 3600 }),
-            { status: 200, headers: { 'Content-Type': 'application/json' } },
-          );
+          return new Response(JSON.stringify({ access_token: 'ya29.token', expires_in: 3600 }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
         }
 
         return new Response(

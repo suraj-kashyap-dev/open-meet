@@ -16,7 +16,13 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useScheduleMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { ApiClientError } from '@/lib/api/client';
@@ -85,7 +91,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     const seen = new Set(next.map((e) => e.toLowerCase()));
 
     for (const email of candidates) {
-      if (! isValidEmail(email)) {
+      if (!isValidEmail(email)) {
         invalid.push(email);
         continue;
       }
@@ -142,7 +148,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
   const onInviteePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     const text = e.clipboardData.getData('text');
 
-    if (! /[,;\s\n]/.test(text)) {
+    if (!/[,;\s\n]/.test(text)) {
       return;
     }
 
@@ -168,7 +174,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
   const handleOpenChange = (next: boolean) => {
     onOpenChange(next);
 
-    if (! next) {
+    if (!next) {
       window.setTimeout(reset, 200);
     }
   };
@@ -178,7 +184,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
     const trimmedTitle = title.trim();
 
-    if (! trimmedTitle) {
+    if (!trimmedTitle) {
       toast.error('Give your meeting a title');
       return;
     }
@@ -199,7 +205,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     let finalInvitees = invitees;
 
     if (pending.length > 0) {
-      if (! commitInvitees(pending)) {
+      if (!commitInvitees(pending)) {
         return;
       }
 
@@ -223,7 +229,9 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       });
 
       if (finalInvitees.length > 0) {
-        toast.success(`Scheduled — invites sent to ${finalInvitees.length} guest${finalInvitees.length === 1 ? '' : 's'}`);
+        toast.success(
+          `Scheduled — invites sent to ${finalInvitees.length} guest${finalInvitees.length === 1 ? '' : 's'}`,
+        );
       } else {
         toast.success('Meeting scheduled');
       }
@@ -234,7 +242,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
   };
 
   const onCopyLink = async () => {
-    if (! result) {
+    if (!result) {
       return;
     }
 
@@ -358,7 +366,8 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
               />
 
               <p className="text-xs text-muted-foreground">
-                Press Enter or comma after each email. They will get an email with the invite + .ics file.
+                Press Enter or comma after each email. They will get an email with the invite + .ics
+                file.
               </p>
 
               {invitees.length > 0 && (

@@ -46,10 +46,7 @@ import { Spotlight } from '@/components/ui/spotlight';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { ScheduleMeetingDialog } from '@/features/web/home/components/schedule-meeting-dialog';
 import { useHistoryList } from '@/features/web/history/hooks/use-history';
-import {
-  useCreateMeeting,
-  useUpcomingMeetings,
-} from '@/features/web/meeting/hooks/use-meetings';
+import { useCreateMeeting, useUpcomingMeetings } from '@/features/web/meeting/hooks/use-meetings';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
@@ -95,7 +92,7 @@ export function Dashboard() {
 
     const trimmed = code.trim().toLowerCase();
 
-    if (! trimmed) {
+    if (!trimmed) {
       toast.error('Enter a meeting code');
       return;
     }
@@ -343,7 +340,7 @@ function ActionCard({
             <Button
               type="submit"
               size="lg"
-              disabled={! code.trim() || isJoining}
+              disabled={!code.trim() || isJoining}
               className="sm:min-w-27.5"
             >
               {isJoining ? (
@@ -372,7 +369,7 @@ interface UpcomingMeetingsProps {
 }
 
 function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProps) {
-  if (! isLoading && items.length === 0) {
+  if (!isLoading && items.length === 0) {
     return null;
   }
 
@@ -982,7 +979,7 @@ function DateBadge() {
     };
   }, []);
 
-  if (! now) {
+  if (!now) {
     return <span className="h-5 w-40" aria-hidden />;
   }
 
@@ -1165,7 +1162,7 @@ function greetingLabel(): string {
 }
 
 function formatShortDate(iso: string | null): string {
-  if (! iso) {
+  if (!iso) {
     return '—';
   }
 
@@ -1178,7 +1175,7 @@ function formatShortDate(iso: string | null): string {
 }
 
 function formatRelativeTime(iso: string | null): string {
-  if (! iso) {
+  if (!iso) {
     return '—';
   }
 
@@ -1291,7 +1288,7 @@ function formatDurationShort(min: number): string {
 function recurrenceLabel(rrule: string): string | null {
   const freq = rrule.match(/FREQ=([A-Z]+)/);
 
-  if (! freq) {
+  if (!freq) {
     return 'Repeats';
   }
 

@@ -27,11 +27,7 @@ export function GoogleSignInButton({ label = 'Continue with Google' }: Props) {
       onClick={onClick}
       disabled={pending}
     >
-      {pending ? (
-        <Loader2 className="h-5 w-5 animate-spin" />
-      ) : (
-        <GoogleIcon className="h-5 w-5" />
-      )}
+      {pending ? <Loader2 className="h-5 w-5 animate-spin" /> : <GoogleIcon className="h-5 w-5" />}
       <span>{pending ? 'Redirecting to Google…' : label}</span>
     </Button>
   );

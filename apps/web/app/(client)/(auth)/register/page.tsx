@@ -19,9 +19,7 @@ export default function RegisterPage() {
       <div className="space-y-6 rounded-2xl border border-border bg-card p-7 shadow-sm">
         <header className="space-y-1">
           <h1 className="text-xl font-semibold tracking-tight">Create account</h1>
-          <p className="text-sm text-muted-foreground">
-            Set up Open Meet in a few seconds.
-          </p>
+          <p className="text-sm text-muted-foreground">Set up Open Meet in a few seconds.</p>
         </header>
 
         <RegisterForm />

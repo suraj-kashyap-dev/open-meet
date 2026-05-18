@@ -332,20 +332,14 @@ export async function installMockApi(page: Page): Promise<MockState> {
     }
 
     // ── livekit + everything else ──────────────────────────────────────────
-    if (
-      (method === 'GET' || method === 'POST') &&
-      path.includes('/api/livekit/token')
-    ) {
+    if ((method === 'GET' || method === 'POST') && path.includes('/api/livekit/token')) {
       // Non-routable IP (RFC 5737 TEST-NET-1) so the WebSocket attempt hangs
       // rather than failing fast — keeps the meeting shell mounted for tests
       // / screenshot captures instead of immediately flipping to EndedView.
       return reply(ok({ token: 'mock-token', url: 'wss://192.0.2.1:7880' }));
     }
 
-    if (
-      method === 'GET' &&
-      path.match(/\/api\/meetings\/[^/]+\/recording\/active$/)
-    ) {
+    if (method === 'GET' && path.match(/\/api\/meetings\/[^/]+\/recording\/active$/)) {
       return reply(ok({ recording: null }));
     }
 

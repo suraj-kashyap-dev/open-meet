@@ -4,5 +4,7 @@
 **/.turbo
 **/build
 **/coverage
+**/test-results
+**/playwright-report
 pnpm-lock.yaml
 *.tsbuildinfo
