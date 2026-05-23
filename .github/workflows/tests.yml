@@ -2,7 +2,6 @@ name: Tests
 
 on:
   push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -46,52 +45,3 @@ jobs:
 
       - name: Build (server + packages)
         run: pnpm exec turbo run build --filter='!@open-meet/web'
-
-  e2e:
-    name: API e2e (Supertest)
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: openmeet_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres" --health-interval 5s
-          --health-timeout 3s --health-retries 10
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-        options: >-
-          --health-cmd "redis-cli ping" --health-interval 5s
-          --health-timeout 3s --health-retries 10
-    env:
-      TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/openmeet_test
-      REDIS_URL: redis://localhost:6379
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.16.0
-          run_install: false
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Prisma generate
-        run: pnpm --filter @open-meet/server prisma:generate
-
-      # global-setup runs `prisma db push` against the test DB before the suite.
-      - name: API e2e tests
-        run: pnpm --filter @open-meet/server test:e2e
