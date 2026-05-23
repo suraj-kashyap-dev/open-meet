@@ -59,6 +59,9 @@ jobs:
       - name: Prisma generate
         run: pnpm --filter @open-meet/server prisma:generate
 
+      - name: Build workspace packages
+        run: pnpm exec turbo run build --filter='./packages/*'
+
       # global-setup runs `prisma db push` against the test DB before the suite.
       - name: API e2e tests
         run: pnpm --filter @open-meet/server test:e2e
