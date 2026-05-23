@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
+import { currentClientPath, loginUrlWithRedirect } from '@/features/web/auth/lib/redirect';
 import { UNAUTHORIZED_EVENT } from '@/lib/api/client';
 
 const ME_KEY = ['auth', 'me'] as const;
@@ -41,7 +42,7 @@ export function UnauthorizedBridge() {
 
       toast.error('Your session expired — please sign in again.');
 
-      router.replace('/login');
+      router.replace(loginUrlWithRedirect(currentClientPath()));
     };
 
     window.addEventListener(UNAUTHORIZED_EVENT, handler);

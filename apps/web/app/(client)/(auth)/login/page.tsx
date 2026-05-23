@@ -3,13 +3,22 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { LoginForm } from '@/features/web/auth/components/login-form';
+import { REDIRECT_PARAM, resolveRedirect } from '@/features/web/auth/lib/redirect';
 import { Logo } from '@open-meet/ui/logo';
 
 export const metadata: Metadata = {
   title: 'Sign in · Open Meet',
 };
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [REDIRECT_PARAM]?: string }>;
+}) {
+  const target = resolveRedirect((await searchParams)[REDIRECT_PARAM]);
+  const registerHref =
+    target === '/' ? '/register' : `/register?${REDIRECT_PARAM}=${encodeURIComponent(target)}`;
+
   return (
     <div className="w-full max-w-sm">
       <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
@@ -32,7 +41,7 @@ export default function LoginPage() {
 
       <p className="mt-6 text-center text-xs text-muted-foreground">
         Don&apos;t have an account?{' '}
-        <Link href="/register" className="underline hover:text-foreground">
+        <Link href={registerHref} className="underline hover:text-foreground">
           Create one
         </Link>
       </p>

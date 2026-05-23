@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, UserPlus } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,6 +13,7 @@ import { Label } from '@open-meet/ui/label';
 import { AuthDivider } from '@/features/web/auth/components/auth-divider';
 import { GoogleSignInButton } from '@/features/web/auth/components/google-sign-in-button';
 import { useGoogleAuthEnabled, useRegister } from '@/features/web/auth/hooks/use-auth';
+import { REDIRECT_PARAM, resolveRedirect } from '@/features/web/auth/lib/redirect';
 import { ApiClientError } from '@/lib/api/client';
 
 const schema = z.object({
@@ -23,7 +25,8 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export function RegisterForm() {
-  const register = useRegister();
+  const searchParams = useSearchParams();
+  const register = useRegister(resolveRedirect(searchParams.get(REDIRECT_PARAM)));
   const { data: googleEnabled } = useGoogleAuthEnabled();
 
   const {

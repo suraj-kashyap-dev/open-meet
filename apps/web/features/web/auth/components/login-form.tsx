@@ -14,6 +14,7 @@ import { Label } from '@open-meet/ui/label';
 import { AuthDivider } from '@/features/web/auth/components/auth-divider';
 import { GoogleSignInButton } from '@/features/web/auth/components/google-sign-in-button';
 import { useGoogleAuthEnabled, useLogin } from '@/features/web/auth/hooks/use-auth';
+import { REDIRECT_PARAM, resolveRedirect } from '@/features/web/auth/lib/redirect';
 import { ApiClientError } from '@/lib/api/client';
 
 const OAUTH_ERROR_MESSAGES: Record<string, string> = {
@@ -31,9 +32,9 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export function LoginForm() {
-  const login = useLogin();
-  const { data: googleEnabled } = useGoogleAuthEnabled();
   const searchParams = useSearchParams();
+  const login = useLogin(resolveRedirect(searchParams.get(REDIRECT_PARAM)));
+  const { data: googleEnabled } = useGoogleAuthEnabled();
   const oauthErrorShown = useRef(false);
 
   useEffect(() => {
