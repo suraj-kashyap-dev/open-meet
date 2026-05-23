@@ -18,28 +18,28 @@
   <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-blue"/>
 </p>
 
-[Highlights](#-highlights) · [Stack](#-stack) · [Quick start](#-quick-start) · [Tour](#-tour) · [Testing](#-testing)
+[Highlights](#highlights) · [Stack](#stack) · [Quick start](#quick-start) · [Testing](#testing)
 
 <br/>
 
-<img alt="Dashboard" src="docs/screenshots/03-dashboard.png" width="860"/>
+<img alt="Dashboard" src="docs/screenshots/dashboard.png" width="860"/>
 
 </div>
 
 ---
 
-## ✨ Highlights
+## Highlights
 
-- **🚀 Instant rooms** — one-click `xxxx-xxxx-xxxx` meeting codes with room-scoped, short-lived JWT tokens.
-- **🎛️ Real pre-join lobby** — camera preview, device pickers, mic level meter, and persisted defaults.
-- **💬 Realtime chat** — Socket.IO `/meeting` namespace fanned out via Redis adapter, so the API scales horizontally.
-- **✋ Reactions & raise hand** — live overlay reactions and raised-hand indicators in tiles and the participants panel.
-- **🔐 Hardened auth** — `argon2` hashing, httpOnly access + refresh cookies, rotation hashed in Redis, throttled `/api/auth/*`.
-- **🧰 Typed end-to-end** — one shared `@open-meet/types` package for DTOs, socket events, and the response envelope.
-- **🧪 Tested** — Vitest unit suites for services and repositories, plus Supertest API e2e over the live HTTP layer.
-- **📦 Self-hostable** — Postgres, Redis, LiveKit, and coturn all wired up in `docker-compose.yml`.
+- **Instant rooms** — one-click `xxxx-xxxx-xxxx` meeting codes with room-scoped, short-lived JWT tokens.
+- **Real pre-join lobby** — camera preview, device pickers, mic level meter, and persisted defaults.
+- **Realtime chat** — Socket.IO `/meeting` namespace fanned out via Redis adapter, so the API scales horizontally.
+- **Reactions & raise hand** — live overlay reactions and raised-hand indicators in tiles and the participants panel.
+- **Hardened auth** — `argon2` hashing, httpOnly access + refresh cookies, rotation hashed in Redis, throttled `/api/auth/*`.
+- **Typed end-to-end** — one shared `@open-meet/types` package for DTOs, socket events, and the response envelope.
+- **Tested** — Vitest unit suites for services and repositories, plus Supertest API e2e over the live HTTP layer.
+- **Self-hostable** — Postgres, Redis, LiveKit, and coturn all wired up in `docker-compose.yml`.
 
-## 🧱 Stack
+## Stack
 
 - **Frontend** — Next.js 15 · React 19 · Tailwind v4 · shadcn/ui · TanStack Query v5 · Zustand v5
 - **Backend** — NestJS 11 (Fastify) · Prisma 6 · `@nestjs/jwt` + argon2 · BullMQ v5
@@ -47,7 +47,7 @@
 - **Infra** — PostgreSQL 16 · Redis 7 · coturn · MailHog · Docker Compose
 - **Tooling** — pnpm workspaces · Turborepo v2 · Vitest + Supertest · ESLint 9 · Prettier 3
 
-## 🚀 Quick start
+## Quick start
 
 > **Prerequisites** — Node 22 LTS · pnpm ≥ 9 · Docker Desktop (running).
 
@@ -110,7 +110,7 @@ The repo-root `.env` is **not** secret storage — it only feeds Docker Compose'
 
 <br/>
 
-> **⚠️ No undo** — these drop every table. Run `pg_dump` first if the data matters.
+> **No undo** — these drop every table. Run `pg_dump` first if the data matters.
 
 `./setup.sh --force` gives a clean slate: it regenerates all secrets, overwrites `apps/server/.env` + `apps/web/.env.local`, runs `prisma migrate reset` (drops meetings · messages · users · admins · recordings), and recreates the LiveKit containers so they pick up the new secret.
 
@@ -124,44 +124,7 @@ All wrap `prisma migrate reset --skip-seed`. The default admin is re-created fro
 
 </details>
 
-## 🖼️ Tour
-
-<div align="center">
-
-**Lobby** — camera preview, device pickers, mic meter, persisted defaults
-
-<img alt="Lobby" src="docs/screenshots/04-lobby.png" width="820"/>
-
-**Meeting** — camera + screen-share grid with raised-hand badges and a reactions overlay
-
-<img alt="Meeting" src="docs/screenshots/05-meeting.png" width="820"/>
-
-**Participants** — host crown, per-participant mic/camera state, raised-hand indicator
-
-<img alt="Participants" src="docs/screenshots/06-participants.png" width="820"/>
-
-**Chat** — WS-backed, persisted to Postgres, history rehydrates on rejoin
-
-<img alt="Chat" src="docs/screenshots/07-chat.png" width="820"/>
-
-</div>
-
-<details>
-<summary><b>Auth screens</b></summary>
-
-<br/>
-
-<div align="center">
-
-<img alt="Sign in" src="docs/screenshots/01-login.png" width="760"/>
-
-<img alt="Sign up" src="docs/screenshots/02-register.png" width="760"/>
-
-</div>
-
-</details>
-
-## 🧪 Testing
+## Testing
 
 ```bash
 pnpm --filter @open-meet/server test       # Vitest unit — services · repositories · guards · pipes · gateway

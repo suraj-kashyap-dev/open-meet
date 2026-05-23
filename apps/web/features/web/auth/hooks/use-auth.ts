@@ -117,7 +117,7 @@ export function useGoogleAuthEnabled() {
   });
 }
 
-export function useLogin() {
+export function useLogin(redirectTo: string = '/') {
   const router = useRouter();
 
   const qc = useQueryClient();
@@ -127,12 +127,12 @@ export function useLogin() {
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);
-      router.replace('/');
+      router.replace(redirectTo);
     },
   });
 }
 
-export function useRegister() {
+export function useRegister(redirectTo: string = '/') {
   const router = useRouter();
 
   const qc = useQueryClient();
@@ -142,7 +142,7 @@ export function useRegister() {
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);
-      router.replace('/');
+      router.replace(redirectTo);
     },
   });
 }

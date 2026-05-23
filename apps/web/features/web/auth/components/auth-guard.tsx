@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { currentClientPath, loginUrlWithRedirect } from '@/features/web/auth/lib/redirect';
 
 export function AuthGuard({ children }: { children: ReactNode }) {
   const router = useRouter();
@@ -11,7 +12,7 @@ export function AuthGuard({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      router.replace('/login');
+      router.replace(loginUrlWithRedirect(currentClientPath()));
     }
   }, [isLoading, user, router]);
 
