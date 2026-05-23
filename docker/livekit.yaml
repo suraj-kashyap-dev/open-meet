@@ -7,16 +7,13 @@ rtc:
   port_range_start: 50000
   port_range_end: 50100
 
-keys:
-  APIxCceKIHNEYY: L-EySLo7E1PNZGAk-A1g491Gcd4fPLKul5mX4QrGi4w
-
 redis:
   address: redis:6379
 
 webhook:
-  api_key: APIxCceKIHNEYY
+  api_key: devkey
   urls:
-    - http://host.docker.internal:3001/api/livekit/webhook
+    - http://host.docker.internal:3002/api/livekit/webhook
 
 turn:
   enabled: false

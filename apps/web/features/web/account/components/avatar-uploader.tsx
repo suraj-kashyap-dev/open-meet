@@ -7,16 +7,16 @@ import { toast } from 'sonner';
 
 import type { UserDto } from '@open-meet/types';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@open-meet/ui/dropdown-menu';
 import { useDeleteAvatar, useUploadAvatar } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 const AVATAR_MIMES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
 const AVATAR_MAX_BYTES = 5 * 1024 * 1024;

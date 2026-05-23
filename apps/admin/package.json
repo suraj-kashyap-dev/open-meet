@@ -1,0 +1,50 @@
+{
+  "name": "@open-meet/admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 next build",
+    "start": "next start --port 3001",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rimraf .next .turbo *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@open-meet/config": "workspace:*",
+    "@open-meet/tailwind-config": "workspace:*",
+    "@open-meet/types": "workspace:*",
+    "@open-meet/ui": "workspace:*",
+    "@tanstack/react-query": "^5.65.1",
+    "@tanstack/react-query-devtools": "^5.65.1",
+    "@tanstack/react-table": "^8.21.3",
+    "lucide-react": "^0.474.0",
+    "next": "15.1.6",
+    "next-themes": "^0.4.4",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-hook-form": "^7.54.2",
+    "sonner": "^1.7.2",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@open-meet/typescript-config": "workspace:*",
+    "@tailwindcss/postcss": "^4.0.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "cross-env": "^10.1.0",
+    "jsdom": "^25.0.1",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^2.1.8"
+  }
+}

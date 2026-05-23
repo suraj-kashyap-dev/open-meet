@@ -3,9 +3,9 @@
 import { useParticipants } from '@livekit/components-react';
 import { Crown, Hand, Mic, MicOff, Video, VideoOff, X } from 'lucide-react';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
+import { ScrollArea } from '@open-meet/ui/scroll-area';
 import { parseParticipantMetadata } from '@/features/web/meeting/lib/participant-metadata';
 import { useMeetingStore } from '@/features/web/meeting/stores';
 

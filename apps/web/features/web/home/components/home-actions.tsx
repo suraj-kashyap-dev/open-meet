@@ -4,11 +4,11 @@ import { ArrowRight, Plus, Video } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { Button } from '@open-meet/ui/button';
+import { Card, CardContent } from '@open-meet/ui/card';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
+import { ShimmerButton } from '@open-meet/ui/shimmer-button';
 import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';

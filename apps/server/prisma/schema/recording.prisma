@@ -1,0 +1,28 @@
+model Recording {
+  id           String          @id @default(cuid())
+  meetingId    String
+  meeting      Meeting         @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  egressId     String          @unique
+  status       RecordingStatus @default(RECORDING)
+  startedById  String
+  storageKey   String?
+  url          String?
+  mime         String          @default("video/mp4")
+  duration     Int             @default(0)
+  size         BigInt          @default(0)
+  error        String?
+  startedAt    DateTime        @default(now())
+  endedAt      DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([meetingId])
+  @@index([status])
+}
+
+enum RecordingStatus {
+  RECORDING
+  STOPPING
+  COMPLETED
+  FAILED
+}

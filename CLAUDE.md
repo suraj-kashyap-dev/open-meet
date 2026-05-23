@@ -17,13 +17,19 @@ Real-time video conferencing app (Google Meet–style). Full-stack TypeScript. R
 ```
 apps/
   server/ NestJS monolith-modular (Fastify) — backend tests live here
-  web/    Next.js 15 App Router
+  web/    Next.js 15 App Router — user-facing app (port 3000)
+  admin/  Next.js 15 App Router — admin console (port 3001, separate origin)
 packages/
-  types/  Shared DTOs, socket events, API envelope (@open-meet/types)
-  config/ Zod env schemas (@open-meet/config)
-  utils/  Pure helpers: meeting code gen, duration fmt (@open-meet/utils)
+  ui/                Shared React lib: shadcn primitives + `cn` + cross-app components (@open-meet/ui)
+  types/             Shared DTOs, socket events, API envelope (@open-meet/types)
+  config/            Zod env schemas (@open-meet/config)
+  utils/             Pure helpers: meeting code gen, duration fmt (@open-meet/utils)
+  tailwind-config/   Shared Tailwind v4 design tokens / globals (@open-meet/tailwind-config)
+  typescript-config/ Shared tsconfig bases: base / nextjs / react-library (@open-meet/typescript-config)
 docker/   livekit.yaml, coturn.conf
 ```
+
+**Admin vs user are separate apps, end to end.** Backend: `modules/admin/*` vs `modules/client/*` (own JWT strategies/guards, `/api/admin/*` endpoints). Frontend: `apps/web` (user) and `apps/admin` (console) are independent Next.js apps on separate origins; the API allow-lists both via `FRONTEND_URL` + `ADMIN_URL`. Shared UI lives in `@open-meet/ui` (consumed by both via `transpilePackages`), never duplicated per app.
 
 ## Non-negotiable conventions
 
@@ -154,11 +160,13 @@ docker compose logs -f livekit
 | Env zod schemas                       | `packages/config/src/env.ts`       |
 | API response envelope shape           | `packages/types/src/api.ts`        |
 | Meeting code generation               | `packages/utils/src/code.ts`       |
-| Prisma schema                         | `apps/server/prisma/schema.prisma` |
+| Prisma schema (multi-file by domain)  | `apps/server/prisma/schema/*.prisma` |
 | NestJS global pipe/filter/interceptor | `apps/server/src/common/`          |
-| API entry point                       | `apps/server/src/main.ts`          |
-| Next.js entry                         | `apps/web/app/layout.tsx`          |
-| Typed API client                      | `apps/web/lib/api.ts`              |
+| API entry point + CORS allow-list     | `apps/server/src/main.ts`          |
+| Shared UI components (`cn`, shadcn)    | `packages/ui/src/`                 |
+| User app entry                        | `apps/web/app/layout.tsx`          |
+| Admin app entry                       | `apps/admin/app/layout.tsx`        |
+| Typed API client (per app)            | `apps/{web,admin}/lib/api/client.ts` |
 | Zustand stores                        | `apps/web/stores/`                 |
 
 ## Testing discipline — non-negotiable

@@ -14,7 +14,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from '@/components/ui/command';
+} from '@open-meet/ui/command';
 import { useCurrentUser, useLogout } from '@/features/web/auth/hooks/use-auth';
 import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';

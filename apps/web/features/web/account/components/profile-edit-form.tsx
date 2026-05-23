@@ -8,9 +8,9 @@ import { z } from 'zod';
 
 import type { UserDto } from '@open-meet/types';
 
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
+import { Textarea } from '@open-meet/ui/textarea';
 import { useUpdateProfile } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
 

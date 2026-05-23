@@ -15,7 +15,7 @@ function makeConfig(overrides: Record<string, string | undefined> = {}) {
   const values: Record<string, string | undefined> = {
     GOOGLE_OAUTH_CLIENT_ID: 'client-id',
     GOOGLE_OAUTH_CLIENT_SECRET: 'client-secret',
-    GOOGLE_OAUTH_REDIRECT_URI: 'http://localhost:3001/api/auth/google/callback',
+    GOOGLE_OAUTH_REDIRECT_URI: 'http://localhost:3002/api/auth/google/callback',
     ...overrides,
   };
 
@@ -89,7 +89,7 @@ describe('GoogleOAuthService', () => {
       expect(parsed.searchParams.get('client_id')).toBe('client-id');
       expect(parsed.searchParams.get('response_type')).toBe('code');
       expect(parsed.searchParams.get('redirect_uri')).toBe(
-        'http://localhost:3001/api/auth/google/callback',
+        'http://localhost:3002/api/auth/google/callback',
       );
       expect(parsed.searchParams.get('scope')).toBe('openid email profile');
       expect(parsed.searchParams.get('state')).toBe(state);

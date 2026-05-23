@@ -6,7 +6,7 @@ import { ThemeProvider } from 'next-themes';
 import { useState, type ReactNode } from 'react';
 
 import { UnauthorizedBridge } from '@/features/web/auth/components/unauthorized-bridge';
-import { TopProgress } from '@/components/ui/top-progress';
+import { TopProgress } from '@open-meet/ui/top-progress';
 
 import { AuthBootstrap } from './auth-bootstrap';
 import { HydrationMarker } from './hydration-marker';

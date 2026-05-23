@@ -1,13 +1,14 @@
 <div align="center">
 
-<img src="docs/logo.svg" alt="Open Meet" width="96" height="96"/>
+<img src="docs/logo.svg" alt="Open Meet" width="88" height="88"/>
 
 # Open Meet
 
 **Self-hostable, real-time video conferencing for distributed teams.**
-Full-stack TypeScript · LiveKit SFU · multi-instance ready.
 
-<sub>
+<sub>Full-stack TypeScript · LiveKit SFU · multi-instance ready</sub>
+
+<p>
   <img alt="Node 22" src="https://img.shields.io/badge/Node-22%20LTS-3c873a?logo=node.js&logoColor=white"/>
   <img alt="Next.js 15" src="https://img.shields.io/badge/Next.js-15-black?logo=next.js&logoColor=white"/>
   <img alt="NestJS 11" src="https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs&logoColor=white"/>
@@ -15,16 +16,13 @@ Full-stack TypeScript · LiveKit SFU · multi-instance ready.
   <img alt="Prisma 6" src="https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white"/>
   <img alt="TypeScript strict" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white"/>
   <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-blue"/>
-</sub>
+</p>
 
-<br/>
-<br/>
-
-[**Highlights**](#-highlights) · [**Tour**](#-tour) · [**Quick start**](#-quick-start) · [**Testing**](#-testing)
+[Highlights](#-highlights) · [Stack](#-stack) · [Quick start](#-quick-start) · [Tour](#-tour) · [Testing](#-testing)
 
 <br/>
 
-![Dashboard](docs/screenshots/03-dashboard.png)
+<img alt="Dashboard" src="docs/screenshots/03-dashboard.png" width="860"/>
 
 </div>
 
@@ -32,136 +30,136 @@ Full-stack TypeScript · LiveKit SFU · multi-instance ready.
 
 ## ✨ Highlights
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🚀 Instant rooms</h3>
-      <p>One-click <code>xxxx-xxxx-xxxx</code> meeting codes, room-scoped JWT tokens, host transfer on the way.</p>
-    </td>
-    <td width="50%" valign="top">
-      <h3>🎛️ Real pre-join</h3>
-      <p>Lobby with camera preview, device pickers, mic level meter, and persisted defaults.</p>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <h3>💬 Realtime chat</h3>
-      <p>Socket.IO <code>/meeting</code> namespace, fanned out via <code>@socket.io/redis-adapter</code> so the API scales horizontally.</p>
-    </td>
-    <td valign="top">
-      <h3>✋ Reactions & raise hand</h3>
-      <p>Live overlay reactions, raised-hand indicator surfaced in tiles and the participants panel.</p>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <h3>🔐 Hardened auth</h3>
-      <p><code>argon2</code> hashing, httpOnly access + refresh cookies, refresh-token rotation hashed in Redis, throttling on <code>/api/auth/*</code>.</p>
-    </td>
-    <td valign="top">
-      <h3>🧰 Typed end-to-end</h3>
-      <p>One <code>@open-meet/types</code> package shared between API + Web for DTOs, socket events, and response envelopes.</p>
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <h3>🧪 Tested</h3>
-      <p>Vitest unit suites for services + repositories, plus Supertest API e2e over the live HTTP layer.</p>
-    </td>
-    <td valign="top">
-      <h3>📦 Self-hostable</h3>
-      <p>Bring-your-own Postgres, Redis, LiveKit, coturn — all wired in <code>docker-compose.yml</code>.</p>
-    </td>
-  </tr>
-</table>
+- **🚀 Instant rooms** — one-click `xxxx-xxxx-xxxx` meeting codes with room-scoped, short-lived JWT tokens.
+- **🎛️ Real pre-join lobby** — camera preview, device pickers, mic level meter, and persisted defaults.
+- **💬 Realtime chat** — Socket.IO `/meeting` namespace fanned out via Redis adapter, so the API scales horizontally.
+- **✋ Reactions & raise hand** — live overlay reactions and raised-hand indicators in tiles and the participants panel.
+- **🔐 Hardened auth** — `argon2` hashing, httpOnly access + refresh cookies, rotation hashed in Redis, throttled `/api/auth/*`.
+- **🧰 Typed end-to-end** — one shared `@open-meet/types` package for DTOs, socket events, and the response envelope.
+- **🧪 Tested** — Vitest unit suites for services and repositories, plus Supertest API e2e over the live HTTP layer.
+- **📦 Self-hostable** — Postgres, Redis, LiveKit, and coturn all wired up in `docker-compose.yml`.
 
----
+## 🧱 Stack
 
-## 🧭 Tour
-
-<table>
-  <tr>
-    <td width="50%"><img alt="Sign in" src="docs/screenshots/01-login.png"/></td>
-    <td width="50%"><img alt="Sign up" src="docs/screenshots/02-register.png"/></td>
-  </tr>
-  <tr>
-    <td><b>Sign in</b><br/><sub>Cookies-based JWT (7 d access · 7 d refresh). Refresh rotates on use.</sub></td>
-    <td><b>Sign up</b><br/><sub>Zod-validated form. <code>argon2</code> hashed at rest.</sub></td>
-  </tr>
-  <tr>
-    <td colspan="2"><img alt="Dashboard" src="docs/screenshots/03-dashboard.png"/></td>
-  </tr>
-  <tr>
-    <td colspan="2"><b>Dashboard</b><br/><sub>One-click meeting create, code-to-join field, history rail.</sub></td>
-  </tr>
-  <tr>
-    <td><img alt="Lobby" src="docs/screenshots/04-lobby.png"/></td>
-    <td><img alt="Meeting" src="docs/screenshots/05-meeting.png"/></td>
-  </tr>
-  <tr>
-    <td><b>Lobby</b><br/><sub>Camera preview, device pickers, mic level, persisted defaults. Camera-off shows your avatar.</sub></td>
-    <td><b>Meeting</b><br/><sub><code>useTracks([Camera, ScreenShare])</code> grid with raised-hand badges and reactions overlay.</sub></td>
-  </tr>
-  <tr>
-    <td><img alt="Participants" src="docs/screenshots/06-participants.png"/></td>
-    <td><img alt="Chat" src="docs/screenshots/07-chat.png"/></td>
-  </tr>
-  <tr>
-    <td><b>Participants</b><br/><sub>Host crown, mic/camera state per-participant, raised-hand indicator.</sub></td>
-    <td><b>Chat</b><br/><sub>WS-backed, persisted to Postgres, history rehydrates on rejoin.</sub></td>
-  </tr>
-</table>
-
----
+- **Frontend** — Next.js 15 · React 19 · Tailwind v4 · shadcn/ui · TanStack Query v5 · Zustand v5
+- **Backend** — NestJS 11 (Fastify) · Prisma 6 · `@nestjs/jwt` + argon2 · BullMQ v5
+- **Realtime** — LiveKit SFU · `@livekit/components-react` · Socket.IO `/meeting` (Redis adapter)
+- **Infra** — PostgreSQL 16 · Redis 7 · coturn · MailHog · Docker Compose
+- **Tooling** — pnpm workspaces · Turborepo v2 · Vitest + Supertest · ESLint 9 · Prettier 3
 
 ## 🚀 Quick start
 
-> [!NOTE]
-> **Prereqs:** Node 22 LTS · pnpm ≥ 9 · Docker Desktop.
-> Every env var is documented in the `.env.example` files and validated by `apiEnvSchema` / `webPublicEnvSchema` in `packages/config/src/env.ts`.
-
-The one-shot installer wires up env files, secrets, the LiveKit key pair, the database, and the first admin user — all in one command.
+> **Prerequisites** — Node 22 LTS · pnpm ≥ 9 · Docker Desktop (running).
 
 ```bash
-pnpm install            # 1 · workspace deps
-docker compose up -d    # 2 · postgres · redis · livekit · coturn · mailhog
-pnpm app:install        # 3 · interactive installer (regenerates the LiveKit key pair)
-docker compose up -d --force-recreate livekit livekit-egress   # 4 · reload regenerated keys
-pnpm dev                # 5 · start api + web
+./setup.sh      # generate secrets + env files, start infra, run migrations
+pnpm dev        # api · web · admin
 ```
 
-> [!IMPORTANT]
-> Step 3 regenerates the LiveKit API key/secret and writes it to `apps/server/.env`, `docker/livekit.yaml`, and `docker/egress.yaml`. Because the LiveKit container started in step 2 with the old key, step 4 recreates it so the new key takes effect — skip it and you'll hit `invalid API key` on join. (Out of the box, before running the installer, all four locations share the dev default `devkey` / `secret`, so a bare `docker compose up -d` also works.)
+| Service | URL |
+| --- | --- |
+| Web (user app) | <http://localhost:3000> |
+| Admin console | <http://localhost:3001> |
+| API docs (Swagger) | <http://localhost:3002/api/docs> |
 
-Then:
+`setup.sh` is idempotent — re-running keeps your existing secrets. The default admin is created on first API boot from `DEFAULT_ADMIN_*` in `apps/server/.env`. Run it as your normal user, **never with `sudo`** (sudo uses root's Node and writes root-owned files).
 
-- Web → **<http://localhost:3000>** — sign in with the admin you just created, click **New meeting**.
-- API docs (Swagger) → **<http://localhost:3001/api/docs>**.
+<details>
+<summary><b>What <code>setup.sh</code> writes &amp; its flags</b></summary>
 
-### Reset everything: `pnpm app:install --force`
+<br/>
 
-> [!WARNING]
-> **There is no undo.** Drops every table — `pg_dump` first if the data matters.
+It generates four env files, all gitignored:
 
-Use this for a clean slate (first-time setup gone wrong, schema drift, fresh dev env). The flag changes three things:
+| File | Read by | Holds |
+| --- | --- | --- |
+| `apps/server/.env` | NestJS API | JWT + LiveKit secrets, DB/Redis URLs, `DEFAULT_ADMIN_*` |
+| `apps/web/.env.local` | Web app | `NEXT_PUBLIC_*` public vars |
+| `apps/admin/.env.local` | Admin console | `NEXT_PUBLIC_*` public vars |
+| `.env` (repo root) | Docker Compose **only** | Mirrors `LIVEKIT_API_KEY` + `LIVEKIT_API_SECRET` for the LiveKit & Egress containers |
 
-- `apps/server/.env` and `apps/web/.env.local` are **overwritten without prompting**.
-- `prisma migrate deploy` is swapped for **`prisma migrate reset --force --skip-seed`**, which **drops every table** (meetings · messages · users · admins · recordings) and re-applies migrations from scratch.
-- The admin user is re-created from your fresh prompt input.
+Flags:
 
-The installer shows a single confirmation prompt before proceeding.
+| Flag | Effect |
+| --- | --- |
+| `--force` | Regenerate every secret and **reset the database** (drops all tables). |
+| `--skip-install` | Skip `pnpm install`. |
+| `--skip-docker` | Skip `docker compose up` (infra already running). |
+| `--skip-db` | Skip Prisma generate + migrate. |
 
-### Database shortcuts
+Every env var is documented in the `.env.example` files and validated by `apiEnvSchema` / `webPublicEnvSchema` in `packages/config/src/env.ts`.
+
+</details>
+
+<details>
+<summary><b>How LiveKit credentials work (and why the root <code>.env</code> exists)</b></summary>
+
+<br/>
+
+LiveKit auth is a **key : secret** pair:
+
+- **`devkey` (key name)** — a non-secret identifier that LiveKit embeds in every room token. It must be identical in `webhook.api_key` (`docker/livekit.yaml`), `LIVEKIT_API_KEY` (`apps/server/.env` + root `.env`), and the key Compose injects via `LIVEKIT_KEYS`. `scripts/setup/config.sh` pins it so it can't drift.
+- **`LIVEKIT_API_SECRET`** — the real credential. `setup.sh` generates a random one; it signs and verifies tokens and webhook signatures. Only this rotates.
+
+The repo-root `.env` is **not** secret storage — it only feeds Docker Compose's `${LIVEKIT_API_SECRET}` interpolation so the LiveKit & Egress containers run with the *same* secret as the API. Delete it and Compose falls back to the literal `secret` default, which then mismatches the API and breaks tokens/webhooks — so keep it.
+
+</details>
+
+<details>
+<summary><b>Reset &amp; database commands</b></summary>
+
+<br/>
+
+> **⚠️ No undo** — these drop every table. Run `pg_dump` first if the data matters.
+
+`./setup.sh --force` gives a clean slate: it regenerates all secrets, overwrites `apps/server/.env` + `apps/web/.env.local`, runs `prisma migrate reset` (drops meetings · messages · users · admins · recordings), and recreates the LiveKit containers so they pick up the new secret.
 
 ```bash
 pnpm db:reset     # interactive — prisma confirms before dropping
 pnpm db:wipe      # non-interactive — drops + re-applies immediately
-pnpm db:studio    # open Prisma Studio at http://localhost:5555
+pnpm db:studio    # Prisma Studio at http://localhost:5555
 ```
 
-Both `db:reset` and `db:wipe` wrap `prisma migrate reset --skip-seed`: drop every table, recreate the schema from `apps/server/prisma/migrations/`, leave the database empty. The admin bootstrap service then re-creates the default admin from `DEFAULT_ADMIN_*` on the next API start — use `pnpm app:install --force` instead if you want to pick a fresh admin email/password.
+All wrap `prisma migrate reset --skip-seed`. The default admin is re-created from `DEFAULT_ADMIN_*` on the next API start.
 
----
+</details>
+
+## 🖼️ Tour
+
+<div align="center">
+
+**Lobby** — camera preview, device pickers, mic meter, persisted defaults
+
+<img alt="Lobby" src="docs/screenshots/04-lobby.png" width="820"/>
+
+**Meeting** — camera + screen-share grid with raised-hand badges and a reactions overlay
+
+<img alt="Meeting" src="docs/screenshots/05-meeting.png" width="820"/>
+
+**Participants** — host crown, per-participant mic/camera state, raised-hand indicator
+
+<img alt="Participants" src="docs/screenshots/06-participants.png" width="820"/>
+
+**Chat** — WS-backed, persisted to Postgres, history rehydrates on rejoin
+
+<img alt="Chat" src="docs/screenshots/07-chat.png" width="820"/>
+
+</div>
+
+<details>
+<summary><b>Auth screens</b></summary>
+
+<br/>
+
+<div align="center">
+
+<img alt="Sign in" src="docs/screenshots/01-login.png" width="760"/>
+
+<img alt="Sign up" src="docs/screenshots/02-register.png" width="760"/>
+
+</div>
+
+</details>
 
 ## 🧪 Testing
 

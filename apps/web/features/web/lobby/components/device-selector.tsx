@@ -3,14 +3,14 @@
 import { Camera, Mic, Volume2 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
-import { Label } from '@/components/ui/label';
+import { Label } from '@open-meet/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@open-meet/ui/select';
 import type { useMediaDevices } from '@/features/web/lobby/hooks/use-media-devices';
 
 type MediaState = ReturnType<typeof useMediaDevices>;
@@ -35,7 +35,7 @@ export function DeviceSelector({ media }: { media: MediaState }) {
     <div className="space-y-4">
       <Field icon={<Camera className="h-3.5 w-3.5" />} label="Camera">
         <Select
-          value={media.selectedVideoId ?? undefined}
+          value={media.selectedVideoId ?? ''}
           onValueChange={(v) => media.selectVideo(v)}
         >
           <SelectTrigger className={triggerCls}>
@@ -53,7 +53,7 @@ export function DeviceSelector({ media }: { media: MediaState }) {
 
       <Field icon={<Mic className="h-3.5 w-3.5" />} label="Microphone">
         <Select
-          value={media.selectedAudioId ?? undefined}
+          value={media.selectedAudioId ?? ''}
           onValueChange={(v) => media.selectAudio(v)}
         >
           <SelectTrigger className={triggerCls}>

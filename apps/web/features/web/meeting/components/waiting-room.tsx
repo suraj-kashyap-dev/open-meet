@@ -13,8 +13,8 @@ import {
   type KnockResolvedPayload,
 } from '@open-meet/types';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
 import { useMeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 
 type Status = 'connecting' | 'waiting' | 'awaiting-host' | 'denied';

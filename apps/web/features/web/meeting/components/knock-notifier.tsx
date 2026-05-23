@@ -11,8 +11,8 @@ import {
   type KnockRequestedPayload,
 } from '@open-meet/types';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { useNotification } from '@/hooks/use-notification';
 import { useSound } from '@/hooks/use-sound';

@@ -8,9 +8,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '@open-meet/ui/button';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
 import { AuthDivider } from '@/features/web/auth/components/auth-divider';
 import { GoogleSignInButton } from '@/features/web/auth/components/google-sign-in-button';
 import { useGoogleAuthEnabled, useLogin } from '@/features/web/auth/hooks/use-auth';

@@ -11,6 +11,6 @@ process.env.ADMIN_JWT_ACCESS_SECRET ??= 'e2e-admin-secret-please-change-01234567
 process.env.LIVEKIT_API_KEY ??= 'devkey';
 process.env.LIVEKIT_API_SECRET ??= 'secret';
 process.env.LIVEKIT_HOST ??= 'ws://localhost:7880';
-process.env.API_PUBLIC_URL ??= 'http://localhost:3001';
+process.env.API_PUBLIC_URL ??= 'http://localhost:3002';
 process.env.FRONTEND_URL ??= 'http://localhost:3000';
 process.env.LOCAL_STORAGE_DIR ??= join(tmpdir(), 'openmeet-e2e-uploads');

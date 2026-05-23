@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 interface Props {
   emoji: string;

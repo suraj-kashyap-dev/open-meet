@@ -2,7 +2,7 @@
 
 import { Check, Loader2 } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@open-meet/ui/button';
 
 interface Props {
   pending: boolean;

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -13,20 +13,20 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@open-meet/ui/dialog';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@open-meet/ui/select';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useScheduleMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { ApiClientError } from '@/lib/api/client';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 interface ScheduleMeetingDialogProps {
   open: boolean;

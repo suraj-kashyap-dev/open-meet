@@ -10,15 +10,15 @@ import { z } from 'zod';
 import type { UserSettingsDto } from '@open-meet/types';
 import { DEFAULT_PRIVACY_SETTINGS, ProfileVisibility } from '@open-meet/types';
 
-import { Label } from '@/components/ui/label';
+import { Label } from '@open-meet/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
+} from '@open-meet/ui/select';
+import { Switch } from '@open-meet/ui/switch';
 import { useUpdateUserSettings } from '@/features/web/account/hooks/use-settings';
 import { ApiClientError } from '@/lib/api/client';
 

@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@open-meet/ui/button';
+import { Input } from '@open-meet/ui/input';
+import { Separator } from '@open-meet/ui/separator';
 import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useMediaDevices } from '@/features/web/lobby/hooks/use-media-devices';

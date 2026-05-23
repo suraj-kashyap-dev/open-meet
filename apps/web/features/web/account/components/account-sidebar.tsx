@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 import { accountNav, isAccountActive } from './nav-config';
 

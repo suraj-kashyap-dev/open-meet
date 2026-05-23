@@ -8,14 +8,14 @@ import { z } from 'zod';
 
 import type { UserDto } from '@open-meet/types';
 
-import { Label } from '@/components/ui/label';
+import { Label } from '@open-meet/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@open-meet/ui/select';
 import { useUpdateProfile } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
 
