@@ -4,10 +4,10 @@ import { ArrowRight, History, Home, PhoneOff, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@open-meet/ui/button';
 import { useMeetingStore } from '@/features/web/meeting/stores';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 const COUNTDOWN_SECONDS = 60;
 const RING_RADIUS = 22;

@@ -1,6 +1,4 @@
 log_level: info
-api_key: APIxCceKIHNEYY
-api_secret: L-EySLo7E1PNZGAk-A1g491Gcd4fPLKul5mX4QrGi4w
 ws_url: ws://livekit:7880
 redis:
   address: redis:6379

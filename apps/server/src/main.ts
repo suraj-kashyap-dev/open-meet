@@ -23,6 +23,7 @@ async function bootstrap(): Promise<void> {
   const config = app.get<ConfigService<ApiEnv, true>>(ConfigService);
   const port = config.getOrThrow<number>('PORT');
   const frontendUrl = config.getOrThrow<string>('FRONTEND_URL');
+  const adminUrl = config.getOrThrow<string>('ADMIN_URL');
   const isProd = config.getOrThrow<string>('NODE_ENV') === 'production';
   const cookieSecret = config.getOrThrow<string>('JWT_ACCESS_SECRET');
 
@@ -49,7 +50,7 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix('api');
 
   app.enableCors({
-    origin: [frontendUrl],
+    origin: [frontendUrl, adminUrl],
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   });

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { LoginForm } from '@/features/web/auth/components/login-form';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@open-meet/ui/logo';
 
 export const metadata: Metadata = {
   title: 'Sign in · Open Meet',

@@ -15,12 +15,12 @@ import { toast } from 'sonner';
 
 import { ClientEvent, type AttachmentDto, type MessageDto } from '@open-meet/types';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { useChatStore } from '@/features/web/meeting/stores';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 import { ApiClientError } from '@/lib/api/client';
 import { env } from '@/lib/env';
 import { uploadAttachment } from '@/features/web/account/services/uploads';

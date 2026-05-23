@@ -11,11 +11,11 @@ import { Track } from 'livekit-client';
 import { Hand } from 'lucide-react';
 import { useMemo } from 'react';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { parseParticipantMetadata } from '@/features/web/meeting/lib/participant-metadata';
 import { useMeetingStore } from '@/features/web/meeting/stores';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 function gridClass(count: number): string {
   if (count <= 1) {

@@ -3,10 +3,10 @@
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
 import { useCallback } from 'react';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { cn } from '@/lib/cn';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-meet/ui/tooltip';
+import { cn } from '@open-meet/ui/cn';
 import type { useMediaDevices } from '@/features/web/lobby/hooks/use-media-devices';
 
 import { AudioMeter } from './audio-meter';

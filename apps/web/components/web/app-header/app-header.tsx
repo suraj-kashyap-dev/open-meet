@@ -3,17 +3,17 @@
 import Link from 'next/link';
 import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
 
-import { Logo } from '@/components/shared/logo';
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
+import { Logo } from '@open-meet/ui/logo';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+} from '@open-meet/ui/dropdown-menu';
+import { ThemeToggle } from '@open-meet/ui/theme-toggle';
 import { useCurrentUser, useLogout } from '@/features/web/auth/hooks/use-auth';
 
 export function AppHeader() {

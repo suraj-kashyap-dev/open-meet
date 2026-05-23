@@ -24,7 +24,7 @@ import { recordingApi } from '@/features/web/meeting/services/recording';
 import { useChatStore, useMeetingStore, useRecordingStore } from '@/features/web/meeting/stores';
 import { useNotification } from '@/hooks/use-notification';
 import { useSound } from '@/hooks/use-sound';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 import { useUIStore } from '@/stores';
 import { ChatPanel } from './chat-panel';
 import { KnockNotifier } from './knock-notifier';

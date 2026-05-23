@@ -10,20 +10,20 @@ import { z } from 'zod';
 import type { UserSettingsDto } from '@open-meet/types';
 import { DEFAULT_MEETING_PREFERENCES, MeetingDefaultView } from '@open-meet/types';
 
-import { Label } from '@/components/ui/label';
+import { Label } from '@open-meet/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
+} from '@open-meet/ui/select';
+import { Switch } from '@open-meet/ui/switch';
 import { useUpdateUserSettings } from '@/features/web/account/hooks/use-settings';
 import { ApiClientError } from '@/lib/api/client';
 import { ensureNotificationPermission, notificationsSupported } from '@/lib/notifications';
 import { playSound } from '@/lib/sounds';
-import { Button } from '@/components/ui/button';
+import { Button } from '@open-meet/ui/button';
 import { Volume2 } from 'lucide-react';
 
 import { FormActions } from './form-actions';

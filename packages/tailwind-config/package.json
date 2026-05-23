@@ -1,0 +1,11 @@
+{
+  "name": "@open-meet/tailwind-config",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "styles.css"
+  ],
+  "exports": {
+    "./styles.css": "./styles.css"
+  }
+}

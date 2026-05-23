@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '@open-meet/ui/button';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
 import { useChangePassword } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
 

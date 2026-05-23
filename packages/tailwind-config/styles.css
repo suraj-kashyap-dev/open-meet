@@ -1,0 +1,429 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light theme (default) */
+:root {
+  --background: #fafafa;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --border: #e4e4e7;
+  --input: #f4f4f5;
+  --ring: #a1a1aa;
+  --primary: #09090b;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #09090b;
+  --accent: #3b82f6;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --hero-glow: rgba(59, 130, 246, 0.18);
+  --grid-line: rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #0c0c0e;
+  --card-foreground: #fafafa;
+  --popover: #101012;
+  --popover-foreground: #fafafa;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --input: #18181b;
+  --ring: #3f3f46;
+  --primary: #fafafa;
+  --primary-foreground: #09090b;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --accent: #3b82f6;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --hero-glow: rgba(59, 130, 246, 0.35);
+  --grid-line: rgba(255, 255, 255, 0.06);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :where(a[href], button, [role='button'], summary, label[for]):not(:disabled):not(
+      [aria-disabled='true']
+    ) {
+    cursor: pointer;
+  }
+
+  :where(button, input, select, textarea, [role='button'])[disabled],
+  :where(button, input, select, textarea, [role='button'])[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+  }
+
+  /* — Native date / time inputs: keep them legible in both themes — */
+  input[type='date'],
+  input[type='time'],
+  input[type='datetime-local'] {
+    font-variant-numeric: tabular-nums;
+    min-height: 2.5rem;
+  }
+
+  input[type='date']::-webkit-datetime-edit,
+  input[type='time']::-webkit-datetime-edit,
+  input[type='datetime-local']::-webkit-datetime-edit {
+    color: var(--color-foreground);
+    padding: 0;
+  }
+
+  input[type='date']::-webkit-datetime-edit-fields-wrapper,
+  input[type='time']::-webkit-datetime-edit-fields-wrapper,
+  input[type='datetime-local']::-webkit-datetime-edit-fields-wrapper {
+    color: var(--color-foreground);
+  }
+
+  input[type='date']::-webkit-datetime-edit-text,
+  input[type='time']::-webkit-datetime-edit-text,
+  input[type='datetime-local']::-webkit-datetime-edit-text {
+    color: var(--color-muted-foreground);
+    padding: 0 0.125rem;
+  }
+
+  input[type='date']::-webkit-datetime-edit-month-field,
+  input[type='date']::-webkit-datetime-edit-day-field,
+  input[type='date']::-webkit-datetime-edit-year-field,
+  input[type='time']::-webkit-datetime-edit-hour-field,
+  input[type='time']::-webkit-datetime-edit-minute-field,
+  input[type='time']::-webkit-datetime-edit-ampm-field,
+  input[type='datetime-local']::-webkit-datetime-edit-month-field,
+  input[type='datetime-local']::-webkit-datetime-edit-day-field,
+  input[type='datetime-local']::-webkit-datetime-edit-year-field,
+  input[type='datetime-local']::-webkit-datetime-edit-hour-field,
+  input[type='datetime-local']::-webkit-datetime-edit-minute-field,
+  input[type='datetime-local']::-webkit-datetime-edit-ampm-field {
+    color: var(--color-foreground);
+    padding: 0 1px;
+    border-radius: 2px;
+  }
+
+  input[type='date']::-webkit-datetime-edit-month-field:focus,
+  input[type='date']::-webkit-datetime-edit-day-field:focus,
+  input[type='date']::-webkit-datetime-edit-year-field:focus,
+  input[type='time']::-webkit-datetime-edit-hour-field:focus,
+  input[type='time']::-webkit-datetime-edit-minute-field:focus,
+  input[type='time']::-webkit-datetime-edit-ampm-field:focus,
+  input[type='datetime-local']::-webkit-datetime-edit-month-field:focus,
+  input[type='datetime-local']::-webkit-datetime-edit-day-field:focus,
+  input[type='datetime-local']::-webkit-datetime-edit-year-field:focus,
+  input[type='datetime-local']::-webkit-datetime-edit-hour-field:focus,
+  input[type='datetime-local']::-webkit-datetime-edit-minute-field:focus,
+  input[type='datetime-local']::-webkit-datetime-edit-ampm-field:focus {
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+    outline: none;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='time']::-webkit-calendar-picker-indicator,
+  input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.55;
+    padding: 0.125rem;
+    margin-left: 0.25rem;
+    border-radius: 0.25rem;
+    transition:
+      opacity 120ms ease,
+      background-color 120ms ease;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator:hover,
+  input[type='time']::-webkit-calendar-picker-indicator:hover,
+  input[type='datetime-local']::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    background-color: color-mix(in srgb, var(--color-foreground) 8%, transparent);
+  }
+
+  html.dark input[type='date']::-webkit-calendar-picker-indicator,
+  html.dark input[type='time']::-webkit-calendar-picker-indicator,
+  html.dark input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+@layer utilities {
+  /* — Animations — */
+  @keyframes overlay-show {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes overlay-hide {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes content-show {
+    from {
+      opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(0.97);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+  }
+
+  @keyframes content-hide {
+    from {
+      opacity: 1;
+      transform: translate3d(-50%, -50%, 0) scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: translate3d(-50%, -50%, 0) scale(0.97);
+    }
+  }
+
+  @keyframes slide-right {
+    from {
+      transform: translateX(100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-left {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes aurora {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+      opacity: 0.4;
+    }
+
+    50% {
+      transform: translate3d(-2%, 4%, 0) rotate(8deg);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes gradient-pan {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-overlay-show {
+    animation: overlay-show 120ms ease-out;
+    will-change: opacity;
+  }
+
+  .animate-overlay-hide {
+    animation: overlay-hide 100ms ease-in;
+    will-change: opacity;
+  }
+
+  .animate-content-show {
+    animation: content-show 140ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .animate-content-hide {
+    animation: content-hide 100ms ease-in;
+    will-change: transform, opacity;
+  }
+
+  .animate-slide-right {
+    animation: slide-right 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-slide-left {
+    animation: slide-left 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-fade-in {
+    animation: fade-in 180ms ease-out;
+  }
+
+  .animate-aurora {
+    animation: aurora 18s ease-in-out infinite;
+  }
+
+  /* — Gradient text — */
+  .gradient-text {
+    background: linear-gradient(
+      90deg,
+      var(--color-foreground) 0%,
+      var(--color-accent) 50%,
+      var(--color-foreground) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-pan 6s ease-in-out infinite;
+  }
+
+  /* — Animated grid backdrop — */
+  .grid-backdrop {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 35%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 35%, transparent 75%);
+  }
+
+  .spotlight {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--hero-glow) 0%, transparent 60%);
+  }
+
+  /* — Shimmer for placeholder/loading — */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-muted) 0%,
+      var(--color-border) 50%,
+      var(--color-muted) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* — Subtle glow ring on focus/active — */
+  .glow-ring {
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      0 8px 24px -8px rgba(0, 0, 0, 0.25);
+  }
+
+  .dark .glow-ring {
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  }
+}

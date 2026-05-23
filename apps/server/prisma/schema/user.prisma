@@ -1,0 +1,52 @@
+model User {
+  id             String        @id @default(cuid())
+  name           String
+  email          String        @unique
+  passwordHash   String?
+  googleId       String?       @unique
+  avatarKey      String?
+  avatarUrl      String?
+  timezone       String        @default("UTC")
+  language       String        @default("en")
+  bio            String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  settings       UserSettings?
+  meetings       Participant[]
+  messages       Message[]
+  hostedMeetings Meeting[]     @relation("host")
+
+  @@index([email])
+  @@index([googleId])
+}
+
+model UserSettings {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  defaultMicMuted     Boolean            @default(false)
+  defaultCameraOff    Boolean            @default(false)
+  defaultView         MeetingDefaultView @default(GALLERY)
+  enableJoinSound     Boolean            @default(true)
+  enableNotifications Boolean            @default(true)
+
+  showEmailToParticipants Boolean           @default(true)
+  allowDirectMessages     Boolean           @default(true)
+  profileVisibility       ProfileVisibility @default(PARTICIPANTS_ONLY)
+  shareUsageData          Boolean           @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MeetingDefaultView {
+  GALLERY
+  SPEAKER
+}
+
+enum ProfileVisibility {
+  PUBLIC
+  PARTICIPANTS_ONLY
+  PRIVATE
+}

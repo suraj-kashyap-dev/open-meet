@@ -29,8 +29,8 @@ import { toast } from 'sonner';
 
 import { MeetingStatus, type MeetingHistoryItemDto } from '@open-meet/types';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@open-meet/ui/button';
+import { Card, CardContent } from '@open-meet/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,11 +38,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ShimmerButton } from '@/components/ui/shimmer-button';
-import { Spotlight } from '@/components/ui/spotlight';
+} from '@open-meet/ui/dropdown-menu';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
+import { ShimmerButton } from '@open-meet/ui/shimmer-button';
+import { Spotlight } from '@open-meet/ui/spotlight';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { ScheduleMeetingDialog } from '@/features/web/home/components/schedule-meeting-dialog';
 import { useHistoryList } from '@/features/web/history/hooks/use-history';
@@ -51,7 +51,7 @@ import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 import type { UpcomingMeetingDto } from '@open-meet/types';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },

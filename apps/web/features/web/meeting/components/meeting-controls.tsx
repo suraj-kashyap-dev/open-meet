@@ -37,7 +37,7 @@ import { toast } from 'sonner';
 
 import { ClientEvent } from '@open-meet/types';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -45,7 +45,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@open-meet/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,9 +53,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+} from '@open-meet/ui/dropdown-menu';
+import { Popover, PopoverContent, PopoverTrigger } from '@open-meet/ui/popover';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-meet/ui/tooltip';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useEndMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';

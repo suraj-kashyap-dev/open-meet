@@ -1,0 +1,27 @@
+model Admin {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         AdminRole @default(ADMIN)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLoginAt  DateTime?
+
+  @@index([email])
+}
+
+enum AdminRole {
+  SUPERADMIN
+  ADMIN
+}
+
+model WorkspaceSettings {
+  id                  String   @id @default("default")
+  defaultMeetingTitle String   @default("Untitled meeting")
+  allowGuestJoin      Boolean  @default(true)
+  maxMeetingMinutes   Int?
+  banner              String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}

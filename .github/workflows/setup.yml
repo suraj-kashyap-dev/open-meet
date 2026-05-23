@@ -1,0 +1,40 @@
+name: Setup Script
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: setup-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HUSKY: 0
+  CI: true
+
+jobs:
+  setup-script:
+    name: setup.sh — shellcheck & tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: ShellCheck (setup.sh + modules)
+        run: shellcheck -x --severity=warning setup.sh
+
+      - name: Syntax-check the test runner
+        run: bash -n scripts/setup/test.sh
+
+      - name: Test setup.sh
+        run: bash scripts/setup/test.sh

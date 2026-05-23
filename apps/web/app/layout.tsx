@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import { Providers } from '@/providers';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@open-meet/ui/sonner';
 import './globals.css';
 
 const inter = Inter({
@@ -26,7 +26,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+      <body
+        className="min-h-screen bg-background font-sans text-foreground antialiased"
+        suppressHydrationWarning
+      >
         <Providers>
           {children}
           <Toaster position="bottom-right" />

@@ -3,7 +3,7 @@
 import { ArrowUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 const SHOW_AFTER_PX = 400;
 

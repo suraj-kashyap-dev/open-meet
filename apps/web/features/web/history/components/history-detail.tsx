@@ -24,8 +24,8 @@ import { toast } from 'sonner';
 
 import type { AttachmentDto, MessageDto, RecordingDto } from '@open-meet/types';
 
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { Button } from '@/components/ui/button';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { Button } from '@open-meet/ui/button';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import {
   useHistoryMeeting,
@@ -33,7 +33,7 @@ import {
   useHistoryRecordings,
 } from '@/features/web/history/hooks/use-history';
 import { env } from '@/lib/env';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 const GROUP_WINDOW_MS = 2 * 60_000;
 

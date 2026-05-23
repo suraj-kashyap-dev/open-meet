@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { RegisterForm } from '@/features/web/auth/components/register-form';
-import { Logo } from '@/components/shared/logo';
+import { Logo } from '@open-meet/ui/logo';
 
 export const metadata: Metadata = {
   title: 'Create account · Open Meet',

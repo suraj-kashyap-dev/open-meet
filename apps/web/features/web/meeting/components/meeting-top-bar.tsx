@@ -4,7 +4,7 @@ import { Check, Loader2, Pencil, Video } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -12,13 +12,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@open-meet/ui/dialog';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
 import { useUpdateMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { useMeetingStore } from '@/features/web/meeting/stores';
 import { ApiClientError } from '@/lib/api/client';
-import { cn } from '@/lib/cn';
+import { cn } from '@open-meet/ui/cn';
 
 interface Props {
   code: string;
