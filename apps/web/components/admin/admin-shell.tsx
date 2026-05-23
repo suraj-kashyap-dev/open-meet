@@ -5,7 +5,7 @@ import { useState, type ReactNode } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 
 import { AdminSidebar } from './admin-sidebar';
-import { AdminSidebarMobile } from './admin-sidebar-mobile';
+import { AdminSidebarContent } from './admin-sidebar-content';
 import { AdminTopbar } from './admin-topbar';
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -18,7 +18,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="w-72 p-0 lg:hidden">
-          <AdminSidebarMobile onNavigate={() => setMobileOpen(false)} />
+          <AdminSidebarContent onNavigate={() => setMobileOpen(false)} />
         </SheetContent>
       </Sheet>
 
@@ -34,7 +34,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           desktopSidebarOpen={desktopSidebarOpen}
           onToggleDesktopSidebar={() => setDesktopSidebarOpen((open) => !open)}
         />
-        <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
+        <div className="min-h-[calc(100vh-3.5rem)]">{children}</div>
       </div>
     </div>
   );

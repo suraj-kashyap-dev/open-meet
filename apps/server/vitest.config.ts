@@ -29,13 +29,13 @@ export default defineConfig({
   test: {
     globals: false,
     environment: 'node',
-    include: ['src/**/*.spec.ts'],
+    include: ['test/unit/**/*.spec.ts'],
     exclude: ['node_modules', 'dist', 'test/e2e/**'],
     setupFiles: ['./test/setup.ts'],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
-      exclude: ['src/**/*.spec.ts', 'src/main.ts', 'src/**/*.module.ts'],
+      exclude: ['src/main.ts', 'src/**/*.module.ts'],
       reporter: ['text', 'html'],
     },
   },

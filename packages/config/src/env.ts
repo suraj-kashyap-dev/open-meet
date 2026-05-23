@@ -61,10 +61,6 @@ export const webPublicEnvSchema = z.object({
   NEXT_PUBLIC_API_URL: z.string().url().default('http://localhost:3001'),
   NEXT_PUBLIC_WS_URL: z.string().url().default('http://localhost:3001'),
   NEXT_PUBLIC_LIVEKIT_URL: z.string().min(1).default('ws://localhost:7880'),
-  NEXT_PUBLIC_GOOGLE_AUTH_ENABLED: z
-    .union([z.literal('true'), z.literal('false')])
-    .default('false')
-    .transform((v) => v === 'true'),
 });
 
 export type WebPublicEnv = z.infer<typeof webPublicEnvSchema>;

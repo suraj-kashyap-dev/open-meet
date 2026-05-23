@@ -67,7 +67,7 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <main className="mx-auto max-w-5xl space-y-8 px-4 py-8 sm:px-6 lg:py-10">
+    <main className="w-full space-y-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Configure

@@ -26,14 +26,14 @@ export default function AdminOverviewPage() {
 
   if (error || !data) {
     return (
-      <main className="mx-auto max-w-7xl px-4 py-10 text-sm text-destructive">
+      <main className="w-full px-4 py-10 text-sm text-destructive sm:px-6 lg:px-8">
         Failed to load overview.
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:py-10">
+    <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Overview

@@ -14,3 +14,7 @@ export interface LoginDto {
 export interface AuthResponseDto {
   user: UserDto;
 }
+
+export interface GoogleAuthStatusDto {
+  enabled: boolean;
+}

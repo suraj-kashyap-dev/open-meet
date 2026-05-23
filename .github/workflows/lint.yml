@@ -43,3 +43,60 @@ jobs:
 
       - name: Prettier check
         run: pnpm format:check
+
+  autofix:
+    name: Auto-fix lint and open PR
+    needs: lint
+    if: ${{ always() && needs.lint.result == 'failure' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Prisma generate (typed client for ESLint resolution)
+        run: pnpm --filter @open-meet/server prisma:generate
+
+      - name: Apply ESLint --fix and Prettier
+        run: |
+          pnpm lint:fix || true
+          pnpm format
+
+      - name: Open pull request with fixes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: ${{ github.ref_name }}
+          branch: automated/lint-fixes-${{ github.ref_name }}
+          delete-branch: true
+          commit-message: 'style: apply automated eslint --fix and prettier'
+          title: 'style: automated lint fixes for ${{ github.ref_name }}'
+          body: |
+            ESLint / Prettier failed on `${{ github.sha }}`.
+
+            This PR was opened automatically by the **Lint** workflow after running:
+
+            ```bash
+            pnpm lint:fix   # eslint --fix across all workspaces
+            pnpm format     # prettier --write
+            ```
+
+            Review the diff and merge if the changes look correct.
+          labels: |
+            lint
+            automated

@@ -11,9 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AuthDivider } from '@/features/web/auth/components/auth-divider';
 import { GoogleSignInButton } from '@/features/web/auth/components/google-sign-in-button';
-import { useRegister } from '@/features/web/auth/hooks/use-auth';
+import { useGoogleAuthEnabled, useRegister } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
-import { env } from '@/lib/env';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required').max(120),
@@ -25,6 +24,7 @@ type FormValues = z.infer<typeof schema>;
 
 export function RegisterForm() {
   const register = useRegister();
+  const { data: googleEnabled } = useGoogleAuthEnabled();
 
   const {
     register: r,
@@ -101,7 +101,7 @@ export function RegisterForm() {
         </Button>
       </form>
 
-      {env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED ? (
+      {googleEnabled ? (
         <>
           <AuthDivider />
 

@@ -1,6 +1,7 @@
 import type {
   AuthResponseDto,
   ChangePasswordDto,
+  GoogleAuthStatusDto,
   UpdateProfileDto,
   UserDto,
 } from '@open-meet/types';
@@ -100,6 +101,9 @@ export const authApi = {
   refresh: () => api.post<{ refreshed: true }>('/auth/refresh'),
 
   me: (signal?: AbortSignal) => api.get<UserDto>('/auth/me', { signal }),
+
+  googleStatus: (signal?: AbortSignal) =>
+    api.get<GoogleAuthStatusDto>('/auth/google/status', { signal }),
 
   updateMe: (input: UpdateProfileDto) => api.patch<UserDto>('/auth/me', input),
 

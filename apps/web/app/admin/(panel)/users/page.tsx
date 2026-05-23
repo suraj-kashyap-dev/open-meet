@@ -106,7 +106,7 @@ export default function AdminUsersPage() {
   const to = Math.min(total, page * PAGE_SIZE);
 
   return (
-    <main className="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:py-10">
+    <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Manage

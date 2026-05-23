@@ -20,7 +20,7 @@ import { Throttle } from '@nestjs/throttler';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import type { ApiEnv } from '@open-meet/config';
-import { ApiErrorCode, AuthResponseDto, UserDto } from '@open-meet/types';
+import { ApiErrorCode, AuthResponseDto, GoogleAuthStatusDto, UserDto } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { Public } from '../../../common/decorators/public.decorator';
@@ -102,6 +102,13 @@ export class AuthController {
     const tokens = await this.auth.refresh(refresh);
     this.setAuthCookies(res, tokens);
     return { refreshed: true };
+  }
+
+  @Public()
+  @Get('google/status')
+  @ApiOperation({ summary: 'Report whether Google sign-in is configured on this server' })
+  googleStatus(): GoogleAuthStatusDto {
+    return { enabled: this.google.isConfigured() };
   }
 
   @Public()

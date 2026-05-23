@@ -66,7 +66,7 @@ Full-stack TypeScript · LiveKit SFU · multi-instance ready.
   <tr>
     <td valign="top">
       <h3>🧪 Tested</h3>
-      <p>Vitest unit suites for services + repositories, Playwright E2E for every user-visible flow.</p>
+      <p>Vitest unit suites for services + repositories, plus Supertest API e2e over the live HTTP layer.</p>
     </td>
     <td valign="top">
       <h3>📦 Self-hostable</h3>
@@ -125,9 +125,13 @@ The one-shot installer wires up env files, secrets, the LiveKit key pair, the da
 ```bash
 pnpm install            # 1 · workspace deps
 docker compose up -d    # 2 · postgres · redis · livekit · coturn · mailhog
-pnpm app:install        # 3 · interactive installer
-pnpm dev                # 4 · start api + web
+pnpm app:install        # 3 · interactive installer (regenerates the LiveKit key pair)
+docker compose up -d --force-recreate livekit livekit-egress   # 4 · reload regenerated keys
+pnpm dev                # 5 · start api + web
 ```
+
+> [!IMPORTANT]
+> Step 3 regenerates the LiveKit API key/secret and writes it to `apps/server/.env`, `docker/livekit.yaml`, and `docker/egress.yaml`. Because the LiveKit container started in step 2 with the old key, step 4 recreates it so the new key takes effect — skip it and you'll hit `invalid API key` on join. (Out of the box, before running the installer, all four locations share the dev default `devkey` / `secret`, so a bare `docker compose up -d` also works.)
 
 Then:
 
@@ -162,10 +166,8 @@ Both `db:reset` and `db:wipe` wrap `prisma migrate reset --skip-seed`: drop ever
 ## 🧪 Testing
 
 ```bash
-pnpm --filter @open-meet/server test            # Vitest — services · repositories · guards
-pnpm --filter @open-meet/e2e install:browsers   # one-time Playwright deps
-pnpm --filter @open-meet/e2e test               # unit + browser e2e
-pnpm --filter @open-meet/e2e screenshots        # regenerate docs/screenshots/*
+pnpm --filter @open-meet/server test       # Vitest unit — services · repositories · guards · pipes · gateway
+pnpm --filter @open-meet/server test:e2e   # Supertest API e2e (needs a test Postgres + Redis)
 ```
 
 ---

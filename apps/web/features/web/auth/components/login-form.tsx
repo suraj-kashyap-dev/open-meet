@@ -13,9 +13,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { AuthDivider } from '@/features/web/auth/components/auth-divider';
 import { GoogleSignInButton } from '@/features/web/auth/components/google-sign-in-button';
-import { useLogin } from '@/features/web/auth/hooks/use-auth';
+import { useGoogleAuthEnabled, useLogin } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
-import { env } from '@/lib/env';
 
 const OAUTH_ERROR_MESSAGES: Record<string, string> = {
   google_denied: 'Google sign-in was cancelled.',
@@ -33,6 +32,7 @@ type FormValues = z.infer<typeof schema>;
 
 export function LoginForm() {
   const login = useLogin();
+  const { data: googleEnabled } = useGoogleAuthEnabled();
   const searchParams = useSearchParams();
   const oauthErrorShown = useRef(false);
 
@@ -107,7 +107,7 @@ export function LoginForm() {
         </Button>
       </form>
 
-      {env.NEXT_PUBLIC_GOOGLE_AUTH_ENABLED ? (
+      {googleEnabled ? (
         <>
           <AuthDivider />
 

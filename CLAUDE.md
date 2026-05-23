@@ -10,15 +10,14 @@ Real-time video conferencing app (Google Meet–style). Full-stack TypeScript. R
 
 **Infra** — PostgreSQL 16 · Redis 7 (ioredis) · LiveKit (Docker) · coturn (Docker) · MailHog (dev)
 
-**Tooling** — pnpm workspaces · Turborepo v2 · ESLint v9 flat config · Prettier v3 · Vitest + Supertest (unit + API e2e) · **Playwright (browser e2e)** in `apps/e2e/` · husky + lint-staged
+**Tooling** — pnpm workspaces · Turborepo v2 · ESLint v9 flat config · Prettier v3 · Vitest + Supertest (unit + API e2e, co-located per app) · husky + lint-staged
 
 ## Repo layout
 
 ```
 apps/
-  server/ NestJS monolith-modular (Fastify)
+  server/ NestJS monolith-modular (Fastify) — backend tests live here
   web/    Next.js 15 App Router
-  e2e/    Playwright browser tests
 packages/
   types/  Shared DTOs, socket events, API envelope (@open-meet/types)
   config/ Zod env schemas (@open-meet/config)
@@ -166,19 +165,16 @@ docker compose logs -f livekit
 
 **Every feature and every bug fix ships with tests. End-to-end.**
 
-- **Unit tests (Vitest)** live next to source as `<name>.spec.ts`. Required for every service, repository, util, guard, pipe, and React component with non-trivial logic.
-- **Browser e2e tests (Playwright)** live in `apps/e2e/tests/`. Required for every user-visible flow change: auth, create/join meeting, in-call controls, chat, reactions, host actions, end-meeting flow.
+- **Test files live under a per-package `test/` tree, NOT next to source.** Unit specs go in `test/unit/**` mirroring the `src/` path (e.g. `src/modules/client/auth/auth.service.ts` → `test/unit/modules/client/auth/auth.service.spec.ts`). Import the unit under test via the `@/` alias (`@/modules/client/auth/auth.service`), so specs are independent of source moves. In `packages/*`, specs go in `test/` and import via `../src/<name>`.
+- **Unit tests (Vitest)** are required for every service, repository, util, guard, pipe, interceptor, gateway, and (on the web side) component with non-trivial logic.
+- **Name tests as behavioral specs.** Group cases by the method under test with a nested `describe('methodName()')`, and phrase every case as `it('should … [when …]')`. Descriptions state observable behavior, not implementation.
+- **API e2e tests (Vitest + Supertest)** live in `apps/server/test/e2e/`. They boot the Nest Fastify app against a throwaway Postgres/Redis and exercise HTTP flows: auth, meetings, uploads, recording, admin auth, and the response envelope.
 - For a **bug fix**: write a failing regression test FIRST, then fix.
-- Before declaring any step or task done, both must pass:
+- Before declaring any step or task done:
   ```bash
-  pnpm test                              # unit (all workspaces)
-  pnpm --filter @open-meet/e2e test      # Playwright
+  pnpm --filter @open-meet/server test       # unit
+  pnpm --filter @open-meet/server test:e2e   # API e2e (needs test Postgres/Redis)
   ```
-- Playwright browser binaries are not auto-installed. Run once after `pnpm install`:
-  ```bash
-  pnpm --filter @open-meet/e2e install:browsers
-  ```
-- Playwright's `webServer` auto-starts `apps/web` in dev. For real LiveKit/socket flows the infra stack must be up first (`docker compose up -d`).
 
 ## Build order reference
 

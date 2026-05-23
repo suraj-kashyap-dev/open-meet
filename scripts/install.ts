@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import * as p from '@clack/prompts';
 
 import { writeServerEnv, writeWebEnv } from './install/env-files.js';
+import { updateEgressYaml } from './install/egress-yaml.js';
 import { updateLivekitYaml } from './install/livekit-yaml.js';
 import { SERVER_ENV, WEB_ENV } from './install/paths.js';
 import { collectAnswers, confirmOverwriteIfExists } from './install/prompts.js';
@@ -121,6 +122,9 @@ async function main(): Promise<void> {
   await step('Updating docker/livekit.yaml', () =>
     updateLivekitYaml(secrets.LIVEKIT_API_KEY, secrets.LIVEKIT_API_SECRET),
   );
+  await step('Updating docker/egress.yaml', () =>
+    updateEgressYaml(secrets.LIVEKIT_API_KEY, secrets.LIVEKIT_API_SECRET),
+  );
 
   if (answers.runMigrations || FORCE) {
     if (process.platform === 'win32') {
@@ -158,12 +162,17 @@ async function main(): Promise<void> {
       'Files written:',
       '  - apps/server/.env',
       '  - apps/web/.env.local',
-      '  - docker/livekit.yaml (keys updated)',
+      '  - docker/livekit.yaml (keys + webhook api_key updated)',
+      '  - docker/egress.yaml (api_key + api_secret updated)',
     ].join('\n'),
     FORCE ? 'Reinstall summary' : 'Installation summary',
   );
 
-  p.outro('Done. Start the stack with `docker compose up -d` then `pnpm dev`.');
+  p.log.warn(
+    'LiveKit & egress keys were regenerated. If their containers are already running, recreate them so the new keys take effect:\n  docker compose up -d --force-recreate livekit livekit-egress',
+  );
+
+  p.outro('Then start the app with `pnpm dev`.');
 }
 
 main().catch((err) => {

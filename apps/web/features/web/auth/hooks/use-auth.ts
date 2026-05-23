@@ -10,17 +10,21 @@ import { authApi } from '@/features/web/auth/services/auth';
 import { ApiClientError } from '@/lib/api/client';
 
 const ME_KEY = ['auth', 'me'] as const;
+const GOOGLE_STATUS_KEY = ['auth', 'google-status'] as const;
 const CACHE_KEY = 'open-meet:user';
 
 function readCachedUser(): UserDto | null {
   if (typeof window === 'undefined') {
     return null;
   }
+
   try {
     const raw = window.localStorage.getItem(CACHE_KEY);
+
     if (!raw) {
       return null;
     }
+
     return JSON.parse(raw) as UserDto;
   } catch {
     return null;
@@ -31,6 +35,7 @@ function writeCachedUser(user: UserDto | null): void {
   if (typeof window === 'undefined') {
     return;
   }
+
   try {
     if (user) {
       window.localStorage.setItem(CACHE_KEY, JSON.stringify(user));
@@ -38,7 +43,7 @@ function writeCachedUser(user: UserDto | null): void {
       window.localStorage.removeItem(CACHE_KEY);
     }
   } catch {
-    /* ignore quota / private-mode errors */
+    // Ignore storage failures (private mode, quota) — the cache is best-effort.
   }
 }
 
@@ -52,11 +57,13 @@ export function useAuthBootstrap(): void {
   const qc = useQueryClient();
   useEffect(() => {
     const cached = readCachedUser();
+
     if (!cached) {
       return;
     }
-    // Only prime if the cache is empty — don't clobber a fresh fetch result.
+
     const current = qc.getQueryData<UserDto | null>(ME_KEY);
+
     if (current === undefined) {
       qc.setQueryData(ME_KEY, cached);
     }
@@ -78,13 +85,17 @@ export function useCurrentUser() {
     queryFn: async ({ signal }) => {
       try {
         const user = await authApi.me(signal);
+
         writeCachedUser(user);
+
         return user;
       } catch (err) {
         if (err instanceof ApiClientError && err.statusCode === 401) {
           writeCachedUser(null);
+
           return null;
         }
+
         throw err;
       }
     },
@@ -92,9 +103,25 @@ export function useCurrentUser() {
   });
 }
 
+/**
+ * Whether Google sign-in is available, derived from the server's actual
+ * OAuth configuration (`/auth/google/status`) — the single source of truth.
+ * Server config is fixed for the process lifetime, so it never goes stale.
+ */
+export function useGoogleAuthEnabled() {
+  return useQuery({
+    queryKey: GOOGLE_STATUS_KEY,
+    queryFn: ({ signal }) => authApi.googleStatus(signal),
+    select: (data) => data.enabled,
+    staleTime: Infinity,
+  });
+}
+
 export function useLogin() {
   const router = useRouter();
+
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
@@ -107,7 +134,9 @@ export function useLogin() {
 
 export function useRegister() {
   const router = useRouter();
+
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: authApi.register,
     onSuccess: (data) => {
@@ -120,6 +149,7 @@ export function useRegister() {
 
 export function useUpdateProfile() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: authApi.updateMe,
     onSuccess: (user) => {
@@ -131,6 +161,7 @@ export function useUpdateProfile() {
 
 export function useUploadAvatar() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (file: File) => authApi.uploadAvatar(file),
     onSuccess: (user) => {
@@ -142,6 +173,7 @@ export function useUploadAvatar() {
 
 export function useDeleteAvatar() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: () => authApi.deleteAvatar(),
     onSuccess: (user) => {
@@ -153,7 +185,9 @@ export function useDeleteAvatar() {
 
 export function useChangePassword() {
   const router = useRouter();
+
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: authApi.changePassword,
     onSuccess: () => {
@@ -167,11 +201,11 @@ export function useChangePassword() {
 
 export function useLogout() {
   const router = useRouter();
+
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: authApi.logout,
-    // Local cleanup must happen even if the server-side logout call fails
-    // (e.g. session already invalidated, network blip).
     onSettled: () => {
       writeCachedUser(null);
       qc.setQueryData(ME_KEY, null);

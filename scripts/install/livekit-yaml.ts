@@ -10,5 +10,7 @@ export async function updateLivekitYaml(apiKey: string, apiSecret: string): Prom
 
   doc.set('keys', { [apiKey]: apiSecret });
 
+  doc.setIn(['webhook', 'api_key'], apiKey);
+
   await writeFile(LIVEKIT_YAML, doc.toString());
 }
