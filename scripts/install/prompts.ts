@@ -76,8 +76,8 @@ export async function collectAnswers(): Promise<InstallAnswers> {
       databaseUrl: () =>
         p.text({
           message: 'PostgreSQL connection URL',
-          placeholder: 'postgresql://postgres:postgres@localhost:5432/meetclone',
-          initialValue: 'postgresql://postgres:postgres@localhost:5432/meetclone',
+          placeholder: 'postgresql://postgres:postgres@localhost:5432/openmeet',
+          initialValue: 'postgresql://postgres:postgres@localhost:5432/openmeet',
           validate: (v) => (!v.startsWith('postgres') ? 'Must be a postgresql:// URL' : undefined),
         }),
       redisUrl: () =>

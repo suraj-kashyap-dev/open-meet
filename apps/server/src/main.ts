@@ -72,7 +72,7 @@ async function bootstrap(): Promise<void> {
   if (!isProd) {
     const swagger = new DocumentBuilder()
       .setTitle('open-meet API')
-      .setDescription('Google Meet clone — REST + WebSocket API')
+      .setDescription('Open Meet — REST + WebSocket API')
       .setVersion('0.1.0')
       .addCookieAuth('access_token')
       .build();
