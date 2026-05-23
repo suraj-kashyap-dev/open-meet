@@ -153,21 +153,21 @@ docker compose logs -f livekit
 
 ## What lives where
 
-| Concern                               | Location                           |
-| ------------------------------------- | ---------------------------------- |
-| Shared DTO/types                      | `packages/types/src/`              |
-| Socket event names + payloads         | `packages/types/src/socket.ts`     |
-| Env zod schemas                       | `packages/config/src/env.ts`       |
-| API response envelope shape           | `packages/types/src/api.ts`        |
-| Meeting code generation               | `packages/utils/src/code.ts`       |
+| Concern                               | Location                             |
+| ------------------------------------- | ------------------------------------ |
+| Shared DTO/types                      | `packages/types/src/`                |
+| Socket event names + payloads         | `packages/types/src/socket.ts`       |
+| Env zod schemas                       | `packages/config/src/env.ts`         |
+| API response envelope shape           | `packages/types/src/api.ts`          |
+| Meeting code generation               | `packages/utils/src/code.ts`         |
 | Prisma schema (multi-file by domain)  | `apps/server/prisma/schema/*.prisma` |
-| NestJS global pipe/filter/interceptor | `apps/server/src/common/`          |
-| API entry point + CORS allow-list     | `apps/server/src/main.ts`          |
-| Shared UI components (`cn`, shadcn)    | `packages/ui/src/`                 |
-| User app entry                        | `apps/web/app/layout.tsx`          |
-| Admin app entry                       | `apps/admin/app/layout.tsx`        |
+| NestJS global pipe/filter/interceptor | `apps/server/src/common/`            |
+| API entry point + CORS allow-list     | `apps/server/src/main.ts`            |
+| Shared UI components (`cn`, shadcn)   | `packages/ui/src/`                   |
+| User app entry                        | `apps/web/app/layout.tsx`            |
+| Admin app entry                       | `apps/admin/app/layout.tsx`          |
 | Typed API client (per app)            | `apps/{web,admin}/lib/api/client.ts` |
-| Zustand stores                        | `apps/web/stores/`                 |
+| Zustand stores                        | `apps/web/stores/`                   |
 
 ## Testing discipline — non-negotiable
 

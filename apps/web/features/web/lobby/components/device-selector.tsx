@@ -34,10 +34,7 @@ export function DeviceSelector({ media }: { media: MediaState }) {
   return (
     <div className="space-y-4">
       <Field icon={<Camera className="h-3.5 w-3.5" />} label="Camera">
-        <Select
-          value={media.selectedVideoId ?? ''}
-          onValueChange={(v) => media.selectVideo(v)}
-        >
+        <Select value={media.selectedVideoId ?? ''} onValueChange={(v) => media.selectVideo(v)}>
           <SelectTrigger className={triggerCls}>
             <SelectValue placeholder="Choose camera" />
           </SelectTrigger>
@@ -52,10 +49,7 @@ export function DeviceSelector({ media }: { media: MediaState }) {
       </Field>
 
       <Field icon={<Mic className="h-3.5 w-3.5" />} label="Microphone">
-        <Select
-          value={media.selectedAudioId ?? ''}
-          onValueChange={(v) => media.selectAudio(v)}
-        >
+        <Select value={media.selectedAudioId ?? ''} onValueChange={(v) => media.selectAudio(v)}>
           <SelectTrigger className={triggerCls}>
             <SelectValue placeholder="Choose microphone" />
           </SelectTrigger>

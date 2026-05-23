@@ -56,10 +56,10 @@
 pnpm dev        # api · web · admin
 ```
 
-| Service | URL |
-| --- | --- |
-| Web (user app) | <http://localhost:3000> |
-| Admin console | <http://localhost:3001> |
+| Service            | URL                              |
+| ------------------ | -------------------------------- |
+| Web (user app)     | <http://localhost:3000>          |
+| Admin console      | <http://localhost:3001>          |
 | API docs (Swagger) | <http://localhost:3002/api/docs> |
 
 `setup.sh` is idempotent — re-running keeps your existing secrets. The default admin is created on first API boot from `DEFAULT_ADMIN_*` in `apps/server/.env`. Run it as your normal user, **never with `sudo`** (sudo uses root's Node and writes root-owned files).
@@ -71,21 +71,21 @@ pnpm dev        # api · web · admin
 
 It generates four env files, all gitignored:
 
-| File | Read by | Holds |
-| --- | --- | --- |
-| `apps/server/.env` | NestJS API | JWT + LiveKit secrets, DB/Redis URLs, `DEFAULT_ADMIN_*` |
-| `apps/web/.env.local` | Web app | `NEXT_PUBLIC_*` public vars |
-| `apps/admin/.env.local` | Admin console | `NEXT_PUBLIC_*` public vars |
-| `.env` (repo root) | Docker Compose **only** | Mirrors `LIVEKIT_API_KEY` + `LIVEKIT_API_SECRET` for the LiveKit & Egress containers |
+| File                    | Read by                 | Holds                                                                                |
+| ----------------------- | ----------------------- | ------------------------------------------------------------------------------------ |
+| `apps/server/.env`      | NestJS API              | JWT + LiveKit secrets, DB/Redis URLs, `DEFAULT_ADMIN_*`                              |
+| `apps/web/.env.local`   | Web app                 | `NEXT_PUBLIC_*` public vars                                                          |
+| `apps/admin/.env.local` | Admin console           | `NEXT_PUBLIC_*` public vars                                                          |
+| `.env` (repo root)      | Docker Compose **only** | Mirrors `LIVEKIT_API_KEY` + `LIVEKIT_API_SECRET` for the LiveKit & Egress containers |
 
 Flags:
 
-| Flag | Effect |
-| --- | --- |
-| `--force` | Regenerate every secret and **reset the database** (drops all tables). |
-| `--skip-install` | Skip `pnpm install`. |
-| `--skip-docker` | Skip `docker compose up` (infra already running). |
-| `--skip-db` | Skip Prisma generate + migrate. |
+| Flag             | Effect                                                                 |
+| ---------------- | ---------------------------------------------------------------------- |
+| `--force`        | Regenerate every secret and **reset the database** (drops all tables). |
+| `--skip-install` | Skip `pnpm install`.                                                   |
+| `--skip-docker`  | Skip `docker compose up` (infra already running).                      |
+| `--skip-db`      | Skip Prisma generate + migrate.                                        |
 
 Every env var is documented in the `.env.example` files and validated by `apiEnvSchema` / `webPublicEnvSchema` in `packages/config/src/env.ts`.
 
@@ -101,7 +101,7 @@ LiveKit auth is a **key : secret** pair:
 - **`devkey` (key name)** — a non-secret identifier that LiveKit embeds in every room token. It must be identical in `webhook.api_key` (`docker/livekit.yaml`), `LIVEKIT_API_KEY` (`apps/server/.env` + root `.env`), and the key Compose injects via `LIVEKIT_KEYS`. `scripts/setup/config.sh` pins it so it can't drift.
 - **`LIVEKIT_API_SECRET`** — the real credential. `setup.sh` generates a random one; it signs and verifies tokens and webhook signatures. Only this rotates.
 
-The repo-root `.env` is **not** secret storage — it only feeds Docker Compose's `${LIVEKIT_API_SECRET}` interpolation so the LiveKit & Egress containers run with the *same* secret as the API. Delete it and Compose falls back to the literal `secret` default, which then mismatches the API and breaks tokens/webhooks — so keep it.
+The repo-root `.env` is **not** secret storage — it only feeds Docker Compose's `${LIVEKIT_API_SECRET}` interpolation so the LiveKit & Egress containers run with the _same_ secret as the API. Delete it and Compose falls back to the literal `secret` default, which then mismatches the API and breaks tokens/webhooks — so keep it.
 
 </details>
 
