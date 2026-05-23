@@ -179,7 +179,10 @@ export class UploadsController {
     res.header('Cache-Control', 'private, max-age=3600');
     res.header('Cross-Origin-Resource-Policy', 'cross-origin');
     res.header('X-Content-Type-Options', 'nosniff');
-    res.header('Content-Disposition', `${inline ? 'inline' : 'attachment'}; filename="${filename}"`);
+    res.header(
+      'Content-Disposition',
+      `${inline ? 'inline' : 'attachment'}; filename="${filename}"`,
+    );
 
     const parsed = parseRange(rangeHeader, totalSize);
 

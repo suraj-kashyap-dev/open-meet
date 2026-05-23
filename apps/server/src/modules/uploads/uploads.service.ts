@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  PayloadTooLargeException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, PayloadTooLargeException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomBytes } from 'node:crypto';
 import type { Attachment } from '@prisma/client';
