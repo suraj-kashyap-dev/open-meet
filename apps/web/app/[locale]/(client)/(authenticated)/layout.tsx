@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 import { AuthGuard } from '@/features/web/auth/components/auth-guard';
 import { CommandPalette } from '@/components/shared/command-palette';
-import { AppHeader } from '@/components/web/app-header/app-header';
+import { AppHeader } from '@/components/web/header/header';
 
 // Authenticated routes are per-user and data-driven, so they render on demand
 // rather than being statically prerendered. This also lets next-intl resolve
