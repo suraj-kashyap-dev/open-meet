@@ -25,7 +25,8 @@
     "microphone": "माइक्रोफ़ोन",
     "microphone-placeholder": "माइक्रोफ़ोन चुनें",
     "speakers": "स्पीकर",
-    "system-default": "सिस्टम डिफ़ॉल्ट"
+    "system-default": "सिस्टम डिफ़ॉल्ट",
+    "unsupported": "कैमरा और माइक्रोफ़ोन के लिए सुरक्षित कनेक्शन (HTTPS) या localhost आवश्यक है।"
   },
   "preview": {
     "camera-off": "कैमरा बंद है",

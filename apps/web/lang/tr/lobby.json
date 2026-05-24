@@ -25,7 +25,8 @@
     "microphone": "Mikrofon",
     "microphone-placeholder": "Mikrofon seçin",
     "speakers": "Hoparlörler",
-    "system-default": "Sistem varsayılanı"
+    "system-default": "Sistem varsayılanı",
+    "unsupported": "Kamera ve mikrofon güvenli bir bağlantı (HTTPS) veya localhost gerektirir."
   },
   "preview": {
     "camera-off": "Kamera kapalı",

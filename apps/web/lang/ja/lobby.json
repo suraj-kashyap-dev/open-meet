@@ -25,7 +25,8 @@
     "microphone": "マイク",
     "microphone-placeholder": "マイクを選択",
     "speakers": "スピーカー",
-    "system-default": "システムデフォルト"
+    "system-default": "システムデフォルト",
+    "unsupported": "カメラとマイクには、安全な接続（HTTPS）または localhost が必要です。"
   },
   "preview": {
     "camera-off": "カメラはオフです",

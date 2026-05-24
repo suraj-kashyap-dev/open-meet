@@ -1,10 +1,19 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface MediaDeviceOption {
   deviceId: string;
   label: string;
+}
+
+function getMediaDevices(): MediaDevices | null {
+  if (typeof navigator === 'undefined') {
+    return null;
+  }
+
+  return navigator.mediaDevices ?? null;
 }
 
 interface UseMediaDevicesResult {
@@ -25,6 +34,7 @@ interface UseMediaDevicesResult {
 }
 
 export function useMediaDevices(): UseMediaDevicesResult {
+  const t = useTranslations('lobby');
   const [videoDevices, setVideoDevices] = useState<MediaDeviceOption[]>([]);
   const [audioInputs, setAudioInputs] = useState<MediaDeviceOption[]>([]);
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceOption[]>([]);
@@ -43,50 +53,86 @@ export function useMediaDevices(): UseMediaDevicesResult {
   }, []);
 
   const refreshDevices = useCallback(async () => {
-    const devices = await navigator.mediaDevices.enumerateDevices();
+    const md = getMediaDevices();
+
+    if (! md) {
+      return;
+    }
+
+    const devices = await md.enumerateDevices();
+
     const mapDevice = (d: MediaDeviceInfo): MediaDeviceOption => ({
       deviceId: d.deviceId,
       label: d.label || `${d.kind} (${d.deviceId.slice(0, 6)})`,
     });
+    
     setVideoDevices(devices.filter((d) => d.kind === 'videoinput').map(mapDevice));
+    
     setAudioInputs(devices.filter((d) => d.kind === 'audioinput').map(mapDevice));
+    
     setAudioOutputs(devices.filter((d) => d.kind === 'audiooutput').map(mapDevice));
   }, []);
 
   const acquire = useCallback(
     async (constraints: { videoId?: string; audioId?: string }) => {
+      const md = getMediaDevices();
+      
+      if (! md) {
+        setError(t('devices.unsupported'));
+        
+        return;
+      }
+
       try {
-        const next = await navigator.mediaDevices.getUserMedia({
+        const next = await md.getUserMedia({
           video: constraints.videoId ? { deviceId: { exact: constraints.videoId } } : true,
           audio: constraints.audioId ? { deviceId: { exact: constraints.audioId } } : true,
         });
+
         streamRef.current?.getTracks().forEach((t) => t.stop());
+
         streamRef.current = next;
+
         setStream(next);
+
         const v = next.getVideoTracks()[0];
+
         const a = next.getAudioTracks()[0];
+
         if (v) {
           setSelectedVideoId(v.getSettings().deviceId ?? null);
         }
+
         if (a) {
           setSelectedAudioId(a.getSettings().deviceId ?? null);
         }
+
         await refreshDevices();
       } catch (err) {
         setError((err as Error).message);
       }
     },
-    [refreshDevices],
+    [refreshDevices, t],
   );
 
   useEffect(() => {
     void acquire({});
+
+    const md = getMediaDevices();
+
+    if (! md) {
+      return stop;
+    }
+
     const handler = () => {
       void refreshDevices();
     };
-    navigator.mediaDevices.addEventListener('devicechange', handler);
+    
+    md.addEventListener('devicechange', handler);
+    
     return () => {
-      navigator.mediaDevices.removeEventListener('devicechange', handler);
+      md.removeEventListener('devicechange', handler);
+    
       stop();
     };
   }, []);
@@ -107,6 +153,7 @@ export function useMediaDevices(): UseMediaDevicesResult {
 
   const setCameraEnabled = useCallback(async (enabled: boolean) => {
     setCameraEnabledState(enabled);
+
     streamRef.current?.getVideoTracks().forEach((t) => {
       t.enabled = enabled;
     });
@@ -114,6 +161,7 @@ export function useMediaDevices(): UseMediaDevicesResult {
 
   const setMicEnabled = useCallback(async (enabled: boolean) => {
     setMicEnabledState(enabled);
+
     streamRef.current?.getAudioTracks().forEach((t) => {
       t.enabled = enabled;
     });

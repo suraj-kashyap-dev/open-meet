@@ -25,7 +25,8 @@
     "microphone": "Микрофон",
     "microphone-placeholder": "Выберите микрофон",
     "speakers": "Динамики",
-    "system-default": "Системное значение по умолчанию"
+    "system-default": "Системное значение по умолчанию",
+    "unsupported": "Для камеры и микрофона требуется защищённое соединение (HTTPS) или localhost."
   },
   "preview": {
     "camera-off": "Камера выключена",
