@@ -187,7 +187,7 @@ export function EditUserDialog({ user, onClose }: Props) {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={onSubmit} className="flex max-h-[70vh] flex-col gap-6 overflow-y-auto pe-1">
+        <form onSubmit={onSubmit} className="flex flex-col gap-6">
           <DialogSection title="Account">
             <div className="flex items-center gap-4">
               <UserAvatar

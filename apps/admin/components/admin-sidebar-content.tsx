@@ -9,6 +9,7 @@ import { cn } from '@open-meet/ui/cn';
 
 import { Link, usePathname } from '@/i18n/navigation';
 import { isRtl } from '@/i18n/routing';
+import { env } from '@/lib/env';
 
 import { adminNav, isActive } from './admin-nav-config';
 
@@ -220,28 +221,30 @@ export function AdminSidebarContent({ onNavigate, collapsed = false }: Props) {
           {collapsed ? (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href="/"
+                <a
+                  href={env.NEXT_PUBLIC_WEB_URL}
                   target="_blank"
+                  rel="noopener noreferrer"
                   onClick={onNavigate}
                   aria-label={t('brand.visit-open-meet')}
                   className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <ExternalLink className="h-4 w-4" />
-                </Link>
+                </a>
               </TooltipTrigger>
               <TooltipContent side={tooltipSide}>{t('brand.visit-open-meet')}</TooltipContent>
             </Tooltip>
           ) : (
-            <Link
-              href="/"
+            <a
+              href={env.NEXT_PUBLIC_WEB_URL}
               target="_blank"
+              rel="noopener noreferrer"
               onClick={onNavigate}
               className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent"
             >
               <ExternalLink className="h-3.5 w-3.5 shrink-0" />
               {t('brand.visit-open-meet')}
-            </Link>
+            </a>
           )}
         </div>
       </div>
