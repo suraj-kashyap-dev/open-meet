@@ -1,6 +1,7 @@
 'use client';
 
 import { Check, Loader2, Pencil, Video } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export function MeetingTopBar({ code, canEdit }: Props) {
+  const t = useTranslations('meeting');
   const liveMeeting = useMeetingStore((s) => s.meeting);
   const title = liveMeeting && liveMeeting.code === code ? liveMeeting.title : null;
   const updateMeeting = useUpdateMeeting(code);
@@ -33,7 +35,7 @@ export function MeetingTopBar({ code, canEdit }: Props) {
   const [renameOpen, setRenameOpen] = useState(false);
   const [draft, setDraft] = useState('');
 
-  const display = title ?? 'Untitled meeting';
+  const display = title ?? t('top-bar.untitled');
   const isPlaceholder = !title;
 
   const openRename = () => {
@@ -53,9 +55,9 @@ export function MeetingTopBar({ code, canEdit }: Props) {
     try {
       await updateMeeting.mutateAsync({ title: next });
       setRenameOpen(false);
-      toast.success('Meeting title updated');
+      toast.success(t('toast.title-updated'));
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not update title';
+      const message = err instanceof ApiClientError ? err.message : t('toast.update-title-error');
       toast.error(message);
     }
   };
@@ -97,7 +99,7 @@ export function MeetingTopBar({ code, canEdit }: Props) {
             className="h-8 gap-1.5 text-muted-foreground hover:text-foreground"
           >
             <Pencil className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Rename</span>
+            <span className="hidden sm:inline">{t('top-bar.rename')}</span>
           </Button>
         ) : null}
       </div>
@@ -119,15 +121,15 @@ export function MeetingTopBar({ code, canEdit }: Props) {
             </div>
 
             <DialogHeader className="space-y-1.5 text-center sm:text-center">
-              <DialogTitle className="text-xl">Rename meeting</DialogTitle>
+              <DialogTitle className="text-xl">{t('top-bar.rename-title')}</DialogTitle>
               <DialogDescription className="text-balance">
-                Update the title so participants and your meeting history can find it easily.
+                {t('top-bar.rename-description')}
               </DialogDescription>
             </DialogHeader>
           </div>
 
           <div className="space-y-2 px-6 py-5">
-            <Label htmlFor="rename-meeting-title">Meeting title</Label>
+            <Label htmlFor="rename-meeting-title">{t('top-bar.meeting-title')}</Label>
             <Input
               id="rename-meeting-title"
               autoFocus
@@ -139,14 +141,16 @@ export function MeetingTopBar({ code, canEdit }: Props) {
                   void submit();
                 }
               }}
-              placeholder="Untitled meeting"
+              placeholder={t('top-bar.title-placeholder')}
               maxLength={200}
               disabled={updateMeeting.isPending}
               className="h-11"
             />
             <p className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>Leave empty to clear the title.</span>
-              <span className="font-mono tabular-nums">{draft.length}/200</span>
+              <span>{t('top-bar.clear-hint')}</span>
+              <span className="font-mono tabular-nums">
+                {t('top-bar.char-count', { count: draft.length })}
+              </span>
             </p>
           </div>
 
@@ -157,7 +161,7 @@ export function MeetingTopBar({ code, canEdit }: Props) {
               disabled={updateMeeting.isPending}
               className="sm:min-w-24"
             >
-              Cancel
+              {t('top-bar.cancel')}
             </Button>
             <Button onClick={() => void submit()} disabled={updateMeeting.isPending}>
               {updateMeeting.isPending ? (
@@ -165,7 +169,7 @@ export function MeetingTopBar({ code, canEdit }: Props) {
               ) : (
                 <Check className="h-4 w-4" />
               )}
-              {updateMeeting.isPending ? 'Saving…' : 'Save'}
+              {updateMeeting.isPending ? t('top-bar.saving') : t('top-bar.save')}
             </Button>
           </DialogFooter>
         </DialogContent>

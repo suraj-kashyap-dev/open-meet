@@ -1,0 +1,13 @@
+{
+  "email-taken": "يوجد مسؤول بهذا البريد الإلكتروني بالفعل",
+  "invite-invalid": "رابط الدعوة هذا غير صالح",
+  "invite-expired": "انتهت صلاحية هذه الدعوة",
+  "invite-not-found": "لم يتم العثور على الدعوة",
+  "admin-not-found": "لم يتم العثور على المسؤول",
+  "name-required": "الاسم مطلوب",
+  "name-empty": "لا يمكن أن يكون الاسم فارغًا",
+  "cannot-demote-last-superadmin": "لا يمكن تخفيض رتبة آخر مسؤول رئيسي متبقٍ",
+  "cannot-delete-self": "لا يمكنك حذف حساب المسؤول الخاص بك",
+  "cannot-delete-last-superadmin": "لا يمكن حذف آخر مسؤول رئيسي متبقٍ",
+  "superadmin-required": "صلاحيات المسؤول الرئيسي مطلوبة لهذا الإجراء"
+}

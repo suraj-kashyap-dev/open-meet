@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "النشاط",
+    "title": "سجل الاجتماعات",
+    "total": "{count, plural, zero {# اجتماع} one {اجتماع واحد} two {اجتماعان} few {# اجتماعات} many {# اجتماعًا} other {# اجتماع}} إجمالًا",
+    "description": "كل اجتماع استضفته أو انضممت إليه — مع الاحتفاظ بالمحادثة والمرفقات وقائمة المشاركين."
+  },
+  "default-title": "اجتماع في {date}",
+  "host": "مضيف",
+  "hosted-by-you": "استضفته أنت",
+  "hosted-by": "استضافه {name}",
+  "overflow": "+{count}",
+  "recording-badge": "تسجيل · {count}",
+  "recording-title": "{count, plural, zero {# تسجيل} one {تسجيل واحد} two {تسجيلان} few {# تسجيلات} many {# تسجيلًا} other {# تسجيل}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "الاجتماع",
+    "started": "بدأ في",
+    "duration": "المدة",
+    "participants": "المشاركون",
+    "activity": "النشاط",
+    "status": "الحالة",
+    "actions": "إجراءات",
+    "open": "فتح"
+  },
+  "status": {
+    "ended": "منتهٍ",
+    "active": "نشط",
+    "scheduled": "مجدول"
+  },
+  "stats": {
+    "on-this-page": "في هذه الصفحة",
+    "hosted-by-you": "استضفته أنت",
+    "total-time": "إجمالي الوقت",
+    "participants": "المشاركون"
+  },
+  "table": {
+    "empty": "لا توجد اجتماعات في هذه الصفحة."
+  },
+  "pagination": {
+    "showing": "عرض {from}–{to} من {total}",
+    "previous": "السابق",
+    "next": "التالي",
+    "page-of": "الصفحة {page} من {pageCount}"
+  },
+  "error": {
+    "list": "تعذّر تحميل سجل اجتماعاتك."
+  },
+  "empty": {
+    "title": "لا توجد اجتماعات بعد",
+    "description": "بمجرد أن تستضيف اجتماعًا أو تنضم إليه، سيظهر هنا.",
+    "cta": "ابدأ اجتماعًا"
+  },
+  "detail": {
+    "back": "العودة إلى السجل",
+    "default-title": "اجتماع في {date}",
+    "hosted-by-you": "استضفته أنت",
+    "copy-aria": "نسخ رمز الاجتماع",
+    "started": "بدأ في",
+    "role": "الدور",
+    "stats": {
+      "duration": "المدة",
+      "participants": "المشاركون",
+      "messages": "الرسائل",
+      "attachments": "المرفقات"
+    },
+    "in-this-chat": "في هذه المحادثة",
+    "overflow": "+{count}",
+    "error": "تعذّر تحميل هذا الاجتماع.",
+    "status": {
+      "ended": "منتهٍ",
+      "active": "نشط",
+      "scheduled": "مجدول"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "التسجيلات",
+      "visibility": "مرئية فقط للأشخاص الذين انضموا إلى هذا الاجتماع.",
+      "started-by": "بدأه",
+      "duration": "المدة",
+      "size": "الحجم",
+      "download": "تنزيل",
+      "recording-from": "تسجيل من {date}",
+      "status": {
+        "completed": "مكتمل",
+        "failed": "فشل",
+        "recording": "قيد التسجيل",
+        "stopping": "قيد الإيقاف"
+      },
+      "failed-title": "فشل التسجيل",
+      "failed-detail": "لم تقدّم خدمة التصدير أي تفاصيل إضافية.",
+      "processing": "جارٍ معالجة التسجيل — تحقق مرة أخرى بعد قليل.",
+      "empty-title": "لا توجد تسجيلات لهذا الاجتماع",
+      "empty-description": "يمكن للمضيف بدء التسجيل من أدوات التحكم أثناء المكالمة. تبقى التسجيلات خاصة بالأشخاص الذين انضموا إلى هذا الاجتماع.",
+      "relative": {
+        "just-now": "الآن",
+        "minutes": "{count, plural, zero {منذ # دقيقة} one {منذ دقيقة} two {منذ دقيقتين} few {منذ # دقائق} many {منذ # دقيقة} other {منذ # دقيقة}}",
+        "hours": "{count, plural, zero {منذ # ساعة} one {منذ ساعة} two {منذ ساعتين} few {منذ # ساعات} many {منذ # ساعة} other {منذ # ساعة}}",
+        "days": "{count, plural, zero {منذ # يوم} one {منذ يوم} two {منذ يومين} few {منذ # أيام} many {منذ # يومًا} other {منذ # يوم}}"
+      }
+    },
+    "transcript": {
+      "title": "نص المحادثة",
+      "count": "{count, plural, zero {# رسالة} one {رسالة واحدة} two {رسالتان} few {# رسائل} many {# رسالة} other {# رسالة}}",
+      "error": "تعذّر تحميل الرسائل.",
+      "empty": "لم تُرسَل أي رسائل في هذا الاجتماع.",
+      "load-earlier": "تحميل الرسائل الأقدم",
+      "loading": "جارٍ التحميل…",
+      "you": "أنت"
+    }
+  },
+  "toast": {
+    "copied": "تم نسخ رمز الاجتماع",
+    "copy-failed": "تعذّر نسخ رمز الاجتماع"
+  }
+}

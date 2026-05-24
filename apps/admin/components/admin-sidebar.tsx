@@ -12,11 +12,11 @@ export function AdminSidebar({ open }: Props) {
   return (
     <aside
       className={cn(
-        'fixed inset-y-0 left-0 z-40 hidden w-64 shrink-0 flex-col border-r border-border bg-card transition-transform duration-200 ease-out lg:flex',
-        open ? 'translate-x-0' : 'pointer-events-none -translate-x-full',
+        'fixed inset-y-0 start-0 z-40 hidden shrink-0 flex-col border-e border-border bg-card transition-[width] duration-200 ease-out lg:flex',
+        open ? 'w-64' : 'w-16',
       )}
     >
-      <AdminSidebarContent />
+      <AdminSidebarContent collapsed={!open} />
     </aside>
   );
 }

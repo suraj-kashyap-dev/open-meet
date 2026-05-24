@@ -13,6 +13,8 @@ import { ConfigService } from '@nestjs/config';
 import { type Admin, type AdminInvite, AdminRole } from '@prisma/client';
 import * as argon2 from 'argon2';
 
+import { I18nContext, I18nService } from 'nestjs-i18n';
+
 import type { ApiEnv } from '@open-meet/config';
 import {
   type AdminAccountDto,
@@ -46,7 +48,18 @@ export class AdminAccountsService {
     private readonly invites: AdminInviteRepository,
     private readonly mail: MailService,
     private readonly config: ConfigService<ApiEnv, true>,
+    private readonly i18n: I18nService,
   ) {}
+
+  /** Locale resolved for the current request, falling back to English. */
+  private get lang(): string {
+    return I18nContext.current()?.lang ?? 'en';
+  }
+
+  /** Translate a key in the request's locale. */
+  private t(key: string, args?: Record<string, unknown>): string {
+    return this.i18n.translate(key, { lang: this.lang, args }) as string;
+  }
 
   async list(): Promise<AdminAccountListResponseDto> {
     const rows = await this.admins.list();
@@ -65,7 +78,7 @@ export class AdminAccountsService {
     if (!name) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
-        message: 'Name is required',
+        message: this.t('errors.name-required'),
       });
     }
 
@@ -74,7 +87,7 @@ export class AdminAccountsService {
     if (existing) {
       throw new ConflictException({
         code: ApiErrorCode.EMAIL_TAKEN,
-        message: 'An admin with that email already exists',
+        message: this.t('errors.email-taken'),
       });
     }
 
@@ -99,7 +112,10 @@ export class AdminAccountsService {
     const invite = await this.invites.findById(id);
 
     if (!invite) {
-      throw new NotFoundException({ code: ApiErrorCode.NOT_FOUND, message: 'Invite not found' });
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: this.t('errors.invite-not-found'),
+      });
     }
 
     const { token, tokenHash } = this.generateToken();
@@ -115,7 +131,10 @@ export class AdminAccountsService {
     const invite = await this.invites.findById(id);
 
     if (!invite) {
-      throw new NotFoundException({ code: ApiErrorCode.NOT_FOUND, message: 'Invite not found' });
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: this.t('errors.invite-not-found'),
+      });
     }
 
     await this.invites.delete(id);
@@ -144,7 +163,7 @@ export class AdminAccountsService {
       await this.invites.delete(invite.id);
       throw new ConflictException({
         code: ApiErrorCode.EMAIL_TAKEN,
-        message: 'An admin with that email already exists',
+        message: this.t('errors.email-taken'),
       });
     }
 
@@ -165,7 +184,10 @@ export class AdminAccountsService {
     const target = await this.admins.findById(id);
 
     if (!target) {
-      throw new NotFoundException({ code: ApiErrorCode.NOT_FOUND, message: 'Admin not found' });
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: this.t('errors.admin-not-found'),
+      });
     }
 
     const data: { name?: string; role?: AdminRole } = {};
@@ -176,7 +198,7 @@ export class AdminAccountsService {
       if (!name) {
         throw new BadRequestException({
           code: ApiErrorCode.VALIDATION_FAILED,
-          message: 'Name cannot be empty',
+          message: this.t('errors.name-empty'),
         });
       }
 
@@ -190,7 +212,7 @@ export class AdminAccountsService {
         if (remaining <= 1) {
           throw new ForbiddenException({
             code: ApiErrorCode.FORBIDDEN,
-            message: 'Cannot demote the last remaining superadmin',
+            message: this.t('errors.cannot-demote-last-superadmin'),
           });
         }
       }
@@ -210,7 +232,7 @@ export class AdminAccountsService {
     if (actingAdminId === targetId) {
       throw new ForbiddenException({
         code: ApiErrorCode.FORBIDDEN,
-        message: 'You cannot delete your own admin account',
+        message: this.t('errors.cannot-delete-self'),
       });
     }
 
@@ -219,7 +241,7 @@ export class AdminAccountsService {
     if (!target) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
-        message: 'Admin not found',
+        message: this.t('errors.admin-not-found'),
       });
     }
 
@@ -229,7 +251,7 @@ export class AdminAccountsService {
       if (remaining <= 1) {
         throw new ForbiddenException({
           code: ApiErrorCode.FORBIDDEN,
-          message: 'Cannot delete the last remaining superadmin',
+          message: this.t('errors.cannot-delete-last-superadmin'),
         });
       }
     }
@@ -244,14 +266,14 @@ export class AdminAccountsService {
     if (!invite) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
-        message: 'This invitation link is invalid',
+        message: this.t('errors.invite-invalid'),
       });
     }
 
     if (invite.expiresAt.getTime() < Date.now()) {
       throw new BadRequestException({
         code: ApiErrorCode.TOKEN_INVALID,
-        message: 'This invitation has expired',
+        message: this.t('errors.invite-expired'),
       });
     }
 
@@ -280,7 +302,7 @@ export class AdminAccountsService {
     try {
       await this.mail.send({
         to: input.email,
-        subject: 'You have been invited to the Open Meet admin console',
+        subject: this.t('email.invite.subject'),
         text: this.inviteText(input.name, acceptUrl, when),
         html: this.inviteHtml(input.name, acceptUrl, when),
       });
@@ -299,26 +321,23 @@ export class AdminAccountsService {
 
   private inviteText(name: string, url: string, when: string): string {
     return [
-      `Hi ${name},`,
+      this.t('email.invite.greeting', { name }),
       '',
-      'You have been invited to administer Open Meet.',
-      'Set your password and activate your account here:',
+      this.t('email.invite.text-intro'),
+      this.t('email.invite.text-action'),
       url,
       '',
-      `This link expires on ${when}.`,
+      this.t('email.invite.text-expires', { when }),
     ].join('\n');
   }
 
   private inviteHtml(name: string, url: string, when: string): string {
     return renderEmail({
-      preview: 'Set your password to activate your Open Meet admin account.',
-      heading: "You're invited to Open Meet",
-      body: [
-        `Hi ${name},`,
-        'You have been invited to the Open Meet admin console. Set your password to activate your account and get started.',
-      ],
-      button: { label: 'Accept invitation', url },
-      footnote: `This link expires on ${when}. If you weren't expecting this invitation, you can safely ignore this email.`,
+      preview: this.t('email.invite.preview'),
+      heading: this.t('email.invite.heading'),
+      body: [this.t('email.invite.greeting', { name }), this.t('email.invite.body')],
+      button: { label: this.t('email.invite.cta'), url },
+      footnote: this.t('email.invite.footnote', { when }),
     });
   }
 

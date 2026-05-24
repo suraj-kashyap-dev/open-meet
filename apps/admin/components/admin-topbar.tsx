@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronRight, LogOut, Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 import { UserAvatar } from '@open-meet/ui/user-avatar';
@@ -15,27 +15,32 @@ import {
   DropdownMenuTrigger,
 } from '@open-meet/ui/dropdown-menu';
 import { ThemeToggle } from '@open-meet/ui/theme-toggle';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { useAdminLogout, useCurrentAdmin } from '@/features/auth/hooks/use-admin-auth';
+import { usePathname } from '@/i18n/navigation';
 import { cn } from '@open-meet/ui/cn';
 
 import { adminNav } from './admin-nav-config';
 
 interface Crumb {
-  label: string;
+  /** A `nav` translation key. When present it is translated for display. */
+  labelKey?: string;
+  /** A literal label (e.g. a dynamic URL segment) shown as-is. */
+  label?: string;
   href?: string;
 }
 
 function deriveCrumbs(pathname: string): Crumb[] {
   if (pathname === '/') {
-    return [{ label: 'Dashboard' }];
+    return [{ labelKey: 'topbar.dashboard' }];
   }
 
   for (const section of adminNav) {
     for (const item of section.items) {
       if (pathname === item.href || pathname.startsWith(`${item.href}/`)) {
         const crumbs: Crumb[] = [
-          { label: 'Admin', href: '/' },
-          { label: item.label, href: item.href },
+          { labelKey: 'topbar.root', href: '/' },
+          { labelKey: item.labelKey, href: item.href },
         ];
         const tail = pathname.slice(item.href.length).split('/').filter(Boolean);
 
@@ -64,6 +69,7 @@ export function AdminTopbar({
   onToggleDesktopSidebar,
 }: Props) {
   const pathname = usePathname();
+  const t = useTranslations('nav');
   const crumbs = useMemo(() => deriveCrumbs(pathname), [pathname]);
   const { data: admin } = useCurrentAdmin();
   const logout = useAdminLogout();
@@ -76,7 +82,7 @@ export function AdminTopbar({
           size="icon"
           className="lg:hidden"
           onClick={onOpenSidebar}
-          aria-label="Open navigation"
+          aria-label={t('topbar.open-sidebar')}
         >
           <Menu className="h-4 w-4" />
         </Button>
@@ -88,7 +94,7 @@ export function AdminTopbar({
           size="icon"
           className="hidden lg:inline-flex"
           onClick={onToggleDesktopSidebar}
-          aria-label={desktopSidebarOpen ? 'Hide navigation' : 'Show navigation'}
+          aria-label={desktopSidebarOpen ? t('topbar.hide-sidebar') : t('topbar.show-sidebar')}
         >
           {desktopSidebarOpen ? (
             <PanelLeftClose className="h-4 w-4" />
@@ -101,10 +107,11 @@ export function AdminTopbar({
       <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1 text-sm">
         {crumbs.map((crumb, index) => {
           const isLast = index === crumbs.length - 1;
+          const text = crumb.labelKey ? t(crumb.labelKey) : (crumb.label ?? '');
           return (
-            <span key={`${crumb.label}-${index}`} className="flex items-center gap-1">
+            <span key={`${crumb.labelKey ?? crumb.label}-${index}`} className="flex items-center gap-1">
               {index > 0 ? (
-                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
+                <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60 rtl:-scale-x-100" />
               ) : null}
               <span
                 className={cn(
@@ -112,22 +119,23 @@ export function AdminTopbar({
                   isLast ? 'font-medium text-foreground' : 'text-muted-foreground',
                 )}
               >
-                {crumb.label}
+                {text}
               </span>
             </span>
           );
         })}
       </nav>
 
-      <div className="ml-auto flex items-center gap-2">
+      <div className="ms-auto flex items-center gap-2">
         <ThemeToggle />
+        <LanguageSwitcher />
 
         {admin ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-10 gap-2 px-2 sm:px-3">
                 <UserAvatar user={admin} size="md" className="h-8 w-8" />
-                <div className="hidden min-w-0 text-left sm:block">
+                <div className="hidden min-w-0 text-start sm:block">
                   <p className="truncate text-sm font-medium leading-none">{admin.name}</p>
                   <p className="truncate pt-1 text-xs text-muted-foreground">{admin.email}</p>
                 </div>
@@ -149,7 +157,7 @@ export function AdminTopbar({
                 className="text-destructive focus:text-destructive"
               >
                 <LogOut className="h-4 w-4" />
-                Sign out
+                {t('topbar.sign-out')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

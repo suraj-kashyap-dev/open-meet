@@ -2,6 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,29 +14,37 @@ import { Label } from '@open-meet/ui/label';
 import { useChangePassword } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
 
-const schema = z
-  .object({
-    currentPassword: z.string().min(1, 'Required'),
-    newPassword: z.string().min(8, 'At least 8 characters').max(128, 'Too long'),
-    confirmPassword: z.string().min(1, 'Required'),
-  })
-  .refine((d) => d.newPassword === d.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Passwords do not match',
-  })
-  .refine((d) => d.newPassword !== d.currentPassword, {
-    path: ['newPassword'],
-    message: 'New password must differ from the current one',
-  });
-
-type Values = z.infer<typeof schema>;
-
 function messageFromError(err: unknown, fallback: string): string {
   return err instanceof ApiClientError ? err.message : fallback;
 }
 
 export function PasswordForm() {
+  const t = useTranslations('account');
   const changePassword = useChangePassword();
+
+  const schema = useMemo(
+    () =>
+      z
+        .object({
+          currentPassword: z.string().min(1, t('validation.password-required')),
+          newPassword: z
+            .string()
+            .min(8, t('validation.password-min'))
+            .max(128, t('validation.password-too-long')),
+          confirmPassword: z.string().min(1, t('validation.password-required')),
+        })
+        .refine((d) => d.newPassword === d.confirmPassword, {
+          path: ['confirmPassword'],
+          message: t('validation.password-mismatch'),
+        })
+        .refine((d) => d.newPassword !== d.currentPassword, {
+          path: ['newPassword'],
+          message: t('validation.password-same'),
+        }),
+    [t],
+  );
+
+  type Values = z.infer<typeof schema>;
 
   const {
     register,
@@ -56,9 +66,9 @@ export function PasswordForm() {
       });
 
       reset({ currentPassword: '', newPassword: '', confirmPassword: '' });
-      toast.success('Password changed — sign in again');
+      toast.success(t('toast.password-changed'));
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to change password'));
+      toast.error(messageFromError(err, t('toast.password-change-failed')));
     }
   });
 
@@ -66,7 +76,7 @@ export function PasswordForm() {
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-1.5">
-          <Label htmlFor="currentPassword">Current password</Label>
+          <Label htmlFor="currentPassword">{t('password.current')}</Label>
 
           <Input
             id="currentPassword"
@@ -81,7 +91,7 @@ export function PasswordForm() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="newPassword">New password</Label>
+          <Label htmlFor="newPassword">{t('password.new')}</Label>
 
           <Input
             id="newPassword"
@@ -96,7 +106,7 @@ export function PasswordForm() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="confirmPassword">Confirm new password</Label>
+          <Label htmlFor="confirmPassword">{t('password.confirm')}</Label>
 
           <Input
             id="confirmPassword"
@@ -112,9 +122,7 @@ export function PasswordForm() {
       </div>
 
       <div className="mt-2 flex items-center justify-between gap-3 border-t border-border pt-4">
-        <p className="text-xs text-muted-foreground">
-          Changing your password signs you out everywhere.
-        </p>
+        <p className="text-xs text-muted-foreground">{t('password.info')}</p>
 
         <div className="flex items-center gap-2">
           <Button
@@ -124,12 +132,12 @@ export function PasswordForm() {
             disabled={!isDirty || pending}
             onClick={() => reset({ currentPassword: '', newPassword: '', confirmPassword: '' })}
           >
-            Clear
+            {t('password.clear')}
           </Button>
 
           <Button type="submit" size="sm" disabled={!isDirty || pending}>
             {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {pending ? 'Changing…' : 'Change password'}
+            {pending ? t('password.changing') : t('password.change')}
           </Button>
         </div>
       </div>

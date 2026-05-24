@@ -1,0 +1,14 @@
+{
+  "language-switcher": { "label": "Language" },
+  "languages": {
+    "en": "English",
+    "ar": "العربية"
+  },
+  "loading": "Loading…",
+  "error": {
+    "title": "Admin panel error",
+    "description": "Something went wrong loading this admin view. Try again, or go back to the dashboard.",
+    "retry": "Try again",
+    "home": "Dashboard"
+  }
+}

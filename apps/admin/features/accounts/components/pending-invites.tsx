@@ -1,6 +1,7 @@
 'use client';
 
 import { Mail, RotateCw, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -15,17 +16,17 @@ import {
 } from '@/features/accounts/hooks/use-admin-accounts';
 import { ApiClientError } from '@/lib/api/client';
 
-function formatExpiry(iso: string, expired: boolean): string {
-  const when = new Date(iso).toLocaleString(undefined, {
+function formatExpiryDate(iso: string): string {
+  return new Date(iso).toLocaleString(undefined, {
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
   });
-  return expired ? `Expired ${when}` : `Expires ${when}`;
 }
 
 export function PendingInvites() {
+  const t = useTranslations('accounts');
   const { data, isLoading, error } = useAdminInvites();
   const resend = useResendAdminInvite();
   const revoke = useRevokeAdminInvite();
@@ -37,9 +38,9 @@ export function PendingInvites() {
     setBusyId(invite.id);
     try {
       await resend.mutateAsync(invite.id);
-      toast.success(`Invite re-sent to ${invite.email}`);
+      toast.success(t('pending.resend-success', { email: invite.email }));
     } catch (err) {
-      toast.error(err instanceof ApiClientError ? err.message : 'Could not resend invite');
+      toast.error(err instanceof ApiClientError ? err.message : t('pending.resend-error'));
     } finally {
       setBusyId(null);
     }
@@ -49,9 +50,9 @@ export function PendingInvites() {
     setBusyId(invite.id);
     try {
       await revoke.mutateAsync(invite.id);
-      toast.success(`Revoked invite for ${invite.email}`);
+      toast.success(t('pending.revoke-success', { email: invite.email }));
     } catch (err) {
-      toast.error(err instanceof ApiClientError ? err.message : 'Could not revoke invite');
+      toast.error(err instanceof ApiClientError ? err.message : t('pending.revoke-error'));
     } finally {
       setBusyId(null);
     }
@@ -66,12 +67,12 @@ export function PendingInvites() {
   }
 
   if (error) {
-    return <p className="text-sm text-destructive">Failed to load invites.</p>;
+    return <p className="text-sm text-destructive">{t('pending.loading-error')}</p>;
   }
 
   if (invites.length === 0) {
     return (
-      <p className="px-2 py-4 text-center text-sm text-muted-foreground">No pending invites.</p>
+      <p className="px-2 py-4 text-center text-sm text-muted-foreground">{t('pending.empty')}</p>
     );
   }
 
@@ -91,7 +92,7 @@ export function PendingInvites() {
               <div className="flex items-center gap-2">
                 <p className="truncate text-sm font-medium">{invite.name}</p>
                 <span className="rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {invite.role.toLowerCase()}
+                  {invite.role === 'SUPERADMIN' ? t('roles.superadmin') : t('roles.admin')}
                 </span>
                 <span
                   className={cn(
@@ -101,20 +102,22 @@ export function PendingInvites() {
                       : 'border-border bg-muted text-muted-foreground',
                   )}
                 >
-                  {expired ? 'expired' : 'pending'}
+                  {expired ? t('pending.status-expired') : t('pending.status-pending')}
                 </span>
               </div>
               <p className="truncate text-xs text-muted-foreground">{invite.email}</p>
             </div>
 
             <p className="hidden text-[10px] text-muted-foreground sm:block">
-              {formatExpiry(invite.expiresAt, expired)}
+              {expired
+                ? t('pending.expired-at', { when: formatExpiryDate(invite.expiresAt) })
+                : t('pending.expires', { when: formatExpiryDate(invite.expiresAt) })}
             </p>
 
             <Button
               variant="ghost"
               size="icon"
-              aria-label={`Resend invite to ${invite.email}`}
+              aria-label={t('pending.resend-label', { email: invite.email })}
               disabled={busy}
               onClick={() => onResend(invite)}
             >
@@ -124,7 +127,7 @@ export function PendingInvites() {
               variant="ghost"
               size="icon"
               className="text-destructive hover:bg-destructive/10"
-              aria-label={`Revoke invite to ${invite.email}`}
+              aria-label={t('pending.revoke-label', { email: invite.email })}
               disabled={busy}
               onClick={() => onRevoke(invite)}
             >

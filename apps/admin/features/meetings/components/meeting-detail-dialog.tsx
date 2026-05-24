@@ -111,7 +111,7 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
                             <p className="truncate text-sm font-medium">
                               {p.name}
                               {p.role === 'HOST' ? (
-                                <span className="ml-2 inline-flex items-center rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
+                                <span className="ms-2 inline-flex items-center rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
                                   Host
                                 </span>
                               ) : null}
@@ -119,7 +119,7 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
                             <p className="truncate text-xs text-muted-foreground">{p.email}</p>
                           </div>
 
-                          <div className="text-right text-[10px] text-muted-foreground">
+                          <div className="text-end text-[10px] text-muted-foreground">
                             <p>Joined {formatTimestamp(p.joinedAt)}</p>
                             {p.leftAt ? <p>Left {formatTimestamp(p.leftAt)}</p> : null}
                           </div>

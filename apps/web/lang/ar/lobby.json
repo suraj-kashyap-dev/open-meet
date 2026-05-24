@@ -1,0 +1,46 @@
+{
+  "eyebrow": "استعد",
+  "you": "أنت",
+  "untitled-meeting": "اجتماع بلا عنوان",
+  "secure-connection": "اتصال آمن",
+  "invited-only": "لا يمكن الانضمام إلا للأشخاص المدعوين",
+  "meeting-code": "رمز الاجتماع",
+  "join-now": "انضم الآن",
+  "joining": "جارٍ الانضمام…",
+  "back-to-home": "العودة إلى الصفحة الرئيسية",
+  "cancel": "إلغاء",
+  "aria": {
+    "rename-meeting": "إعادة تسمية الاجتماع",
+    "meeting-title": "عنوان الاجتماع",
+    "save-title": "حفظ العنوان",
+    "cancel-rename": "إلغاء إعادة التسمية",
+    "copy-meeting-link": "نسخ رابط الاجتماع",
+    "microphone-level": "مستوى الميكروفون"
+  },
+  "devices": {
+    "title": "الأجهزة",
+    "subtitle": "تحقق من الصوت والفيديو",
+    "camera": "الكاميرا",
+    "camera-placeholder": "اختر الكاميرا",
+    "microphone": "الميكروفون",
+    "microphone-placeholder": "اختر الميكروفون",
+    "speakers": "السماعات",
+    "system-default": "الإعداد الافتراضي للنظام"
+  },
+  "preview": {
+    "camera-off": "الكاميرا مغلقة",
+    "mute-microphone": "كتم الميكروفون",
+    "unmute-microphone": "إلغاء كتم الميكروفون",
+    "turn-off-microphone": "إيقاف الميكروفون",
+    "turn-on-microphone": "تشغيل الميكروفون",
+    "turn-off-camera": "إيقاف الكاميرا",
+    "turn-on-camera": "تشغيل الكاميرا"
+  },
+  "toast": {
+    "title-updated": "تم تحديث عنوان الاجتماع",
+    "title-update-failed": "تعذّر تحديث العنوان",
+    "meeting-not-found": "الاجتماع غير موجود",
+    "link-copied": "تم نسخ رابط الاجتماع",
+    "link-copy-failed": "تعذّر نسخ الرابط"
+  }
+}

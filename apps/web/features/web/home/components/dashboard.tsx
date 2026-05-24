@@ -23,7 +23,7 @@ import {
   Video,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -43,6 +43,7 @@ import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
 import { ShimmerButton } from '@open-meet/ui/shimmer-button';
 import { Spotlight } from '@open-meet/ui/spotlight';
+import { Link } from '@/i18n/navigation';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { ScheduleMeetingDialog } from '@/features/web/home/components/schedule-meeting-dialog';
 import { useHistoryList } from '@/features/web/history/hooks/use-history';
@@ -63,6 +64,7 @@ const fadeUp = {
 };
 
 export function Dashboard() {
+  const t = useTranslations('home');
   const nav = useNavigateTransition();
   const { data: user } = useCurrentUser();
   const createMeeting = useCreateMeeting();
@@ -81,7 +83,7 @@ export function Dashboard() {
     } catch (err) {
       setIntent(null);
 
-      const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
+      const message = err instanceof ApiClientError ? err.message : t('toast.create-error');
 
       toast.error(message);
     }
@@ -93,7 +95,7 @@ export function Dashboard() {
     const trimmed = code.trim().toLowerCase();
 
     if (!trimmed) {
-      toast.error('Enter a meeting code');
+      toast.error(t('toast.enter-code'));
       return;
     }
 
@@ -101,7 +103,7 @@ export function Dashboard() {
     nav.push(`/${trimmed}/lobby`);
   };
 
-  const firstName = user?.name?.split(' ')[0] ?? 'there';
+  const firstName = user?.name?.split(' ')[0] ?? t('greeting.fallback-name');
   const recent = history.data?.items ?? [];
   const totalMeetings = history.data?.total ?? 0;
 
@@ -123,12 +125,13 @@ export function Dashboard() {
           <DateBadge />
 
           <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-            {greetingLabel()}, <span className="gradient-text">{firstName}</span>
+            {greetingLabel(t)}, <span className="gradient-text">{firstName}</span>
           </h1>
 
           <p className="max-w-xl text-balance text-sm text-muted-foreground sm:text-base">
-            Spin up a room in one click or hop into one with a code. Press{' '}
-            <KbdShortcut>⌘ K</KbdShortcut> from anywhere to search.
+            {t.rich('greeting.intro', {
+              kbd: (chunks) => <KbdShortcut>{chunks}</KbdShortcut>,
+            })}
           </p>
         </motion.header>
 
@@ -191,6 +194,8 @@ function ActionCard({
   isCreating,
   isJoining,
 }: ActionCardProps) {
+  const t = useTranslations('home');
+
   return (
     <Card className="group relative overflow-hidden border-border/60 bg-card/60 backdrop-blur transition-all duration-300 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10">
       <div
@@ -215,31 +220,29 @@ function ActionCard({
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
               </span>
-              Instant
+              {t('instant.badge')}
             </span>
           </div>
 
           <div className="flex flex-col gap-1.5">
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              Start fresh
+              {t('instant.eyebrow')}
             </p>
 
-            <h2 className="text-2xl font-semibold tracking-tight">Start a new meeting</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">{t('instant.title')}</h2>
 
-            <p className="text-sm text-muted-foreground">
-              A fresh, shareable room. No setup — the link expires once the room is empty.
-            </p>
+            <p className="text-sm text-muted-foreground">{t('instant.description')}</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-medium text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <Users className="h-3 w-3" />
-              Up to 100
+              {t('instant.capacity')}
             </span>
             <span className="h-3 w-px bg-border" aria-hidden />
             <span className="inline-flex items-center gap-1.5">
               <ShieldCheck className="h-3 w-3 text-success" />
-              End-to-end secure
+              {t('instant.secure')}
             </span>
           </div>
 
@@ -253,12 +256,12 @@ function ActionCard({
               {isCreating ? (
                 <>
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  Creating…
+                  {t('instant.creating')}
                 </>
               ) : (
                 <>
                   <Plus className="h-4 w-4" />
-                  New meeting
+                  {t('instant.new-meeting')}
                 </>
               )}
             </ShimmerButton>
@@ -270,7 +273,7 @@ function ActionCard({
               className="w-full sm:w-auto"
             >
               <CalendarClock className="h-3.5 w-3.5" />
-              Schedule for later
+              {t('instant.schedule-for-later')}
             </Button>
           </div>
         </div>
@@ -279,7 +282,7 @@ function ActionCard({
           <div className="absolute inset-y-8 left-1/2 w-px -translate-x-1/2 bg-border" />
 
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            or
+            {t('join.or')}
           </span>
         </div>
 
@@ -287,7 +290,7 @@ function ActionCard({
           <div className="h-px flex-1 bg-border" />
 
           <span className="mx-3 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            or
+            {t('join.or')}
           </span>
 
           <div className="h-px flex-1 bg-border" />
@@ -300,25 +303,23 @@ function ActionCard({
             </span>
 
             <span className="inline-flex items-center rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              Have a code
+              {t('join.badge')}
             </span>
           </div>
 
           <div className="flex flex-col gap-1.5">
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              Join in
+              {t('join.eyebrow')}
             </p>
 
-            <h2 className="text-2xl font-semibold tracking-tight">Join with a code</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">{t('join.title')}</h2>
 
-            <p className="text-sm text-muted-foreground">
-              Paste the 12-character code your host shared with you.
-            </p>
+            <p className="text-sm text-muted-foreground">{t('join.description')}</p>
           </div>
 
           <form onSubmit={onJoin} className="mt-auto flex flex-col gap-2 sm:flex-row">
             <Label htmlFor="join-code" className="sr-only">
-              Meeting code
+              {t('join.code-label')}
             </Label>
 
             <div className="relative flex-1">
@@ -346,11 +347,11 @@ function ActionCard({
               {isJoining ? (
                 <>
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  Joining…
+                  {t('join.joining')}
                 </>
               ) : (
                 <>
-                  Join
+                  {t('join.join')}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </>
               )}
@@ -369,6 +370,8 @@ interface UpcomingMeetingsProps {
 }
 
 function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProps) {
+  const t = useTranslations('home');
+
   if (!isLoading && items.length === 0) {
     return null;
   }
@@ -387,7 +390,7 @@ function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProp
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2.5">
-              <h3 className="text-xl font-semibold tracking-tight">Coming up</h3>
+              <h3 className="text-xl font-semibold tracking-tight">{t('upcoming.title')}</h3>
 
               {soonCount > 0 ? (
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
@@ -395,21 +398,19 @@ function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProp
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
                   </span>
-                  {soonCount} starting soon
+                  {t('upcoming.starting-soon', { count: soonCount })}
                 </span>
               ) : null}
             </div>
 
             <p className="text-xs text-muted-foreground">
-              {total > 0
-                ? `Showing your next ${total} scheduled meeting${total === 1 ? '' : 's'}`
-                : 'Your scheduled meetings will appear here'}
+              {total > 0 ? t('upcoming.count', { count: total }) : t('upcoming.empty')}
             </p>
           </div>
 
           <Button size="sm" variant="ghost" className="text-xs" onClick={onSchedule}>
             <CalendarClock className="h-3.5 w-3.5" />
-            Schedule
+            {t('upcoming.schedule')}
           </Button>
         </div>
 
@@ -428,16 +429,17 @@ function UpcomingMeetings({ items, isLoading, onSchedule }: UpcomingMeetingsProp
 }
 
 function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
+  const t = useTranslations('home');
   const when = new Date(item.scheduledFor);
-  const title = item.title ?? `Meeting on ${formatScheduledDate(when)}`;
-  const repeats = item.recurrence ? recurrenceLabel(item.recurrence) : null;
+  const title = item.title ?? t('upcoming.default-title', { date: formatScheduledDate(when) });
+  const repeats = item.recurrence ? recurrenceLabel(item.recurrence, t) : null;
   const isStartingSoon = minutesUntil(item.scheduledFor) <= 15;
 
   return (
     <li className="group/row relative isolate flex items-center gap-2 rounded-xl px-2.5 py-3 transition-colors duration-200 hover:bg-muted/50 sm:px-3">
       <Link
         href={`/${item.code}/lobby`}
-        aria-label={`Join ${title}`}
+        aria-label={t('upcoming.join-aria', { title })}
         className="flex min-w-0 flex-1 items-center gap-3.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <span
@@ -472,7 +474,7 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
             {item.isHost ? (
               <span className="inline-flex shrink-0 items-center gap-1 rounded-md bg-warning/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warning">
                 <Crown className="h-3 w-3" />
-                Host
+                {t('upcoming.host')}
               </span>
             ) : null}
 
@@ -499,7 +501,7 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
                 </span>
 
                 <span className="hidden tabular-nums sm:inline-flex">
-                  {formatDurationShort(item.durationMin)}
+                  {formatDurationShort(item.durationMin, t)}
                 </span>
               </>
             ) : null}
@@ -511,7 +513,7 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
                 </span>
 
                 <span className="hidden tabular-nums sm:inline-flex">
-                  {item.inviteeCount} invited
+                  {t('upcoming.invited', { count: item.inviteeCount })}
                 </span>
               </>
             ) : null}
@@ -530,11 +532,11 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent/60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
               </span>
-              Soon
+              {t('upcoming.soon')}
             </span>
           ) : (
             <span className="text-right text-xs tabular-nums text-muted-foreground">
-              {formatTimeUntil(when)}
+              {formatTimeUntil(when, t)}
             </span>
           )}
         </div>
@@ -544,8 +546,8 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
 
           <Link
             href={`/${item.code}/lobby`}
-            aria-label="Join"
-            title="Join"
+            aria-label={t('upcoming.join')}
+            title={t('upcoming.join')}
             className={cn(
               'inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground',
               isStartingSoon && 'text-accent hover:bg-accent/10 hover:text-accent',
@@ -560,13 +562,15 @@ function UpcomingRow({ item }: { item: UpcomingMeetingDto }) {
 }
 
 function RowIcsButton({ code }: { code: string }) {
+  const t = useTranslations('home');
+
   return (
     <Button
       asChild
       variant="ghost"
       size="icon"
-      aria-label="Download .ics"
-      title="Add to calendar"
+      aria-label={t('upcoming.download-ics-aria')}
+      title={t('upcoming.add-to-calendar')}
       className="h-8 w-8 shrink-0 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
     >
       <a
@@ -605,6 +609,7 @@ interface RecentMeetingsProps {
 }
 
 function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
+  const t = useTranslations('home');
   const liveCount = items.filter((i) => i.status === MeetingStatus.ACTIVE).length;
 
   return (
@@ -618,7 +623,7 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2.5">
-              <h3 className="text-xl font-semibold tracking-tight">History</h3>
+              <h3 className="text-xl font-semibold tracking-tight">{t('recent.title')}</h3>
 
               {liveCount > 0 ? (
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-success">
@@ -626,22 +631,22 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
                   </span>
-                  {liveCount} live
+                  {t('recent.live', { count: liveCount })}
                 </span>
               ) : null}
             </div>
 
             <p className="text-xs text-muted-foreground">
               {total > 0
-                ? `Showing your last ${Math.min(items.length, total)} of ${total.toLocaleString()}`
-                : 'Your meetings will appear here'}
+                ? t('recent.count', { shown: Math.min(items.length, total), total })
+                : t('recent.empty')}
             </p>
           </div>
 
           {items.length > 0 ? (
             <Button asChild size="sm" variant="ghost" className="text-xs">
               <Link href="/history">
-                View all
+                {t('recent.view-all')}
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </Button>
@@ -665,18 +670,21 @@ function RecentMeetings({ items, total, isLoading }: RecentMeetingsProps) {
 }
 
 function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
+  const t = useTranslations('home');
   const rejoinable = item.status === MeetingStatus.ACTIVE || item.status === MeetingStatus.WAITING;
   const isLive = item.status === MeetingStatus.ACTIVE;
 
   const primaryHref = rejoinable ? `/${item.code}/lobby` : `/history/${item.code}`;
-  const actionLabel = rejoinable ? 'Rejoin' : 'Open';
-  const title = item.title ?? `Meeting on ${formatShortDate(item.startedAt ?? item.createdAt)}`;
+  const actionLabel = rejoinable ? t('recent.rejoin') : t('recent.open');
+  const title =
+    item.title ??
+    t('recent.default-title', { date: formatShortDate(item.startedAt ?? item.createdAt) });
 
   return (
     <li className="group/row relative isolate flex items-center gap-2 rounded-xl px-2.5 py-3 transition-colors duration-200 hover:bg-muted/50 sm:px-3">
       <Link
         href={primaryHref}
-        aria-label={`${actionLabel} ${title}`}
+        aria-label={t('recent.action-aria', { action: actionLabel, title })}
         className="flex min-w-0 flex-1 items-center gap-3.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-accent"
       >
         <StatusIndicator status={item.status} />
@@ -688,7 +696,7 @@ function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
             {item.isHost ? (
               <span className="inline-flex shrink-0 items-center gap-1 rounded-md bg-warning/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-warning">
                 <Crown className="h-3 w-3" />
-                Host
+                {t('recent.host')}
               </span>
             ) : null}
           </div>
@@ -707,7 +715,7 @@ function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
             </span>
 
             <span className="hidden tabular-nums sm:inline-flex">
-              {item.participantCount} {item.participantCount === 1 ? 'person' : 'people'}
+              {t('recent.people', { count: item.participantCount })}
             </span>
 
             <span className="hidden sm:inline" aria-hidden>
@@ -715,7 +723,7 @@ function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
             </span>
 
             <span className="hidden tabular-nums sm:inline-flex">
-              {isLive ? 'ongoing' : formatDuration(item.durationMinutes)}
+              {isLive ? t('recent.ongoing') : formatDuration(item.durationMinutes, t)}
             </span>
           </div>
         </div>
@@ -732,11 +740,11 @@ function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
               </span>
-              Live
+              {t('recent.live-label')}
             </span>
           ) : (
             <span className="text-right text-xs tabular-nums text-muted-foreground">
-              {formatRelativeTime(item.startedAt ?? item.createdAt)}
+              {formatRelativeTime(item.startedAt ?? item.createdAt, t)}
             </span>
           )}
         </div>
@@ -764,11 +772,13 @@ function RecentRow({ item }: { item: MeetingHistoryItemDto }) {
 }
 
 function StatusIndicator({ status }: { status: MeetingStatus }) {
+  const t = useTranslations('home');
+
   if (status === MeetingStatus.ACTIVE) {
     return (
       <span
         className="relative flex h-2.5 w-2.5 shrink-0 items-center justify-center"
-        aria-label="Live"
+        aria-label={t('recent.status-live')}
       >
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
         <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-success shadow-[0_0_0_3px_rgba(16,185,129,0.18)]" />
@@ -780,7 +790,7 @@ function StatusIndicator({ status }: { status: MeetingStatus }) {
     return (
       <span
         className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-accent shadow-[0_0_0_3px_rgba(59,130,246,0.18)]"
-        aria-label="Waiting"
+        aria-label={t('recent.status-waiting')}
       />
     );
   }
@@ -788,12 +798,13 @@ function StatusIndicator({ status }: { status: MeetingStatus }) {
   return (
     <span
       className="relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-muted-foreground/30 shadow-[0_0_0_3px_rgba(161,161,170,0.12)] transition-colors group-hover/row:bg-muted-foreground/60"
-      aria-label="Ended"
+      aria-label={t('recent.status-ended')}
     />
   );
 }
 
 function RowCopyButton({ code }: { code: string }) {
+  const t = useTranslations('home');
   const [copied, setCopied] = useState(false);
 
   const onCopy = async (e: React.MouseEvent) => {
@@ -803,13 +814,13 @@ function RowCopyButton({ code }: { code: string }) {
     try {
       await navigator.clipboard.writeText(`${window.location.origin}/${code}`);
       setCopied(true);
-      toast.success('Meeting link copied');
+      toast.success(t('recent.copy-link'));
 
       window.setTimeout(() => {
         setCopied(false);
       }, 1500);
     } catch {
-      toast.error('Could not copy link');
+      toast.error(t('recent.copy-link-error'));
     }
   };
 
@@ -819,8 +830,8 @@ function RowCopyButton({ code }: { code: string }) {
       variant="ghost"
       size="icon"
       onClick={onCopy}
-      aria-label="Copy meeting link"
-      title="Copy meeting link"
+      aria-label={t('recent.copy-link-aria')}
+      title={t('recent.copy-link-aria')}
       className="h-8 w-8 shrink-0 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
     >
       {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Link2 className="h-3.5 w-3.5" />}
@@ -829,34 +840,36 @@ function RowCopyButton({ code }: { code: string }) {
 }
 
 function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
+  const t = useTranslations('home');
+
   const buildUrl = () =>
     typeof window !== 'undefined' ? `${window.location.origin}/${item.code}` : `/${item.code}`;
 
   const onCopyCode = async () => {
     try {
       await navigator.clipboard.writeText(item.code);
-      toast.success('Meeting code copied');
+      toast.success(t('recent.code-copied'));
     } catch {
-      toast.error('Could not copy code');
+      toast.error(t('recent.code-copy-error'));
     }
   };
 
   const onCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(buildUrl());
-      toast.success('Meeting link copied');
+      toast.success(t('recent.copy-link'));
     } catch {
-      toast.error('Could not copy link');
+      toast.error(t('recent.copy-link-error'));
     }
   };
 
   const onShare = async () => {
     const url = buildUrl();
-    const text = 'Join my meeting on Open Meet';
+    const text = t('recent.share-text');
 
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
-        await navigator.share({ title: item.title ?? 'Open Meet', text, url });
+        await navigator.share({ title: item.title ?? t('recent.share-fallback-title'), text, url });
         return;
       } catch (err) {
         if ((err as DOMException)?.name === 'AbortError') {
@@ -867,9 +880,9 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
 
     try {
       await navigator.clipboard.writeText(`${text}: ${url}`);
-      toast.success('Invite copied to clipboard');
+      toast.success(t('recent.invite-copied'));
     } catch {
-      toast.error('Could not share meeting');
+      toast.error(t('recent.share-error'));
     }
   };
 
@@ -880,8 +893,8 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
           type="button"
           variant="ghost"
           size="icon"
-          aria-label="More actions"
-          title="More actions"
+          aria-label={t('recent.more-actions')}
+          title={t('recent.more-actions')}
           className="h-8 w-8 shrink-0 text-muted-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
         >
           <MoreHorizontal className="h-4 w-4" />
@@ -898,14 +911,14 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
         <DropdownMenuItem asChild>
           <Link href={`/${item.code}`} className="flex items-center gap-2">
             <ExternalLink className="h-3.5 w-3.5" />
-            Open meeting
+            {t('recent.open-meeting')}
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
           <Link href={`/history/${item.code}`} className="flex items-center gap-2">
             <Info className="h-3.5 w-3.5" />
-            View details
+            {t('recent.view-details')}
           </Link>
         </DropdownMenuItem>
 
@@ -913,17 +926,17 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
 
         <DropdownMenuItem onSelect={onCopyCode}>
           <Hash className="h-3.5 w-3.5" />
-          Copy code
+          {t('recent.copy-code')}
         </DropdownMenuItem>
 
         <DropdownMenuItem onSelect={onCopyLink}>
           <Link2 className="h-3.5 w-3.5" />
-          Copy link
+          {t('recent.copy-link-item')}
         </DropdownMenuItem>
 
         <DropdownMenuItem onSelect={onShare}>
           <Share2 className="h-3.5 w-3.5" />
-          Share invite
+          {t('recent.share-invite')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -949,17 +962,17 @@ function RecentSkeleton() {
 }
 
 function EmptyRecent() {
+  const t = useTranslations('home');
+
   return (
     <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed border-border/60 py-10 text-center">
       <span className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
         <History className="h-4 w-4" />
       </span>
 
-      <p className="text-sm font-medium">No meetings yet</p>
+      <p className="text-sm font-medium">{t('recent.empty-title')}</p>
 
-      <p className="max-w-xs text-xs text-muted-foreground">
-        Your first meeting will show up here as soon as you host or join one.
-      </p>
+      <p className="max-w-xs text-xs text-muted-foreground">{t('recent.empty-body')}</p>
     </div>
   );
 }
@@ -1007,31 +1020,33 @@ function DateBadge() {
 
 const TIPS: {
   icon: React.ReactNode;
-  title: string;
-  body: string;
+  titleKey: string;
+  bodyKey: string;
   accent: string;
 }[] = [
   {
     icon: <Sparkles className="h-3.5 w-3.5" />,
-    title: 'React without interrupting',
-    body: 'Drop a 🎉 or 👏 to acknowledge a point without breaking flow.',
+    titleKey: 'tips.react-title',
+    bodyKey: 'tips.react-body',
     accent: 'text-warning bg-warning/10 ring-warning/20',
   },
   {
     icon: <Users className="h-3.5 w-3.5" />,
-    title: 'Raise your hand',
-    body: 'Queue up to speak so quieter voices get heard.',
+    titleKey: 'tips.raise-hand-title',
+    bodyKey: 'tips.raise-hand-body',
     accent: 'text-accent bg-accent/10 ring-accent/20',
   },
   {
     icon: <History className="h-3.5 w-3.5" />,
-    title: 'Chat is preserved',
-    body: 'Every message and shared file is saved to your meeting history.',
+    titleKey: 'tips.chat-title',
+    bodyKey: 'tips.chat-body',
     accent: 'text-success bg-success/10 ring-success/20',
   },
 ];
 
 function TipsCard() {
+  const t = useTranslations('home');
+
   return (
     <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur">
       <CardContent className="relative flex h-full flex-col gap-6 p-6">
@@ -1041,16 +1056,16 @@ function TipsCard() {
           </span>
 
           <div className="flex flex-col leading-tight">
-            <h3 className="text-base font-semibold tracking-tight">Quick tips</h3>
+            <h3 className="text-base font-semibold tracking-tight">{t('tips.title')}</h3>
 
-            <p className="text-xs text-muted-foreground">Small habits, smoother calls.</p>
+            <p className="text-xs text-muted-foreground">{t('tips.subtitle')}</p>
           </div>
         </div>
 
         <ul className="flex flex-1 flex-col">
           {TIPS.map((tip, i) => (
             <li
-              key={tip.title}
+              key={tip.titleKey}
               className={cn(
                 'group/tip flex items-start gap-3.5 py-3.5',
                 i > 0 && 'border-t border-border/50',
@@ -1067,10 +1082,12 @@ function TipsCard() {
 
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold leading-tight tracking-tight text-foreground">
-                  {tip.title}
+                  {t(tip.titleKey)}
                 </p>
 
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{tip.body}</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                  {t(tip.bodyKey)}
+                </p>
               </div>
             </li>
           ))}
@@ -1080,14 +1097,16 @@ function TipsCard() {
   );
 }
 
-const SHORTCUTS: { keys: string[]; label: string; scope: 'global' | 'in-call' }[] = [
-  { keys: ['⌘', 'K'], label: 'Open command palette', scope: 'global' },
-  { keys: ['⌘', 'M'], label: 'Mute / unmute mic', scope: 'in-call' },
-  { keys: ['⌘', 'E'], label: 'Toggle camera', scope: 'in-call' },
-  { keys: ['⌘', 'D'], label: 'Raise / lower hand', scope: 'in-call' },
+const SHORTCUTS: { keys: string[]; labelKey: string; scope: 'global' | 'in-call' }[] = [
+  { keys: ['⌘', 'K'], labelKey: 'shortcuts.command-palette', scope: 'global' },
+  { keys: ['⌘', 'M'], labelKey: 'shortcuts.mute', scope: 'in-call' },
+  { keys: ['⌘', 'E'], labelKey: 'shortcuts.camera', scope: 'in-call' },
+  { keys: ['⌘', 'D'], labelKey: 'shortcuts.raise-hand', scope: 'in-call' },
 ];
 
 function ShortcutsCard() {
+  const t = useTranslations('home');
+
   return (
     <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur">
       <CardContent className="relative flex h-full flex-col gap-6 p-6">
@@ -1097,27 +1116,27 @@ function ShortcutsCard() {
           </span>
 
           <div className="flex flex-col leading-tight">
-            <h3 className="text-base font-semibold tracking-tight">Shortcuts</h3>
+            <h3 className="text-base font-semibold tracking-tight">{t('shortcuts.title')}</h3>
 
-            <p className="text-xs text-muted-foreground">Move through the app without a mouse.</p>
+            <p className="text-xs text-muted-foreground">{t('shortcuts.subtitle')}</p>
           </div>
         </div>
 
         <ul className="flex flex-1 flex-col">
           {SHORTCUTS.map((shortcut, i) => (
             <li
-              key={shortcut.label}
+              key={shortcut.labelKey}
               className={cn(
                 'flex items-center justify-between gap-3 py-2.5',
                 i > 0 && 'border-t border-border/50',
               )}
             >
               <div className="flex min-w-0 items-center gap-2">
-                <span className="truncate text-sm text-foreground/90">{shortcut.label}</span>
+                <span className="truncate text-sm text-foreground/90">{t(shortcut.labelKey)}</span>
 
                 {shortcut.scope === 'in-call' ? (
                   <span className="hidden rounded-md bg-muted px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted-foreground sm:inline-flex">
-                    in call
+                    {t('shortcuts.in-call')}
                   </span>
                 ) : null}
               </div>
@@ -1143,22 +1162,24 @@ function KbdShortcut({ children }: { children: React.ReactNode }) {
   );
 }
 
-function greetingLabel(): string {
+type Translator = (key: string, values?: Record<string, number | string>) => string;
+
+function greetingLabel(t: Translator): string {
   const hour = new Date().getHours();
 
   if (hour < 5) {
-    return 'Up late';
+    return t('greeting.up-late');
   }
 
   if (hour < 12) {
-    return 'Good morning';
+    return t('greeting.good-morning');
   }
 
   if (hour < 18) {
-    return 'Good afternoon';
+    return t('greeting.good-afternoon');
   }
 
-  return 'Good evening';
+  return t('greeting.good-evening');
 }
 
 function formatShortDate(iso: string | null): string {
@@ -1174,94 +1195,94 @@ function formatShortDate(iso: string | null): string {
   });
 }
 
-function formatRelativeTime(iso: string | null): string {
+function formatRelativeTime(iso: string | null, t: Translator): string {
   if (!iso) {
-    return '—';
+    return t('relative.none');
   }
 
   const diffMs = Date.now() - new Date(iso).getTime();
   const min = Math.round(diffMs / 60_000);
 
   if (min < 1) {
-    return 'just now';
+    return t('relative.just-now');
   }
 
   if (min < 60) {
-    return `${min}m ago`;
+    return t('relative.minutes-ago', { count: min });
   }
 
   const hr = Math.round(min / 60);
 
   if (hr < 24) {
-    return `${hr}h ago`;
+    return t('relative.hours-ago', { count: hr });
   }
 
   const days = Math.round(hr / 24);
 
   if (days < 7) {
-    return `${days}d ago`;
+    return t('relative.days-ago', { count: days });
   }
 
   if (days < 30) {
-    return `${Math.round(days / 7)}w ago`;
+    return t('relative.weeks-ago', { count: Math.round(days / 7) });
   }
 
   if (days < 365) {
-    return `${Math.round(days / 30)}mo ago`;
+    return t('relative.months-ago', { count: Math.round(days / 30) });
   }
 
-  return `${Math.round(days / 365)}y ago`;
+  return t('relative.years-ago', { count: Math.round(days / 365) });
 }
 
-function formatDuration(min: number | null): string {
+function formatDuration(min: number | null, t: Translator): string {
   if (min === null) {
-    return '—';
+    return t('relative.none');
   }
 
   if (min < 60) {
-    return `${min}m`;
+    return t('duration.minutes', { count: min });
   }
 
   const h = Math.floor(min / 60);
   const m = min % 60;
 
-  return m === 0 ? `${h}h` : `${h}h ${m}m`;
+  return m === 0 ? t('duration.hours', { count: h }) : t('duration.hours-minutes', { hours: h, minutes: m });
 }
 
 function minutesUntil(iso: string): number {
   return Math.round((new Date(iso).getTime() - Date.now()) / 60_000);
 }
 
-function formatTimeUntil(d: Date): string {
+function formatTimeUntil(d: Date, t: Translator): string {
   const diffMs = d.getTime() - Date.now();
 
   if (diffMs <= 0) {
-    return 'now';
+    return t('until.now');
   }
 
   const min = Math.round(diffMs / 60_000);
 
   if (min < 60) {
-    return `in ${min}m`;
+    return t('until.minutes', { count: min });
   }
 
   const hr = Math.round(min / 60);
 
   if (hr < 24) {
-    return `in ${hr}h`;
+    return t('until.hours', { count: hr });
   }
 
   const days = Math.round(hr / 24);
 
   if (days < 7) {
-    return `in ${days}d`;
+    return t('until.days', { count: days });
   }
 
   if (days < 30) {
-    return `in ${Math.round(days / 7)}w`;
+    return t('until.weeks', { count: Math.round(days / 7) });
   }
 
-  return `in ${Math.round(days / 30)}mo`;
+  return t('until.months', { count: Math.round(days / 30) });
 }
 
 function formatScheduledDate(d: Date): string {
@@ -1274,34 +1295,34 @@ function formatScheduledDate(d: Date): string {
   });
 }
 
-function formatDurationShort(min: number): string {
+function formatDurationShort(min: number, t: Translator): string {
   if (min < 60) {
-    return `${min} min`;
+    return t('duration.minutes-long', { count: min });
   }
 
   const h = Math.floor(min / 60);
   const m = min % 60;
 
-  return m === 0 ? `${h}h` : `${h}h ${m}m`;
+  return m === 0 ? t('duration.hours', { count: h }) : t('duration.hours-minutes', { hours: h, minutes: m });
 }
 
-function recurrenceLabel(rrule: string): string | null {
+function recurrenceLabel(rrule: string, t: Translator): string | null {
   const freq = rrule.match(/FREQ=([A-Z]+)/);
 
   if (!freq) {
-    return 'Repeats';
+    return t('recurrence.repeats');
   }
 
   switch (freq[1]) {
     case 'DAILY':
-      return 'Daily';
+      return t('recurrence.daily');
     case 'WEEKLY':
-      return 'Weekly';
+      return t('recurrence.weekly');
     case 'MONTHLY':
-      return 'Monthly';
+      return t('recurrence.monthly');
     case 'YEARLY':
-      return 'Yearly';
+      return t('recurrence.yearly');
     default:
-      return 'Repeats';
+      return t('recurrence.repeats');
   }
 }

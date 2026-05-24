@@ -85,7 +85,7 @@ export function TopProgress() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-0.5">
       <div
-        className="h-full origin-left bg-gradient-to-r from-accent via-accent to-accent/70 shadow-[0_0_8px_var(--color-accent)] transition-all duration-300 ease-out"
+        className="h-full origin-left bg-gradient-to-r from-accent via-accent to-accent/70 shadow-[0_0_8px_var(--color-accent)] transition-all duration-300 ease-out rtl:origin-right rtl:bg-gradient-to-l"
         style={{
           transform: `scaleX(${progress / 100})`,
           opacity: progress > 0 ? 1 : 0,

@@ -18,9 +18,11 @@ import {
   Users,
   Video as VideoIcon,
 } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { toast } from 'sonner';
+
+import { Link } from '@/i18n/navigation';
 
 import type { AttachmentDto, MessageDto, RecordingDto } from '@open-meet/types';
 
@@ -129,6 +131,8 @@ function buildRows(messages: MessageDto[], currentUserId: string | undefined): R
 }
 
 function AttachmentBlock({ a }: { a: AttachmentDto }) {
+  const t = useTranslations('history');
+
   if (a.mime.startsWith('image/')) {
     return (
       <a
@@ -167,7 +171,7 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-medium">{a.url.split('/').pop()}</span>
         <span className="block text-xs text-muted-foreground">
-          {a.mime} · {formatBytes(a.size)}
+          {t('detail.attachment.meta', { mime: a.mime, size: formatBytes(a.size) })}
         </span>
       </span>
     </a>
@@ -203,30 +207,32 @@ function formatRecordingDuration(ms: number): string {
   return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
 }
 
-function formatRelative(iso: string): string {
+type TranslateFn = ReturnType<typeof useTranslations<'history'>>;
+
+function formatRelative(iso: string, t: TranslateFn): string {
   const diff = Date.now() - new Date(iso).getTime();
   const sec = Math.round(diff / 1000);
 
   if (sec < 60) {
-    return 'just now';
+    return t('detail.recordings.relative.just-now');
   }
 
   const min = Math.round(sec / 60);
 
   if (min < 60) {
-    return `${min} min ago`;
+    return t('detail.recordings.relative.minutes', { count: min });
   }
 
   const h = Math.round(min / 60);
 
   if (h < 24) {
-    return `${h} hr ago`;
+    return t('detail.recordings.relative.hours', { count: h });
   }
 
   const d = Math.round(h / 24);
 
   if (d < 30) {
-    return `${d} day${d === 1 ? '' : 's'} ago`;
+    return t('detail.recordings.relative.days', { count: d });
   }
 
   return new Date(iso).toLocaleDateString();
@@ -244,6 +250,7 @@ function statusTone(status: RecordingDto['status']): string {
 }
 
 function RecordingCard({ rec }: { rec: RecordingDto }) {
+  const t = useTranslations('history');
   const playable = rec.status === 'COMPLETED' && rec.url;
   const playerSrc = playable ? `${env.NEXT_PUBLIC_API_URL}${rec.url}` : null;
   const downloadHref = playable ? `${env.NEXT_PUBLIC_API_URL}${rec.url}?download=1` : null;
@@ -256,13 +263,14 @@ function RecordingCard({ rec }: { rec: RecordingDto }) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <h3 className="truncate text-sm font-semibold tracking-tight">
-                Recording from{' '}
-                {startedDate.toLocaleString(undefined, {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
+                {t('detail.recordings.recording-from', {
+                  date: startedDate.toLocaleString(undefined, {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }),
                 })}
               </h3>
               <span
@@ -271,7 +279,7 @@ function RecordingCard({ rec }: { rec: RecordingDto }) {
                   statusTone(rec.status),
                 )}
               >
-                {rec.status.toLowerCase()}
+                {t(`detail.recordings.status.${rec.status.toLowerCase()}`)}
               </span>
             </div>
 
@@ -279,27 +287,27 @@ function RecordingCard({ rec }: { rec: RecordingDto }) {
               {rec.startedByName ? (
                 <div className="inline-flex items-center gap-1.5">
                   <User className="h-3 w-3" />
-                  <dt className="sr-only">Started by</dt>
+                  <dt className="sr-only">{t('detail.recordings.started-by')}</dt>
                   <dd>{rec.startedByName}</dd>
                 </div>
               ) : null}
 
               <div className="inline-flex items-center gap-1.5">
                 <Clock className="h-3 w-3" />
-                <dt className="sr-only">Duration</dt>
+                <dt className="sr-only">{t('detail.recordings.duration')}</dt>
                 <dd className="tabular-nums">{formatRecordingDuration(rec.durationMs)}</dd>
               </div>
 
               {rec.sizeBytes > 0 ? (
                 <div className="inline-flex items-center gap-1.5">
                   <HardDrive className="h-3 w-3" />
-                  <dt className="sr-only">Size</dt>
+                  <dt className="sr-only">{t('detail.recordings.size')}</dt>
                   <dd className="tabular-nums">{formatBytes(rec.sizeBytes)}</dd>
                 </div>
               ) : null}
 
               <span className="text-muted-foreground/70">·</span>
-              <span>{formatRelative(rec.startedAt)}</span>
+              <span>{formatRelative(rec.startedAt, t)}</span>
             </dl>
           </div>
 
@@ -307,7 +315,7 @@ function RecordingCard({ rec }: { rec: RecordingDto }) {
             <Button asChild size="sm" variant="outline" className="gap-1.5">
               <a href={downloadHref} download>
                 <Download className="h-3.5 w-3.5" />
-                Download
+                {t('detail.recordings.download')}
               </a>
             </Button>
           ) : null}
@@ -330,15 +338,17 @@ function RecordingCard({ rec }: { rec: RecordingDto }) {
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-destructive/15 text-destructive">
               <VideoIcon className="h-4 w-4" />
             </span>
-            <p className="text-sm font-medium text-destructive">Recording failed</p>
+            <p className="text-sm font-medium text-destructive">
+              {t('detail.recordings.failed-title')}
+            </p>
             <p className="max-w-md text-xs text-destructive/80">
-              {rec.error ?? 'No further detail was provided by the egress service.'}
+              {rec.error ?? t('detail.recordings.failed-detail')}
             </p>
           </div>
         ) : (
           <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 bg-muted/50 text-muted-foreground">
             <Loader2 className="h-5 w-5 animate-spin" />
-            <p className="text-xs">Processing recording — check back shortly.</p>
+            <p className="text-xs">{t('detail.recordings.processing')}</p>
           </div>
         )}
       </div>
@@ -347,16 +357,17 @@ function RecordingCard({ rec }: { rec: RecordingDto }) {
 }
 
 function RecordingsEmptyState() {
+  const t = useTranslations('history');
+
   return (
     <div className="flex flex-col items-center gap-3 px-6 py-12 text-center">
       <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
         <VideoIcon className="h-5 w-5" />
       </span>
       <div className="flex flex-col gap-1">
-        <p className="text-sm font-medium">No recordings for this meeting</p>
+        <p className="text-sm font-medium">{t('detail.recordings.empty-title')}</p>
         <p className="max-w-sm text-xs text-muted-foreground">
-          The host can start a recording from in-call controls. Recordings stay private to the
-          people who joined this meeting.
+          {t('detail.recordings.empty-description')}
         </p>
       </div>
     </div>
@@ -370,6 +381,8 @@ function RecordingsSection({
   recordings: RecordingDto[];
   isLoading: boolean;
 }) {
+  const t = useTranslations('history');
+
   return (
     <section className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
       <header className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
@@ -377,7 +390,9 @@ function RecordingsSection({
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-destructive/10 text-destructive">
             <VideoIcon className="h-3.5 w-3.5" />
           </span>
-          <h2 className="text-sm font-semibold tracking-tight">Recordings</h2>
+          <h2 className="text-sm font-semibold tracking-tight">
+            {t('detail.recordings.title')}
+          </h2>
           {recordings.length > 0 ? (
             <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
               {recordings.length}
@@ -385,7 +400,7 @@ function RecordingsSection({
           ) : null}
         </div>
         <span className="text-[11px] text-muted-foreground">
-          Visible only to people who joined this meeting.
+          {t('detail.recordings.visibility')}
         </span>
       </header>
 
@@ -407,6 +422,7 @@ function RecordingsSection({
 }
 
 export function HistoryDetail({ code }: { code: string }) {
+  const t = useTranslations('history');
   const { data: user } = useCurrentUser();
   const { data: meeting, isLoading: meetingLoading, error: meetingError } = useHistoryMeeting(code);
   const { data: recordings, isLoading: recordingsLoading } = useHistoryRecordings(code);
@@ -477,10 +493,10 @@ export function HistoryDetail({ code }: { code: string }) {
     try {
       await navigator.clipboard.writeText(meeting.code);
       setCopied(true);
-      toast.success('Meeting code copied');
+      toast.success(t('toast.copied'));
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      toast.error('Could not copy meeting code');
+      toast.error(t('toast.copy-failed'));
     }
   };
 
@@ -488,7 +504,7 @@ export function HistoryDetail({ code }: { code: string }) {
     return (
       <main className="mx-auto max-w-4xl px-4 py-10">
         <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6 text-sm text-destructive">
-          Failed to load this meeting.
+          {t('detail.error')}
         </div>
       </main>
     );
@@ -505,11 +521,13 @@ export function HistoryDetail({ code }: { code: string }) {
   const startedAtIso = meeting.startedAt ?? meeting.createdAt;
   const title =
     meeting.title ??
-    `Meeting on ${new Date(startedAtIso).toLocaleString(undefined, {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    })}`;
+    t('detail.default-title', {
+      date: new Date(startedAtIso).toLocaleString(undefined, {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+      }),
+    });
 
   const durationMs =
     meeting.startedAt && meeting.endedAt
@@ -534,7 +552,7 @@ export function HistoryDetail({ code }: { code: string }) {
         >
           <Link href="/history">
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to history
+            {t('detail.back')}
           </Link>
         </Button>
       </div>
@@ -550,22 +568,24 @@ export function HistoryDetail({ code }: { code: string }) {
                   statusTone,
                 )}
               >
-                {meeting.status.toLowerCase()}
+                {t(`detail.status.${meeting.status.toLowerCase()}`)}
               </span>
             </div>
 
             <dl className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <div className="inline-flex items-center gap-1.5">
                 <Calendar className="h-3.5 w-3.5" />
-                <dt className="sr-only">Started</dt>
+                <dt className="sr-only">{t('detail.started')}</dt>
                 <dd>{formatStartedAt(meeting.startedAt)}</dd>
               </div>
 
               {meeting.hostId === user?.id ? (
                 <div className="inline-flex items-center gap-1.5 text-warning">
                   <Crown className="h-3.5 w-3.5" />
-                  <dt className="sr-only">Role</dt>
-                  <dd className="text-xs font-medium uppercase tracking-wider">Hosted by you</dd>
+                  <dt className="sr-only">{t('detail.role')}</dt>
+                  <dd className="text-xs font-medium uppercase tracking-wider">
+                    {t('detail.hosted-by-you')}
+                  </dd>
                 </div>
               ) : null}
             </dl>
@@ -578,7 +598,7 @@ export function HistoryDetail({ code }: { code: string }) {
               'inline-flex items-center gap-2 rounded-lg border border-border bg-muted/30 px-3 py-1.5 text-xs font-medium transition-colors',
               'hover:bg-muted',
             )}
-            aria-label="Copy meeting code"
+            aria-label={t('detail.copy-aria')}
           >
             <Hash className="h-3.5 w-3.5 text-muted-foreground" />
             <span className="font-mono text-sm tracking-tight">{meeting.code}</span>
@@ -594,22 +614,22 @@ export function HistoryDetail({ code }: { code: string }) {
         <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
           <StatTile
             icon={<Hourglass className="h-3.5 w-3.5" />}
-            label="Duration"
+            label={t('detail.stats.duration')}
             value={formatDuration(durationMs)}
           />
           <StatTile
             icon={<Users className="h-3.5 w-3.5" />}
-            label="Participants"
+            label={t('detail.stats.participants')}
             value={stats.participants.length.toString()}
           />
           <StatTile
             icon={<MessageSquare className="h-3.5 w-3.5" />}
-            label="Messages"
+            label={t('detail.stats.messages')}
             value={messages.length.toString()}
           />
           <StatTile
             icon={<Paperclip className="h-3.5 w-3.5" />}
-            label="Attachments"
+            label={t('detail.stats.attachments')}
             value={stats.attachmentCount.toString()}
           />
         </div>
@@ -617,7 +637,7 @@ export function HistoryDetail({ code }: { code: string }) {
         {stats.participants.length > 0 ? (
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-              In this chat
+              {t('detail.in-this-chat')}
             </span>
             <ul className="flex flex-wrap items-center gap-1.5">
               {stats.participants.slice(0, 8).map((p) => (
@@ -631,7 +651,7 @@ export function HistoryDetail({ code }: { code: string }) {
               ))}
               {stats.participants.length > 8 ? (
                 <li className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-1 text-xs font-medium text-muted-foreground">
-                  +{stats.participants.length - 8}
+                  {t('detail.overflow', { count: stats.participants.length - 8 })}
                 </li>
               ) : null}
             </ul>
@@ -643,17 +663,17 @@ export function HistoryDetail({ code }: { code: string }) {
 
       <section className="flex min-h-[24rem] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         <header className="flex items-center justify-between border-b border-border px-4 py-3">
-          <h2 className="text-sm font-semibold tracking-tight">Chat transcript</h2>
+          <h2 className="text-sm font-semibold tracking-tight">{t('detail.transcript.title')}</h2>
           {messages.length > 0 ? (
             <span className="text-xs text-muted-foreground tabular-nums">
-              {messages.length} {messages.length === 1 ? 'message' : 'messages'}
+              {t('detail.transcript.count', { count: messages.length })}
             </span>
           ) : null}
         </header>
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 sm:px-5">
           {messagesError ? (
-            <p className="text-sm text-destructive">Failed to load messages.</p>
+            <p className="text-sm text-destructive">{t('detail.transcript.error')}</p>
           ) : messagesLoading && messages.length === 0 ? (
             <div className="flex h-full items-center justify-center py-12">
               <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -663,9 +683,7 @@ export function HistoryDetail({ code }: { code: string }) {
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
                 <MessageSquare className="h-5 w-5" />
               </span>
-              <p className="text-sm text-muted-foreground">
-                No messages were sent in this meeting.
-              </p>
+              <p className="text-sm text-muted-foreground">{t('detail.transcript.empty')}</p>
             </div>
           ) : (
             <>
@@ -677,7 +695,9 @@ export function HistoryDetail({ code }: { code: string }) {
                     disabled={isFetchingNextPage}
                     onClick={() => fetchNextPage()}
                   >
-                    {isFetchingNextPage ? 'Loading…' : 'Load earlier messages'}
+                    {isFetchingNextPage
+                      ? t('detail.transcript.loading')
+                      : t('detail.transcript.load-earlier')}
                   </Button>
                 </div>
               ) : null}
@@ -715,7 +735,7 @@ export function HistoryDetail({ code }: { code: string }) {
                             )}
                           >
                             <span className="font-medium text-foreground">
-                              {isMe ? 'You' : m.sender.name}
+                              {isMe ? t('detail.transcript.you') : m.sender.name}
                             </span>
                             <time>{formatTime(m.sentAt)}</time>
                           </div>

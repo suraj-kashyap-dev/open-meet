@@ -2,6 +2,7 @@
 
 import { useParticipants } from '@livekit/components-react';
 import { Crown, Hand, Mic, MicOff, Video, VideoOff, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function ParticipantsPanel({ onClose }: Props) {
+  const t = useTranslations('meeting');
   const participants = useParticipants();
   const meeting = useMeetingStore((s) => s.meeting);
   const raisedHands = useMeetingStore((s) => s.raisedHands);
@@ -23,16 +25,16 @@ export function ParticipantsPanel({ onClose }: Props) {
       <header className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="space-y-0.5">
           <h2 className="text-sm font-semibold tracking-tight">
-            Participants ({participants.length})
+            {t('participants.title', { count: participants.length })}
           </h2>
-          <p className="text-xs text-muted-foreground">People currently in this meeting</p>
+          <p className="text-xs text-muted-foreground">{t('participants.description')}</p>
         </div>
 
         <Button
           variant="ghost"
           size="icon"
           onClick={onClose}
-          aria-label="Close participants"
+          aria-label={t('participants.close')}
           className="-mr-1"
         >
           <X className="h-4 w-4" />
@@ -61,20 +63,20 @@ export function ParticipantsPanel({ onClose }: Props) {
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">
                       {p.name ?? p.identity}
-                      {p.isLocal ? ' (you)' : ''}
+                      {p.isLocal ? ` ${t('participants.you')}` : ''}
                     </span>
 
                     <span className="flex items-center gap-2 text-xs text-muted-foreground">
                       {isHost ? (
                         <span className="inline-flex items-center gap-1">
                           <Crown className="h-3 w-3 text-warning" />
-                          Host
+                          {t('participants.host')}
                         </span>
                       ) : null}
                       {hasHand ? (
                         <span className="inline-flex items-center gap-1 text-warning">
                           <Hand className="h-3 w-3" />
-                          Hand raised
+                          {t('participants.hand-raised')}
                         </span>
                       ) : null}
                     </span>

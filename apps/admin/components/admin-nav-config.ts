@@ -8,12 +8,12 @@ import {
 } from 'lucide-react';
 
 export interface AdminNavChild {
-  label: string;
+  labelKey: string;
   href: string;
 }
 
 export interface AdminNavItem {
-  label: string;
+  labelKey: string;
   href: string;
   icon: LucideIcon;
   badge?: string;
@@ -22,36 +22,36 @@ export interface AdminNavItem {
 }
 
 export interface AdminNavSection {
-  label: string;
+  labelKey: string;
   items: AdminNavItem[];
 }
 
 export const adminNav: AdminNavSection[] = [
   {
-    label: 'Overview',
-    items: [{ label: 'Dashboard', href: '/', icon: LayoutDashboard }],
+    labelKey: 'sections.overview',
+    items: [{ labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard }],
   },
   {
-    label: 'Manage',
+    labelKey: 'sections.manage',
     items: [
-      { label: 'Users', href: '/users', icon: Users },
-      { label: 'Meetings', href: '/meetings', icon: CalendarRange },
+      { labelKey: 'items.users', href: '/users', icon: Users },
+      { labelKey: 'items.meetings', href: '/meetings', icon: CalendarRange },
     ],
   },
   {
-    label: 'Insights',
-    items: [{ label: 'Analytics', href: '/analytics', icon: BarChart3 }],
+    labelKey: 'sections.insights',
+    items: [{ labelKey: 'items.analytics', href: '/analytics', icon: BarChart3 }],
   },
   {
-    label: 'System',
+    labelKey: 'sections.system',
     items: [
       {
-        label: 'Settings',
+        labelKey: 'items.settings',
         href: '/settings',
         icon: Settings,
         children: [
-          { label: 'Administrators', href: '/settings/administrators' },
-          { label: 'Configuration', href: '/settings/configuration' },
+          { labelKey: 'items.administrators', href: '/settings/administrators' },
+          { labelKey: 'items.configuration', href: '/settings/configuration' },
         ],
       },
     ],

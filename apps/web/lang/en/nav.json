@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Profile",
+    "profile-description": "Edit your account details",
+    "settings": "Settings",
+    "settings-description": "Defaults, privacy, language",
+    "sign-out": "Sign out"
+  },
+  "user-menu-label": "Open account menu",
+  "command": {
+    "placeholder": "Type a command or meeting code…",
+    "no-results": "No results.",
+    "group-meetings": "Meetings",
+    "group-appearance": "Appearance",
+    "new-meeting": "New meeting",
+    "join": "Join “{code}”",
+    "switch-to-light": "Switch to light mode",
+    "switch-to-dark": "Switch to dark mode",
+    "match-system-theme": "Match system theme",
+    "home": "Home",
+    "sign-out": "Sign out",
+    "create-meeting-error": "Could not create meeting",
+    "join-code-required": "Type a meeting code first"
+  }
+}

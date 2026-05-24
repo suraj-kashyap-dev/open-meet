@@ -1,0 +1,80 @@
+{
+  "eyebrow": "الإعدادات",
+  "title": "المسؤولون",
+  "access-summary": "{count, plural, zero {لا يملك أحد} one {يملك شخص واحد} two {يملك شخصان} few {يملك # أشخاص} many {يملك # شخصًا} other {يملك # شخص}} صلاحية الوصول إلى وحدة التحكم هذه.",
+  "invite-button": "دعوة مسؤول",
+  "empty": "لا يوجد مسؤولون بعد.",
+  "roles": {
+    "admin": "مسؤول",
+    "superadmin": "مسؤول أعلى"
+  },
+  "table": {
+    "administrator": "المسؤول",
+    "role": "الدور",
+    "joined": "تاريخ الانضمام",
+    "last-login": "آخر تسجيل دخول",
+    "never": "أبدًا",
+    "actions": "الإجراءات",
+    "actions-for": "إجراءات لـ {name}",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "delete-dialog": {
+    "title": "حذف هذا المسؤول؟",
+    "description": "سيفقد {name} ({email}) صلاحية الوصول إلى وحدة تحكم المسؤول فورًا. لا يمكن التراجع عن هذا الإجراء.",
+    "cancel": "إلغاء",
+    "confirm": "حذف المسؤول",
+    "deleting": "جارٍ الحذف…",
+    "success": "تم حذف {name}",
+    "error": "تعذّر حذف المسؤول"
+  },
+  "invite-dialog": {
+    "title": "دعوة مسؤول",
+    "description": "سنرسل رابطًا آمنًا عبر البريد الإلكتروني. سيقومون بتعيين كلمة المرور الخاصة بهم لتفعيل الحساب.",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "role": "الدور",
+    "role-admin": "مسؤول",
+    "role-superadmin": "مسؤول أعلى",
+    "cancel": "إلغاء",
+    "submit": "إرسال الدعوة",
+    "submitting": "جارٍ الإرسال…",
+    "success": "تم إرسال الدعوة إلى {email}",
+    "error": "تعذّر إرسال الدعوة",
+    "validation": {
+      "invalid-email": "أدخل بريدًا إلكترونيًا صالحًا",
+      "name-required": "الاسم مطلوب"
+    }
+  },
+  "edit-dialog": {
+    "title": "تعديل المسؤول",
+    "name": "الاسم",
+    "role": "الدور",
+    "role-admin": "مسؤول",
+    "role-superadmin": "مسؤول أعلى",
+    "cancel": "إلغاء",
+    "submit": "حفظ التغييرات",
+    "submitting": "جارٍ الحفظ…",
+    "success": "تم تحديث {name}",
+    "error": "تعذّر تحديث المسؤول",
+    "validation": {
+      "name-required": "الاسم مطلوب"
+    }
+  },
+  "pending": {
+    "heading": "الدعوات المعلّقة",
+    "description": "الدعوات التي لم يتم قبولها بعد. أعد إرسال البريد الإلكتروني أو ألغِ الوصول.",
+    "loading-error": "تعذّر تحميل الدعوات.",
+    "empty": "لا توجد دعوات معلّقة.",
+    "status-pending": "معلّقة",
+    "status-expired": "منتهية",
+    "expires": "تنتهي في {when}",
+    "expired-at": "انتهت في {when}",
+    "resend-label": "إعادة إرسال الدعوة إلى {email}",
+    "revoke-label": "إلغاء الدعوة إلى {email}",
+    "resend-success": "تمت إعادة إرسال الدعوة إلى {email}",
+    "resend-error": "تعذّر إعادة إرسال الدعوة",
+    "revoke-success": "تم إلغاء الدعوة لـ {email}",
+    "revoke-error": "تعذّر إلغاء الدعوة"
+  }
+}

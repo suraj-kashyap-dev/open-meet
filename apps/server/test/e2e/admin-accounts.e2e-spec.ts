@@ -95,6 +95,20 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(res.status).toBe(401);
     });
 
+    it('should return a localized error message when x-locale is set', async () => {
+      const { cookie } = await loginAdmin(app, REGULAR);
+
+      const res = await http(app)
+        .post('/api/admin/accounts/invites')
+        .set('Cookie', cookie)
+        .set('x-locale', 'ar')
+        .send({ email: 'new@example.com', name: 'New Admin' });
+
+      expect(res.status).toBe(403);
+      expect(res.body.error.code).toBe('FORBIDDEN');
+      expect(res.body.error.message).toBe('صلاحيات المسؤول الرئيسي مطلوبة لهذا الإجراء');
+    });
+
     it('should conflict when inviting an email that already belongs to an admin', async () => {
       const { cookie } = await loginAdmin(app, SUPER);
 

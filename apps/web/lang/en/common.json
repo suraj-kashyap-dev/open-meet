@@ -1,0 +1,24 @@
+{
+  "language-switcher": { "label": "Language" },
+  "languages": {
+    "en": "English",
+    "ar": "العربية"
+  },
+  "or": "or",
+  "loading": "Loading…",
+  "google": {
+    "continue": "Continue with Google",
+    "redirecting": "Redirecting to Google…"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "We hit an unexpected error. You can retry or head back home.",
+    "retry": "Try again",
+    "home": "Home"
+  },
+  "not-found": {
+    "title": "Page not found",
+    "description": "The page you’re looking for doesn’t exist or has moved.",
+    "back": "Back to home"
+  }
+}

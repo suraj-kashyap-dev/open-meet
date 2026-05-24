@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Settings",
+  "title": "Administrators",
+  "access-summary": "{count, plural, one {# person has} other {# people have}} access to this console.",
+  "invite-button": "Invite admin",
+  "empty": "No administrators yet.",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "table": {
+    "administrator": "Administrator",
+    "role": "Role",
+    "joined": "Joined",
+    "last-login": "Last login",
+    "never": "never",
+    "actions": "Actions",
+    "actions-for": "Actions for {name}",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "delete-dialog": {
+    "title": "Delete this admin?",
+    "description": "{name} ({email}) will lose access to the admin console immediately. This cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Delete admin",
+    "deleting": "Deleting…",
+    "success": "Deleted {name}",
+    "error": "Could not delete admin"
+  },
+  "invite-dialog": {
+    "title": "Invite an admin",
+    "description": "We'll email a secure link. They set their own password to activate the account.",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Cancel",
+    "submit": "Send invite",
+    "submitting": "Sending…",
+    "success": "Invitation emailed to {email}",
+    "error": "Could not send invite",
+    "validation": {
+      "invalid-email": "Enter a valid email",
+      "name-required": "Name is required"
+    }
+  },
+  "edit-dialog": {
+    "title": "Edit admin",
+    "name": "Name",
+    "role": "Role",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Cancel",
+    "submit": "Save changes",
+    "submitting": "Saving…",
+    "success": "Updated {name}",
+    "error": "Could not update admin",
+    "validation": {
+      "name-required": "Name is required"
+    }
+  },
+  "pending": {
+    "heading": "Pending invites",
+    "description": "Invites that haven't been accepted yet. Resend the email or revoke access.",
+    "loading-error": "Failed to load invites.",
+    "empty": "No pending invites.",
+    "status-pending": "pending",
+    "status-expired": "expired",
+    "expires": "Expires {when}",
+    "expired-at": "Expired {when}",
+    "resend-label": "Resend invite to {email}",
+    "revoke-label": "Revoke invite to {email}",
+    "resend-success": "Invite re-sent to {email}",
+    "resend-error": "Could not resend invite",
+    "revoke-success": "Revoked invite for {email}",
+    "revoke-error": "Could not revoke invite"
+  }
+}

@@ -1,30 +1,30 @@
 import { History, Settings, User, type LucideIcon } from 'lucide-react';
 
 export interface AccountNavItem {
-  label: string;
+  labelKey: string;
+  descriptionKey: string;
   href: string;
   icon: LucideIcon;
-  description?: string;
 }
 
 export const accountNav: AccountNavItem[] = [
   {
-    label: 'Profile',
+    labelKey: 'sidebar.profile-label',
+    descriptionKey: 'sidebar.profile-description',
     href: '/profile',
     icon: User,
-    description: 'Your account details',
   },
   {
-    label: 'Settings',
+    labelKey: 'sidebar.settings-label',
+    descriptionKey: 'sidebar.settings-description',
     href: '/settings',
     icon: Settings,
-    description: 'Defaults, privacy, language',
   },
   {
-    label: 'Meeting history',
+    labelKey: 'sidebar.history-label',
+    descriptionKey: 'sidebar.history-description',
     href: '/history',
     icon: History,
-    description: 'Past meetings, chats and files',
   },
 ];
 

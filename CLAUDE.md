@@ -105,9 +105,19 @@ Errors flow through `GlobalExceptionFilter`. Use `HttpException` subclasses, nev
 - Server Components by default; `"use client"` only when needed
 - Data fetching = TanStack Query (NOT `useEffect`)
 - Forms = react-hook-form + zod
-- Navigation = `next/navigation`
+- Navigation = locale-aware `Link`/`useRouter`/`usePathname`/`redirect` from `@/i18n/navigation`; `useSearchParams`/`useParams` still come from `next/navigation`
 - Images = `next/image`
 - All API calls go through `lib/api.ts` (typed fetch wrapper, `credentials: 'include'`)
+
+### Internationalization (i18n)
+
+The whole app is localized. **English (`en`) is the source of truth; Arabic (`ar`) is the second locale (RTL).**
+
+- **Frontend** (`apps/web`, `apps/admin`): `next-intl` v4 with URL-prefixed routing (`/[locale]/…`). Locale config in `apps/{web,admin}/i18n/` (`routing.ts`, `request.ts`, `navigation.ts`) + `middleware.ts`. Read strings with `useTranslations('<namespace>')` (client) or `getTranslations('<namespace>')` (server). Authenticated/panel routes are `force-dynamic`; statically rendered pages call `setRequestLocale(locale)`. RTL `dir` is set on `<html>` by the locale layout.
+- **Backend** (`apps/server`): `nestjs-i18n`. Request locale resolves from the `x-locale` header (the typed api client sends the active locale), then `?lang=`, then `Accept-Language`. Localize via `I18nContext.current()` or the injected `I18nService`.
+- **Message files**: one per namespace under `<app>/lang/<locale>/<namespace>.json` (Laravel/Filament-style directory layout) — `apps/web/lang/`, `apps/admin/lang/`, `apps/server/lang/`. **Keys are kebab-case.** Values use ICU MessageFormat (`{name}`, plurals).
+
+**Rule — keep locales in lockstep:** whenever you add, rename, or remove a translation key, do it in **English first**, then mirror the exact same change into **every** other locale. Each locale must contain the same namespace files with identical keys, nesting, and key order — only the values differ. Run `pnpm i18n:verify` before committing; CI (`.github/workflows/i18n.yml`) enforces it.
 
 ### Security
 
@@ -132,6 +142,7 @@ pnpm build                      # turbo: type-check & build all packages
 pnpm typecheck                  # turbo: tsc --noEmit everywhere
 pnpm lint                       # turbo: eslint everywhere
 pnpm format                     # prettier --write across repo
+pnpm i18n:verify                # every locale must mirror the English base (files, keys, nesting, order)
 
 # API-specific (from apps/server or root via --filter)
 pnpm --filter @open-meet/server prisma:generate
@@ -164,10 +175,12 @@ docker compose logs -f livekit
 | NestJS global pipe/filter/interceptor | `apps/server/src/common/`            |
 | API entry point + CORS allow-list     | `apps/server/src/main.ts`            |
 | Shared UI components (`cn`, shadcn)   | `packages/ui/src/`                   |
-| User app entry                        | `apps/web/app/layout.tsx`            |
-| Admin app entry                       | `apps/admin/app/layout.tsx`          |
+| User app entry                        | `apps/web/app/[locale]/layout.tsx`   |
+| Admin app entry                       | `apps/admin/app/[locale]/layout.tsx` |
 | Typed API client (per app)            | `apps/{web,admin}/lib/api/client.ts` |
 | Zustand stores                        | `apps/web/stores/`                   |
+| Translations (en base + ar)           | `apps/{web,admin,server}/lang/<locale>/`|
+| i18n config (frontend)                | `apps/{web,admin}/i18n/`             |
 
 ## Testing discipline — non-negotiable
 

@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "console": "وحدة تحكم المسؤول",
+    "visit-open-meet": "زيارة Open Meet"
+  },
+  "sections": {
+    "overview": "نظرة عامة",
+    "manage": "الإدارة",
+    "insights": "الإحصاءات",
+    "system": "النظام"
+  },
+  "items": {
+    "dashboard": "لوحة التحكم",
+    "users": "المستخدمون",
+    "meetings": "الاجتماعات",
+    "analytics": "التحليلات",
+    "settings": "الإعدادات",
+    "administrators": "المسؤولون",
+    "configuration": "الإعدادات العامة"
+  },
+  "topbar": {
+    "root": "الإدارة",
+    "dashboard": "لوحة التحكم",
+    "open-sidebar": "فتح التنقل",
+    "hide-sidebar": "إخفاء التنقل",
+    "show-sidebar": "إظهار التنقل",
+    "sign-out": "تسجيل الخروج"
+  }
+}

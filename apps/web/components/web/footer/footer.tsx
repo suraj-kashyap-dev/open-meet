@@ -7,10 +7,11 @@ import {
   Users,
   type LucideIcon,
 } from 'lucide-react';
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
 import { Logo } from '@open-meet/ui/logo';
 import { Button } from '@open-meet/ui/button';
+import { Link } from '@/i18n/navigation';
 import { GITHUB_URL } from '@/lib/constants';
 
 const STACK = [
@@ -22,7 +23,9 @@ const STACK = [
   { name: 'Tailwind v4', href: 'https://tailwindcss.com' },
 ];
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations('footer');
+
   return (
     <footer className="relative isolate overflow-hidden bg-background">
       <div
@@ -55,15 +58,14 @@ export function Footer() {
             </Link>
 
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Open-source video conferencing for teams that move fast. Self-host in minutes, own
-              your data forever.
+              {t('tagline')}
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <Button asChild size="sm">
                 <a href={GITHUB_URL} target="_blank" rel="noreferrer noopener" className="gap-1.5">
                   <Github className="h-3.5 w-3.5" />
-                  Star on GitHub
+                  {t('star')}
                 </a>
               </Button>
 
@@ -74,7 +76,7 @@ export function Footer() {
                   rel="noreferrer noopener"
                   className="gap-1.5"
                 >
-                  Report an issue
+                  {t('report-issue')}
                   <ArrowUpRight className="h-3 w-3" />
                 </a>
               </Button>
@@ -90,29 +92,46 @@ export function Footer() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success/60" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
               </span>
-              All systems operational
+              {t('status')}
               <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
             </a>
           </div>
 
-          <FooterCol className="md:col-span-2" eyebrow="Navigate" title="Product" icon={LayoutGrid}>
-            <FooterLink href="/">Dashboard</FooterLink>
-            <FooterLink href="/history">History</FooterLink>
-            <FooterLink href="/account">Account</FooterLink>
+          <FooterCol
+            className="md:col-span-2"
+            eyebrow={t('product.eyebrow')}
+            title={t('product.title')}
+            icon={LayoutGrid}
+          >
+            <FooterLink href="/">{t('product.dashboard')}</FooterLink>
+            <FooterLink href="/history">{t('product.history')}</FooterLink>
+            <FooterLink href="/account">{t('product.account')}</FooterLink>
           </FooterCol>
 
-          <FooterCol className="md:col-span-2" eyebrow="Learn" title="Resources" icon={BookOpen}>
-            <FooterLink href={`${GITHUB_URL}/blob/main/README.md`}>Self-host guide</FooterLink>
-            <FooterLink href={`${GITHUB_URL}#api-reference`}>API reference</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>MIT license</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/releases`}>Changelog</FooterLink>
+          <FooterCol
+            className="md:col-span-2"
+            eyebrow={t('resources.eyebrow')}
+            title={t('resources.title')}
+            icon={BookOpen}
+          >
+            <FooterLink href={`${GITHUB_URL}/blob/main/README.md`}>
+              {t('resources.self-host')}
+            </FooterLink>
+            <FooterLink href={`${GITHUB_URL}#api-reference`}>{t('resources.api')}</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>{t('resources.license')}</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/releases`}>{t('resources.changelog')}</FooterLink>
           </FooterCol>
 
-          <FooterCol className="md:col-span-3" eyebrow="Join in" title="Community" icon={Users}>
-            <FooterLink href={GITHUB_URL}>GitHub repo</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/issues`}>Issues &amp; bug reports</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/discussions`}>Discussions</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/pulls`}>Contribute</FooterLink>
+          <FooterCol
+            className="md:col-span-3"
+            eyebrow={t('community.eyebrow')}
+            title={t('community.title')}
+            icon={Users}
+          >
+            <FooterLink href={GITHUB_URL}>{t('community.repo')}</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/issues`}>{t('community.issues')}</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/discussions`}>{t('community.discussions')}</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/pulls`}>{t('community.contribute')}</FooterLink>
           </FooterCol>
         </div>
 
@@ -130,10 +149,10 @@ export function Footer() {
 
               <div className="flex flex-col leading-tight">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                  Powered by
+                  {t('powered-by')}
                 </span>
 
-                <span className="text-sm font-semibold tracking-tight">Built with open tech</span>
+                <span className="text-sm font-semibold tracking-tight">{t('built-with')}</span>
               </div>
             </div>
 
@@ -158,7 +177,7 @@ export function Footer() {
         <div className="flex flex-col-reverse items-start gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-muted-foreground">
             <span className="font-medium tracking-tight">
-              © {new Date().getFullYear()} Open Meet
+              {t('copyright', { year: new Date().getFullYear() })}
             </span>
 
             <span className="h-3 w-px bg-border" aria-hidden />
@@ -175,9 +194,12 @@ export function Footer() {
             <span className="h-3 w-px bg-border" aria-hidden />
 
             <span className="inline-flex items-center gap-1.5">
-              Crafted with
-              <Heart className="h-3 w-3 fill-destructive text-destructive" aria-label="love" />
-              by the community
+              {t('crafted-prefix')}
+              <Heart
+                className="h-3 w-3 fill-destructive text-destructive"
+                aria-label={t('love')}
+              />
+              {t('crafted-suffix')}
             </span>
           </div>
 

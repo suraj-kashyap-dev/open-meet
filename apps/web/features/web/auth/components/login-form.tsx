@@ -2,8 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, LogIn } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -17,21 +18,13 @@ import { useGoogleAuthEnabled, useLogin } from '@/features/web/auth/hooks/use-au
 import { REDIRECT_PARAM, resolveRedirect } from '@/features/web/auth/lib/redirect';
 import { ApiClientError } from '@/lib/api/client';
 
-const OAUTH_ERROR_MESSAGES: Record<string, string> = {
-  google_denied: 'Google sign-in was cancelled.',
-  state_mismatch: 'Sign-in session expired. Please try again.',
-  missing_code: 'Google did not return an authorization code.',
-  login_failed: 'Could not sign you in with Google. Please try again.',
-};
-
-const schema = z.object({
-  email: z.string().email('Enter a valid email'),
-  password: z.string().min(1, 'Password is required'),
-});
-
-type FormValues = z.infer<typeof schema>;
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 export function LoginForm() {
+  const t = useTranslations('auth');
   const searchParams = useSearchParams();
   const login = useLogin(resolveRedirect(searchParams.get(REDIRECT_PARAM)));
   const { data: googleEnabled } = useGoogleAuthEnabled();
@@ -44,8 +37,20 @@ export function LoginForm() {
 
     oauthErrorShown.current = true;
 
-    toast.error(OAUTH_ERROR_MESSAGES[error] ?? 'Sign-in failed. Please try again.');
-  }, [searchParams]);
+    const key = `oauth.${error}` as const;
+    const message = t.has(key) ? t(key) : t('oauth.fallback');
+
+    toast.error(message);
+  }, [searchParams, t]);
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t('validation.invalid-email')),
+        password: z.string().min(1, t('validation.password-required')),
+      }),
+    [t],
+  );
 
   const {
     register,
@@ -60,7 +65,7 @@ export function LoginForm() {
     try {
       await login.mutateAsync(values);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Something went wrong';
+      const message = err instanceof ApiClientError ? err.message : t('validation.generic');
 
       toast.error(message);
     }
@@ -72,13 +77,13 @@ export function LoginForm() {
     <div className="space-y-5">
       <form onSubmit={onSubmit} className="space-y-5" noValidate>
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('login.email')}</Label>
 
           <Input
             id="email"
             type="email"
             autoComplete="email"
-            placeholder="you@example.com"
+            placeholder={t('login.email-placeholder')}
             {...register('email')}
           />
 
@@ -86,13 +91,13 @@ export function LoginForm() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('login.password')}</Label>
 
           <Input
             id="password"
             type="password"
             autoComplete="current-password"
-            placeholder="Password"
+            placeholder={t('login.password')}
             {...register('password')}
           />
 
@@ -104,7 +109,7 @@ export function LoginForm() {
         <Button type="submit" size="lg" className="w-full" disabled={pending}>
           {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
 
-          {pending ? 'Signing in…' : 'Sign in'}
+          {pending ? t('login.submitting') : t('login.submit')}
         </Button>
       </form>
 
@@ -112,7 +117,7 @@ export function LoginForm() {
         <>
           <AuthDivider />
 
-          <GoogleSignInButton label="Sign in with Google" />
+          <GoogleSignInButton label={t('login.google')} />
         </>
       ) : null}
     </div>

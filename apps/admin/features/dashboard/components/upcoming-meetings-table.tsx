@@ -103,17 +103,17 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
         ),
       }),
       column.accessor('inviteeCount', {
-        header: () => <span className="block text-right">Invitees</span>,
-        cell: (info) => <span className="block text-right tabular-nums">{info.getValue()}</span>,
+        header: () => <span className="block text-end">Invitees</span>,
+        cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('durationMin', {
-        header: () => <span className="block text-right">Duration</span>,
+        header: () => <span className="block text-end">Duration</span>,
         cell: (info) => (
-          <span className="block text-right tabular-nums">{formatDuration(info.getValue())}</span>
+          <span className="block text-end tabular-nums">{formatDuration(info.getValue())}</span>
         ),
       }),
       column.accessor('scheduledFor', {
-        header: () => <span className="block text-right">When</span>,
+        header: () => <span className="block text-end">When</span>,
         cell: (info) => {
           const startsIn = minutesUntil(info.getValue());
           const isStartingSoon = startsIn >= 0 && startsIn <= 15;
@@ -121,7 +121,7 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
           return (
             <span
               className={cn(
-                'block text-right text-muted-foreground',
+                'block text-end text-muted-foreground',
                 isStartingSoon && 'font-medium text-accent',
               )}
             >

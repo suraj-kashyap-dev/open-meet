@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+
+import { Link, usePathname } from '@/i18n/navigation';
 
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
@@ -10,6 +11,7 @@ import { cn } from '@open-meet/ui/cn';
 import { accountNav, isAccountActive } from './nav-config';
 
 export function AccountSidebar() {
+  const t = useTranslations('account');
   const pathname = usePathname();
   const { data: user } = useCurrentUser();
 
@@ -28,7 +30,7 @@ export function AccountSidebar() {
 
         <nav className="rounded-2xl border border-border bg-card p-2 shadow-sm">
           <p className="px-3 pb-1 pt-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            Account
+            {t('sidebar.heading')}
           </p>
           <ul className="flex flex-col gap-0.5">
             {accountNav.map((item) => {
@@ -58,18 +60,16 @@ export function AccountSidebar() {
                     </span>
                     <span className="flex min-w-0 flex-1 flex-col">
                       <span className={cn('truncate font-medium', active ? '' : 'text-foreground')}>
-                        {item.label}
+                        {t(item.labelKey)}
                       </span>
-                      {item.description ? (
-                        <span
-                          className={cn(
-                            'truncate text-xs',
-                            active ? 'text-accent/80' : 'text-muted-foreground',
-                          )}
-                        >
-                          {item.description}
-                        </span>
-                      ) : null}
+                      <span
+                        className={cn(
+                          'truncate text-xs',
+                          active ? 'text-accent/80' : 'text-muted-foreground',
+                        )}
+                      >
+                        {t(item.descriptionKey)}
+                      </span>
                     </span>
                   </Link>
                 </li>

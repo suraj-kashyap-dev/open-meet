@@ -1,7 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -29,12 +30,10 @@ import {
 import { useUpdateAdminAccount } from '@/features/accounts/hooks/use-admin-accounts';
 import { ApiClientError } from '@/lib/api/client';
 
-const schema = z.object({
-  name: z.string().min(1, 'Name is required').max(120),
-  role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
-});
-
-type FormValues = z.infer<typeof schema>;
+interface FormValues {
+  name: string;
+  role: AdminRole;
+}
 
 interface Props {
   admin: AdminAccountDto | null;
@@ -42,7 +41,17 @@ interface Props {
 }
 
 export function EditAdminDialog({ admin, onClose }: Props) {
+  const t = useTranslations('accounts');
   const update = useUpdateAdminAccount();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(1, t('edit-dialog.validation.name-required')).max(120),
+        role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
+      }),
+    [t],
+  );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -63,10 +72,10 @@ export function EditAdminDialog({ admin, onClose }: Props) {
 
     try {
       await update.mutateAsync({ id: admin.id, dto: values });
-      toast.success(`Updated ${values.name}`);
+      toast.success(t('edit-dialog.success', { name: values.name }));
       onClose();
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not update admin';
+      const message = err instanceof ApiClientError ? err.message : t('edit-dialog.error');
       toast.error(message);
     }
   });
@@ -75,13 +84,13 @@ export function EditAdminDialog({ admin, onClose }: Props) {
     <Dialog open={Boolean(admin)} onOpenChange={(o) => (!o ? onClose() : null)}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Edit admin</DialogTitle>
+          <DialogTitle>{t('edit-dialog.title')}</DialogTitle>
           <DialogDescription>{admin?.email}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={onSubmit} className="space-y-3">
           <div className="space-y-1.5">
-            <Label htmlFor="edit-name">Name</Label>
+            <Label htmlFor="edit-name">{t('edit-dialog.name')}</Label>
             <Input id="edit-name" autoComplete="off" {...form.register('name')} />
             {form.formState.errors.name ? (
               <p className="text-xs text-destructive">{form.formState.errors.name.message}</p>
@@ -89,7 +98,7 @@ export function EditAdminDialog({ admin, onClose }: Props) {
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="edit-role">Role</Label>
+            <Label htmlFor="edit-role">{t('edit-dialog.role')}</Label>
             <Select
               value={form.watch('role')}
               onValueChange={(v) => form.setValue('role', v as AdminRole)}
@@ -98,18 +107,20 @@ export function EditAdminDialog({ admin, onClose }: Props) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={AdminRole.ADMIN}>Admin</SelectItem>
-                <SelectItem value={AdminRole.SUPERADMIN}>Superadmin</SelectItem>
+                <SelectItem value={AdminRole.ADMIN}>{t('edit-dialog.role-admin')}</SelectItem>
+                <SelectItem value={AdminRole.SUPERADMIN}>
+                  {t('edit-dialog.role-superadmin')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <DialogFooter className="pt-2">
             <Button type="button" variant="outline" onClick={onClose} disabled={update.isPending}>
-              Cancel
+              {t('edit-dialog.cancel')}
             </Button>
             <Button type="submit" disabled={update.isPending}>
-              {update.isPending ? 'Saving…' : 'Save changes'}
+              {update.isPending ? t('edit-dialog.submitting') : t('edit-dialog.submit')}
             </Button>
           </DialogFooter>
         </form>

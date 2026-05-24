@@ -10,6 +10,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
+import type { I18nService } from 'nestjs-i18n';
+
 import type { AdminRepository } from '@/modules/admin/admin.repository';
 import type { AdminInviteRepository } from '@/modules/admin/accounts/admin-invite.repository';
 import { AdminAccountsService } from '@/modules/admin/accounts/accounts.service';
@@ -26,6 +28,7 @@ describe('AdminAccountsService', () => {
   let invites: Record<string, ReturnType<typeof vi.fn>>;
   let mail: { send: ReturnType<typeof vi.fn> };
   let config: { getOrThrow: ReturnType<typeof vi.fn> };
+  let i18n: { translate: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     admins = {
@@ -80,12 +83,14 @@ describe('AdminAccountsService', () => {
 
     mail = { send: vi.fn().mockResolvedValue(undefined) };
     config = { getOrThrow: vi.fn().mockReturnValue('http://localhost:3001') };
+    i18n = { translate: vi.fn((key: string) => key) };
 
     service = new AdminAccountsService(
       admins as unknown as AdminRepository,
       invites as unknown as AdminInviteRepository,
       mail as unknown as MailService,
       config as unknown as ConfigService<ApiEnv, true>,
+      i18n as unknown as I18nService,
     );
   });
 

@@ -66,21 +66,21 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
         ),
       }),
       column.accessor('participantCount', {
-        header: () => <span className="block text-right">Participants</span>,
-        cell: (info) => <span className="block text-right tabular-nums">{info.getValue()}</span>,
+        header: () => <span className="block text-end">Participants</span>,
+        cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('durationMinutes', {
-        header: () => <span className="block text-right">Duration</span>,
+        header: () => <span className="block text-end">Duration</span>,
         cell: (info) => (
-          <span className="block text-right tabular-nums">
+          <span className="block text-end tabular-nums">
             {info.getValue() !== null ? `${info.getValue()}m` : '—'}
           </span>
         ),
       }),
       column.accessor('startedAt', {
-        header: () => <span className="block text-right">Started</span>,
+        header: () => <span className="block text-end">Started</span>,
         cell: (info) => (
-          <span className="block text-right text-muted-foreground">
+          <span className="block text-end text-muted-foreground">
             {formatRelative(info.getValue())}
           </span>
         ),

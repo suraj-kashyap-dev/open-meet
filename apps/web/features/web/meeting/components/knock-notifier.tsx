@@ -1,6 +1,7 @@
 'use client';
 
 import { Check, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -30,6 +31,7 @@ interface Props {
 }
 
 export function KnockNotifier({ socket, code }: Props) {
+  const t = useTranslations('meeting');
   const [pending, setPending] = useState<PendingKnock[]>([]);
   const knockSound = useSound('knock');
   const notification = useNotification();
@@ -47,10 +49,10 @@ export function KnockNotifier({ socket, code }: Props) {
 
         return [...prev, payload];
       });
-      toast.message(`${payload.name} is asking to join`);
+      toast.message(t('knock.toast-asking', { name: payload.name }));
       knockSound.play();
-      notification.notify(`${payload.name} wants to join`, {
-        body: 'Open the meeting to let them in.',
+      notification.notify(t('knock.notify-title', { name: payload.name }), {
+        body: t('knock.notify-body'),
         tag: `knock-${code}`,
       });
     };
@@ -66,7 +68,7 @@ export function KnockNotifier({ socket, code }: Props) {
       socket.off(ServerEvent.KNOCK_REQUESTED, onRequested);
       socket.off(ServerEvent.KNOCK_CANCELLED, onCancelled);
     };
-  }, [socket, code, knockSound, notification]);
+  }, [socket, code, knockSound, notification, t]);
 
   const respond = (userId: string, admit: boolean) => {
     if (!socket) {
@@ -97,7 +99,7 @@ export function KnockNotifier({ socket, code }: Props) {
 
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">{knock.name}</p>
-              <p className="text-xs text-muted-foreground">wants to join the meeting</p>
+              <p className="text-xs text-muted-foreground">{t('knock.wants-to-join')}</p>
             </div>
 
             <div className="flex items-center gap-1.5">
@@ -105,19 +107,19 @@ export function KnockNotifier({ socket, code }: Props) {
                 size="sm"
                 variant="outline"
                 onClick={() => respond(knock.userId, false)}
-                aria-label={`Deny ${knock.name}`}
+                aria-label={t('knock.deny-aria', { name: knock.name })}
               >
                 <X className="h-4 w-4" />
-                Deny
+                {t('knock.deny')}
               </Button>
               <Button
                 size="sm"
                 variant="accent"
                 onClick={() => respond(knock.userId, true)}
-                aria-label={`Admit ${knock.name}`}
+                aria-label={t('knock.admit-aria', { name: knock.name })}
               >
                 <Check className="h-4 w-4" />
-                Admit
+                {t('knock.admit')}
               </Button>
             </div>
           </div>

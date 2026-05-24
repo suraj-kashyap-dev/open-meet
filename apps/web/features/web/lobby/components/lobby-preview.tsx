@@ -1,6 +1,7 @@
 'use client';
 
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
 import { UserAvatar } from '@open-meet/ui/user-avatar';
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export function LobbyPreview({ media, displayName, avatar }: Props) {
+  const t = useTranslations('lobby');
   const stream = media.stream;
 
   const attachStream = useCallback(
@@ -56,7 +58,7 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
               className="h-24 w-24 ring-2 ring-white/10 sm:h-28 sm:w-28"
               fallbackClassName="bg-zinc-800 text-3xl font-medium text-zinc-100"
             />
-            <p className="text-sm text-zinc-400">Camera is off</p>
+            <p className="text-sm text-zinc-400">{t('preview.camera-off')}</p>
           </div>
         )}
 
@@ -80,7 +82,11 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
                 variant={media.micEnabled ? 'ghost' : 'destructive'}
                 size="icon"
                 onClick={() => media.setMicEnabled(!media.micEnabled)}
-                aria-label={media.micEnabled ? 'Mute microphone' : 'Unmute microphone'}
+                aria-label={
+                  media.micEnabled
+                    ? t('preview.mute-microphone')
+                    : t('preview.unmute-microphone')
+                }
                 className={cn(
                   'h-11 w-11 rounded-full border border-white/15 backdrop-blur-md',
                   media.micEnabled ? 'bg-white/15 text-white hover:bg-white/25' : '',
@@ -90,7 +96,9 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              {media.micEnabled ? 'Turn off microphone' : 'Turn on microphone'}
+              {media.micEnabled
+                ? t('preview.turn-off-microphone')
+                : t('preview.turn-on-microphone')}
             </TooltipContent>
           </Tooltip>
 
@@ -100,7 +108,9 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
                 variant={media.cameraEnabled ? 'ghost' : 'destructive'}
                 size="icon"
                 onClick={() => media.setCameraEnabled(!media.cameraEnabled)}
-                aria-label={media.cameraEnabled ? 'Turn off camera' : 'Turn on camera'}
+                aria-label={
+                  media.cameraEnabled ? t('preview.turn-off-camera') : t('preview.turn-on-camera')
+                }
                 className={cn(
                   'h-11 w-11 rounded-full border border-white/15 backdrop-blur-md',
                   media.cameraEnabled ? 'bg-white/15 text-white hover:bg-white/25' : '',
@@ -114,7 +124,7 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              {media.cameraEnabled ? 'Turn off camera' : 'Turn on camera'}
+              {media.cameraEnabled ? t('preview.turn-off-camera') : t('preview.turn-on-camera')}
             </TooltipContent>
           </Tooltip>
         </div>

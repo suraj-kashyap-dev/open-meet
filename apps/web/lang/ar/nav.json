@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "الملف الشخصي",
+    "profile-description": "تعديل تفاصيل حسابك",
+    "settings": "الإعدادات",
+    "settings-description": "الإعدادات الافتراضية والخصوصية واللغة",
+    "sign-out": "تسجيل الخروج"
+  },
+  "user-menu-label": "فتح قائمة الحساب",
+  "command": {
+    "placeholder": "اكتب أمرًا أو رمز اجتماع…",
+    "no-results": "لا توجد نتائج.",
+    "group-meetings": "الاجتماعات",
+    "group-appearance": "المظهر",
+    "new-meeting": "اجتماع جديد",
+    "join": "الانضمام إلى ”{code}“",
+    "switch-to-light": "التبديل إلى الوضع الفاتح",
+    "switch-to-dark": "التبديل إلى الوضع الداكن",
+    "match-system-theme": "مطابقة سمة النظام",
+    "home": "الرئيسية",
+    "sign-out": "تسجيل الخروج",
+    "create-meeting-error": "تعذّر إنشاء الاجتماع",
+    "join-code-required": "اكتب رمز الاجتماع أولًا"
+  }
+}
