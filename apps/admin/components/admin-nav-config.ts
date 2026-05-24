@@ -7,12 +7,18 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
+export interface AdminNavChild {
+  label: string;
+  href: string;
+}
+
 export interface AdminNavItem {
   label: string;
   href: string;
   icon: LucideIcon;
   badge?: string;
   disabled?: boolean;
+  children?: AdminNavChild[];
 }
 
 export interface AdminNavSection {
@@ -38,7 +44,17 @@ export const adminNav: AdminNavSection[] = [
   },
   {
     label: 'System',
-    items: [{ label: 'Settings', href: '/settings', icon: Settings }],
+    items: [
+      {
+        label: 'Settings',
+        href: '/settings',
+        icon: Settings,
+        children: [
+          { label: 'Administrators', href: '/settings/administrators' },
+          { label: 'Configuration', href: '/settings/configuration' },
+        ],
+      },
+    ],
   },
 ];
 

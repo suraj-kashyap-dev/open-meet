@@ -8,12 +8,29 @@ model Admin {
   updatedAt    DateTime  @updatedAt
   lastLoginAt  DateTime?
 
+  invitesSent AdminInvite[]
+
   @@index([email])
 }
 
 enum AdminRole {
   SUPERADMIN
   ADMIN
+}
+
+model AdminInvite {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  name        String
+  role        AdminRole @default(ADMIN)
+  tokenHash   String    @unique
+  expiresAt   DateTime
+  invitedById String?
+  invitedBy   Admin?    @relation(fields: [invitedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([email])
 }
 
 model WorkspaceSettings {

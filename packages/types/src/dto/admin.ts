@@ -183,15 +183,57 @@ export interface AdminAccountDto {
   lastLoginAt: string | null;
 }
 
-export interface AdminInviteAccountDto {
-  email: string;
-  name: string;
-  password: string;
+export interface AdminAccountListResponseDto {
+  items: AdminAccountDto[];
+}
+
+/** Fields a superadmin may change on an existing admin account. */
+export interface AdminUpdateAccountDto {
+  name?: string;
   role?: AdminRole;
 }
 
-export interface AdminAccountListResponseDto {
-  items: AdminAccountDto[];
+export const AdminInviteStatus = {
+  PENDING: 'PENDING',
+  EXPIRED: 'EXPIRED',
+} as const;
+
+export type AdminInviteStatus = (typeof AdminInviteStatus)[keyof typeof AdminInviteStatus];
+
+/** Payload to invite a new admin by email (no password — they set their own). */
+export interface AdminCreateInviteDto {
+  email: string;
+  name: string;
+  role?: AdminRole;
+}
+
+/** A pending admin invite, as shown in the console. */
+export interface AdminInviteDto {
+  id: string;
+  email: string;
+  name: string;
+  role: AdminRole;
+  status: AdminInviteStatus;
+  invitedByName: string | null;
+  expiresAt: string;
+  createdAt: string;
+}
+
+export interface AdminInviteListResponseDto {
+  items: AdminInviteDto[];
+}
+
+export interface AdminInviteLookupDto {
+  email: string;
+  name: string;
+  role: AdminRole;
+  expiresAt: string;
+}
+
+/** Payload the invitee submits to claim an invite and set their password. */
+export interface AdminAcceptInviteDto {
+  token: string;
+  password: string;
 }
 
 export interface AdminWorkspaceSettingsDto {

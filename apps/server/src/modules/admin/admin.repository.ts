@@ -35,6 +35,10 @@ export class AdminRepository {
     return this.prisma.admin.create({ data });
   }
 
+  update(id: string, data: { name?: string; role?: AdminRole }): Promise<Admin> {
+    return this.prisma.admin.update({ where: { id }, data });
+  }
+
   delete(id: string): Promise<Admin> {
     return this.prisma.admin.delete({ where: { id } });
   }

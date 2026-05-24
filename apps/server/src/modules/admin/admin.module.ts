@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { LiveKitModule } from '../../integrations/livekit/livekit.module';
+import { MailModule } from '../../integrations/mail/mail.module';
 
 import { AdminAuthController } from './auth/auth.controller';
 import { AdminAuthService } from './auth/auth.service';
@@ -14,7 +15,9 @@ import { AdminMeetingsController } from './meetings/meetings.controller';
 import { AdminMeetingsService } from './meetings/meetings.service';
 import { AdminMeetingsRepository } from './meetings/meetings.repository';
 import { AdminAccountsController } from './accounts/accounts.controller';
+import { AdminInviteController } from './accounts/invite.controller';
 import { AdminAccountsService } from './accounts/accounts.service';
+import { AdminInviteRepository } from './accounts/admin-invite.repository';
 import { AdminUsersController } from './users/users.controller';
 import { AdminUsersService } from './users/users.service';
 import { AdminUsersRepository } from './users/users.repository';
@@ -22,12 +25,13 @@ import { AdminRepository } from './admin.repository';
 import { AdminBootstrapService } from './bootstrap.service';
 
 @Module({
-  imports: [PassportModule, JwtModule.register({}), LiveKitModule],
+  imports: [PassportModule, JwtModule.register({}), LiveKitModule, MailModule],
   controllers: [
     AdminAuthController,
     AdminAnalyticsController,
     AdminMeetingsController,
     AdminAccountsController,
+    AdminInviteController,
     AdminUsersController,
   ],
   providers: [
@@ -39,6 +43,7 @@ import { AdminBootstrapService } from './bootstrap.service';
     AdminMeetingsService,
     AdminMeetingsRepository,
     AdminAccountsService,
+    AdminInviteRepository,
     AdminUsersService,
     AdminUsersRepository,
     AdminBootstrapService,

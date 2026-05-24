@@ -1,12 +1,10 @@
 'use client';
 
-import { ExternalLink } from 'lucide-react';
+import { ChevronRight, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { Logo } from '@open-meet/ui/logo';
-import { UserAvatar } from '@open-meet/ui/user-avatar';
-import { useCurrentAdmin } from '@/features/auth/hooks/use-admin-auth';
 import { cn } from '@open-meet/ui/cn';
 
 import { adminNav, isActive } from './admin-nav-config';
@@ -19,7 +17,6 @@ import { adminNav, isActive } from './admin-nav-config';
  */
 export function AdminSidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
-  const { data: admin } = useCurrentAdmin();
 
   return (
     <div className="flex h-full flex-col bg-card">
@@ -50,12 +47,13 @@ export function AdminSidebarContent({ onNavigate }: { onNavigate?: () => void })
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(pathname, item.href);
+                const hasChildren = Boolean(item.children?.length);
 
                 const badge = item.badge ? (
                   <span
                     className={cn(
                       'ml-auto rounded-full px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
-                      active
+                      active && !hasChildren
                         ? 'bg-accent-foreground/20 text-accent-foreground'
                         : 'bg-muted text-muted-foreground',
                     )}
@@ -84,25 +82,63 @@ export function AdminSidebarContent({ onNavigate }: { onNavigate?: () => void })
                     <Link
                       href={item.href}
                       onClick={onNavigate}
-                      aria-current={active ? 'page' : undefined}
+                      aria-current={active && !hasChildren ? 'page' : undefined}
                       className={cn(
                         'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent',
-                        active
-                          ? 'bg-accent text-accent-foreground shadow-sm'
-                          : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                        hasChildren
+                          ? active
+                            ? 'text-foreground'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                          : active
+                            ? 'bg-accent text-accent-foreground shadow-sm'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                       )}
                     >
                       <Icon
                         className={cn(
                           'h-[18px] w-[18px] shrink-0 transition-colors',
-                          active
+                          active && !hasChildren
                             ? 'text-accent-foreground'
                             : 'text-muted-foreground group-hover:text-foreground',
                         )}
                       />
                       <span className="truncate">{item.label}</span>
                       {badge}
+                      {hasChildren ? (
+                        <ChevronRight
+                          className={cn(
+                            'ml-auto h-4 w-4 shrink-0 text-muted-foreground transition-transform',
+                            active && 'rotate-90',
+                          )}
+                        />
+                      ) : null}
                     </Link>
+
+                    {hasChildren && active ? (
+                      <ul className="ml-[1.6rem] mt-1 space-y-1 border-l border-border pl-3">
+                        {item.children!.map((child) => {
+                          const childActive = isActive(pathname, child.href);
+
+                          return (
+                            <li key={child.href}>
+                              <Link
+                                href={child.href}
+                                onClick={onNavigate}
+                                aria-current={childActive ? 'page' : undefined}
+                                className={cn(
+                                  'block rounded-lg px-3 py-1.5 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent',
+                                  childActive
+                                    ? 'bg-muted font-medium text-foreground'
+                                    : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
+                                )}
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    ) : null}
                   </li>
                 );
               })}
@@ -111,7 +147,7 @@ export function AdminSidebarContent({ onNavigate }: { onNavigate?: () => void })
         ))}
       </nav>
 
-      <div className="space-y-2 border-t border-border p-3">
+      <div className="border-t border-border p-3">
         <Link
           href="/"
           target="_blank"
@@ -121,19 +157,6 @@ export function AdminSidebarContent({ onNavigate }: { onNavigate?: () => void })
           <ExternalLink className="h-3.5 w-3.5 shrink-0" />
           Visit Open Meet
         </Link>
-
-        {admin ? (
-          <div className="flex items-center gap-2.5 rounded-lg border border-border bg-muted/40 px-2.5 py-2">
-            <UserAvatar user={admin} size="sm" />
-
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium leading-tight">{admin.name}</p>
-              <p className="truncate pt-0.5 text-[11px] text-muted-foreground">
-                {admin.role === 'SUPERADMIN' ? 'Super admin' : 'Admin'}
-              </p>
-            </div>
-          </div>
-        ) : null}
       </div>
     </div>
   );
