@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/suraj-kashyap-dev/open-meet/security/policy
+    about: Report vulnerabilities privately instead of opening a public issue.
+  - name: Project setup and documentation
+    url: https://github.com/suraj-kashyap-dev/open-meet#readme
+    about: Check the README for setup, environment, and local development guidance.

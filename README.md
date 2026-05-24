@@ -18,7 +18,7 @@
   <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-blue"/>
 </p>
 
-[Highlights](#highlights) · [Stack](#stack) · [Quick start](#quick-start) · [Testing](#testing)
+[Highlights](#highlights) · [Stack](#stack) · [Quick start](#quick-start) · [Testing](#testing) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Code of Conduct](CODE_OF_CONDUCT.md)
 
 <br/>
 
