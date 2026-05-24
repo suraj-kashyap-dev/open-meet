@@ -1,11 +1,11 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 
-import { currentClientPath, loginUrlWithRedirect } from '@/features/web/auth/lib/redirect';
+import { currentClientPath, loginHref } from '@/features/web/auth/lib/redirect';
+import { usePathname, useRouter } from '@/i18n/navigation';
 import { UNAUTHORIZED_EVENT } from '@/lib/api/client';
 
 const ME_KEY = ['auth', 'me'] as const;
@@ -21,7 +21,11 @@ export function UnauthorizedBridge() {
       const detail = (event as CustomEvent<{ path: string }>).detail;
       const failedPath = detail?.path ?? '';
 
-      if (failedPath.endsWith('/auth/me')) {
+      if (
+        failedPath.endsWith('/auth/me') ||
+        failedPath.endsWith('/auth/login') ||
+        failedPath.endsWith('/auth/register')
+      ) {
         return;
       }
 
@@ -42,7 +46,7 @@ export function UnauthorizedBridge() {
 
       toast.error('Your session expired — please sign in again.');
 
-      router.replace(loginUrlWithRedirect(currentClientPath()));
+      router.replace(loginHref(currentClientPath()));
     };
 
     window.addEventListener(UNAUTHORIZED_EVENT, handler);

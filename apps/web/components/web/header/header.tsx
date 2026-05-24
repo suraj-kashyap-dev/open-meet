@@ -27,7 +27,7 @@ export function AppHeader() {
       data-hide-in-fullscreen
       className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl"
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="flex h-14 items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight">
           <Logo className="h-7 w-7 shadow-sm" />
           <span>Open Meet</span>

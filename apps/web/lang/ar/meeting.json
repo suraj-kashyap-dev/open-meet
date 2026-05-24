@@ -162,5 +162,9 @@
     "upload-failed": "فشل الرفع",
     "max-attachments": "يمكنك إرفاق {max} ملفات كحد أقصى لكل رسالة.",
     "wait-for-uploads": "انتظر حتى تنتهي عمليات الرفع"
+  },
+  "mini": {
+    "expand": "توسيع",
+    "connecting": "جارٍ الاتصال…"
   }
 }

@@ -1,12 +1,12 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import type { UserDto } from '@open-meet/types';
 
 import { authApi } from '@/features/web/auth/services/auth';
+import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
 const ME_KEY = ['auth', 'me'] as const;
@@ -190,7 +190,7 @@ export function useChangePassword() {
       writeCachedUser(null);
       qc.setQueryData(ME_KEY, null);
       qc.clear();
-      router.replace('/login?password=changed');
+      router.replace({ pathname: '/login', query: { password: 'changed' } });
     },
   });
 }

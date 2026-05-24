@@ -500,7 +500,7 @@ export function HistoryDetail({ code }: { code: string }) {
 
   if (meetingError) {
     return (
-      <main className="mx-auto max-w-4xl px-4 py-10">
+      <main className="px-4 py-10">
         <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6 text-sm text-destructive">
           {t('detail.error')}
         </div>
@@ -540,7 +540,7 @@ export function HistoryDetail({ code }: { code: string }) {
         : 'border-warning/30 bg-warning/10 text-warning';
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="flex w-full flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
       <div>
         <Button
           asChild

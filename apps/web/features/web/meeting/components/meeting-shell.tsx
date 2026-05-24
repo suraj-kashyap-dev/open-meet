@@ -31,6 +31,7 @@ import { ChatPanel } from './chat-panel';
 import { KnockNotifier } from './knock-notifier';
 import { MeetingControls } from './meeting-controls';
 import { MeetingTopBar } from './meeting-top-bar';
+import { MiniMeeting } from './mini-meeting';
 import { ParticipantsPanel } from './participants-panel';
 import { ReactionOverlay } from './reaction-overlay';
 import { RecordingBanner } from './recording-banner';
@@ -39,9 +40,10 @@ import { VideoGrid } from './video-grid';
 interface Props {
   code: string;
   meeting: MeetingDto;
+  minimized: boolean;
 }
 
-export function MeetingShell({ code, meeting }: Props) {
+export function MeetingShell({ code, meeting, minimized }: Props) {
   const t = useTranslations('meeting');
   const room = useRoomContext();
   const { socket } = useMeetingSocket();
@@ -210,40 +212,55 @@ export function MeetingShell({ code, meeting }: Props) {
     };
   }, [room, joinSound, leaveSound]);
 
-  return (
-    <div className="relative flex h-full flex-col">
-      <MeetingTopBar code={code} canEdit={isHost} />
+  if (minimized) {
+    return (
+      <>
+        <MiniMeeting code={code} meeting={meeting} />
+        {isHost ? <KnockNotifier socket={socket} code={code} /> : null}
+      </>
+    );
+  }
 
-      <div className="flex min-h-0 flex-1">
-        <div className="relative min-w-0 flex-1 bg-background p-4">
-          <RecordingBanner />
-          <VideoGrid />
+  return (
+    <>
+      <div
+        data-lk-theme="default"
+        className="fixed inset-x-0 bottom-0 top-14 z-30 flex flex-col bg-background"
+      >
+        <MeetingTopBar code={code} canEdit={isHost} />
+
+        <div className="flex min-h-0 flex-1">
+          <div className="relative min-w-0 flex-1 bg-background p-4">
+            <RecordingBanner />
+            <VideoGrid />
+          </div>
+
+          <aside
+            className={cn(
+              'shrink-0 overflow-hidden border-l border-border bg-card',
+              'transition-[width] duration-200 ease-out',
+              sidebarOpen ? 'w-full sm:w-96' : 'w-0',
+            )}
+            aria-hidden={!sidebarOpen}
+          >
+            <div className="h-full w-full sm:w-96">
+              {activePanel === 'chat' ? (
+                <ChatPanel code={code} socket={socket} onClose={() => setChatOpen(false)} />
+              ) : null}
+
+              {activePanel === 'participants' ? (
+                <ParticipantsPanel onClose={() => setParticipantsOpen(false)} />
+              ) : null}
+            </div>
+          </aside>
         </div>
 
-        <aside
-          className={cn(
-            'shrink-0 overflow-hidden border-l border-border bg-card',
-            'transition-[width] duration-200 ease-out',
-            sidebarOpen ? 'w-full sm:w-96' : 'w-0',
-          )}
-          aria-hidden={!sidebarOpen}
-        >
-          <div className="h-full w-full sm:w-96">
-            {activePanel === 'chat' ? (
-              <ChatPanel code={code} socket={socket} onClose={() => setChatOpen(false)} />
-            ) : null}
+        <MeetingControls code={code} socket={socket} hostId={meeting.hostId} />
 
-            {activePanel === 'participants' ? (
-              <ParticipantsPanel onClose={() => setParticipantsOpen(false)} />
-            ) : null}
-          </div>
-        </aside>
+        <ReactionOverlay />
       </div>
 
-      <MeetingControls code={code} socket={socket} hostId={meeting.hostId} />
-
-      <ReactionOverlay />
       {isHost ? <KnockNotifier socket={socket} code={code} /> : null}
-    </div>
+    </>
   );
 }
