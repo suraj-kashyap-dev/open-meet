@@ -162,5 +162,9 @@
     "upload-failed": "Upload failed",
     "max-attachments": "You can attach at most {max} files per message.",
     "wait-for-uploads": "Wait for uploads to finish"
+  },
+  "mini": {
+    "expand": "Expand",
+    "connecting": "Connecting…"
   }
 }
