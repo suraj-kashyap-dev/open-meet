@@ -1,6 +1,6 @@
 name: Feature request
 description: Suggest an improvement to Open Meet
-title: "[Feature]: "
+title: '[Feature]: '
 labels:
   - enhancement
 body:

@@ -6,10 +6,10 @@ Open Meet handles authentication, JWT issuance, refresh cookies, meeting access,
 
 This project is currently pre-1.0. Security fixes are applied to the latest code on the default branch. Older commits, forks, and unpublished local deployments should be assumed unsupported unless a maintainer states otherwise.
 
-| Version | Supported |
-| --- | --- |
-| Default branch (latest commit) | Yes |
-| Older branches or commits | No |
+| Version                        | Supported |
+| ------------------------------ | --------- |
+| Default branch (latest commit) | Yes       |
+| Older branches or commits      | No        |
 
 ## Reporting a vulnerability
 
