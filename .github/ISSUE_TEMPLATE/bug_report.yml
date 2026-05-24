@@ -1,0 +1,84 @@
+name: Bug report
+description: Report a reproducible bug in Open Meet
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+        Please use this form for reproducible product or developer-experience issues. If you found a security vulnerability, do not file a public issue. Follow the private reporting process in the repository security policy instead.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I searched existing issues and the README before opening this report.
+          required: true
+        - label: This is not a security vulnerability or sensitive data exposure report.
+          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      description: Which part of the project is impacted?
+      options:
+        - Web app
+        - Admin app
+        - Server/API
+        - Realtime or meetings
+        - Authentication
+        - Docker or setup
+        - Internationalization
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Bug summary
+      description: Describe the problem in one or two sentences.
+      placeholder: Joining a room fails after the pre-join screen when...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide a minimal, reliable reproduction.
+      placeholder: |
+        1. Start the stack with `./setup.sh`
+        2. Sign in as...
+        3. Open...
+        4. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, browser, Node version, Docker context, and any relevant branch or commit details.
+      placeholder: Ubuntu 24.04, Chrome 136, Node 22, pnpm 10.16.0, default branch at commit abc1234
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste relevant logs or attach screenshots. Redact secrets and tokens first.
+      render: shell

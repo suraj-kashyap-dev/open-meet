@@ -29,7 +29,7 @@
   "powered-by": "Powered by",
   "built-with": "Built with open tech",
   "copyright": "© {year} Open Meet",
-  "crafted-prefix": "Crafted with",
-  "crafted-suffix": "by the community",
+  "made-prefix": "Made with",
+  "made-suffix": "in TypeScript · MIT licensed",
   "love": "love"
 }

@@ -194,9 +194,9 @@ export async function Footer() {
             <span className="h-3 w-px bg-border" aria-hidden />
 
             <span className="inline-flex items-center gap-1.5">
-              {t('crafted-prefix')}
+              {t('made-prefix')}
               <Heart className="h-3 w-3 fill-destructive text-destructive" aria-label={t('love')} />
-              {t('crafted-suffix')}
+              {t('made-suffix')}
             </span>
           </div>
 

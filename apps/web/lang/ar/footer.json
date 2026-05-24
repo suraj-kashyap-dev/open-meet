@@ -29,7 +29,7 @@
   "powered-by": "مدعوم بـ",
   "built-with": "مبني بتقنيات مفتوحة",
   "copyright": "© {year} Open Meet",
-  "crafted-prefix": "صُنع بـ",
-  "crafted-suffix": "بواسطة المجتمع",
+  "made-prefix": "صُنع بـ",
+  "made-suffix": "بلغة TypeScript · مُرخّص برخصة MIT",
   "love": "حب"
 }

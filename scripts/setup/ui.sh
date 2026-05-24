@@ -11,11 +11,15 @@ warn() { printf '%b!%b %s\n' "$YELLOW" "$NC" "$1"; }
 die()  { printf '%b✗ %s%b\n' "$RED$BOLD" "$1" "$NC" >&2; exit 1; }
 
 banner() {
-  printf '%b' "$BOLD$BLUE"
-  echo '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-  echo '                 Open Meet — local environment setup                '
-  echo '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-  printf '%b\n' "$NC"
+  printf '\n%b' "$BOLD$BLUE"
+  cat <<'ART'
+ ██████  ██████  ███████ ██    ██   ███    ███ ███████ ███████ ████████
+██    ██ ██   ██ ██      ███   ██   ████  ████ ██      ██         ██
+██    ██ ██████  █████   ██ ██ ██   ██ ████ ██ █████   █████      ██
+██    ██ ██      ██      ██   ███   ██  ██  ██ ██      ██         ██
+ ██████  ██      ███████ ██    ██   ██      ██ ███████ ███████    ██
+ART
+  printf '%b        Real-time video conferencing · Setting Up the Environment%b\n\n' "$BOLD$BLUE" "$NC"
 }
 
 usage() {
