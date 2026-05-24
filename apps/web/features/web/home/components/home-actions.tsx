@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowRight, Plus, Video } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -14,6 +15,7 @@ import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 
 export function HomeActions() {
+  const t = useTranslations('home');
   const nav = useNavigateTransition();
   const createMeeting = useCreateMeeting();
   const [code, setCode] = useState('');
@@ -25,7 +27,7 @@ export function HomeActions() {
       const meeting = await createMeeting.mutateAsync({});
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
+      const message = err instanceof ApiClientError ? err.message : t('toast.create-error');
       toast.error(message);
     }
   };
@@ -34,7 +36,7 @@ export function HomeActions() {
     e.preventDefault();
     const trimmed = code.trim().toLowerCase();
     if (!trimmed) {
-      toast.error('Enter a meeting code');
+      toast.error(t('toast.enter-code'));
       return;
     }
     nav.push(`/${trimmed}/lobby`);
@@ -52,10 +54,8 @@ export function HomeActions() {
             <Plus className="h-5 w-5" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-lg font-medium">Start a new meeting</h2>
-            <p className="text-sm text-muted-foreground">
-              Generate a fresh link and invite anyone.
-            </p>
+            <h2 className="text-lg font-medium">{t('actions.start-title')}</h2>
+            <p className="text-sm text-muted-foreground">{t('actions.start-description')}</p>
           </div>
           <ShimmerButton
             type="button"
@@ -64,11 +64,11 @@ export function HomeActions() {
             className="mt-auto w-full"
           >
             {creating ? (
-              <>Creating…</>
+              <>{t('actions.creating')}</>
             ) : (
               <>
                 <Video className="h-4 w-4" />
-                New meeting
+                {t('actions.new-meeting')}
               </>
             )}
           </ShimmerButton>
@@ -81,13 +81,13 @@ export function HomeActions() {
             <ArrowRight className="h-5 w-5" />
           </div>
           <div className="space-y-1">
-            <h2 className="text-lg font-medium">Join with a code</h2>
-            <p className="text-sm text-muted-foreground">Paste the link or 12-character code.</p>
+            <h2 className="text-lg font-medium">{t('actions.join-title')}</h2>
+            <p className="text-sm text-muted-foreground">{t('actions.join-description')}</p>
           </div>
           <form onSubmit={onJoin} className="mt-auto space-y-3">
             <div className="space-y-2">
               <Label htmlFor="join-code" className="sr-only">
-                Meeting code
+                {t('actions.code-label')}
               </Label>
               <Input
                 id="join-code"
@@ -100,7 +100,7 @@ export function HomeActions() {
               />
             </div>
             <Button type="submit" variant="outline" className="w-full" disabled={nav.isNavigating}>
-              {nav.isNavigating ? 'Joining…' : 'Join'}
+              {nav.isNavigating ? t('actions.joining') : t('actions.join')}
             </Button>
           </form>
         </CardContent>

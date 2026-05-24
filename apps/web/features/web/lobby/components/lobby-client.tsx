@@ -1,9 +1,11 @@
 'use client';
 
 import { ArrowRight, Check, Copy, Lock, Pencil, ShieldCheck, X } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+
+import { Link } from '@/i18n/navigation';
 
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
@@ -21,6 +23,7 @@ import { DeviceSelector } from './device-selector';
 import { LobbyPreview } from './lobby-preview';
 
 export function LobbyClient({ code }: { code: string }) {
+  const t = useTranslations('lobby');
   const nav = useNavigateTransition();
   const media = useMediaDevices();
   const { data: meeting, error, isLoading } = useMeeting(code);
@@ -31,10 +34,10 @@ export function LobbyClient({ code }: { code: string }) {
 
   useEffect(() => {
     if (error instanceof ApiClientError && error.code === 'MEETING_NOT_FOUND') {
-      toast.error('Meeting not found');
+      toast.error(t('toast.meeting-not-found'));
       nav.replace('/');
     }
-  }, [error, nav]);
+  }, [error, nav, t]);
 
   // Apply the user's saved meeting defaults once the media stream is ready.
   // Guarded by a ref so a settings refetch can't clobber a manual toggle.
@@ -62,10 +65,10 @@ export function LobbyClient({ code }: { code: string }) {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      toast.success('Meeting link copied');
+      toast.success(t('toast.link-copied'));
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      toast.error('Could not copy link');
+      toast.error(t('toast.link-copy-failed'));
     }
   };
 
@@ -90,7 +93,7 @@ export function LobbyClient({ code }: { code: string }) {
     return null;
   }
 
-  const displayName = user?.name ?? 'You';
+  const displayName = user?.name ?? t('you');
   const isHost = Boolean(user && user.id === meeting.hostId);
 
   return (
@@ -101,7 +104,7 @@ export function LobbyClient({ code }: { code: string }) {
       <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 pb-28 lg:py-12 lg:pb-12">
         <header className="space-y-2">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-            Get ready
+            {t('eyebrow')}
           </p>
 
           <EditableTitle code={code} title={meeting.title} canEdit={isHost} />
@@ -114,12 +117,12 @@ export function LobbyClient({ code }: { code: string }) {
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1">
                 <ShieldCheck className="h-3.5 w-3.5 text-success" />
-                Secure connection
+                {t('secure-connection')}
               </span>
 
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1">
                 <Lock className="h-3.5 w-3.5" />
-                Only invited people can join
+                {t('invited-only')}
               </span>
             </div>
           </section>
@@ -128,7 +131,7 @@ export function LobbyClient({ code }: { code: string }) {
             <section className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="space-y-2.5 p-5">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                  Meeting code
+                  {t('meeting-code')}
                 </p>
                 <div className="flex items-center gap-2">
                   <code className="min-w-0 flex-1 truncate rounded-md border border-border bg-muted px-3 py-2 font-mono text-sm">
@@ -138,7 +141,7 @@ export function LobbyClient({ code }: { code: string }) {
                     variant="outline"
                     size="icon"
                     onClick={onCopyLink}
-                    aria-label="Copy meeting link"
+                    aria-label={t('aria.copy-meeting-link')}
                     className="shrink-0"
                   >
                     {copied ? (
@@ -155,9 +158,9 @@ export function LobbyClient({ code }: { code: string }) {
               <div className="space-y-4 p-5">
                 <header className="space-y-0.5">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                    Devices
+                    {t('devices.title')}
                   </p>
-                  <h3 className="text-sm font-semibold tracking-tight">Check your audio & video</h3>
+                  <h3 className="text-sm font-semibold tracking-tight">{t('devices.subtitle')}</h3>
                 </header>
                 <DeviceSelector media={media} />
               </div>
@@ -170,12 +173,12 @@ export function LobbyClient({ code }: { code: string }) {
                 className="group w-full"
                 size="lg"
               >
-                {nav.isNavigating ? 'Joining…' : 'Join now'}
+                {nav.isNavigating ? t('joining') : t('join-now')}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <p className="text-center text-xs text-muted-foreground">
                 <Link href="/" className="hover:text-foreground hover:underline">
-                  Back to home
+                  {t('back-to-home')}
                 </Link>
               </p>
             </div>
@@ -189,10 +192,10 @@ export function LobbyClient({ code }: { code: string }) {
             href="/"
             className="text-xs text-muted-foreground hover:text-foreground hover:underline"
           >
-            Cancel
+            {t('cancel')}
           </Link>
           <Button onClick={onJoin} disabled={nav.isNavigating} className="group flex-1" size="lg">
-            {nav.isNavigating ? 'Joining…' : 'Join now'}
+            {nav.isNavigating ? t('joining') : t('join-now')}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>
         </div>
@@ -208,12 +211,13 @@ interface EditableTitleProps {
 }
 
 function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
+  const t = useTranslations('lobby');
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState('');
   const inputRef = useRef<HTMLInputElement | null>(null);
   const update = useUpdateMeeting(code);
 
-  const display = title ?? 'Untitled meeting';
+  const display = title ?? t('untitled-meeting');
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -245,9 +249,9 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
       await update.mutateAsync({ title: next });
       setIsEditing(false);
       setDraft('');
-      toast.success('Meeting title updated');
+      toast.success(t('toast.title-updated'));
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not update title';
+      const message = err instanceof ApiClientError ? err.message : t('toast.title-update-failed');
       toast.error(message);
     }
   };
@@ -279,7 +283,7 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
           variant="ghost"
           size="icon"
           onClick={openEditor}
-          aria-label="Rename meeting"
+          aria-label={t('aria.rename-meeting')}
           className="h-8 w-8 text-muted-foreground opacity-60 transition-opacity hover:text-foreground hover:opacity-100 focus-visible:opacity-100 group-hover:opacity-100"
         >
           <Pencil className="h-4 w-4" />
@@ -296,8 +300,8 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
         onChange={(e) => setDraft(e.target.value)}
         onKeyDown={onKeyDown}
         maxLength={200}
-        placeholder="Untitled meeting"
-        aria-label="Meeting title"
+        placeholder={t('untitled-meeting')}
+        aria-label={t('aria.meeting-title')}
         disabled={update.isPending}
         className="h-10 text-lg font-semibold tracking-tight"
       />
@@ -307,7 +311,7 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
         size="icon"
         onClick={() => void save()}
         disabled={update.isPending}
-        aria-label="Save title"
+        aria-label={t('aria.save-title')}
         className="h-9 w-9 shrink-0"
       >
         <Check className="h-4 w-4" />
@@ -319,7 +323,7 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
         size="icon"
         onClick={cancel}
         disabled={update.isPending}
-        aria-label="Cancel rename"
+        aria-label={t('aria.cancel-rename')}
         className="h-9 w-9 shrink-0"
       >
         <X className="h-4 w-4" />

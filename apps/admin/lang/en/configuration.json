@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Settings",
+  "title": "Configuration",
+  "description": "Workspace defaults, branding, and meeting policies.",
+  "coming-soon-label": "Coming soon",
+  "coming-soon": {
+    "title": "Configuration is on the way",
+    "description": "Workspace defaults, branding, and meeting policies will live here soon."
+  }
+}

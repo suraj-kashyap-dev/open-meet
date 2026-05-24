@@ -1,6 +1,7 @@
 'use client';
 
 import { Camera, Mic, Volume2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 
 import { Label } from '@open-meet/ui/label';
@@ -31,12 +32,14 @@ const triggerCls = 'w-full [&>span]:min-w-0 [&>span]:flex-1 [&>span]:truncate [&
 const itemCls = 'whitespace-normal py-2 pr-3 leading-snug';
 
 export function DeviceSelector({ media }: { media: MediaState }) {
+  const t = useTranslations('lobby');
+
   return (
     <div className="space-y-4">
-      <Field icon={<Camera className="h-3.5 w-3.5" />} label="Camera">
+      <Field icon={<Camera className="h-3.5 w-3.5" />} label={t('devices.camera')}>
         <Select value={media.selectedVideoId ?? ''} onValueChange={(v) => media.selectVideo(v)}>
           <SelectTrigger className={triggerCls}>
-            <SelectValue placeholder="Choose camera" />
+            <SelectValue placeholder={t('devices.camera-placeholder')} />
           </SelectTrigger>
           <SelectContent>
             {media.videoDevices.map((d) => (
@@ -48,10 +51,10 @@ export function DeviceSelector({ media }: { media: MediaState }) {
         </Select>
       </Field>
 
-      <Field icon={<Mic className="h-3.5 w-3.5" />} label="Microphone">
+      <Field icon={<Mic className="h-3.5 w-3.5" />} label={t('devices.microphone')}>
         <Select value={media.selectedAudioId ?? ''} onValueChange={(v) => media.selectAudio(v)}>
           <SelectTrigger className={triggerCls}>
-            <SelectValue placeholder="Choose microphone" />
+            <SelectValue placeholder={t('devices.microphone-placeholder')} />
           </SelectTrigger>
           <SelectContent>
             {media.audioInputs.map((d) => (
@@ -64,10 +67,10 @@ export function DeviceSelector({ media }: { media: MediaState }) {
       </Field>
 
       {media.audioOutputs.length > 0 ? (
-        <Field icon={<Volume2 className="h-3.5 w-3.5" />} label="Speakers">
+        <Field icon={<Volume2 className="h-3.5 w-3.5" />} label={t('devices.speakers')}>
           <Select disabled defaultValue={media.audioOutputs[0]?.deviceId}>
             <SelectTrigger className={triggerCls}>
-              <SelectValue placeholder="System default" />
+              <SelectValue placeholder={t('devices.system-default')} />
             </SelectTrigger>
             <SelectContent>
               {media.audioOutputs.map((d) => (

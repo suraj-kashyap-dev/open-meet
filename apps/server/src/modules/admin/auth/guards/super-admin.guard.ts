@@ -5,6 +5,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { AdminRole } from '@prisma/client';
+import { I18nContext } from 'nestjs-i18n';
 
 import { ApiErrorCode } from '@open-meet/types';
 
@@ -23,7 +24,9 @@ export class SuperAdminGuard implements CanActivate {
     if (req.user?.role !== AdminRole.SUPERADMIN) {
       throw new ForbiddenException({
         code: ApiErrorCode.FORBIDDEN,
-        message: 'Superadmin privileges are required for this action',
+        message:
+          I18nContext.current()?.t('errors.superadmin-required') ??
+          'Superadmin privileges are required for this action',
       });
     }
 

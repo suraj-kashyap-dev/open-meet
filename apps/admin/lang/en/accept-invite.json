@@ -1,0 +1,27 @@
+{
+  "title": "Activate your admin account",
+  "subtitle": "Set a password to finish setting up your access.",
+  "joining-as": "You're joining as",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "password": "Password",
+  "password-placeholder": "At least 8 characters",
+  "confirm": "Confirm password",
+  "submit": "Activate account",
+  "submitting": "Activating…",
+  "go-to-sign-in": "Go to sign in",
+  "validation": {
+    "password-min": "At least 8 characters",
+    "password-mismatch": "Passwords do not match"
+  },
+  "errors": {
+    "missing-token": "This invitation link is missing its token.",
+    "invalid": "This invitation is invalid or has expired.",
+    "activate-failed": "Could not activate account"
+  },
+  "toast": {
+    "activated": "Account activated — please sign in."
+  }
+}

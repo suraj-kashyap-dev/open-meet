@@ -1,0 +1,14 @@
+{
+  "invite": {
+    "subject": "You have been invited to the Open Meet admin console",
+    "preview": "Set your password to activate your Open Meet admin account.",
+    "heading": "You're invited to Open Meet",
+    "greeting": "Hi {name},",
+    "body": "You have been invited to the Open Meet admin console. Set your password to activate your account and get started.",
+    "cta": "Accept invitation",
+    "footnote": "This link expires on {when}. If you weren't expecting this invitation, you can safely ignore this email.",
+    "text-intro": "You have been invited to administer Open Meet.",
+    "text-action": "Set your password and activate your account here:",
+    "text-expires": "This link expires on {when}."
+  }
+}

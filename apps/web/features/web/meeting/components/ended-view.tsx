@@ -1,12 +1,13 @@
 'use client';
 
 import { ArrowRight, History, Home, PhoneOff, RotateCcw } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@open-meet/ui/button';
 import { useMeetingStore } from '@/features/web/meeting/stores';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@open-meet/ui/cn';
 
 const COUNTDOWN_SECONDS = 60;
@@ -14,6 +15,7 @@ const RING_RADIUS = 22;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 export function EndedView({ code }: { code: string }) {
+  const t = useTranslations('meeting');
   const nav = useNavigateTransition();
   const meeting = useMeetingStore((s) => s.meeting);
   const title = meeting && meeting.code === code ? meeting.title : null;
@@ -65,12 +67,9 @@ export function EndedView({ code }: { code: string }) {
               <PhoneOff className="relative h-7 w-7 text-accent" />
             </div>
 
-            <h1 className="mt-5 text-2xl font-semibold tracking-tight">You left the meeting</h1>
+            <h1 className="mt-5 text-2xl font-semibold tracking-tight">{t('ended.heading')}</h1>
 
-            <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-              The call may still be in progress — you can rejoin while it&apos;s active, or head
-              back home.
-            </p>
+            <p className="mt-2 max-w-sm text-sm text-muted-foreground">{t('ended.description')}</p>
           </div>
 
           <div className="mx-8 mt-7 rounded-2xl border border-border/60 bg-background/40 p-4">
@@ -85,9 +84,9 @@ export function EndedView({ code }: { code: string }) {
                     'truncate text-sm font-semibold tracking-tight',
                     title ? 'text-foreground' : 'text-muted-foreground',
                   )}
-                  title={title ?? 'Untitled meeting'}
+                  title={title ?? t('ended.untitled')}
                 >
-                  {title ?? 'Untitled meeting'}
+                  {title ?? t('ended.untitled')}
                 </p>
                 <p className="mt-0.5 truncate font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   {code}
@@ -98,7 +97,7 @@ export function EndedView({ code }: { code: string }) {
                 href={`/history/${code}`}
                 className="inline-flex shrink-0 items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground"
               >
-                History
+                {t('ended.history')}
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
@@ -107,7 +106,7 @@ export function EndedView({ code }: { code: string }) {
           <div className="flex flex-col gap-2 px-8 pt-6 sm:flex-row">
             <Button onClick={rejoin} disabled={nav.isNavigating} size="lg" className="sm:flex-1">
               <RotateCcw className="h-4 w-4" />
-              {nav.isNavigating ? 'Rejoining…' : 'Rejoin meeting'}
+              {nav.isNavigating ? t('ended.rejoining') : t('ended.rejoin')}
             </Button>
 
             <Button
@@ -118,7 +117,7 @@ export function EndedView({ code }: { code: string }) {
               className="sm:flex-1"
             >
               <Home className="h-4 w-4" />
-              Go home
+              {t('ended.go-home')}
             </Button>
           </div>
 
@@ -153,12 +152,10 @@ export function EndedView({ code }: { code: string }) {
 
               <div className="flex flex-col leading-tight">
                 <span className="font-medium text-foreground">
-                  {paused ? 'Auto-redirect paused' : 'Heading home soon'}
+                  {paused ? t('ended.redirect-paused') : t('ended.heading-home-soon')}
                 </span>
                 <span className="text-muted-foreground">
-                  {paused
-                    ? 'You can stay here as long as you want.'
-                    : `Returns you to the dashboard in ${secs}s.`}
+                  {paused ? t('ended.paused-subline') : t('ended.redirect-in', { seconds: secs })}
                 </span>
               </div>
             </div>
@@ -169,7 +166,7 @@ export function EndedView({ code }: { code: string }) {
               onClick={() => setPaused((p) => !p)}
               className="shrink-0 text-xs"
             >
-              {paused ? 'Resume' : 'Stay here'}
+              {paused ? t('ended.resume') : t('ended.stay-here')}
             </Button>
           </div>
         </div>

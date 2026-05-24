@@ -9,6 +9,7 @@ import {
 } from '@livekit/components-react';
 import { Track } from 'livekit-client';
 import { Hand } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 import { UserAvatar } from '@open-meet/ui/user-avatar';
@@ -50,6 +51,7 @@ interface TileProps {
 }
 
 function Tile({ track, raisedHands, className }: TileProps) {
+  const t = useTranslations('meeting');
   const identity = track.participant.identity;
   const isCamera = track.source === Track.Source.Camera;
   const hasHand = Boolean(raisedHands[identity]) && isCamera;
@@ -62,7 +64,7 @@ function Tile({ track, raisedHands, className }: TileProps) {
 
   const remoteName = track.participant.name?.trim();
   const localName = isLocal ? currentUser?.name?.trim() : undefined;
-  const displayName = remoteName || localName || identity || 'Guest';
+  const displayName = remoteName || localName || identity || t('video.guest');
 
   const { avatar: metadataAvatar } = parseParticipantMetadata(track.participant.metadata);
   const avatar = metadataAvatar ?? (isLocal ? (currentUser?.avatar ?? null) : null);

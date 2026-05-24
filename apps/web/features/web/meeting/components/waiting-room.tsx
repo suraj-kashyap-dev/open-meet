@@ -1,8 +1,7 @@
 'use client';
 
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -16,6 +15,7 @@ import {
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import { useMeetingSocket } from '@/features/web/meeting/hooks/use-socket';
+import { Link, useRouter } from '@/i18n/navigation';
 
 type Status = 'connecting' | 'waiting' | 'awaiting-host' | 'denied';
 
@@ -28,6 +28,7 @@ interface Props {
 }
 
 export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
+  const t = useTranslations('meeting');
   const router = useRouter();
   const { socket } = useMeetingSocket(true);
   const [status, setStatus] = useState<Status>('connecting');
@@ -68,7 +69,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
           clearTimeout(retryTimerRef.current);
         }
 
-        toast.success('You were admitted to the meeting');
+        toast.success(t('waiting.toast-admitted'));
         onAdmitted();
         return;
       }
@@ -83,7 +84,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
       }
 
       setStatus('denied');
-      toast.error('The host declined your request to join.');
+      toast.error(t('waiting.toast-declined'));
       setTimeout(() => router.replace('/'), 1800);
     };
 
@@ -108,7 +109,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
         socket.emit(ClientEvent.MEETING_KNOCK_CANCEL, { meetingCode: code });
       }
     };
-  }, [socket, code, onAdmitted, router]);
+  }, [socket, code, onAdmitted, router, t]);
 
   const cancel = () => {
     router.replace('/');
@@ -116,24 +117,24 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
 
   const heading =
     status === 'denied'
-      ? 'Request declined'
+      ? t('waiting.heading-denied')
       : status === 'awaiting-host'
-        ? 'Waiting for the host'
-        : 'Asking to join';
+        ? t('waiting.heading-awaiting-host')
+        : t('waiting.heading-asking');
 
   const subline =
     status === 'denied'
-      ? 'Redirecting you back…'
+      ? t('waiting.subline-denied')
       : status === 'awaiting-host'
-        ? "The host hasn't started the meeting yet. You'll join automatically as soon as they arrive."
-        : 'The host has been notified. You will join automatically once they admit you.';
+        ? t('waiting.subline-awaiting-host')
+        : t('waiting.subline-asking');
 
   const statusText =
     status === 'connecting'
-      ? 'Connecting…'
+      ? t('waiting.status-connecting')
       : status === 'awaiting-host'
-        ? 'Retrying every few seconds…'
-        : 'Waiting for the host…';
+        ? t('waiting.status-awaiting-host')
+        : t('waiting.status-waiting');
 
   return (
     <main className="relative isolate flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4">
@@ -159,16 +160,16 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
           <div className="mt-2 flex flex-col gap-2 sm:flex-row">
             <Button variant="outline" onClick={cancel} disabled={status === 'denied'}>
               <ArrowLeft className="h-4 w-4" />
-              Cancel
+              {t('waiting.cancel')}
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/">Back to home</Link>
+              <Link href="/">{t('waiting.back-to-home')}</Link>
             </Button>
           </div>
         </div>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          Meeting code <span className="font-mono text-foreground">{code}</span>
+          {t('waiting.meeting-code')} <span className="font-mono text-foreground">{code}</span>
         </p>
       </div>
     </main>

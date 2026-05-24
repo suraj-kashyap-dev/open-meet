@@ -1,6 +1,7 @@
 'use client';
 
 import { Camera, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import type { ChangeEvent } from 'react';
 import { useRef } from 'react';
 import { toast } from 'sonner';
@@ -26,6 +27,7 @@ function messageFromError(err: unknown, fallback: string): string {
 }
 
 export function AvatarUploader({ user }: { user: UserDto }) {
+  const t = useTranslations('account');
   const uploadAvatar = useUploadAvatar();
   const deleteAvatar = useDeleteAvatar();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -45,33 +47,35 @@ export function AvatarUploader({ user }: { user: UserDto }) {
     }
 
     if (!AVATAR_MIMES.includes(file.type)) {
-      toast.error('Avatar must be a PNG, JPEG, WebP, or GIF image');
+      toast.error(t('validation.avatar-invalid-type'));
       return;
     }
 
     if (file.size > AVATAR_MAX_BYTES) {
-      toast.error(`Avatar must be under ${Math.round(AVATAR_MAX_BYTES / 1024 / 1024)} MB`);
+      toast.error(
+        t('validation.avatar-too-large', { mb: Math.round(AVATAR_MAX_BYTES / 1024 / 1024) }),
+      );
       return;
     }
 
     try {
       await uploadAvatar.mutateAsync(file);
-      toast.success('Avatar updated');
+      toast.success(t('toast.avatar-updated'));
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to upload avatar'));
+      toast.error(messageFromError(err, t('toast.avatar-upload-failed')));
     }
   };
 
   const onRemove = async (): Promise<void> => {
     try {
       await deleteAvatar.mutateAsync();
-      toast.success('Avatar removed');
+      toast.success(t('toast.avatar-removed'));
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to remove avatar'));
+      toast.error(messageFromError(err, t('toast.avatar-remove-failed')));
     }
   };
 
-  const editLabel = user.avatar ? 'Edit profile picture' : 'Upload profile picture';
+  const editLabel = user.avatar ? t('avatar.edit-label') : t('avatar.upload-label');
 
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -108,7 +112,7 @@ export function AvatarUploader({ user }: { user: UserDto }) {
             <DropdownMenuContent align="end" sideOffset={6} className="w-48">
               <DropdownMenuItem onSelect={onPickFile}>
                 <Camera className="h-4 w-4" />
-                Replace
+                {t('avatar.replace')}
               </DropdownMenuItem>
 
               <DropdownMenuItem
@@ -116,7 +120,7 @@ export function AvatarUploader({ user }: { user: UserDto }) {
                 className="text-destructive focus:bg-destructive/10 focus:text-destructive"
               >
                 <Trash2 className="h-4 w-4" />
-                Remove
+                {t('avatar.remove')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -142,9 +146,7 @@ export function AvatarUploader({ user }: { user: UserDto }) {
         )}
       </div>
 
-      <p className="text-xs text-muted-foreground">
-        PNG, JPEG, WebP or GIF. Up to 5 MB. Square images look best.
-      </p>
+      <p className="text-xs text-muted-foreground">{t('avatar.helper')}</p>
     </div>
   );
 }

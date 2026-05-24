@@ -1,10 +1,11 @@
 'use client';
 
 import { ArrowRight, CalendarClock, Check, Copy, Download, Loader2, X } from 'lucide-react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
 import { toast } from 'sonner';
 
+import { Link } from '@/i18n/navigation';
 import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
@@ -39,16 +40,17 @@ interface ScheduledResult {
   scheduledFor: string;
 }
 
-const RECURRENCE_OPTIONS: { value: string; label: string }[] = [
-  { value: 'none', label: "Doesn't repeat" },
-  { value: 'FREQ=DAILY', label: 'Daily' },
-  { value: 'FREQ=WEEKLY', label: 'Weekly' },
-  { value: 'FREQ=MONTHLY', label: 'Monthly' },
+const RECURRENCE_OPTIONS: { value: string; labelKey: string }[] = [
+  { value: 'none', labelKey: 'schedule.repeat-none' },
+  { value: 'FREQ=DAILY', labelKey: 'schedule.repeat-daily' },
+  { value: 'FREQ=WEEKLY', labelKey: 'schedule.repeat-weekly' },
+  { value: 'FREQ=MONTHLY', labelKey: 'schedule.repeat-monthly' },
 ];
 
 const DURATION_OPTIONS = [15, 30, 45, 60, 90, 120];
 
 export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDialogProps) {
+  const t = useTranslations('home');
   const defaultStart = useMemo(() => nextRoundedHour(), []);
 
   const [title, setTitle] = useState('');
@@ -107,7 +109,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     }
 
     if (invalid.length > 0) {
-      toast.error(`Not a valid email: ${invalid.join(', ')}`);
+      toast.error(t('toast.invalid-email', { emails: invalid.join(', ') }));
     }
 
     setInvitees(next);
@@ -185,19 +187,19 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     const trimmedTitle = title.trim();
 
     if (!trimmedTitle) {
-      toast.error('Give your meeting a title');
+      toast.error(t('toast.title-required'));
       return;
     }
 
     const scheduledFor = new Date(startAt);
 
     if (Number.isNaN(scheduledFor.getTime())) {
-      toast.error('Pick a valid date and time');
+      toast.error(t('toast.valid-datetime'));
       return;
     }
 
     if (scheduledFor.getTime() < Date.now() - 60_000) {
-      toast.error('Pick a future date and time');
+      toast.error(t('toast.future-datetime'));
       return;
     }
 
@@ -229,14 +231,12 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       });
 
       if (finalInvitees.length > 0) {
-        toast.success(
-          `Scheduled — invites sent to ${finalInvitees.length} guest${finalInvitees.length === 1 ? '' : 's'}`,
-        );
+        toast.success(t('toast.scheduled-invites', { count: finalInvitees.length }));
       } else {
-        toast.success('Meeting scheduled');
+        toast.success(t('toast.scheduled'));
       }
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not schedule meeting';
+      const message = err instanceof ApiClientError ? err.message : t('toast.schedule-error');
       toast.error(message);
     }
   };
@@ -249,10 +249,10 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     try {
       await navigator.clipboard.writeText(`${window.location.origin}/${result.code}`);
       setCopied(true);
-      toast.success('Meeting link copied');
+      toast.success(t('toast.link-copied'));
       window.setTimeout(() => setCopied(false), 1500);
     } catch {
-      toast.error('Could not copy link');
+      toast.error(t('toast.link-copy-error'));
     }
   };
 
@@ -262,13 +262,11 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CalendarClock className="h-4 w-4 text-accent" />
-            {result ? 'Meeting scheduled' : 'Schedule a meeting'}
+            {result ? t('schedule.result-title') : t('schedule.title')}
           </DialogTitle>
 
           <DialogDescription>
-            {result
-              ? 'Share the link, or download the .ics to add it to any calendar.'
-              : 'Pick a time, invite guests, and we will email the calendar invite.'}
+            {result ? t('schedule.result-description') : t('schedule.description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -286,12 +284,12 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
         ) : (
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="meeting-title">Title</Label>
+              <Label htmlFor="meeting-title">{t('schedule.title-label')}</Label>
               <Input
                 id="meeting-title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Weekly sync"
+                placeholder={t('schedule.title-placeholder')}
                 autoFocus
                 maxLength={200}
               />
@@ -299,7 +297,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_140px]">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="meeting-start">Date &amp; time</Label>
+                <Label htmlFor="meeting-start">{t('schedule.datetime-label')}</Label>
                 <Input
                   id="meeting-start"
                   type="datetime-local"
@@ -309,7 +307,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="meeting-duration">Duration</Label>
+                <Label htmlFor="meeting-duration">{t('schedule.duration-label')}</Label>
                 <Select
                   value={String(durationMin)}
                   onValueChange={(v) => setDurationMin(Number(v))}
@@ -321,7 +319,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                   <SelectContent>
                     {DURATION_OPTIONS.map((min) => (
                       <SelectItem key={min} value={String(min)}>
-                        {formatDuration(min)}
+                        {formatDuration(min, t)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -330,7 +328,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="meeting-recurrence">Repeat</Label>
+              <Label htmlFor="meeting-recurrence">{t('schedule.repeat-label')}</Label>
               <Select value={recurrence} onValueChange={setRecurrence}>
                 <SelectTrigger id="meeting-recurrence">
                   <SelectValue />
@@ -339,7 +337,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                 <SelectContent>
                   {RECURRENCE_OPTIONS.map((opt) => (
                     <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
+                      {t(opt.labelKey)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -348,7 +346,8 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="meeting-invitees">
-                Invite guests <span className="text-muted-foreground">(optional)</span>
+                {t('schedule.guests-label')}{' '}
+                <span className="text-muted-foreground">{t('schedule.guests-optional')}</span>
               </Label>
 
               <Input
@@ -361,14 +360,11 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                 onPaste={onInviteePaste}
                 onFocus={() => setInviteeFocused(true)}
                 onBlur={onInviteeBlur}
-                placeholder="alice@example.com"
+                placeholder={t('schedule.guests-placeholder')}
                 className={cn(inviteeFocused && 'ring-2 ring-ring')}
               />
 
-              <p className="text-xs text-muted-foreground">
-                Press Enter or comma after each email. They will get an email with the invite + .ics
-                file.
-              </p>
+              <p className="text-xs text-muted-foreground">{t('schedule.guests-helper')}</p>
 
               {invitees.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
@@ -383,7 +379,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                         type="button"
                         onClick={() => removeInviteeAt(idx)}
                         className="inline-flex h-4 w-4 items-center justify-center rounded-full text-muted-foreground hover:bg-accent/30 hover:text-foreground"
-                        aria-label={`Remove ${email}`}
+                        aria-label={t('schedule.remove-guest-aria', { email })}
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -395,19 +391,19 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
             <DialogFooter>
               <Button type="button" variant="ghost" onClick={() => handleOpenChange(false)}>
-                Cancel
+                {t('schedule.cancel')}
               </Button>
 
               <Button type="submit" disabled={schedule.isPending}>
                 {schedule.isPending ? (
                   <>
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                    Scheduling…
+                    {t('schedule.scheduling')}
                   </>
                 ) : (
                   <>
                     <CalendarClock className="h-3.5 w-3.5" />
-                    Schedule
+                    {t('schedule.schedule')}
                   </>
                 )}
               </Button>
@@ -432,6 +428,7 @@ function ScheduledSummary({
   onSchedule: () => void;
   onClose: () => void;
 }) {
+  const t = useTranslations('home');
   const when = new Date(result.scheduledFor).toLocaleString(undefined, {
     weekday: 'short',
     month: 'short',
@@ -453,12 +450,12 @@ function ScheduledSummary({
           {copied ? (
             <>
               <Check className="h-3.5 w-3.5 text-success" />
-              Link copied
+              {t('schedule.copied')}
             </>
           ) : (
             <>
               <Copy className="h-3.5 w-3.5" />
-              Copy link
+              {t('schedule.copy-link')}
             </>
           )}
         </Button>
@@ -466,7 +463,7 @@ function ScheduledSummary({
         <Button asChild type="button" variant="outline">
           <a href={meetingsApi.icsUrl(result.code)} download={`${result.code}.ics`}>
             <Download className="h-3.5 w-3.5" />
-            Download .ics
+            {t('schedule.download-ics')}
           </a>
         </Button>
       </div>
@@ -474,12 +471,12 @@ function ScheduledSummary({
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Button type="button" variant="ghost" onClick={onSchedule}>
           <X className="h-3.5 w-3.5" />
-          Schedule another
+          {t('schedule.schedule-another')}
         </Button>
 
         <Button asChild type="button" onClick={onClose}>
           <Link href={`/${result.code}/lobby`}>
-            Open lobby
+            {t('schedule.open-lobby')}
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </Button>
@@ -530,13 +527,15 @@ function dedupeEmails(list: string[]): string[] {
   return out;
 }
 
-function formatDuration(min: number): string {
+function formatDuration(min: number, t: (key: string, values?: Record<string, number>) => string) {
   if (min < 60) {
-    return `${min} min`;
+    return t('duration.minutes-long', { count: min });
   }
 
   const h = Math.floor(min / 60);
   const m = min % 60;
 
-  return m === 0 ? `${h}h` : `${h}h ${m}m`;
+  return m === 0
+    ? t('duration.hours', { count: h })
+    : t('duration.hours-minutes', { hours: h, minutes: m });
 }

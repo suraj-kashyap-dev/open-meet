@@ -1,7 +1,10 @@
+import { join } from 'node:path';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 
 import { envValidate } from './config/env.config';
 import { AppController } from './app.controller';
@@ -28,6 +31,22 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     }),
     ThrottlerModule.forRoot({
       throttlers: [{ ttl: 60_000, limit: 60 }],
+    }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      fallbacks: {
+        'en-*': 'en',
+        'ar-*': 'ar',
+      },
+      loaderOptions: {
+        path: join(process.cwd(), 'lang'),
+        watch: false,
+      },
+      resolvers: [
+        new QueryResolver(['lang']),
+        new HeaderResolver(['x-locale']),
+        AcceptLanguageResolver,
+      ],
     }),
     PrismaModule,
     RedisModule,

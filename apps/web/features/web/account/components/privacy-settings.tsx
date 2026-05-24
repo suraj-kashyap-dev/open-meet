@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -42,6 +43,7 @@ function messageFromError(err: unknown, fallback: string): string {
 }
 
 export function PrivacySettings({ settings }: { settings: UserSettingsDto | undefined }) {
+  const t = useTranslations('account');
   const updateSettings = useUpdateUserSettings();
 
   const current = settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS;
@@ -67,17 +69,20 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
   const onSubmit = handleSubmit(async (v) => {
     try {
       await updateSettings.mutateAsync({ privacySettings: v });
-      toast.success('Privacy settings updated');
+      toast.success(t('toast.privacy-updated'));
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to update privacy settings'));
+      toast.error(messageFromError(err, t('toast.privacy-update-failed')));
     }
   });
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-      <Row title="Profile visibility" description="Who can see your profile outside of meetings.">
+      <Row
+        title={t('preferences.visibility-title')}
+        description={t('preferences.visibility-description')}
+      >
         <div className="w-56">
-          <Label className="sr-only">Profile visibility</Label>
+          <Label className="sr-only">{t('preferences.visibility-title')}</Label>
 
           <Select
             value={values.profileVisibility}
@@ -92,19 +97,25 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
             </SelectTrigger>
 
             <SelectContent>
-              <SelectItem value={ProfileVisibility.PUBLIC}>Public</SelectItem>
+              <SelectItem value={ProfileVisibility.PUBLIC}>
+                {t('preferences.visibility-public')}
+              </SelectItem>
 
-              <SelectItem value={ProfileVisibility.PARTICIPANTS_ONLY}>Participants only</SelectItem>
+              <SelectItem value={ProfileVisibility.PARTICIPANTS_ONLY}>
+                {t('preferences.visibility-participants')}
+              </SelectItem>
 
-              <SelectItem value={ProfileVisibility.PRIVATE}>Private</SelectItem>
+              <SelectItem value={ProfileVisibility.PRIVATE}>
+                {t('preferences.visibility-private')}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
       </Row>
 
       <Row
-        title="Show email to participants"
-        description="Let people in your meetings see your email address."
+        title={t('preferences.show-email-title')}
+        description={t('preferences.show-email-description')}
       >
         <Switch
           checked={values.showEmailToParticipants}
@@ -113,8 +124,8 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
       </Row>
 
       <Row
-        title="Allow direct messages"
-        description="Let others start a 1-1 chat with you outside of meetings."
+        title={t('preferences.direct-messages-title')}
+        description={t('preferences.direct-messages-description')}
       >
         <Switch
           checked={values.allowDirectMessages}
@@ -123,8 +134,8 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
       </Row>
 
       <Row
-        title="Share anonymous usage data"
-        description="Helps us improve Open Meet. No meeting content is ever shared."
+        title={t('preferences.usage-data-title')}
+        description={t('preferences.usage-data-description')}
       >
         <Switch
           checked={values.shareUsageData}

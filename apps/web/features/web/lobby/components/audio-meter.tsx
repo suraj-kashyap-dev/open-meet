@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@open-meet/ui/cn';
@@ -13,6 +14,7 @@ interface Props {
 const BAR_COUNT = 5;
 
 export function AudioMeter({ stream, active, className }: Props) {
+  const t = useTranslations('lobby');
   const [level, setLevel] = useState(0);
   const rafRef = useRef<number | null>(null);
 
@@ -74,7 +76,7 @@ export function AudioMeter({ stream, active, className }: Props) {
   return (
     <div
       className={cn('flex items-end gap-0.5', className)}
-      aria-label="Microphone level"
+      aria-label={t('aria.microphone-level')}
       role="meter"
     >
       {Array.from({ length: BAR_COUNT }).map((_, i) => {

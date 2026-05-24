@@ -10,6 +10,7 @@ import {
   Send,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -34,6 +35,8 @@ interface Props {
 const GROUP_WINDOW_MS = 2 * 60_000;
 const MAX_ATTACHMENTS = 5;
 
+type ChatTranslator = ReturnType<typeof useTranslations<'meeting'>>;
+
 function formatTime(iso: string): string {
   return new Date(iso).toLocaleTimeString(undefined, {
     hour: '2-digit',
@@ -41,16 +44,16 @@ function formatTime(iso: string): string {
   });
 }
 
-function formatBytes(bytes: number): string {
+function formatBytes(t: ChatTranslator, bytes: number): string {
   if (bytes < 1024) {
-    return `${bytes} B`;
+    return t('chat.size-bytes', { bytes });
   }
 
   if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(0)} KB`;
+    return t('chat.size-kb', { kb: (bytes / 1024).toFixed(0) });
   }
 
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  return t('chat.size-mb', { mb: (bytes / (1024 * 1024)).toFixed(1) });
 }
 
 interface Row {
@@ -115,6 +118,7 @@ function toAbsoluteMediaUrl(url: string): string {
 }
 
 function AttachmentBlock({ a }: { a: AttachmentDto }) {
+  const t = useTranslations('meeting');
   const src = toAbsoluteMediaUrl(a.url);
 
   if (a.mime.startsWith('image/')) {
@@ -174,7 +178,7 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
       <span className="min-w-0 flex-1">
         <span className="block truncate text-sm font-medium">{a.url.split('/').pop()}</span>
         <span className="block text-xs text-muted-foreground">
-          {a.mime} · {formatBytes(a.size)}
+          {a.mime} · {formatBytes(t, a.size)}
         </span>
       </span>
     </a>
@@ -182,6 +186,7 @@ function AttachmentBlock({ a }: { a: AttachmentDto }) {
 }
 
 export function ChatPanel({ code, socket, onClose }: Props) {
+  const t = useTranslations('meeting');
   const { data: user } = useCurrentUser();
   const messages = useChatStore((s) => s.messages);
 
@@ -282,7 +287,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
     const available = MAX_ATTACHMENTS - staged.length;
 
     if (available <= 0) {
-      toast.error(`You can attach at most ${MAX_ATTACHMENTS} files per message.`);
+      toast.error(t('toast.max-attachments', { max: MAX_ATTACHMENTS }));
       return;
     }
 
@@ -320,7 +325,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           ),
         );
       } catch (err) {
-        const message = err instanceof ApiClientError ? err.message : 'Upload failed';
+        const message = err instanceof ApiClientError ? err.message : t('toast.upload-failed');
         setStaged((prev) =>
           prev.map((s) => (s.id === item.id ? { ...s, status: 'failed', error: message } : s)),
         );
@@ -351,7 +356,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
     const stillUploading = staged.some((s) => s.status === 'uploading');
 
     if (stillUploading) {
-      toast.message('Wait for uploads to finish');
+      toast.message(t('toast.wait-for-uploads'));
       return;
     }
 
@@ -390,7 +395,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
     <div className="flex h-full w-full flex-col bg-card">
       <header className="flex items-center justify-between border-b border-border px-4 py-3">
         <h2 className="text-sm font-semibold tracking-tight">
-          Chat
+          {t('chat.title')}
           {messages.length > 0 ? (
             <span className="ml-1.5 text-xs font-normal text-muted-foreground">
               · {messages.length}
@@ -402,7 +407,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           variant="ghost"
           size="icon"
           onClick={onClose}
-          aria-label="Close chat"
+          aria-label={t('chat.close')}
           className="-mr-1"
         >
           <X className="h-4 w-4" />
@@ -416,9 +421,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
                 <MessageSquare className="h-4 w-4" />
               </span>
-              <p className="text-sm text-muted-foreground">
-                No messages yet. Be the first to say something.
-              </p>
+              <p className="text-sm text-muted-foreground">{t('chat.empty')}</p>
             </div>
           ) : (
             <ul className="space-y-1">
@@ -454,7 +457,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
                           )}
                         >
                           <span className="font-medium text-foreground">
-                            {isMe ? 'You' : m.sender.name}
+                            {isMe ? t('chat.you') : m.sender.name}
                           </span>
                           <time>{formatTime(m.sentAt)}</time>
                         </div>
@@ -506,7 +509,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
               scrollToBottom();
               setShowJumpToBottom(false);
             }}
-            aria-label="Jump to latest"
+            aria-label={t('chat.jump-to-latest')}
             className="absolute bottom-3 right-3 h-8 w-8 rounded-full shadow-lg"
           >
             <ArrowDown className="h-4 w-4" />
@@ -534,10 +537,10 @@ export function ChatPanel({ code, socket, onClose }: Props) {
                   <span className="max-w-[10rem] truncate text-xs font-medium">{s.file.name}</span>
                   <span className="text-[10px] text-muted-foreground">
                     {s.status === 'uploading'
-                      ? `Uploading… ${Math.round(s.progress)}%`
+                      ? t('chat.uploading', { percent: Math.round(s.progress) })
                       : s.status === 'failed'
-                        ? (s.error ?? 'Failed')
-                        : formatBytes(s.file.size)}
+                        ? (s.error ?? t('chat.failed'))
+                        : formatBytes(t, s.file.size)}
                   </span>
                 </div>
 
@@ -545,7 +548,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
                   type="button"
                   onClick={() => removeStaged(s.id)}
                   className="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-foreground/80 text-background hover:bg-foreground"
-                  aria-label="Remove attachment"
+                  aria-label={t('chat.remove-attachment')}
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -591,7 +594,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           variant="ghost"
           size="icon"
           onClick={() => fileInputRef.current?.click()}
-          aria-label="Attach file"
+          aria-label={t('chat.attach-file')}
         >
           <Paperclip className="h-4 w-4" />
         </Button>
@@ -601,7 +604,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           variant="ghost"
           size="icon"
           onClick={() => cameraInputRef.current?.click()}
-          aria-label="Take a photo"
+          aria-label={t('chat.take-photo')}
           className="sm:hidden"
         >
           <Camera className="h-4 w-4" />
@@ -612,7 +615,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={onKeyDown}
-          placeholder="Send a message to everyone"
+          placeholder={t('chat.placeholder')}
           rows={1}
           maxLength={2000}
           autoComplete="off"
@@ -630,7 +633,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
           type="submit"
           size="icon"
           disabled={!hasReadyContent || hasInflight || sending}
-          aria-label="Send message"
+          aria-label={t('chat.send')}
         >
           {hasInflight ? (
             <Loader2 className="h-4 w-4 animate-spin" />

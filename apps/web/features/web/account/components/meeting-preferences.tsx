@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -43,6 +44,7 @@ function messageFromError(err: unknown, fallback: string): string {
 }
 
 export function MeetingPreferences({ settings }: { settings: UserSettingsDto | undefined }) {
+  const t = useTranslations('account');
   const updateSettings = useUpdateUserSettings();
 
   const current = settings?.meetingPreferences ?? DEFAULT_MEETING_PREFERENCES;
@@ -68,17 +70,17 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
   const onSubmit = handleSubmit(async (v) => {
     try {
       await updateSettings.mutateAsync({ meetingPreferences: v });
-      toast.success('Meeting preferences updated');
+      toast.success(t('toast.preferences-updated'));
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to update preferences'));
+      toast.error(messageFromError(err, t('toast.preferences-update-failed')));
     }
   });
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
       <Row
-        title="Join muted by default"
-        description="Start every meeting with your microphone off."
+        title={t('preferences.mic-muted-title')}
+        description={t('preferences.mic-muted-description')}
       >
         <Switch
           checked={values.defaultMicMuted}
@@ -86,7 +88,10 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
         />
       </Row>
 
-      <Row title="Camera off by default" description="Keep your camera off until you turn it on.">
+      <Row
+        title={t('preferences.camera-off-title')}
+        description={t('preferences.camera-off-description')}
+      >
         <Switch
           checked={values.defaultCameraOff}
           onCheckedChange={(c) => setValue('defaultCameraOff', c, { shouldDirty: true })}
@@ -94,11 +99,11 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
       </Row>
 
       <Row
-        title="Default view"
-        description="Gallery shows everyone; speaker focuses the active talker."
+        title={t('preferences.default-view-title')}
+        description={t('preferences.default-view-description')}
       >
         <div className="w-44">
-          <Label className="sr-only">Default view</Label>
+          <Label className="sr-only">{t('preferences.default-view-title')}</Label>
 
           <Select
             value={values.defaultView}
@@ -111,21 +116,25 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
             </SelectTrigger>
 
             <SelectContent>
-              <SelectItem value={MeetingDefaultView.GALLERY}>Gallery</SelectItem>
+              <SelectItem value={MeetingDefaultView.GALLERY}>
+                {t('preferences.view-gallery')}
+              </SelectItem>
 
-              <SelectItem value={MeetingDefaultView.SPEAKER}>Speaker</SelectItem>
+              <SelectItem value={MeetingDefaultView.SPEAKER}>
+                {t('preferences.view-speaker')}
+              </SelectItem>
             </SelectContent>
           </Select>
         </div>
       </Row>
 
-      <Row title="Meeting sounds" description="Chimes on join, leave, chat, reactions, and knocks.">
+      <Row title={t('preferences.sounds-title')} description={t('preferences.sounds-description')}>
         <div className="flex items-center gap-2">
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            aria-label="Preview sound"
+            aria-label={t('preferences.preview-sound')}
             onClick={() => void playSound('join')}
             disabled={!values.enableJoinSound}
           >
@@ -139,20 +148,20 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
       </Row>
 
       <Row
-        title="Browser notifications"
-        description="Get notified about chat and admit requests when this tab isn't focused."
+        title={t('preferences.notifications-title')}
+        description={t('preferences.notifications-description')}
       >
         <Switch
           checked={values.enableNotifications}
           onCheckedChange={async (c) => {
             if (c) {
               if (!notificationsSupported()) {
-                toast.error('Notifications are not supported in this browser');
+                toast.error(t('toast.notifications-unsupported'));
                 return;
               }
               const permission = await ensureNotificationPermission();
               if (permission !== 'granted') {
-                toast.error('Permission denied — enable notifications in your browser settings');
+                toast.error(t('toast.notifications-denied'));
                 return;
               }
             }

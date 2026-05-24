@@ -1,7 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -16,19 +17,28 @@ import { ApiClientError } from '@/lib/api/client';
 
 import { FormActions } from './form-actions';
 
-const schema = z.object({
-  name: z.string().trim().min(1, 'Name is required').max(100, 'Name is too long'),
-  bio: z.string().trim().max(500, 'Bio is too long').optional().or(z.literal('')),
-});
-
-type Values = z.infer<typeof schema>;
-
 function messageFromError(err: unknown, fallback: string): string {
   return err instanceof ApiClientError ? err.message : fallback;
 }
 
 export function ProfileEditForm({ user }: { user: UserDto }) {
+  const t = useTranslations('account');
   const updateProfile = useUpdateProfile();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z
+          .string()
+          .trim()
+          .min(1, t('validation.name-required'))
+          .max(100, t('validation.name-too-long')),
+        bio: z.string().trim().max(500, t('validation.bio-too-long')).optional().or(z.literal('')),
+      }),
+    [t],
+  );
+
+  type Values = z.infer<typeof schema>;
 
   const {
     register,
@@ -58,9 +68,9 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
         bio: values.bio?.trim() || null,
       });
 
-      toast.success('Profile updated');
+      toast.success(t('toast.profile-updated'));
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to update profile'));
+      toast.error(messageFromError(err, t('toast.profile-update-failed')));
     }
   });
 
@@ -68,13 +78,13 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label htmlFor="name">Display name</Label>
+          <Label htmlFor="name">{t('profile.display-name')}</Label>
 
           <Input
             id="name"
             type="text"
             autoComplete="name"
-            placeholder="Your name"
+            placeholder={t('profile.display-name-placeholder')}
             aria-invalid={Boolean(errors.name)}
             {...register('name')}
           />
@@ -82,12 +92,12 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
           {errors.name ? (
             <p className="text-xs text-destructive">{errors.name.message}</p>
           ) : (
-            <p className="text-xs text-muted-foreground">Shown in meetings and chats.</p>
+            <p className="text-xs text-muted-foreground">{t('profile.display-name-hint')}</p>
           )}
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('profile.email')}</Label>
 
           <Input
             id="email"
@@ -98,25 +108,23 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
             className="cursor-not-allowed"
           />
 
-          <p className="text-xs text-muted-foreground">
-            Used for sign-in. Email changes aren't available yet.
-          </p>
+          <p className="text-xs text-muted-foreground">{t('profile.email-hint')}</p>
         </div>
       </div>
 
       <div className="space-y-1.5">
         <div className="flex items-center justify-between gap-3">
-          <Label htmlFor="bio">Bio</Label>
+          <Label htmlFor="bio">{t('profile.bio')}</Label>
 
           <span className="text-[11px] tabular-nums text-muted-foreground">
-            {bioValue.length}/500
+            {t('profile.bio-counter', { count: bioValue.length })}
           </span>
         </div>
 
         <Textarea
           id="bio"
           rows={3}
-          placeholder="A short note about you."
+          placeholder={t('profile.bio-placeholder')}
           aria-invalid={Boolean(errors.bio)}
           {...register('bio')}
         />

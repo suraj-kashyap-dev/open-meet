@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -17,20 +18,23 @@ import {
   SelectValue,
 } from '@open-meet/ui/select';
 import { useUpdateProfile } from '@/features/web/auth/hooks/use-auth';
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { type Locale, routing } from '@/i18n/routing';
 import { ApiClientError } from '@/lib/api/client';
 
 import { FormActions } from './form-actions';
 
-const LANGUAGES: { value: string; label: string }[] = [
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Español' },
-  { value: 'fr', label: 'Français' },
-  { value: 'de', label: 'Deutsch' },
-  { value: 'hi', label: 'हिन्दी' },
-  { value: 'ja', label: '日本語' },
-  { value: 'pt', label: 'Português' },
-  { value: 'zh', label: '中文' },
-];
+// Native names for the locales the app actually supports. Sourced from the
+// i18n routing config so this list never drifts from the locale switcher.
+const LANGUAGE_NAMES: Record<Locale, string> = {
+  en: 'English',
+  ar: 'العربية',
+};
+
+const LANGUAGES: { value: string; label: string }[] = routing.locales.map((value) => ({
+  value,
+  label: LANGUAGE_NAMES[value],
+}));
 
 const TIMEZONES: string[] = [
   'UTC',
@@ -59,6 +63,10 @@ function messageFromError(err: unknown, fallback: string): string {
 }
 
 export function LocalizationSettings({ user }: { user: UserDto }) {
+  const t = useTranslations('account');
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
   const updateProfile = useUpdateProfile();
 
   const {
@@ -93,9 +101,14 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
   const onSubmit = handleSubmit(async (values) => {
     try {
       await updateProfile.mutateAsync(values);
-      toast.success('Localization updated');
+      toast.success(t('toast.localization-updated'));
+
+      // Apply the chosen language immediately by switching the active locale.
+      if (values.language !== locale) {
+        router.replace(pathname, { locale: values.language as Locale });
+      }
     } catch (err) {
-      toast.error(messageFromError(err, 'Failed to update localization'));
+      toast.error(messageFromError(err, t('toast.localization-update-failed')));
     }
   });
 
@@ -103,14 +116,14 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Timezone</Label>
+          <Label>{t('settings.timezone')}</Label>
 
           <Select
             value={timezone}
             onValueChange={(v) => setValue('timezone', v, { shouldDirty: true })}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Pick a timezone" />
+              <SelectValue placeholder={t('settings.timezone-placeholder')} />
             </SelectTrigger>
 
             <SelectContent>
@@ -124,14 +137,14 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
         </div>
 
         <div className="space-y-1.5">
-          <Label>Language</Label>
+          <Label>{t('settings.language')}</Label>
 
           <Select
             value={language}
             onValueChange={(v) => setValue('language', v, { shouldDirty: true })}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Pick a language" />
+              <SelectValue placeholder={t('settings.language-placeholder')} />
             </SelectTrigger>
 
             <SelectContent>

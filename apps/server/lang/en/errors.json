@@ -1,0 +1,13 @@
+{
+  "email-taken": "An admin with that email already exists",
+  "invite-invalid": "This invitation link is invalid",
+  "invite-expired": "This invitation has expired",
+  "invite-not-found": "Invite not found",
+  "admin-not-found": "Admin not found",
+  "name-required": "Name is required",
+  "name-empty": "Name cannot be empty",
+  "cannot-demote-last-superadmin": "Cannot demote the last remaining superadmin",
+  "cannot-delete-self": "You cannot delete your own admin account",
+  "cannot-delete-last-superadmin": "Cannot delete the last remaining superadmin",
+  "superadmin-required": "Superadmin privileges are required for this action"
+}

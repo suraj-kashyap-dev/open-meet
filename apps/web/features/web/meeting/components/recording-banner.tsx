@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { useRecordingStore } from '@/features/web/meeting/stores';
@@ -17,6 +18,7 @@ function formatElapsed(startIso: string, nowMs: number): string {
 }
 
 export function RecordingBanner() {
+  const t = useTranslations('meeting');
   const active = useRecordingStore((s) => s.active);
   const [now, setNow] = useState(() => Date.now());
 
@@ -36,7 +38,7 @@ export function RecordingBanner() {
   }
 
   const elapsed = formatElapsed(active.startedAt, now);
-  const starter = active.startedByName ?? 'the host';
+  const starter = active.startedByName ?? t('recording.default-starter');
 
   return (
     <div
@@ -50,7 +52,9 @@ export function RecordingBanner() {
           <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive-foreground" />
         </span>
 
-        <span className="text-xs font-semibold uppercase tracking-[0.16em]">Recording</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.16em]">
+          {t('recording.label')}
+        </span>
         <span className="font-mono text-sm tabular-nums">{elapsed}</span>
 
         <span
@@ -58,8 +62,8 @@ export function RecordingBanner() {
           className="hidden h-4 w-px bg-destructive-foreground/40 sm:inline-block"
         />
 
-        <span className="hidden text-xs text-destructive-foreground/85 sm:inline">
-          Started by <span className="font-medium">{starter}</span>
+        <span className="hidden text-xs font-medium text-destructive-foreground/85 sm:inline">
+          {t('recording.started-by', { name: starter })}
         </span>
       </div>
     </div>

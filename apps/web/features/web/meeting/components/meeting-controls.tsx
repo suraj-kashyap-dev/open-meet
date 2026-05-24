@@ -31,6 +31,7 @@ import {
   VideoOff,
   X,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -72,6 +73,7 @@ interface Props {
 }
 
 export function MeetingControls({ code, socket, hostId }: Props) {
+  const t = useTranslations('meeting');
   const room = useRoomContext();
   const { localParticipant, isMicrophoneEnabled, isCameraEnabled, isScreenShareEnabled } =
     useLocalParticipant();
@@ -165,7 +167,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     try {
       await localParticipant.setMicrophoneEnabled(!micEnabled);
     } catch (err) {
-      toast.error(`Could not toggle microphone: ${(err as Error).message}`);
+      toast.error(t('toast.toggle-microphone-error', { message: (err as Error).message }));
     } finally {
       setMicBusy(false);
     }
@@ -181,7 +183,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     try {
       await localParticipant.setCameraEnabled(!cameraEnabled);
     } catch (err) {
-      toast.error(`Could not toggle camera: ${(err as Error).message}`);
+      toast.error(t('toast.toggle-camera-error', { message: (err as Error).message }));
     } finally {
       setCameraBusy(false);
     }
@@ -197,7 +199,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     try {
       await localParticipant.setScreenShareEnabled(!isScreenSharing);
     } catch (err) {
-      toast.error(`Could not toggle screen share: ${(err as Error).message}`);
+      toast.error(t('toast.toggle-screen-error', { message: (err as Error).message }));
     } finally {
       setScreenBusy(false);
     }
@@ -211,7 +213,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         await document.documentElement.requestFullscreen();
       }
     } catch {
-      toast.error('Could not toggle full screen');
+      toast.error(t('toast.toggle-fullscreen-error'));
     }
   };
 
@@ -243,7 +245,8 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       const started = await recordingApi.start(code);
       setActiveRecording(started);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not start recording';
+      const message =
+        err instanceof ApiClientError ? err.message : t('toast.start-recording-error');
       toast.error(message);
     } finally {
       setRecordingBusy(false);
@@ -265,11 +268,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       // UI immediately so they can start another one or just move on.
       // The recording will appear in /history as soon as it's processed.
       setActiveRecording(null);
-      toast.success('Recording saved', {
-        description: 'It will appear in this meeting’s history within a few seconds.',
+      toast.success(t('toast.recording-saved'), {
+        description: t('toast.recording-saved-description'),
       });
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not stop recording';
+      const message = err instanceof ApiClientError ? err.message : t('toast.stop-recording-error');
       toast.error(message);
     } finally {
       setRecordingBusy(false);
@@ -299,11 +302,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
       setCopied(true);
 
-      toast.success('Meeting link copied');
+      toast.success(t('toast.link-copied'));
 
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      toast.error('Could not copy link');
+      toast.error(t('toast.copy-link-error'));
     }
   };
 
@@ -326,7 +329,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
       await room.disconnect();
     } catch (err) {
       setLeaving(false);
-      const message = err instanceof ApiClientError ? err.message : 'Could not end meeting';
+      const message = err instanceof ApiClientError ? err.message : t('toast.end-meeting-error');
       toast.error(message);
     }
   };
@@ -335,7 +338,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     <TooltipProvider delayDuration={200}>
       <footer className="flex items-center justify-center gap-2 border-t border-border bg-card/80 px-4 py-3 backdrop-blur">
         <ControlButton
-          label={micEnabled ? 'Mute' : 'Unmute'}
+          label={micEnabled ? t('controls.mute') : t('controls.unmute')}
           active={!micEnabled}
           onClick={toggleMic}
         >
@@ -343,7 +346,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         </ControlButton>
 
         <ControlButton
-          label={cameraEnabled ? 'Stop video' : 'Start video'}
+          label={cameraEnabled ? t('controls.stop-video') : t('controls.start-video')}
           active={!cameraEnabled}
           onClick={toggleCamera}
         >
@@ -351,7 +354,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         </ControlButton>
 
         <ControlButton
-          label={isScreenSharing ? 'Stop sharing' : 'Share screen'}
+          label={isScreenSharing ? t('controls.stop-sharing') : t('controls.share-screen')}
           active={isScreenSharing}
           onClick={toggleScreenShare}
         >
@@ -362,12 +365,12 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <Tooltip>
             <TooltipTrigger asChild>
               <PopoverTrigger asChild>
-                <Button size="icon" variant="ghost" aria-label="React">
+                <Button size="icon" variant="ghost" aria-label={t('controls.react')}>
                   <Smile className="h-4 w-4" />
                 </Button>
               </PopoverTrigger>
             </TooltipTrigger>
-            <TooltipContent>React</TooltipContent>
+            <TooltipContent>{t('controls.react')}</TooltipContent>
           </Tooltip>
           <PopoverContent side="top" align="center" className="border-0 p-0 shadow-xl">
             <EmojiPicker
@@ -387,7 +390,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         </Popover>
 
         <ControlButton
-          label={handRaised ? 'Lower hand' : 'Raise hand'}
+          label={handRaised ? t('controls.lower-hand') : t('controls.raise-hand')}
           active={handRaised}
           onClick={toggleHand}
         >
@@ -397,7 +400,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         <div className="mx-2 h-6 w-px bg-border" />
 
         <ControlButton
-          label="Chat"
+          label={t('controls.chat')}
           active={isChatOpen}
           onClick={() => {
             if (isParticipantsOpen) {
@@ -416,7 +419,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         </ControlButton>
 
         <ControlButton
-          label="Participants"
+          label={t('controls.participants')}
           active={isParticipantsOpen}
           onClick={() => {
             if (isChatOpen) {
@@ -430,7 +433,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
         </ControlButton>
 
         <ControlButton
-          label={isFullscreen ? 'Exit full screen' : 'Full screen'}
+          label={isFullscreen ? t('controls.exit-full-screen') : t('controls.full-screen')}
           onClick={toggleFullscreen}
         >
           {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -442,7 +445,12 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <Tooltip>
             <TooltipTrigger asChild>
               <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost" className="relative" aria-label="More options">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="relative"
+                  aria-label={t('controls.more-options')}
+                >
                   <MoreVertical className="h-4 w-4" />
                   {isHost && activeRecording ? (
                     <span
@@ -456,14 +464,14 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                 </Button>
               </DropdownMenuTrigger>
             </TooltipTrigger>
-            <TooltipContent>More options</TooltipContent>
+            <TooltipContent>{t('controls.more-options')}</TooltipContent>
           </Tooltip>
 
           <DropdownMenuContent align="end" side="top" className="w-64">
             {isHost ? (
               <>
                 <DropdownMenuLabel className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                  Host tools
+                  {t('controls.host-tools')}
                 </DropdownMenuLabel>
 
                 {!activeRecording ? (
@@ -483,9 +491,9 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                       )}
                     </span>
                     <span className="flex flex-1 flex-col">
-                      <span className="text-sm font-medium">Start recording</span>
+                      <span className="text-sm font-medium">{t('controls.start-recording')}</span>
                       <span className="text-[11px] text-muted-foreground">
-                        Captures everyone&apos;s video and audio
+                        {t('controls.start-recording-description')}
                       </span>
                     </span>
                   </DropdownMenuItem>
@@ -495,9 +503,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                       <Loader2 className="h-3.5 w-3.5 animate-spin" />
                     </span>
                     <span className="flex flex-1 flex-col">
-                      <span className="text-sm font-medium">Stopping recording…</span>
+                      <span className="text-sm font-medium">
+                        {t('controls.stopping-recording')}
+                      </span>
                       <span className="text-[11px] text-muted-foreground">
-                        Saving — appears in history when finished
+                        {t('controls.stopping-recording-description')}
                       </span>
                     </span>
                   </DropdownMenuItem>
@@ -519,14 +529,14 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                     </span>
                     <span className="flex flex-1 flex-col">
                       <span className="flex items-center gap-2 text-sm font-medium">
-                        Stop recording
+                        {t('controls.stop-recording')}
                         <span className="inline-flex items-center gap-1 rounded-full bg-destructive/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-destructive">
                           <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-destructive" />
-                          REC <span className="font-mono">{recordingElapsed}</span>
+                          {t('controls.rec', { time: recordingElapsed })}
                         </span>
                       </span>
                       <span className="text-[11px] text-muted-foreground">
-                        Saves the recording to meeting history
+                        {t('controls.stop-recording-description')}
                       </span>
                     </span>
                   </DropdownMenuItem>
@@ -546,7 +556,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted">
                 <Info className="h-3.5 w-3.5 text-muted-foreground" />
               </span>
-              <span className="text-sm">Meeting details</span>
+              <span className="text-sm">{t('controls.meeting-details')}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -559,12 +569,12 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             className="gap-2"
           >
             <X className="h-4 w-4" />
-            End for all
+            {t('controls.end-for-all')}
           </Button>
         ) : null}
         <Button variant="destructive" onClick={() => setLeaveOpen(true)} className="gap-2">
           <PhoneOff className="h-4 w-4" />
-          Leave
+          {t('controls.leave')}
         </Button>
       </footer>
 
@@ -576,17 +586,16 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             </div>
 
             <DialogHeader className="space-y-1.5 text-center sm:text-center">
-              <DialogTitle className="text-xl">Meeting details</DialogTitle>
+              <DialogTitle className="text-xl">{t('controls.details-title')}</DialogTitle>
               <DialogDescription className="text-balance">
-                Share the code or link with anyone you want to invite. The host approves every
-                guest.
+                {t('controls.details-description')}
               </DialogDescription>
             </DialogHeader>
           </div>
 
           <div className="space-y-2 px-6 py-5">
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-              Meeting code
+              {t('controls.meeting-code')}
             </p>
             <div className="flex items-center gap-2">
               <code className="min-w-0 flex-1 truncate rounded-lg border border-border bg-muted px-3 py-2.5 font-mono text-sm">
@@ -596,7 +605,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
                 variant="outline"
                 size="icon"
                 onClick={onCopyLink}
-                aria-label="Copy meeting link"
+                aria-label={t('controls.copy-link')}
                 className="shrink-0"
               >
                 {copied ? <Check className="h-4 w-4 text-success" /> : <Copy className="h-4 w-4" />}
@@ -606,7 +615,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
           <DialogFooter className="gap-2 border-t border-border bg-muted/30 px-6 py-4">
             <Button variant="outline" onClick={() => setInfoOpen(false)} className="sm:min-w-24">
-              Close
+              {t('controls.close')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -620,10 +629,9 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             </div>
 
             <DialogHeader className="space-y-1.5 text-center sm:text-center">
-              <DialogTitle className="text-xl">Leave this meeting?</DialogTitle>
+              <DialogTitle className="text-xl">{t('controls.leave-title')}</DialogTitle>
               <DialogDescription className="text-balance">
-                You&apos;ll be removed from the call. The meeting continues for everyone else — you
-                can rejoin while it&apos;s still in progress.
+                {t('controls.leave-description')}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -635,7 +643,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               disabled={leaving}
               className="sm:min-w-24"
             >
-              Stay
+              {t('controls.stay')}
             </Button>
             <Button variant="destructive" onClick={confirmLeave} disabled={leaving}>
               {leaving ? (
@@ -643,7 +651,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               ) : (
                 <PhoneOff className="h-4 w-4" />
               )}
-              {leaving ? 'Leaving…' : 'Leave meeting'}
+              {leaving ? t('controls.leaving') : t('controls.leave-meeting')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -657,9 +665,9 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             </div>
 
             <DialogHeader className="space-y-1.5 text-center sm:text-center">
-              <DialogTitle className="text-xl">End meeting for everyone?</DialogTitle>
+              <DialogTitle className="text-xl">{t('controls.end-all-title')}</DialogTitle>
               <DialogDescription className="text-balance">
-                All participants will be disconnected immediately. This action cannot be undone.
+                {t('controls.end-all-description')}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -667,11 +675,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <ul className="mx-6 mt-4 space-y-2 rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm">
             <li className="flex items-start gap-2 text-foreground/85">
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
-              <span>Active recordings will stop and save to history.</span>
+              <span>{t('controls.end-all-point-recordings')}</span>
             </li>
             <li className="flex items-start gap-2 text-foreground/85">
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
-              <span>Anyone wanting to continue will need a new meeting.</span>
+              <span>{t('controls.end-all-point-new-meeting')}</span>
             </li>
           </ul>
 
@@ -682,11 +690,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               disabled={leaving}
               className="sm:min-w-24"
             >
-              Cancel
+              {t('controls.cancel')}
             </Button>
             <Button variant="destructive" onClick={confirmEndForAll} disabled={leaving}>
               {leaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <X className="h-4 w-4" />}
-              {leaving ? 'Ending…' : 'End for all'}
+              {leaving ? t('controls.ending') : t('controls.end-for-all')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -702,11 +710,13 @@ export function MeetingControls({ code, socket, hostId }: Props) {
             </div>
 
             <DialogHeader className="space-y-1.5 text-center sm:text-center">
-              <DialogTitle className="text-xl">Start recording this meeting?</DialogTitle>
+              <DialogTitle className="text-xl">{t('controls.start-recording-title')}</DialogTitle>
               <DialogDescription className="text-balance">
-                Everyone will see a{' '}
-                <strong className="font-semibold text-foreground">Recording</strong> indicator and
-                hear a chime. Only people who attended can view the recording afterwards.
+                {t.rich('controls.start-recording-confirm-description', {
+                  strong: (chunks) => (
+                    <strong className="font-semibold text-foreground">{chunks}</strong>
+                  ),
+                })}
               </DialogDescription>
             </DialogHeader>
           </div>
@@ -714,11 +724,11 @@ export function MeetingControls({ code, socket, hostId }: Props) {
           <ul className="mx-6 mt-4 space-y-2 rounded-xl border border-border/60 bg-muted/30 p-4 text-sm">
             <li className="flex items-start gap-2 text-foreground/85">
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
-              <span>Captures everyone&apos;s video, screen share, and audio.</span>
+              <span>{t('controls.start-recording-point-captures')}</span>
             </li>
             <li className="flex items-start gap-2 text-foreground/85">
               <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-destructive" />
-              <span>Stops automatically when the meeting ends.</span>
+              <span>{t('controls.start-recording-point-auto-stop')}</span>
             </li>
           </ul>
 
@@ -729,7 +739,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               disabled={recordingBusy}
               className="sm:min-w-24"
             >
-              Cancel
+              {t('controls.cancel')}
             </Button>
             <Button
               variant="destructive"
@@ -743,7 +753,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
               ) : (
                 <Circle className="h-4 w-4 fill-current" />
               )}
-              {recordingBusy ? 'Starting…' : 'Start recording'}
+              {recordingBusy ? t('controls.starting') : t('controls.start-recording')}
             </Button>
           </DialogFooter>
         </DialogContent>

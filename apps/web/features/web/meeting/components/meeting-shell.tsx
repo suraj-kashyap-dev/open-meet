@@ -2,6 +2,7 @@
 
 import { useRoomContext } from '@livekit/components-react';
 import { RoomEvent } from 'livekit-client';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 
@@ -41,6 +42,7 @@ interface Props {
 }
 
 export function MeetingShell({ code, meeting }: Props) {
+  const t = useTranslations('meeting');
   const room = useRoomContext();
   const { socket } = useMeetingSocket();
   const { data: user } = useCurrentUser();
@@ -108,7 +110,7 @@ export function MeetingShell({ code, meeting }: Props) {
       addMessage(msg);
       if (msg.sender.id !== user?.id) {
         messageSound.play();
-        notification.notify(msg.sender.name || 'New message', {
+        notification.notify(msg.sender.name || t('toast.new-message'), {
           body: msg.content,
           tag: `chat-${code}`,
         });
@@ -122,29 +124,33 @@ export function MeetingShell({ code, meeting }: Props) {
     });
     socket.on(ServerEvent.HAND_RAISED, (h: HandRaisedPayload) => {
       raiseHand(h.userId, h.name);
-      toast.message(`✋ ${h.name} raised their hand`);
+      toast.message(t('toast.hand-raised', { name: h.name }));
     });
     socket.on(ServerEvent.HAND_LOWERED, (h: HandLoweredPayload) => {
       lowerHand(h.userId);
     });
     socket.on(ServerEvent.MEETING_ENDED, (_payload: MeetingEndedPayload) => {
-      toast.message('The host ended the meeting');
+      toast.message(t('toast.host-ended'));
       void room.disconnect();
     });
     socket.on(ServerEvent.RECORDING_STARTED, (payload: RecordingStartedPayload) => {
       setActiveRecording(payload.recording);
       recordingSound.play();
-      const starter = payload.recording.startedByName ?? 'The host';
-      toast.message(`${starter} is recording this meeting`, {
-        description: 'Everyone will see a “Recording” indicator while it is active.',
+      const starter = payload.recording.startedByName ?? t('toast.default-host');
+      toast.message(t('toast.recording-started', { name: starter }), {
+        description: t('toast.recording-started-description'),
       });
     });
     socket.on(ServerEvent.RECORDING_STOPPED, (payload: RecordingStoppedPayload) => {
       setActiveRecording(null);
       if (payload.recording.status === 'COMPLETED') {
-        toast.success('Recording stopped — it will appear in your meeting history.');
+        toast.success(t('toast.recording-stopped'));
       } else if (payload.recording.status === 'FAILED') {
-        toast.error(`Recording failed: ${payload.recording.error ?? 'unknown error'}`);
+        toast.error(
+          t('toast.recording-failed', {
+            error: payload.recording.error ?? t('toast.recording-failed-unknown'),
+          }),
+        );
       }
     });
 
@@ -172,6 +178,7 @@ export function MeetingShell({ code, meeting }: Props) {
     notification,
     recordingSound,
     setActiveRecording,
+    t,
   ]);
 
   // LiveKit participant join / leave sounds. Suppress for the first ~1.2s

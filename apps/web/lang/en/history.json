@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Activity",
+    "title": "Meeting history",
+    "total": "{count, plural, one {# meeting} other {# meetings}} total",
+    "description": "Every meeting you hosted or joined — with chat, attachments, and the participant list preserved."
+  },
+  "default-title": "Meeting on {date}",
+  "host": "Host",
+  "hosted-by-you": "hosted by you",
+  "hosted-by": "hosted by {name}",
+  "overflow": "+{count}",
+  "recording-badge": "Rec · {count}",
+  "recording-title": "{count, plural, one {# recording} other {# recordings}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Meeting",
+    "started": "Started",
+    "duration": "Duration",
+    "participants": "Participants",
+    "activity": "Activity",
+    "status": "Status",
+    "actions": "Actions",
+    "open": "Open"
+  },
+  "status": {
+    "ended": "ended",
+    "active": "active",
+    "scheduled": "scheduled"
+  },
+  "stats": {
+    "on-this-page": "On this page",
+    "hosted-by-you": "Hosted by you",
+    "total-time": "Total time",
+    "participants": "Participants"
+  },
+  "table": {
+    "empty": "No meetings on this page."
+  },
+  "pagination": {
+    "showing": "Showing {from}–{to} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "page-of": "Page {page} of {pageCount}"
+  },
+  "error": {
+    "list": "Failed to load your meeting history."
+  },
+  "empty": {
+    "title": "No meetings yet",
+    "description": "Once you host or join a meeting, it’ll show up here.",
+    "cta": "Start a meeting"
+  },
+  "detail": {
+    "back": "Back to history",
+    "default-title": "Meeting on {date}",
+    "hosted-by-you": "Hosted by you",
+    "copy-aria": "Copy meeting code",
+    "started": "Started",
+    "role": "Role",
+    "stats": {
+      "duration": "Duration",
+      "participants": "Participants",
+      "messages": "Messages",
+      "attachments": "Attachments"
+    },
+    "in-this-chat": "In this chat",
+    "overflow": "+{count}",
+    "error": "Failed to load this meeting.",
+    "status": {
+      "ended": "ended",
+      "active": "active",
+      "scheduled": "scheduled"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Recordings",
+      "visibility": "Visible only to people who joined this meeting.",
+      "started-by": "Started by",
+      "duration": "Duration",
+      "size": "Size",
+      "download": "Download",
+      "recording-from": "Recording from {date}",
+      "status": {
+        "completed": "completed",
+        "failed": "failed",
+        "recording": "recording",
+        "stopping": "stopping"
+      },
+      "failed-title": "Recording failed",
+      "failed-detail": "No further detail was provided by the egress service.",
+      "processing": "Processing recording — check back shortly.",
+      "empty-title": "No recordings for this meeting",
+      "empty-description": "The host can start a recording from in-call controls. Recordings stay private to the people who joined this meeting.",
+      "relative": {
+        "just-now": "just now",
+        "minutes": "{count, plural, one {# min ago} other {# min ago}}",
+        "hours": "{count, plural, one {# hr ago} other {# hr ago}}",
+        "days": "{count, plural, one {# day ago} other {# days ago}}"
+      }
+    },
+    "transcript": {
+      "title": "Chat transcript",
+      "count": "{count, plural, one {# message} other {# messages}}",
+      "error": "Failed to load messages.",
+      "empty": "No messages were sent in this meeting.",
+      "load-earlier": "Load earlier messages",
+      "loading": "Loading…",
+      "you": "You"
+    }
+  },
+  "toast": {
+    "copied": "Meeting code copied",
+    "copy-failed": "Could not copy meeting code"
+  }
+}

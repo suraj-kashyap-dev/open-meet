@@ -3,7 +3,7 @@
 import '@livekit/components-styles';
 
 import { LiveKitRoom, RoomAudioRenderer } from '@livekit/components-react';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -11,6 +11,7 @@ import type { LiveKitTokenResponseDto, MeetingDto } from '@open-meet/types';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { consumeJoinPreferences } from '@/features/web/lobby/lib/join-preferences';
+import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 import { livekitApi } from '@/features/web/meeting/services/livekit';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
@@ -21,6 +22,7 @@ import { WaitingRoom } from './waiting-room';
 type GuestStage = 'lookup' | 'knocking' | 'admitted';
 
 export function MeetingClient({ code }: { code: string }) {
+  const t = useTranslations('meeting');
   const router = useRouter();
   const { data: user, isLoading: userLoading } = useCurrentUser();
   const [token, setToken] = useState<LiveKitTokenResponseDto | null>(null);
@@ -55,7 +57,7 @@ export function MeetingClient({ code }: { code: string }) {
           return;
         }
 
-        const message = err instanceof ApiClientError ? err.message : 'Failed to load meeting';
+        const message = err instanceof ApiClientError ? err.message : t('toast.load-meeting-error');
         setError(message);
         toast.error(message);
 
@@ -70,7 +72,7 @@ export function MeetingClient({ code }: { code: string }) {
     return () => {
       cancelled = true;
     };
-  }, [code, router, user, userLoading]);
+  }, [code, router, user, userLoading, t]);
 
   const proceedToRoom = useCallback(async () => {
     try {
@@ -79,11 +81,11 @@ export function MeetingClient({ code }: { code: string }) {
       const lkToken = await livekitApi.token({ meetingCode: code });
       setToken(lkToken);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Failed to join meeting';
+      const message = err instanceof ApiClientError ? err.message : t('toast.join-meeting-error');
       setError(message);
       toast.error(message);
     }
-  }, [code]);
+  }, [code, t]);
 
   useEffect(() => {
     if (!meeting || !user) {

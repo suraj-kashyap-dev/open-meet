@@ -1,0 +1,46 @@
+{
+  "eyebrow": "Get ready",
+  "you": "You",
+  "untitled-meeting": "Untitled meeting",
+  "secure-connection": "Secure connection",
+  "invited-only": "Only invited people can join",
+  "meeting-code": "Meeting code",
+  "join-now": "Join now",
+  "joining": "Joining…",
+  "back-to-home": "Back to home",
+  "cancel": "Cancel",
+  "aria": {
+    "rename-meeting": "Rename meeting",
+    "meeting-title": "Meeting title",
+    "save-title": "Save title",
+    "cancel-rename": "Cancel rename",
+    "copy-meeting-link": "Copy meeting link",
+    "microphone-level": "Microphone level"
+  },
+  "devices": {
+    "title": "Devices",
+    "subtitle": "Check your audio & video",
+    "camera": "Camera",
+    "camera-placeholder": "Choose camera",
+    "microphone": "Microphone",
+    "microphone-placeholder": "Choose microphone",
+    "speakers": "Speakers",
+    "system-default": "System default"
+  },
+  "preview": {
+    "camera-off": "Camera is off",
+    "mute-microphone": "Mute microphone",
+    "unmute-microphone": "Unmute microphone",
+    "turn-off-microphone": "Turn off microphone",
+    "turn-on-microphone": "Turn on microphone",
+    "turn-off-camera": "Turn off camera",
+    "turn-on-camera": "Turn on camera"
+  },
+  "toast": {
+    "title-updated": "Meeting title updated",
+    "title-update-failed": "Could not update title",
+    "meeting-not-found": "Meeting not found",
+    "link-copied": "Meeting link copied",
+    "link-copy-failed": "Could not copy link"
+  }
+}

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 
@@ -9,6 +11,7 @@ import { PageHeader, SectionCard } from './section';
 import { PrivacySettings } from './privacy-settings';
 
 export function SettingsForm() {
+  const t = useTranslations('account');
   const { data: user, isLoading: userLoading } = useCurrentUser();
   const { data: settings, isLoading: settingsLoading } = useUserSettings();
 
@@ -23,32 +26,35 @@ export function SettingsForm() {
   return (
     <div className="flex flex-col gap-6 pb-10">
       <PageHeader
-        eyebrow="Account"
-        title="Settings"
-        description="Defaults for meetings, what others can see, and your language."
+        eyebrow={t('settings.eyebrow')}
+        title={t('settings.title')}
+        description={t('settings.description')}
       />
 
       <SectionCard
-        title="Localization"
-        description="Used for meeting times, dates, and the UI language."
+        title={t('settings.localization-title')}
+        description={t('settings.localization-description')}
       >
         <LocalizationSettings user={user} />
       </SectionCard>
 
       <SectionCard
-        title="Meeting defaults"
-        description="What happens when you start or join a meeting."
+        title={t('settings.defaults-title')}
+        description={t('settings.defaults-description')}
       >
         {settingsLoading ? (
-          <p className="text-xs text-muted-foreground">Loading…</p>
+          <p className="text-xs text-muted-foreground">{t('settings.loading')}</p>
         ) : (
           <MeetingPreferences settings={settings} />
         )}
       </SectionCard>
 
-      <SectionCard title="Privacy" description="Control what others see and how your data is used.">
+      <SectionCard
+        title={t('settings.privacy-title')}
+        description={t('settings.privacy-description')}
+      >
         {settingsLoading ? (
-          <p className="text-xs text-muted-foreground">Loading…</p>
+          <p className="text-xs text-muted-foreground">{t('settings.loading')}</p>
         ) : (
           <PrivacySettings settings={settings} />
         )}

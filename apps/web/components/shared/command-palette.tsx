@@ -1,6 +1,7 @@
 'use client';
 
 import { LogOut, Moon, Plus, Search, Sun, User, Video } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -21,6 +22,7 @@ import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 
 export function CommandPalette() {
+  const t = useTranslations('nav');
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState('');
   const nav = useNavigateTransition();
@@ -69,7 +71,8 @@ export function CommandPalette() {
       const meeting = await createMeeting.mutateAsync({});
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not create meeting';
+      const message =
+        err instanceof ApiClientError ? err.message : t('command.create-meeting-error');
       toast.error(message);
     }
   };
@@ -78,7 +81,7 @@ export function CommandPalette() {
     const trimmed = code.trim().toLowerCase();
 
     if (!trimmed) {
-      toast.error('Type a meeting code first');
+      toast.error(t('command.join-code-required'));
       return;
     }
 
@@ -87,25 +90,21 @@ export function CommandPalette() {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput
-        placeholder="Type a command or meeting code…"
-        value={code}
-        onValueChange={setCode}
-      />
+      <CommandInput placeholder={t('command.placeholder')} value={code} onValueChange={setCode} />
       <CommandList>
-        <CommandEmpty>No results.</CommandEmpty>
+        <CommandEmpty>{t('command.no-results')}</CommandEmpty>
 
-        <CommandGroup heading="Meetings">
+        <CommandGroup heading={t('command.group-meetings')}>
           <CommandItem onSelect={() => runAction(onCreateMeeting)}>
             <Plus className="h-4 w-4" />
-            New meeting
+            {t('command.new-meeting')}
             <CommandShortcut>↵</CommandShortcut>
           </CommandItem>
 
           {code.trim().length > 0 ? (
             <CommandItem onSelect={() => runAction(onJoin)}>
               <Video className="h-4 w-4" />
-              Join &ldquo;{code.trim()}&rdquo;
+              {t('command.join', { code: code.trim() })}
               <CommandShortcut>↵</CommandShortcut>
             </CommandItem>
           ) : null}
@@ -113,7 +112,7 @@ export function CommandPalette() {
 
         <CommandSeparator />
 
-        <CommandGroup heading="Appearance">
+        <CommandGroup heading={t('command.group-appearance')}>
           <CommandItem
             onSelect={() =>
               runAction(() => {
@@ -122,7 +121,7 @@ export function CommandPalette() {
             }
           >
             {resolvedTheme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            Switch to {resolvedTheme === 'dark' ? 'light' : 'dark'} mode
+            {resolvedTheme === 'dark' ? t('command.switch-to-light') : t('command.switch-to-dark')}
           </CommandItem>
           <CommandItem
             onSelect={() =>
@@ -132,7 +131,7 @@ export function CommandPalette() {
             }
           >
             <Search className="h-4 w-4" />
-            Match system theme
+            {t('command.match-system-theme')}
           </CommandItem>
         </CommandGroup>
 
@@ -142,14 +141,14 @@ export function CommandPalette() {
             <CommandGroup heading={user.name}>
               <CommandItem onSelect={() => runAction(() => nav.push('/'))}>
                 <User className="h-4 w-4" />
-                Home
+                {t('command.home')}
               </CommandItem>
               <CommandItem
                 onSelect={() => runAction(() => logout.mutate())}
                 className="text-destructive"
               >
                 <LogOut className="h-4 w-4" />
-                Sign out
+                {t('command.sign-out')}
               </CommandItem>
             </CommandGroup>
           </>

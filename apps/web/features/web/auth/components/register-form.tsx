@@ -2,7 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, UserPlus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -16,18 +18,27 @@ import { useGoogleAuthEnabled, useRegister } from '@/features/web/auth/hooks/use
 import { REDIRECT_PARAM, resolveRedirect } from '@/features/web/auth/lib/redirect';
 import { ApiClientError } from '@/lib/api/client';
 
-const schema = z.object({
-  name: z.string().min(1, 'Name is required').max(120),
-  email: z.string().email('Enter a valid email'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-});
-
-type FormValues = z.infer<typeof schema>;
+interface FormValues {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export function RegisterForm() {
+  const t = useTranslations('auth');
   const searchParams = useSearchParams();
   const register = useRegister(resolveRedirect(searchParams.get(REDIRECT_PARAM)));
   const { data: googleEnabled } = useGoogleAuthEnabled();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(1, t('validation.name-required')).max(120),
+        email: z.string().email(t('validation.invalid-email')),
+        password: z.string().min(8, t('validation.password-min')),
+      }),
+    [t],
+  );
 
   const {
     register: r,
@@ -42,7 +53,7 @@ export function RegisterForm() {
     try {
       await register.mutateAsync(values);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Something went wrong';
+      const message = err instanceof ApiClientError ? err.message : t('validation.generic');
 
       toast.error(message);
     }
@@ -54,21 +65,26 @@ export function RegisterForm() {
     <div className="space-y-5">
       <form onSubmit={onSubmit} className="space-y-5" noValidate>
         <div className="space-y-1.5">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">{t('register.name')}</Label>
 
-          <Input id="name" autoComplete="name" placeholder="Your name" {...r('name')} />
+          <Input
+            id="name"
+            autoComplete="name"
+            placeholder={t('register.name-placeholder')}
+            {...r('name')}
+          />
 
           {errors.name ? <p className="text-xs text-destructive">{errors.name.message}</p> : null}
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t('register.email')}</Label>
 
           <Input
             id="email"
             type="email"
             autoComplete="email"
-            placeholder="you@example.com"
+            placeholder={t('register.email-placeholder')}
             {...r('email')}
           />
 
@@ -76,12 +92,12 @@ export function RegisterForm() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">{t('register.password')}</Label>
 
           <Input
             id="password"
             type="password"
-            placeholder="Password"
+            placeholder={t('register.password')}
             autoComplete="new-password"
             {...r('password')}
           />
@@ -89,7 +105,7 @@ export function RegisterForm() {
           {errors.password ? (
             <p className="text-xs text-destructive">{errors.password.message}</p>
           ) : (
-            <p className="text-xs text-muted-foreground">At least 8 characters.</p>
+            <p className="text-xs text-muted-foreground">{t('register.password-hint')}</p>
           )}
         </div>
 
@@ -100,7 +116,7 @@ export function RegisterForm() {
             <UserPlus className="h-4 w-4" />
           )}
 
-          {pending ? 'Creating…' : 'Create account'}
+          {pending ? t('register.submitting') : t('register.submit')}
         </Button>
       </form>
 
@@ -108,7 +124,7 @@ export function RegisterForm() {
         <>
           <AuthDivider />
 
-          <GoogleSignInButton label="Sign up with Google" />
+          <GoogleSignInButton label={t('register.google')} />
         </>
       ) : null}
     </div>

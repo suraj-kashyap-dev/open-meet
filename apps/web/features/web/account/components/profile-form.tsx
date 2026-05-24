@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 
 import { AvatarUploader } from './avatar-uploader';
@@ -8,6 +10,7 @@ import { PasswordForm } from './password-form';
 import { ProfileEditForm } from './profile-edit-form';
 
 export function ProfileForm() {
+  const t = useTranslations('account');
   const { data: user, isLoading } = useCurrentUser();
 
   if (isLoading || !user) {
@@ -21,20 +24,26 @@ export function ProfileForm() {
   return (
     <div className="flex flex-col gap-6 pb-10">
       <PageHeader
-        eyebrow="Account"
-        title="Profile"
-        description="Update how you appear to others in meetings and chats."
+        eyebrow={t('profile.eyebrow')}
+        title={t('profile.title')}
+        description={t('profile.description')}
       />
 
-      <SectionCard title="Profile image" description="Optional. A square image works best.">
+      <SectionCard title={t('profile.image-title')} description={t('profile.image-description')}>
         <AvatarUploader user={user} />
       </SectionCard>
 
-      <SectionCard title="Personal details" description="Your display name, email, and bio.">
+      <SectionCard
+        title={t('profile.personal-title')}
+        description={t('profile.personal-description')}
+      >
         <ProfileEditForm user={user} />
       </SectionCard>
 
-      <SectionCard title="Password" description="Change the password used to sign in.">
+      <SectionCard
+        title={t('profile.password-title')}
+        description={t('profile.password-description')}
+      >
         <PasswordForm />
       </SectionCard>
     </div>

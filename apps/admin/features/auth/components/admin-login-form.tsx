@@ -2,6 +2,8 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2, ShieldCheck } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,15 +14,23 @@ import { Label } from '@open-meet/ui/label';
 import { useAdminLogin } from '@/features/auth/hooks/use-admin-auth';
 import { ApiClientError } from '@/lib/api/client';
 
-const schema = z.object({
-  email: z.string().email('Enter a valid email'),
-  password: z.string().min(1, 'Password is required'),
-});
-
-type FormValues = z.infer<typeof schema>;
+interface FormValues {
+  email: string;
+  password: string;
+}
 
 export function AdminLoginForm() {
+  const t = useTranslations('auth');
   const login = useAdminLogin();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t('validation.invalid-email')),
+        password: z.string().min(1, t('validation.password-required')),
+      }),
+    [t],
+  );
 
   const {
     register,
@@ -35,7 +45,7 @@ export function AdminLoginForm() {
     try {
       await login.mutateAsync(values);
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Failed to sign in';
+      const message = err instanceof ApiClientError ? err.message : t('validation.generic');
       toast.error(message);
     }
   });
@@ -43,21 +53,21 @@ export function AdminLoginForm() {
   const pending = isSubmitting || login.isPending;
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
+    <form onSubmit={onSubmit} className="space-y-5" noValidate>
       <div className="space-y-1.5">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">{t('login.email')}</Label>
         <Input
           id="email"
           type="email"
           autoComplete="username"
-          placeholder="admin@example.com"
+          placeholder={t('login.email-placeholder')}
           {...register('email')}
         />
         {errors.email ? <p className="text-xs text-destructive">{errors.email.message}</p> : null}
       </div>
 
       <div className="space-y-1.5">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">{t('login.password')}</Label>
         <Input
           id="password"
           type="password"
@@ -75,7 +85,7 @@ export function AdminLoginForm() {
         ) : (
           <ShieldCheck className="h-4 w-4" />
         )}
-        {pending ? 'Signing in…' : 'Sign in'}
+        {pending ? t('login.submitting') : t('login.submit')}
       </Button>
     </form>
   );

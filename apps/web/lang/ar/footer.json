@@ -1,0 +1,35 @@
+{
+  "tagline": "مؤتمرات فيديو مفتوحة المصدر للفرق سريعة الحركة. استضِفها بنفسك في دقائق وامتلك بياناتك إلى الأبد.",
+  "star": "أضف نجمة على GitHub",
+  "report-issue": "الإبلاغ عن مشكلة",
+  "status": "جميع الأنظمة تعمل",
+  "product": {
+    "eyebrow": "تصفّح",
+    "title": "المنتج",
+    "dashboard": "لوحة التحكم",
+    "history": "السجل",
+    "account": "الحساب"
+  },
+  "resources": {
+    "eyebrow": "تعلّم",
+    "title": "الموارد",
+    "self-host": "دليل الاستضافة الذاتية",
+    "api": "مرجع API",
+    "license": "رخصة MIT",
+    "changelog": "سجل التغييرات"
+  },
+  "community": {
+    "eyebrow": "انضم",
+    "title": "المجتمع",
+    "repo": "مستودع GitHub",
+    "issues": "المشكلات والأخطاء",
+    "discussions": "النقاشات",
+    "contribute": "المساهمة"
+  },
+  "powered-by": "مدعوم بـ",
+  "built-with": "مبني بتقنيات مفتوحة",
+  "copyright": "© {year} Open Meet",
+  "crafted-prefix": "صُنع بـ",
+  "crafted-suffix": "بواسطة المجتمع",
+  "love": "حب"
+}

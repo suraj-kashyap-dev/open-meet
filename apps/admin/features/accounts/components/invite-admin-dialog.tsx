@@ -1,6 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -28,13 +30,11 @@ import {
 import { useCreateAdminInvite } from '@/features/accounts/hooks/use-admin-accounts';
 import { ApiClientError } from '@/lib/api/client';
 
-const schema = z.object({
-  email: z.string().email('Enter a valid email'),
-  name: z.string().min(1, 'Name is required').max(120),
-  role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
-});
-
-type FormValues = z.infer<typeof schema>;
+interface FormValues {
+  email: string;
+  name: string;
+  role: AdminRole;
+}
 
 interface Props {
   open: boolean;
@@ -42,7 +42,18 @@ interface Props {
 }
 
 export function InviteAdminDialog({ open, onClose }: Props) {
+  const t = useTranslations('accounts');
   const invite = useCreateAdminInvite();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t('invite-dialog.validation.invalid-email')),
+        name: z.string().min(1, t('invite-dialog.validation.name-required')).max(120),
+        role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
+      }),
+    [t],
+  );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -52,11 +63,11 @@ export function InviteAdminDialog({ open, onClose }: Props) {
   const onSubmit = form.handleSubmit(async (values) => {
     try {
       await invite.mutateAsync(values);
-      toast.success(`Invitation emailed to ${values.email}`);
+      toast.success(t('invite-dialog.success', { email: values.email }));
       form.reset();
       onClose();
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not send invite';
+      const message = err instanceof ApiClientError ? err.message : t('invite-dialog.error');
       toast.error(message);
     }
   });
@@ -70,15 +81,13 @@ export function InviteAdminDialog({ open, onClose }: Props) {
     <Dialog open={open} onOpenChange={(o) => (!o ? close() : null)}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Invite an admin</DialogTitle>
-          <DialogDescription>
-            We&apos;ll email a secure link. They set their own password to activate the account.
-          </DialogDescription>
+          <DialogTitle>{t('invite-dialog.title')}</DialogTitle>
+          <DialogDescription>{t('invite-dialog.description')}</DialogDescription>
         </DialogHeader>
 
         <form onSubmit={onSubmit} className="space-y-3">
           <div className="space-y-1.5">
-            <Label htmlFor="invite-name">Name</Label>
+            <Label htmlFor="invite-name">{t('invite-dialog.name')}</Label>
             <Input id="invite-name" autoComplete="off" {...form.register('name')} />
             {form.formState.errors.name ? (
               <p className="text-xs text-destructive">{form.formState.errors.name.message}</p>
@@ -86,7 +95,7 @@ export function InviteAdminDialog({ open, onClose }: Props) {
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="invite-email">Email</Label>
+            <Label htmlFor="invite-email">{t('invite-dialog.email')}</Label>
             <Input id="invite-email" type="email" autoComplete="off" {...form.register('email')} />
             {form.formState.errors.email ? (
               <p className="text-xs text-destructive">{form.formState.errors.email.message}</p>
@@ -94,7 +103,7 @@ export function InviteAdminDialog({ open, onClose }: Props) {
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="invite-role">Role</Label>
+            <Label htmlFor="invite-role">{t('invite-dialog.role')}</Label>
             <Select
               value={form.watch('role')}
               onValueChange={(v) => form.setValue('role', v as AdminRole)}
@@ -103,18 +112,20 @@ export function InviteAdminDialog({ open, onClose }: Props) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={AdminRole.ADMIN}>Admin</SelectItem>
-                <SelectItem value={AdminRole.SUPERADMIN}>Superadmin</SelectItem>
+                <SelectItem value={AdminRole.ADMIN}>{t('invite-dialog.role-admin')}</SelectItem>
+                <SelectItem value={AdminRole.SUPERADMIN}>
+                  {t('invite-dialog.role-superadmin')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <DialogFooter className="pt-2">
             <Button type="button" variant="outline" onClick={close} disabled={invite.isPending}>
-              Cancel
+              {t('invite-dialog.cancel')}
             </Button>
             <Button type="submit" disabled={invite.isPending}>
-              {invite.isPending ? 'Sending…' : 'Send invite'}
+              {invite.isPending ? t('invite-dialog.submitting') : t('invite-dialog.submit')}
             </Button>
           </DialogFooter>
         </form>

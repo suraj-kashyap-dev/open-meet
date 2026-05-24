@@ -1,0 +1,35 @@
+{
+  "tagline": "Open-source video conferencing for teams that move fast. Self-host in minutes, own your data forever.",
+  "star": "Star on GitHub",
+  "report-issue": "Report an issue",
+  "status": "All systems operational",
+  "product": {
+    "eyebrow": "Navigate",
+    "title": "Product",
+    "dashboard": "Dashboard",
+    "history": "History",
+    "account": "Account"
+  },
+  "resources": {
+    "eyebrow": "Learn",
+    "title": "Resources",
+    "self-host": "Self-host guide",
+    "api": "API reference",
+    "license": "MIT license",
+    "changelog": "Changelog"
+  },
+  "community": {
+    "eyebrow": "Join in",
+    "title": "Community",
+    "repo": "GitHub repo",
+    "issues": "Issues & bug reports",
+    "discussions": "Discussions",
+    "contribute": "Contribute"
+  },
+  "powered-by": "Powered by",
+  "built-with": "Built with open tech",
+  "copyright": "© {year} Open Meet",
+  "crafted-prefix": "Crafted with",
+  "crafted-suffix": "by the community",
+  "love": "love"
+}
