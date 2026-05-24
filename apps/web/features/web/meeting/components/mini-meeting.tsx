@@ -62,8 +62,7 @@ export function MiniMeeting({ code, meeting }: Props) {
 
     const remote = tracks.find(
       (tr) =>
-        tr.source === Track.Source.Camera &&
-        tr.participant.identity !== localParticipant?.identity,
+        tr.source === Track.Source.Camera && tr.participant.identity !== localParticipant?.identity,
     );
 
     return remote ?? tracks.find((tr) => tr.source === Track.Source.Camera) ?? null;
@@ -101,11 +100,7 @@ export function MiniMeeting({ code, meeting }: Props) {
   return (
     <div
       data-lk-theme="default"
-      style={
-        position
-          ? { left: position.x, top: position.y }
-          : { right: 16, bottom: 16 }
-      }
+      style={position ? { left: position.x, top: position.y } : { right: 16, bottom: 16 }}
       className={cn(
         'fixed z-50 w-72 overflow-hidden rounded-xl border border-border bg-card shadow-2xl shadow-black/30',
         dragging && 'select-none',

@@ -1,6 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from 'react';
 
 import type { MiniPosition } from '@/features/web/meeting/stores';
 
@@ -64,7 +70,12 @@ export function useDraggable({ size, value, onChange, margin = 16 }: DraggableOp
       }
 
       onChange(
-        clampToViewport(value, size, { width: window.innerWidth, height: window.innerHeight }, margin),
+        clampToViewport(
+          value,
+          size,
+          { width: window.innerWidth, height: window.innerHeight },
+          margin,
+        ),
       );
     };
 
@@ -108,7 +119,12 @@ export function useDraggable({ size, value, onChange, margin = 16 }: DraggableOp
       };
 
       onChange(
-        clampToViewport(next, size, { width: window.innerWidth, height: window.innerHeight }, margin),
+        clampToViewport(
+          next,
+          size,
+          { width: window.innerWidth, height: window.innerHeight },
+          margin,
+        ),
       );
     };
 
