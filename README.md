@@ -36,7 +36,7 @@
 - **Reactions & raise hand** — live overlay reactions and raised-hand indicators in tiles and the participants panel.
 - **Hardened auth** — `argon2` hashing, httpOnly access + refresh cookies, rotation hashed in Redis, throttled `/api/auth/*`.
 - **Typed end-to-end** — one shared `@open-meet/types` package for DTOs, socket events, and the response envelope.
-- **Localized** — full UI + API i18n via `next-intl` (web/admin, URL-prefixed locales) and `nestjs-i18n` (server). English is the source of truth; `pnpm i18n:verify` keeps every locale in lockstep.
+- **Localized** — full UI + API i18n in **15 languages** via `next-intl` (web/admin, URL-prefixed locales) and `nestjs-i18n` (server). English is the source of truth; `pnpm i18n:verify` keeps every locale in lockstep.
 - **Tested** — Vitest unit suites for services and repositories, plus Supertest API e2e over the live HTTP layer.
 - **Self-hostable** — Postgres, Redis, LiveKit, and coturn all wired up in `docker-compose.yml`.
 
@@ -45,7 +45,7 @@
 - **Frontend** — Next.js 15 · React 19 · Tailwind v4 · shadcn/ui · TanStack Query v5 · Zustand v5
 - **Backend** — NestJS 11 (Fastify) · Prisma 6 · `@nestjs/jwt` + argon2 · BullMQ v5
 - **Realtime** — LiveKit SFU · `@livekit/components-react` · Socket.IO `/meeting` (Redis adapter)
-- **i18n** — `next-intl` (web/admin) · `nestjs-i18n` (server) · **English** (base) + **Arabic** (RTL)
+- **i18n** — `next-intl` (web/admin) · `nestjs-i18n` (server) · **15 languages**: English (base) · Arabic (RTL) · Spanish · Portuguese · French · German · Italian · Russian · Turkish · Chinese (Simplified) · Japanese · Korean · Indonesian · Hindi · Bengali
 - **Infra** — PostgreSQL 16 · Redis 7 · coturn · MailHog · Docker Compose
 - **Tooling** — pnpm workspaces · Turborepo v2 · Vitest + Supertest · ESLint 9 · Prettier 3
 
