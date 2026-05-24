@@ -195,9 +195,7 @@ export default function AdministratorsPage() {
             </Button>
           ) : null}
         </div>
-        <p className="text-sm text-muted-foreground">
-          {t('access-summary', { count: total })}
-        </p>
+        <p className="text-sm text-muted-foreground">{t('access-summary', { count: total })}</p>
       </header>
 
       <section className="space-y-4">

@@ -65,7 +65,9 @@ export function AdminSidebarContent({ onNavigate, collapsed = false }: Props) {
           {adminNav.map((section, sectionIndex) => (
             <div key={section.labelKey} className="space-y-1">
               {collapsed ? (
-                sectionIndex > 0 ? <div className="mx-auto my-2 h-px w-6 bg-border" /> : null
+                sectionIndex > 0 ? (
+                  <div className="mx-auto my-2 h-px w-6 bg-border" />
+                ) : null
               ) : (
                 <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">
                   {t(section.labelKey)}

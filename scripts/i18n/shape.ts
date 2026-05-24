@@ -43,16 +43,25 @@ export function diffShapes(base: Entry[], target: Entry[], baseLocale: string): 
   const extra = target.filter((entry) => !baseKind.has(entry.path)).map((entry) => entry.path);
   const reshaped = base
     .filter((entry) => targetKind.has(entry.path) && targetKind.get(entry.path) !== entry.kind)
-    .map((entry) => `${entry.path}  (${baseLocale}: ${entry.kind}, here: ${targetKind.get(entry.path)})`);
+    .map(
+      (entry) =>
+        `${entry.path}  (${baseLocale}: ${entry.kind}, here: ${targetKind.get(entry.path)})`,
+    );
 
   if (missing.length) {
-    problems.push(`missing ${missing.length} key(s) present in "${baseLocale}":\n${indent(missing.join('\n'))}`);
+    problems.push(
+      `missing ${missing.length} key(s) present in "${baseLocale}":\n${indent(missing.join('\n'))}`,
+    );
   }
   if (extra.length) {
-    problems.push(`${extra.length} extra key(s) not present in "${baseLocale}":\n${indent(extra.join('\n'))}`);
+    problems.push(
+      `${extra.length} extra key(s) not present in "${baseLocale}":\n${indent(extra.join('\n'))}`,
+    );
   }
   if (reshaped.length) {
-    problems.push(`${reshaped.length} key(s) with a different shape (object vs value):\n${indent(reshaped.join('\n'))}`);
+    problems.push(
+      `${reshaped.length} key(s) with a different shape (object vs value):\n${indent(reshaped.join('\n'))}`,
+    );
   }
 
   if (!missing.length && !extra.length && !reshaped.length) {

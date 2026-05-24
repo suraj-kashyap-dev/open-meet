@@ -110,7 +110,11 @@ export function RegisterForm() {
         </div>
 
         <Button type="submit" size="lg" className="w-full" disabled={pending}>
-          {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
+          {pending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <UserPlus className="h-4 w-4" />
+          )}
 
           {pending ? t('register.submitting') : t('register.submit')}
         </Button>

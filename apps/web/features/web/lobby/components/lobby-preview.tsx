@@ -83,9 +83,7 @@ export function LobbyPreview({ media, displayName, avatar }: Props) {
                 size="icon"
                 onClick={() => media.setMicEnabled(!media.micEnabled)}
                 aria-label={
-                  media.micEnabled
-                    ? t('preview.mute-microphone')
-                    : t('preview.unmute-microphone')
+                  media.micEnabled ? t('preview.mute-microphone') : t('preview.unmute-microphone')
                 }
                 className={cn(
                   'h-11 w-11 rounded-full border border-white/15 backdrop-blur-md',

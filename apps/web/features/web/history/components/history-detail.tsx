@@ -390,9 +390,7 @@ function RecordingsSection({
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-destructive/10 text-destructive">
             <VideoIcon className="h-3.5 w-3.5" />
           </span>
-          <h2 className="text-sm font-semibold tracking-tight">
-            {t('detail.recordings.title')}
-          </h2>
+          <h2 className="text-sm font-semibold tracking-tight">{t('detail.recordings.title')}</h2>
           {recordings.length > 0 ? (
             <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-[10px] font-medium tabular-nums text-muted-foreground">
               {recordings.length}

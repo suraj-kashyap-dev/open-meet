@@ -52,7 +52,9 @@ export function AvatarUploader({ user }: { user: UserDto }) {
     }
 
     if (file.size > AVATAR_MAX_BYTES) {
-      toast.error(t('validation.avatar-too-large', { mb: Math.round(AVATAR_MAX_BYTES / 1024 / 1024) }));
+      toast.error(
+        t('validation.avatar-too-large', { mb: Math.round(AVATAR_MAX_BYTES / 1024 / 1024) }),
+      );
       return;
     }
 

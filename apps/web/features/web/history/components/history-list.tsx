@@ -330,7 +330,9 @@ export function HistoryList() {
 
           {pageCount > 1 ? (
             <footer className="flex items-center justify-between text-sm">
-              <p className="text-muted-foreground">{t('pagination.showing', { from, to, total })}</p>
+              <p className="text-muted-foreground">
+                {t('pagination.showing', { from, to, total })}
+              </p>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"

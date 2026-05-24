@@ -109,7 +109,10 @@ export function AdminTopbar({
           const isLast = index === crumbs.length - 1;
           const text = crumb.labelKey ? t(crumb.labelKey) : (crumb.label ?? '');
           return (
-            <span key={`${crumb.labelKey ?? crumb.label}-${index}`} className="flex items-center gap-1">
+            <span
+              key={`${crumb.labelKey ?? crumb.label}-${index}`}
+              className="flex items-center gap-1"
+            >
               {index > 0 ? (
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60 rtl:-scale-x-100" />
               ) : null}

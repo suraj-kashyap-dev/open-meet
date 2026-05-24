@@ -169,8 +169,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
         </div>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          {t('waiting.meeting-code')}{' '}
-          <span className="font-mono text-foreground">{code}</span>
+          {t('waiting.meeting-code')} <span className="font-mono text-foreground">{code}</span>
         </p>
       </div>
     </main>

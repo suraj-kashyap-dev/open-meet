@@ -90,11 +90,7 @@ export function CommandPalette() {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput
-        placeholder={t('command.placeholder')}
-        value={code}
-        onValueChange={setCode}
-      />
+      <CommandInput placeholder={t('command.placeholder')} value={code} onValueChange={setCode} />
       <CommandList>
         <CommandEmpty>{t('command.no-results')}</CommandEmpty>
 

@@ -1246,7 +1246,9 @@ function formatDuration(min: number | null, t: Translator): string {
   const h = Math.floor(min / 60);
   const m = min % 60;
 
-  return m === 0 ? t('duration.hours', { count: h }) : t('duration.hours-minutes', { hours: h, minutes: m });
+  return m === 0
+    ? t('duration.hours', { count: h })
+    : t('duration.hours-minutes', { hours: h, minutes: m });
 }
 
 function minutesUntil(iso: string): number {
@@ -1303,7 +1305,9 @@ function formatDurationShort(min: number, t: Translator): string {
   const h = Math.floor(min / 60);
   const m = min % 60;
 
-  return m === 0 ? t('duration.hours', { count: h }) : t('duration.hours-minutes', { hours: h, minutes: m });
+  return m === 0
+    ? t('duration.hours', { count: h })
+    : t('duration.hours-minutes', { hours: h, minutes: m });
 }
 
 function recurrenceLabel(rrule: string, t: Translator): string | null {

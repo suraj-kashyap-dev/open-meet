@@ -128,10 +128,7 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
         </div>
       </Row>
 
-      <Row
-        title={t('preferences.sounds-title')}
-        description={t('preferences.sounds-description')}
-      >
+      <Row title={t('preferences.sounds-title')} description={t('preferences.sounds-description')}>
         <div className="flex items-center gap-2">
           <Button
             type="button"

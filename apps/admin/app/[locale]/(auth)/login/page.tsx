@@ -11,11 +11,7 @@ export const metadata: Metadata = {
   title: 'Admin sign in · Open Meet',
 };
 
-export default async function AdminLoginPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default async function AdminLoginPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('auth');

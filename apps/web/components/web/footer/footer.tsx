@@ -57,9 +57,7 @@ export async function Footer() {
               </span>
             </Link>
 
-            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-              {t('tagline')}
-            </p>
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{t('tagline')}</p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <Button asChild size="sm">
@@ -118,7 +116,9 @@ export async function Footer() {
               {t('resources.self-host')}
             </FooterLink>
             <FooterLink href={`${GITHUB_URL}#api-reference`}>{t('resources.api')}</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>{t('resources.license')}</FooterLink>
+            <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>
+              {t('resources.license')}
+            </FooterLink>
             <FooterLink href={`${GITHUB_URL}/releases`}>{t('resources.changelog')}</FooterLink>
           </FooterCol>
 
@@ -195,10 +195,7 @@ export async function Footer() {
 
             <span className="inline-flex items-center gap-1.5">
               {t('crafted-prefix')}
-              <Heart
-                className="h-3 w-3 fill-destructive text-destructive"
-                aria-label={t('love')}
-              />
+              <Heart className="h-3 w-3 fill-destructive text-destructive" aria-label={t('love')} />
               {t('crafted-suffix')}
             </span>
           </div>

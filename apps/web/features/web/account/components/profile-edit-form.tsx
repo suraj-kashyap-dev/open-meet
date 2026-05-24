@@ -33,12 +33,7 @@ export function ProfileEditForm({ user }: { user: UserDto }) {
           .trim()
           .min(1, t('validation.name-required'))
           .max(100, t('validation.name-too-long')),
-        bio: z
-          .string()
-          .trim()
-          .max(500, t('validation.bio-too-long'))
-          .optional()
-          .or(z.literal('')),
+        bio: z.string().trim().max(500, t('validation.bio-too-long')).optional().or(z.literal('')),
       }),
     [t],
   );

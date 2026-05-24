@@ -23,8 +23,7 @@ export default async function LoginPage({
   const t = await getTranslations('auth');
 
   const target = resolveRedirect((await searchParams)[REDIRECT_PARAM]);
-  const registerQuery =
-    target === '/' ? undefined : { [REDIRECT_PARAM]: target };
+  const registerQuery = target === '/' ? undefined : { [REDIRECT_PARAM]: target };
 
   return (
     <div className="w-full max-w-sm">

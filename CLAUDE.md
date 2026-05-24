@@ -164,23 +164,23 @@ docker compose logs -f livekit
 
 ## What lives where
 
-| Concern                               | Location                             |
-| ------------------------------------- | ------------------------------------ |
-| Shared DTO/types                      | `packages/types/src/`                |
-| Socket event names + payloads         | `packages/types/src/socket.ts`       |
-| Env zod schemas                       | `packages/config/src/env.ts`         |
-| API response envelope shape           | `packages/types/src/api.ts`          |
-| Meeting code generation               | `packages/utils/src/code.ts`         |
-| Prisma schema (multi-file by domain)  | `apps/server/prisma/schema/*.prisma` |
-| NestJS global pipe/filter/interceptor | `apps/server/src/common/`            |
-| API entry point + CORS allow-list     | `apps/server/src/main.ts`            |
-| Shared UI components (`cn`, shadcn)   | `packages/ui/src/`                   |
-| User app entry                        | `apps/web/app/[locale]/layout.tsx`   |
-| Admin app entry                       | `apps/admin/app/[locale]/layout.tsx` |
-| Typed API client (per app)            | `apps/{web,admin}/lib/api/client.ts` |
-| Zustand stores                        | `apps/web/stores/`                   |
-| Translations (en base + ar)           | `apps/{web,admin,server}/lang/<locale>/`|
-| i18n config (frontend)                | `apps/{web,admin}/i18n/`             |
+| Concern                               | Location                                 |
+| ------------------------------------- | ---------------------------------------- |
+| Shared DTO/types                      | `packages/types/src/`                    |
+| Socket event names + payloads         | `packages/types/src/socket.ts`           |
+| Env zod schemas                       | `packages/config/src/env.ts`             |
+| API response envelope shape           | `packages/types/src/api.ts`              |
+| Meeting code generation               | `packages/utils/src/code.ts`             |
+| Prisma schema (multi-file by domain)  | `apps/server/prisma/schema/*.prisma`     |
+| NestJS global pipe/filter/interceptor | `apps/server/src/common/`                |
+| API entry point + CORS allow-list     | `apps/server/src/main.ts`                |
+| Shared UI components (`cn`, shadcn)   | `packages/ui/src/`                       |
+| User app entry                        | `apps/web/app/[locale]/layout.tsx`       |
+| Admin app entry                       | `apps/admin/app/[locale]/layout.tsx`     |
+| Typed API client (per app)            | `apps/{web,admin}/lib/api/client.ts`     |
+| Zustand stores                        | `apps/web/stores/`                       |
+| Translations (en base + ar)           | `apps/{web,admin,server}/lang/<locale>/` |
+| i18n config (frontend)                | `apps/{web,admin}/i18n/`                 |
 
 ## Testing discipline — non-negotiable
 

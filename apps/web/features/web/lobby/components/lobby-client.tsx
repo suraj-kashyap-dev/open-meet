@@ -251,8 +251,7 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
       setDraft('');
       toast.success(t('toast.title-updated'));
     } catch (err) {
-      const message =
-        err instanceof ApiClientError ? err.message : t('toast.title-update-failed');
+      const message = err instanceof ApiClientError ? err.message : t('toast.title-update-failed');
       toast.error(message);
     }
   };
