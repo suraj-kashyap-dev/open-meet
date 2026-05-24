@@ -1,49 +1,57 @@
+import { locales } from '@/i18n/routing';
+
 export const REDIRECT_PARAM = 'redirect';
 
 const HOME = '/';
 
-/**
- * Validate a post-login redirect target read from the URL. Only same-origin
- * absolute paths are allowed — external URLs, protocol-relative `//host` (or
- * the `/\\host` backslash variant browsers normalize to it), and the auth
- * screens themselves all collapse to the home route. This blocks open-redirect
- * abuse via the `?redirect=` query param.
- */
+function stripLocale(path: string): string {
+  const match = /^\/([^/?#]+)(.*)$/.exec(path);
+  const first = match?.[1];
+
+  if (!first || !(locales as readonly string[]).includes(first)) {
+    return path;
+  }
+
+  const rest = match?.[2] ?? '';
+
+  if (!rest) {
+    return HOME;
+  }
+
+  return rest.startsWith('/') ? rest : `/${rest}`;
+}
+
 export function resolveRedirect(raw: string | null | undefined): string {
   if (!raw) {
     return HOME;
   }
 
-  if (!raw.startsWith('/') || raw.startsWith('//') || raw.startsWith('/\\')) {
+  const path = stripLocale(raw);
+
+  if (!path.startsWith('/') || path.startsWith('//') || path.startsWith('/\\')) {
     return HOME;
   }
 
   if (
-    raw === '/login' ||
-    raw === '/register' ||
-    raw.startsWith('/login?') ||
-    raw.startsWith('/register?')
+    path === '/login' ||
+    path === '/register' ||
+    path.startsWith('/login?') ||
+    path.startsWith('/register?')
   ) {
     return HOME;
   }
 
-  return raw;
+  return path;
 }
 
-/**
- * Build the login URL for an unauthenticated visitor, preserving the page they
- * were trying to reach so they land back there after signing in.
- */
-export function loginUrlWithRedirect(intended: string): string {
+type LoginHref = '/login' | { pathname: '/login'; query: Record<string, string> };
+
+export function loginHref(intended: string): LoginHref {
   const safe = resolveRedirect(intended);
 
-  return safe === HOME ? '/login' : `/login?${REDIRECT_PARAM}=${encodeURIComponent(safe)}`;
+  return safe === HOME ? '/login' : { pathname: '/login', query: { [REDIRECT_PARAM]: safe } };
 }
 
-/**
- * The path (with query + hash) the browser is currently on. Client-only —
- * call it from event handlers or effects, never during a server render.
- */
 export function currentClientPath(): string {
   if (typeof window === 'undefined') {
     return HOME;
@@ -51,5 +59,5 @@ export function currentClientPath(): string {
 
   const { pathname, search, hash } = window.location;
 
-  return `${pathname}${search}${hash}`;
+  return stripLocale(`${pathname}${search}${hash}`);
 }
