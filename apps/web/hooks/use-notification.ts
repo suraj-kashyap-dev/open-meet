@@ -9,13 +9,9 @@ interface NotifyOptions {
   body?: string;
   icon?: string;
   tag?: string;
+  onClick?: () => void;
 }
 
-/**
- * Returns a `notify()` function gated by the user's `enableNotifications`
- * preference. The underlying helper already suppresses notifications when
- * the tab is visible — this just adds the user-toggle layer on top.
- */
 export function useNotification(): { notify: (title: string, opts?: NotifyOptions) => void } {
   const { data: settings } = useUserSettings();
   const enabled = settings?.meetingPreferences?.enableNotifications ?? false;

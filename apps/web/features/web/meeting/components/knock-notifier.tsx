@@ -17,6 +17,7 @@ import { Button } from '@open-meet/ui/button';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { useNotification } from '@/hooks/use-notification';
 import { useSound } from '@/hooks/use-sound';
+import { useUIStore } from '@/stores';
 
 interface PendingKnock {
   userId: string;
@@ -35,6 +36,7 @@ export function KnockNotifier({ socket, code }: Props) {
   const [pending, setPending] = useState<PendingKnock[]>([]);
   const knockSound = useSound('knock');
   const notification = useNotification();
+  const setParticipantsOpen = useUIStore((s) => s.setParticipantsOpen);
 
   useEffect(() => {
     if (!socket) {
@@ -54,6 +56,7 @@ export function KnockNotifier({ socket, code }: Props) {
       notification.notify(t('knock.notify-title', { name: payload.name }), {
         body: t('knock.notify-body'),
         tag: `knock-${code}`,
+        onClick: () => setParticipantsOpen(true),
       });
     };
 
@@ -68,7 +71,7 @@ export function KnockNotifier({ socket, code }: Props) {
       socket.off(ServerEvent.KNOCK_REQUESTED, onRequested);
       socket.off(ServerEvent.KNOCK_CANCELLED, onCancelled);
     };
-  }, [socket, code, knockSound, notification, t]);
+  }, [socket, code, knockSound, notification, setParticipantsOpen, t]);
 
   const respond = (userId: string, admit: boolean) => {
     if (!socket) {

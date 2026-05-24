@@ -35,6 +35,7 @@ interface NotifyOptions {
   icon?: string;
   tag?: string;
   silent?: boolean;
+  onClick?: () => void;
 }
 
 export function notify(title: string, opts: NotifyOptions = {}): void {
@@ -47,12 +48,19 @@ export function notify(title: string, opts: NotifyOptions = {}): void {
   }
 
   try {
-    new Notification(title, {
+    const notification = new Notification(title, {
       body: opts.body,
       icon: opts.icon ?? '/icon.svg',
       tag: opts.tag,
       silent: opts.silent,
     });
+
+    notification.onclick = (event) => {
+      event.preventDefault();
+      window.focus();
+      opts.onClick?.();
+      notification.close();
+    };
   } catch {
     /* swallowed: Notification can throw in private mode or with bad icons */
   }

@@ -1,7 +1,8 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { ChevronLeft, ChevronRight, MoreHorizontal, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Pencil, Search, Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 import type { AdminUserDto } from '@open-meet/types';
@@ -11,13 +12,6 @@ import { DeleteUserDialog } from '@/features/users/components/delete-user-dialog
 import { EditUserDialog } from '@/features/users/components/edit-user-dialog';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@open-meet/ui/dropdown-menu';
 import { Input } from '@open-meet/ui/input';
 import { useAdminUsers } from '@/features/users/hooks/use-admin-users';
 
@@ -34,6 +28,7 @@ function formatJoined(iso: string): string {
 const column = createColumnHelper<AdminUserDto>();
 
 export default function AdminUsersPage() {
+  const t = useTranslations('users');
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [editing, setEditing] = useState<AdminUserDto | null>(null);
@@ -46,7 +41,7 @@ export default function AdminUsersPage() {
     () => [
       column.display({
         id: 'user',
-        header: 'User',
+        header: t('table.user'),
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
             <UserAvatar user={row.original} size="md" />
@@ -58,46 +53,42 @@ export default function AdminUsersPage() {
         ),
       }),
       column.accessor('createdAt', {
-        header: 'Joined',
+        header: t('table.joined'),
         cell: (info) => (
           <span className="text-sm text-muted-foreground">{formatJoined(info.getValue())}</span>
         ),
       }),
       column.accessor('meetingsHosted', {
-        header: () => <span className="block text-end">Hosted</span>,
+        header: () => <span className="block text-end">{t('table.hosted')}</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('meetingsAttended', {
-        header: () => <span className="block text-end">Attended</span>,
+        header: () => <span className="block text-end">{t('table.attended')}</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
       }),
       column.display({
         id: 'actions',
-        header: () => <span className="sr-only">Actions</span>,
+        header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
-          <div className="flex justify-end">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost" aria-label="Open actions">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setEditing(row.original)}>Edit</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
-                  onSelect={() => setDeleting(row.original)}
-                >
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+          <div className="flex items-center justify-end gap-1">
+            <Button size="sm" variant="ghost" onClick={() => setEditing(row.original)}>
+              <Pencil className="h-4 w-4" />
+              {t('table.edit')}
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => setDeleting(row.original)}
+              className="text-destructive hover:text-destructive"
+            >
+              <Trash2 className="h-4 w-4" />
+              {t('table.delete')}
+            </Button>
           </div>
         ),
       }),
     ],
-    [],
+    [t],
   );
 
   const total = data?.total ?? 0;
@@ -109,11 +100,13 @@ export default function AdminUsersPage() {
     <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          Manage
+          {t('eyebrow')}
         </p>
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Users</h1>
-          <span className="text-sm text-muted-foreground">{total.toLocaleString()} total</span>
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
+          <span className="text-sm text-muted-foreground">
+            {t('total-count', { count: total })}
+          </span>
         </div>
       </header>
 
@@ -122,7 +115,7 @@ export default function AdminUsersPage() {
           <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search by name or email"
+            placeholder={t('search-placeholder')}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -132,7 +125,7 @@ export default function AdminUsersPage() {
           />
         </div>
         {isFetching && !isLoading ? (
-          <span className="text-xs text-muted-foreground">Refreshing…</span>
+          <span className="text-xs text-muted-foreground">{t('refreshing')}</span>
         ) : null}
       </div>
 
@@ -140,12 +133,12 @@ export default function AdminUsersPage() {
         data={data?.items ?? []}
         columns={columns}
         isLoading={isLoading}
-        emptyMessage={search ? `No users match "${search}".` : 'No users yet.'}
+        emptyMessage={search ? t('empty-search', { query: search }) : t('empty')}
       />
 
       <footer className="flex items-center justify-between text-sm">
         <p className="text-muted-foreground">
-          {total === 0 ? 'No results' : `Showing ${from}–${to} of ${total}`}
+          {total === 0 ? t('pagination.no-results') : t('pagination.showing', { from, to, total })}
         </p>
         <div className="flex items-center gap-2">
           <Button
@@ -155,10 +148,10 @@ export default function AdminUsersPage() {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
             <ChevronLeft className="h-4 w-4" />
-            Previous
+            {t('pagination.previous')}
           </Button>
           <span className="text-xs text-muted-foreground">
-            Page {page} of {pageCount}
+            {t('pagination.page-of', { page, pageCount })}
           </span>
           <Button
             variant="outline"
@@ -166,7 +159,7 @@ export default function AdminUsersPage() {
             disabled={page >= pageCount || isFetching}
             onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
           >
-            Next
+            {t('pagination.next')}
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

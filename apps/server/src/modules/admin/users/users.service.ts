@@ -1,4 +1,13 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  Logger,
+  NotFoundException,
+  PayloadTooLargeException,
+  UnsupportedMediaTypeException,
+} from '@nestjs/common';
+import { randomBytes } from 'node:crypto';
 import * as argon2 from 'argon2';
 
 import type {
@@ -15,8 +24,19 @@ import { AdminUsersRepository, type UserWithCounts } from './users.repository';
 const DEFAULT_PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 100;
 
+const ALLOWED_AVATAR_MIMES: Record<string, string> = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+};
+
+const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
+
 @Injectable()
 export class AdminUsersService {
+  private readonly logger = new Logger(AdminUsersService.name);
+
   constructor(
     private readonly users: AdminUsersRepository,
     private readonly storage: StorageService,
@@ -117,6 +137,81 @@ export class AdminUsersService {
 
     await this.users.delete(id);
     return { deleted: true };
+  }
+
+  async uploadAvatar(id: string, buffer: Buffer, mime: string): Promise<AdminUserDto> {
+    if (!buffer || buffer.length === 0) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Avatar file is empty',
+      });
+    }
+
+    if (buffer.length > MAX_AVATAR_BYTES) {
+      throw new PayloadTooLargeException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: `Avatar exceeds maximum size of ${MAX_AVATAR_BYTES} bytes`,
+      });
+    }
+
+    const ext = ALLOWED_AVATAR_MIMES[mime];
+
+    if (!ext) {
+      throw new UnsupportedMediaTypeException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: `Avatar must be a PNG, JPEG, WebP, or GIF image (got ${mime})`,
+      });
+    }
+
+    const existing = await this.users.findById(id);
+
+    if (!existing) {
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: `User "${id}" not found`,
+      });
+    }
+
+    const key = `avatars/${id}/${randomBytes(12).toString('hex')}.${ext}`;
+
+    await this.storage.put({ key, buffer, mime });
+
+    const updated = await this.users.update(id, { avatarKey: key });
+
+    if (existing.avatarKey && existing.avatarKey !== key) {
+      this.storage.delete(existing.avatarKey).catch((err: unknown) => {
+        this.logger.warn(
+          `Failed to delete previous avatar "${existing.avatarKey}": ${(err as Error).message}`,
+        );
+      });
+    }
+
+    return this.toDto(updated);
+  }
+
+  async removeAvatar(id: string): Promise<AdminUserDto> {
+    const existing = await this.users.findById(id);
+
+    if (!existing) {
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: `User "${id}" not found`,
+      });
+    }
+
+    if (!existing.avatarKey) {
+      return this.toDto(existing);
+    }
+
+    const previousKey = existing.avatarKey;
+
+    const updated = await this.users.update(id, { avatarKey: null });
+
+    this.storage.delete(previousKey).catch((err: unknown) => {
+      this.logger.warn(`Failed to delete avatar "${previousKey}": ${(err as Error).message}`);
+    });
+
+    return this.toDto(updated);
   }
 
   private toDto(u: UserWithCounts): AdminUserDto {

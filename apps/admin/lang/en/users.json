@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Manage",
+  "title": "Users",
+  "total-count": "{count, number} total",
+  "search-placeholder": "Search by name or email",
+  "refreshing": "Refreshing…",
+  "empty": "No users yet.",
+  "empty-search": "No users match \"{query}\".",
+  "table": {
+    "user": "User",
+    "joined": "Joined",
+    "hosted": "Hosted",
+    "attended": "Attended",
+    "actions": "Actions",
+    "open-actions": "Open actions",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "pagination": {
+    "no-results": "No results",
+    "showing": "Showing {from}-{to} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "page-of": "Page {page} of {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Edit user",
+    "description": "Update profile, localization, bio, or reset the password.",
+    "section-account": "Account",
+    "section-localization": "Localization",
+    "section-about": "About",
+    "section-password": "Reset password",
+    "name": "Name",
+    "email": "Email",
+    "timezone": "Timezone",
+    "timezone-placeholder": "Pick a timezone",
+    "language": "Language",
+    "language-placeholder": "Pick a language",
+    "bio": "Bio",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Optional",
+    "new-password": "New password",
+    "new-password-placeholder": "Leave blank to keep the existing password",
+    "new-password-helper": "Setting a new password invalidates the user's sessions.",
+    "cancel": "Cancel",
+    "submit": "Save changes",
+    "submitting": "Saving…",
+    "success": "User updated",
+    "error": "Could not update user",
+    "validation": {
+      "name-required": "Name is required",
+      "invalid-email": "Enter a valid email",
+      "bio-too-long": "Bio is too long",
+      "password-too-long": "Too long",
+      "password-too-short": "At least 8 characters"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP, or GIF. Up to {mb} MB.",
+    "replace": "Replace image",
+    "remove": "Remove image",
+    "edit-label": "Change profile image",
+    "upload-label": "Upload profile image",
+    "success": "Profile image updated",
+    "upload-error": "Could not upload image",
+    "removed": "Profile image removed",
+    "remove-error": "Could not remove image",
+    "invalid-type": "Image must be a PNG, JPEG, WebP, or GIF.",
+    "too-large": "Image must be under {mb} MB."
+  },
+  "delete-dialog": {
+    "title": "Delete user?",
+    "description": "This permanently removes <strong>{email}</strong> and all meetings they hosted, participated in, and messages they sent. This cannot be undone.",
+    "cancel": "Cancel",
+    "submit": "Delete user",
+    "submitting": "Deleting…",
+    "success": "Deleted {email}",
+    "error": "Could not delete user"
+  }
+}

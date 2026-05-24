@@ -1,0 +1,80 @@
+{
+  "eyebrow": "الإدارة",
+  "title": "المستخدمون",
+  "total-count": "{count, number} إجمالاً",
+  "search-placeholder": "ابحث بالاسم أو البريد الإلكتروني",
+  "refreshing": "جارٍ التحديث…",
+  "empty": "لا يوجد مستخدمون بعد.",
+  "empty-search": "لا يوجد مستخدمون يطابقون \"{query}\".",
+  "table": {
+    "user": "المستخدم",
+    "joined": "تاريخ الانضمام",
+    "hosted": "استضاف",
+    "attended": "حضر",
+    "actions": "إجراءات",
+    "open-actions": "فتح الإجراءات",
+    "edit": "تعديل",
+    "delete": "حذف"
+  },
+  "pagination": {
+    "no-results": "لا توجد نتائج",
+    "showing": "عرض {from}–{to} من {total}",
+    "previous": "السابق",
+    "next": "التالي",
+    "page-of": "صفحة {page} من {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "تعديل المستخدم",
+    "description": "حدّث الملف الشخصي أو الإعدادات الإقليمية أو النبذة، أو أعد تعيين كلمة المرور.",
+    "section-account": "الحساب",
+    "section-localization": "الإعدادات الإقليمية",
+    "section-about": "نبذة",
+    "section-password": "إعادة تعيين كلمة المرور",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "timezone": "المنطقة الزمنية",
+    "timezone-placeholder": "اختر منطقة زمنية",
+    "language": "اللغة",
+    "language-placeholder": "اختر لغة",
+    "bio": "النبذة",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "اختياري",
+    "new-password": "كلمة مرور جديدة",
+    "new-password-placeholder": "اتركه فارغاً للإبقاء على كلمة المرور الحالية",
+    "new-password-helper": "تعيين كلمة مرور جديدة يُنهي جلسات المستخدم.",
+    "cancel": "إلغاء",
+    "submit": "حفظ التغييرات",
+    "submitting": "جارٍ الحفظ…",
+    "success": "تم تحديث المستخدم",
+    "error": "تعذّر تحديث المستخدم",
+    "validation": {
+      "name-required": "الاسم مطلوب",
+      "invalid-email": "أدخل بريداً إلكترونياً صالحاً",
+      "bio-too-long": "النبذة طويلة جداً",
+      "password-too-long": "طويلة جداً",
+      "password-too-short": "8 أحرف على الأقل"
+    }
+  },
+  "avatar": {
+    "helper": "PNG أو JPEG أو WebP أو GIF. حتى {mb} ميجابايت.",
+    "replace": "استبدال الصورة",
+    "remove": "إزالة الصورة",
+    "edit-label": "تغيير صورة الملف الشخصي",
+    "upload-label": "رفع صورة الملف الشخصي",
+    "success": "تم تحديث صورة الملف الشخصي",
+    "upload-error": "تعذّر رفع الصورة",
+    "removed": "تمت إزالة صورة الملف الشخصي",
+    "remove-error": "تعذّر إزالة الصورة",
+    "invalid-type": "يجب أن تكون الصورة بصيغة PNG أو JPEG أو WebP أو GIF.",
+    "too-large": "يجب أن تكون الصورة أقل من {mb} ميجابايت."
+  },
+  "delete-dialog": {
+    "title": "حذف المستخدم؟",
+    "description": "سيؤدي هذا إلى الحذف النهائي لـ <strong>{email}</strong> وجميع الاجتماعات التي استضافها أو شارك فيها والرسائل التي أرسلها. لا يمكن التراجع عن هذا الإجراء.",
+    "cancel": "إلغاء",
+    "submit": "حذف المستخدم",
+    "submitting": "جارٍ الحذف…",
+    "success": "تم حذف {email}",
+    "error": "تعذّر حذف المستخدم"
+  }
+}

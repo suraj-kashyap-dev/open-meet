@@ -1,4 +1,10 @@
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  NotFoundException,
+  PayloadTooLargeException,
+  UnsupportedMediaTypeException,
+} from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { StorageService } from '@/storage/storage.service';
@@ -25,7 +31,11 @@ function makeUser(over: Partial<UserWithCounts> = {}): UserWithCounts {
 describe('AdminUsersService', () => {
   let service: AdminUsersService;
   let users: Record<string, ReturnType<typeof vi.fn>>;
-  let storage: { publicUrl: ReturnType<typeof vi.fn> };
+  let storage: {
+    publicUrl: ReturnType<typeof vi.fn>;
+    put: ReturnType<typeof vi.fn>;
+    delete: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(() => {
     users = {
@@ -36,7 +46,11 @@ describe('AdminUsersService', () => {
       update: vi.fn().mockResolvedValue(makeUser()),
       delete: vi.fn().mockResolvedValue(makeUser()),
     };
-    storage = { publicUrl: vi.fn((k: string) => `pub:${k}`) };
+    storage = {
+      publicUrl: vi.fn((k: string) => `pub:${k}`),
+      put: vi.fn().mockResolvedValue(undefined),
+      delete: vi.fn().mockResolvedValue(undefined),
+    };
     service = new AdminUsersService(
       users as unknown as AdminUsersRepository,
       storage as unknown as StorageService,
@@ -99,6 +113,84 @@ describe('AdminUsersService', () => {
       users.findById.mockResolvedValueOnce(makeUser());
       await expect(service.delete('u1')).resolves.toEqual({ deleted: true });
       expect(users.delete).toHaveBeenCalledWith('u1');
+    });
+  });
+
+  describe('uploadAvatar()', () => {
+    it('should reject an empty file', async () => {
+      await expect(service.uploadAvatar('u1', Buffer.alloc(0), 'image/png')).rejects.toBeInstanceOf(
+        BadRequestException,
+      );
+    });
+
+    it('should reject a file over the size limit', async () => {
+      const tooBig = Buffer.alloc(5 * 1024 * 1024 + 1);
+      await expect(service.uploadAvatar('u1', tooBig, 'image/png')).rejects.toBeInstanceOf(
+        PayloadTooLargeException,
+      );
+    });
+
+    it('should reject an unsupported mime type', async () => {
+      await expect(
+        service.uploadAvatar('u1', Buffer.from('x'), 'application/pdf'),
+      ).rejects.toBeInstanceOf(UnsupportedMediaTypeException);
+    });
+
+    it('should throw when the user is missing', async () => {
+      users.findById.mockResolvedValueOnce(null);
+      await expect(
+        service.uploadAvatar('nope', Buffer.from('x'), 'image/png'),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('should store the image, persist a namespaced key, and delete the previous avatar', async () => {
+      users.findById.mockResolvedValueOnce(makeUser({ avatarKey: 'avatars/u1/old.png' }));
+
+      const res = await service.uploadAvatar('u1', Buffer.from('img'), 'image/png');
+
+      const putArg = storage.put.mock.calls[0]?.[0] as {
+        key: string;
+        buffer: Buffer;
+        mime: string;
+      };
+      expect(putArg.key).toMatch(/^avatars\/u1\/[0-9a-f]+\.png$/);
+      expect(putArg.mime).toBe('image/png');
+      expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: putArg.key });
+      expect(storage.delete).toHaveBeenCalledWith('avatars/u1/old.png');
+      expect(res).toMatchObject({ id: 'u1' });
+    });
+
+    it('should not delete anything when the user had no previous avatar', async () => {
+      users.findById.mockResolvedValueOnce(makeUser({ avatarKey: null }));
+
+      await service.uploadAvatar('u1', Buffer.from('img'), 'image/webp');
+
+      expect(storage.delete).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('removeAvatar()', () => {
+    it('should throw when the user is missing', async () => {
+      users.findById.mockResolvedValueOnce(null);
+      await expect(service.removeAvatar('nope')).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('should be a no-op when no avatar is set', async () => {
+      users.findById.mockResolvedValueOnce(makeUser({ avatarKey: null }));
+
+      await service.removeAvatar('u1');
+
+      expect(users.update).not.toHaveBeenCalled();
+      expect(storage.delete).not.toHaveBeenCalled();
+    });
+
+    it('should clear the stored key and delete the object', async () => {
+      users.findById.mockResolvedValueOnce(makeUser({ avatarKey: 'avatars/u1/a.png' }));
+
+      await service.removeAvatar('u1');
+
+      expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: null });
+      expect(storage.delete).toHaveBeenCalledWith('avatars/u1/a.png');
     });
   });
 });

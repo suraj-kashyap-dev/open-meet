@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/logo.svg" alt="Open Meet" width="88" height="88"/>
+<img src="public/logo.svg" alt="Open Meet" width="88" height="88"/>
 
 # Open Meet
 
@@ -22,7 +22,7 @@
 
 <br/>
 
-<img alt="Dashboard" src="docs/screenshots/dashboard.png" width="860"/>
+<img alt="Dashboard" src="public/images/dashboard.png" width="860"/>
 
 </div>
 
