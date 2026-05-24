@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "কার্যক্রম",
+    "title": "মিটিং ইতিহাস",
+    "total": "{count, plural, one {# টি মিটিং} other {# টি মিটিং}} মোট",
+    "description": "আপনি হোস্ট করা বা যোগ দেওয়া প্রতিটি মিটিং — চ্যাট, সংযুক্তি এবং অংশগ্রহণকারীর তালিকা সংরক্ষিত।"
+  },
+  "default-title": "{date}-এর মিটিং",
+  "host": "হোস্ট",
+  "hosted-by-you": "আপনার হোস্ট করা",
+  "hosted-by": "{name} হোস্ট করেছেন",
+  "overflow": "+{count}",
+  "recording-badge": "রেক · {count}",
+  "recording-title": "{count, plural, one {# টি রেকর্ডিং} other {# টি রেকর্ডিং}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "মিটিং",
+    "started": "শুরু হয়েছে",
+    "duration": "সময়কাল",
+    "participants": "অংশগ্রহণকারী",
+    "activity": "কার্যক্রম",
+    "status": "অবস্থা",
+    "actions": "কার্যক্রম",
+    "open": "খুলুন"
+  },
+  "status": {
+    "ended": "শেষ হয়েছে",
+    "active": "সক্রিয়",
+    "scheduled": "নির্ধারিত"
+  },
+  "stats": {
+    "on-this-page": "এই পেজে",
+    "hosted-by-you": "আপনার হোস্ট করা",
+    "total-time": "মোট সময়",
+    "participants": "অংশগ্রহণকারী"
+  },
+  "table": {
+    "empty": "এই পেজে কোনো মিটিং নেই।"
+  },
+  "pagination": {
+    "showing": "{from}–{to} দেখাচ্ছে {total}-এর মধ্যে",
+    "previous": "পূর্ববর্তী",
+    "next": "পরবর্তী",
+    "page-of": "{pageCount}-এর মধ্যে {page} পেজ"
+  },
+  "error": {
+    "list": "আপনার মিটিং ইতিহাস লোড করতে ব্যর্থ।"
+  },
+  "empty": {
+    "title": "এখনো কোনো মিটিং নেই",
+    "description": "আপনি একটি মিটিং হোস্ট বা যোগ দিলে এটি এখানে দেখা যাবে।",
+    "cta": "একটি মিটিং শুরু করুন"
+  },
+  "detail": {
+    "back": "ইতিহাসে ফিরে যান",
+    "default-title": "{date}-এর মিটিং",
+    "hosted-by-you": "আপনার হোস্ট করা",
+    "copy-aria": "মিটিং কোড কপি করুন",
+    "started": "শুরু হয়েছে",
+    "role": "ভূমিকা",
+    "stats": {
+      "duration": "সময়কাল",
+      "participants": "অংশগ্রহণকারী",
+      "messages": "বার্তা",
+      "attachments": "সংযুক্তি"
+    },
+    "in-this-chat": "এই চ্যাটে",
+    "overflow": "+{count}",
+    "error": "এই মিটিং লোড করতে ব্যর্থ।",
+    "status": {
+      "ended": "শেষ হয়েছে",
+      "active": "সক্রিয়",
+      "scheduled": "নির্ধারিত"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "রেকর্ডিং",
+      "visibility": "শুধুমাত্র এই মিটিংয়ে যোগ দেওয়া লোকেদের কাছে দৃশ্যমান।",
+      "started-by": "শুরু করেছেন",
+      "duration": "সময়কাল",
+      "size": "আকার",
+      "download": "ডাউনলোড",
+      "recording-from": "{date} থেকে রেকর্ডিং",
+      "status": {
+        "completed": "সম্পন্ন",
+        "failed": "ব্যর্থ",
+        "recording": "রেকর্ড হচ্ছে",
+        "stopping": "থামছে"
+      },
+      "failed-title": "রেকর্ডিং ব্যর্থ হয়েছে",
+      "failed-detail": "egress সার্ভিস থেকে আর কোনো বিবরণ পাওয়া যায়নি।",
+      "processing": "রেকর্ডিং প্রক্রিয়াকরণ হচ্ছে — একটু পরে আবার দেখুন।",
+      "empty-title": "এই মিটিংয়ে কোনো রেকর্ডিং নেই",
+      "empty-description": "হোস্ট ইন-কল কন্ট্রোল থেকে রেকর্ডিং শুরু করতে পারেন। রেকর্ডিং এই মিটিংয়ে যোগ দেওয়া লোকেদের কাছে ব্যক্তিগত থাকে।",
+      "relative": {
+        "just-now": "এইমাত্র",
+        "minutes": "{count, plural, one {# মিনিট আগে} other {# মিনিট আগে}}",
+        "hours": "{count, plural, one {# ঘণ্টা আগে} other {# ঘণ্টা আগে}}",
+        "days": "{count, plural, one {# দিন আগে} other {# দিন আগে}}"
+      }
+    },
+    "transcript": {
+      "title": "চ্যাট ট্রান্সক্রিপ্ট",
+      "count": "{count, plural, one {# টি বার্তা} other {# টি বার্তা}}",
+      "error": "বার্তা লোড করতে ব্যর্থ।",
+      "empty": "এই মিটিংয়ে কোনো বার্তা পাঠানো হয়নি।",
+      "load-earlier": "আগের বার্তা লোড করুন",
+      "loading": "লোড হচ্ছে…",
+      "you": "আপনি"
+    }
+  },
+  "toast": {
+    "copied": "মিটিং কোড কপি হয়েছে",
+    "copy-failed": "মিটিং কোড কপি করা যায়নি"
+  }
+}

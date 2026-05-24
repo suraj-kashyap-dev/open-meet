@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "Idioma"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "ou",
+  "loading": "Carregando…",
+  "google": {
+    "continue": "Continuar com Google",
+    "redirecting": "Redirecionando para o Google…"
+  },
+  "error": {
+    "title": "Algo deu errado",
+    "description": "Encontramos um erro inesperado. Você pode tentar novamente ou voltar para a página inicial.",
+    "retry": "Tentar novamente",
+    "home": "Início"
+  },
+  "not-found": {
+    "title": "Página não encontrada",
+    "description": "A página que você está procurando não existe ou foi movida.",
+    "back": "Voltar para o início"
+  }
+}

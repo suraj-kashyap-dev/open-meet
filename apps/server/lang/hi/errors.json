@@ -1,0 +1,13 @@
+{
+  "email-taken": "उस ईमेल से एक एडमिन पहले से मौजूद है",
+  "invite-invalid": "यह आमंत्रण लिंक अमान्य है",
+  "invite-expired": "यह आमंत्रण समाप्त हो गया है",
+  "invite-not-found": "आमंत्रण नहीं मिला",
+  "admin-not-found": "एडमिन नहीं मिला",
+  "name-required": "नाम आवश्यक है",
+  "name-empty": "नाम खाली नहीं हो सकता",
+  "cannot-demote-last-superadmin": "अंतिम शेष superadmin को पदावनत नहीं किया जा सकता",
+  "cannot-delete-self": "आप अपना स्वयं का एडमिन खाता हटा नहीं सकते",
+  "cannot-delete-last-superadmin": "अंतिम शेष superadmin को हटाया नहीं जा सकता",
+  "superadmin-required": "इस कार्रवाई के लिए superadmin अधिकार आवश्यक हैं"
+}

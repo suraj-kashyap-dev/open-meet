@@ -1,0 +1,14 @@
+{
+  "invite": {
+    "subject": "Sie wurden zur Open Meet-Admin-Konsole eingeladen",
+    "preview": "Legen Sie Ihr Passwort fest, um Ihr Open Meet-Admin-Konto zu aktivieren.",
+    "heading": "Sie sind zu Open Meet eingeladen",
+    "greeting": "Hallo {name},",
+    "body": "Sie wurden zur Open Meet-Admin-Konsole eingeladen. Legen Sie Ihr Passwort fest, um Ihr Konto zu aktivieren und loszulegen.",
+    "cta": "Einladung annehmen",
+    "footnote": "Dieser Link läuft am {when} ab. Falls Sie diese Einladung nicht erwartet haben, können Sie diese E-Mail ignorieren.",
+    "text-intro": "Sie wurden eingeladen, Open Meet zu verwalten.",
+    "text-action": "Legen Sie Ihr Passwort fest und aktivieren Sie Ihr Konto hier:",
+    "text-expires": "Dieser Link läuft am {when} ab."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "email-taken": "Esiste già un amministratore con quella email",
+  "invite-invalid": "Questo link di invito non è valido",
+  "invite-expired": "Questo invito è scaduto",
+  "invite-not-found": "Invito non trovato",
+  "admin-not-found": "Amministratore non trovato",
+  "name-required": "Il nome è obbligatorio",
+  "name-empty": "Il nome non può essere vuoto",
+  "cannot-demote-last-superadmin": "Impossibile degradare l'ultimo superamministratore rimasto",
+  "cannot-delete-self": "Non puoi eliminare il tuo account amministratore",
+  "cannot-delete-last-superadmin": "Impossibile eliminare l'ultimo superamministratore rimasto",
+  "superadmin-required": "Per questa azione sono richiesti i privilegi di superamministratore"
+}

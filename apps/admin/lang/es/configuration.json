@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Configuración",
+  "title": "Configuración",
+  "description": "Valores predeterminados del espacio de trabajo, marca y políticas de reuniones.",
+  "coming-soon-label": "Próximamente",
+  "coming-soon": {
+    "title": "La configuración está en camino",
+    "description": "Los valores predeterminados del espacio de trabajo, la marca y las políticas de reuniones estarán disponibles aquí pronto."
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Einstellungen",
+  "title": "Administratoren",
+  "access-summary": "{count, plural, one {# Person hat} other {# Personen haben}} Zugang zu dieser Konsole.",
+  "invite-button": "Admin einladen",
+  "empty": "Noch keine Administratoren.",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "table": {
+    "administrator": "Administrator",
+    "role": "Rolle",
+    "joined": "Beigetreten",
+    "last-login": "Letzter Login",
+    "never": "nie",
+    "actions": "Aktionen",
+    "actions-for": "Aktionen für {name}",
+    "edit": "Bearbeiten",
+    "delete": "Löschen"
+  },
+  "delete-dialog": {
+    "title": "Diesen Admin löschen?",
+    "description": "{name} ({email}) verliert sofort den Zugang zur Admin-Konsole. Dies kann nicht rückgängig gemacht werden.",
+    "cancel": "Abbrechen",
+    "confirm": "Admin löschen",
+    "deleting": "Wird gelöscht…",
+    "success": "{name} gelöscht",
+    "error": "Admin konnte nicht gelöscht werden"
+  },
+  "invite-dialog": {
+    "title": "Einen Admin einladen",
+    "description": "Wir senden einen sicheren Link per E-Mail. Sie legen ihr eigenes Passwort fest, um das Konto zu aktivieren.",
+    "name": "Name",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Abbrechen",
+    "submit": "Einladung senden",
+    "submitting": "Wird gesendet…",
+    "success": "Einladung an {email} per E-Mail gesendet",
+    "error": "Einladung konnte nicht gesendet werden",
+    "validation": {
+      "invalid-email": "Gültige E-Mail-Adresse eingeben",
+      "name-required": "Name ist erforderlich"
+    }
+  },
+  "edit-dialog": {
+    "title": "Admin bearbeiten",
+    "name": "Name",
+    "role": "Rolle",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Abbrechen",
+    "submit": "Änderungen speichern",
+    "submitting": "Wird gespeichert…",
+    "success": "{name} aktualisiert",
+    "error": "Admin konnte nicht aktualisiert werden",
+    "validation": {
+      "name-required": "Name ist erforderlich"
+    }
+  },
+  "pending": {
+    "heading": "Ausstehende Einladungen",
+    "description": "Einladungen, die noch nicht angenommen wurden. E-Mail erneut senden oder Zugang widerrufen.",
+    "loading-error": "Einladungen konnten nicht geladen werden.",
+    "empty": "Keine ausstehenden Einladungen.",
+    "status-pending": "ausstehend",
+    "status-expired": "abgelaufen",
+    "expires": "Läuft ab {when}",
+    "expired-at": "Abgelaufen am {when}",
+    "resend-label": "Einladung erneut an {email} senden",
+    "revoke-label": "Einladung für {email} widerrufen",
+    "resend-success": "Einladung erneut an {email} gesendet",
+    "resend-error": "Einladung konnte nicht erneut gesendet werden",
+    "revoke-success": "Einladung für {email} widerrufen",
+    "revoke-error": "Einladung konnte nicht widerrufen werden"
+  }
+}

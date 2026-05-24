@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Ayarlar",
+  "title": "Yapılandırma",
+  "description": "Çalışma alanı varsayılanları, marka ve toplantı politikaları.",
+  "coming-soon-label": "Yakında",
+  "coming-soon": {
+    "title": "Yapılandırma geliyor",
+    "description": "Çalışma alanı varsayılanları, marka ve toplantı politikaları yakında burada olacak."
+  }
+}

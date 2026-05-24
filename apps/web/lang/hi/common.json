@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "भाषा"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "या",
+  "loading": "लोड हो रहा है…",
+  "google": {
+    "continue": "Google से जारी रखें",
+    "redirecting": "Google पर रीडायरेक्ट हो रहा है…"
+  },
+  "error": {
+    "title": "कुछ गलत हो गया",
+    "description": "एक अनपेक्षित त्रुटि आई। आप पुनः प्रयास कर सकते हैं या होम पर वापस जा सकते हैं।",
+    "retry": "फिर से प्रयास करें",
+    "home": "होम"
+  },
+  "not-found": {
+    "title": "पृष्ठ नहीं मिला",
+    "description": "जिस पृष्ठ को आप ढूंढ रहे हैं वह मौजूद नहीं है या स्थानांतरित हो गया है।",
+    "back": "होम पर वापस जाएं"
+  }
+}

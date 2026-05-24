@@ -1,0 +1,27 @@
+{
+  "title": "Ativar sua conta de administrador",
+  "subtitle": "Defina uma senha para concluir a configuração do seu acesso.",
+  "joining-as": "Você está entrando como",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "password": "Senha",
+  "password-placeholder": "Pelo menos 8 caracteres",
+  "confirm": "Confirmar senha",
+  "submit": "Ativar conta",
+  "submitting": "Ativando…",
+  "go-to-sign-in": "Ir para o login",
+  "validation": {
+    "password-min": "Pelo menos 8 caracteres",
+    "password-mismatch": "As senhas não coincidem"
+  },
+  "errors": {
+    "missing-token": "Este link de convite está sem o token.",
+    "invalid": "Este convite é inválido ou expirou.",
+    "activate-failed": "Não foi possível ativar a conta"
+  },
+  "toast": {
+    "activated": "Conta ativada — por favor, faça login."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "title": "관리자 계정 활성화",
+  "subtitle": "비밀번호를 설정하여 액세스 설정을 완료하세요.",
+  "joining-as": "다음으로 참여하고 있습니다",
+  "roles": {
+    "admin": "관리자",
+    "superadmin": "슈퍼관리자"
+  },
+  "password": "비밀번호",
+  "password-placeholder": "8자 이상",
+  "confirm": "비밀번호 확인",
+  "submit": "계정 활성화",
+  "submitting": "활성화 중…",
+  "go-to-sign-in": "로그인으로 이동",
+  "validation": {
+    "password-min": "8자 이상이어야 합니다",
+    "password-mismatch": "비밀번호가 일치하지 않습니다"
+  },
+  "errors": {
+    "missing-token": "이 초대 링크에 토큰이 없습니다.",
+    "invalid": "이 초대는 유효하지 않거나 만료되었습니다.",
+    "activate-failed": "계정을 활성화할 수 없습니다"
+  },
+  "toast": {
+    "activated": "계정이 활성화되었습니다 — 로그인해 주세요."
+  }
+}

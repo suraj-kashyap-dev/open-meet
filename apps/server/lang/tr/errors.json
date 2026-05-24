@@ -1,0 +1,13 @@
+{
+  "email-taken": "Bu e-posta adresine sahip bir yönetici zaten mevcut",
+  "invite-invalid": "Bu davet bağlantısı geçersiz",
+  "invite-expired": "Bu davetin süresi dolmuş",
+  "invite-not-found": "Davet bulunamadı",
+  "admin-not-found": "Yönetici bulunamadı",
+  "name-required": "Ad gereklidir",
+  "name-empty": "Ad boş olamaz",
+  "cannot-demote-last-superadmin": "Son kalan süper yönetici düşürülemez",
+  "cannot-delete-self": "Kendi yönetici hesabınızı silemezsiniz",
+  "cannot-delete-last-superadmin": "Son kalan süper yönetici silinemez",
+  "superadmin-required": "Bu işlem için süper yönetici ayrıcalıkları gereklidir"
+}

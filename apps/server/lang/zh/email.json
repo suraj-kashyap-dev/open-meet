@@ -1,0 +1,14 @@
+{
+  "invite": {
+    "subject": "您已被邀请加入 Open Meet 管理控制台",
+    "preview": "设置密码以激活您的 Open Meet 管理员账户。",
+    "heading": "您已受邀加入 Open Meet",
+    "greeting": "您好，{name}，",
+    "body": "您已被邀请加入 Open Meet 管理控制台。请设置密码以激活您的账户并开始使用。",
+    "cta": "接受邀请",
+    "footnote": "此链接将于 {when} 过期。如果您并未期待此邀请，可以安全地忽略此邮件。",
+    "text-intro": "您已被邀请管理 Open Meet。",
+    "text-action": "请在此处设置密码并激活您的账户：",
+    "text-expires": "此链接将于 {when} 过期。"
+  }
+}

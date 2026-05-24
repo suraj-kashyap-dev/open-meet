@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "Idioma"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "Carregando…",
+  "error": {
+    "title": "Erro no painel de administração",
+    "description": "Algo deu errado ao carregar esta visualização de administração. Tente novamente ou volte ao painel.",
+    "retry": "Tentar novamente",
+    "home": "Painel"
+  }
+}

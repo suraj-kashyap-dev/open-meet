@@ -1,0 +1,35 @@
+{
+  "tagline": "Videoconferencia de código abierto para equipos que se mueven rápido. Instálalo tú mismo en minutos, tus datos son siempre tuyos.",
+  "star": "Destacar en GitHub",
+  "report-issue": "Reportar un problema",
+  "status": "Todos los sistemas operativos",
+  "product": {
+    "eyebrow": "Navegar",
+    "title": "Producto",
+    "dashboard": "Panel",
+    "history": "Historial",
+    "account": "Cuenta"
+  },
+  "resources": {
+    "eyebrow": "Aprender",
+    "title": "Recursos",
+    "self-host": "Guía de autoalojamiento",
+    "api": "Referencia de API",
+    "license": "Licencia MIT",
+    "changelog": "Registro de cambios"
+  },
+  "community": {
+    "eyebrow": "Únete",
+    "title": "Comunidad",
+    "repo": "Repositorio de GitHub",
+    "issues": "Problemas e informes de errores",
+    "discussions": "Discusiones",
+    "contribute": "Contribuir"
+  },
+  "powered-by": "Impulsado por",
+  "built-with": "Construido con tecnología abierta",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "Hecho con",
+  "made-suffix": "en TypeScript · Licencia MIT",
+  "love": "amor"
+}

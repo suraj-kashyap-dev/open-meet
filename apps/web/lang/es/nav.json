@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Perfil",
+    "profile-description": "Edita los detalles de tu cuenta",
+    "settings": "Configuración",
+    "settings-description": "Valores predeterminados, privacidad, idioma",
+    "sign-out": "Cerrar sesión"
+  },
+  "user-menu-label": "Abrir menú de cuenta",
+  "command": {
+    "placeholder": "Escribe un comando o código de reunión…",
+    "no-results": "Sin resultados.",
+    "group-meetings": "Reuniones",
+    "group-appearance": "Apariencia",
+    "new-meeting": "Nueva reunión",
+    "join": "Unirse a «{code}»",
+    "switch-to-light": "Cambiar al modo claro",
+    "switch-to-dark": "Cambiar al modo oscuro",
+    "match-system-theme": "Seguir tema del sistema",
+    "home": "Inicio",
+    "sign-out": "Cerrar sesión",
+    "create-meeting-error": "No se pudo crear la reunión",
+    "join-code-required": "Primero escribe un código de reunión"
+  }
+}

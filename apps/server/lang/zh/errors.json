@@ -1,0 +1,13 @@
+{
+  "email-taken": "该电子邮件已有管理员账户",
+  "invite-invalid": "此邀请链接无效",
+  "invite-expired": "此邀请已过期",
+  "invite-not-found": "邀请未找到",
+  "admin-not-found": "管理员未找到",
+  "name-required": "姓名为必填项",
+  "name-empty": "姓名不能为空",
+  "cannot-demote-last-superadmin": "无法降级最后一位超级管理员",
+  "cannot-delete-self": "您无法删除自己的管理员账户",
+  "cannot-delete-last-superadmin": "无法删除最后一位超级管理员",
+  "superadmin-required": "此操作需要超级管理员权限"
+}

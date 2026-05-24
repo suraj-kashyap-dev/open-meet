@@ -1,0 +1,27 @@
+{
+  "title": "Yönetici hesabınızı etkinleştirin",
+  "subtitle": "Erişiminizi tamamlamak için bir şifre belirleyin.",
+  "joining-as": "Şu rolde katılıyorsunuz:",
+  "roles": {
+    "admin": "yönetici",
+    "superadmin": "süper yönetici"
+  },
+  "password": "Şifre",
+  "password-placeholder": "En az 8 karakter",
+  "confirm": "Şifreyi onayla",
+  "submit": "Hesabı etkinleştir",
+  "submitting": "Etkinleştiriliyor…",
+  "go-to-sign-in": "Giriş sayfasına git",
+  "validation": {
+    "password-min": "En az 8 karakter",
+    "password-mismatch": "Şifreler eşleşmiyor"
+  },
+  "errors": {
+    "missing-token": "Bu davet bağlantısında token eksik.",
+    "invalid": "Bu davet geçersiz veya süresi dolmuş.",
+    "activate-failed": "Hesap etkinleştirilemedi"
+  },
+  "toast": {
+    "activated": "Hesap etkinleştirildi — lütfen giriş yapın."
+  }
+}

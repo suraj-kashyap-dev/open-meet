@@ -1,0 +1,46 @@
+{
+  "eyebrow": "Preparati",
+  "you": "Tu",
+  "untitled-meeting": "Riunione senza titolo",
+  "secure-connection": "Connessione sicura",
+  "invited-only": "Solo le persone invitate possono partecipare",
+  "meeting-code": "Codice riunione",
+  "join-now": "Partecipa ora",
+  "joining": "Accesso in corso…",
+  "back-to-home": "Torna alla home",
+  "cancel": "Annulla",
+  "aria": {
+    "rename-meeting": "Rinomina riunione",
+    "meeting-title": "Titolo riunione",
+    "save-title": "Salva titolo",
+    "cancel-rename": "Annulla rinomina",
+    "copy-meeting-link": "Copia link riunione",
+    "microphone-level": "Livello microfono"
+  },
+  "devices": {
+    "title": "Dispositivi",
+    "subtitle": "Controlla audio e video",
+    "camera": "Fotocamera",
+    "camera-placeholder": "Scegli fotocamera",
+    "microphone": "Microfono",
+    "microphone-placeholder": "Scegli microfono",
+    "speakers": "Altoparlanti",
+    "system-default": "Predefinito di sistema"
+  },
+  "preview": {
+    "camera-off": "La fotocamera è spenta",
+    "mute-microphone": "Silenzia microfono",
+    "unmute-microphone": "Riattiva microfono",
+    "turn-off-microphone": "Spegni microfono",
+    "turn-on-microphone": "Accendi microfono",
+    "turn-off-camera": "Spegni fotocamera",
+    "turn-on-camera": "Accendi fotocamera"
+  },
+  "toast": {
+    "title-updated": "Titolo riunione aggiornato",
+    "title-update-failed": "Impossibile aggiornare il titolo",
+    "meeting-not-found": "Riunione non trovata",
+    "link-copied": "Link riunione copiato",
+    "link-copy-failed": "Impossibile copiare il link"
+  }
+}

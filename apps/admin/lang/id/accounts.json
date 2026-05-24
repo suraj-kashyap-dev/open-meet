@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Pengaturan",
+  "title": "Administrator",
+  "access-summary": "{count, plural, one {# orang memiliki} other {# orang memiliki}} akses ke konsol ini.",
+  "invite-button": "Undang admin",
+  "empty": "Belum ada administrator.",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "table": {
+    "administrator": "Administrator",
+    "role": "Peran",
+    "joined": "Bergabung",
+    "last-login": "Login terakhir",
+    "never": "tidak pernah",
+    "actions": "Tindakan",
+    "actions-for": "Tindakan untuk {name}",
+    "edit": "Edit",
+    "delete": "Hapus"
+  },
+  "delete-dialog": {
+    "title": "Hapus admin ini?",
+    "description": "{name} ({email}) akan segera kehilangan akses ke konsol admin. Ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "confirm": "Hapus admin",
+    "deleting": "Menghapus…",
+    "success": "{name} dihapus",
+    "error": "Tidak dapat menghapus admin"
+  },
+  "invite-dialog": {
+    "title": "Undang admin",
+    "description": "Kami akan mengirim tautan aman melalui email. Mereka menetapkan kata sandi sendiri untuk mengaktifkan akun.",
+    "name": "Nama",
+    "email": "Email",
+    "role": "Peran",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Batal",
+    "submit": "Kirim undangan",
+    "submitting": "Mengirim…",
+    "success": "Undangan dikirim ke email {email}",
+    "error": "Tidak dapat mengirim undangan",
+    "validation": {
+      "invalid-email": "Masukkan email yang valid",
+      "name-required": "Nama diperlukan"
+    }
+  },
+  "edit-dialog": {
+    "title": "Edit admin",
+    "name": "Nama",
+    "role": "Peran",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Batal",
+    "submit": "Simpan perubahan",
+    "submitting": "Menyimpan…",
+    "success": "{name} diperbarui",
+    "error": "Tidak dapat memperbarui admin",
+    "validation": {
+      "name-required": "Nama diperlukan"
+    }
+  },
+  "pending": {
+    "heading": "Undangan tertunda",
+    "description": "Undangan yang belum diterima. Kirim ulang email atau cabut akses.",
+    "loading-error": "Gagal memuat undangan.",
+    "empty": "Tidak ada undangan tertunda.",
+    "status-pending": "tertunda",
+    "status-expired": "kedaluwarsa",
+    "expires": "Kedaluwarsa {when}",
+    "expired-at": "Kedaluwarsa pada {when}",
+    "resend-label": "Kirim ulang undangan ke {email}",
+    "revoke-label": "Cabut undangan ke {email}",
+    "resend-success": "Undangan dikirim ulang ke {email}",
+    "resend-error": "Tidak dapat mengirim ulang undangan",
+    "revoke-success": "Undangan untuk {email} dicabut",
+    "revoke-error": "Tidak dapat mencabut undangan"
+  }
+}

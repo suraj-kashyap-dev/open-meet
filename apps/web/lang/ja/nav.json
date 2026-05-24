@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "プロフィール",
+    "profile-description": "アカウントの詳細を編集",
+    "settings": "設定",
+    "settings-description": "デフォルト、プライバシー、言語",
+    "sign-out": "サインアウト"
+  },
+  "user-menu-label": "アカウントメニューを開く",
+  "command": {
+    "placeholder": "コマンドまたはミーティングコードを入力…",
+    "no-results": "結果がありません。",
+    "group-meetings": "ミーティング",
+    "group-appearance": "外観",
+    "new-meeting": "新しいミーティング",
+    "join": "「{code}」に参加",
+    "switch-to-light": "ライトモードに切り替え",
+    "switch-to-dark": "ダークモードに切り替え",
+    "match-system-theme": "システムのテーマに合わせる",
+    "home": "ホーム",
+    "sign-out": "サインアウト",
+    "create-meeting-error": "ミーティングを作成できませんでした",
+    "join-code-required": "最初にミーティングコードを入力してください"
+  }
+}

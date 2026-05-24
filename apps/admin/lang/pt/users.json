@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Gerenciar",
+  "title": "Usuários",
+  "total-count": "{count, number} no total",
+  "search-placeholder": "Pesquisar por nome ou e-mail",
+  "refreshing": "Atualizando…",
+  "empty": "Nenhum usuário ainda.",
+  "empty-search": "Nenhum usuário corresponde a \"{query}\".",
+  "table": {
+    "user": "Usuário",
+    "joined": "Entrou",
+    "hosted": "Organizou",
+    "attended": "Participou",
+    "actions": "Ações",
+    "open-actions": "Abrir ações",
+    "edit": "Editar",
+    "delete": "Excluir"
+  },
+  "pagination": {
+    "no-results": "Sem resultados",
+    "showing": "Exibindo {from}-{to} de {total}",
+    "previous": "Anterior",
+    "next": "Próximo",
+    "page-of": "Página {page} de {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Editar usuário",
+    "description": "Atualize perfil, localização, bio ou redefina a senha.",
+    "section-account": "Conta",
+    "section-localization": "Localização",
+    "section-about": "Sobre",
+    "section-password": "Redefinir senha",
+    "name": "Nome",
+    "email": "E-mail",
+    "timezone": "Fuso horário",
+    "timezone-placeholder": "Escolha um fuso horário",
+    "language": "Idioma",
+    "language-placeholder": "Escolha um idioma",
+    "bio": "Bio",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Opcional",
+    "new-password": "Nova senha",
+    "new-password-placeholder": "Deixe em branco para manter a senha atual",
+    "new-password-helper": "Definir uma nova senha invalida as sessões do usuário.",
+    "cancel": "Cancelar",
+    "submit": "Salvar alterações",
+    "submitting": "Salvando…",
+    "success": "Usuário atualizado",
+    "error": "Não foi possível atualizar o usuário",
+    "validation": {
+      "name-required": "O nome é obrigatório",
+      "invalid-email": "Insira um e-mail válido",
+      "bio-too-long": "A bio é muito longa",
+      "password-too-long": "Muito longo",
+      "password-too-short": "Pelo menos 8 caracteres"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP ou GIF. Até {mb} MB.",
+    "replace": "Substituir imagem",
+    "remove": "Remover imagem",
+    "edit-label": "Alterar foto de perfil",
+    "upload-label": "Enviar foto de perfil",
+    "success": "Foto de perfil atualizada",
+    "upload-error": "Não foi possível enviar a imagem",
+    "removed": "Foto de perfil removida",
+    "remove-error": "Não foi possível remover a imagem",
+    "invalid-type": "A imagem deve ser PNG, JPEG, WebP ou GIF.",
+    "too-large": "A imagem deve ter menos de {mb} MB."
+  },
+  "delete-dialog": {
+    "title": "Excluir usuário?",
+    "description": "Isso remove permanentemente <strong>{email}</strong> e todas as reuniões que organizou, participou e as mensagens que enviou. Isso não pode ser desfeito.",
+    "cancel": "Cancelar",
+    "submit": "Excluir usuário",
+    "submitting": "Excluindo…",
+    "success": "{email} excluído",
+    "error": "Não foi possível excluir o usuário"
+  }
+}

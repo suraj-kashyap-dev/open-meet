@@ -1,0 +1,80 @@
+{
+  "eyebrow": "सेटिंग्स",
+  "title": "प्रशासक",
+  "access-summary": "{count, plural, one {# व्यक्ति की} other {# लोगों की}} इस कंसोल तक पहुंच है।",
+  "invite-button": "एडमिन आमंत्रित करें",
+  "empty": "अभी तक कोई प्रशासक नहीं।",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "table": {
+    "administrator": "प्रशासक",
+    "role": "भूमिका",
+    "joined": "शामिल हुए",
+    "last-login": "अंतिम लॉगिन",
+    "never": "कभी नहीं",
+    "actions": "कार्रवाई",
+    "actions-for": "{name} के लिए कार्रवाई",
+    "edit": "संपादित करें",
+    "delete": "हटाएं"
+  },
+  "delete-dialog": {
+    "title": "यह एडमिन हटाएं?",
+    "description": "{name} ({email}) की एडमिन कंसोल तक पहुंच तुरंत समाप्त हो जाएगी। यह पूर्ववत नहीं किया जा सकता।",
+    "cancel": "रद्द करें",
+    "confirm": "एडमिन हटाएं",
+    "deleting": "हटाया जा रहा है…",
+    "success": "{name} को हटाया गया",
+    "error": "एडमिन हटाने में विफल"
+  },
+  "invite-dialog": {
+    "title": "एडमिन आमंत्रित करें",
+    "description": "हम एक सुरक्षित लिंक ईमेल करेंगे। वे खाता सक्रिय करने के लिए अपना पासवर्ड सेट करते हैं।",
+    "name": "नाम",
+    "email": "ईमेल",
+    "role": "भूमिका",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "रद्द करें",
+    "submit": "आमंत्रण भेजें",
+    "submitting": "भेजा जा रहा है…",
+    "success": "{email} पर आमंत्रण ईमेल किया गया",
+    "error": "आमंत्रण नहीं भेजा जा सका",
+    "validation": {
+      "invalid-email": "एक वैध ईमेल दर्ज करें",
+      "name-required": "नाम आवश्यक है"
+    }
+  },
+  "edit-dialog": {
+    "title": "एडमिन संपादित करें",
+    "name": "नाम",
+    "role": "भूमिका",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "रद्द करें",
+    "submit": "परिवर्तन सहेजें",
+    "submitting": "सहेजा जा रहा है…",
+    "success": "{name} अपडेट किया गया",
+    "error": "एडमिन अपडेट नहीं हो सका",
+    "validation": {
+      "name-required": "नाम आवश्यक है"
+    }
+  },
+  "pending": {
+    "heading": "लंबित आमंत्रण",
+    "description": "ऐसे आमंत्रण जो अभी स्वीकार नहीं किए गए। ईमेल फिर से भेजें या पहुंच रद्द करें।",
+    "loading-error": "आमंत्रण लोड करने में विफल।",
+    "empty": "कोई लंबित आमंत्रण नहीं।",
+    "status-pending": "लंबित",
+    "status-expired": "समाप्त",
+    "expires": "{when} को समाप्त होगा",
+    "expired-at": "{when} को समाप्त हुआ",
+    "resend-label": "{email} को आमंत्रण फिर से भेजें",
+    "revoke-label": "{email} का आमंत्रण रद्द करें",
+    "resend-success": "{email} को आमंत्रण फिर से भेजा गया",
+    "resend-error": "आमंत्रण फिर से नहीं भेजा जा सका",
+    "revoke-success": "{email} का आमंत्रण रद्द किया गया",
+    "revoke-error": "आमंत्रण रद्द नहीं हो सका"
+  }
+}

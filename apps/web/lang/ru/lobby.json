@@ -1,0 +1,46 @@
+{
+  "eyebrow": "Готовьтесь",
+  "you": "Вы",
+  "untitled-meeting": "Встреча без названия",
+  "secure-connection": "Защищённое соединение",
+  "invited-only": "Могут войти только приглашённые",
+  "meeting-code": "Код встречи",
+  "join-now": "Войти сейчас",
+  "joining": "Подключение…",
+  "back-to-home": "Вернуться на главную",
+  "cancel": "Отмена",
+  "aria": {
+    "rename-meeting": "Переименовать встречу",
+    "meeting-title": "Название встречи",
+    "save-title": "Сохранить название",
+    "cancel-rename": "Отменить переименование",
+    "copy-meeting-link": "Скопировать ссылку на встречу",
+    "microphone-level": "Уровень микрофона"
+  },
+  "devices": {
+    "title": "Устройства",
+    "subtitle": "Проверьте аудио и видео",
+    "camera": "Камера",
+    "camera-placeholder": "Выберите камеру",
+    "microphone": "Микрофон",
+    "microphone-placeholder": "Выберите микрофон",
+    "speakers": "Динамики",
+    "system-default": "Системное значение по умолчанию"
+  },
+  "preview": {
+    "camera-off": "Камера выключена",
+    "mute-microphone": "Отключить микрофон",
+    "unmute-microphone": "Включить микрофон",
+    "turn-off-microphone": "Выключить микрофон",
+    "turn-on-microphone": "Включить микрофон",
+    "turn-off-camera": "Выключить камеру",
+    "turn-on-camera": "Включить камеру"
+  },
+  "toast": {
+    "title-updated": "Название встречи обновлено",
+    "title-update-failed": "Не удалось обновить название",
+    "meeting-not-found": "Встреча не найдена",
+    "link-copied": "Ссылка на встречу скопирована",
+    "link-copy-failed": "Не удалось скопировать ссылку"
+  }
+}

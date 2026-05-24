@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Profil",
+    "profile-description": "Hesap bilgilerinizi düzenleyin",
+    "settings": "Ayarlar",
+    "settings-description": "Varsayılanlar, gizlilik ve dil",
+    "sign-out": "Çıkış yap"
+  },
+  "user-menu-label": "Hesap menüsünü aç",
+  "command": {
+    "placeholder": "Komut veya toplantı kodu yazın…",
+    "no-results": "Sonuç bulunamadı.",
+    "group-meetings": "Toplantılar",
+    "group-appearance": "Görünüm",
+    "new-meeting": "Yeni toplantı",
+    "join": "\"{code}\" toplantısına katıl",
+    "switch-to-light": "Açık moda geç",
+    "switch-to-dark": "Koyu moda geç",
+    "match-system-theme": "Sistem temasını kullan",
+    "home": "Ana sayfa",
+    "sign-out": "Çıkış yap",
+    "create-meeting-error": "Toplantı oluşturulamadı",
+    "join-code-required": "Önce bir toplantı kodu girin"
+  }
+}

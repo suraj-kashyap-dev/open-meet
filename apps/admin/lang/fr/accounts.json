@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Paramètres",
+  "title": "Administrateurs",
+  "access-summary": "{count, plural, one {# personne a} other {# personnes ont}} accès à cette console.",
+  "invite-button": "Inviter un administrateur",
+  "empty": "Aucun administrateur pour l'instant.",
+  "roles": {
+    "admin": "administrateur",
+    "superadmin": "super-administrateur"
+  },
+  "table": {
+    "administrator": "Administrateur",
+    "role": "Rôle",
+    "joined": "Inscrit",
+    "last-login": "Dernière connexion",
+    "never": "jamais",
+    "actions": "Actions",
+    "actions-for": "Actions pour {name}",
+    "edit": "Modifier",
+    "delete": "Supprimer"
+  },
+  "delete-dialog": {
+    "title": "Supprimer cet administrateur ?",
+    "description": "{name} ({email}) perdra immédiatement l'accès à la console d'administration. Cette action est irréversible.",
+    "cancel": "Annuler",
+    "confirm": "Supprimer l'administrateur",
+    "deleting": "Suppression en cours…",
+    "success": "{name} supprimé",
+    "error": "Impossible de supprimer l'administrateur"
+  },
+  "invite-dialog": {
+    "title": "Inviter un administrateur",
+    "description": "Nous enverrons un lien sécurisé par e-mail. Le destinataire définira son propre mot de passe pour activer le compte.",
+    "name": "Nom",
+    "email": "E-mail",
+    "role": "Rôle",
+    "role-admin": "Administrateur",
+    "role-superadmin": "Super-administrateur",
+    "cancel": "Annuler",
+    "submit": "Envoyer l'invitation",
+    "submitting": "Envoi en cours…",
+    "success": "Invitation envoyée par e-mail à {email}",
+    "error": "Impossible d'envoyer l'invitation",
+    "validation": {
+      "invalid-email": "Saisissez un e-mail valide",
+      "name-required": "Le nom est requis"
+    }
+  },
+  "edit-dialog": {
+    "title": "Modifier l'administrateur",
+    "name": "Nom",
+    "role": "Rôle",
+    "role-admin": "Administrateur",
+    "role-superadmin": "Super-administrateur",
+    "cancel": "Annuler",
+    "submit": "Enregistrer les modifications",
+    "submitting": "Enregistrement…",
+    "success": "{name} mis à jour",
+    "error": "Impossible de mettre à jour l'administrateur",
+    "validation": {
+      "name-required": "Le nom est requis"
+    }
+  },
+  "pending": {
+    "heading": "Invitations en attente",
+    "description": "Invitations qui n'ont pas encore été acceptées. Renvoyez l'e-mail ou révoquez l'accès.",
+    "loading-error": "Échec du chargement des invitations.",
+    "empty": "Aucune invitation en attente.",
+    "status-pending": "en attente",
+    "status-expired": "expirée",
+    "expires": "Expire {when}",
+    "expired-at": "Expirée {when}",
+    "resend-label": "Renvoyer l'invitation à {email}",
+    "revoke-label": "Révoquer l'invitation pour {email}",
+    "resend-success": "Invitation renvoyée à {email}",
+    "resend-error": "Impossible de renvoyer l'invitation",
+    "revoke-success": "Invitation révoquée pour {email}",
+    "revoke-error": "Impossible de révoquer l'invitation"
+  }
+}

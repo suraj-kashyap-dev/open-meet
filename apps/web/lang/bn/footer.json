@@ -1,0 +1,35 @@
+{
+  "tagline": "দ্রুতগতি দলের জন্য ওপেন-সোর্স ভিডিও কনফারেন্সিং। মিনিটে সেলফ-হোস্ট করুন, চিরকাল আপনার ডেটা নিজের রাখুন।",
+  "star": "GitHub-এ স্টার দিন",
+  "report-issue": "একটি সমস্যা রিপোর্ট করুন",
+  "status": "সকল সিস্টেম চালু আছে",
+  "product": {
+    "eyebrow": "নেভিগেট",
+    "title": "পণ্য",
+    "dashboard": "ড্যাশবোর্ড",
+    "history": "ইতিহাস",
+    "account": "অ্যাকাউন্ট"
+  },
+  "resources": {
+    "eyebrow": "শিখুন",
+    "title": "রিসোর্স",
+    "self-host": "সেলফ-হোস্ট গাইড",
+    "api": "API রেফারেন্স",
+    "license": "MIT লাইসেন্স",
+    "changelog": "পরিবর্তন তালিকা"
+  },
+  "community": {
+    "eyebrow": "যোগ দিন",
+    "title": "কমিউনিটি",
+    "repo": "GitHub রিপো",
+    "issues": "সমস্যা ও বাগ রিপোর্ট",
+    "discussions": "আলোচনা",
+    "contribute": "অবদান রাখুন"
+  },
+  "powered-by": "চালিত",
+  "built-with": "ওপেন প্রযুক্তিতে তৈরি",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "তৈরি",
+  "made-suffix": "TypeScript-এ · MIT লাইসেন্স",
+  "love": "ভালোবাসায়"
+}

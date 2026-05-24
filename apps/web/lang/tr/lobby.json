@@ -1,0 +1,46 @@
+{
+  "eyebrow": "Hazırlanın",
+  "you": "Siz",
+  "untitled-meeting": "Başlıksız toplantı",
+  "secure-connection": "Güvenli bağlantı",
+  "invited-only": "Yalnızca davetli kişiler katılabilir",
+  "meeting-code": "Toplantı kodu",
+  "join-now": "Şimdi katıl",
+  "joining": "Katılınıyor…",
+  "back-to-home": "Ana sayfaya dön",
+  "cancel": "İptal",
+  "aria": {
+    "rename-meeting": "Toplantıyı yeniden adlandır",
+    "meeting-title": "Toplantı başlığı",
+    "save-title": "Başlığı kaydet",
+    "cancel-rename": "Yeniden adlandırmayı iptal et",
+    "copy-meeting-link": "Toplantı bağlantısını kopyala",
+    "microphone-level": "Mikrofon seviyesi"
+  },
+  "devices": {
+    "title": "Cihazlar",
+    "subtitle": "Ses ve videonuzu kontrol edin",
+    "camera": "Kamera",
+    "camera-placeholder": "Kamera seçin",
+    "microphone": "Mikrofon",
+    "microphone-placeholder": "Mikrofon seçin",
+    "speakers": "Hoparlörler",
+    "system-default": "Sistem varsayılanı"
+  },
+  "preview": {
+    "camera-off": "Kamera kapalı",
+    "mute-microphone": "Mikrofonu kapat",
+    "unmute-microphone": "Mikrofonu aç",
+    "turn-off-microphone": "Mikrofonu kapat",
+    "turn-on-microphone": "Mikrofonu aç",
+    "turn-off-camera": "Kamerayı kapat",
+    "turn-on-camera": "Kamerayı aç"
+  },
+  "toast": {
+    "title-updated": "Toplantı başlığı güncellendi",
+    "title-update-failed": "Başlık güncellenemedi",
+    "meeting-not-found": "Toplantı bulunamadı",
+    "link-copied": "Toplantı bağlantısı kopyalandı",
+    "link-copy-failed": "Bağlantı kopyalanamadı"
+  }
+}

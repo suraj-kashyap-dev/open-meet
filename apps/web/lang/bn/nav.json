@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "প্রোফাইল",
+    "profile-description": "আপনার অ্যাকাউন্টের বিবরণ সম্পাদনা করুন",
+    "settings": "সেটিংস",
+    "settings-description": "ডিফল্ট, গোপনীয়তা, ভাষা",
+    "sign-out": "সাইন আউট"
+  },
+  "user-menu-label": "অ্যাকাউন্ট মেনু খুলুন",
+  "command": {
+    "placeholder": "একটি কমান্ড বা মিটিং কোড টাইপ করুন…",
+    "no-results": "কোনো ফলাফল নেই।",
+    "group-meetings": "মিটিং",
+    "group-appearance": "চেহারা",
+    "new-meeting": "নতুন মিটিং",
+    "join": "“{code}” যোগ দিন",
+    "switch-to-light": "লাইট মোডে যান",
+    "switch-to-dark": "ডার্ক মোডে যান",
+    "match-system-theme": "সিস্টেম থিম অনুসরণ করুন",
+    "home": "হোম",
+    "sign-out": "সাইন আউট",
+    "create-meeting-error": "মিটিং তৈরি করা যায়নি",
+    "join-code-required": "আগে একটি মিটিং কোড টাইপ করুন"
+  }
+}

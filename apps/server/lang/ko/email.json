@@ -1,0 +1,14 @@
+{
+  "invite": {
+    "subject": "Open Meet 관리자 콘솔에 초대되었습니다",
+    "preview": "비밀번호를 설정하여 Open Meet 관리자 계정을 활성화하세요.",
+    "heading": "Open Meet에 초대되셨습니다",
+    "greeting": "안녕하세요, {name}님,",
+    "body": "Open Meet 관리자 콘솔에 초대되었습니다. 비밀번호를 설정하여 계정을 활성화하고 시작하세요.",
+    "cta": "초대 수락",
+    "footnote": "이 링크는 {when}에 만료됩니다. 이 초대를 예상하지 않으셨다면 이 이메일을 무시하셔도 됩니다.",
+    "text-intro": "Open Meet 관리를 위해 초대되었습니다.",
+    "text-action": "여기서 비밀번호를 설정하고 계정을 활성화하세요:",
+    "text-expires": "이 링크는 {when}에 만료됩니다."
+  }
+}

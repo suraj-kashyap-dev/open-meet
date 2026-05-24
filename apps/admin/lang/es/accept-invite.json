@@ -1,0 +1,27 @@
+{
+  "title": "Activa tu cuenta de administrador",
+  "subtitle": "Establece una contraseña para finalizar la configuración de tu acceso.",
+  "joining-as": "Te estás uniendo como",
+  "roles": {
+    "admin": "administrador",
+    "superadmin": "superadministrador"
+  },
+  "password": "Contraseña",
+  "password-placeholder": "Al menos 8 caracteres",
+  "confirm": "Confirmar contraseña",
+  "submit": "Activar cuenta",
+  "submitting": "Activando…",
+  "go-to-sign-in": "Ir a iniciar sesión",
+  "validation": {
+    "password-min": "Al menos 8 caracteres",
+    "password-mismatch": "Las contraseñas no coinciden"
+  },
+  "errors": {
+    "missing-token": "A este enlace de invitación le falta el token.",
+    "invalid": "Esta invitación no es válida o ha expirado.",
+    "activate-failed": "No se pudo activar la cuenta"
+  },
+  "toast": {
+    "activated": "Cuenta activada — por favor inicia sesión."
+  }
+}

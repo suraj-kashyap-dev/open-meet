@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Gérer",
+  "title": "Utilisateurs",
+  "total-count": "{count, number} au total",
+  "search-placeholder": "Rechercher par nom ou e-mail",
+  "refreshing": "Actualisation…",
+  "empty": "Aucun utilisateur pour l'instant.",
+  "empty-search": "Aucun utilisateur ne correspond à « {query} ».",
+  "table": {
+    "user": "Utilisateur",
+    "joined": "Inscrit",
+    "hosted": "Organisées",
+    "attended": "Participées",
+    "actions": "Actions",
+    "open-actions": "Ouvrir les actions",
+    "edit": "Modifier",
+    "delete": "Supprimer"
+  },
+  "pagination": {
+    "no-results": "Aucun résultat",
+    "showing": "Affichage {from}-{to} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page-of": "Page {page} sur {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Modifier l'utilisateur",
+    "description": "Mettez à jour le profil, la localisation, la biographie ou réinitialisez le mot de passe.",
+    "section-account": "Compte",
+    "section-localization": "Localisation",
+    "section-about": "À propos",
+    "section-password": "Réinitialiser le mot de passe",
+    "name": "Nom",
+    "email": "E-mail",
+    "timezone": "Fuseau horaire",
+    "timezone-placeholder": "Choisir un fuseau horaire",
+    "language": "Langue",
+    "language-placeholder": "Choisir une langue",
+    "bio": "Biographie",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Facultatif",
+    "new-password": "Nouveau mot de passe",
+    "new-password-placeholder": "Laisser vide pour conserver le mot de passe actuel",
+    "new-password-helper": "Définir un nouveau mot de passe invalide les sessions de l'utilisateur.",
+    "cancel": "Annuler",
+    "submit": "Enregistrer les modifications",
+    "submitting": "Enregistrement…",
+    "success": "Utilisateur mis à jour",
+    "error": "Impossible de mettre à jour l'utilisateur",
+    "validation": {
+      "name-required": "Le nom est requis",
+      "invalid-email": "Saisissez un e-mail valide",
+      "bio-too-long": "La biographie est trop longue",
+      "password-too-long": "Trop long",
+      "password-too-short": "Au moins 8 caractères"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP ou GIF. Jusqu'à {mb} Mo.",
+    "replace": "Remplacer l'image",
+    "remove": "Supprimer l'image",
+    "edit-label": "Changer la photo de profil",
+    "upload-label": "Télécharger une photo de profil",
+    "success": "Photo de profil mise à jour",
+    "upload-error": "Impossible de télécharger l'image",
+    "removed": "Photo de profil supprimée",
+    "remove-error": "Impossible de supprimer l'image",
+    "invalid-type": "L'image doit être au format PNG, JPEG, WebP ou GIF.",
+    "too-large": "L'image doit faire moins de {mb} Mo."
+  },
+  "delete-dialog": {
+    "title": "Supprimer l'utilisateur ?",
+    "description": "Cette action supprime définitivement <strong>{email}</strong> ainsi que toutes les réunions qu'il a organisées, auxquelles il a participé et les messages qu'il a envoyés. Cette action est irréversible.",
+    "cancel": "Annuler",
+    "submit": "Supprimer l'utilisateur",
+    "submitting": "Suppression…",
+    "success": "{email} supprimé",
+    "error": "Impossible de supprimer l'utilisateur"
+  }
+}

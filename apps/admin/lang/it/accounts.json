@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Impostazioni",
+  "title": "Amministratori",
+  "access-summary": "{count, plural, one {# persona ha} other {# persone hanno}} accesso a questa console.",
+  "invite-button": "Invita amministratore",
+  "empty": "Nessun amministratore ancora.",
+  "roles": {
+    "admin": "amministratore",
+    "superadmin": "superamministratore"
+  },
+  "table": {
+    "administrator": "Amministratore",
+    "role": "Ruolo",
+    "joined": "Entrato",
+    "last-login": "Ultimo accesso",
+    "never": "mai",
+    "actions": "Azioni",
+    "actions-for": "Azioni per {name}",
+    "edit": "Modifica",
+    "delete": "Elimina"
+  },
+  "delete-dialog": {
+    "title": "Eliminare questo amministratore?",
+    "description": "{name} ({email}) perderà immediatamente l'accesso alla console di amministrazione. Questa azione non può essere annullata.",
+    "cancel": "Annulla",
+    "confirm": "Elimina amministratore",
+    "deleting": "Eliminazione in corso…",
+    "success": "{name} eliminato",
+    "error": "Impossibile eliminare l'amministratore"
+  },
+  "invite-dialog": {
+    "title": "Invita un amministratore",
+    "description": "Invieremo un link sicuro via email. L'utente imposterà la propria password per attivare l'account.",
+    "name": "Nome",
+    "email": "Email",
+    "role": "Ruolo",
+    "role-admin": "Amministratore",
+    "role-superadmin": "Superamministratore",
+    "cancel": "Annulla",
+    "submit": "Invia invito",
+    "submitting": "Invio in corso…",
+    "success": "Invito inviato via email a {email}",
+    "error": "Impossibile inviare l'invito",
+    "validation": {
+      "invalid-email": "Inserisci un'email valida",
+      "name-required": "Il nome è obbligatorio"
+    }
+  },
+  "edit-dialog": {
+    "title": "Modifica amministratore",
+    "name": "Nome",
+    "role": "Ruolo",
+    "role-admin": "Amministratore",
+    "role-superadmin": "Superamministratore",
+    "cancel": "Annulla",
+    "submit": "Salva modifiche",
+    "submitting": "Salvataggio…",
+    "success": "{name} aggiornato",
+    "error": "Impossibile aggiornare l'amministratore",
+    "validation": {
+      "name-required": "Il nome è obbligatorio"
+    }
+  },
+  "pending": {
+    "heading": "Inviti in sospeso",
+    "description": "Inviti non ancora accettati. Reinvia l'email o revoca l'accesso.",
+    "loading-error": "Caricamento inviti non riuscito.",
+    "empty": "Nessun invito in sospeso.",
+    "status-pending": "in sospeso",
+    "status-expired": "scaduto",
+    "expires": "Scade {when}",
+    "expired-at": "Scaduto {when}",
+    "resend-label": "Reinvia invito a {email}",
+    "revoke-label": "Revoca invito a {email}",
+    "resend-success": "Invito reinviato a {email}",
+    "resend-error": "Impossibile reinviare l'invito",
+    "revoke-success": "Invito revocato per {email}",
+    "revoke-error": "Impossibile revocare l'invito"
+  }
+}

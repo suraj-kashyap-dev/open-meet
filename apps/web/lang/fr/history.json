@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Activité",
+    "title": "Historique des réunions",
+    "total": "{count, plural, one {# réunion} other {# réunions}} au total",
+    "description": "Toutes les réunions que vous avez organisées ou rejointes — avec la discussion, les pièces jointes et la liste des participants préservées."
+  },
+  "default-title": "Réunion du {date}",
+  "host": "Hôte",
+  "hosted-by-you": "organisée par vous",
+  "hosted-by": "organisée par {name}",
+  "overflow": "+{count}",
+  "recording-badge": "Enr. · {count}",
+  "recording-title": "{count, plural, one {# enregistrement} other {# enregistrements}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Réunion",
+    "started": "Démarrée",
+    "duration": "Durée",
+    "participants": "Participants",
+    "activity": "Activité",
+    "status": "Statut",
+    "actions": "Actions",
+    "open": "Ouvrir"
+  },
+  "status": {
+    "ended": "terminée",
+    "active": "active",
+    "scheduled": "planifiée"
+  },
+  "stats": {
+    "on-this-page": "Sur cette page",
+    "hosted-by-you": "Organisées par vous",
+    "total-time": "Temps total",
+    "participants": "Participants"
+  },
+  "table": {
+    "empty": "Aucune réunion sur cette page."
+  },
+  "pagination": {
+    "showing": "Affichage {from}–{to} sur {total}",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page-of": "Page {page} sur {pageCount}"
+  },
+  "error": {
+    "list": "Échec du chargement de votre historique de réunions."
+  },
+  "empty": {
+    "title": "Aucune réunion pour l'instant",
+    "description": "Une fois que vous avez organisé ou rejoint une réunion, elle apparaîtra ici.",
+    "cta": "Démarrer une réunion"
+  },
+  "detail": {
+    "back": "Retour à l'historique",
+    "default-title": "Réunion du {date}",
+    "hosted-by-you": "Organisée par vous",
+    "copy-aria": "Copier le code de réunion",
+    "started": "Démarrée",
+    "role": "Rôle",
+    "stats": {
+      "duration": "Durée",
+      "participants": "Participants",
+      "messages": "Messages",
+      "attachments": "Pièces jointes"
+    },
+    "in-this-chat": "Dans cette discussion",
+    "overflow": "+{count}",
+    "error": "Échec du chargement de cette réunion.",
+    "status": {
+      "ended": "terminée",
+      "active": "active",
+      "scheduled": "planifiée"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Enregistrements",
+      "visibility": "Visible uniquement par les personnes qui ont participé à cette réunion.",
+      "started-by": "Démarré par",
+      "duration": "Durée",
+      "size": "Taille",
+      "download": "Télécharger",
+      "recording-from": "Enregistrement du {date}",
+      "status": {
+        "completed": "terminé",
+        "failed": "échoué",
+        "recording": "enregistrement",
+        "stopping": "arrêt en cours"
+      },
+      "failed-title": "L'enregistrement a échoué",
+      "failed-detail": "Aucun détail supplémentaire n'a été fourni par le service d'egress.",
+      "processing": "Traitement de l'enregistrement — revenez dans un moment.",
+      "empty-title": "Aucun enregistrement pour cette réunion",
+      "empty-description": "L'hôte peut démarrer un enregistrement depuis les contrôles en appel. Les enregistrements restent privés pour les personnes qui ont participé à cette réunion.",
+      "relative": {
+        "just-now": "à l'instant",
+        "minutes": "{count, plural, one {il y a # min} other {il y a # min}}",
+        "hours": "{count, plural, one {il y a # h} other {il y a # h}}",
+        "days": "{count, plural, one {il y a # jour} other {il y a # jours}}"
+      }
+    },
+    "transcript": {
+      "title": "Transcription de la discussion",
+      "count": "{count, plural, one {# message} other {# messages}}",
+      "error": "Échec du chargement des messages.",
+      "empty": "Aucun message n'a été envoyé dans cette réunion.",
+      "load-earlier": "Charger les messages précédents",
+      "loading": "Chargement…",
+      "you": "Vous"
+    }
+  },
+  "toast": {
+    "copied": "Code de réunion copié",
+    "copy-failed": "Impossible de copier le code de réunion"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "email-taken": "해당 이메일을 가진 관리자가 이미 존재합니다",
+  "invite-invalid": "이 초대 링크는 유효하지 않습니다",
+  "invite-expired": "이 초대는 만료되었습니다",
+  "invite-not-found": "초대를 찾을 수 없습니다",
+  "admin-not-found": "관리자를 찾을 수 없습니다",
+  "name-required": "이름은 필수입니다",
+  "name-empty": "이름은 비워 둘 수 없습니다",
+  "cannot-demote-last-superadmin": "마지막 남은 슈퍼관리자의 권한을 강등할 수 없습니다",
+  "cannot-delete-self": "자신의 관리자 계정을 삭제할 수 없습니다",
+  "cannot-delete-last-superadmin": "마지막 남은 슈퍼관리자를 삭제할 수 없습니다",
+  "superadmin-required": "이 작업에는 슈퍼관리자 권한이 필요합니다"
+}

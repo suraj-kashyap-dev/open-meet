@@ -1,0 +1,13 @@
+{
+  "email-taken": "Ya existe un administrador con ese correo electrónico",
+  "invite-invalid": "Este enlace de invitación no es válido",
+  "invite-expired": "Esta invitación ha expirado",
+  "invite-not-found": "Invitación no encontrada",
+  "admin-not-found": "Administrador no encontrado",
+  "name-required": "El nombre es obligatorio",
+  "name-empty": "El nombre no puede estar vacío",
+  "cannot-demote-last-superadmin": "No se puede degradar al último superadministrador restante",
+  "cannot-delete-self": "No puedes eliminar tu propia cuenta de administrador",
+  "cannot-delete-last-superadmin": "No se puede eliminar al último superadministrador restante",
+  "superadmin-required": "Se requieren privilegios de superadministrador para esta acción"
+}

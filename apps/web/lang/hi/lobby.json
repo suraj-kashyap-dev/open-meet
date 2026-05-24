@@ -1,0 +1,46 @@
+{
+  "eyebrow": "तैयार हो जाएं",
+  "you": "आप",
+  "untitled-meeting": "शीर्षक रहित मीटिंग",
+  "secure-connection": "सुरक्षित कनेक्शन",
+  "invited-only": "केवल आमंत्रित लोग शामिल हो सकते हैं",
+  "meeting-code": "मीटिंग कोड",
+  "join-now": "अभी जुड़ें",
+  "joining": "जुड़ा जा रहा है…",
+  "back-to-home": "होम पर वापस जाएं",
+  "cancel": "रद्द करें",
+  "aria": {
+    "rename-meeting": "मीटिंग का नाम बदलें",
+    "meeting-title": "मीटिंग शीर्षक",
+    "save-title": "शीर्षक सहेजें",
+    "cancel-rename": "नाम बदलना रद्द करें",
+    "copy-meeting-link": "मीटिंग लिंक कॉपी करें",
+    "microphone-level": "माइक्रोफ़ोन स्तर"
+  },
+  "devices": {
+    "title": "डिवाइस",
+    "subtitle": "अपना ऑडियो और वीडियो जांचें",
+    "camera": "कैमरा",
+    "camera-placeholder": "कैमरा चुनें",
+    "microphone": "माइक्रोफ़ोन",
+    "microphone-placeholder": "माइक्रोफ़ोन चुनें",
+    "speakers": "स्पीकर",
+    "system-default": "सिस्टम डिफ़ॉल्ट"
+  },
+  "preview": {
+    "camera-off": "कैमरा बंद है",
+    "mute-microphone": "माइक्रोफ़ोन म्यूट करें",
+    "unmute-microphone": "माइक्रोफ़ोन अनम्यूट करें",
+    "turn-off-microphone": "माइक्रोफ़ोन बंद करें",
+    "turn-on-microphone": "माइक्रोफ़ोन चालू करें",
+    "turn-off-camera": "कैमरा बंद करें",
+    "turn-on-camera": "कैमरा चालू करें"
+  },
+  "toast": {
+    "title-updated": "मीटिंग शीर्षक अपडेट किया गया",
+    "title-update-failed": "शीर्षक अपडेट नहीं हो सका",
+    "meeting-not-found": "मीटिंग नहीं मिली",
+    "link-copied": "मीटिंग लिंक कॉपी किया गया",
+    "link-copy-failed": "लिंक कॉपी नहीं हो सका"
+  }
+}

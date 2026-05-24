@@ -1,0 +1,46 @@
+{
+  "eyebrow": "준비하세요",
+  "you": "나",
+  "untitled-meeting": "제목 없는 회의",
+  "secure-connection": "보안 연결",
+  "invited-only": "초대된 사람만 참여할 수 있습니다",
+  "meeting-code": "회의 코드",
+  "join-now": "지금 참여",
+  "joining": "참여 중…",
+  "back-to-home": "홈으로 돌아가기",
+  "cancel": "취소",
+  "aria": {
+    "rename-meeting": "회의 이름 변경",
+    "meeting-title": "회의 제목",
+    "save-title": "제목 저장",
+    "cancel-rename": "이름 변경 취소",
+    "copy-meeting-link": "회의 링크 복사",
+    "microphone-level": "마이크 레벨"
+  },
+  "devices": {
+    "title": "장치",
+    "subtitle": "오디오 및 비디오 확인",
+    "camera": "카메라",
+    "camera-placeholder": "카메라 선택",
+    "microphone": "마이크",
+    "microphone-placeholder": "마이크 선택",
+    "speakers": "스피커",
+    "system-default": "시스템 기본값"
+  },
+  "preview": {
+    "camera-off": "카메라가 꺼져 있습니다",
+    "mute-microphone": "마이크 음소거",
+    "unmute-microphone": "마이크 음소거 해제",
+    "turn-off-microphone": "마이크 끄기",
+    "turn-on-microphone": "마이크 켜기",
+    "turn-off-camera": "카메라 끄기",
+    "turn-on-camera": "카메라 켜기"
+  },
+  "toast": {
+    "title-updated": "회의 제목이 업데이트되었습니다",
+    "title-update-failed": "제목을 업데이트할 수 없습니다",
+    "meeting-not-found": "회의를 찾을 수 없습니다",
+    "link-copied": "회의 링크가 복사되었습니다",
+    "link-copy-failed": "링크를 복사할 수 없습니다"
+  }
+}

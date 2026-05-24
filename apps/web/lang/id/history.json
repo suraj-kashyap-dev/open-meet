@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Aktivitas",
+    "title": "Riwayat rapat",
+    "total": "{count, plural, one {# rapat} other {# rapat}} total",
+    "description": "Setiap rapat yang Anda host atau ikuti — dengan obrolan, lampiran, dan daftar peserta yang tersimpan."
+  },
+  "default-title": "Rapat pada {date}",
+  "host": "Host",
+  "hosted-by-you": "di-host oleh Anda",
+  "hosted-by": "di-host oleh {name}",
+  "overflow": "+{count}",
+  "recording-badge": "Rek · {count}",
+  "recording-title": "{count, plural, one {# rekaman} other {# rekaman}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Rapat",
+    "started": "Dimulai",
+    "duration": "Durasi",
+    "participants": "Peserta",
+    "activity": "Aktivitas",
+    "status": "Status",
+    "actions": "Tindakan",
+    "open": "Buka"
+  },
+  "status": {
+    "ended": "selesai",
+    "active": "aktif",
+    "scheduled": "dijadwalkan"
+  },
+  "stats": {
+    "on-this-page": "Di halaman ini",
+    "hosted-by-you": "Di-host oleh Anda",
+    "total-time": "Total waktu",
+    "participants": "Peserta"
+  },
+  "table": {
+    "empty": "Tidak ada rapat di halaman ini."
+  },
+  "pagination": {
+    "showing": "Menampilkan {from}–{to} dari {total}",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "page-of": "Halaman {page} dari {pageCount}"
+  },
+  "error": {
+    "list": "Gagal memuat riwayat rapat Anda."
+  },
+  "empty": {
+    "title": "Belum ada rapat",
+    "description": "Setelah Anda meng-host atau bergabung dalam rapat, rapat tersebut akan muncul di sini.",
+    "cta": "Mulai rapat"
+  },
+  "detail": {
+    "back": "Kembali ke riwayat",
+    "default-title": "Rapat pada {date}",
+    "hosted-by-you": "Di-host oleh Anda",
+    "copy-aria": "Salin kode rapat",
+    "started": "Dimulai",
+    "role": "Peran",
+    "stats": {
+      "duration": "Durasi",
+      "participants": "Peserta",
+      "messages": "Pesan",
+      "attachments": "Lampiran"
+    },
+    "in-this-chat": "Dalam obrolan ini",
+    "overflow": "+{count}",
+    "error": "Gagal memuat rapat ini.",
+    "status": {
+      "ended": "selesai",
+      "active": "aktif",
+      "scheduled": "dijadwalkan"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Rekaman",
+      "visibility": "Hanya terlihat oleh orang yang bergabung dalam rapat ini.",
+      "started-by": "Dimulai oleh",
+      "duration": "Durasi",
+      "size": "Ukuran",
+      "download": "Unduh",
+      "recording-from": "Rekaman dari {date}",
+      "status": {
+        "completed": "selesai",
+        "failed": "gagal",
+        "recording": "merekam",
+        "stopping": "menghentikan"
+      },
+      "failed-title": "Rekaman gagal",
+      "failed-detail": "Tidak ada detail lebih lanjut yang diberikan oleh layanan egress.",
+      "processing": "Memproses rekaman — periksa kembali sebentar lagi.",
+      "empty-title": "Tidak ada rekaman untuk rapat ini",
+      "empty-description": "Host dapat memulai rekaman dari kontrol dalam panggilan. Rekaman tetap privat untuk orang-orang yang bergabung dalam rapat ini.",
+      "relative": {
+        "just-now": "baru saja",
+        "minutes": "{count, plural, one {# mnt lalu} other {# mnt lalu}}",
+        "hours": "{count, plural, one {# jam lalu} other {# jam lalu}}",
+        "days": "{count, plural, one {# hari lalu} other {# hari lalu}}"
+      }
+    },
+    "transcript": {
+      "title": "Transkrip obrolan",
+      "count": "{count, plural, one {# pesan} other {# pesan}}",
+      "error": "Gagal memuat pesan.",
+      "empty": "Tidak ada pesan yang dikirim dalam rapat ini.",
+      "load-earlier": "Muat pesan lebih awal",
+      "loading": "Memuat…",
+      "you": "Anda"
+    }
+  },
+  "toast": {
+    "copied": "Kode rapat disalin",
+    "copy-failed": "Tidak dapat menyalin kode rapat"
+  }
+}

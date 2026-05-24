@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "Sprache"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "oder",
+  "loading": "Wird geladen…",
+  "google": {
+    "continue": "Mit Google fortfahren",
+    "redirecting": "Weiterleitung zu Google…"
+  },
+  "error": {
+    "title": "Etwas ist schiefgelaufen",
+    "description": "Ein unerwarteter Fehler ist aufgetreten. Sie können es erneut versuchen oder zur Startseite zurückkehren.",
+    "retry": "Erneut versuchen",
+    "home": "Startseite"
+  },
+  "not-found": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "back": "Zurück zur Startseite"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "eyebrow": "설정",
+  "title": "관리자",
+  "access-summary": "{count, plural, one {# 명이} other {# 명이}} 이 콘솔에 액세스할 수 있습니다.",
+  "invite-button": "관리자 초대",
+  "empty": "아직 관리자가 없습니다.",
+  "roles": {
+    "admin": "관리자",
+    "superadmin": "슈퍼관리자"
+  },
+  "table": {
+    "administrator": "관리자",
+    "role": "역할",
+    "joined": "가입일",
+    "last-login": "마지막 로그인",
+    "never": "없음",
+    "actions": "작업",
+    "actions-for": "{name}의 작업",
+    "edit": "편집",
+    "delete": "삭제"
+  },
+  "delete-dialog": {
+    "title": "이 관리자를 삭제하시겠습니까?",
+    "description": "{name} ({email})은(는) 즉시 관리자 콘솔 액세스를 잃게 됩니다. 이 작업은 취소할 수 없습니다.",
+    "cancel": "취소",
+    "confirm": "관리자 삭제",
+    "deleting": "삭제 중…",
+    "success": "{name} 삭제 완료",
+    "error": "관리자를 삭제할 수 없습니다"
+  },
+  "invite-dialog": {
+    "title": "관리자 초대",
+    "description": "보안 링크를 이메일로 전송합니다. 초대받은 분이 직접 비밀번호를 설정하여 계정을 활성화합니다.",
+    "name": "이름",
+    "email": "이메일",
+    "role": "역할",
+    "role-admin": "관리자",
+    "role-superadmin": "슈퍼관리자",
+    "cancel": "취소",
+    "submit": "초대장 보내기",
+    "submitting": "전송 중…",
+    "success": "{email}로 초대장을 이메일로 전송했습니다",
+    "error": "초대장을 보낼 수 없습니다",
+    "validation": {
+      "invalid-email": "유효한 이메일을 입력하세요",
+      "name-required": "이름은 필수입니다"
+    }
+  },
+  "edit-dialog": {
+    "title": "관리자 편집",
+    "name": "이름",
+    "role": "역할",
+    "role-admin": "관리자",
+    "role-superadmin": "슈퍼관리자",
+    "cancel": "취소",
+    "submit": "변경 사항 저장",
+    "submitting": "저장 중…",
+    "success": "{name} 업데이트 완료",
+    "error": "관리자를 업데이트할 수 없습니다",
+    "validation": {
+      "name-required": "이름은 필수입니다"
+    }
+  },
+  "pending": {
+    "heading": "대기 중인 초대",
+    "description": "아직 수락되지 않은 초대입니다. 이메일을 다시 보내거나 액세스를 취소할 수 있습니다.",
+    "loading-error": "초대 목록을 불러오지 못했습니다.",
+    "empty": "대기 중인 초대가 없습니다.",
+    "status-pending": "대기 중",
+    "status-expired": "만료됨",
+    "expires": "{when} 만료",
+    "expired-at": "{when} 만료됨",
+    "resend-label": "{email}로 초대장 다시 보내기",
+    "revoke-label": "{email}의 초대 취소",
+    "resend-success": "{email}로 초대장을 다시 보냈습니다",
+    "resend-error": "초대장을 다시 보낼 수 없습니다",
+    "revoke-success": "{email}의 초대를 취소했습니다",
+    "revoke-error": "초대를 취소할 수 없습니다"
+  }
+}

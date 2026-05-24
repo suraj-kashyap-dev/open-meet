@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Einstellungen",
+  "title": "Konfiguration",
+  "description": "Arbeitsbereichsstandards, Branding und Besprechungsrichtlinien.",
+  "coming-soon-label": "Demnächst verfügbar",
+  "coming-soon": {
+    "title": "Konfiguration ist in Vorbereitung",
+    "description": "Arbeitsbereichsstandards, Branding und Besprechungsrichtlinien werden bald hier verfügbar sein."
+  }
+}

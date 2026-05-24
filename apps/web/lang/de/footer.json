@@ -1,0 +1,35 @@
+{
+  "tagline": "Open-Source-Videokonferenz für Teams, die schnell arbeiten. In wenigen Minuten selbst hosten, Daten für immer behalten.",
+  "star": "Auf GitHub mit Stern bewerten",
+  "report-issue": "Problem melden",
+  "status": "Alle Systeme betriebsbereit",
+  "product": {
+    "eyebrow": "Navigation",
+    "title": "Produkt",
+    "dashboard": "Dashboard",
+    "history": "Verlauf",
+    "account": "Konto"
+  },
+  "resources": {
+    "eyebrow": "Lernen",
+    "title": "Ressourcen",
+    "self-host": "Self-Hosting-Anleitung",
+    "api": "API-Referenz",
+    "license": "MIT-Lizenz",
+    "changelog": "Änderungsprotokoll"
+  },
+  "community": {
+    "eyebrow": "Mitmachen",
+    "title": "Community",
+    "repo": "GitHub-Repository",
+    "issues": "Probleme & Fehlerberichte",
+    "discussions": "Diskussionen",
+    "contribute": "Beitragen"
+  },
+  "powered-by": "Betrieben von",
+  "built-with": "Mit offener Technologie entwickelt",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "Entwickelt mit",
+  "made-suffix": "in TypeScript · MIT-lizenziert",
+  "love": "Liebe"
+}

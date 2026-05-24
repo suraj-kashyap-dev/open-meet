@@ -1,0 +1,35 @@
+{
+  "tagline": "तेज़ टीमों के लिए ओपन-सोर्स वीडियो कॉन्फ्रेंसिंग। मिनटों में सेल्फ-होस्ट करें, अपना डेटा हमेशा के लिए अपने पास रखें।",
+  "star": "GitHub पर Star करें",
+  "report-issue": "समस्या रिपोर्ट करें",
+  "status": "सभी सिस्टम सामान्य रूप से चल रहे हैं",
+  "product": {
+    "eyebrow": "नेविगेट करें",
+    "title": "उत्पाद",
+    "dashboard": "डैशबोर्ड",
+    "history": "इतिहास",
+    "account": "खाता"
+  },
+  "resources": {
+    "eyebrow": "जानें",
+    "title": "संसाधन",
+    "self-host": "सेल्फ-होस्ट गाइड",
+    "api": "API संदर्भ",
+    "license": "MIT लाइसेंस",
+    "changelog": "परिवर्तन लॉग"
+  },
+  "community": {
+    "eyebrow": "शामिल हों",
+    "title": "समुदाय",
+    "repo": "GitHub रिपो",
+    "issues": "समस्याएं और बग रिपोर्ट",
+    "discussions": "चर्चाएं",
+    "contribute": "योगदान करें"
+  },
+  "powered-by": "द्वारा संचालित",
+  "built-with": "ओपन तकनीक से बनाया गया",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "बनाया गया",
+  "made-suffix": "TypeScript में · MIT लाइसेंस प्राप्त",
+  "love": "प्यार"
+}

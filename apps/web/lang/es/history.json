@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Actividad",
+    "title": "Historial de reuniones",
+    "total": "{count, plural, one {# reunión} other {# reuniones}} en total",
+    "description": "Cada reunión que organizaste o a la que te uniste, con el chat, los archivos adjuntos y la lista de participantes conservados."
+  },
+  "default-title": "Reunión el {date}",
+  "host": "Anfitrión",
+  "hosted-by-you": "organizada por ti",
+  "hosted-by": "organizada por {name}",
+  "overflow": "+{count}",
+  "recording-badge": "Grab · {count}",
+  "recording-title": "{count, plural, one {# grabación} other {# grabaciones}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Reunión",
+    "started": "Iniciada",
+    "duration": "Duración",
+    "participants": "Participantes",
+    "activity": "Actividad",
+    "status": "Estado",
+    "actions": "Acciones",
+    "open": "Abrir"
+  },
+  "status": {
+    "ended": "finalizada",
+    "active": "activa",
+    "scheduled": "programada"
+  },
+  "stats": {
+    "on-this-page": "En esta página",
+    "hosted-by-you": "Organizadas por ti",
+    "total-time": "Tiempo total",
+    "participants": "Participantes"
+  },
+  "table": {
+    "empty": "No hay reuniones en esta página."
+  },
+  "pagination": {
+    "showing": "Mostrando {from}–{to} de {total}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page-of": "Página {page} de {pageCount}"
+  },
+  "error": {
+    "list": "Error al cargar el historial de reuniones."
+  },
+  "empty": {
+    "title": "Aún no hay reuniones",
+    "description": "Una vez que organices o te unas a una reunión, aparecerá aquí.",
+    "cta": "Iniciar una reunión"
+  },
+  "detail": {
+    "back": "Volver al historial",
+    "default-title": "Reunión el {date}",
+    "hosted-by-you": "Organizada por ti",
+    "copy-aria": "Copiar código de reunión",
+    "started": "Iniciada",
+    "role": "Rol",
+    "stats": {
+      "duration": "Duración",
+      "participants": "Participantes",
+      "messages": "Mensajes",
+      "attachments": "Archivos adjuntos"
+    },
+    "in-this-chat": "En este chat",
+    "overflow": "+{count}",
+    "error": "Error al cargar esta reunión.",
+    "status": {
+      "ended": "finalizada",
+      "active": "activa",
+      "scheduled": "programada"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Grabaciones",
+      "visibility": "Visible solo para las personas que se unieron a esta reunión.",
+      "started-by": "Iniciada por",
+      "duration": "Duración",
+      "size": "Tamaño",
+      "download": "Descargar",
+      "recording-from": "Grabación del {date}",
+      "status": {
+        "completed": "completada",
+        "failed": "fallida",
+        "recording": "grabando",
+        "stopping": "deteniéndose"
+      },
+      "failed-title": "La grabación falló",
+      "failed-detail": "El servicio de egress no proporcionó más detalles.",
+      "processing": "Procesando grabación — comprueba de nuevo en breve.",
+      "empty-title": "No hay grabaciones para esta reunión",
+      "empty-description": "El anfitrión puede iniciar una grabación desde los controles de la llamada. Las grabaciones son privadas para las personas que se unieron a esta reunión.",
+      "relative": {
+        "just-now": "ahora mismo",
+        "minutes": "{count, plural, one {hace # min} other {hace # min}}",
+        "hours": "{count, plural, one {hace # hr} other {hace # hr}}",
+        "days": "{count, plural, one {hace # día} other {hace # días}}"
+      }
+    },
+    "transcript": {
+      "title": "Transcripción del chat",
+      "count": "{count, plural, one {# mensaje} other {# mensajes}}",
+      "error": "Error al cargar los mensajes.",
+      "empty": "No se enviaron mensajes en esta reunión.",
+      "load-earlier": "Cargar mensajes anteriores",
+      "loading": "Cargando…",
+      "you": "Tú"
+    }
+  },
+  "toast": {
+    "copied": "Código de reunión copiado",
+    "copy-failed": "No se pudo copiar el código de reunión"
+  }
+}

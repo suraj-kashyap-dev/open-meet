@@ -1,0 +1,27 @@
+{
+  "title": "Ihr Admin-Konto aktivieren",
+  "subtitle": "Legen Sie ein Passwort fest, um Ihren Zugang einzurichten.",
+  "joining-as": "Sie treten bei als",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "password": "Passwort",
+  "password-placeholder": "Mindestens 8 Zeichen",
+  "confirm": "Passwort bestätigen",
+  "submit": "Konto aktivieren",
+  "submitting": "Wird aktiviert…",
+  "go-to-sign-in": "Zur Anmeldung",
+  "validation": {
+    "password-min": "Mindestens 8 Zeichen",
+    "password-mismatch": "Passwörter stimmen nicht überein"
+  },
+  "errors": {
+    "missing-token": "Diesem Einladungslink fehlt das Token.",
+    "invalid": "Diese Einladung ist ungültig oder abgelaufen.",
+    "activate-failed": "Konto konnte nicht aktiviert werden"
+  },
+  "toast": {
+    "activated": "Konto aktiviert — bitte anmelden."
+  }
+}

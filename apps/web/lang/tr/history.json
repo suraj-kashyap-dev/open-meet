@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Aktivite",
+    "title": "Toplantı geçmişi",
+    "total": "{count, plural, one {toplam # toplantı} other {toplam # toplantı}}",
+    "description": "Düzenlediğiniz veya katıldığınız her toplantı — sohbet, ekler ve katılımcı listesiyle birlikte saklanır."
+  },
+  "default-title": "{date} tarihli toplantı",
+  "host": "Ev sahibi",
+  "hosted-by-you": "sizin tarafınızdan düzenlendi",
+  "hosted-by": "{name} tarafından düzenlendi",
+  "overflow": "+{count}",
+  "recording-badge": "Kay · {count}",
+  "recording-title": "{count, plural, one {# kayıt} other {# kayıt}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Toplantı",
+    "started": "Başladı",
+    "duration": "Süre",
+    "participants": "Katılımcılar",
+    "activity": "Aktivite",
+    "status": "Durum",
+    "actions": "İşlemler",
+    "open": "Aç"
+  },
+  "status": {
+    "ended": "sona erdi",
+    "active": "aktif",
+    "scheduled": "planlandı"
+  },
+  "stats": {
+    "on-this-page": "Bu sayfada",
+    "hosted-by-you": "Sizin tarafınızdan düzenlendi",
+    "total-time": "Toplam süre",
+    "participants": "Katılımcılar"
+  },
+  "table": {
+    "empty": "Bu sayfada toplantı yok."
+  },
+  "pagination": {
+    "showing": "{from}–{to} / {total} gösteriliyor",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "page-of": "{pageCount} sayfadan {page}. sayfa"
+  },
+  "error": {
+    "list": "Toplantı geçmişiniz yüklenemedi."
+  },
+  "empty": {
+    "title": "Henüz toplantı yok",
+    "description": "Bir toplantı düzenlediğinizde veya katıldığınızda burada görünecek.",
+    "cta": "Toplantı başlat"
+  },
+  "detail": {
+    "back": "Geçmişe dön",
+    "default-title": "{date} tarihli toplantı",
+    "hosted-by-you": "Sizin tarafınızdan düzenlendi",
+    "copy-aria": "Toplantı kodunu kopyala",
+    "started": "Başladı",
+    "role": "Rol",
+    "stats": {
+      "duration": "Süre",
+      "participants": "Katılımcılar",
+      "messages": "Mesajlar",
+      "attachments": "Ekler"
+    },
+    "in-this-chat": "Bu sohbette",
+    "overflow": "+{count}",
+    "error": "Bu toplantı yüklenemedi.",
+    "status": {
+      "ended": "sona erdi",
+      "active": "aktif",
+      "scheduled": "planlandı"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Kayıtlar",
+      "visibility": "Yalnızca bu toplantıya katılan kişiler tarafından görülebilir.",
+      "started-by": "Başlatan",
+      "duration": "Süre",
+      "size": "Boyut",
+      "download": "İndir",
+      "recording-from": "{date} tarihli kayıt",
+      "status": {
+        "completed": "tamamlandı",
+        "failed": "başarısız",
+        "recording": "kaydediliyor",
+        "stopping": "durduruluyor"
+      },
+      "failed-title": "Kayıt başarısız",
+      "failed-detail": "Çıktı hizmeti tarafından başka bir ayrıntı sağlanmadı.",
+      "processing": "Kayıt işleniyor — kısa süre sonra tekrar kontrol edin.",
+      "empty-title": "Bu toplantı için kayıt yok",
+      "empty-description": "Ev sahibi, arama içi kontrollerden kayıt başlatabilir. Kayıtlar, bu toplantıya katılan kişilere özel kalır.",
+      "relative": {
+        "just-now": "az önce",
+        "minutes": "{count, plural, one {# dk önce} other {# dk önce}}",
+        "hours": "{count, plural, one {# sa önce} other {# sa önce}}",
+        "days": "{count, plural, one {# gün önce} other {# gün önce}}"
+      }
+    },
+    "transcript": {
+      "title": "Sohbet dökümü",
+      "count": "{count, plural, one {# mesaj} other {# mesaj}}",
+      "error": "Mesajlar yüklenemedi.",
+      "empty": "Bu toplantıda mesaj gönderilmedi.",
+      "load-earlier": "Önceki mesajları yükle",
+      "loading": "Yükleniyor…",
+      "you": "Siz"
+    }
+  },
+  "toast": {
+    "copied": "Toplantı kodu kopyalandı",
+    "copy-failed": "Toplantı kodu kopyalanamadı"
+  }
+}

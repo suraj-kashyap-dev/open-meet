@@ -1,0 +1,35 @@
+{
+  "tagline": "Visioconférence open source pour les équipes qui avancent vite. Auto-hébergez en quelques minutes, maîtrisez vos données pour toujours.",
+  "star": "Étoiler sur GitHub",
+  "report-issue": "Signaler un problème",
+  "status": "Tous les systèmes opérationnels",
+  "product": {
+    "eyebrow": "Naviguer",
+    "title": "Produit",
+    "dashboard": "Tableau de bord",
+    "history": "Historique",
+    "account": "Compte"
+  },
+  "resources": {
+    "eyebrow": "Apprendre",
+    "title": "Ressources",
+    "self-host": "Guide d'auto-hébergement",
+    "api": "Référence API",
+    "license": "Licence MIT",
+    "changelog": "Journal des modifications"
+  },
+  "community": {
+    "eyebrow": "Rejoindre",
+    "title": "Communauté",
+    "repo": "Dépôt GitHub",
+    "issues": "Problèmes et rapports de bugs",
+    "discussions": "Discussions",
+    "contribute": "Contribuer"
+  },
+  "powered-by": "Propulsé par",
+  "built-with": "Construit avec des technologies ouvertes",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "Fait avec",
+  "made-suffix": "en TypeScript · Sous licence MIT",
+  "love": "amour"
+}

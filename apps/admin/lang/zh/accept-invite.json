@@ -1,0 +1,27 @@
+{
+  "title": "激活您的管理员账户",
+  "subtitle": "设置密码以完成访问权限设置。",
+  "joining-as": "您正以以下身份加入",
+  "roles": {
+    "admin": "管理员",
+    "superadmin": "超级管理员"
+  },
+  "password": "密码",
+  "password-placeholder": "至少 8 个字符",
+  "confirm": "确认密码",
+  "submit": "激活账户",
+  "submitting": "正在激活…",
+  "go-to-sign-in": "前往登录",
+  "validation": {
+    "password-min": "至少 8 个字符",
+    "password-mismatch": "两次密码不一致"
+  },
+  "errors": {
+    "missing-token": "此邀请链接缺少令牌。",
+    "invalid": "此邀请无效或已过期。",
+    "activate-failed": "无法激活账户"
+  },
+  "toast": {
+    "activated": "账户已激活 — 请登录。"
+  }
+}

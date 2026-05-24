@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Gestionar",
+  "title": "Usuarios",
+  "total-count": "{count, number} en total",
+  "search-placeholder": "Buscar por nombre o correo",
+  "refreshing": "Actualizando…",
+  "empty": "Aún no hay usuarios.",
+  "empty-search": "No hay usuarios que coincidan con «{query}».",
+  "table": {
+    "user": "Usuario",
+    "joined": "Se unió",
+    "hosted": "Organizó",
+    "attended": "Asistió",
+    "actions": "Acciones",
+    "open-actions": "Abrir acciones",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "pagination": {
+    "no-results": "Sin resultados",
+    "showing": "Mostrando {from}-{to} de {total}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page-of": "Página {page} de {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Editar usuario",
+    "description": "Actualiza el perfil, la localización, la biografía o restablece la contraseña.",
+    "section-account": "Cuenta",
+    "section-localization": "Localización",
+    "section-about": "Acerca de",
+    "section-password": "Restablecer contraseña",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "timezone": "Zona horaria",
+    "timezone-placeholder": "Elige una zona horaria",
+    "language": "Idioma",
+    "language-placeholder": "Elige un idioma",
+    "bio": "Biografía",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Opcional",
+    "new-password": "Nueva contraseña",
+    "new-password-placeholder": "Deja en blanco para mantener la contraseña actual",
+    "new-password-helper": "Establecer una nueva contraseña invalida las sesiones del usuario.",
+    "cancel": "Cancelar",
+    "submit": "Guardar cambios",
+    "submitting": "Guardando…",
+    "success": "Usuario actualizado",
+    "error": "No se pudo actualizar al usuario",
+    "validation": {
+      "name-required": "El nombre es obligatorio",
+      "invalid-email": "Ingresa un correo electrónico válido",
+      "bio-too-long": "La biografía es demasiado larga",
+      "password-too-long": "Demasiado largo",
+      "password-too-short": "Al menos 8 caracteres"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP o GIF. Hasta {mb} MB.",
+    "replace": "Reemplazar imagen",
+    "remove": "Eliminar imagen",
+    "edit-label": "Cambiar imagen de perfil",
+    "upload-label": "Subir imagen de perfil",
+    "success": "Imagen de perfil actualizada",
+    "upload-error": "No se pudo subir la imagen",
+    "removed": "Imagen de perfil eliminada",
+    "remove-error": "No se pudo eliminar la imagen",
+    "invalid-type": "La imagen debe ser PNG, JPEG, WebP o GIF.",
+    "too-large": "La imagen debe pesar menos de {mb} MB."
+  },
+  "delete-dialog": {
+    "title": "¿Eliminar usuario?",
+    "description": "Esto elimina permanentemente a <strong>{email}</strong> y todas las reuniones que organizó, en las que participó y los mensajes que envió. Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "submit": "Eliminar usuario",
+    "submitting": "Eliminando…",
+    "success": "{email} eliminado",
+    "error": "No se pudo eliminar al usuario"
+  }
+}

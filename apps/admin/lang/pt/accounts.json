@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Configurações",
+  "title": "Administradores",
+  "access-summary": "{count, plural, one {# pessoa tem} other {# pessoas têm}} acesso a este console.",
+  "invite-button": "Convidar admin",
+  "empty": "Nenhum administrador ainda.",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "table": {
+    "administrator": "Administrador",
+    "role": "Papel",
+    "joined": "Entrou",
+    "last-login": "Último login",
+    "never": "nunca",
+    "actions": "Ações",
+    "actions-for": "Ações para {name}",
+    "edit": "Editar",
+    "delete": "Excluir"
+  },
+  "delete-dialog": {
+    "title": "Excluir este admin?",
+    "description": "{name} ({email}) perderá o acesso ao console de administração imediatamente. Isso não pode ser desfeito.",
+    "cancel": "Cancelar",
+    "confirm": "Excluir admin",
+    "deleting": "Excluindo…",
+    "success": "{name} excluído",
+    "error": "Não foi possível excluir o admin"
+  },
+  "invite-dialog": {
+    "title": "Convidar um admin",
+    "description": "Enviaremos um link seguro por e-mail. Eles definem a própria senha para ativar a conta.",
+    "name": "Nome",
+    "email": "E-mail",
+    "role": "Papel",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Cancelar",
+    "submit": "Enviar convite",
+    "submitting": "Enviando…",
+    "success": "Convite enviado por e-mail para {email}",
+    "error": "Não foi possível enviar o convite",
+    "validation": {
+      "invalid-email": "Insira um e-mail válido",
+      "name-required": "O nome é obrigatório"
+    }
+  },
+  "edit-dialog": {
+    "title": "Editar admin",
+    "name": "Nome",
+    "role": "Papel",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Cancelar",
+    "submit": "Salvar alterações",
+    "submitting": "Salvando…",
+    "success": "{name} atualizado",
+    "error": "Não foi possível atualizar o admin",
+    "validation": {
+      "name-required": "O nome é obrigatório"
+    }
+  },
+  "pending": {
+    "heading": "Convites pendentes",
+    "description": "Convites que ainda não foram aceitos. Reenvie o e-mail ou revogue o acesso.",
+    "loading-error": "Falha ao carregar os convites.",
+    "empty": "Nenhum convite pendente.",
+    "status-pending": "pendente",
+    "status-expired": "expirado",
+    "expires": "Expira {when}",
+    "expired-at": "Expirou {when}",
+    "resend-label": "Reenviar convite para {email}",
+    "revoke-label": "Revogar convite para {email}",
+    "resend-success": "Convite reenviado para {email}",
+    "resend-error": "Não foi possível reenviar o convite",
+    "revoke-success": "Convite revogado para {email}",
+    "revoke-error": "Não foi possível revogar o convite"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "动态",
+    "title": "会议记录",
+    "total": "{count, plural, one {# 次会议} other {# 次会议}}共计",
+    "description": "您主持或参与的每一次会议 — 聊天记录、附件和参与者列表均已保存。"
+  },
+  "default-title": "{date} 的会议",
+  "host": "主持人",
+  "hosted-by-you": "由您主持",
+  "hosted-by": "由 {name} 主持",
+  "overflow": "+{count}",
+  "recording-badge": "录制 · {count}",
+  "recording-title": "{count, plural, one {# 段录制} other {# 段录制}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "会议",
+    "started": "开始时间",
+    "duration": "时长",
+    "participants": "参与者",
+    "activity": "动态",
+    "status": "状态",
+    "actions": "操作",
+    "open": "打开"
+  },
+  "status": {
+    "ended": "已结束",
+    "active": "进行中",
+    "scheduled": "已排期"
+  },
+  "stats": {
+    "on-this-page": "本页",
+    "hosted-by-you": "由您主持",
+    "total-time": "总时长",
+    "participants": "参与者"
+  },
+  "table": {
+    "empty": "本页没有会议。"
+  },
+  "pagination": {
+    "showing": "显示 {from}–{to}，共 {total}",
+    "previous": "上一页",
+    "next": "下一页",
+    "page-of": "第 {page} 页，共 {pageCount} 页"
+  },
+  "error": {
+    "list": "加载会议记录失败。"
+  },
+  "empty": {
+    "title": "暂无会议",
+    "description": "一旦您主持或加入会议，记录将显示在这里。",
+    "cta": "发起会议"
+  },
+  "detail": {
+    "back": "返回记录",
+    "default-title": "{date} 的会议",
+    "hosted-by-you": "由您主持",
+    "copy-aria": "复制会议码",
+    "started": "开始时间",
+    "role": "角色",
+    "stats": {
+      "duration": "时长",
+      "participants": "参与者",
+      "messages": "消息数",
+      "attachments": "附件数"
+    },
+    "in-this-chat": "本次聊天",
+    "overflow": "+{count}",
+    "error": "加载本次会议失败。",
+    "status": {
+      "ended": "已结束",
+      "active": "进行中",
+      "scheduled": "已排期"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "录制文件",
+      "visibility": "仅对参与本次会议的人可见。",
+      "started-by": "由谁开始",
+      "duration": "时长",
+      "size": "大小",
+      "download": "下载",
+      "recording-from": "{date} 的录制",
+      "status": {
+        "completed": "已完成",
+        "failed": "失败",
+        "recording": "录制中",
+        "stopping": "正在停止"
+      },
+      "failed-title": "录制失败",
+      "failed-detail": "推流服务未提供更多详细信息。",
+      "processing": "正在处理录制文件 — 请稍后再查看。",
+      "empty-title": "本次会议无录制文件",
+      "empty-description": "主持人可在通话控制中开始录制。录制文件仅对参与本次会议的人可见。",
+      "relative": {
+        "just-now": "刚刚",
+        "minutes": "{count, plural, one {# 分钟前} other {# 分钟前}}",
+        "hours": "{count, plural, one {# 小时前} other {# 小时前}}",
+        "days": "{count, plural, one {# 天前} other {# 天前}}"
+      }
+    },
+    "transcript": {
+      "title": "聊天记录",
+      "count": "{count, plural, one {# 条消息} other {# 条消息}}",
+      "error": "加载消息失败。",
+      "empty": "本次会议未发送任何消息。",
+      "load-earlier": "加载更早的消息",
+      "loading": "加载中…",
+      "you": "您"
+    }
+  },
+  "toast": {
+    "copied": "会议码已复制",
+    "copy-failed": "无法复制会议码"
+  }
+}

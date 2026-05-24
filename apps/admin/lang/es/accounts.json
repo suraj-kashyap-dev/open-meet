@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Configuración",
+  "title": "Administradores",
+  "access-summary": "{count, plural, one {# persona tiene} other {# personas tienen}} acceso a esta consola.",
+  "invite-button": "Invitar administrador",
+  "empty": "Aún no hay administradores.",
+  "roles": {
+    "admin": "administrador",
+    "superadmin": "superadministrador"
+  },
+  "table": {
+    "administrator": "Administrador",
+    "role": "Rol",
+    "joined": "Se unió",
+    "last-login": "Último inicio de sesión",
+    "never": "nunca",
+    "actions": "Acciones",
+    "actions-for": "Acciones para {name}",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "delete-dialog": {
+    "title": "¿Eliminar este administrador?",
+    "description": "{name} ({email}) perderá el acceso a la consola de administración inmediatamente. Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "confirm": "Eliminar administrador",
+    "deleting": "Eliminando…",
+    "success": "{name} eliminado",
+    "error": "No se pudo eliminar al administrador"
+  },
+  "invite-dialog": {
+    "title": "Invitar a un administrador",
+    "description": "Enviaremos un enlace seguro por correo. La persona establecerá su propia contraseña para activar la cuenta.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "role-admin": "Administrador",
+    "role-superadmin": "Superadministrador",
+    "cancel": "Cancelar",
+    "submit": "Enviar invitación",
+    "submitting": "Enviando…",
+    "success": "Invitación enviada por correo a {email}",
+    "error": "No se pudo enviar la invitación",
+    "validation": {
+      "invalid-email": "Ingresa un correo electrónico válido",
+      "name-required": "El nombre es obligatorio"
+    }
+  },
+  "edit-dialog": {
+    "title": "Editar administrador",
+    "name": "Nombre",
+    "role": "Rol",
+    "role-admin": "Administrador",
+    "role-superadmin": "Superadministrador",
+    "cancel": "Cancelar",
+    "submit": "Guardar cambios",
+    "submitting": "Guardando…",
+    "success": "{name} actualizado",
+    "error": "No se pudo actualizar al administrador",
+    "validation": {
+      "name-required": "El nombre es obligatorio"
+    }
+  },
+  "pending": {
+    "heading": "Invitaciones pendientes",
+    "description": "Invitaciones que aún no han sido aceptadas. Reenvía el correo o revoca el acceso.",
+    "loading-error": "Error al cargar las invitaciones.",
+    "empty": "No hay invitaciones pendientes.",
+    "status-pending": "pendiente",
+    "status-expired": "expirada",
+    "expires": "Expira {when}",
+    "expired-at": "Expiró {when}",
+    "resend-label": "Reenviar invitación a {email}",
+    "revoke-label": "Revocar invitación a {email}",
+    "resend-success": "Invitación reenviada a {email}",
+    "resend-error": "No se pudo reenviar la invitación",
+    "revoke-success": "Invitación revocada para {email}",
+    "revoke-error": "No se pudo revocar la invitación"
+  }
+}

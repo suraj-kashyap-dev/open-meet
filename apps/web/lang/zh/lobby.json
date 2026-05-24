@@ -1,0 +1,46 @@
+{
+  "eyebrow": "准备就绪",
+  "you": "您",
+  "untitled-meeting": "未命名会议",
+  "secure-connection": "安全连接",
+  "invited-only": "仅受邀者可加入",
+  "meeting-code": "会议码",
+  "join-now": "立即加入",
+  "joining": "正在加入…",
+  "back-to-home": "返回首页",
+  "cancel": "取消",
+  "aria": {
+    "rename-meeting": "重命名会议",
+    "meeting-title": "会议标题",
+    "save-title": "保存标题",
+    "cancel-rename": "取消重命名",
+    "copy-meeting-link": "复制会议链接",
+    "microphone-level": "麦克风音量"
+  },
+  "devices": {
+    "title": "设备",
+    "subtitle": "检查您的音频和视频",
+    "camera": "摄像头",
+    "camera-placeholder": "选择摄像头",
+    "microphone": "麦克风",
+    "microphone-placeholder": "选择麦克风",
+    "speakers": "扬声器",
+    "system-default": "系统默认"
+  },
+  "preview": {
+    "camera-off": "摄像头已关闭",
+    "mute-microphone": "静音麦克风",
+    "unmute-microphone": "取消麦克风静音",
+    "turn-off-microphone": "关闭麦克风",
+    "turn-on-microphone": "开启麦克风",
+    "turn-off-camera": "关闭摄像头",
+    "turn-on-camera": "开启摄像头"
+  },
+  "toast": {
+    "title-updated": "会议标题已更新",
+    "title-update-failed": "无法更新标题",
+    "meeting-not-found": "会议未找到",
+    "link-copied": "会议链接已复制",
+    "link-copy-failed": "无法复制链接"
+  }
+}

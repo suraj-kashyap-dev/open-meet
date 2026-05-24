@@ -1,0 +1,27 @@
+{
+  "title": "管理者アカウントを有効化する",
+  "subtitle": "パスワードを設定してアクセスの設定を完了してください。",
+  "joining-as": "参加するアカウント",
+  "roles": {
+    "admin": "管理者",
+    "superadmin": "スーパー管理者"
+  },
+  "password": "パスワード",
+  "password-placeholder": "8 文字以上",
+  "confirm": "パスワードを確認",
+  "submit": "アカウントを有効化",
+  "submitting": "有効化中…",
+  "go-to-sign-in": "サインインへ",
+  "validation": {
+    "password-min": "8 文字以上",
+    "password-mismatch": "パスワードが一致しません"
+  },
+  "errors": {
+    "missing-token": "この招待リンクにはトークンが含まれていません。",
+    "invalid": "この招待は無効か、有効期限が切れています。",
+    "activate-failed": "アカウントを有効化できませんでした"
+  },
+  "toast": {
+    "activated": "アカウントを有効化しました — サインインしてください。"
+  }
+}

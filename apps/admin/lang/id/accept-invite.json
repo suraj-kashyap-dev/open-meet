@@ -1,0 +1,27 @@
+{
+  "title": "Aktifkan akun admin Anda",
+  "subtitle": "Tetapkan kata sandi untuk menyelesaikan pengaturan akses Anda.",
+  "joining-as": "Anda bergabung sebagai",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "password": "Kata sandi",
+  "password-placeholder": "Minimal 8 karakter",
+  "confirm": "Konfirmasi kata sandi",
+  "submit": "Aktifkan akun",
+  "submitting": "Mengaktifkan…",
+  "go-to-sign-in": "Ke halaman masuk",
+  "validation": {
+    "password-min": "Minimal 8 karakter",
+    "password-mismatch": "Kata sandi tidak cocok"
+  },
+  "errors": {
+    "missing-token": "Tautan undangan ini tidak memiliki token.",
+    "invalid": "Undangan ini tidak valid atau telah kedaluwarsa.",
+    "activate-failed": "Tidak dapat mengaktifkan akun"
+  },
+  "toast": {
+    "activated": "Akun diaktifkan — silakan masuk."
+  }
+}

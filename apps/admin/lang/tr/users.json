@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Yönet",
+  "title": "Kullanıcılar",
+  "total-count": "Toplam {count, number}",
+  "search-placeholder": "Ada veya e-postaya göre ara",
+  "refreshing": "Yenileniyor…",
+  "empty": "Henüz kullanıcı yok.",
+  "empty-search": "\"{query}\" ile eşleşen kullanıcı yok.",
+  "table": {
+    "user": "Kullanıcı",
+    "joined": "Katıldı",
+    "hosted": "Düzenledi",
+    "attended": "Katıldı",
+    "actions": "İşlemler",
+    "open-actions": "İşlemleri aç",
+    "edit": "Düzenle",
+    "delete": "Sil"
+  },
+  "pagination": {
+    "no-results": "Sonuç yok",
+    "showing": "{from}-{to} / {total} gösteriliyor",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "page-of": "{pageCount} sayfadan {page}. sayfa"
+  },
+  "edit-dialog": {
+    "title": "Kullanıcıyı düzenle",
+    "description": "Profili, yerelleştirmeyi, biyografiyi güncelleyin veya şifreyi sıfırlayın.",
+    "section-account": "Hesap",
+    "section-localization": "Yerelleştirme",
+    "section-about": "Hakkında",
+    "section-password": "Şifreyi sıfırla",
+    "name": "Ad",
+    "email": "E-posta",
+    "timezone": "Saat dilimi",
+    "timezone-placeholder": "Saat dilimi seçin",
+    "language": "Dil",
+    "language-placeholder": "Dil seçin",
+    "bio": "Biyografi",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "İsteğe bağlı",
+    "new-password": "Yeni şifre",
+    "new-password-placeholder": "Mevcut şifreyi korumak için boş bırakın",
+    "new-password-helper": "Yeni bir şifre belirlemek kullanıcının oturumlarını geçersiz kılar.",
+    "cancel": "İptal",
+    "submit": "Değişiklikleri kaydet",
+    "submitting": "Kaydediliyor…",
+    "success": "Kullanıcı güncellendi",
+    "error": "Kullanıcı güncellenemedi",
+    "validation": {
+      "name-required": "Ad gereklidir",
+      "invalid-email": "Geçerli bir e-posta girin",
+      "bio-too-long": "Biyografi çok uzun",
+      "password-too-long": "Çok uzun",
+      "password-too-short": "En az 8 karakter"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP veya GIF. En fazla {mb} MB.",
+    "replace": "Resmi değiştir",
+    "remove": "Resmi kaldır",
+    "edit-label": "Profil resmini değiştir",
+    "upload-label": "Profil resmi yükle",
+    "success": "Profil resmi güncellendi",
+    "upload-error": "Resim yüklenemedi",
+    "removed": "Profil resmi kaldırıldı",
+    "remove-error": "Resim kaldırılamadı",
+    "invalid-type": "Resim PNG, JPEG, WebP veya GIF olmalıdır.",
+    "too-large": "Resim {mb} MB'ın altında olmalıdır."
+  },
+  "delete-dialog": {
+    "title": "Kullanıcı silinsin mi?",
+    "description": "Bu işlem <strong>{email}</strong> kullanıcısını ve düzenlediği, katıldığı tüm toplantıları ve gönderdiği mesajları kalıcı olarak siler. Bu işlem geri alınamaz.",
+    "cancel": "İptal",
+    "submit": "Kullanıcıyı sil",
+    "submitting": "Siliniyor…",
+    "success": "{email} silindi",
+    "error": "Kullanıcı silinemedi"
+  }
+}

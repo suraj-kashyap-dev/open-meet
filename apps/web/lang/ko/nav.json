@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "프로필",
+    "profile-description": "계정 세부 정보 편집",
+    "settings": "설정",
+    "settings-description": "기본값, 개인정보, 언어",
+    "sign-out": "로그아웃"
+  },
+  "user-menu-label": "계정 메뉴 열기",
+  "command": {
+    "placeholder": "명령어 또는 회의 코드를 입력하세요…",
+    "no-results": "결과 없음.",
+    "group-meetings": "회의",
+    "group-appearance": "외관",
+    "new-meeting": "새 회의",
+    "join": "\"{code}\" 참여",
+    "switch-to-light": "라이트 모드로 전환",
+    "switch-to-dark": "다크 모드로 전환",
+    "match-system-theme": "시스템 테마에 맞추기",
+    "home": "홈",
+    "sign-out": "로그아웃",
+    "create-meeting-error": "회의를 만들 수 없습니다",
+    "join-code-required": "먼저 회의 코드를 입력하세요"
+  }
+}

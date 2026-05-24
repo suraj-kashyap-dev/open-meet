@@ -1,0 +1,27 @@
+{
+  "title": "अपना एडमिन खाता सक्रिय करें",
+  "subtitle": "अपनी पहुंच सेट अप पूरी करने के लिए पासवर्ड सेट करें।",
+  "joining-as": "आप इस रूप में शामिल हो रहे हैं",
+  "roles": {
+    "admin": "admin",
+    "superadmin": "superadmin"
+  },
+  "password": "पासवर्ड",
+  "password-placeholder": "कम से कम 8 अक्षर",
+  "confirm": "पासवर्ड की पुष्टि करें",
+  "submit": "खाता सक्रिय करें",
+  "submitting": "सक्रिय हो रहा है…",
+  "go-to-sign-in": "साइन इन पर जाएं",
+  "validation": {
+    "password-min": "कम से कम 8 अक्षर",
+    "password-mismatch": "पासवर्ड मेल नहीं खाते"
+  },
+  "errors": {
+    "missing-token": "इस आमंत्रण लिंक में टोकन गायब है।",
+    "invalid": "यह आमंत्रण अमान्य है या समाप्त हो गया है।",
+    "activate-failed": "खाता सक्रिय नहीं हो सका"
+  },
+  "toast": {
+    "activated": "खाता सक्रिय हुआ — कृपया साइन इन करें।"
+  }
+}

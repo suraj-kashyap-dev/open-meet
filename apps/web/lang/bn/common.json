@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "ভাষা"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "অথবা",
+  "loading": "লোড হচ্ছে…",
+  "google": {
+    "continue": "Google দিয়ে চালিয়ে যান",
+    "redirecting": "Google-এ রিডাইরেক্ট হচ্ছে…"
+  },
+  "error": {
+    "title": "কিছু একটা ভুল হয়েছে",
+    "description": "একটি অপ্রত্যাশিত ত্রুটি হয়েছে। আপনি আবার চেষ্টা করতে পারেন বা হোমে ফিরে যেতে পারেন।",
+    "retry": "আবার চেষ্টা করুন",
+    "home": "হোম"
+  },
+  "not-found": {
+    "title": "পেজ পাওয়া যায়নি",
+    "description": "আপনি যে পেজটি খুঁজছেন সেটি নেই বা সরিয়ে নেওয়া হয়েছে।",
+    "back": "হোমে ফিরে যান"
+  }
+}

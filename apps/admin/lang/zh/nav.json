@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "console": "管理控制台",
+    "visit-open-meet": "访问 Open Meet"
+  },
+  "sections": {
+    "overview": "概览",
+    "manage": "管理",
+    "insights": "洞察",
+    "system": "系统"
+  },
+  "items": {
+    "dashboard": "仪表盘",
+    "users": "用户",
+    "meetings": "会议",
+    "analytics": "分析",
+    "settings": "设置",
+    "administrators": "管理员",
+    "configuration": "配置"
+  },
+  "topbar": {
+    "root": "管理",
+    "dashboard": "仪表盘",
+    "open-sidebar": "打开导航",
+    "hide-sidebar": "隐藏导航",
+    "show-sidebar": "显示导航",
+    "sign-out": "退出登录"
+  }
+}

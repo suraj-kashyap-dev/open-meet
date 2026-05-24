@@ -1,0 +1,35 @@
+{
+  "tagline": "빠르게 움직이는 팀을 위한 오픈소스 화상 회의 서비스. 몇 분 안에 셀프호스팅하고 데이터를 영원히 소유하세요.",
+  "star": "GitHub에서 즐겨찾기",
+  "report-issue": "문제 보고",
+  "status": "모든 시스템 정상 운영 중",
+  "product": {
+    "eyebrow": "탐색",
+    "title": "제품",
+    "dashboard": "대시보드",
+    "history": "기록",
+    "account": "계정"
+  },
+  "resources": {
+    "eyebrow": "학습",
+    "title": "리소스",
+    "self-host": "셀프호스팅 가이드",
+    "api": "API 참조",
+    "license": "MIT 라이선스",
+    "changelog": "변경 로그"
+  },
+  "community": {
+    "eyebrow": "참여",
+    "title": "커뮤니티",
+    "repo": "GitHub 저장소",
+    "issues": "이슈 및 버그 리포트",
+    "discussions": "토론",
+    "contribute": "기여하기"
+  },
+  "powered-by": "제공",
+  "built-with": "오픈 기술로 제작",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "TypeScript로 만들어졌습니다",
+  "made-suffix": "· MIT 라이선스",
+  "love": "사랑"
+}

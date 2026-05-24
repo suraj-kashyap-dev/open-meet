@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Paramètres",
+  "title": "Configuration",
+  "description": "Valeurs par défaut de l'espace de travail, image de marque et politiques de réunion.",
+  "coming-soon-label": "Bientôt disponible",
+  "coming-soon": {
+    "title": "La configuration est en cours de développement",
+    "description": "Les valeurs par défaut de l'espace de travail, l'image de marque et les politiques de réunion seront bientôt disponibles ici."
+  }
+}

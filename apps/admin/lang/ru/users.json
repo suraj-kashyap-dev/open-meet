@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Управление",
+  "title": "Пользователи",
+  "total-count": "{count, number} всего",
+  "search-placeholder": "Поиск по имени или email",
+  "refreshing": "Обновление…",
+  "empty": "Пользователей пока нет.",
+  "empty-search": "Пользователи не найдены по запросу «{query}».",
+  "table": {
+    "user": "Пользователь",
+    "joined": "Присоединился",
+    "hosted": "Организовал",
+    "attended": "Посетил",
+    "actions": "Действия",
+    "open-actions": "Открыть действия",
+    "edit": "Редактировать",
+    "delete": "Удалить"
+  },
+  "pagination": {
+    "no-results": "Нет результатов",
+    "showing": "Показано {from}-{to} из {total}",
+    "previous": "Назад",
+    "next": "Вперёд",
+    "page-of": "Страница {page} из {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Редактировать пользователя",
+    "description": "Обновите профиль, локализацию, биографию или сбросьте пароль.",
+    "section-account": "Аккаунт",
+    "section-localization": "Локализация",
+    "section-about": "О себе",
+    "section-password": "Сбросить пароль",
+    "name": "Имя",
+    "email": "Email",
+    "timezone": "Часовой пояс",
+    "timezone-placeholder": "Выберите часовой пояс",
+    "language": "Язык",
+    "language-placeholder": "Выберите язык",
+    "bio": "О себе",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Необязательно",
+    "new-password": "Новый пароль",
+    "new-password-placeholder": "Оставьте пустым, чтобы сохранить текущий пароль",
+    "new-password-helper": "Установка нового пароля аннулирует сессии пользователя.",
+    "cancel": "Отмена",
+    "submit": "Сохранить изменения",
+    "submitting": "Сохранение…",
+    "success": "Пользователь обновлён",
+    "error": "Не удалось обновить пользователя",
+    "validation": {
+      "name-required": "Имя обязательно",
+      "invalid-email": "Введите корректный email",
+      "bio-too-long": "Биография слишком длинная",
+      "password-too-long": "Слишком длинный",
+      "password-too-short": "Не менее 8 символов"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP или GIF. До {mb} МБ.",
+    "replace": "Заменить изображение",
+    "remove": "Удалить изображение",
+    "edit-label": "Изменить фото профиля",
+    "upload-label": "Загрузить фото профиля",
+    "success": "Фото профиля обновлено",
+    "upload-error": "Не удалось загрузить изображение",
+    "removed": "Фото профиля удалено",
+    "remove-error": "Не удалось удалить изображение",
+    "invalid-type": "Изображение должно быть в формате PNG, JPEG, WebP или GIF.",
+    "too-large": "Размер изображения не должен превышать {mb} МБ."
+  },
+  "delete-dialog": {
+    "title": "Удалить пользователя?",
+    "description": "Это навсегда удалит <strong>{email}</strong> и все встречи, которые они организовали, посетили, а также отправленные ими сообщения. Это действие нельзя отменить.",
+    "cancel": "Отмена",
+    "submit": "Удалить пользователя",
+    "submitting": "Удаление…",
+    "success": "Удалён {email}",
+    "error": "Не удалось удалить пользователя"
+  }
+}

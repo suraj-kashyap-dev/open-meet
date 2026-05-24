@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Профиль",
+    "profile-description": "Редактировать данные аккаунта",
+    "settings": "Настройки",
+    "settings-description": "Параметры по умолчанию, конфиденциальность, язык",
+    "sign-out": "Выйти"
+  },
+  "user-menu-label": "Открыть меню аккаунта",
+  "command": {
+    "placeholder": "Введите команду или код встречи…",
+    "no-results": "Нет результатов.",
+    "group-meetings": "Встречи",
+    "group-appearance": "Внешний вид",
+    "new-meeting": "Новая встреча",
+    "join": "Войти «{code}»",
+    "switch-to-light": "Переключить на светлую тему",
+    "switch-to-dark": "Переключить на тёмную тему",
+    "match-system-theme": "Соответствовать теме системы",
+    "home": "Главная",
+    "sign-out": "Выйти",
+    "create-meeting-error": "Не удалось создать встречу",
+    "join-code-required": "Сначала введите код встречи"
+  }
+}

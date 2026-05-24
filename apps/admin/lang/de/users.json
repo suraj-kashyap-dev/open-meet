@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Verwalten",
+  "title": "Benutzer",
+  "total-count": "{count, number} insgesamt",
+  "search-placeholder": "Nach Name oder E-Mail suchen",
+  "refreshing": "Wird aktualisiert…",
+  "empty": "Noch keine Benutzer.",
+  "empty-search": "Keine Benutzer entsprechen „{query}”.",
+  "table": {
+    "user": "Benutzer",
+    "joined": "Beigetreten",
+    "hosted": "Gehostet",
+    "attended": "Teilgenommen",
+    "actions": "Aktionen",
+    "open-actions": "Aktionen öffnen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen"
+  },
+  "pagination": {
+    "no-results": "Keine Ergebnisse",
+    "showing": "{from}–{to} von {total} angezeigt",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page-of": "Seite {page} von {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Benutzer bearbeiten",
+    "description": "Profil, Lokalisierung, Biografie aktualisieren oder Passwort zurücksetzen.",
+    "section-account": "Konto",
+    "section-localization": "Lokalisierung",
+    "section-about": "Über",
+    "section-password": "Passwort zurücksetzen",
+    "name": "Name",
+    "email": "E-Mail",
+    "timezone": "Zeitzone",
+    "timezone-placeholder": "Zeitzone auswählen",
+    "language": "Sprache",
+    "language-placeholder": "Sprache auswählen",
+    "bio": "Biografie",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Optional",
+    "new-password": "Neues Passwort",
+    "new-password-placeholder": "Leer lassen, um das bestehende Passwort zu behalten",
+    "new-password-helper": "Ein neues Passwort festlegen macht die Sitzungen des Benutzers ungültig.",
+    "cancel": "Abbrechen",
+    "submit": "Änderungen speichern",
+    "submitting": "Wird gespeichert…",
+    "success": "Benutzer aktualisiert",
+    "error": "Benutzer konnte nicht aktualisiert werden",
+    "validation": {
+      "name-required": "Name ist erforderlich",
+      "invalid-email": "Gültige E-Mail-Adresse eingeben",
+      "bio-too-long": "Biografie ist zu lang",
+      "password-too-long": "Zu lang",
+      "password-too-short": "Mindestens 8 Zeichen"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP oder GIF. Bis zu {mb} MB.",
+    "replace": "Bild ersetzen",
+    "remove": "Bild entfernen",
+    "edit-label": "Profilbild ändern",
+    "upload-label": "Profilbild hochladen",
+    "success": "Profilbild aktualisiert",
+    "upload-error": "Bild konnte nicht hochgeladen werden",
+    "removed": "Profilbild entfernt",
+    "remove-error": "Bild konnte nicht entfernt werden",
+    "invalid-type": "Bild muss ein PNG, JPEG, WebP oder GIF sein.",
+    "too-large": "Bild muss unter {mb} MB liegen."
+  },
+  "delete-dialog": {
+    "title": "Benutzer löschen?",
+    "description": "Dies entfernt dauerhaft <strong>{email}</strong> sowie alle Besprechungen, an denen sie teilgenommen haben, gehostet haben, und Nachrichten, die sie gesendet haben. Dies kann nicht rückgängig gemacht werden.",
+    "cancel": "Abbrechen",
+    "submit": "Benutzer löschen",
+    "submitting": "Wird gelöscht…",
+    "success": "{email} gelöscht",
+    "error": "Benutzer konnte nicht gelöscht werden"
+  }
+}

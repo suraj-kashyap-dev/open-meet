@@ -1,0 +1,27 @@
+{
+  "title": "Activez votre compte administrateur",
+  "subtitle": "Définissez un mot de passe pour finaliser la configuration de votre accès.",
+  "joining-as": "Vous rejoignez en tant que",
+  "roles": {
+    "admin": "administrateur",
+    "superadmin": "super-administrateur"
+  },
+  "password": "Mot de passe",
+  "password-placeholder": "Au moins 8 caractères",
+  "confirm": "Confirmer le mot de passe",
+  "submit": "Activer le compte",
+  "submitting": "Activation en cours…",
+  "go-to-sign-in": "Aller à la connexion",
+  "validation": {
+    "password-min": "Au moins 8 caractères",
+    "password-mismatch": "Les mots de passe ne correspondent pas"
+  },
+  "errors": {
+    "missing-token": "Le jeton est absent de ce lien d'invitation.",
+    "invalid": "Cette invitation est invalide ou a expiré.",
+    "activate-failed": "Impossible d'activer le compte"
+  },
+  "toast": {
+    "activated": "Compte activé — veuillez vous connecter."
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Ayarlar",
+  "title": "Yöneticiler",
+  "access-summary": "{count, plural, one {# kişinin} other {# kişinin}} bu konsola erişimi var.",
+  "invite-button": "Yönetici davet et",
+  "empty": "Henüz yönetici yok.",
+  "roles": {
+    "admin": "yönetici",
+    "superadmin": "süper yönetici"
+  },
+  "table": {
+    "administrator": "Yönetici",
+    "role": "Rol",
+    "joined": "Katıldı",
+    "last-login": "Son giriş",
+    "never": "hiç",
+    "actions": "İşlemler",
+    "actions-for": "{name} için işlemler",
+    "edit": "Düzenle",
+    "delete": "Sil"
+  },
+  "delete-dialog": {
+    "title": "Bu yöneticiyi sil?",
+    "description": "{name} ({email}) yönetici konsoluna erişimini hemen kaybedecek. Bu işlem geri alınamaz.",
+    "cancel": "İptal",
+    "confirm": "Yöneticiyi sil",
+    "deleting": "Siliniyor…",
+    "success": "{name} silindi",
+    "error": "Yönetici silinemedi"
+  },
+  "invite-dialog": {
+    "title": "Yönetici davet et",
+    "description": "Güvenli bir bağlantıyı e-posta ile göndereceğiz. Hesabı etkinleştirmek için kendi şifrelerini belirleyecekler.",
+    "name": "Ad",
+    "email": "E-posta",
+    "role": "Rol",
+    "role-admin": "Yönetici",
+    "role-superadmin": "Süper yönetici",
+    "cancel": "İptal",
+    "submit": "Davet gönder",
+    "submitting": "Gönderiliyor…",
+    "success": "{email} adresine davet gönderildi",
+    "error": "Davet gönderilemedi",
+    "validation": {
+      "invalid-email": "Geçerli bir e-posta girin",
+      "name-required": "Ad gereklidir"
+    }
+  },
+  "edit-dialog": {
+    "title": "Yöneticiyi düzenle",
+    "name": "Ad",
+    "role": "Rol",
+    "role-admin": "Yönetici",
+    "role-superadmin": "Süper yönetici",
+    "cancel": "İptal",
+    "submit": "Değişiklikleri kaydet",
+    "submitting": "Kaydediliyor…",
+    "success": "{name} güncellendi",
+    "error": "Yönetici güncellenemedi",
+    "validation": {
+      "name-required": "Ad gereklidir"
+    }
+  },
+  "pending": {
+    "heading": "Bekleyen davetler",
+    "description": "Henüz kabul edilmemiş davetler. E-postayı yeniden gönderin veya erişimi iptal edin.",
+    "loading-error": "Davetler yüklenemedi.",
+    "empty": "Bekleyen davet yok.",
+    "status-pending": "bekliyor",
+    "status-expired": "süresi doldu",
+    "expires": "{when} tarihinde sona erer",
+    "expired-at": "{when} tarihinde sona erdi",
+    "resend-label": "{email} adresine daveti yeniden gönder",
+    "revoke-label": "{email} adresine gönderilen daveti iptal et",
+    "resend-success": "Davet {email} adresine yeniden gönderildi",
+    "resend-error": "Davet yeniden gönderilemedi",
+    "revoke-success": "{email} için davet iptal edildi",
+    "revoke-error": "Davet iptal edilemedi"
+  }
+}

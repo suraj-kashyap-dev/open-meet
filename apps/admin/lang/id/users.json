@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Kelola",
+  "title": "Pengguna",
+  "total-count": "{count, number} total",
+  "search-placeholder": "Cari berdasarkan nama atau email",
+  "refreshing": "Memperbarui…",
+  "empty": "Belum ada pengguna.",
+  "empty-search": "Tidak ada pengguna yang cocok dengan \"{query}\".",
+  "table": {
+    "user": "Pengguna",
+    "joined": "Bergabung",
+    "hosted": "Di-host",
+    "attended": "Dihadiri",
+    "actions": "Tindakan",
+    "open-actions": "Buka tindakan",
+    "edit": "Edit",
+    "delete": "Hapus"
+  },
+  "pagination": {
+    "no-results": "Tidak ada hasil",
+    "showing": "Menampilkan {from}-{to} dari {total}",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "page-of": "Halaman {page} dari {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Edit pengguna",
+    "description": "Perbarui profil, lokalisasi, bio, atau atur ulang kata sandi.",
+    "section-account": "Akun",
+    "section-localization": "Lokalisasi",
+    "section-about": "Tentang",
+    "section-password": "Atur ulang kata sandi",
+    "name": "Nama",
+    "email": "Email",
+    "timezone": "Zona waktu",
+    "timezone-placeholder": "Pilih zona waktu",
+    "language": "Bahasa",
+    "language-placeholder": "Pilih bahasa",
+    "bio": "Bio",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Opsional",
+    "new-password": "Kata sandi baru",
+    "new-password-placeholder": "Biarkan kosong untuk mempertahankan kata sandi yang ada",
+    "new-password-helper": "Menetapkan kata sandi baru akan membatalkan sesi pengguna.",
+    "cancel": "Batal",
+    "submit": "Simpan perubahan",
+    "submitting": "Menyimpan…",
+    "success": "Pengguna diperbarui",
+    "error": "Tidak dapat memperbarui pengguna",
+    "validation": {
+      "name-required": "Nama diperlukan",
+      "invalid-email": "Masukkan email yang valid",
+      "bio-too-long": "Bio terlalu panjang",
+      "password-too-long": "Terlalu panjang",
+      "password-too-short": "Minimal 8 karakter"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP, atau GIF. Maks {mb} MB.",
+    "replace": "Ganti gambar",
+    "remove": "Hapus gambar",
+    "edit-label": "Ubah gambar profil",
+    "upload-label": "Unggah gambar profil",
+    "success": "Gambar profil diperbarui",
+    "upload-error": "Tidak dapat mengunggah gambar",
+    "removed": "Gambar profil dihapus",
+    "remove-error": "Tidak dapat menghapus gambar",
+    "invalid-type": "Gambar harus berupa PNG, JPEG, WebP, atau GIF.",
+    "too-large": "Gambar harus di bawah {mb} MB."
+  },
+  "delete-dialog": {
+    "title": "Hapus pengguna?",
+    "description": "Ini akan menghapus secara permanen <strong>{email}</strong> beserta semua rapat yang mereka host, hadiri, dan pesan yang mereka kirim. Ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "submit": "Hapus pengguna",
+    "submitting": "Menghapus…",
+    "success": "{email} dihapus",
+    "error": "Tidak dapat menghapus pengguna"
+  }
+}

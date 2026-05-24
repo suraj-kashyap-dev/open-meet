@@ -1,0 +1,80 @@
+{
+  "eyebrow": "ম্যানেজ",
+  "title": "ব্যবহারকারী",
+  "total-count": "{count, number} মোট",
+  "search-placeholder": "নাম বা ইমেইল দিয়ে অনুসন্ধান করুন",
+  "refreshing": "রিফ্রেশ হচ্ছে…",
+  "empty": "এখনো কোনো ব্যবহারকারী নেই।",
+  "empty-search": "\"{query}\" এর সাথে কোনো ব্যবহারকারী মিলছে না।",
+  "table": {
+    "user": "ব্যবহারকারী",
+    "joined": "যোগ দিয়েছেন",
+    "hosted": "হোস্ট করেছেন",
+    "attended": "অংশগ্রহণ করেছেন",
+    "actions": "কার্যক্রম",
+    "open-actions": "কার্যক্রম খুলুন",
+    "edit": "সম্পাদনা",
+    "delete": "মুছুন"
+  },
+  "pagination": {
+    "no-results": "কোনো ফলাফল নেই",
+    "showing": "{total}-এর মধ্যে {from}-{to} দেখাচ্ছে",
+    "previous": "পূর্ববর্তী",
+    "next": "পরবর্তী",
+    "page-of": "{pageCount}-এর মধ্যে {page} পেজ"
+  },
+  "edit-dialog": {
+    "title": "ব্যবহারকারী সম্পাদনা করুন",
+    "description": "প্রোফাইল, স্থানীয়করণ, পরিচিতি আপডেট করুন, বা পাসওয়ার্ড রিসেট করুন।",
+    "section-account": "অ্যাকাউন্ট",
+    "section-localization": "স্থানীয়করণ",
+    "section-about": "পরিচিতি",
+    "section-password": "পাসওয়ার্ড রিসেট",
+    "name": "নাম",
+    "email": "ইমেইল",
+    "timezone": "টাইমজোন",
+    "timezone-placeholder": "একটি টাইমজোন বেছে নিন",
+    "language": "ভাষা",
+    "language-placeholder": "একটি ভাষা বেছে নিন",
+    "bio": "পরিচিতি",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "ঐচ্ছিক",
+    "new-password": "নতুন পাসওয়ার্ড",
+    "new-password-placeholder": "বিদ্যমান পাসওয়ার্ড রাখতে খালি ছেড়ে দিন",
+    "new-password-helper": "নতুন পাসওয়ার্ড নির্ধারণ করলে ব্যবহারকারীর সেশন বাতিল হয়।",
+    "cancel": "বাতিল",
+    "submit": "পরিবর্তন সংরক্ষণ করুন",
+    "submitting": "সংরক্ষণ হচ্ছে…",
+    "success": "ব্যবহারকারী আপডেট হয়েছে",
+    "error": "ব্যবহারকারী আপডেট করা যায়নি",
+    "validation": {
+      "name-required": "নাম প্রয়োজন",
+      "invalid-email": "একটি বৈধ ইমেইল লিখুন",
+      "bio-too-long": "পরিচিতি অনেক বড়",
+      "password-too-long": "অনেক বড়",
+      "password-too-short": "কমপক্ষে ৮ অক্ষর"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP বা GIF। সর্বোচ্চ {mb} MB।",
+    "replace": "ছবি পরিবর্তন করুন",
+    "remove": "ছবি সরান",
+    "edit-label": "প্রোফাইল ছবি পরিবর্তন করুন",
+    "upload-label": "প্রোফাইল ছবি আপলোড করুন",
+    "success": "প্রোফাইল ছবি আপডেট হয়েছে",
+    "upload-error": "ছবি আপলোড করা যায়নি",
+    "removed": "প্রোফাইল ছবি সরানো হয়েছে",
+    "remove-error": "ছবি সরানো যায়নি",
+    "invalid-type": "ছবি অবশ্যই PNG, JPEG, WebP বা GIF হতে হবে।",
+    "too-large": "ছবি অবশ্যই {mb} MB-এর কম হতে হবে।"
+  },
+  "delete-dialog": {
+    "title": "ব্যবহারকারী মুছবেন?",
+    "description": "এটি স্থায়িভাবে <strong>{email}</strong> এবং তারা হোস্ট করা, অংশগ্রহণ করা সমস্ত মিটিং ও পাঠানো বার্তা মুছে ফেলবে। এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+    "cancel": "বাতিল",
+    "submit": "ব্যবহারকারী মুছুন",
+    "submitting": "মুছে হচ্ছে…",
+    "success": "{email} মুছে ফেলা হয়েছে",
+    "error": "ব্যবহারকারী মুছতে পারা যায়নি"
+  }
+}

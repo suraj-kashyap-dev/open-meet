@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "Idioma"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "Cargando…",
+  "error": {
+    "title": "Error en el panel de administración",
+    "description": "Algo salió mal al cargar esta vista de administración. Inténtalo de nuevo o vuelve al panel.",
+    "retry": "Intentar de nuevo",
+    "home": "Panel"
+  }
+}

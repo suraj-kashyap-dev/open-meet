@@ -1,0 +1,27 @@
+{
+  "title": "Attiva il tuo account amministratore",
+  "subtitle": "Imposta una password per completare la configurazione del tuo accesso.",
+  "joining-as": "Stai accedendo come",
+  "roles": {
+    "admin": "amministratore",
+    "superadmin": "superamministratore"
+  },
+  "password": "Password",
+  "password-placeholder": "Almeno 8 caratteri",
+  "confirm": "Conferma password",
+  "submit": "Attiva account",
+  "submitting": "Attivazione in corso…",
+  "go-to-sign-in": "Vai al login",
+  "validation": {
+    "password-min": "Almeno 8 caratteri",
+    "password-mismatch": "Le password non corrispondono"
+  },
+  "errors": {
+    "missing-token": "A questo link di invito manca il token.",
+    "invalid": "Questo invito non è valido o è scaduto.",
+    "activate-failed": "Impossibile attivare l'account"
+  },
+  "toast": {
+    "activated": "Account attivato — effettua il login."
+  }
+}

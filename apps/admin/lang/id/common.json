@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "Bahasa"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "Memuat…",
+  "error": {
+    "title": "Kesalahan panel admin",
+    "description": "Terjadi kesalahan saat memuat tampilan admin ini. Coba lagi, atau kembali ke dasbor.",
+    "retry": "Coba lagi",
+    "home": "Dasbor"
+  }
+}

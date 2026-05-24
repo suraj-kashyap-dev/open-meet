@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Configurações",
+  "title": "Configuração",
+  "description": "Padrões do espaço de trabalho, identidade visual e políticas de reunião.",
+  "coming-soon-label": "Em breve",
+  "coming-soon": {
+    "title": "A configuração está a caminho",
+    "description": "Padrões do espaço de trabalho, identidade visual e políticas de reunião estarão aqui em breve."
+  }
+}

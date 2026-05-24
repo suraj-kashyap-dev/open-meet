@@ -1,0 +1,35 @@
+{
+  "tagline": "面向快速团队的开源视频会议。几分钟内自托管，永久掌控您的数据。",
+  "star": "在 GitHub 上点星",
+  "report-issue": "报告问题",
+  "status": "所有系统正常运行",
+  "product": {
+    "eyebrow": "导航",
+    "title": "产品",
+    "dashboard": "仪表盘",
+    "history": "历史记录",
+    "account": "账户"
+  },
+  "resources": {
+    "eyebrow": "学习",
+    "title": "资源",
+    "self-host": "自托管指南",
+    "api": "API 参考",
+    "license": "MIT 许可证",
+    "changelog": "更新日志"
+  },
+  "community": {
+    "eyebrow": "加入",
+    "title": "社区",
+    "repo": "GitHub 仓库",
+    "issues": "问题与错误报告",
+    "discussions": "讨论",
+    "contribute": "贡献代码"
+  },
+  "powered-by": "技术支持",
+  "built-with": "基于开源技术构建",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "用",
+  "made-suffix": "以 TypeScript 打造 · MIT 许可",
+  "love": "爱心"
+}

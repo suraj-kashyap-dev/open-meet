@@ -24,11 +24,22 @@ import { ApiClientError } from '@/lib/api/client';
 
 import { FormActions } from './form-actions';
 
-// Native names for the locales the app actually supports. Sourced from the
-// i18n routing config so this list never drifts from the locale switcher.
 const LANGUAGE_NAMES: Record<Locale, string> = {
   en: 'English',
   ar: 'العربية',
+  es: 'Español',
+  zh: '中文',
+  ru: 'Русский',
+  tr: 'Türkçe',
+  hi: 'हिन्दी',
+  pt: 'Português',
+  fr: 'Français',
+  de: 'Deutsch',
+  ja: '日本語',
+  ko: '한국어',
+  id: 'Bahasa Indonesia',
+  it: 'Italiano',
+  bn: 'বাংলা',
 };
 
 const LANGUAGES: { value: string; label: string }[] = routing.locales.map((value) => ({
@@ -103,7 +114,6 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
       await updateProfile.mutateAsync(values);
       toast.success(t('toast.localization-updated'));
 
-      // Apply the chosen language immediately by switching the active locale.
       if (values.language !== locale) {
         router.replace(pathname, { locale: values.language as Locale });
       }

@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "语言"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "或",
+  "loading": "加载中…",
+  "google": {
+    "continue": "使用 Google 继续",
+    "redirecting": "正在跳转至 Google…"
+  },
+  "error": {
+    "title": "出现了一些问题",
+    "description": "遇到了意外错误，您可以重试或返回首页。",
+    "retry": "重试",
+    "home": "首页"
+  },
+  "not-found": {
+    "title": "页面未找到",
+    "description": "您访问的页面不存在或已移动。",
+    "back": "返回首页"
+  }
+}

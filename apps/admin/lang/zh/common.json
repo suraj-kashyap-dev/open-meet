@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "语言"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "加载中…",
+  "error": {
+    "title": "管理面板错误",
+    "description": "加载此管理视图时出现问题，请重试或返回仪表盘。",
+    "retry": "重试",
+    "home": "仪表盘"
+  }
+}

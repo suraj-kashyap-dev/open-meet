@@ -1,0 +1,14 @@
+{
+  "invite": {
+    "subject": "Open Meet yönetici konsoluna davet edildiniz",
+    "preview": "Open Meet yönetici hesabınızı etkinleştirmek için şifrenizi belirleyin.",
+    "heading": "Open Meet'e davet edildiniz",
+    "greeting": "Merhaba {name},",
+    "body": "Open Meet yönetici konsoluna davet edildiniz. Hesabınızı etkinleştirmek ve başlamak için şifrenizi belirleyin.",
+    "cta": "Daveti kabul et",
+    "footnote": "Bu bağlantı {when} tarihinde sona erecek. Bu daveti beklemiyorsanız, bu e-postayı güvenle yok sayabilirsiniz.",
+    "text-intro": "Open Meet'i yönetmeye davet edildiniz.",
+    "text-action": "Şifrenizi belirleyin ve hesabınızı burada etkinleştirin:",
+    "text-expires": "Bu bağlantı {when} tarihinde sona erecek."
+  }
+}

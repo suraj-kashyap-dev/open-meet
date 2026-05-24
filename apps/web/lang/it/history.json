@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Attività",
+    "title": "Cronologia riunioni",
+    "total": "{count, plural, one {# riunione} other {# riunioni}} in totale",
+    "description": "Ogni riunione che hai ospitato o a cui hai partecipato — con chat, allegati e lista dei partecipanti conservati."
+  },
+  "default-title": "Riunione del {date}",
+  "host": "Ospite",
+  "hosted-by-you": "ospitata da te",
+  "hosted-by": "ospitata da {name}",
+  "overflow": "+{count}",
+  "recording-badge": "Rec · {count}",
+  "recording-title": "{count, plural, one {# registrazione} other {# registrazioni}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Riunione",
+    "started": "Iniziata",
+    "duration": "Durata",
+    "participants": "Partecipanti",
+    "activity": "Attività",
+    "status": "Stato",
+    "actions": "Azioni",
+    "open": "Apri"
+  },
+  "status": {
+    "ended": "terminata",
+    "active": "attiva",
+    "scheduled": "programmata"
+  },
+  "stats": {
+    "on-this-page": "In questa pagina",
+    "hosted-by-you": "Ospitate da te",
+    "total-time": "Tempo totale",
+    "participants": "Partecipanti"
+  },
+  "table": {
+    "empty": "Nessuna riunione in questa pagina."
+  },
+  "pagination": {
+    "showing": "Visualizzazione {from}–{to} di {total}",
+    "previous": "Precedente",
+    "next": "Successivo",
+    "page-of": "Pagina {page} di {pageCount}"
+  },
+  "error": {
+    "list": "Caricamento della cronologia riunioni non riuscito."
+  },
+  "empty": {
+    "title": "Ancora nessuna riunione",
+    "description": "Una volta che ospiti o partecipi a una riunione, apparirà qui.",
+    "cta": "Avvia una riunione"
+  },
+  "detail": {
+    "back": "Torna alla cronologia",
+    "default-title": "Riunione del {date}",
+    "hosted-by-you": "Ospitata da te",
+    "copy-aria": "Copia codice riunione",
+    "started": "Iniziata",
+    "role": "Ruolo",
+    "stats": {
+      "duration": "Durata",
+      "participants": "Partecipanti",
+      "messages": "Messaggi",
+      "attachments": "Allegati"
+    },
+    "in-this-chat": "In questa chat",
+    "overflow": "+{count}",
+    "error": "Caricamento della riunione non riuscito.",
+    "status": {
+      "ended": "terminata",
+      "active": "attiva",
+      "scheduled": "programmata"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Registrazioni",
+      "visibility": "Visibile solo alle persone che hanno partecipato a questa riunione.",
+      "started-by": "Avviata da",
+      "duration": "Durata",
+      "size": "Dimensione",
+      "download": "Scarica",
+      "recording-from": "Registrazione del {date}",
+      "status": {
+        "completed": "completata",
+        "failed": "non riuscita",
+        "recording": "registrazione",
+        "stopping": "interruzione"
+      },
+      "failed-title": "Registrazione non riuscita",
+      "failed-detail": "Il servizio di egress non ha fornito ulteriori dettagli.",
+      "processing": "Elaborazione registrazione — ricontrolla tra poco.",
+      "empty-title": "Nessuna registrazione per questa riunione",
+      "empty-description": "L'ospite può avviare una registrazione dai controlli durante la chiamata. Le registrazioni rimangono private per le persone che hanno partecipato a questa riunione.",
+      "relative": {
+        "just-now": "proprio ora",
+        "minutes": "{count, plural, one {# min fa} other {# min fa}}",
+        "hours": "{count, plural, one {# ora fa} other {# ore fa}}",
+        "days": "{count, plural, one {# giorno fa} other {# giorni fa}}"
+      }
+    },
+    "transcript": {
+      "title": "Trascrizione chat",
+      "count": "{count, plural, one {# messaggio} other {# messaggi}}",
+      "error": "Caricamento messaggi non riuscito.",
+      "empty": "Nessun messaggio inviato in questa riunione.",
+      "load-earlier": "Carica messaggi precedenti",
+      "loading": "Caricamento…",
+      "you": "Tu"
+    }
+  },
+  "toast": {
+    "copied": "Codice riunione copiato",
+    "copy-failed": "Impossibile copiare il codice riunione"
+  }
+}

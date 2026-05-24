@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "प्रोफ़ाइल",
+    "profile-description": "अपने खाते की जानकारी संपादित करें",
+    "settings": "सेटिंग्स",
+    "settings-description": "डिफ़ॉल्ट, गोपनीयता और भाषा",
+    "sign-out": "साइन आउट करें"
+  },
+  "user-menu-label": "खाता मेनू खोलें",
+  "command": {
+    "placeholder": "कोई कमांड या मीटिंग कोड टाइप करें…",
+    "no-results": "कोई परिणाम नहीं मिला।",
+    "group-meetings": "मीटिंग्स",
+    "group-appearance": "रूप-रंग",
+    "new-meeting": "नई मीटिंग",
+    "join": "\"{code}\" में जुड़ें",
+    "switch-to-light": "लाइट मोड पर जाएं",
+    "switch-to-dark": "डार्क मोड पर जाएं",
+    "match-system-theme": "सिस्टम थीम से मिलाएं",
+    "home": "होम",
+    "sign-out": "साइन आउट करें",
+    "create-meeting-error": "मीटिंग नहीं बनाई जा सकी",
+    "join-code-required": "पहले मीटिंग कोड दर्ज करें"
+  }
+}

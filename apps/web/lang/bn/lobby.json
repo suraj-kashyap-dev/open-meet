@@ -1,0 +1,46 @@
+{
+  "eyebrow": "প্রস্তুত হন",
+  "you": "আপনি",
+  "untitled-meeting": "শিরোনামহীন মিটিং",
+  "secure-connection": "নিরাপদ সংযোগ",
+  "invited-only": "শুধুমাত্র আমন্ত্রিতরা যোগ দিতে পারবেন",
+  "meeting-code": "মিটিং কোড",
+  "join-now": "এখনই যোগ দিন",
+  "joining": "যোগ হচ্ছে…",
+  "back-to-home": "হোমে ফিরে যান",
+  "cancel": "বাতিল",
+  "aria": {
+    "rename-meeting": "মিটিং পুনঃনামকরণ করুন",
+    "meeting-title": "মিটিংয়ের শিরোনাম",
+    "save-title": "শিরোনাম সংরক্ষণ করুন",
+    "cancel-rename": "পুনঃনামকরণ বাতিল করুন",
+    "copy-meeting-link": "মিটিং লিঙ্ক কপি করুন",
+    "microphone-level": "মাইক্রোফোনের মাত্রা"
+  },
+  "devices": {
+    "title": "ডিভাইস",
+    "subtitle": "আপনার অডিও ও ভিডিও পরীক্ষা করুন",
+    "camera": "ক্যামেরা",
+    "camera-placeholder": "ক্যামেরা বেছে নিন",
+    "microphone": "মাইক্রোফোন",
+    "microphone-placeholder": "মাইক্রোফোন বেছে নিন",
+    "speakers": "স্পিকার",
+    "system-default": "সিস্টেম ডিফল্ট"
+  },
+  "preview": {
+    "camera-off": "ক্যামেরা বন্ধ",
+    "mute-microphone": "মাইক্রোফোন মিউট করুন",
+    "unmute-microphone": "মাইক্রোফোন আনমিউট করুন",
+    "turn-off-microphone": "মাইক্রোফোন বন্ধ করুন",
+    "turn-on-microphone": "মাইক্রোফোন চালু করুন",
+    "turn-off-camera": "ক্যামেরা বন্ধ করুন",
+    "turn-on-camera": "ক্যামেরা চালু করুন"
+  },
+  "toast": {
+    "title-updated": "মিটিংয়ের শিরোনাম আপডেট হয়েছে",
+    "title-update-failed": "শিরোনাম আপডেট করা যায়নি",
+    "meeting-not-found": "মিটিং পাওয়া যায়নি",
+    "link-copied": "মিটিং লিঙ্ক কপি হয়েছে",
+    "link-copy-failed": "লিঙ্ক কপি করা যায়নি"
+  }
+}

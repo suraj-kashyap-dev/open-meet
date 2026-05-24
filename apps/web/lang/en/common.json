@@ -1,8 +1,23 @@
 {
-  "language-switcher": { "label": "Language" },
+  "language-switcher": {
+    "label": "Language"
+  },
   "languages": {
     "en": "English",
-    "ar": "العربية"
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
   },
   "or": "or",
   "loading": "Loading…",

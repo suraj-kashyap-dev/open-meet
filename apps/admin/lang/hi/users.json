@@ -1,0 +1,80 @@
+{
+  "eyebrow": "प्रबंधन",
+  "title": "उपयोगकर्ता",
+  "total-count": "कुल {count, number}",
+  "search-placeholder": "नाम या ईमेल से खोजें",
+  "refreshing": "रिफ्रेश हो रहा है…",
+  "empty": "अभी तक कोई उपयोगकर्ता नहीं।",
+  "empty-search": "\"{query}\" से मेल खाता कोई उपयोगकर्ता नहीं।",
+  "table": {
+    "user": "उपयोगकर्ता",
+    "joined": "शामिल हुए",
+    "hosted": "होस्ट किए",
+    "attended": "भाग लिया",
+    "actions": "कार्रवाई",
+    "open-actions": "कार्रवाई खोलें",
+    "edit": "संपादित करें",
+    "delete": "हटाएं"
+  },
+  "pagination": {
+    "no-results": "कोई परिणाम नहीं",
+    "showing": "{from}-{to} दिखाया जा रहा है, कुल {total} में से",
+    "previous": "पिछला",
+    "next": "अगला",
+    "page-of": "पृष्ठ {page} / {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "उपयोगकर्ता संपादित करें",
+    "description": "प्रोफ़ाइल, स्थानीयकरण, परिचय अपडेट करें या पासवर्ड रीसेट करें।",
+    "section-account": "खाता",
+    "section-localization": "स्थानीयकरण",
+    "section-about": "परिचय",
+    "section-password": "पासवर्ड रीसेट करें",
+    "name": "नाम",
+    "email": "ईमेल",
+    "timezone": "समय क्षेत्र",
+    "timezone-placeholder": "समय क्षेत्र चुनें",
+    "language": "भाषा",
+    "language-placeholder": "भाषा चुनें",
+    "bio": "परिचय",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "वैकल्पिक",
+    "new-password": "नया पासवर्ड",
+    "new-password-placeholder": "मौजूदा पासवर्ड रखने के लिए खाली छोड़ें",
+    "new-password-helper": "नया पासवर्ड सेट करने से उपयोगकर्ता के सत्र अमान्य हो जाते हैं।",
+    "cancel": "रद्द करें",
+    "submit": "परिवर्तन सहेजें",
+    "submitting": "सहेजा जा रहा है…",
+    "success": "उपयोगकर्ता अपडेट किया गया",
+    "error": "उपयोगकर्ता अपडेट नहीं हो सका",
+    "validation": {
+      "name-required": "नाम आवश्यक है",
+      "invalid-email": "एक वैध ईमेल दर्ज करें",
+      "bio-too-long": "परिचय बहुत लंबा है",
+      "password-too-long": "बहुत लंबा",
+      "password-too-short": "कम से कम 8 अक्षर"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP या GIF। {mb} MB तक।",
+    "replace": "छवि बदलें",
+    "remove": "छवि हटाएं",
+    "edit-label": "प्रोफ़ाइल छवि बदलें",
+    "upload-label": "प्रोफ़ाइल छवि अपलोड करें",
+    "success": "प्रोफ़ाइल छवि अपडेट की गई",
+    "upload-error": "छवि अपलोड नहीं हो सकी",
+    "removed": "प्रोफ़ाइल छवि हटाई गई",
+    "remove-error": "छवि नहीं हटाई जा सकी",
+    "invalid-type": "छवि PNG, JPEG, WebP या GIF होनी चाहिए।",
+    "too-large": "छवि {mb} MB से कम होनी चाहिए।"
+  },
+  "delete-dialog": {
+    "title": "उपयोगकर्ता हटाएं?",
+    "description": "यह <strong>{email}</strong> और उनके द्वारा होस्ट की गई, भाग ली गई सभी मीटिंग और भेजे गए सभी संदेशों को स्थायी रूप से हटा देता है। यह पूर्ववत नहीं किया जा सकता।",
+    "cancel": "रद्द करें",
+    "submit": "उपयोगकर्ता हटाएं",
+    "submitting": "हटाया जा रहा है…",
+    "success": "{email} को हटाया गया",
+    "error": "उपयोगकर्ता हटाने में विफल"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "invite": {
+    "subject": "Anda telah diundang ke konsol admin Open Meet",
+    "preview": "Tetapkan kata sandi Anda untuk mengaktifkan akun admin Open Meet Anda.",
+    "heading": "Anda diundang ke Open Meet",
+    "greeting": "Halo {name},",
+    "body": "Anda telah diundang ke konsol admin Open Meet. Tetapkan kata sandi Anda untuk mengaktifkan akun dan mulai.",
+    "cta": "Terima undangan",
+    "footnote": "Tautan ini kedaluwarsa pada {when}. Jika Anda tidak mengharapkan undangan ini, Anda dapat mengabaikan email ini.",
+    "text-intro": "Anda telah diundang untuk mengelola Open Meet.",
+    "text-action": "Tetapkan kata sandi Anda dan aktifkan akun di sini:",
+    "text-expires": "Tautan ini kedaluwarsa pada {when}."
+  }
+}

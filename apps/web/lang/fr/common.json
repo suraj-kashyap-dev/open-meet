@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "Langue"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "ou",
+  "loading": "Chargement…",
+  "google": {
+    "continue": "Continuer avec Google",
+    "redirecting": "Redirection vers Google…"
+  },
+  "error": {
+    "title": "Une erreur s'est produite",
+    "description": "Nous avons rencontré une erreur inattendue. Vous pouvez réessayer ou revenir à l'accueil.",
+    "retry": "Réessayer",
+    "home": "Accueil"
+  },
+  "not-found": {
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "back": "Retour à l'accueil"
+  }
+}

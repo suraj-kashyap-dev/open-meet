@@ -1,0 +1,13 @@
+{
+  "email-taken": "そのメールアドレスを持つ管理者はすでに存在します",
+  "invite-invalid": "この招待リンクは無効です",
+  "invite-expired": "この招待は有効期限が切れています",
+  "invite-not-found": "招待が見つかりません",
+  "admin-not-found": "管理者が見つかりません",
+  "name-required": "名前は必須です",
+  "name-empty": "名前を空にすることはできません",
+  "cannot-demote-last-superadmin": "最後のスーパー管理者を降格させることはできません",
+  "cannot-delete-self": "自分の管理者アカウントを削除することはできません",
+  "cannot-delete-last-superadmin": "最後のスーパー管理者を削除することはできません",
+  "superadmin-required": "このアクションにはスーパー管理者権限が必要です"
+}

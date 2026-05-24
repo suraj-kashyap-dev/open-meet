@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "गतिविधि",
+    "title": "मीटिंग इतिहास",
+    "total": "{count, plural, one {कुल # मीटिंग} other {कुल # मीटिंग}}",
+    "description": "हर वह मीटिंग जो आपने होस्ट की या जिसमें शामिल हुए — चैट, अटैचमेंट और प्रतिभागी सूची के साथ।"
+  },
+  "default-title": "{date} को मीटिंग",
+  "host": "होस्ट",
+  "hosted-by-you": "आपके द्वारा होस्ट की गई",
+  "hosted-by": "{name} द्वारा होस्ट की गई",
+  "overflow": "+{count}",
+  "recording-badge": "रेक · {count}",
+  "recording-title": "{count, plural, one {# रिकॉर्डिंग} other {# रिकॉर्डिंग}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "मीटिंग",
+    "started": "शुरू हुई",
+    "duration": "अवधि",
+    "participants": "प्रतिभागी",
+    "activity": "गतिविधि",
+    "status": "स्थिति",
+    "actions": "कार्रवाई",
+    "open": "खोलें"
+  },
+  "status": {
+    "ended": "समाप्त",
+    "active": "सक्रिय",
+    "scheduled": "निर्धारित"
+  },
+  "stats": {
+    "on-this-page": "इस पृष्ठ पर",
+    "hosted-by-you": "आपके द्वारा होस्ट की गई",
+    "total-time": "कुल समय",
+    "participants": "प्रतिभागी"
+  },
+  "table": {
+    "empty": "इस पृष्ठ पर कोई मीटिंग नहीं।"
+  },
+  "pagination": {
+    "showing": "{from}–{to} दिखाया जा रहा है, कुल {total} में से",
+    "previous": "पिछला",
+    "next": "अगला",
+    "page-of": "पृष्ठ {page} / {pageCount}"
+  },
+  "error": {
+    "list": "आपका मीटिंग इतिहास लोड करने में विफल।"
+  },
+  "empty": {
+    "title": "अभी तक कोई मीटिंग नहीं",
+    "description": "जब आप कोई मीटिंग होस्ट करेंगे या उसमें शामिल होंगे, तो वह यहाँ दिखाई देगी।",
+    "cta": "मीटिंग शुरू करें"
+  },
+  "detail": {
+    "back": "इतिहास पर वापस जाएं",
+    "default-title": "{date} को मीटिंग",
+    "hosted-by-you": "आपके द्वारा होस्ट की गई",
+    "copy-aria": "मीटिंग कोड कॉपी करें",
+    "started": "शुरू हुई",
+    "role": "भूमिका",
+    "stats": {
+      "duration": "अवधि",
+      "participants": "प्रतिभागी",
+      "messages": "संदेश",
+      "attachments": "अटैचमेंट"
+    },
+    "in-this-chat": "इस चैट में",
+    "overflow": "+{count}",
+    "error": "यह मीटिंग लोड करने में विफल।",
+    "status": {
+      "ended": "समाप्त",
+      "active": "सक्रिय",
+      "scheduled": "निर्धारित"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "रिकॉर्डिंग",
+      "visibility": "केवल उन लोगों को दिखाई देती है जो इस मीटिंग में शामिल हुए थे।",
+      "started-by": "द्वारा शुरू की गई",
+      "duration": "अवधि",
+      "size": "आकार",
+      "download": "डाउनलोड",
+      "recording-from": "{date} की रिकॉर्डिंग",
+      "status": {
+        "completed": "पूर्ण",
+        "failed": "विफल",
+        "recording": "रिकॉर्ड हो रहा है",
+        "stopping": "रुक रहा है"
+      },
+      "failed-title": "रिकॉर्डिंग विफल",
+      "failed-detail": "egress सेवा द्वारा कोई अतिरिक्त विवरण नहीं दिया गया।",
+      "processing": "रिकॉर्डिंग प्रोसेस हो रही है — थोड़ी देर बाद जांचें।",
+      "empty-title": "इस मीटिंग के लिए कोई रिकॉर्डिंग नहीं",
+      "empty-description": "होस्ट इन-कॉल नियंत्रणों से रिकॉर्डिंग शुरू कर सकता है। रिकॉर्डिंग इस मीटिंग में शामिल होने वाले लोगों के लिए निजी रहती है।",
+      "relative": {
+        "just-now": "अभी-अभी",
+        "minutes": "{count, plural, one {# मिनट पहले} other {# मिनट पहले}}",
+        "hours": "{count, plural, one {# घंटे पहले} other {# घंटे पहले}}",
+        "days": "{count, plural, one {# दिन पहले} other {# दिन पहले}}"
+      }
+    },
+    "transcript": {
+      "title": "चैट ट्रांसक्रिप्ट",
+      "count": "{count, plural, one {# संदेश} other {# संदेश}}",
+      "error": "संदेश लोड करने में विफल।",
+      "empty": "इस मीटिंग में कोई संदेश नहीं भेजा गया।",
+      "load-earlier": "पहले के संदेश लोड करें",
+      "loading": "लोड हो रहा है…",
+      "you": "आप"
+    }
+  },
+  "toast": {
+    "copied": "मीटिंग कोड कॉपी किया गया",
+    "copy-failed": "मीटिंग कोड कॉपी नहीं हो सका"
+  }
+}

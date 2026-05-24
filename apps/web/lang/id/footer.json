@@ -1,0 +1,35 @@
+{
+  "tagline": "Konferensi video sumber terbuka untuk tim yang bergerak cepat. Self-host dalam hitungan menit, miliki data Anda selamanya.",
+  "star": "Bintangi di GitHub",
+  "report-issue": "Laporkan masalah",
+  "status": "Semua sistem beroperasi",
+  "product": {
+    "eyebrow": "Navigasi",
+    "title": "Produk",
+    "dashboard": "Dasbor",
+    "history": "Riwayat",
+    "account": "Akun"
+  },
+  "resources": {
+    "eyebrow": "Pelajari",
+    "title": "Sumber daya",
+    "self-host": "Panduan self-host",
+    "api": "Referensi API",
+    "license": "Lisensi MIT",
+    "changelog": "Catatan perubahan"
+  },
+  "community": {
+    "eyebrow": "Bergabung",
+    "title": "Komunitas",
+    "repo": "Repositori GitHub",
+    "issues": "Masalah & laporan bug",
+    "discussions": "Diskusi",
+    "contribute": "Berkontribusi"
+  },
+  "powered-by": "Didukung oleh",
+  "built-with": "Dibangun dengan teknologi terbuka",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "Dibuat dengan",
+  "made-suffix": "dalam TypeScript · Berlisensi MIT",
+  "love": "cinta"
+}

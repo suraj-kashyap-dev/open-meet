@@ -1,0 +1,46 @@
+{
+  "eyebrow": "Bersiap",
+  "you": "Anda",
+  "untitled-meeting": "Rapat tanpa judul",
+  "secure-connection": "Koneksi aman",
+  "invited-only": "Hanya orang yang diundang yang dapat bergabung",
+  "meeting-code": "Kode rapat",
+  "join-now": "Bergabung sekarang",
+  "joining": "Bergabung…",
+  "back-to-home": "Kembali ke beranda",
+  "cancel": "Batalkan",
+  "aria": {
+    "rename-meeting": "Ubah nama rapat",
+    "meeting-title": "Judul rapat",
+    "save-title": "Simpan judul",
+    "cancel-rename": "Batalkan penggantian nama",
+    "copy-meeting-link": "Salin tautan rapat",
+    "microphone-level": "Tingkat mikrofon"
+  },
+  "devices": {
+    "title": "Perangkat",
+    "subtitle": "Periksa audio & video Anda",
+    "camera": "Kamera",
+    "camera-placeholder": "Pilih kamera",
+    "microphone": "Mikrofon",
+    "microphone-placeholder": "Pilih mikrofon",
+    "speakers": "Speaker",
+    "system-default": "Default sistem"
+  },
+  "preview": {
+    "camera-off": "Kamera mati",
+    "mute-microphone": "Bisukan mikrofon",
+    "unmute-microphone": "Aktifkan mikrofon",
+    "turn-off-microphone": "Matikan mikrofon",
+    "turn-on-microphone": "Nyalakan mikrofon",
+    "turn-off-camera": "Matikan kamera",
+    "turn-on-camera": "Nyalakan kamera"
+  },
+  "toast": {
+    "title-updated": "Judul rapat diperbarui",
+    "title-update-failed": "Tidak dapat memperbarui judul",
+    "meeting-not-found": "Rapat tidak ditemukan",
+    "link-copied": "Tautan rapat disalin",
+    "link-copy-failed": "Tidak dapat menyalin tautan"
+  }
+}

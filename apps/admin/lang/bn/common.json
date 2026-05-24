@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "ভাষা"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "লোড হচ্ছে…",
+  "error": {
+    "title": "অ্যাডমিন প্যানেল ত্রুটি",
+    "description": "এই অ্যাডমিন ভিউ লোড করতে কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন, বা ড্যাশবোর্ডে ফিরে যান।",
+    "retry": "আবার চেষ্টা করুন",
+    "home": "ড্যাশবোর্ড"
+  }
+}

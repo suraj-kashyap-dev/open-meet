@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "アクティビティ",
+    "title": "ミーティング履歴",
+    "total": "{count, plural, one {# 件のミーティング} other {# 件のミーティング}}",
+    "description": "参加またはホストしたすべてのミーティング — チャット、添付ファイル、参加者リストが保存されています。"
+  },
+  "default-title": "{date} のミーティング",
+  "host": "ホスト",
+  "hosted-by-you": "あなたがホスト",
+  "hosted-by": "{name} がホスト",
+  "overflow": "+{count}",
+  "recording-badge": "録画 · {count}",
+  "recording-title": "{count, plural, one {# 件の録画} other {# 件の録画}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "ミーティング",
+    "started": "開始日時",
+    "duration": "所要時間",
+    "participants": "参加者",
+    "activity": "アクティビティ",
+    "status": "ステータス",
+    "actions": "操作",
+    "open": "開く"
+  },
+  "status": {
+    "ended": "終了",
+    "active": "進行中",
+    "scheduled": "予定済み"
+  },
+  "stats": {
+    "on-this-page": "このページ",
+    "hosted-by-you": "あなたがホスト",
+    "total-time": "合計時間",
+    "participants": "参加者"
+  },
+  "table": {
+    "empty": "このページにはミーティングがありません。"
+  },
+  "pagination": {
+    "showing": "{from}〜{to} 件を表示（全 {total} 件）",
+    "previous": "前へ",
+    "next": "次へ",
+    "page-of": "{pageCount} ページ中 {page} ページ目"
+  },
+  "error": {
+    "list": "ミーティング履歴の読み込みに失敗しました。"
+  },
+  "empty": {
+    "title": "まだミーティングがありません",
+    "description": "ミーティングをホストまたは参加すると、ここに表示されます。",
+    "cta": "ミーティングを開始"
+  },
+  "detail": {
+    "back": "履歴に戻る",
+    "default-title": "{date} のミーティング",
+    "hosted-by-you": "あなたがホスト",
+    "copy-aria": "ミーティングコードをコピー",
+    "started": "開始日時",
+    "role": "役割",
+    "stats": {
+      "duration": "所要時間",
+      "participants": "参加者",
+      "messages": "メッセージ",
+      "attachments": "添付ファイル"
+    },
+    "in-this-chat": "このチャット内",
+    "overflow": "+{count}",
+    "error": "このミーティングの読み込みに失敗しました。",
+    "status": {
+      "ended": "終了",
+      "active": "進行中",
+      "scheduled": "予定済み"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "録画",
+      "visibility": "このミーティングに参加した方のみ閲覧できます。",
+      "started-by": "開始者",
+      "duration": "所要時間",
+      "size": "サイズ",
+      "download": "ダウンロード",
+      "recording-from": "{date} の録画",
+      "status": {
+        "completed": "完了",
+        "failed": "失敗",
+        "recording": "録画中",
+        "stopping": "停止中"
+      },
+      "failed-title": "録画に失敗しました",
+      "failed-detail": "エグレスサービスから詳細情報は提供されませんでした。",
+      "processing": "録画を処理中です — しばらくしてから確認してください。",
+      "empty-title": "このミーティングの録画はありません",
+      "empty-description": "ホストは通話中のコントロールから録画を開始できます。録画はこのミーティングに参加した方のみに限定されます。",
+      "relative": {
+        "just-now": "たった今",
+        "minutes": "{count, plural, one {# 分前} other {# 分前}}",
+        "hours": "{count, plural, one {# 時間前} other {# 時間前}}",
+        "days": "{count, plural, one {# 日前} other {# 日前}}"
+      }
+    },
+    "transcript": {
+      "title": "チャットの記録",
+      "count": "{count, plural, one {# 件のメッセージ} other {# 件のメッセージ}}",
+      "error": "メッセージの読み込みに失敗しました。",
+      "empty": "このミーティングではメッセージが送信されませんでした。",
+      "load-earlier": "以前のメッセージを読み込む",
+      "loading": "読み込み中…",
+      "you": "あなた"
+    }
+  },
+  "toast": {
+    "copied": "ミーティングコードをコピーしました",
+    "copy-failed": "ミーティングコードをコピーできませんでした"
+  }
+}

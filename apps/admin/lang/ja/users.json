@@ -1,0 +1,80 @@
+{
+  "eyebrow": "管理",
+  "title": "ユーザー",
+  "total-count": "{count, number} 件",
+  "search-placeholder": "名前またはメールアドレスで検索",
+  "refreshing": "更新中…",
+  "empty": "まだユーザーがいません。",
+  "empty-search": "\"{query}\" に一致するユーザーはいません。",
+  "table": {
+    "user": "ユーザー",
+    "joined": "参加日",
+    "hosted": "主催",
+    "attended": "参加",
+    "actions": "操作",
+    "open-actions": "操作を開く",
+    "edit": "編集",
+    "delete": "削除"
+  },
+  "pagination": {
+    "no-results": "結果なし",
+    "showing": "{total} 件中 {from}〜{to} 件を表示",
+    "previous": "前へ",
+    "next": "次へ",
+    "page-of": "{pageCount} ページ中 {page} ページ目"
+  },
+  "edit-dialog": {
+    "title": "ユーザーを編集",
+    "description": "プロフィール、ローカライズ、自己紹介の更新、またはパスワードのリセット。",
+    "section-account": "アカウント",
+    "section-localization": "ローカライズ",
+    "section-about": "自己紹介",
+    "section-password": "パスワードをリセット",
+    "name": "名前",
+    "email": "メールアドレス",
+    "timezone": "タイムゾーン",
+    "timezone-placeholder": "タイムゾーンを選択",
+    "language": "言語",
+    "language-placeholder": "言語を選択",
+    "bio": "自己紹介",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "任意",
+    "new-password": "新しいパスワード",
+    "new-password-placeholder": "既存のパスワードを維持する場合は空白のままにしてください",
+    "new-password-helper": "新しいパスワードを設定すると、ユーザーのセッションが無効になります。",
+    "cancel": "キャンセル",
+    "submit": "変更を保存",
+    "submitting": "保存中…",
+    "success": "ユーザーを更新しました",
+    "error": "ユーザーを更新できませんでした",
+    "validation": {
+      "name-required": "名前は必須です",
+      "invalid-email": "有効なメールアドレスを入力してください",
+      "bio-too-long": "自己紹介が長すぎます",
+      "password-too-long": "長すぎます",
+      "password-too-short": "8 文字以上"
+    }
+  },
+  "avatar": {
+    "helper": "PNG、JPEG、WebP、または GIF。最大 {mb} MB。",
+    "replace": "画像を変更",
+    "remove": "画像を削除",
+    "edit-label": "プロフィール画像を変更",
+    "upload-label": "プロフィール画像をアップロード",
+    "success": "プロフィール画像を更新しました",
+    "upload-error": "画像をアップロードできませんでした",
+    "removed": "プロフィール画像を削除しました",
+    "remove-error": "画像を削除できませんでした",
+    "invalid-type": "画像は PNG、JPEG、WebP、または GIF である必要があります。",
+    "too-large": "画像は {mb} MB 未満である必要があります。"
+  },
+  "delete-dialog": {
+    "title": "ユーザーを削除しますか？",
+    "description": "<strong>{email}</strong> と、そのユーザーが主催・参加したすべてのミーティングおよび送信したメッセージが完全に削除されます。この操作は元に戻せません。",
+    "cancel": "キャンセル",
+    "submit": "ユーザーを削除",
+    "submitting": "削除中…",
+    "success": "{email} を削除しました",
+    "error": "ユーザーを削除できませんでした"
+  }
+}

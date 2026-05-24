@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "console": "Консоль администратора",
+    "visit-open-meet": "Перейти в Open Meet"
+  },
+  "sections": {
+    "overview": "Обзор",
+    "manage": "Управление",
+    "insights": "Аналитика",
+    "system": "Система"
+  },
+  "items": {
+    "dashboard": "Панель управления",
+    "users": "Пользователи",
+    "meetings": "Встречи",
+    "analytics": "Аналитика",
+    "settings": "Настройки",
+    "administrators": "Администраторы",
+    "configuration": "Конфигурация"
+  },
+  "topbar": {
+    "root": "Администратор",
+    "dashboard": "Панель управления",
+    "open-sidebar": "Открыть навигацию",
+    "hide-sidebar": "Скрыть навигацию",
+    "show-sidebar": "Показать навигацию",
+    "sign-out": "Выйти"
+  }
+}

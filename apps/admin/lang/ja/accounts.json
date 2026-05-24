@@ -1,0 +1,80 @@
+{
+  "eyebrow": "設定",
+  "title": "管理者",
+  "access-summary": "{count, plural, one {# 人} other {# 人}} がこのコンソールにアクセスできます。",
+  "invite-button": "管理者を招待",
+  "empty": "まだ管理者がいません。",
+  "roles": {
+    "admin": "管理者",
+    "superadmin": "スーパー管理者"
+  },
+  "table": {
+    "administrator": "管理者",
+    "role": "役割",
+    "joined": "参加日",
+    "last-login": "最終ログイン",
+    "never": "なし",
+    "actions": "操作",
+    "actions-for": "{name} の操作",
+    "edit": "編集",
+    "delete": "削除"
+  },
+  "delete-dialog": {
+    "title": "この管理者を削除しますか？",
+    "description": "{name}（{email}）は即座に管理コンソールへのアクセスを失います。この操作は元に戻せません。",
+    "cancel": "キャンセル",
+    "confirm": "管理者を削除",
+    "deleting": "削除中…",
+    "success": "{name} を削除しました",
+    "error": "管理者を削除できませんでした"
+  },
+  "invite-dialog": {
+    "title": "管理者を招待",
+    "description": "安全なリンクをメールで送信します。招待された方が自分のパスワードを設定してアカウントを有効化します。",
+    "name": "名前",
+    "email": "メールアドレス",
+    "role": "役割",
+    "role-admin": "管理者",
+    "role-superadmin": "スーパー管理者",
+    "cancel": "キャンセル",
+    "submit": "招待を送信",
+    "submitting": "送信中…",
+    "success": "{email} に招待状をメールで送信しました",
+    "error": "招待を送信できませんでした",
+    "validation": {
+      "invalid-email": "有効なメールアドレスを入力してください",
+      "name-required": "名前は必須です"
+    }
+  },
+  "edit-dialog": {
+    "title": "管理者を編集",
+    "name": "名前",
+    "role": "役割",
+    "role-admin": "管理者",
+    "role-superadmin": "スーパー管理者",
+    "cancel": "キャンセル",
+    "submit": "変更を保存",
+    "submitting": "保存中…",
+    "success": "{name} を更新しました",
+    "error": "管理者を更新できませんでした",
+    "validation": {
+      "name-required": "名前は必須です"
+    }
+  },
+  "pending": {
+    "heading": "保留中の招待",
+    "description": "まだ承認されていない招待。メールを再送信するかアクセスを取り消すことができます。",
+    "loading-error": "招待の読み込みに失敗しました。",
+    "empty": "保留中の招待はありません。",
+    "status-pending": "保留中",
+    "status-expired": "有効期限切れ",
+    "expires": "{when} に有効期限切れ",
+    "expired-at": "{when} に有効期限が切れました",
+    "resend-label": "{email} に招待を再送信",
+    "revoke-label": "{email} への招待を取り消す",
+    "resend-success": "{email} に招待を再送信しました",
+    "resend-error": "招待を再送信できませんでした",
+    "revoke-success": "{email} への招待を取り消しました",
+    "revoke-error": "招待を取り消せませんでした"
+  }
+}

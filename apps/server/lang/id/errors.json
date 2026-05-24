@@ -1,0 +1,13 @@
+{
+  "email-taken": "Admin dengan email tersebut sudah ada",
+  "invite-invalid": "Tautan undangan ini tidak valid",
+  "invite-expired": "Undangan ini telah kedaluwarsa",
+  "invite-not-found": "Undangan tidak ditemukan",
+  "admin-not-found": "Admin tidak ditemukan",
+  "name-required": "Nama diperlukan",
+  "name-empty": "Nama tidak boleh kosong",
+  "cannot-demote-last-superadmin": "Tidak dapat menurunkan superadmin terakhir yang tersisa",
+  "cannot-delete-self": "Anda tidak dapat menghapus akun admin Anda sendiri",
+  "cannot-delete-last-superadmin": "Tidak dapat menghapus superadmin terakhir yang tersisa",
+  "superadmin-required": "Hak superadmin diperlukan untuk tindakan ini"
+}

@@ -1,0 +1,46 @@
+{
+  "eyebrow": "準備しましょう",
+  "you": "あなた",
+  "untitled-meeting": "タイトルなしのミーティング",
+  "secure-connection": "セキュアな接続",
+  "invited-only": "招待された方のみ参加できます",
+  "meeting-code": "ミーティングコード",
+  "join-now": "今すぐ参加",
+  "joining": "参加中…",
+  "back-to-home": "ホームに戻る",
+  "cancel": "キャンセル",
+  "aria": {
+    "rename-meeting": "ミーティング名を変更",
+    "meeting-title": "ミーティングのタイトル",
+    "save-title": "タイトルを保存",
+    "cancel-rename": "名前変更をキャンセル",
+    "copy-meeting-link": "ミーティングリンクをコピー",
+    "microphone-level": "マイクレベル"
+  },
+  "devices": {
+    "title": "デバイス",
+    "subtitle": "音声と映像を確認する",
+    "camera": "カメラ",
+    "camera-placeholder": "カメラを選択",
+    "microphone": "マイク",
+    "microphone-placeholder": "マイクを選択",
+    "speakers": "スピーカー",
+    "system-default": "システムデフォルト"
+  },
+  "preview": {
+    "camera-off": "カメラはオフです",
+    "mute-microphone": "マイクをミュート",
+    "unmute-microphone": "マイクのミュートを解除",
+    "turn-off-microphone": "マイクをオフにする",
+    "turn-on-microphone": "マイクをオンにする",
+    "turn-off-camera": "カメラをオフにする",
+    "turn-on-camera": "カメラをオンにする"
+  },
+  "toast": {
+    "title-updated": "ミーティングのタイトルを更新しました",
+    "title-update-failed": "タイトルを更新できませんでした",
+    "meeting-not-found": "ミーティングが見つかりません",
+    "link-copied": "ミーティングリンクをコピーしました",
+    "link-copy-failed": "リンクをコピーできませんでした"
+  }
+}

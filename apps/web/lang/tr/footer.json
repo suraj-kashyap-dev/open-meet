@@ -1,0 +1,35 @@
+{
+  "tagline": "Hızlı hareket eden ekipler için açık kaynaklı görüntülü konferans. Dakikalar içinde kendi sunucunuza kurun, verilerinize sonsuza dek sahip olun.",
+  "star": "GitHub'da yıldızla",
+  "report-issue": "Sorun bildir",
+  "status": "Tüm sistemler çalışıyor",
+  "product": {
+    "eyebrow": "Gezin",
+    "title": "Ürün",
+    "dashboard": "Kontrol paneli",
+    "history": "Geçmiş",
+    "account": "Hesap"
+  },
+  "resources": {
+    "eyebrow": "Öğren",
+    "title": "Kaynaklar",
+    "self-host": "Kendi sunucunuza kurulum rehberi",
+    "api": "API referansı",
+    "license": "MIT lisansı",
+    "changelog": "Değişiklik günlüğü"
+  },
+  "community": {
+    "eyebrow": "Katıl",
+    "title": "Topluluk",
+    "repo": "GitHub deposu",
+    "issues": "Sorunlar ve hata raporları",
+    "discussions": "Tartışmalar",
+    "contribute": "Katkıda bulun"
+  },
+  "powered-by": "Altyapı",
+  "built-with": "Açık teknolojilerle oluşturuldu",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "TypeScript ile",
+  "made-suffix": "· MIT lisanslı",
+  "love": "sevgi"
+}

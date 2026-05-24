@@ -1,0 +1,10 @@
+{
+  "eyebrow": "设置",
+  "title": "配置",
+  "description": "工作区默认值、品牌设置和会议策略。",
+  "coming-soon-label": "即将推出",
+  "coming-soon": {
+    "title": "配置功能即将上线",
+    "description": "工作区默认值、品牌设置和会议策略将很快在此处提供。"
+  }
+}

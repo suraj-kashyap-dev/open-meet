@@ -1,0 +1,35 @@
+{
+  "tagline": "Videoconferenza open-source per team veloci. Self-host in pochi minuti, i tuoi dati per sempre.",
+  "star": "Metti una stella su GitHub",
+  "report-issue": "Segnala un problema",
+  "status": "Tutti i sistemi operativi",
+  "product": {
+    "eyebrow": "Naviga",
+    "title": "Prodotto",
+    "dashboard": "Dashboard",
+    "history": "Cronologia",
+    "account": "Account"
+  },
+  "resources": {
+    "eyebrow": "Scopri",
+    "title": "Risorse",
+    "self-host": "Guida al self-hosting",
+    "api": "Riferimento API",
+    "license": "Licenza MIT",
+    "changelog": "Changelog"
+  },
+  "community": {
+    "eyebrow": "Unisciti",
+    "title": "Community",
+    "repo": "Repository GitHub",
+    "issues": "Problemi e segnalazioni di bug",
+    "discussions": "Discussioni",
+    "contribute": "Contribuisci"
+  },
+  "powered-by": "Realizzato con",
+  "built-with": "Costruito con tecnologie open",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "Fatto con",
+  "made-suffix": "in TypeScript · Licenza MIT",
+  "love": "amore"
+}

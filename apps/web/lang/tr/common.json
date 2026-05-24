@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "Dil"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "veya",
+  "loading": "Yükleniyor…",
+  "google": {
+    "continue": "Google ile devam et",
+    "redirecting": "Google'a yönlendiriliyor…"
+  },
+  "error": {
+    "title": "Bir şeyler ters gitti",
+    "description": "Beklenmedik bir hatayla karşılaştık. Tekrar deneyebilir veya ana sayfaya dönebilirsiniz.",
+    "retry": "Tekrar dene",
+    "home": "Ana sayfa"
+  },
+  "not-found": {
+    "title": "Sayfa bulunamadı",
+    "description": "Aradığınız sayfa mevcut değil veya taşınmış.",
+    "back": "Ana sayfaya dön"
+  }
+}

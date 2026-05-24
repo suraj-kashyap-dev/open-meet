@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "言語"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "読み込み中…",
+  "error": {
+    "title": "管理パネルエラー",
+    "description": "この管理ビューの読み込み中に問題が発生しました。再試行するかダッシュボードに戻ってください。",
+    "retry": "再試行",
+    "home": "ダッシュボード"
+  }
+}

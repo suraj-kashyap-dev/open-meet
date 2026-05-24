@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "언어"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "로드 중…",
+  "error": {
+    "title": "관리자 패널 오류",
+    "description": "이 관리자 화면을 불러오는 중 문제가 발생했습니다. 다시 시도하거나 대시보드로 돌아가세요.",
+    "retry": "다시 시도",
+    "home": "대시보드"
+  }
+}

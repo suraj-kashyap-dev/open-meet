@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "Dil"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "Yükleniyor…",
+  "error": {
+    "title": "Yönetici paneli hatası",
+    "description": "Bu yönetici görünümü yüklenirken bir sorun oluştu. Tekrar deneyin veya kontrol paneline geri dönün.",
+    "retry": "Tekrar dene",
+    "home": "Kontrol paneli"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "Активность",
+    "title": "История встреч",
+    "total": "{count, plural, one {# встреча} other {# встреч}} всего",
+    "description": "Все встречи, которые вы организовали или посетили — с чатом, вложениями и сохранённым списком участников."
+  },
+  "default-title": "Встреча {date}",
+  "host": "Организатор",
+  "hosted-by-you": "организовано вами",
+  "hosted-by": "организовано {name}",
+  "overflow": "+{count}",
+  "recording-badge": "Зап. · {count}",
+  "recording-title": "{count, plural, one {# запись} other {# записей}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "Встреча",
+    "started": "Начало",
+    "duration": "Длительность",
+    "participants": "Участники",
+    "activity": "Активность",
+    "status": "Статус",
+    "actions": "Действия",
+    "open": "Открыть"
+  },
+  "status": {
+    "ended": "завершена",
+    "active": "активна",
+    "scheduled": "запланирована"
+  },
+  "stats": {
+    "on-this-page": "На этой странице",
+    "hosted-by-you": "Организовано вами",
+    "total-time": "Общее время",
+    "participants": "Участники"
+  },
+  "table": {
+    "empty": "На этой странице нет встреч."
+  },
+  "pagination": {
+    "showing": "Показано {from}–{to} из {total}",
+    "previous": "Назад",
+    "next": "Вперёд",
+    "page-of": "Страница {page} из {pageCount}"
+  },
+  "error": {
+    "list": "Не удалось загрузить историю встреч."
+  },
+  "empty": {
+    "title": "Пока нет встреч",
+    "description": "Как только вы организуете или посетите встречу, она появится здесь.",
+    "cta": "Начать встречу"
+  },
+  "detail": {
+    "back": "Назад к истории",
+    "default-title": "Встреча {date}",
+    "hosted-by-you": "Организовано вами",
+    "copy-aria": "Скопировать код встречи",
+    "started": "Начало",
+    "role": "Роль",
+    "stats": {
+      "duration": "Длительность",
+      "participants": "Участники",
+      "messages": "Сообщения",
+      "attachments": "Вложения"
+    },
+    "in-this-chat": "В этом чате",
+    "overflow": "+{count}",
+    "error": "Не удалось загрузить эту встречу.",
+    "status": {
+      "ended": "завершена",
+      "active": "активна",
+      "scheduled": "запланирована"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "Записи",
+      "visibility": "Видно только людям, которые участвовали в этой встрече.",
+      "started-by": "Начата",
+      "duration": "Длительность",
+      "size": "Размер",
+      "download": "Скачать",
+      "recording-from": "Запись от {date}",
+      "status": {
+        "completed": "завершена",
+        "failed": "ошибка",
+        "recording": "запись",
+        "stopping": "остановка"
+      },
+      "failed-title": "Запись не удалась",
+      "failed-detail": "Сервис эгресса не предоставил подробностей.",
+      "processing": "Обработка записи — проверьте позже.",
+      "empty-title": "Нет записей для этой встречи",
+      "empty-description": "Организатор может начать запись из элементов управления звонком. Записи остаются приватными для участников встречи.",
+      "relative": {
+        "just-now": "только что",
+        "minutes": "{count, plural, one {# мин назад} other {# мин назад}}",
+        "hours": "{count, plural, one {# ч назад} other {# ч назад}}",
+        "days": "{count, plural, one {# день назад} other {# дней назад}}"
+      }
+    },
+    "transcript": {
+      "title": "Транскрипт чата",
+      "count": "{count, plural, one {# сообщение} other {# сообщений}}",
+      "error": "Не удалось загрузить сообщения.",
+      "empty": "В этой встрече не было отправлено сообщений.",
+      "load-earlier": "Загрузить более ранние сообщения",
+      "loading": "Загрузка…",
+      "you": "Вы"
+    }
+  },
+  "toast": {
+    "copied": "Код встречи скопирован",
+    "copy-failed": "Не удалось скопировать код встречи"
+  }
+}

@@ -43,18 +43,31 @@ import {
   useUpdateAdminUser,
   useUploadAdminUserAvatar,
 } from '@/features/users/hooks/use-admin-users';
+import { type Locale, routing } from '@/i18n/routing';
 import { ApiClientError } from '@/lib/api/client';
 
-const LANGUAGES: { value: string; label: string }[] = [
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Español' },
-  { value: 'fr', label: 'Français' },
-  { value: 'de', label: 'Deutsch' },
-  { value: 'hi', label: 'हिन्दी' },
-  { value: 'ja', label: '日本語' },
-  { value: 'pt', label: 'Português' },
-  { value: 'zh', label: '中文' },
-];
+const LANGUAGE_NAMES: Record<Locale, string> = {
+  en: 'English',
+  ar: 'العربية',
+  es: 'Español',
+  zh: '中文',
+  ru: 'Русский',
+  tr: 'Türkçe',
+  hi: 'हिन्दी',
+  pt: 'Português',
+  fr: 'Français',
+  de: 'Deutsch',
+  ja: '日本語',
+  ko: '한국어',
+  id: 'Bahasa Indonesia',
+  it: 'Italiano',
+  bn: 'বাংলা',
+};
+
+const LANGUAGES: { value: string; label: string }[] = routing.locales.map((value) => ({
+  value,
+  label: LANGUAGE_NAMES[value],
+}));
 
 const TIMEZONES: string[] = [
   'UTC',

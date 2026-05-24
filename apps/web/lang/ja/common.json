@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "言語"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "または",
+  "loading": "読み込み中…",
+  "google": {
+    "continue": "Google で続ける",
+    "redirecting": "Google にリダイレクト中…"
+  },
+  "error": {
+    "title": "問題が発生しました",
+    "description": "予期しないエラーが発生しました。再試行するかホームに戻ってください。",
+    "retry": "再試行",
+    "home": "ホーム"
+  },
+  "not-found": {
+    "title": "ページが見つかりません",
+    "description": "お探しのページは存在しないか、移動した可能性があります。",
+    "back": "ホームに戻る"
+  }
+}

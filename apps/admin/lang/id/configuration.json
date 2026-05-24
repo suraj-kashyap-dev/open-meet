@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Pengaturan",
+  "title": "Konfigurasi",
+  "description": "Default ruang kerja, merek, dan kebijakan rapat.",
+  "coming-soon-label": "Segera hadir",
+  "coming-soon": {
+    "title": "Konfigurasi sedang dalam proses",
+    "description": "Default ruang kerja, merek, dan kebijakan rapat akan segera hadir di sini."
+  }
+}

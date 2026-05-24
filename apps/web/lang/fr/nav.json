@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Profil",
+    "profile-description": "Modifier les détails de votre compte",
+    "settings": "Paramètres",
+    "settings-description": "Valeurs par défaut, confidentialité, langue",
+    "sign-out": "Se déconnecter"
+  },
+  "user-menu-label": "Ouvrir le menu du compte",
+  "command": {
+    "placeholder": "Tapez une commande ou un code de réunion…",
+    "no-results": "Aucun résultat.",
+    "group-meetings": "Réunions",
+    "group-appearance": "Apparence",
+    "new-meeting": "Nouvelle réunion",
+    "join": "Rejoindre « {code} »",
+    "switch-to-light": "Passer en mode clair",
+    "switch-to-dark": "Passer en mode sombre",
+    "match-system-theme": "Suivre le thème du système",
+    "home": "Accueil",
+    "sign-out": "Se déconnecter",
+    "create-meeting-error": "Impossible de créer la réunion",
+    "join-code-required": "Saisissez d'abord un code de réunion"
+  }
+}

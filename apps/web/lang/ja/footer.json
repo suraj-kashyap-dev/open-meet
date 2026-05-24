@@ -1,0 +1,35 @@
+{
+  "tagline": "チームが素早く動くためのオープンソースビデオ会議。数分でセルフホストでき、データを永久に所有できます。",
+  "star": "GitHub でスターを付ける",
+  "report-issue": "問題を報告する",
+  "status": "すべてのシステムは正常に稼働中",
+  "product": {
+    "eyebrow": "ナビゲート",
+    "title": "プロダクト",
+    "dashboard": "ダッシュボード",
+    "history": "履歴",
+    "account": "アカウント"
+  },
+  "resources": {
+    "eyebrow": "学ぶ",
+    "title": "リソース",
+    "self-host": "セルフホストガイド",
+    "api": "API リファレンス",
+    "license": "MIT ライセンス",
+    "changelog": "変更履歴"
+  },
+  "community": {
+    "eyebrow": "参加する",
+    "title": "コミュニティ",
+    "repo": "GitHub リポジトリ",
+    "issues": "イシューとバグ報告",
+    "discussions": "ディスカッション",
+    "contribute": "コントリビュート"
+  },
+  "powered-by": "Powered by",
+  "built-with": "オープンテクノロジーで構築",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "TypeScript で",
+  "made-suffix": "を込めて作りました · MIT ライセンス",
+  "love": "愛"
+}

@@ -1,0 +1,118 @@
+{
+  "header": {
+    "eyebrow": "활동",
+    "title": "회의 기록",
+    "total": "{count, plural, one {총 # 건의 회의} other {총 # 건의 회의}}",
+    "description": "주최하거나 참여한 모든 회의 — 채팅, 첨부 파일 및 참여자 목록이 보존됩니다."
+  },
+  "default-title": "{date}의 회의",
+  "host": "주최자",
+  "hosted-by-you": "내가 주최",
+  "hosted-by": "{name}이(가) 주최",
+  "overflow": "+{count}",
+  "recording-badge": "녹화 · {count}",
+  "recording-title": "{count, plural, one {# 개의 녹화} other {# 개의 녹화}}",
+  "empty-cell": "—",
+  "columns": {
+    "meeting": "회의",
+    "started": "시작",
+    "duration": "지속 시간",
+    "participants": "참여자",
+    "activity": "활동",
+    "status": "상태",
+    "actions": "작업",
+    "open": "열기"
+  },
+  "status": {
+    "ended": "종료됨",
+    "active": "진행 중",
+    "scheduled": "예약됨"
+  },
+  "stats": {
+    "on-this-page": "이 페이지",
+    "hosted-by-you": "내가 주최",
+    "total-time": "총 시간",
+    "participants": "참여자"
+  },
+  "table": {
+    "empty": "이 페이지에 회의가 없습니다."
+  },
+  "pagination": {
+    "showing": "{total}개 중 {from}–{to}개 표시",
+    "previous": "이전",
+    "next": "다음",
+    "page-of": "{pageCount}페이지 중 {page}페이지"
+  },
+  "error": {
+    "list": "회의 기록을 불러오지 못했습니다."
+  },
+  "empty": {
+    "title": "아직 회의가 없습니다",
+    "description": "회의를 주최하거나 참여하면 여기에 표시됩니다.",
+    "cta": "회의 시작"
+  },
+  "detail": {
+    "back": "기록으로 돌아가기",
+    "default-title": "{date}의 회의",
+    "hosted-by-you": "내가 주최",
+    "copy-aria": "회의 코드 복사",
+    "started": "시작",
+    "role": "역할",
+    "stats": {
+      "duration": "지속 시간",
+      "participants": "참여자",
+      "messages": "메시지",
+      "attachments": "첨부 파일"
+    },
+    "in-this-chat": "이 채팅에서",
+    "overflow": "+{count}",
+    "error": "이 회의를 불러오지 못했습니다.",
+    "status": {
+      "ended": "종료됨",
+      "active": "진행 중",
+      "scheduled": "예약됨"
+    },
+    "attachment": {
+      "meta": "{mime} · {size}"
+    },
+    "recordings": {
+      "title": "녹화",
+      "visibility": "이 회의에 참여한 사람들에게만 표시됩니다.",
+      "started-by": "시작한 사람",
+      "duration": "지속 시간",
+      "size": "크기",
+      "download": "다운로드",
+      "recording-from": "{date}의 녹화",
+      "status": {
+        "completed": "완료됨",
+        "failed": "실패",
+        "recording": "녹화 중",
+        "stopping": "중지 중"
+      },
+      "failed-title": "녹화 실패",
+      "failed-detail": "이그레스 서비스에서 추가 정보를 제공하지 않았습니다.",
+      "processing": "녹화 처리 중 — 잠시 후 다시 확인하세요.",
+      "empty-title": "이 회의에 녹화가 없습니다",
+      "empty-description": "주최자는 통화 중 컨트롤에서 녹화를 시작할 수 있습니다. 녹화는 이 회의에 참여한 사람들에게만 비공개로 유지됩니다.",
+      "relative": {
+        "just-now": "방금",
+        "minutes": "{count, plural, one {# 분 전} other {# 분 전}}",
+        "hours": "{count, plural, one {# 시간 전} other {# 시간 전}}",
+        "days": "{count, plural, one {# 일 전} other {# 일 전}}"
+      }
+    },
+    "transcript": {
+      "title": "채팅 기록",
+      "count": "{count, plural, one {# 개의 메시지} other {# 개의 메시지}}",
+      "error": "메시지를 불러오지 못했습니다.",
+      "empty": "이 회의에서 전송된 메시지가 없습니다.",
+      "load-earlier": "이전 메시지 불러오기",
+      "loading": "로드 중…",
+      "you": "나"
+    }
+  },
+  "toast": {
+    "copied": "회의 코드가 복사되었습니다",
+    "copy-failed": "회의 코드를 복사할 수 없습니다"
+  }
+}

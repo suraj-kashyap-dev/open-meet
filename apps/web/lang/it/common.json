@@ -1,0 +1,39 @@
+{
+  "language-switcher": {
+    "label": "Lingua"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "or": "o",
+  "loading": "Caricamento…",
+  "google": {
+    "continue": "Continua con Google",
+    "redirecting": "Reindirizzamento a Google…"
+  },
+  "error": {
+    "title": "Qualcosa è andato storto",
+    "description": "Si è verificato un errore imprevisto. Puoi riprovare o tornare alla home.",
+    "retry": "Riprova",
+    "home": "Home"
+  },
+  "not-found": {
+    "title": "Pagina non trovata",
+    "description": "La pagina che stai cercando non esiste o è stata spostata.",
+    "back": "Torna alla home"
+  }
+}

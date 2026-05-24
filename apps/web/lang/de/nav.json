@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Profil",
+    "profile-description": "Ihre Kontodetails bearbeiten",
+    "settings": "Einstellungen",
+    "settings-description": "Standards, Datenschutz, Sprache",
+    "sign-out": "Abmelden"
+  },
+  "user-menu-label": "Kontomenü öffnen",
+  "command": {
+    "placeholder": "Befehl oder Besprechungscode eingeben…",
+    "no-results": "Keine Ergebnisse.",
+    "group-meetings": "Besprechungen",
+    "group-appearance": "Darstellung",
+    "new-meeting": "Neue Besprechung",
+    "join": "„{code}” beitreten",
+    "switch-to-light": "Zum hellen Modus wechseln",
+    "switch-to-dark": "Zum dunklen Modus wechseln",
+    "match-system-theme": "Systemdesign übernehmen",
+    "home": "Startseite",
+    "sign-out": "Abmelden",
+    "create-meeting-error": "Besprechung konnte nicht erstellt werden",
+    "join-code-required": "Zuerst einen Besprechungscode eingeben"
+  }
+}

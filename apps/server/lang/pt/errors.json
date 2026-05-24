@@ -1,0 +1,13 @@
+{
+  "email-taken": "Já existe um administrador com esse e-mail",
+  "invite-invalid": "Este link de convite é inválido",
+  "invite-expired": "Este convite expirou",
+  "invite-not-found": "Convite não encontrado",
+  "admin-not-found": "Administrador não encontrado",
+  "name-required": "O nome é obrigatório",
+  "name-empty": "O nome não pode estar vazio",
+  "cannot-demote-last-superadmin": "Não é possível rebaixar o último superadmin restante",
+  "cannot-delete-self": "Você não pode excluir sua própria conta de administrador",
+  "cannot-delete-last-superadmin": "Não é possível excluir o último superadmin restante",
+  "superadmin-required": "Privilégios de superadmin são necessários para esta ação"
+}

@@ -1,0 +1,80 @@
+{
+  "eyebrow": "管理",
+  "title": "用户",
+  "total-count": "{count, number} 位用户",
+  "search-placeholder": "按姓名或电子邮件搜索",
+  "refreshing": "正在刷新…",
+  "empty": "暂无用户。",
+  "empty-search": "没有与\"{query}\"匹配的用户。",
+  "table": {
+    "user": "用户",
+    "joined": "加入时间",
+    "hosted": "主持次数",
+    "attended": "参与次数",
+    "actions": "操作",
+    "open-actions": "打开操作",
+    "edit": "编辑",
+    "delete": "删除"
+  },
+  "pagination": {
+    "no-results": "无结果",
+    "showing": "显示 {from}-{to}，共 {total}",
+    "previous": "上一页",
+    "next": "下一页",
+    "page-of": "第 {page} 页，共 {pageCount} 页"
+  },
+  "edit-dialog": {
+    "title": "编辑用户",
+    "description": "更新个人资料、本地化设置、简介或重置密码。",
+    "section-account": "账户",
+    "section-localization": "本地化",
+    "section-about": "关于",
+    "section-password": "重置密码",
+    "name": "姓名",
+    "email": "电子邮件",
+    "timezone": "时区",
+    "timezone-placeholder": "选择时区",
+    "language": "语言",
+    "language-placeholder": "选择语言",
+    "bio": "简介",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "可选",
+    "new-password": "新密码",
+    "new-password-placeholder": "留空以保留现有密码",
+    "new-password-helper": "设置新密码将使用户的当前会话失效。",
+    "cancel": "取消",
+    "submit": "保存更改",
+    "submitting": "正在保存…",
+    "success": "用户已更新",
+    "error": "无法更新用户",
+    "validation": {
+      "name-required": "姓名为必填项",
+      "invalid-email": "请输入有效的电子邮件",
+      "bio-too-long": "简介过长",
+      "password-too-long": "过长",
+      "password-too-short": "至少 8 个字符"
+    }
+  },
+  "avatar": {
+    "helper": "PNG、JPEG、WebP 或 GIF，最大 {mb} MB。",
+    "replace": "替换图片",
+    "remove": "删除图片",
+    "edit-label": "更改头像",
+    "upload-label": "上传头像",
+    "success": "头像已更新",
+    "upload-error": "无法上传图片",
+    "removed": "头像已删除",
+    "remove-error": "无法删除图片",
+    "invalid-type": "图片必须是 PNG、JPEG、WebP 或 GIF。",
+    "too-large": "图片必须小于 {mb} MB。"
+  },
+  "delete-dialog": {
+    "title": "删除用户？",
+    "description": "此操作将永久删除 <strong>{email}</strong> 及其主持的所有会议、参与的记录和发送的消息，无法撤销。",
+    "cancel": "取消",
+    "submit": "删除用户",
+    "submitting": "正在删除…",
+    "success": "已删除 {email}",
+    "error": "无法删除用户"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "menu": {
+    "profile": "Profil",
+    "profile-description": "Edit detail akun Anda",
+    "settings": "Pengaturan",
+    "settings-description": "Default, privasi, bahasa",
+    "sign-out": "Keluar"
+  },
+  "user-menu-label": "Buka menu akun",
+  "command": {
+    "placeholder": "Ketik perintah atau kode rapat…",
+    "no-results": "Tidak ada hasil.",
+    "group-meetings": "Rapat",
+    "group-appearance": "Tampilan",
+    "new-meeting": "Rapat baru",
+    "join": "Bergabung “{code}”",
+    "switch-to-light": "Beralih ke mode terang",
+    "switch-to-dark": "Beralih ke mode gelap",
+    "match-system-theme": "Sesuaikan tema sistem",
+    "home": "Beranda",
+    "sign-out": "Keluar",
+    "create-meeting-error": "Tidak dapat membuat rapat",
+    "join-code-required": "Ketik kode rapat terlebih dahulu"
+  }
+}

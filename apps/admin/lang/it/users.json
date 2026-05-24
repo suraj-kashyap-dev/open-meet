@@ -1,0 +1,80 @@
+{
+  "eyebrow": "Gestisci",
+  "title": "Utenti",
+  "total-count": "{count, number} in totale",
+  "search-placeholder": "Cerca per nome o email",
+  "refreshing": "Aggiornamento…",
+  "empty": "Ancora nessun utente.",
+  "empty-search": "Nessun utente corrisponde a \"{query}\".",
+  "table": {
+    "user": "Utente",
+    "joined": "Entrato",
+    "hosted": "Ospitate",
+    "attended": "Partecipate",
+    "actions": "Azioni",
+    "open-actions": "Apri azioni",
+    "edit": "Modifica",
+    "delete": "Elimina"
+  },
+  "pagination": {
+    "no-results": "Nessun risultato",
+    "showing": "Visualizzazione {from}-{to} di {total}",
+    "previous": "Precedente",
+    "next": "Successivo",
+    "page-of": "Pagina {page} di {pageCount}"
+  },
+  "edit-dialog": {
+    "title": "Modifica utente",
+    "description": "Aggiorna profilo, localizzazione, biografia o reimposta la password.",
+    "section-account": "Account",
+    "section-localization": "Localizzazione",
+    "section-about": "Informazioni",
+    "section-password": "Reimposta password",
+    "name": "Nome",
+    "email": "Email",
+    "timezone": "Fuso orario",
+    "timezone-placeholder": "Scegli un fuso orario",
+    "language": "Lingua",
+    "language-placeholder": "Scegli una lingua",
+    "bio": "Biografia",
+    "bio-counter": "{count}/500",
+    "bio-placeholder": "Facoltativo",
+    "new-password": "Nuova password",
+    "new-password-placeholder": "Lascia vuoto per mantenere la password esistente",
+    "new-password-helper": "Impostare una nuova password invalida le sessioni dell'utente.",
+    "cancel": "Annulla",
+    "submit": "Salva modifiche",
+    "submitting": "Salvataggio…",
+    "success": "Utente aggiornato",
+    "error": "Impossibile aggiornare l'utente",
+    "validation": {
+      "name-required": "Il nome è obbligatorio",
+      "invalid-email": "Inserisci un'email valida",
+      "bio-too-long": "La biografia è troppo lunga",
+      "password-too-long": "Troppo lunga",
+      "password-too-short": "Almeno 8 caratteri"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP o GIF. Fino a {mb} MB.",
+    "replace": "Sostituisci immagine",
+    "remove": "Rimuovi immagine",
+    "edit-label": "Cambia immagine del profilo",
+    "upload-label": "Carica immagine del profilo",
+    "success": "Immagine del profilo aggiornata",
+    "upload-error": "Impossibile caricare l'immagine",
+    "removed": "Immagine del profilo rimossa",
+    "remove-error": "Impossibile rimuovere l'immagine",
+    "invalid-type": "L'immagine deve essere PNG, JPEG, WebP o GIF.",
+    "too-large": "L'immagine deve essere inferiore a {mb} MB."
+  },
+  "delete-dialog": {
+    "title": "Eliminare l'utente?",
+    "description": "Questa operazione rimuove definitivamente <strong>{email}</strong> e tutte le riunioni che ha ospitato, a cui ha partecipato e i messaggi che ha inviato. Questa azione non può essere annullata.",
+    "cancel": "Annulla",
+    "submit": "Elimina utente",
+    "submitting": "Eliminazione in corso…",
+    "success": "{email} eliminato",
+    "error": "Impossibile eliminare l'utente"
+  }
+}

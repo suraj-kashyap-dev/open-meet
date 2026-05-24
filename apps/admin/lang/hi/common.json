@@ -1,0 +1,29 @@
+{
+  "language-switcher": {
+    "label": "भाषा"
+  },
+  "languages": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "zh": "中文",
+    "ru": "Русский",
+    "tr": "Türkçe",
+    "hi": "हिन्दी",
+    "pt": "Português",
+    "fr": "Français",
+    "de": "Deutsch",
+    "ja": "日本語",
+    "ko": "한국어",
+    "id": "Bahasa Indonesia",
+    "it": "Italiano",
+    "bn": "বাংলা"
+  },
+  "loading": "लोड हो रहा है…",
+  "error": {
+    "title": "एडमिन पैनल त्रुटि",
+    "description": "इस एडमिन व्यू को लोड करने में कुछ गलत हो गया। फिर से प्रयास करें, या डैशबोर्ड पर वापस जाएं।",
+    "retry": "फिर से प्रयास करें",
+    "home": "डैशबोर्ड"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "eyebrow": "설정",
+  "title": "구성",
+  "description": "워크스페이스 기본값, 브랜딩, 회의 정책.",
+  "coming-soon-label": "출시 예정",
+  "coming-soon": {
+    "title": "구성 기능이 곧 제공됩니다",
+    "description": "워크스페이스 기본값, 브랜딩, 회의 정책이 곧 여기에 추가됩니다."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "eyebrow": "Bereit machen",
+  "you": "Sie",
+  "untitled-meeting": "Besprechung ohne Titel",
+  "secure-connection": "Sichere Verbindung",
+  "invited-only": "Nur eingeladene Personen können beitreten",
+  "meeting-code": "Besprechungscode",
+  "join-now": "Jetzt beitreten",
+  "joining": "Wird beigetreten…",
+  "back-to-home": "Zurück zur Startseite",
+  "cancel": "Abbrechen",
+  "aria": {
+    "rename-meeting": "Besprechung umbenennen",
+    "meeting-title": "Besprechungstitel",
+    "save-title": "Titel speichern",
+    "cancel-rename": "Umbenennen abbrechen",
+    "copy-meeting-link": "Besprechungslink kopieren",
+    "microphone-level": "Mikrofonpegel"
+  },
+  "devices": {
+    "title": "Geräte",
+    "subtitle": "Audio & Video überprüfen",
+    "camera": "Kamera",
+    "camera-placeholder": "Kamera auswählen",
+    "microphone": "Mikrofon",
+    "microphone-placeholder": "Mikrofon auswählen",
+    "speakers": "Lautsprecher",
+    "system-default": "Systemstandard"
+  },
+  "preview": {
+    "camera-off": "Kamera ist ausgeschaltet",
+    "mute-microphone": "Mikrofon stummschalten",
+    "unmute-microphone": "Stummschaltung des Mikrofons aufheben",
+    "turn-off-microphone": "Mikrofon ausschalten",
+    "turn-on-microphone": "Mikrofon einschalten",
+    "turn-off-camera": "Kamera ausschalten",
+    "turn-on-camera": "Kamera einschalten"
+  },
+  "toast": {
+    "title-updated": "Besprechungstitel aktualisiert",
+    "title-update-failed": "Titel konnte nicht aktualisiert werden",
+    "meeting-not-found": "Besprechung nicht gefunden",
+    "link-copied": "Besprechungslink kopiert",
+    "link-copy-failed": "Link konnte nicht kopiert werden"
+  }
+}

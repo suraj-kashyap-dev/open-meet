@@ -1,0 +1,10 @@
+{
+  "eyebrow": "Impostazioni",
+  "title": "Configurazione",
+  "description": "Impostazioni predefinite del workspace, branding e criteri delle riunioni.",
+  "coming-soon-label": "Prossimamente",
+  "coming-soon": {
+    "title": "La configurazione è in arrivo",
+    "description": "Le impostazioni predefinite del workspace, il branding e i criteri delle riunioni saranno disponibili qui a breve."
+  }
+}

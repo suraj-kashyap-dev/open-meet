@@ -1,0 +1,35 @@
+{
+  "tagline": "Videoconferência de código aberto para equipes que se movem rápido. Auto-hospede em minutos, seus dados para sempre.",
+  "star": "Favoritar no GitHub",
+  "report-issue": "Reportar um problema",
+  "status": "Todos os sistemas operacionais",
+  "product": {
+    "eyebrow": "Navegar",
+    "title": "Produto",
+    "dashboard": "Painel",
+    "history": "Histórico",
+    "account": "Conta"
+  },
+  "resources": {
+    "eyebrow": "Aprender",
+    "title": "Recursos",
+    "self-host": "Guia de auto-hospedagem",
+    "api": "Referência da API",
+    "license": "Licença MIT",
+    "changelog": "Registro de alterações"
+  },
+  "community": {
+    "eyebrow": "Participar",
+    "title": "Comunidade",
+    "repo": "Repositório GitHub",
+    "issues": "Problemas e relatórios de bugs",
+    "discussions": "Discussões",
+    "contribute": "Contribuir"
+  },
+  "powered-by": "Desenvolvido por",
+  "built-with": "Construído com tecnologia aberta",
+  "copyright": "© {year} Open Meet",
+  "made-prefix": "Feito com",
+  "made-suffix": "em TypeScript · Licenciado MIT",
+  "love": "amor"
+}
