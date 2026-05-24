@@ -99,15 +99,11 @@ export function useCurrentUser() {
         throw err;
       }
     },
-    staleTime: 60_000,
+    staleTime: 10_000,
+    refetchOnWindowFocus: true,
   });
 }
 
-/**
- * Whether Google sign-in is available, derived from the server's actual
- * OAuth configuration (`/auth/google/status`) — the single source of truth.
- * Server config is fixed for the process lifetime, so it never goes stale.
- */
 export function useGoogleAuthEnabled() {
   return useQuery({
     queryKey: GOOGLE_STATUS_KEY,

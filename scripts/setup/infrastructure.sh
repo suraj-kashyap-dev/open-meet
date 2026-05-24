@@ -8,6 +8,8 @@ start_infrastructure() {
     die "Can't reach the Docker daemon. Start it (sudo systemctl start docker), and if you get a permission error, add yourself to the docker group: sudo usermod -aG docker \"\$(id -un)\" && newgrp docker"
   fi
 
+  mkdir -p apps/server/uploads
+
   step "Starting infrastructure (postgres · redis · livekit · egress · coturn · mailhog)"
   docker compose up -d --wait --wait-timeout 180 --remove-orphans
   ok "Containers up and healthy"

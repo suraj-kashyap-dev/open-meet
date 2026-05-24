@@ -1,7 +1,7 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { Crown, MoreHorizontal, Plus } from 'lucide-react';
+import { Crown, Pencil, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
@@ -19,13 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@open-meet/ui/dialog';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@open-meet/ui/dropdown-menu';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { EditAdminDialog } from '@/features/accounts/components/edit-admin-dialog';
 import { InviteAdminDialog } from '@/features/accounts/components/invite-admin-dialog';
@@ -147,30 +140,20 @@ export default function AdministratorsPage() {
         id: 'actions',
         header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
-          <div className="flex justify-end">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  aria-label={t('table.actions-for', { name: row.original.name })}
-                >
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setEditing(row.original)}>
-                  {t('table.edit')}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
-                  onSelect={() => setDeleting(row.original)}
-                >
-                  {t('table.delete')}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+          <div className="flex items-center justify-end gap-1">
+            <Button size="sm" variant="ghost" onClick={() => setEditing(row.original)}>
+              <Pencil className="h-4 w-4" />
+              {t('table.edit')}
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => setDeleting(row.original)}
+              className="text-destructive hover:text-destructive"
+            >
+              <Trash2 className="h-4 w-4" />
+              {t('table.delete')}
+            </Button>
           </div>
         ),
       }),

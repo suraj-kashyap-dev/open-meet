@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,12 +8,16 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import type { FastifyRequest } from 'fastify';
 
 import type { AdminUserDto, AdminUserListResponseDto } from '@open-meet/types';
+import { ApiErrorCode } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
 
@@ -51,5 +56,36 @@ export class AdminUsersController {
   @ApiOperation({ summary: 'Delete a user' })
   remove(@Param('id') id: string): Promise<{ deleted: true }> {
     return this.users.delete(id);
+  }
+
+  @Post(':id/avatar')
+  @ApiOperation({ summary: "Upload (or replace) a user's profile image" })
+  async uploadAvatar(@Param('id') id: string, @Req() req: FastifyRequest): Promise<AdminUserDto> {
+    if (!req.isMultipart()) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Expected multipart/form-data',
+      });
+    }
+
+    const part = await req.file();
+
+    if (!part) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'No file provided',
+      });
+    }
+
+    const buffer = await part.toBuffer();
+
+    return this.users.uploadAvatar(id, buffer, part.mimetype || 'application/octet-stream');
+  }
+
+  @Delete(':id/avatar')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: "Remove a user's avatar" })
+  removeAvatar(@Param('id') id: string): Promise<AdminUserDto> {
+    return this.users.removeAvatar(id);
   }
 }

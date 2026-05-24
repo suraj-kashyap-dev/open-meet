@@ -1,28 +1,13 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Eye,
-  MoreHorizontal,
-  PhoneOff,
-  Search,
-  Trash2,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, Eye, PhoneOff, Search, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import type { AdminMeetingDto } from '@open-meet/types';
 
 import { DataTable } from '@open-meet/ui/data-table';
 import { Button } from '@open-meet/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@open-meet/ui/dropdown-menu';
 import { Input } from '@open-meet/ui/input';
 import { DeleteMeetingDialog } from '@/features/meetings/components/delete-meeting-dialog';
 import { EndAllActiveDialog } from '@/features/meetings/components/end-all-dialog';
@@ -171,34 +156,26 @@ export default function AdminMeetingsPage() {
           const canEnd = m.status !== 'ENDED';
 
           return (
-            <div className="flex justify-end">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button size="icon" variant="ghost" aria-label="Open actions">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onSelect={() => setDetailId(m.id)}>
-                    <Eye className="h-4 w-4" />
-                    View details
-                  </DropdownMenuItem>
-                  {canEnd ? (
-                    <DropdownMenuItem onSelect={() => setEndTarget(m)}>
-                      <PhoneOff className="h-4 w-4" />
-                      Force end
-                    </DropdownMenuItem>
-                  ) : null}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="text-destructive focus:text-destructive"
-                    onSelect={() => setDeleteTarget(m)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Delete
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            <div className="flex items-center justify-end gap-1">
+              <Button size="sm" variant="ghost" onClick={() => setDetailId(m.id)}>
+                <Eye className="h-4 w-4" />
+                View
+              </Button>
+              {canEnd ? (
+                <Button size="sm" variant="ghost" onClick={() => setEndTarget(m)}>
+                  <PhoneOff className="h-4 w-4" />
+                  End
+                </Button>
+              ) : null}
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setDeleteTarget(m)}
+                className="text-destructive hover:text-destructive"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </Button>
             </div>
           );
         },
@@ -266,7 +243,7 @@ export default function AdminMeetingsPage() {
                   : 'text-muted-foreground hover:text-foreground',
               )}
             >
-              {s.toLowerCase()}
+              {s.toUpperCase()}
             </button>
           ))}
         </div>

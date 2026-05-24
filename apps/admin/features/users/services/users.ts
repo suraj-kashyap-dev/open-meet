@@ -5,7 +5,67 @@ import type {
   AdminUserListResponseDto,
 } from '@open-meet/types';
 
-import { api } from '@/lib/api/client';
+import { api, ApiClientError } from '@/lib/api/client';
+import { env } from '@/lib/env';
+
+function uploadAvatar(id: string, file: File): Promise<AdminUserDto> {
+  return new Promise((resolve, reject) => {
+    const url = `${env.NEXT_PUBLIC_API_URL}/api/admin/users/${id}/avatar`;
+    const form = new FormData();
+
+    form.append('file', file, file.name);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.withCredentials = true;
+
+    xhr.onload = () => {
+      const isJson = (xhr.getResponseHeader('content-type') ?? '').includes('application/json');
+
+      if (!isJson) {
+        reject(
+          new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
+        );
+        return;
+      }
+
+      let body: unknown;
+
+      try {
+        body = JSON.parse(xhr.responseText);
+      } catch {
+        reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
+        return;
+      }
+
+      const envelope = body as {
+        success: boolean;
+        data?: AdminUserDto;
+        error?: { code: string; message: string; statusCode: number };
+      };
+
+      if (!envelope.success || !envelope.data) {
+        const err = envelope.error;
+        reject(
+          new ApiClientError(
+            err?.code ?? 'UPLOAD_FAILED',
+            err?.statusCode ?? xhr.status,
+            err?.message ?? 'Upload failed',
+          ),
+        );
+        return;
+      }
+
+      resolve(envelope.data);
+    };
+
+    xhr.onerror = () => {
+      reject(new ApiClientError('NETWORK_ERROR', 0, 'Network error during upload'));
+    };
+
+    xhr.send(form);
+  });
+}
 
 function toQueryString(params: Record<string, string | number | undefined>): string {
   const search = new URLSearchParams();
@@ -33,4 +93,8 @@ export const adminUsersApi = {
     api.patch<AdminUserDto>(`/admin/users/${id}`, body),
 
   remove: (id: string) => api.delete<{ deleted: true }>(`/admin/users/${id}`),
+
+  uploadAvatar,
+
+  removeAvatar: (id: string) => api.delete<AdminUserDto>(`/admin/users/${id}/avatar`),
 };

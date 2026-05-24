@@ -14,6 +14,7 @@ export function useAdminUsers(query: AdminUserListQuery) {
     queryFn: ({ signal }) => adminUsersApi.list(query, signal),
     placeholderData: keepPreviousData,
     staleTime: 10_000,
+    refetchOnWindowFocus: true,
   });
 }
 
@@ -32,6 +33,27 @@ export function useDeleteAdminUser() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => adminUsersApi.remove(id),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+    },
+  });
+}
+
+export function useUploadAdminUserAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: { id: string; file: File }) =>
+      adminUsersApi.uploadAvatar(input.id, input.file),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+    },
+  });
+}
+
+export function useRemoveAdminUserAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => adminUsersApi.removeAvatar(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
     },
