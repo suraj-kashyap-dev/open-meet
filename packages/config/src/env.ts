@@ -30,6 +30,7 @@ export const apiEnvSchema = z.object({
   LIVEKIT_API_KEY: z.string().min(1),
   LIVEKIT_API_SECRET: z.string().min(1),
   LIVEKIT_HOST: z.string().min(1),
+  LIVEKIT_PUBLIC_URL: z.string().min(1).optional(),
 
   RECORDING_EGRESS_FILEPATH_PREFIX: z.string().default('/out'),
   RECORDING_STORAGE_SUBDIR: z.string().default('recordings'),

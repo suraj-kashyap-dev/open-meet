@@ -113,7 +113,9 @@ export class LiveKitService {
 
     return {
       token,
-      url: this.config.getOrThrow<string>('LIVEKIT_HOST'),
+      url:
+        this.config.get<string>('LIVEKIT_PUBLIC_URL') ??
+        this.config.getOrThrow<string>('LIVEKIT_HOST'),
       identity: input.userId,
       room: input.meetingCode,
     };

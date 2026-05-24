@@ -31,13 +31,16 @@ describe('LiveKitService', () => {
       resolveUrl: vi.fn().mockReturnValue(null),
     };
 
+    const env: Record<string, string> = {
+      LIVEKIT_API_KEY: 'devkey',
+      LIVEKIT_API_SECRET: 'secret-of-at-least-some-length-for-jwt',
+      LIVEKIT_HOST: 'ws://livekit:7880',
+      LIVEKIT_PUBLIC_URL: 'ws://localhost:7880',
+    };
+
     const config = {
+      get: (key: string) => env[key],
       getOrThrow: (key: string) => {
-        const env: Record<string, string> = {
-          LIVEKIT_API_KEY: 'devkey',
-          LIVEKIT_API_SECRET: 'secret-of-at-least-some-length-for-jwt',
-          LIVEKIT_HOST: 'ws://localhost:7880',
-        };
         const v = env[key];
         if (v === undefined) {
           throw new Error(`Missing ${key}`);
@@ -103,8 +106,59 @@ describe('LiveKitService', () => {
       });
       expect(result.room).toBe('abcd-efgh-ijkl');
       expect(result.identity).toBe('u1');
-      expect(result.url).toBe('ws://localhost:7880');
       expect(result.token.split('.').length).toBe(3);
+    });
+
+    it('should return the browser-reachable LIVEKIT_PUBLIC_URL, not the internal host', async () => {
+      meetings.findRawByCode.mockResolvedValue({
+        id: 'm1',
+        hostId: 'u1',
+        status: MeetingStatus.ACTIVE,
+      });
+      const result = await service.mintToken({
+        meetingCode: 'abcd-efgh-ijkl',
+        userId: 'u1',
+        name: 'Ada',
+      });
+      expect(result.url).toBe('ws://localhost:7880');
+    });
+
+    it('should fall back to LIVEKIT_HOST when LIVEKIT_PUBLIC_URL is unset', async () => {
+      const fallbackEnv: Record<string, string> = {
+        LIVEKIT_API_KEY: 'devkey',
+        LIVEKIT_API_SECRET: 'secret-of-at-least-some-length-for-jwt',
+        LIVEKIT_HOST: 'ws://livekit:7880',
+      };
+      const fallbackConfig = {
+        get: (key: string) => fallbackEnv[key],
+        getOrThrow: (key: string) => {
+          const v = fallbackEnv[key];
+          if (v === undefined) {
+            throw new Error(`Missing ${key}`);
+          }
+          return v;
+        },
+      } as unknown as ConstructorParameters<typeof LiveKitService>[0];
+      const fallbackService = new LiveKitService(
+        fallbackConfig,
+        meetings as unknown as MeetingsService,
+        users as unknown as AuthRepository,
+        avatars as unknown as AvatarsService,
+        {} as unknown as RecordingService,
+        {} as unknown as RecordingEvents,
+      );
+
+      meetings.findRawByCode.mockResolvedValue({
+        id: 'm1',
+        hostId: 'u1',
+        status: MeetingStatus.ACTIVE,
+      });
+      const result = await fallbackService.mintToken({
+        meetingCode: 'abcd-efgh-ijkl',
+        userId: 'u1',
+        name: 'Ada',
+      });
+      expect(result.url).toBe('ws://livekit:7880');
     });
   });
 });
