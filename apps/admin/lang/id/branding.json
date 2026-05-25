@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Pengaturan",
+  "title": "Merek",
+  "description": "Sesuaikan tampilan ruang kerja Anda di seluruh aplikasi.",
+  "name": {
+    "title": "Nama aplikasi",
+    "description": "Ditampilkan di header, layar masuk, dan tab browser.",
+    "label": "Nama",
+    "placeholder": "mis. Acme Meet"
+  },
+  "logo": {
+    "title": "Logo",
+    "description": "Ditampilkan di samping nama aplikasi. PNG, JPEG, WebP, atau GIF.",
+    "alt": "Logo aplikasi",
+    "upload": "Unggah logo",
+    "replace": "Ganti logo",
+    "remove": "Hapus",
+    "hint": "Disarankan: gambar persegi, minimal 64×64px, hingga 2MB."
+  },
+  "form": {
+    "name-required": "Masukkan nama aplikasi.",
+    "name-too-long": "Nama harus 60 karakter atau kurang.",
+    "name-saved": "Nama aplikasi diperbarui",
+    "logo-saved": "Logo diperbarui",
+    "logo-removed": "Logo dihapus",
+    "logo-invalid-type": "Logo harus berupa gambar PNG, JPEG, WebP, atau GIF.",
+    "logo-too-large": "Logo harus 2MB atau lebih kecil.",
+    "save": "Simpan",
+    "saving": "Menyimpan…",
+    "uploading": "Mengunggah…",
+    "error": "Terjadi kesalahan"
+  }
+}

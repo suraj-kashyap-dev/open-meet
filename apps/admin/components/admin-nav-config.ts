@@ -3,6 +3,7 @@ import {
   CalendarRange,
   LayoutDashboard,
   Settings,
+  ShieldCheck,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -45,15 +46,8 @@ export const adminNav: AdminNavSection[] = [
   {
     labelKey: 'sections.system',
     items: [
-      {
-        labelKey: 'items.settings',
-        href: '/settings',
-        icon: Settings,
-        children: [
-          { labelKey: 'items.administrators', href: '/settings/administrators' },
-          { labelKey: 'items.configuration', href: '/settings/configuration' },
-        ],
-      },
+      { labelKey: 'items.administrators', href: '/administrators', icon: ShieldCheck },
+      { labelKey: 'items.settings', href: '/settings', icon: Settings },
     ],
   },
 ];

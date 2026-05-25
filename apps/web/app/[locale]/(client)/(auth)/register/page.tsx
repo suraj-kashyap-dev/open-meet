@@ -5,10 +5,11 @@ import { Suspense } from 'react';
 import { Link } from '@/i18n/navigation';
 import { RegisterForm } from '@/features/web/auth/components/register-form';
 import { REDIRECT_PARAM, resolveRedirect } from '@/features/web/auth/lib/redirect';
-import { Logo } from '@open-meet/ui/logo';
+import { BrandLockup } from '@/components/web/branding/brand-lockup';
+import { getBranding } from '@/lib/branding';
 
 export const metadata: Metadata = {
-  title: 'Create account · Open Meet',
+  title: 'Create account',
 };
 
 export default async function RegisterPage({
@@ -21,16 +22,19 @@ export default async function RegisterPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('auth');
+  const { appName, logoUrl } = await getBranding();
 
   const target = resolveRedirect((await searchParams)[REDIRECT_PARAM]);
   const loginQuery = target === '/' ? undefined : { [REDIRECT_PARAM]: target };
 
   return (
     <div className="w-full max-w-sm">
-      <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
-        <Logo className="h-7 w-7" />
-        <span>Open Meet</span>
-      </div>
+      <BrandLockup
+        appName={appName}
+        logoUrl={logoUrl}
+        className="mb-8"
+        textClassName="text-sm font-semibold tracking-tight"
+      />
 
       <div className="space-y-6 rounded-2xl border border-border bg-card p-7 shadow-sm">
         <header className="space-y-1">

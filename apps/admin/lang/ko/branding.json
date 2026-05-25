@@ -1,0 +1,33 @@
+{
+  "eyebrow": "설정",
+  "title": "브랜딩",
+  "description": "앱 전반에서 워크스페이스의 모양을 맞춤 설정하세요.",
+  "name": {
+    "title": "애플리케이션 이름",
+    "description": "헤더, 로그인 화면, 브라우저 탭에 표시됩니다.",
+    "label": "이름",
+    "placeholder": "예: Acme Meet"
+  },
+  "logo": {
+    "title": "로고",
+    "description": "앱 이름 옆에 표시됩니다. PNG, JPEG, WebP 또는 GIF.",
+    "alt": "애플리케이션 로고",
+    "upload": "로고 업로드",
+    "replace": "로고 교체",
+    "remove": "삭제",
+    "hint": "권장: 정사각형 이미지, 최소 64×64px, 최대 2MB."
+  },
+  "form": {
+    "name-required": "애플리케이션 이름을 입력하세요.",
+    "name-too-long": "이름은 60자 이하여야 합니다.",
+    "name-saved": "애플리케이션 이름이 업데이트되었습니다",
+    "logo-saved": "로고가 업데이트되었습니다",
+    "logo-removed": "로고가 삭제되었습니다",
+    "logo-invalid-type": "로고는 PNG, JPEG, WebP 또는 GIF 이미지여야 합니다.",
+    "logo-too-large": "로고는 2MB 이하여야 합니다.",
+    "save": "저장",
+    "saving": "저장 중…",
+    "uploading": "업로드 중…",
+    "error": "문제가 발생했습니다"
+  }
+}

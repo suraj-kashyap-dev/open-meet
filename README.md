@@ -20,10 +20,6 @@
 
 [Highlights](#highlights) · [Stack](#stack) · [Quick start](#quick-start) · [Testing](#testing) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Code of Conduct](CODE_OF_CONDUCT.md)
 
-<br/>
-
-<img alt="Dashboard" src="public/images/dashboard.png" width="860"/>
-
 </div>
 
 ---

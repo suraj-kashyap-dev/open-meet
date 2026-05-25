@@ -6,6 +6,8 @@ import { setRequestLocale } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
 import { isRtl, routing } from '@/i18n/routing';
+import { getBranding } from '@/lib/branding';
+import { BrandingProvider } from '@/components/web/branding/branding-provider';
 import { Providers } from '@/providers';
 import { Toaster } from '@open-meet/ui/sonner';
 import '../globals.css';
@@ -16,16 +18,20 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'),
-  title: {
-    default: 'Open Meet · Live video for teams that ship',
-    template: '%s · Open Meet',
-  },
-  description:
-    'Real-time video conferencing for distributed teams. No downloads, no friction — open a link and start talking.',
-  keywords: ['video conferencing', 'meetings', 'webrtc', 'team collaboration'],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { appName } = await getBranding();
+
+  return {
+    metadataBase: new URL('http://localhost:3000'),
+    title: {
+      default: `${appName} · Live video for teams that ship`,
+      template: `%s · ${appName}`,
+    },
+    description:
+      'Real-time video conferencing for distributed teams. No downloads, no friction — open a link and start talking.',
+    keywords: ['video conferencing', 'meetings', 'webrtc', 'team collaboration'],
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -46,6 +52,8 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
+  const branding = await getBranding();
+
   return (
     <html
       lang={locale}
@@ -58,10 +66,12 @@ export default async function LocaleLayout({
         suppressHydrationWarning
       >
         <NextIntlClientProvider>
-          <Providers>
-            {children}
-            <Toaster position="bottom-right" />
-          </Providers>
+          <BrandingProvider value={branding}>
+            <Providers>
+              {children}
+              <Toaster position="bottom-right" />
+            </Providers>
+          </BrandingProvider>
         </NextIntlClientProvider>
       </body>
     </html>

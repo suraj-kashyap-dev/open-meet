@@ -55,7 +55,7 @@ export function useMediaDevices(): UseMediaDevicesResult {
   const refreshDevices = useCallback(async () => {
     const md = getMediaDevices();
 
-    if (! md) {
+    if (!md) {
       return;
     }
 
@@ -65,21 +65,21 @@ export function useMediaDevices(): UseMediaDevicesResult {
       deviceId: d.deviceId,
       label: d.label || `${d.kind} (${d.deviceId.slice(0, 6)})`,
     });
-    
+
     setVideoDevices(devices.filter((d) => d.kind === 'videoinput').map(mapDevice));
-    
+
     setAudioInputs(devices.filter((d) => d.kind === 'audioinput').map(mapDevice));
-    
+
     setAudioOutputs(devices.filter((d) => d.kind === 'audiooutput').map(mapDevice));
   }, []);
 
   const acquire = useCallback(
     async (constraints: { videoId?: string; audioId?: string }) => {
       const md = getMediaDevices();
-      
-      if (! md) {
+
+      if (!md) {
         setError(t('devices.unsupported'));
-        
+
         return;
       }
 
@@ -120,19 +120,19 @@ export function useMediaDevices(): UseMediaDevicesResult {
 
     const md = getMediaDevices();
 
-    if (! md) {
+    if (!md) {
       return stop;
     }
 
     const handler = () => {
       void refreshDevices();
     };
-    
+
     md.addEventListener('devicechange', handler);
-    
+
     return () => {
       md.removeEventListener('devicechange', handler);
-    
+
       stop();
     };
   }, []);

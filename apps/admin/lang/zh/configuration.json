@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "配置功能即将上线",
     "description": "工作区默认值、品牌设置和会议策略将很快在此处提供。"
+  },
+  "form": {
+    "title": "工作区默认设置",
+    "subtitle": "应用于整个工作区中新会议的默认值。",
+    "default-title-label": "默认会议标题",
+    "default-title-help": "在创建会议时未命名时使用。",
+    "title-required": "请输入默认会议标题。",
+    "title-too-long": "标题不得超过 120 个字符。",
+    "allow-guests-label": "允许访客加入",
+    "allow-guests-help": "允许没有账户的人通过链接加入会议。",
+    "max-duration-label": "最长会议时长（分钟）",
+    "max-duration-placeholder": "无限制",
+    "max-duration-help": "留空表示无限制。介于 5 到 1440 分钟之间。",
+    "duration-range": "请输入 5 到 1440 之间的数字，或留空。",
+    "save": "保存更改",
+    "saving": "正在保存…",
+    "saved": "配置已保存",
+    "error": "无法保存配置"
   }
 }

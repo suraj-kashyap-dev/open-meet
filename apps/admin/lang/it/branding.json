@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Impostazioni",
+  "title": "Branding",
+  "description": "Personalizza l'aspetto del tuo workspace nelle app.",
+  "name": {
+    "title": "Nome dell'applicazione",
+    "description": "Mostrato nell'intestazione, nelle schermate di accesso e nella scheda del browser.",
+    "label": "Nome",
+    "placeholder": "es. Acme Meet"
+  },
+  "logo": {
+    "title": "Logo",
+    "description": "Mostrato accanto al nome dell'app. PNG, JPEG, WebP o GIF.",
+    "alt": "Logo dell'applicazione",
+    "upload": "Carica logo",
+    "replace": "Sostituisci logo",
+    "remove": "Rimuovi",
+    "hint": "Consigliato: un'immagine quadrata, almeno 64×64px, fino a 2MB."
+  },
+  "form": {
+    "name-required": "Inserisci un nome dell'applicazione.",
+    "name-too-long": "Il nome deve contenere al massimo 60 caratteri.",
+    "name-saved": "Nome dell'applicazione aggiornato",
+    "logo-saved": "Logo aggiornato",
+    "logo-removed": "Logo rimosso",
+    "logo-invalid-type": "Il logo deve essere un'immagine PNG, JPEG, WebP o GIF.",
+    "logo-too-large": "Il logo deve essere di 2MB o inferiore.",
+    "save": "Salva",
+    "saving": "Salvataggio…",
+    "uploading": "Caricamento…",
+    "error": "Qualcosa è andato storto"
+  }
+}

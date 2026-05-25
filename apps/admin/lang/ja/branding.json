@@ -1,0 +1,33 @@
+{
+  "eyebrow": "設定",
+  "title": "ブランディング",
+  "description": "アプリ全体でワークスペースの外観をカスタマイズします。",
+  "name": {
+    "title": "アプリケーション名",
+    "description": "ヘッダー、サインイン画面、ブラウザタブに表示されます。",
+    "label": "名前",
+    "placeholder": "例: Acme Meet"
+  },
+  "logo": {
+    "title": "ロゴ",
+    "description": "アプリ名の横に表示されます。PNG、JPEG、WebP、または GIF。",
+    "alt": "アプリケーションロゴ",
+    "upload": "ロゴをアップロード",
+    "replace": "ロゴを変更",
+    "remove": "削除",
+    "hint": "推奨: 正方形の画像、最小 64×64px、最大 2MB。"
+  },
+  "form": {
+    "name-required": "アプリケーション名を入力してください。",
+    "name-too-long": "名前は 60 文字以下にしてください。",
+    "name-saved": "アプリケーション名を更新しました",
+    "logo-saved": "ロゴを更新しました",
+    "logo-removed": "ロゴを削除しました",
+    "logo-invalid-type": "ロゴは PNG、JPEG、WebP、または GIF 画像にしてください。",
+    "logo-too-large": "ロゴは 2MB 以下にしてください。",
+    "save": "保存",
+    "saving": "保存中…",
+    "uploading": "アップロード中…",
+    "error": "問題が発生しました"
+  }
+}

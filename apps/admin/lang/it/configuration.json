@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "La configurazione è in arrivo",
     "description": "Le impostazioni predefinite del workspace, il branding e i criteri delle riunioni saranno disponibili qui a breve."
+  },
+  "form": {
+    "title": "Impostazioni predefinite del workspace",
+    "subtitle": "Impostazioni predefinite applicate alle nuove riunioni in tutto il workspace.",
+    "default-title-label": "Titolo riunione predefinito",
+    "default-title-help": "Usato quando una riunione viene creata senza nome.",
+    "title-required": "Inserisci un titolo riunione predefinito.",
+    "title-too-long": "Il titolo deve contenere al massimo 120 caratteri.",
+    "allow-guests-label": "Consenti agli ospiti di partecipare",
+    "allow-guests-help": "Consenti alle persone senza un account di partecipare alle riunioni tramite un link.",
+    "max-duration-label": "Durata massima riunione (minuti)",
+    "max-duration-placeholder": "Nessun limite",
+    "max-duration-help": "Lascia vuoto per nessun limite. Tra 5 e 1440 minuti.",
+    "duration-range": "Inserisci un numero compreso tra 5 e 1440, oppure lascia vuoto.",
+    "save": "Salva modifiche",
+    "saving": "Salvataggio…",
+    "saved": "Configurazione salvata",
+    "error": "Impossibile salvare la configurazione"
   }
 }

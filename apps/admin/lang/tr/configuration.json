@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "Yapılandırma geliyor",
     "description": "Çalışma alanı varsayılanları, marka ve toplantı politikaları yakında burada olacak."
+  },
+  "form": {
+    "title": "Çalışma alanı varsayılanları",
+    "subtitle": "Çalışma alanı genelinde yeni toplantılara uygulanan varsayılanlar.",
+    "default-title-label": "Varsayılan toplantı başlığı",
+    "default-title-help": "Bir toplantı adsız oluşturulduğunda kullanılır.",
+    "title-required": "Varsayılan bir toplantı başlığı girin.",
+    "title-too-long": "Başlık en fazla 120 karakter olmalıdır.",
+    "allow-guests-label": "Konukların katılmasına izin ver",
+    "allow-guests-help": "Hesabı olmayan kişilerin bir bağlantı aracılığıyla toplantılara katılmasına izin verin.",
+    "max-duration-label": "Maksimum toplantı süresi (dakika)",
+    "max-duration-placeholder": "Sınır yok",
+    "max-duration-help": "Sınır olmaması için boş bırakın. 5 ile 1440 dakika arasında.",
+    "duration-range": "5 ile 1440 arasında bir sayı girin veya boş bırakın.",
+    "save": "Değişiklikleri kaydet",
+    "saving": "Kaydediliyor…",
+    "saved": "Yapılandırma kaydedildi",
+    "error": "Yapılandırma kaydedilemedi"
   }
 }
