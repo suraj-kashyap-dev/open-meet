@@ -9,6 +9,7 @@ const NAMESPACES = [
   'accept-invite',
   'nav',
   'accounts',
+  'branding',
   'configuration',
   'users',
 ] as const;

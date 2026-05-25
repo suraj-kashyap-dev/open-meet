@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Settings",
+  "title": "Branding",
+  "description": "Customize how your workspace looks across the apps.",
+  "name": {
+    "title": "Application name",
+    "description": "Shown in the header, sign-in screens, and the browser tab.",
+    "label": "Name",
+    "placeholder": "e.g. Acme Meet"
+  },
+  "logo": {
+    "title": "Logo",
+    "description": "Displayed beside the app name. PNG, JPEG, WebP, or GIF.",
+    "alt": "Application logo",
+    "upload": "Upload logo",
+    "replace": "Replace logo",
+    "remove": "Remove",
+    "hint": "Recommended: a square image, at least 64×64px, up to 2MB."
+  },
+  "form": {
+    "name-required": "Enter an application name.",
+    "name-too-long": "Name must be 60 characters or fewer.",
+    "name-saved": "Application name updated",
+    "logo-saved": "Logo updated",
+    "logo-removed": "Logo removed",
+    "logo-invalid-type": "Logo must be a PNG, JPEG, WebP, or GIF image.",
+    "logo-too-large": "Logo must be 2MB or smaller.",
+    "save": "Save",
+    "saving": "Saving…",
+    "uploading": "Uploading…",
+    "error": "Something went wrong"
+  }
+}

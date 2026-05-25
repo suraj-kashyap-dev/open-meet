@@ -5,6 +5,15 @@ interface Props {
   title?: string;
 }
 
+/**
+ * Open Meet brand mark — a camera-aperture iris. The hexagonal opening reads as
+ * an "O" ("Open"), the lens says video/meeting, and a gradient in the theme's
+ * blue accent sweeps across the six blades. A mask keeps the opening and blade
+ * gaps transparent so the mark sits on any surface.
+ *
+ * Multiple instances reuse the `omAccent` / `omIris` ids; this is safe because
+ * every definition is byte-identical and `url(#…)` resolves to the first.
+ */
 export function Logo({ className, title = 'Open Meet' }: Props) {
   return (
     <svg
@@ -12,30 +21,66 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label={title}
-      className={cn('shrink-0', className)}
+      className={cn('shrink-0 rounded-full', className)}
     >
-      <rect x="3" y="3" width="18" height="18" rx="5" className="fill-foreground" />
+      <defs>
+        <linearGradient id="omAccent" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#60a5fa" />
+          <stop offset="0.55" stopColor="#3b82f6" />
+          <stop offset="1" stopColor="#2563eb" />
+        </linearGradient>
 
-      <rect x="11" y="11" width="18" height="18" rx="5" className="fill-accent" />
+        <mask id="omIris">
+          <circle cx="16" cy="16" r="13.44" fill="#fff" />
+          <polygon
+            points="22.25,16 19.12,21.41 12.88,21.41 9.75,16 12.87,10.59 19.12,10.59"
+            fill="#000"
+          />
+          <g stroke="#000" strokeWidth="1.5" strokeLinecap="round" fill="none">
+            <path d="M22.25 16 L30.16 22.3" />
+            <path d="M19.12 21.41 L17.62 31.42" />
+            <path d="M12.88 21.41 L3.46 25.11" />
+            <path d="M9.75 16 L1.84 9.7" />
+            <path d="M12.87 10.59 L14.38 0.58" />
+            <path d="M19.12 10.59 L28.54 6.89" />
+          </g>
+        </mask>
+      </defs>
 
-      <path d="M17 15.5 L25 20 L17 24.5 Z" fill="#ffffff" />
+      <rect width="32" height="32" fill="url(#omAccent)" mask="url(#omIris)" />
     </svg>
   );
 }
 
+/**
+ * Monochrome variant for single-color contexts — the same iris filled with
+ * `currentColor` instead of the gradient.
+ */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
-      className={cn('shrink-0', className)}
+      className={cn('shrink-0 rounded-full', className)}
     >
-      <rect x="3" y="3" width="18" height="18" rx="5" fill="currentColor" opacity="0.5" />
+      <mask id="omIrisMono">
+        <circle cx="16" cy="16" r="13.44" fill="#fff" />
+        <polygon
+          points="22.25,16 19.12,21.41 12.88,21.41 9.75,16 12.87,10.59 19.12,10.59"
+          fill="#000"
+        />
+        <g stroke="#000" strokeWidth="1.5" strokeLinecap="round" fill="none">
+          <path d="M22.25 16 L30.16 22.3" />
+          <path d="M19.12 21.41 L17.62 31.42" />
+          <path d="M12.88 21.41 L3.46 25.11" />
+          <path d="M9.75 16 L1.84 9.7" />
+          <path d="M12.87 10.59 L14.38 0.58" />
+          <path d="M19.12 10.59 L28.54 6.89" />
+        </g>
+      </mask>
 
-      <rect x="11" y="11" width="18" height="18" rx="5" fill="currentColor" />
-
-      <path d="M17 15.5 L25 20 L17 24.5 Z" fill="var(--background)" />
+      <rect width="32" height="32" fill="currentColor" mask="url(#omIrisMono)" />
     </svg>
   );
 }

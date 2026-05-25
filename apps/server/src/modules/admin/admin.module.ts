@@ -4,6 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 
 import { LiveKitModule } from '../../integrations/livekit/livekit.module';
 import { MailModule } from '../../integrations/mail/mail.module';
+import { AppConfigModule } from '../config/config.module';
 
 import { AdminAuthController } from './auth/auth.controller';
 import { AdminAuthService } from './auth/auth.service';
@@ -21,11 +22,13 @@ import { AdminInviteRepository } from './accounts/admin-invite.repository';
 import { AdminUsersController } from './users/users.controller';
 import { AdminUsersService } from './users/users.service';
 import { AdminUsersRepository } from './users/users.repository';
+import { AdminBrandingController } from './branding/branding.controller';
+import { AdminConfigurationController } from './configuration/configuration.controller';
 import { AdminRepository } from './admin.repository';
 import { AdminBootstrapService } from './bootstrap.service';
 
 @Module({
-  imports: [PassportModule, JwtModule.register({}), LiveKitModule, MailModule],
+  imports: [PassportModule, JwtModule.register({}), LiveKitModule, MailModule, AppConfigModule],
   controllers: [
     AdminAuthController,
     AdminAnalyticsController,
@@ -33,6 +36,8 @@ import { AdminBootstrapService } from './bootstrap.service';
     AdminAccountsController,
     AdminInviteController,
     AdminUsersController,
+    AdminBrandingController,
+    AdminConfigurationController,
   ],
   providers: [
     AdminAuthService,

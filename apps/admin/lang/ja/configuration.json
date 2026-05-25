@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "構成設定は準備中です",
     "description": "ワークスペースのデフォルト、ブランディング、ミーティングポリシーは近日公開予定です。"
+  },
+  "form": {
+    "title": "ワークスペースのデフォルト",
+    "subtitle": "ワークスペース全体の新しいミーティングに適用されるデフォルト。",
+    "default-title-label": "デフォルトのミーティングタイトル",
+    "default-title-help": "ミーティングが名前なしで作成された場合に使用されます。",
+    "title-required": "デフォルトのミーティングタイトルを入力してください。",
+    "title-too-long": "タイトルは 120 文字以下にしてください。",
+    "allow-guests-label": "ゲストの参加を許可する",
+    "allow-guests-help": "アカウントを持たない人がリンク経由でミーティングに参加できるようにします。",
+    "max-duration-label": "最大ミーティング時間（分）",
+    "max-duration-placeholder": "制限なし",
+    "max-duration-help": "制限なしの場合は空欄のままにします。5 ～ 1440 分の間。",
+    "duration-range": "5 ～ 1440 の数値を入力するか、空欄のままにしてください。",
+    "save": "変更を保存",
+    "saving": "保存中…",
+    "saved": "構成を保存しました",
+    "error": "構成を保存できませんでした"
   }
 }

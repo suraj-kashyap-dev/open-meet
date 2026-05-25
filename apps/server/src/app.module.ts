@@ -19,6 +19,7 @@ import { MailModule } from './integrations/mail/mail.module';
 import { ChatModule } from './modules/client/chat/chat.module';
 import { RecordingModule } from './modules/client/recording/recording.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { AppConfigModule } from './modules/config/config.module';
 import { StorageModule } from './storage/storage.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 
@@ -70,6 +71,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     LiveKitModule,
     ChatModule,
     RecordingModule,
+    AppConfigModule,
     AdminModule,
     StorageModule,
     UploadsModule,

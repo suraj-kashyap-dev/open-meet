@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "La configuración está en camino",
     "description": "Los valores predeterminados del espacio de trabajo, la marca y las políticas de reuniones estarán disponibles aquí pronto."
+  },
+  "form": {
+    "title": "Valores predeterminados del espacio de trabajo",
+    "subtitle": "Valores predeterminados aplicados a las nuevas reuniones en todo el espacio de trabajo.",
+    "default-title-label": "Título de reunión predeterminado",
+    "default-title-help": "Se usa cuando se crea una reunión sin nombre.",
+    "title-required": "Ingresa un título de reunión predeterminado.",
+    "title-too-long": "El título debe tener 120 caracteres o menos.",
+    "allow-guests-label": "Permitir que los invitados se unan",
+    "allow-guests-help": "Permite que personas sin cuenta se unan a las reuniones mediante un enlace.",
+    "max-duration-label": "Duración máxima de la reunión (minutos)",
+    "max-duration-placeholder": "Sin límite",
+    "max-duration-help": "Deja vacío para no establecer límite. Entre 5 y 1440 minutos.",
+    "duration-range": "Ingresa un número entre 5 y 1440, o déjalo vacío.",
+    "save": "Guardar cambios",
+    "saving": "Guardando…",
+    "saved": "Configuración guardada",
+    "error": "No se pudo guardar la configuración"
   }
 }

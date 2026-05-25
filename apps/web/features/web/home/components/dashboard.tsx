@@ -115,20 +115,20 @@ export function Dashboard() {
 
       <Spotlight />
 
-      <section className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-[96rem] space-y-8 px-4 sm:px-6 lg:px-10">
         <motion.header
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="flex flex-col gap-3"
+          className="flex flex-col gap-2"
         >
           <DateBadge />
 
-          <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             {greetingLabel(t)}, <span className="gradient-text">{firstName}</span>
           </h1>
 
-          <p className="max-w-xl text-balance text-sm text-muted-foreground sm:text-base">
+          <p className="max-w-2xl text-balance text-sm text-muted-foreground">
             {t.rich('greeting.intro', {
               kbd: (chunks) => <KbdShortcut>{chunks}</KbdShortcut>,
             })}
@@ -147,28 +147,36 @@ export function Dashboard() {
           />
         </motion.div>
 
-        <motion.div initial="hidden" animate="visible" custom={2} variants={fadeUp}>
-          <UpcomingMeetings
-            items={upcoming.data ?? []}
-            isLoading={upcoming.isLoading}
-            onSchedule={() => setScheduleOpen(true)}
-          />
-        </motion.div>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            custom={2}
+            variants={fadeUp}
+            className="space-y-6 lg:col-span-7"
+          >
+            <UpcomingMeetings
+              items={upcoming.data ?? []}
+              isLoading={upcoming.isLoading}
+              onSchedule={() => setScheduleOpen(true)}
+            />
 
-        <motion.div initial="hidden" animate="visible" custom={3} variants={fadeUp}>
-          <RecentMeetings items={recent} total={totalMeetings} isLoading={history.isLoading} />
-        </motion.div>
+            <RecentMeetings items={recent} total={totalMeetings} isLoading={history.isLoading} />
+          </motion.div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <motion.div initial="hidden" animate="visible" custom={4} variants={fadeUp}>
+          <motion.aside
+            initial="hidden"
+            animate="visible"
+            custom={3}
+            variants={fadeUp}
+            className="space-y-6 lg:col-span-5"
+          >
             <TipsCard />
-          </motion.div>
 
-          <motion.div initial="hidden" animate="visible" custom={5} variants={fadeUp}>
             <ShortcutsCard />
-          </motion.div>
+          </motion.aside>
         </div>
-      </section>
+      </div>
 
       <ScheduleMeetingDialog open={scheduleOpen} onOpenChange={setScheduleOpen} />
     </main>
@@ -197,19 +205,9 @@ function ActionCard({
   const t = useTranslations('home');
 
   return (
-    <Card className="group relative overflow-hidden border-border/60 bg-card/60 backdrop-blur transition-all duration-300 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/10">
-      <div
-        className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-accent/15 blur-3xl"
-        aria-hidden
-      />
-
-      <div
-        className="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-accent/10 blur-3xl"
-        aria-hidden
-      />
-
-      <CardContent className="relative grid gap-0 p-0 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
-        <div className="flex flex-col gap-6 p-6 md:p-8">
+    <Card className="overflow-hidden border-border/60 bg-card">
+      <CardContent className="grid gap-px overflow-hidden bg-border p-0 sm:grid-cols-2">
+        <div className="flex flex-col gap-5 bg-card p-6 sm:p-7">
           <div className="flex items-start justify-between gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/15 text-accent ring-1 ring-accent/25">
               <Video className="h-4 w-4" />
@@ -278,25 +276,7 @@ function ActionCard({
           </div>
         </div>
 
-        <div className="relative hidden self-stretch md:block" aria-hidden>
-          <div className="absolute inset-y-8 left-1/2 w-px -translate-x-1/2 bg-border" />
-
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            {t('join.or')}
-          </span>
-        </div>
-
-        <div className="flex h-px items-center px-6 md:hidden" aria-hidden>
-          <div className="h-px flex-1 bg-border" />
-
-          <span className="mx-3 rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            {t('join.or')}
-          </span>
-
-          <div className="h-px flex-1 bg-border" />
-        </div>
-
-        <div className="flex flex-col gap-6 p-6 md:p-8">
+        <div className="flex flex-col gap-5 bg-card p-6 sm:p-7">
           <div className="flex items-start justify-between gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted text-muted-foreground ring-1 ring-border/60">
               <ArrowRight className="h-4 w-4" />

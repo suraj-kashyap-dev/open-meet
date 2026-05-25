@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Einstellungen",
+  "title": "Branding",
+  "description": "Passen Sie an, wie Ihr Arbeitsbereich in den Apps aussieht.",
+  "name": {
+    "title": "Anwendungsname",
+    "description": "Wird im Header, auf den Anmeldebildschirmen und im Browser-Tab angezeigt.",
+    "label": "Name",
+    "placeholder": "z. B. Acme Meet"
+  },
+  "logo": {
+    "title": "Logo",
+    "description": "Wird neben dem App-Namen angezeigt. PNG, JPEG, WebP oder GIF.",
+    "alt": "Anwendungslogo",
+    "upload": "Logo hochladen",
+    "replace": "Logo ersetzen",
+    "remove": "Entfernen",
+    "hint": "Empfohlen: ein quadratisches Bild, mindestens 64×64px, bis zu 2MB."
+  },
+  "form": {
+    "name-required": "Geben Sie einen Anwendungsnamen ein.",
+    "name-too-long": "Der Name darf höchstens 60 Zeichen lang sein.",
+    "name-saved": "Anwendungsname aktualisiert",
+    "logo-saved": "Logo aktualisiert",
+    "logo-removed": "Logo entfernt",
+    "logo-invalid-type": "Das Logo muss ein PNG-, JPEG-, WebP- oder GIF-Bild sein.",
+    "logo-too-large": "Das Logo darf höchstens 2MB groß sein.",
+    "save": "Speichern",
+    "saving": "Wird gespeichert…",
+    "uploading": "Wird hochgeladen…",
+    "error": "Etwas ist schiefgelaufen"
+  }
+}

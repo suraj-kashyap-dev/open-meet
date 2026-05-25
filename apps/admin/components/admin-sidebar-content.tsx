@@ -10,6 +10,7 @@ import { cn } from '@open-meet/ui/cn';
 import { Link, usePathname } from '@/i18n/navigation';
 import { isRtl } from '@/i18n/routing';
 import { env } from '@/lib/env';
+import { useBranding } from '@/components/branding-provider';
 
 import { adminNav, isActive } from './admin-nav-config';
 
@@ -29,6 +30,7 @@ export function AdminSidebarContent({ onNavigate, collapsed = false }: Props) {
   const pathname = usePathname();
   const t = useTranslations('nav');
   const tooltipSide = isRtl(useLocale()) ? 'left' : 'right';
+  const { appName, logoUrl } = useBranding();
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -42,13 +44,21 @@ export function AdminSidebarContent({ onNavigate, collapsed = false }: Props) {
           <Link
             href="/"
             onClick={onNavigate}
-            aria-label="Open Meet"
+            aria-label={appName}
             className="flex min-w-0 items-center gap-2.5 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
-            <Logo className="h-8 w-8 shrink-0" />
+            {logoUrl ? (
+              <img
+                src={logoUrl}
+                alt={appName}
+                className="h-8 w-8 shrink-0 rounded-md object-contain"
+              />
+            ) : (
+              <Logo className="h-8 w-8 shrink-0" />
+            )}
             {!collapsed ? (
               <span className="flex min-w-0 flex-col leading-none">
-                <span className="truncate text-sm font-semibold tracking-tight">Open Meet</span>
+                <span className="truncate text-sm font-semibold tracking-tight">{appName}</span>
                 <span className="truncate pt-1 text-[11px] font-medium text-muted-foreground">
                   {t('brand.console')}
                 </span>

@@ -25,7 +25,8 @@
     "microphone": "Microphone",
     "microphone-placeholder": "Choisir un microphone",
     "speakers": "Haut-parleurs",
-    "system-default": "Par défaut du système"
+    "system-default": "Par défaut du système",
+    "unsupported": "La caméra et le microphone nécessitent une connexion sécurisée (HTTPS) ou localhost."
   },
   "preview": {
     "camera-off": "La caméra est désactivée",

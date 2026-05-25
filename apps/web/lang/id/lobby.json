@@ -25,7 +25,8 @@
     "microphone": "Mikrofon",
     "microphone-placeholder": "Pilih mikrofon",
     "speakers": "Speaker",
-    "system-default": "Default sistem"
+    "system-default": "Default sistem",
+    "unsupported": "Kamera dan mikrofon memerlukan koneksi aman (HTTPS) atau localhost."
   },
   "preview": {
     "camera-off": "Kamera mati",

@@ -25,7 +25,8 @@
     "microphone": "মাইক্রোফোন",
     "microphone-placeholder": "মাইক্রোফোন বেছে নিন",
     "speakers": "স্পিকার",
-    "system-default": "সিস্টেম ডিফল্ট"
+    "system-default": "সিস্টেম ডিফল্ট",
+    "unsupported": "ক্যামেরা ও মাইক্রোফোনের জন্য একটি নিরাপদ সংযোগ (HTTPS) বা localhost প্রয়োজন।"
   },
   "preview": {
     "camera-off": "ক্যামেরা বন্ধ",

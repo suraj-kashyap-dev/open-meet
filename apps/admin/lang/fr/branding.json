@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Paramètres",
+  "title": "Image de marque",
+  "description": "Personnalisez l'apparence de votre espace de travail dans les applications.",
+  "name": {
+    "title": "Nom de l'application",
+    "description": "Affiché dans l'en-tête, sur les écrans de connexion et dans l'onglet du navigateur.",
+    "label": "Nom",
+    "placeholder": "p. ex. Acme Meet"
+  },
+  "logo": {
+    "title": "Logo",
+    "description": "Affiché à côté du nom de l'application. PNG, JPEG, WebP ou GIF.",
+    "alt": "Logo de l'application",
+    "upload": "Téléverser le logo",
+    "replace": "Remplacer le logo",
+    "remove": "Supprimer",
+    "hint": "Recommandé : une image carrée, d'au moins 64×64px, jusqu'à 2MB."
+  },
+  "form": {
+    "name-required": "Saisissez un nom d'application.",
+    "name-too-long": "Le nom ne doit pas dépasser 60 caractères.",
+    "name-saved": "Nom de l'application mis à jour",
+    "logo-saved": "Logo mis à jour",
+    "logo-removed": "Logo supprimé",
+    "logo-invalid-type": "Le logo doit être une image PNG, JPEG, WebP ou GIF.",
+    "logo-too-large": "Le logo ne doit pas dépasser 2MB.",
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "uploading": "Téléversement…",
+    "error": "Une erreur est survenue"
+  }
+}

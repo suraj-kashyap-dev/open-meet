@@ -25,7 +25,8 @@
     "microphone": "Micrófono",
     "microphone-placeholder": "Elegir micrófono",
     "speakers": "Altavoces",
-    "system-default": "Predeterminado del sistema"
+    "system-default": "Predeterminado del sistema",
+    "unsupported": "La cámara y el micrófono requieren una conexión segura (HTTPS) o localhost."
   },
   "preview": {
     "camera-off": "La cámara está apagada",

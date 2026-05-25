@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "Configuration is on the way",
     "description": "Workspace defaults, branding, and meeting policies will live here soon."
+  },
+  "form": {
+    "title": "Workspace defaults",
+    "subtitle": "Defaults applied to new meetings across the workspace.",
+    "default-title-label": "Default meeting title",
+    "default-title-help": "Used when a meeting is created without a name.",
+    "title-required": "Enter a default meeting title.",
+    "title-too-long": "Title must be 120 characters or fewer.",
+    "allow-guests-label": "Allow guests to join",
+    "allow-guests-help": "Let people without an account join meetings via a link.",
+    "max-duration-label": "Maximum meeting duration (minutes)",
+    "max-duration-placeholder": "No limit",
+    "max-duration-help": "Leave empty for no limit. Between 5 and 1440 minutes.",
+    "duration-range": "Enter a number between 5 and 1440, or leave empty.",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "saved": "Configuration saved",
+    "error": "Could not save configuration"
   }
 }

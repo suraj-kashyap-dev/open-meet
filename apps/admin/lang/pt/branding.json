@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Configurações",
+  "title": "Identidade visual",
+  "description": "Personalize a aparência do seu espaço de trabalho em todos os aplicativos.",
+  "name": {
+    "title": "Nome do aplicativo",
+    "description": "Exibido no cabeçalho, nas telas de login e na aba do navegador.",
+    "label": "Nome",
+    "placeholder": "ex.: Acme Meet"
+  },
+  "logo": {
+    "title": "Logotipo",
+    "description": "Exibido ao lado do nome do aplicativo. PNG, JPEG, WebP ou GIF.",
+    "alt": "Logotipo do aplicativo",
+    "upload": "Enviar logotipo",
+    "replace": "Substituir logotipo",
+    "remove": "Remover",
+    "hint": "Recomendado: uma imagem quadrada, com no mínimo 64×64px, até 2MB."
+  },
+  "form": {
+    "name-required": "Insira um nome para o aplicativo.",
+    "name-too-long": "O nome deve ter no máximo 60 caracteres.",
+    "name-saved": "Nome do aplicativo atualizado",
+    "logo-saved": "Logotipo atualizado",
+    "logo-removed": "Logotipo removido",
+    "logo-invalid-type": "O logotipo deve ser uma imagem PNG, JPEG, WebP ou GIF.",
+    "logo-too-large": "O logotipo deve ter 2MB ou menos.",
+    "save": "Salvar",
+    "saving": "Salvando…",
+    "uploading": "Enviando…",
+    "error": "Algo deu errado"
+  }
+}

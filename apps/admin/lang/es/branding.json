@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Configuración",
+  "title": "Marca",
+  "description": "Personaliza cómo se ve tu espacio de trabajo en las aplicaciones.",
+  "name": {
+    "title": "Nombre de la aplicación",
+    "description": "Se muestra en el encabezado, las pantallas de inicio de sesión y la pestaña del navegador.",
+    "label": "Nombre",
+    "placeholder": "p. ej. Acme Meet"
+  },
+  "logo": {
+    "title": "Logotipo",
+    "description": "Se muestra junto al nombre de la aplicación. PNG, JPEG, WebP o GIF.",
+    "alt": "Logotipo de la aplicación",
+    "upload": "Subir logotipo",
+    "replace": "Reemplazar logotipo",
+    "remove": "Eliminar",
+    "hint": "Recomendado: una imagen cuadrada, de al menos 64×64px, hasta 2MB."
+  },
+  "form": {
+    "name-required": "Ingresa un nombre de aplicación.",
+    "name-too-long": "El nombre debe tener 60 caracteres o menos.",
+    "name-saved": "Nombre de la aplicación actualizado",
+    "logo-saved": "Logotipo actualizado",
+    "logo-removed": "Logotipo eliminado",
+    "logo-invalid-type": "El logotipo debe ser una imagen PNG, JPEG, WebP o GIF.",
+    "logo-too-large": "El logotipo debe ser de 2MB o menos.",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "uploading": "Subiendo…",
+    "error": "Algo salió mal"
+  }
+}

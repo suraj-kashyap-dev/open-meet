@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Ayarlar",
+  "title": "Marka",
+  "description": "Çalışma alanınızın uygulamalardaki görünümünü özelleştirin.",
+  "name": {
+    "title": "Uygulama adı",
+    "description": "Başlıkta, oturum açma ekranlarında ve tarayıcı sekmesinde gösterilir.",
+    "label": "Ad",
+    "placeholder": "örn. Acme Meet"
+  },
+  "logo": {
+    "title": "Logo",
+    "description": "Uygulama adının yanında gösterilir. PNG, JPEG, WebP veya GIF.",
+    "alt": "Uygulama logosu",
+    "upload": "Logo yükle",
+    "replace": "Logoyu değiştir",
+    "remove": "Kaldır",
+    "hint": "Önerilen: kare bir görsel, en az 64×64px, en fazla 2MB."
+  },
+  "form": {
+    "name-required": "Bir uygulama adı girin.",
+    "name-too-long": "Ad en fazla 60 karakter olmalıdır.",
+    "name-saved": "Uygulama adı güncellendi",
+    "logo-saved": "Logo güncellendi",
+    "logo-removed": "Logo kaldırıldı",
+    "logo-invalid-type": "Logo bir PNG, JPEG, WebP veya GIF görseli olmalıdır.",
+    "logo-too-large": "Logo 2MB veya daha küçük olmalıdır.",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor…",
+    "uploading": "Yükleniyor…",
+    "error": "Bir şeyler ters gitti"
+  }
+}

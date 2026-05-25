@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl';
 import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
 
 import { Link } from '@/i18n/navigation';
-import { Logo } from '@open-meet/ui/logo';
+import { BrandLockup } from '@/components/web/branding/brand-lockup';
+import { useBranding } from '@/components/web/branding/branding-provider';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import {
@@ -21,6 +22,7 @@ export function AppHeader() {
   const t = useTranslations('nav');
   const { data: user } = useCurrentUser();
   const logout = useLogout();
+  const { appName, logoUrl } = useBranding();
 
   return (
     <header
@@ -28,9 +30,16 @@ export function AppHeader() {
       className="sticky top-0 z-40 border-b border-border bg-background/70 backdrop-blur-xl"
     >
       <div className="flex h-14 items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 text-sm font-semibold tracking-tight">
-          <Logo className="h-7 w-7 shadow-sm" />
-          <span>Open Meet</span>
+        <Link
+          href="/"
+          className="flex items-center rounded-md outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <BrandLockup
+            appName={appName}
+            logoUrl={logoUrl}
+            logoClassName="h-7 w-7 shadow-sm"
+            textClassName="text-base font-semibold tracking-tight"
+          />
         </Link>
 
         <div className="flex items-center gap-2">

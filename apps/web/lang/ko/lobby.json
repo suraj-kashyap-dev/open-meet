@@ -25,7 +25,8 @@
     "microphone": "마이크",
     "microphone-placeholder": "마이크 선택",
     "speakers": "스피커",
-    "system-default": "시스템 기본값"
+    "system-default": "시스템 기본값",
+    "unsupported": "카메라와 마이크는 보안 연결(HTTPS) 또는 localhost가 필요합니다."
   },
   "preview": {
     "camera-off": "카메라가 꺼져 있습니다",

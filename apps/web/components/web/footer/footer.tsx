@@ -9,9 +9,10 @@ import {
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { Logo } from '@open-meet/ui/logo';
 import { Button } from '@open-meet/ui/button';
 import { Link } from '@/i18n/navigation';
+import { BrandLockup } from '@/components/web/branding/brand-lockup';
+import { getBranding } from '@/lib/branding';
 import { GITHUB_URL } from '@/lib/constants';
 
 const STACK = [
@@ -25,6 +26,7 @@ const STACK = [
 
 export async function Footer() {
   const t = await getTranslations('footer');
+  const { appName, logoUrl } = await getBranding();
 
   return (
     <footer className="relative isolate overflow-hidden bg-background">
@@ -44,13 +46,13 @@ export async function Footer() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-14 sm:px-6 sm:py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
           <div className="col-span-2 flex flex-col gap-6 md:col-span-5">
-            <Link
-              href="/"
-              className="inline-flex w-fit items-center gap-2.5 text-base font-semibold tracking-tight"
-            >
-              <Logo className="h-9 w-9 shadow-sm" />
-
-              <span className="text-lg">Open Meet</span>
+            <Link href="/" className="inline-flex w-fit items-center gap-2.5">
+              <BrandLockup
+                appName={appName}
+                logoUrl={logoUrl}
+                logoClassName="h-9 w-9 shadow-sm"
+                textClassName="text-lg font-semibold tracking-tight"
+              />
 
               <span className="ml-1 inline-flex items-center rounded-md border border-border bg-card px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 v0.1
@@ -103,7 +105,6 @@ export async function Footer() {
           >
             <FooterLink href="/">{t('product.dashboard')}</FooterLink>
             <FooterLink href="/history">{t('product.history')}</FooterLink>
-            <FooterLink href="/account">{t('product.account')}</FooterLink>
           </FooterCol>
 
           <FooterCol
@@ -115,7 +116,6 @@ export async function Footer() {
             <FooterLink href={`${GITHUB_URL}/blob/main/README.md`}>
               {t('resources.self-host')}
             </FooterLink>
-            <FooterLink href={`${GITHUB_URL}#api-reference`}>{t('resources.api')}</FooterLink>
             <FooterLink href={`${GITHUB_URL}/blob/main/LICENSE`}>
               {t('resources.license')}
             </FooterLink>
@@ -130,7 +130,6 @@ export async function Footer() {
           >
             <FooterLink href={GITHUB_URL}>{t('community.repo')}</FooterLink>
             <FooterLink href={`${GITHUB_URL}/issues`}>{t('community.issues')}</FooterLink>
-            <FooterLink href={`${GITHUB_URL}/discussions`}>{t('community.discussions')}</FooterLink>
             <FooterLink href={`${GITHUB_URL}/pulls`}>{t('community.contribute')}</FooterLink>
           </FooterCol>
         </div>

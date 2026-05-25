@@ -35,6 +35,8 @@ model AdminInvite {
 
 model WorkspaceSettings {
   id                  String   @id @default("default")
+  appName             String   @default("Open Meet")
+  logoKey             String?
   defaultMeetingTitle String   @default("Untitled meeting")
   allowGuestJoin      Boolean  @default(true)
   maxMeetingMinutes   Int?

@@ -25,7 +25,8 @@
     "microphone": "الميكروفون",
     "microphone-placeholder": "اختر الميكروفون",
     "speakers": "السماعات",
-    "system-default": "الإعداد الافتراضي للنظام"
+    "system-default": "الإعداد الافتراضي للنظام",
+    "unsupported": "تتطلب الكاميرا والميكروفون اتصالاً آمنًا (HTTPS) أو localhost."
   },
   "preview": {
     "camera-off": "الكاميرا مغلقة",

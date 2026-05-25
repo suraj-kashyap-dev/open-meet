@@ -4,6 +4,7 @@ import { ChevronRight, LogOut, Menu, PanelLeftClose, PanelLeftOpen } from 'lucid
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
+import { Logo } from '@open-meet/ui/logo';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import {
@@ -16,8 +17,9 @@ import {
 } from '@open-meet/ui/dropdown-menu';
 import { ThemeToggle } from '@open-meet/ui/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
+import { useBranding } from '@/components/branding-provider';
 import { useAdminLogout, useCurrentAdmin } from '@/features/auth/hooks/use-admin-auth';
-import { usePathname } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@open-meet/ui/cn';
 
 import { adminNav } from './admin-nav-config';
@@ -73,6 +75,7 @@ export function AdminTopbar({
   const crumbs = useMemo(() => deriveCrumbs(pathname), [pathname]);
   const { data: admin } = useCurrentAdmin();
   const logout = useAdminLogout();
+  const { appName, logoUrl } = useBranding();
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-xl sm:px-6">
@@ -87,6 +90,20 @@ export function AdminTopbar({
           <Menu className="h-4 w-4" />
         </Button>
       ) : null}
+
+      {/* Mobile-only brand: the desktop sidebar (with the logo) is hidden here. */}
+      <Link
+        href="/"
+        aria-label={appName}
+        className="flex min-w-0 items-center gap-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-accent sm:hidden"
+      >
+        {logoUrl ? (
+          <img src={logoUrl} alt={appName} className="h-7 w-7 shrink-0 rounded-md object-contain" />
+        ) : (
+          <Logo className="h-7 w-7 shrink-0" />
+        )}
+        <span className="truncate text-sm font-semibold tracking-tight">{appName}</span>
+      </Link>
 
       {onToggleDesktopSidebar ? (
         <Button
@@ -104,7 +121,7 @@ export function AdminTopbar({
         </Button>
       ) : null}
 
-      <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1 text-sm">
+      <nav aria-label="Breadcrumb" className="hidden min-w-0 items-center gap-1 text-sm sm:flex">
         {crumbs.map((crumb, index) => {
           const isLast = index === crumbs.length - 1;
           const text = crumb.labelKey ? t(crumb.labelKey) : (crumb.label ?? '');

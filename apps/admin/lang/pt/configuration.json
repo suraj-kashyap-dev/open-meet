@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "A configuração está a caminho",
     "description": "Padrões do espaço de trabalho, identidade visual e políticas de reunião estarão aqui em breve."
+  },
+  "form": {
+    "title": "Padrões do espaço de trabalho",
+    "subtitle": "Padrões aplicados a novas reuniões em todo o espaço de trabalho.",
+    "default-title-label": "Título padrão da reunião",
+    "default-title-help": "Usado quando uma reunião é criada sem nome.",
+    "title-required": "Insira um título padrão para a reunião.",
+    "title-too-long": "O título deve ter no máximo 120 caracteres.",
+    "allow-guests-label": "Permitir que convidados entrem",
+    "allow-guests-help": "Permita que pessoas sem conta entrem nas reuniões por meio de um link.",
+    "max-duration-label": "Duração máxima da reunião (minutos)",
+    "max-duration-placeholder": "Sem limite",
+    "max-duration-help": "Deixe em branco para não haver limite. Entre 5 e 1440 minutos.",
+    "duration-range": "Insira um número entre 5 e 1440 ou deixe em branco.",
+    "save": "Salvar alterações",
+    "saving": "Salvando…",
+    "saved": "Configuração salva",
+    "error": "Não foi possível salvar a configuração"
   }
 }

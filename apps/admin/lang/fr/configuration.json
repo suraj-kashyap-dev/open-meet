@@ -6,5 +6,23 @@
   "coming-soon": {
     "title": "La configuration est en cours de développement",
     "description": "Les valeurs par défaut de l'espace de travail, l'image de marque et les politiques de réunion seront bientôt disponibles ici."
+  },
+  "form": {
+    "title": "Valeurs par défaut de l'espace de travail",
+    "subtitle": "Valeurs par défaut appliquées aux nouvelles réunions dans tout l'espace de travail.",
+    "default-title-label": "Titre de réunion par défaut",
+    "default-title-help": "Utilisé lorsqu'une réunion est créée sans nom.",
+    "title-required": "Saisissez un titre de réunion par défaut.",
+    "title-too-long": "Le titre ne doit pas dépasser 120 caractères.",
+    "allow-guests-label": "Autoriser les invités à rejoindre",
+    "allow-guests-help": "Permettez aux personnes sans compte de rejoindre les réunions via un lien.",
+    "max-duration-label": "Durée maximale de réunion (minutes)",
+    "max-duration-placeholder": "Aucune limite",
+    "max-duration-help": "Laissez vide pour aucune limite. Entre 5 et 1440 minutes.",
+    "duration-range": "Saisissez un nombre entre 5 et 1440, ou laissez vide.",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement…",
+    "saved": "Configuration enregistrée",
+    "error": "Impossible d'enregistrer la configuration"
   }
 }
