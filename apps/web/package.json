@@ -8,6 +8,9 @@
     "start": "next start --port 3000",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
     "clean": "rimraf .next .turbo *.tsbuildinfo"
   },
   "dependencies": {
@@ -56,6 +59,7 @@
   },
   "devDependencies": {
     "@open-meet/typescript-config": "workspace:*",
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.7",
