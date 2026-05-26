@@ -43,7 +43,7 @@ export async function Footer() {
         className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-30"
       />
 
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-14 sm:px-6 sm:py-16">
+      <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-12 px-4 py-14 sm:px-6 sm:py-16 lg:px-10">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
           <div className="col-span-2 flex flex-col gap-6 md:col-span-5">
             <Link href="/" className="inline-flex w-fit items-center gap-2.5">

@@ -99,15 +99,6 @@
     "chat-title": "चैट सुरक्षित है",
     "chat-body": "हर संदेश और साझा फ़ाइल आपके मीटिंग इतिहास में सहेजी जाती है।"
   },
-  "shortcuts": {
-    "title": "शॉर्टकट",
-    "subtitle": "माउस के बिना ऐप में नेविगेट करें।",
-    "in-call": "कॉल में",
-    "command-palette": "कमांड पैलेट खोलें",
-    "mute": "माइक म्यूट / अनम्यूट करें",
-    "camera": "कैमरा टॉगल करें",
-    "raise-hand": "हाथ उठाएं / नीचे करें"
-  },
   "recurrence": {
     "repeats": "दोहराता है",
     "daily": "दैनिक",
@@ -165,7 +156,8 @@
     "repeat-none": "दोहराता नहीं",
     "repeat-daily": "दैनिक",
     "repeat-weekly": "साप्ताहिक",
-    "repeat-monthly": "मासिक"
+    "repeat-monthly": "मासिक",
+    "time-heading": "समय"
   },
   "toast": {
     "create-error": "मीटिंग नहीं बनाई जा सकी",

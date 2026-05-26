@@ -99,15 +99,6 @@
     "chat-title": "채팅이 보존됩니다",
     "chat-body": "모든 메시지와 공유된 파일이 회의 기록에 저장됩니다."
   },
-  "shortcuts": {
-    "title": "단축키",
-    "subtitle": "마우스 없이 앱을 탐색하세요.",
-    "in-call": "통화 중",
-    "command-palette": "명령 팔레트 열기",
-    "mute": "마이크 음소거 / 해제",
-    "camera": "카메라 전환",
-    "raise-hand": "손 올리기 / 내리기"
-  },
   "recurrence": {
     "repeats": "반복",
     "daily": "매일",
@@ -165,7 +156,8 @@
     "repeat-none": "반복 안 함",
     "repeat-daily": "매일",
     "repeat-weekly": "매주",
-    "repeat-monthly": "매월"
+    "repeat-monthly": "매월",
+    "time-heading": "시간"
   },
   "toast": {
     "create-error": "회의를 생성할 수 없습니다",

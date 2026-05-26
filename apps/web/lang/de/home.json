@@ -99,15 +99,6 @@
     "chat-title": "Chat wird gespeichert",
     "chat-body": "Jede Nachricht und geteilte Datei wird in Ihrem Besprechungsverlauf gespeichert."
   },
-  "shortcuts": {
-    "title": "Tastenkürzel",
-    "subtitle": "Durch die App navigieren ohne Maus.",
-    "in-call": "im Anruf",
-    "command-palette": "Befehlspalette öffnen",
-    "mute": "Mikrofon stummschalten / aufheben",
-    "camera": "Kamera umschalten",
-    "raise-hand": "Hand heben / senken"
-  },
   "recurrence": {
     "repeats": "Wiederholt sich",
     "daily": "Täglich",
@@ -165,7 +156,8 @@
     "repeat-none": "Wiederholt sich nicht",
     "repeat-daily": "Täglich",
     "repeat-weekly": "Wöchentlich",
-    "repeat-monthly": "Monatlich"
+    "repeat-monthly": "Monatlich",
+    "time-heading": "Uhrzeit"
   },
   "toast": {
     "create-error": "Besprechung konnte nicht erstellt werden",

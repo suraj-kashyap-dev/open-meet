@@ -1,6 +1,21 @@
 'use client';
 
-import { ArrowRight, CalendarClock, Check, Copy, Download, Loader2, X } from 'lucide-react';
+import {
+  ArrowRight,
+  CalendarCheck,
+  CalendarClock,
+  Check,
+  Clock,
+  Copy,
+  Download,
+  Loader2,
+  Repeat,
+  Type,
+  Users,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
+import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
 import { toast } from 'sonner';
@@ -17,13 +32,8 @@ import {
 } from '@open-meet/ui/dialog';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@open-meet/ui/select';
+import { DateTimePicker } from '@/features/web/home/components/date-time-picker';
+import { nextRoundedHour } from '@/features/web/home/lib/schedule-time';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useScheduleMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { ApiClientError } from '@/lib/api/client';
@@ -49,12 +59,22 @@ const RECURRENCE_OPTIONS: { value: string; labelKey: string }[] = [
 
 const DURATION_OPTIONS = [15, 30, 45, 60, 90, 120];
 
+const fieldStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.04 } },
+};
+
+const fieldItem = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+};
+
 export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDialogProps) {
   const t = useTranslations('home');
   const defaultStart = useMemo(() => nextRoundedHour(), []);
 
   const [title, setTitle] = useState('');
-  const [startAt, setStartAt] = useState(defaultStart);
+  const [startAt, setStartAt] = useState<Date>(defaultStart);
   const [durationMin, setDurationMin] = useState(30);
   const [recurrence, setRecurrence] = useState('none');
   const [invitees, setInvitees] = useState<string[]>([]);
@@ -191,14 +211,12 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       return;
     }
 
-    const scheduledFor = new Date(startAt);
-
-    if (Number.isNaN(scheduledFor.getTime())) {
+    if (Number.isNaN(startAt.getTime())) {
       toast.error(t('toast.valid-datetime'));
       return;
     }
 
-    if (scheduledFor.getTime() < Date.now() - 60_000) {
+    if (startAt.getTime() < Date.now() - 60_000) {
       toast.error(t('toast.future-datetime'));
       return;
     }
@@ -218,7 +236,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
     try {
       const meeting = await schedule.mutateAsync({
         title: trimmedTitle,
-        scheduledFor: scheduledFor.toISOString(),
+        scheduledFor: startAt.toISOString(),
         durationMin,
         recurrence: recurrence === 'none' ? null : recurrence,
         invitees: finalInvitees,
@@ -227,7 +245,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       setResult({
         code: meeting.code,
         title: trimmedTitle,
-        scheduledFor: meeting.scheduledFor ?? scheduledFor.toISOString(),
+        scheduledFor: meeting.scheduledFor ?? startAt.toISOString(),
       });
 
       if (finalInvitees.length > 0) {
@@ -261,7 +279,13 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       <DialogContent className="sm:max-w-130">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <CalendarClock className="h-4 w-4 text-accent" />
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/15 text-accent ring-1 ring-accent/25">
+              {result ? (
+                <CalendarCheck className="h-4 w-4" />
+              ) : (
+                <CalendarClock className="h-4 w-4" />
+              )}
+            </span>
             {result ? t('schedule.result-title') : t('schedule.title')}
           </DialogTitle>
 
@@ -282,9 +306,14 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
             onClose={() => handleOpenChange(false)}
           />
         ) : (
-          <form onSubmit={onSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="meeting-title">{t('schedule.title-label')}</Label>
+          <motion.form
+            onSubmit={onSubmit}
+            className="flex flex-col gap-5"
+            variants={fieldStagger}
+            initial="hidden"
+            animate="visible"
+          >
+            <Field icon={Type} label={t('schedule.title-label')} htmlFor="meeting-title">
               <Input
                 id="meeting-title"
                 value={title}
@@ -293,63 +322,56 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                 autoFocus
                 maxLength={200}
               />
-            </div>
+            </Field>
 
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[1fr_140px]">
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="meeting-start">{t('schedule.datetime-label')}</Label>
-                <Input
-                  id="meeting-start"
-                  type="datetime-local"
-                  value={startAt}
-                  onChange={(e) => setStartAt(e.target.value)}
-                />
+            <Field
+              icon={CalendarClock}
+              label={t('schedule.datetime-label')}
+              htmlFor="meeting-start"
+            >
+              <DateTimePicker id="meeting-start" value={startAt} onChange={setStartAt} />
+            </Field>
+
+            <Field icon={Clock} label={t('schedule.duration-label')}>
+              <div className="flex flex-wrap gap-2">
+                {DURATION_OPTIONS.map((min) => (
+                  <Chip
+                    key={min}
+                    selected={durationMin === min}
+                    onClick={() => setDurationMin(min)}
+                  >
+                    {formatDuration(min, t)}
+                  </Chip>
+                ))}
               </div>
+            </Field>
 
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="meeting-duration">{t('schedule.duration-label')}</Label>
-                <Select
-                  value={String(durationMin)}
-                  onValueChange={(v) => setDurationMin(Number(v))}
-                >
-                  <SelectTrigger id="meeting-duration">
-                    <SelectValue />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    {DURATION_OPTIONS.map((min) => (
-                      <SelectItem key={min} value={String(min)}>
-                        {formatDuration(min, t)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            <Field icon={Repeat} label={t('schedule.repeat-label')}>
+              <div className="flex flex-wrap gap-2">
+                {RECURRENCE_OPTIONS.map((opt) => (
+                  <Chip
+                    key={opt.value}
+                    selected={recurrence === opt.value}
+                    onClick={() => setRecurrence(opt.value)}
+                  >
+                    {t(opt.labelKey)}
+                  </Chip>
+                ))}
               </div>
-            </div>
+            </Field>
 
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="meeting-recurrence">{t('schedule.repeat-label')}</Label>
-              <Select value={recurrence} onValueChange={setRecurrence}>
-                <SelectTrigger id="meeting-recurrence">
-                  <SelectValue />
-                </SelectTrigger>
-
-                <SelectContent>
-                  {RECURRENCE_OPTIONS.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {t(opt.labelKey)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="meeting-invitees">
-                {t('schedule.guests-label')}{' '}
-                <span className="text-muted-foreground">{t('schedule.guests-optional')}</span>
-              </Label>
-
+            <Field
+              icon={Users}
+              htmlFor="meeting-invitees"
+              label={
+                <>
+                  {t('schedule.guests-label')}{' '}
+                  <span className="font-normal text-muted-foreground">
+                    {t('schedule.guests-optional')}
+                  </span>
+                </>
+              }
+            >
               <Input
                 ref={inviteeInputRef}
                 id="meeting-invitees"
@@ -387,7 +409,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                   ))}
                 </div>
               )}
-            </div>
+            </Field>
 
             <DialogFooter>
               <Button type="button" variant="ghost" onClick={() => handleOpenChange(false)}>
@@ -408,10 +430,56 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                 )}
               </Button>
             </DialogFooter>
-          </form>
+          </motion.form>
         )}
       </DialogContent>
     </Dialog>
+  );
+}
+
+interface FieldProps {
+  icon: LucideIcon;
+  label: React.ReactNode;
+  htmlFor?: string;
+  children: React.ReactNode;
+}
+
+function Field({ icon: Icon, label, htmlFor, children }: FieldProps) {
+  return (
+    <motion.div variants={fieldItem} className="flex flex-col gap-1.5">
+      <Label htmlFor={htmlFor} className="flex items-center gap-1.5 text-sm font-medium">
+        <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+        {label}
+      </Label>
+      {children}
+    </motion.div>
+  );
+}
+
+function Chip({
+  selected,
+  onClick,
+  children,
+}: {
+  selected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={cn(
+        'inline-flex h-8 cursor-pointer items-center justify-center rounded-full border px-3.5 text-xs font-medium transition-colors',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+        selected
+          ? 'border-accent bg-accent/15 text-foreground'
+          : 'border-border bg-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground',
+      )}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -439,10 +507,25 @@ function ScheduledSummary({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="rounded-md border border-border bg-muted/40 p-4">
-        <p className="text-sm font-medium">{result.title}</p>
-        <p className="mt-1 text-xs text-muted-foreground">{when}</p>
-        <p className="mt-2 font-mono text-xs text-muted-foreground">{result.code}</p>
+      <div className="relative overflow-hidden rounded-xl border border-border bg-muted/40 p-4">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/10 blur-2xl"
+        />
+
+        <div className="relative flex items-start gap-3">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/15 text-accent ring-1 ring-accent/25">
+            <CalendarClock className="h-4 w-4" />
+          </span>
+
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold">{result.title}</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">{when}</p>
+            <p className="mt-2 inline-flex items-center rounded-md border border-border bg-card px-2 py-0.5 font-mono text-[11px] tracking-tight text-muted-foreground">
+              {result.code}
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -482,26 +565,6 @@ function ScheduledSummary({
         </Button>
       </div>
     </div>
-  );
-}
-
-function nextRoundedHour(): string {
-  const d = new Date();
-  d.setMinutes(0, 0, 0);
-  d.setHours(d.getHours() + 1);
-
-  const pad = (n: number) => n.toString().padStart(2, '0');
-
-  return (
-    d.getFullYear() +
-    '-' +
-    pad(d.getMonth() + 1) +
-    '-' +
-    pad(d.getDate()) +
-    'T' +
-    pad(d.getHours()) +
-    ':' +
-    pad(d.getMinutes())
   );
 }
 
