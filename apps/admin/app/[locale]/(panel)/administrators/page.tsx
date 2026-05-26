@@ -89,10 +89,7 @@ export default function AdministratorsPage() {
         header: t('table.administrator'),
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
-            <UserAvatar
-              user={{ name: row.original.name, avatar: row.original.avatar }}
-              size="md"
-            />
+            <UserAvatar user={{ name: row.original.name, avatar: row.original.avatar }} size="md" />
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{row.original.name}</p>
               <p className="truncate text-xs text-muted-foreground">{row.original.email}</p>

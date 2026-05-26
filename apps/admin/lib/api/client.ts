@@ -89,7 +89,7 @@ async function uploadForm<TData>(path: string, form: FormData): Promise<TData> {
 
   const contentType = res.headers.get('content-type') ?? '';
 
-  if (! contentType.includes('application/json')) {
+  if (!contentType.includes('application/json')) {
     if (res.status === 401) {
       emitUnauthorized(path);
     }
@@ -99,7 +99,7 @@ async function uploadForm<TData>(path: string, form: FormData): Promise<TData> {
 
   const json = (await res.json()) as ApiResponse<TData>;
 
-  if (! res.ok || ! json.success) {
+  if (!res.ok || !json.success) {
     const errBody = (json as ApiError).error;
 
     const status = errBody?.statusCode ?? res.status;

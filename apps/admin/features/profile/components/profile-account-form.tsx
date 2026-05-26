@@ -53,7 +53,8 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
   const [avatarRemoved, setAvatarRemoved] = useState(false);
 
   const schema = useMemo(
-    () => z.object({ name: z.string().trim().min(1, t('account.validation.name-required')).max(120) }),
+    () =>
+      z.object({ name: z.string().trim().min(1, t('account.validation.name-required')).max(120) }),
     [t],
   );
 
@@ -225,7 +226,9 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
             )}
           </div>
 
-          <p className="text-xs text-muted-foreground">{t('avatar.helper', { mb: AVATAR_MAX_MB })}</p>
+          <p className="text-xs text-muted-foreground">
+            {t('avatar.helper', { mb: AVATAR_MAX_MB })}
+          </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -237,9 +240,7 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
               placeholder={t('account.name-placeholder')}
               {...register('name')}
             />
-            {errors.name ? (
-              <p className="text-xs text-destructive">{errors.name.message}</p>
-            ) : null}
+            {errors.name ? <p className="text-xs text-destructive">{errors.name.message}</p> : null}
           </div>
 
           <div className="space-y-1.5">

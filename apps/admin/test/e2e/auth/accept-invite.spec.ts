@@ -7,9 +7,7 @@ test.describe('Admin accept-invite page', () => {
     await mockAdminApi(page);
     await page.goto('/en/accept-invite');
 
-    await expect(
-      page.getByRole('heading', { name: 'Activate your admin account' }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Activate your admin account' })).toBeVisible();
     await expect(page.getByText('This invitation link is missing its token.')).toBeVisible();
   });
 
@@ -17,9 +15,7 @@ test.describe('Admin accept-invite page', () => {
     await mockAdminApi(page);
     await page.goto('/en/accept-invite?token=valid-token');
 
-    await expect(
-      page.getByRole('heading', { name: 'Activate your admin account' }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Activate your admin account' })).toBeVisible();
     await expect(page.getByText('invitee@example.com')).toBeVisible();
     await expect(page.getByLabel('Password', { exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Activate account' })).toBeVisible();

@@ -66,7 +66,13 @@ export function CreateAdminDialog({ open, onClose }: Props) {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: '', email: '', password: '', confirmPassword: '', role: AdminRole.ADMIN },
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      role: AdminRole.ADMIN,
+    },
   });
 
   const onSubmit = form.handleSubmit(async ({ confirmPassword: _confirm, ...values }) => {

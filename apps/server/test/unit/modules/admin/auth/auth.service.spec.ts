@@ -40,7 +40,9 @@ describe('AdminAuthService', () => {
       findByEmail: vi.fn().mockResolvedValue(adminRow),
       findById: vi.fn().mockResolvedValue(adminRow),
       touchLastLogin: vi.fn().mockResolvedValue(adminRow),
-      update: vi.fn().mockImplementation((id, data) => Promise.resolve({ ...adminRow, id, ...data })),
+      update: vi
+        .fn()
+        .mockImplementation((id, data) => Promise.resolve({ ...adminRow, id, ...data })),
     };
     jwt = { signAsync: vi.fn().mockResolvedValue('signed.jwt') };
     storage = { publicUrl: vi.fn((key: string) => `https://cdn.example/${key}`) };

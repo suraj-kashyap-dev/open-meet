@@ -70,9 +70,9 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(res.body.data.role).toBe('ADMIN');
 
       const list = await http(app).get('/api/admin/accounts').set('Cookie', cookie);
-      expect(list.body.data.items.some((a: { email: string }) => a.email === 'direct@example.com')).toBe(
-        true,
-      );
+      expect(
+        list.body.data.items.some((a: { email: string }) => a.email === 'direct@example.com'),
+      ).toBe(true);
 
       const { res: loginRes } = await loginAdmin(app, {
         email: 'direct@example.com',
@@ -84,15 +84,12 @@ describe('Admin accounts & invites (e2e)', () => {
     it('should create a superadmin when role is SUPERADMIN', async () => {
       const { cookie } = await loginAdmin(app, SUPER);
 
-      const res = await http(app)
-        .post('/api/admin/accounts')
-        .set('Cookie', cookie)
-        .send({
-          email: 'boss@example.com',
-          name: 'Boss',
-          password: 'boss-pass-1',
-          role: AdminRole.SUPERADMIN,
-        });
+      const res = await http(app).post('/api/admin/accounts').set('Cookie', cookie).send({
+        email: 'boss@example.com',
+        name: 'Boss',
+        password: 'boss-pass-1',
+        role: AdminRole.SUPERADMIN,
+      });
 
       expect(res.status).toBe(201);
       expect(res.body.data.role).toBe('SUPERADMIN');
