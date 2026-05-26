@@ -99,15 +99,6 @@
     "chat-title": "聊天记录已保存",
     "chat-body": "所有消息和共享文件都会保存到您的会议记录中。"
   },
-  "shortcuts": {
-    "title": "快捷键",
-    "subtitle": "无需鼠标，快速操作应用。",
-    "in-call": "通话中",
-    "command-palette": "打开命令面板",
-    "mute": "静音 / 取消静音",
-    "camera": "切换摄像头",
-    "raise-hand": "举手 / 放手"
-  },
   "recurrence": {
     "repeats": "重复",
     "daily": "每天",
@@ -165,7 +156,8 @@
     "repeat-none": "不重复",
     "repeat-daily": "每天",
     "repeat-weekly": "每周",
-    "repeat-monthly": "每月"
+    "repeat-monthly": "每月",
+    "time-heading": "时间"
   },
   "toast": {
     "create-error": "无法创建会议",

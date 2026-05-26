@@ -99,15 +99,6 @@
     "chat-title": "チャットは保存されます",
     "chat-body": "すべてのメッセージと共有ファイルはミーティング履歴に保存されます。"
   },
-  "shortcuts": {
-    "title": "ショートカット",
-    "subtitle": "マウスなしでアプリを操作できます。",
-    "in-call": "通話中",
-    "command-palette": "コマンドパレットを開く",
-    "mute": "マイクをミュート / ミュート解除",
-    "camera": "カメラをオン / オフ",
-    "raise-hand": "手を挙げる / 下げる"
-  },
   "recurrence": {
     "repeats": "繰り返し",
     "daily": "毎日",
@@ -165,7 +156,8 @@
     "repeat-none": "繰り返しなし",
     "repeat-daily": "毎日",
     "repeat-weekly": "毎週",
-    "repeat-monthly": "毎月"
+    "repeat-monthly": "毎月",
+    "time-heading": "時刻"
   },
   "toast": {
     "create-error": "ミーティングを作成できませんでした",

@@ -99,15 +99,6 @@
     "chat-title": "A conversa é preservada",
     "chat-body": "Cada mensagem e arquivo compartilhado é salvo no seu histórico de reuniões."
   },
-  "shortcuts": {
-    "title": "Atalhos",
-    "subtitle": "Navegue pelo aplicativo sem o mouse.",
-    "in-call": "na chamada",
-    "command-palette": "Abrir paleta de comandos",
-    "mute": "Silenciar / ativar microfone",
-    "camera": "Alternar câmera",
-    "raise-hand": "Levantar / baixar mão"
-  },
   "recurrence": {
     "repeats": "Repete",
     "daily": "Diariamente",
@@ -165,7 +156,8 @@
     "repeat-none": "Não repete",
     "repeat-daily": "Diariamente",
     "repeat-weekly": "Semanalmente",
-    "repeat-monthly": "Mensalmente"
+    "repeat-monthly": "Mensalmente",
+    "time-heading": "Hora"
   },
   "toast": {
     "create-error": "Não foi possível criar a reunião",

@@ -99,15 +99,6 @@
     "chat-title": "La chat è conservata",
     "chat-body": "Ogni messaggio e file condiviso viene salvato nella cronologia delle riunioni."
   },
-  "shortcuts": {
-    "title": "Scorciatoie",
-    "subtitle": "Naviga nell'app senza mouse.",
-    "in-call": "in chiamata",
-    "command-palette": "Apri tavolozza comandi",
-    "mute": "Silenzia / riattiva microfono",
-    "camera": "Attiva/disattiva fotocamera",
-    "raise-hand": "Alza / abbassa mano"
-  },
   "recurrence": {
     "repeats": "Ripeti",
     "daily": "Ogni giorno",
@@ -165,7 +156,8 @@
     "repeat-none": "Non si ripete",
     "repeat-daily": "Ogni giorno",
     "repeat-weekly": "Ogni settimana",
-    "repeat-monthly": "Ogni mese"
+    "repeat-monthly": "Ogni mese",
+    "time-heading": "Ora"
   },
   "toast": {
     "create-error": "Impossibile creare la riunione",

@@ -11,7 +11,6 @@ import {
   Hash,
   History,
   Info,
-  Keyboard,
   Link2,
   Loader2,
   MoreHorizontal,
@@ -169,11 +168,9 @@ export function Dashboard() {
             animate="visible"
             custom={3}
             variants={fadeUp}
-            className="space-y-6 lg:col-span-5"
+            className="lg:col-span-5"
           >
             <TipsCard />
-
-            <ShortcutsCard />
           </motion.aside>
         </div>
       </div>
@@ -1047,13 +1044,13 @@ function TipsCard() {
             <li
               key={tip.titleKey}
               className={cn(
-                'group/tip flex items-start gap-3.5 py-3.5',
+                'group/tip flex flex-1 items-center gap-3.5 py-3.5',
                 i > 0 && 'border-t border-border/50',
               )}
             >
               <span
                 className={cn(
-                  'mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-1 transition-transform group-hover/tip:scale-105',
+                  'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-1 transition-transform group-hover/tip:scale-105',
                   tip.accent,
                 )}
               >
@@ -1077,66 +1074,9 @@ function TipsCard() {
   );
 }
 
-const SHORTCUTS: { keys: string[]; labelKey: string; scope: 'global' | 'in-call' }[] = [
-  { keys: ['⌘', 'K'], labelKey: 'shortcuts.command-palette', scope: 'global' },
-  { keys: ['⌘', 'M'], labelKey: 'shortcuts.mute', scope: 'in-call' },
-  { keys: ['⌘', 'E'], labelKey: 'shortcuts.camera', scope: 'in-call' },
-  { keys: ['⌘', 'D'], labelKey: 'shortcuts.raise-hand', scope: 'in-call' },
-];
-
-function ShortcutsCard() {
-  const t = useTranslations('home');
-
-  return (
-    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur">
-      <CardContent className="relative flex h-full flex-col gap-6 p-6">
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20">
-            <Keyboard className="h-4 w-4" />
-          </span>
-
-          <div className="flex flex-col leading-tight">
-            <h3 className="text-base font-semibold tracking-tight">{t('shortcuts.title')}</h3>
-
-            <p className="text-xs text-muted-foreground">{t('shortcuts.subtitle')}</p>
-          </div>
-        </div>
-
-        <ul className="flex flex-1 flex-col">
-          {SHORTCUTS.map((shortcut, i) => (
-            <li
-              key={shortcut.labelKey}
-              className={cn(
-                'flex items-center justify-between gap-3 py-2.5',
-                i > 0 && 'border-t border-border/50',
-              )}
-            >
-              <div className="flex min-w-0 items-center gap-2">
-                <span className="truncate text-sm text-foreground/90">{t(shortcut.labelKey)}</span>
-
-                {shortcut.scope === 'in-call' ? (
-                  <span className="hidden rounded-md bg-muted px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted-foreground sm:inline-flex">
-                    {t('shortcuts.in-call')}
-                  </span>
-                ) : null}
-              </div>
-
-              <span className="flex shrink-0 items-center gap-1">
-                {shortcut.keys.map((k) => (
-                  <KbdShortcut key={k}>{k}</KbdShortcut>
-                ))}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
-  );
-}
-
 function KbdShortcut({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-border bg-card px-1.5 font-mono text-[10px] font-semibold text-foreground shadow-[0_1px_0_0_var(--color-border)]">
+    <kbd className="mx-0.5 inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-border bg-muted px-2 align-middle text-xs font-semibold leading-none text-foreground shadow-[0_1px_0_0_var(--color-border)]">
       {children}
     </kbd>
   );

@@ -99,15 +99,6 @@
     "chat-title": "Obrolan tersimpan",
     "chat-body": "Setiap pesan dan file yang dibagikan disimpan ke riwayat rapat Anda."
   },
-  "shortcuts": {
-    "title": "Pintasan",
-    "subtitle": "Navigasi aplikasi tanpa mouse.",
-    "in-call": "dalam panggilan",
-    "command-palette": "Buka palet perintah",
-    "mute": "Bisukan / aktifkan mikrofon",
-    "camera": "Aktifkan/nonaktifkan kamera",
-    "raise-hand": "Angkat / turunkan tangan"
-  },
   "recurrence": {
     "repeats": "Berulang",
     "daily": "Harian",
@@ -165,7 +156,8 @@
     "repeat-none": "Tidak berulang",
     "repeat-daily": "Harian",
     "repeat-weekly": "Mingguan",
-    "repeat-monthly": "Bulanan"
+    "repeat-monthly": "Bulanan",
+    "time-heading": "Waktu"
   },
   "toast": {
     "create-error": "Tidak dapat membuat rapat",

@@ -99,15 +99,6 @@
     "chat-title": "تُحفظ المحادثة",
     "chat-body": "تُحفظ كل رسالة وكل ملف مشترك في سجل اجتماعاتك."
   },
-  "shortcuts": {
-    "title": "اختصارات",
-    "subtitle": "تنقّل في التطبيق دون فأرة.",
-    "in-call": "أثناء المكالمة",
-    "command-palette": "فتح لوحة الأوامر",
-    "mute": "كتم/إلغاء كتم الميكروفون",
-    "camera": "تبديل الكاميرا",
-    "raise-hand": "رفع/خفض اليد"
-  },
   "recurrence": {
     "repeats": "متكرر",
     "daily": "يوميًا",
@@ -165,7 +156,8 @@
     "repeat-none": "لا يتكرر",
     "repeat-daily": "يوميًا",
     "repeat-weekly": "أسبوعيًا",
-    "repeat-monthly": "شهريًا"
+    "repeat-monthly": "شهريًا",
+    "time-heading": "الوقت"
   },
   "toast": {
     "create-error": "تعذّر إنشاء الاجتماع",

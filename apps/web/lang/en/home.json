@@ -99,15 +99,6 @@
     "chat-title": "Chat is preserved",
     "chat-body": "Every message and shared file is saved to your meeting history."
   },
-  "shortcuts": {
-    "title": "Shortcuts",
-    "subtitle": "Move through the app without a mouse.",
-    "in-call": "in call",
-    "command-palette": "Open command palette",
-    "mute": "Mute / unmute mic",
-    "camera": "Toggle camera",
-    "raise-hand": "Raise / lower hand"
-  },
   "recurrence": {
     "repeats": "Repeats",
     "daily": "Daily",
@@ -165,7 +156,8 @@
     "repeat-none": "Doesn't repeat",
     "repeat-daily": "Daily",
     "repeat-weekly": "Weekly",
-    "repeat-monthly": "Monthly"
+    "repeat-monthly": "Monthly",
+    "time-heading": "Time"
   },
   "toast": {
     "create-error": "Could not create meeting",

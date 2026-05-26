@@ -99,15 +99,6 @@
     "chat-title": "Sohbet kayıt altına alınır",
     "chat-body": "Her mesaj ve paylaşılan dosya toplantı geçmişinize kaydedilir."
   },
-  "shortcuts": {
-    "title": "Kısayollar",
-    "subtitle": "Uygulamada fareye ihtiyaç duymadan gezinin.",
-    "in-call": "aramada",
-    "command-palette": "Komut paletini aç",
-    "mute": "Mikrofonu kapat / aç",
-    "camera": "Kamerayı değiştir",
-    "raise-hand": "Elini kaldır / indir"
-  },
   "recurrence": {
     "repeats": "Tekrarlar",
     "daily": "Günlük",
@@ -165,7 +156,8 @@
     "repeat-none": "Tekrarlanmıyor",
     "repeat-daily": "Günlük",
     "repeat-weekly": "Haftalık",
-    "repeat-monthly": "Aylık"
+    "repeat-monthly": "Aylık",
+    "time-heading": "Saat"
   },
   "toast": {
     "create-error": "Toplantı oluşturulamadı",
