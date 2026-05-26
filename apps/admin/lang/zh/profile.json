@@ -1,0 +1,53 @@
+{
+  "eyebrow": "账户",
+  "title": "我的个人资料",
+  "subtitle": "管理您的个人详细信息、照片和密码。",
+  "account": {
+    "title": "个人资料",
+    "description": "更新您的姓名和照片。",
+    "name": "姓名",
+    "name-placeholder": "您的姓名",
+    "email": "电子邮件",
+    "email-helper": "您的电子邮件地址无法在此处更改。",
+    "role": "角色",
+    "role-admin": "管理员",
+    "role-superadmin": "超级管理员",
+    "save": "保存更改",
+    "saving": "正在保存…",
+    "success": "个人资料已更新",
+    "error": "无法更新个人资料",
+    "validation": {
+      "name-required": "姓名为必填项"
+    }
+  },
+  "avatar": {
+    "helper": "PNG、JPEG、WebP 或 GIF。最大 {mb} MB。",
+    "upload": "上传照片",
+    "replace": "替换照片",
+    "remove": "移除照片",
+    "edit-label": "编辑个人资料照片",
+    "upload-label": "上传个人资料照片",
+    "invalid-type": "请选择 PNG、JPEG、WebP 或 GIF 图片。",
+    "too-large": "图片必须不大于 {mb} MB。"
+  },
+  "password": {
+    "title": "密码",
+    "description": "更改您用于登录的密码。",
+    "current": "当前密码",
+    "current-placeholder": "输入您的当前密码",
+    "new": "新密码",
+    "new-placeholder": "至少 8 个字符",
+    "new-helper": "请至少使用 8 个字符。",
+    "confirm": "确认新密码",
+    "confirm-placeholder": "重新输入新密码",
+    "change": "更改密码",
+    "changing": "正在更改…",
+    "success": "密码已更改",
+    "error": "无法更改密码",
+    "validation": {
+      "current-required": "输入您的当前密码",
+      "password-min": "密码必须至少包含 8 个字符",
+      "password-mismatch": "密码不匹配"
+    }
+  }
+}

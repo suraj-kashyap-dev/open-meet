@@ -1,0 +1,53 @@
+{
+  "eyebrow": "खाता",
+  "title": "मेरी प्रोफ़ाइल",
+  "subtitle": "अपने व्यक्तिगत विवरण, फ़ोटो और पासवर्ड का प्रबंधन करें।",
+  "account": {
+    "title": "प्रोफ़ाइल",
+    "description": "अपना नाम और फ़ोटो अपडेट करें।",
+    "name": "नाम",
+    "name-placeholder": "आपका नाम",
+    "email": "ईमेल",
+    "email-helper": "आपका ईमेल पता यहां नहीं बदला जा सकता।",
+    "role": "भूमिका",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "save": "परिवर्तन सहेजें",
+    "saving": "सहेजा जा रहा है…",
+    "success": "प्रोफ़ाइल अपडेट की गई",
+    "error": "प्रोफ़ाइल अपडेट नहीं हो सकी",
+    "validation": {
+      "name-required": "नाम आवश्यक है"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP या GIF. {mb} MB तक।",
+    "upload": "फ़ोटो अपलोड करें",
+    "replace": "फ़ोटो बदलें",
+    "remove": "फ़ोटो हटाएं",
+    "edit-label": "प्रोफ़ाइल फ़ोटो संपादित करें",
+    "upload-label": "प्रोफ़ाइल फ़ोटो अपलोड करें",
+    "invalid-type": "PNG, JPEG, WebP या GIF छवि चुनें।",
+    "too-large": "छवि {mb} MB या उससे छोटी होनी चाहिए।"
+  },
+  "password": {
+    "title": "पासवर्ड",
+    "description": "साइन इन करने के लिए उपयोग किया जाने वाला पासवर्ड बदलें।",
+    "current": "वर्तमान पासवर्ड",
+    "current-placeholder": "अपना वर्तमान पासवर्ड दर्ज करें",
+    "new": "नया पासवर्ड",
+    "new-placeholder": "कम से कम 8 अक्षर",
+    "new-helper": "कम से कम 8 अक्षरों का उपयोग करें।",
+    "confirm": "नए पासवर्ड की पुष्टि करें",
+    "confirm-placeholder": "नया पासवर्ड फिर से दर्ज करें",
+    "change": "पासवर्ड बदलें",
+    "changing": "बदला जा रहा है…",
+    "success": "पासवर्ड बदला गया",
+    "error": "पासवर्ड नहीं बदला जा सका",
+    "validation": {
+      "current-required": "अपना वर्तमान पासवर्ड दर्ज करें",
+      "password-min": "पासवर्ड कम से कम 8 अक्षर का होना चाहिए",
+      "password-mismatch": "पासवर्ड मेल नहीं खाते"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Akun",
+  "title": "Profil saya",
+  "subtitle": "Kelola detail pribadi, foto, dan kata sandi Anda.",
+  "account": {
+    "title": "Profil",
+    "description": "Perbarui nama dan foto Anda.",
+    "name": "Nama",
+    "name-placeholder": "Nama Anda",
+    "email": "Email",
+    "email-helper": "Alamat email Anda tidak dapat diubah di sini.",
+    "role": "Peran",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "save": "Simpan perubahan",
+    "saving": "Menyimpan…",
+    "success": "Profil diperbarui",
+    "error": "Tidak dapat memperbarui profil",
+    "validation": {
+      "name-required": "Nama diperlukan"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP, atau GIF. Hingga {mb} MB.",
+    "upload": "Unggah foto",
+    "replace": "Ganti foto",
+    "remove": "Hapus foto",
+    "edit-label": "Edit foto profil",
+    "upload-label": "Unggah foto profil",
+    "invalid-type": "Pilih gambar PNG, JPEG, WebP, atau GIF.",
+    "too-large": "Gambar harus {mb} MB atau lebih kecil."
+  },
+  "password": {
+    "title": "Kata sandi",
+    "description": "Ubah kata sandi yang Anda gunakan untuk masuk.",
+    "current": "Kata sandi saat ini",
+    "current-placeholder": "Masukkan kata sandi Anda saat ini",
+    "new": "Kata sandi baru",
+    "new-placeholder": "Minimal 8 karakter",
+    "new-helper": "Gunakan minimal 8 karakter.",
+    "confirm": "Konfirmasi kata sandi baru",
+    "confirm-placeholder": "Masukkan kembali kata sandi baru",
+    "change": "Ubah kata sandi",
+    "changing": "Mengubah…",
+    "success": "Kata sandi diubah",
+    "error": "Tidak dapat mengubah kata sandi",
+    "validation": {
+      "current-required": "Masukkan kata sandi Anda saat ini",
+      "password-min": "Kata sandi minimal harus 8 karakter",
+      "password-mismatch": "Kata sandi tidak cocok"
+    }
+  }
+}

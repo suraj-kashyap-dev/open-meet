@@ -1,18 +1,35 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Patch,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
-import type { FastifyReply } from 'fastify';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import type { AdminDto, AdminLoginResponseDto } from '@open-meet/types';
+import { ApiErrorCode } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
 
+import { AdminAvatarsService } from './admin-avatars.service';
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AdminAuthService, type IssuedAdminTokens } from './auth.service';
 import { CurrentAdmin } from './decorators/current-admin.decorator';
 import { ADMIN_ACCESS_COOKIE } from './strategies/admin-jwt.strategy';
 import type { AdminRequestUser } from './strategies/admin-jwt.strategy';
 import { AdminLoginDto } from './dto/admin-login.dto';
+import { ChangeAdminPasswordDto } from './dto/change-admin-password.dto';
+import { UpdateAdminProfileDto } from './dto/update-admin-profile.dto';
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 
@@ -26,7 +43,10 @@ const ADMIN_THROTTLE = {
 @ApiTags('admin-auth')
 @Controller('admin/auth')
 export class AdminAuthController {
-  constructor(private readonly auth: AdminAuthService) {}
+  constructor(
+    private readonly auth: AdminAuthService,
+    private readonly avatars: AdminAvatarsService,
+  ) {}
 
   @Public()
   @Throttle(ADMIN_THROTTLE)
@@ -56,6 +76,72 @@ export class AdminAuthController {
   @Get('me')
   @ApiOperation({ summary: 'Return the currently authenticated admin' })
   me(@CurrentAdmin() admin: AdminRequestUser): Promise<AdminDto> {
+    return this.auth.getAdminDtoById(admin.id);
+  }
+
+  @Public()
+  @UseGuards(AdminAuthGuard)
+  @Patch('me')
+  @ApiOperation({ summary: "Update the authenticated admin's own profile" })
+  updateMe(
+    @CurrentAdmin() admin: AdminRequestUser,
+    @Body() dto: UpdateAdminProfileDto,
+  ): Promise<AdminDto> {
+    return this.auth.updateProfile(admin.id, dto);
+  }
+
+  @Public()
+  @UseGuards(AdminAuthGuard)
+  @Patch('me/password')
+  @ApiOperation({ summary: "Change the authenticated admin's own password" })
+  async changePassword(
+    @CurrentAdmin() admin: AdminRequestUser,
+    @Body() dto: ChangeAdminPasswordDto,
+  ): Promise<{ changed: true }> {
+    await this.auth.changePassword(admin.id, dto);
+    return { changed: true };
+  }
+
+  @Public()
+  @UseGuards(AdminAuthGuard)
+  @Post('me/avatar')
+  @ApiOperation({ summary: "Upload (or replace) the authenticated admin's profile image" })
+  async uploadAvatar(
+    @CurrentAdmin() admin: AdminRequestUser,
+    @Req() req: FastifyRequest,
+  ): Promise<AdminDto> {
+    if (!req.isMultipart()) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Expected multipart/form-data',
+      });
+    }
+
+    const part = await req.file();
+
+    if (!part) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'No file provided',
+      });
+    }
+
+    const buffer = await part.toBuffer();
+    await this.avatars.upload({
+      adminId: admin.id,
+      buffer,
+      mime: part.mimetype || 'application/octet-stream',
+    });
+    return this.auth.getAdminDtoById(admin.id);
+  }
+
+  @Public()
+  @UseGuards(AdminAuthGuard)
+  @Delete('me/avatar')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: "Remove the authenticated admin's avatar" })
+  async deleteAvatar(@CurrentAdmin() admin: AdminRequestUser): Promise<AdminDto> {
+    await this.avatars.remove(admin.id);
     return this.auth.getAdminDtoById(admin.id);
   }
 

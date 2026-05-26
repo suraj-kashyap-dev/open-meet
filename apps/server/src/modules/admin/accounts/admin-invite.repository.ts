@@ -51,4 +51,8 @@ export class AdminInviteRepository {
   delete(id: string): Promise<AdminInvite> {
     return this.prisma.adminInvite.delete({ where: { id } });
   }
+
+  async deleteByEmail(email: string): Promise<void> {
+    await this.prisma.adminInvite.deleteMany({ where: { email } });
+  }
 }

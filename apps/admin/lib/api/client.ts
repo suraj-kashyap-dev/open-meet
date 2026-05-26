@@ -77,6 +77,48 @@ async function request<TData>(path: string, options: RequestOptions = {}): Promi
   return (json as ApiSuccess<TData>).data;
 }
 
+async function uploadForm<TData>(path: string, form: FormData): Promise<TData> {
+  const url = `${env.NEXT_PUBLIC_API_URL}/api${path.startsWith('/') ? path : `/${path}`}`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { Accept: 'application/json', ...currentLocaleHeader() },
+    body: form,
+  });
+
+  const contentType = res.headers.get('content-type') ?? '';
+
+  if (!contentType.includes('application/json')) {
+    if (res.status === 401) {
+      emitUnauthorized(path);
+    }
+
+    throw new ApiClientError('INVALID_RESPONSE', res.status, `Unexpected response: ${res.status}`);
+  }
+
+  const json = (await res.json()) as ApiResponse<TData>;
+
+  if (!res.ok || !json.success) {
+    const errBody = (json as ApiError).error;
+
+    const status = errBody?.statusCode ?? res.status;
+
+    if (status === 401) {
+      emitUnauthorized(path);
+    }
+
+    throw new ApiClientError(
+      errBody?.code ?? 'UNKNOWN',
+      status,
+      errBody?.message ?? 'Request failed',
+      errBody?.details,
+    );
+  }
+
+  return (json as ApiSuccess<TData>).data;
+}
+
 function emitUnauthorized(path: string): void {
   if (typeof window === 'undefined') {
     return;
@@ -84,11 +126,6 @@ function emitUnauthorized(path: string): void {
   window.dispatchEvent(new CustomEvent(UNAUTHORIZED_EVENT, { detail: { path } }));
 }
 
-/**
- * Tell the API which locale to answer in (error messages, emails). Derived
- * from the locale prefix in the URL, which next-intl keeps in sync with the
- * admin's choice. No-op during SSR.
- */
 function currentLocaleHeader(): Record<string, string> {
   if (typeof window === 'undefined') {
     return {};
@@ -110,4 +147,5 @@ export const api = {
     request<TData>(path, { ...opts, method: 'PUT', body }),
   delete: <TData>(path: string, opts?: Omit<RequestOptions, 'method' | 'body'>) =>
     request<TData>(path, { ...opts, method: 'DELETE' }),
+  upload: <TData>(path: string, form: FormData) => uploadForm<TData>(path, form),
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, LogOut, Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { ChevronRight, LogOut, Menu, PanelLeftClose, PanelLeftOpen, UserCog } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
@@ -165,6 +165,13 @@ export function Topbar({
                   <span className="text-xs text-muted-foreground">{admin.email}</span>
                 </div>
               </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/profile">
+                  <UserCog className="h-4 w-4" />
+                  {t('topbar.my-account')}
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onSelect={(e) => {

@@ -55,6 +55,90 @@ describe('Admin accounts & invites (e2e)', () => {
     });
   }
 
+  describe('POST /api/admin/accounts', () => {
+    it('should let a superadmin create an admin who can immediately sign in', async () => {
+      const { cookie } = await loginAdmin(app, SUPER);
+
+      const res = await http(app)
+        .post('/api/admin/accounts')
+        .set('Cookie', cookie)
+        .send({ email: 'direct@example.com', name: 'Direct Admin', password: 'direct-pass-1' });
+
+      expect(res.status).toBe(201);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.email).toBe('direct@example.com');
+      expect(res.body.data.role).toBe('ADMIN');
+
+      const list = await http(app).get('/api/admin/accounts').set('Cookie', cookie);
+      expect(
+        list.body.data.items.some((a: { email: string }) => a.email === 'direct@example.com'),
+      ).toBe(true);
+
+      const { res: loginRes } = await loginAdmin(app, {
+        email: 'direct@example.com',
+        password: 'direct-pass-1',
+      });
+      expect(loginRes.status).toBe(200);
+    });
+
+    it('should create a superadmin when role is SUPERADMIN', async () => {
+      const { cookie } = await loginAdmin(app, SUPER);
+
+      const res = await http(app).post('/api/admin/accounts').set('Cookie', cookie).send({
+        email: 'boss@example.com',
+        name: 'Boss',
+        password: 'boss-pass-1',
+        role: AdminRole.SUPERADMIN,
+      });
+
+      expect(res.status).toBe(201);
+      expect(res.body.data.role).toBe('SUPERADMIN');
+    });
+
+    it('should reject a regular admin with 403', async () => {
+      const { cookie } = await loginAdmin(app, REGULAR);
+
+      const res = await http(app)
+        .post('/api/admin/accounts')
+        .set('Cookie', cookie)
+        .send({ email: 'direct@example.com', name: 'Direct Admin', password: 'direct-pass-1' });
+
+      expect(res.status).toBe(403);
+      expect(res.body.error.code).toBe('FORBIDDEN');
+    });
+
+    it('should require an admin session', async () => {
+      const res = await http(app)
+        .post('/api/admin/accounts')
+        .send({ email: 'direct@example.com', name: 'Direct Admin', password: 'direct-pass-1' });
+
+      expect(res.status).toBe(401);
+    });
+
+    it('should reject a too-short password with 400', async () => {
+      const { cookie } = await loginAdmin(app, SUPER);
+
+      const res = await http(app)
+        .post('/api/admin/accounts')
+        .set('Cookie', cookie)
+        .send({ email: 'direct@example.com', name: 'Direct Admin', password: 'short' });
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should conflict when the email already belongs to an admin', async () => {
+      const { cookie } = await loginAdmin(app, SUPER);
+
+      const res = await http(app)
+        .post('/api/admin/accounts')
+        .set('Cookie', cookie)
+        .send({ email: REGULAR.email, name: 'Dup', password: 'dup-pass-12' });
+
+      expect(res.status).toBe(409);
+      expect(res.body.error.code).toBe('EMAIL_TAKEN');
+    });
+  });
+
   describe('POST /api/admin/accounts/invites', () => {
     it('should let a superadmin invite an admin and list it as pending', async () => {
       const { cookie } = await loginAdmin(app, SUPER);

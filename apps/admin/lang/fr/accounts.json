@@ -3,6 +3,7 @@
   "title": "Administrateurs",
   "access-summary": "{count, plural, one {# personne a} other {# personnes ont}} accès à cette console.",
   "invite-button": "Inviter un administrateur",
+  "create-button": "Créer un administrateur",
   "empty": "Aucun administrateur pour l'instant.",
   "roles": {
     "admin": "administrateur",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Saisissez un e-mail valide",
       "name-required": "Le nom est requis"
+    }
+  },
+  "create-dialog": {
+    "title": "Créer un administrateur",
+    "description": "Créez le compte directement et définissez un mot de passe. Le destinataire pourra se connecter immédiatement.",
+    "name": "Nom",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "password-placeholder": "Au moins 8 caractères",
+    "password-helper": "Partagez ce mot de passe avec le destinataire de manière sécurisée.",
+    "confirm-password": "Confirmer le mot de passe",
+    "confirm-password-placeholder": "Saisissez à nouveau le mot de passe",
+    "role": "Rôle",
+    "role-admin": "Administrateur",
+    "role-superadmin": "Super-administrateur",
+    "cancel": "Annuler",
+    "submit": "Créer un administrateur",
+    "submitting": "Création en cours…",
+    "success": "{name} créé",
+    "error": "Impossible de créer l'administrateur",
+    "validation": {
+      "invalid-email": "Saisissez un e-mail valide",
+      "name-required": "Le nom est requis",
+      "password-min": "Le mot de passe doit contenir au moins 8 caractères",
+      "password-mismatch": "Les mots de passe ne correspondent pas"
     }
   },
   "edit-dialog": {

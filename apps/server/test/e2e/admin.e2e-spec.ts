@@ -5,6 +5,12 @@ import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from './setup-app
 
 const ADMIN = { email: 'root@example.com', password: 'admin-pass-1', name: 'Root' };
 
+// Smallest valid 1x1 transparent PNG.
+const PNG_1x1 = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+  'base64',
+);
+
 describe('Admin (e2e)', () => {
   let app: NestFastifyApplication;
 
@@ -49,6 +55,92 @@ describe('Admin (e2e)', () => {
     it('should reject access without an admin session', async () => {
       const res = await http(app).get('/api/admin/users');
       expect(res.status).toBe(401);
+    });
+  });
+
+  describe('PATCH /api/admin/auth/me', () => {
+    it('should let the authenticated admin rename themselves', async () => {
+      const { cookie } = await loginAdmin(app, ADMIN);
+
+      const res = await http(app)
+        .patch('/api/admin/auth/me')
+        .set('Cookie', cookie)
+        .send({ name: 'Renamed Root' });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.name).toBe('Renamed Root');
+
+      const me = await http(app).get('/api/admin/auth/me').set('Cookie', cookie);
+      expect(me.body.data.name).toBe('Renamed Root');
+    });
+
+    it('should require an admin session', async () => {
+      const res = await http(app).patch('/api/admin/auth/me').send({ name: 'X' });
+      expect(res.status).toBe(401);
+    });
+  });
+
+  describe('PATCH /api/admin/auth/me/password', () => {
+    it('should change the password when the current one is correct', async () => {
+      const { cookie } = await loginAdmin(app, ADMIN);
+
+      const res = await http(app)
+        .patch('/api/admin/auth/me/password')
+        .set('Cookie', cookie)
+        .send({ currentPassword: ADMIN.password, newPassword: 'brand-new-pass-1' });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.changed).toBe(true);
+
+      // Old password no longer works; the new one does.
+      const oldLogin = await loginAdmin(app, ADMIN);
+      expect(oldLogin.res.status).toBe(401);
+      const newLogin = await loginAdmin(app, { ...ADMIN, password: 'brand-new-pass-1' });
+      expect(newLogin.res.status).toBe(200);
+    });
+
+    it('should reject a wrong current password with 400', async () => {
+      const { cookie } = await loginAdmin(app, ADMIN);
+
+      const res = await http(app)
+        .patch('/api/admin/auth/me/password')
+        .set('Cookie', cookie)
+        .send({ currentPassword: 'wrong-pass', newPassword: 'brand-new-pass-1' });
+
+      expect(res.status).toBe(400);
+      expect(res.body.error.code).toBe('INVALID_CREDENTIALS');
+    });
+  });
+
+  describe('admin self avatar', () => {
+    it('should upload then remove the authenticated admin avatar', async () => {
+      const { cookie } = await loginAdmin(app, ADMIN);
+
+      const upload = await http(app)
+        .post('/api/admin/auth/me/avatar')
+        .set('Cookie', cookie)
+        .attach('file', PNG_1x1, { filename: 'me.png', contentType: 'image/png' });
+
+      expect(upload.status).toBe(201);
+      expect(upload.body.data.avatar).toMatch(/\/api\/uploads\/public\/avatars\/admins\//);
+
+      const removed = await http(app).delete('/api/admin/auth/me/avatar').set('Cookie', cookie);
+      expect(removed.status).toBe(200);
+      expect(removed.body.data.avatar).toBeNull();
+    });
+
+    it('should reject a non-image upload with 415', async () => {
+      const { cookie } = await loginAdmin(app, ADMIN);
+
+      const res = await http(app)
+        .post('/api/admin/auth/me/avatar')
+        .set('Cookie', cookie)
+        .attach('file', Buffer.from('not an image'), {
+          filename: 'note.txt',
+          contentType: 'text/plain',
+        });
+
+      expect(res.status).toBe(415);
     });
   });
 });

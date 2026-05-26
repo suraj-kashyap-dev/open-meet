@@ -3,6 +3,7 @@
   "title": "Administradores",
   "access-summary": "{count, plural, one {# pessoa tem} other {# pessoas têm}} acesso a este console.",
   "invite-button": "Convidar admin",
+  "create-button": "Criar admin",
   "empty": "Nenhum administrador ainda.",
   "roles": {
     "admin": "admin",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Insira um e-mail válido",
       "name-required": "O nome é obrigatório"
+    }
+  },
+  "create-dialog": {
+    "title": "Criar um admin",
+    "description": "Crie a conta diretamente e defina uma senha. Eles podem entrar imediatamente.",
+    "name": "Nome",
+    "email": "E-mail",
+    "password": "Senha",
+    "password-placeholder": "Pelo menos 8 caracteres",
+    "password-helper": "Compartilhe esta senha com eles de forma segura.",
+    "confirm-password": "Confirmar senha",
+    "confirm-password-placeholder": "Insira a senha novamente",
+    "role": "Papel",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Cancelar",
+    "submit": "Criar admin",
+    "submitting": "Criando…",
+    "success": "{name} criado",
+    "error": "Não foi possível criar o admin",
+    "validation": {
+      "invalid-email": "Insira um e-mail válido",
+      "name-required": "O nome é obrigatório",
+      "password-min": "A senha deve ter pelo menos 8 caracteres",
+      "password-mismatch": "As senhas não coincidem"
     }
   },
   "edit-dialog": {

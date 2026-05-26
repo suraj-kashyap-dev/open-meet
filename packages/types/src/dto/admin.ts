@@ -10,8 +10,19 @@ export interface AdminDto {
   email: string;
   name: string;
   role: AdminRole;
+  avatar: string | null;
   createdAt: string;
   lastLoginAt: string | null;
+}
+
+/** Fields the authenticated admin may change on their own profile. */
+export interface AdminUpdateProfileDto {
+  name?: string;
+}
+
+export interface AdminChangePasswordDto {
+  currentPassword: string;
+  newPassword: string;
 }
 
 export interface AdminLoginRequestDto {
@@ -179,6 +190,7 @@ export interface AdminAccountDto {
   email: string;
   name: string;
   role: AdminRole;
+  avatar: string | null;
   createdAt: string;
   lastLoginAt: string | null;
 }
@@ -190,6 +202,13 @@ export interface AdminAccountListResponseDto {
 /** Fields a superadmin may change on an existing admin account. */
 export interface AdminUpdateAccountDto {
   name?: string;
+  role?: AdminRole;
+}
+
+export interface AdminCreateAccountDto {
+  email: string;
+  name: string;
+  password: string;
   role?: AdminRole;
 }
 

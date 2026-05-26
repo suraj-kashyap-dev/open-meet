@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Hesap",
+  "title": "Profilim",
+  "subtitle": "Kişisel bilgilerinizi, fotoğrafınızı ve şifrenizi yönetin.",
+  "account": {
+    "title": "Profil",
+    "description": "Adınızı ve fotoğrafınızı güncelleyin.",
+    "name": "Ad",
+    "name-placeholder": "Adınız",
+    "email": "E-posta",
+    "email-helper": "E-posta adresiniz buradan değiştirilemez.",
+    "role": "Rol",
+    "role-admin": "Yönetici",
+    "role-superadmin": "Süper yönetici",
+    "save": "Değişiklikleri kaydet",
+    "saving": "Kaydediliyor…",
+    "success": "Profil güncellendi",
+    "error": "Profil güncellenemedi",
+    "validation": {
+      "name-required": "Ad gereklidir"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP veya GIF. En fazla {mb} MB.",
+    "upload": "Fotoğraf yükle",
+    "replace": "Fotoğrafı değiştir",
+    "remove": "Fotoğrafı kaldır",
+    "edit-label": "Profil fotoğrafını düzenle",
+    "upload-label": "Profil fotoğrafı yükle",
+    "invalid-type": "Bir PNG, JPEG, WebP veya GIF görüntüsü seçin.",
+    "too-large": "Görüntü en fazla {mb} MB olmalıdır."
+  },
+  "password": {
+    "title": "Şifre",
+    "description": "Oturum açmak için kullandığınız şifreyi değiştirin.",
+    "current": "Mevcut şifre",
+    "current-placeholder": "Mevcut şifrenizi girin",
+    "new": "Yeni şifre",
+    "new-placeholder": "En az 8 karakter",
+    "new-helper": "En az 8 karakter kullanın.",
+    "confirm": "Yeni şifreyi onayla",
+    "confirm-placeholder": "Yeni şifreyi tekrar girin",
+    "change": "Şifreyi değiştir",
+    "changing": "Değiştiriliyor…",
+    "success": "Şifre değiştirildi",
+    "error": "Şifre değiştirilemedi",
+    "validation": {
+      "current-required": "Mevcut şifrenizi girin",
+      "password-min": "Şifre en az 8 karakter olmalıdır",
+      "password-mismatch": "Şifreler eşleşmiyor"
+    }
+  }
+}

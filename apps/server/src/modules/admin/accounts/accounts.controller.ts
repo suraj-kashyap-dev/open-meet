@@ -27,6 +27,7 @@ import { CurrentAdmin } from '../auth/decorators/current-admin.decorator';
 import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 
 import { AdminAccountsService } from './accounts.service';
+import { CreateAdminAccountDto } from './dto/create-account.dto';
 import { CreateAdminInviteDto } from './dto/create-invite.dto';
 import { UpdateAdminAccountDto } from './dto/update-account.dto';
 
@@ -41,6 +42,13 @@ export class AdminAccountsController {
   @ApiOperation({ summary: 'List every admin account' })
   list(): Promise<AdminAccountListResponseDto> {
     return this.accounts.list();
+  }
+
+  @Post()
+  @UseGuards(SuperAdminGuard)
+  @ApiOperation({ summary: 'Create an admin account directly with a password (superadmin only)' })
+  create(@Body() dto: CreateAdminAccountDto): Promise<AdminAccountDto> {
+    return this.accounts.create(dto);
   }
 
   @Get('invites')

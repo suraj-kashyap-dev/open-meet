@@ -2,7 +2,11 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { AdminCreateInviteDto, AdminUpdateAccountDto } from '@open-meet/types';
+import type {
+  AdminCreateAccountDto,
+  AdminCreateInviteDto,
+  AdminUpdateAccountDto,
+} from '@open-meet/types';
 
 import { adminAccountsApi } from '@/features/accounts/services/accounts';
 
@@ -14,6 +18,17 @@ export function useAdminAccounts() {
     queryKey: [KEY],
     queryFn: ({ signal }) => adminAccountsApi.list(signal),
     staleTime: 30_000,
+  });
+}
+
+export function useCreateAdminAccount() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (dto: AdminCreateAccountDto) => adminAccountsApi.create(dto),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: [KEY] });
+      void qc.invalidateQueries({ queryKey: [INVITES_KEY] });
+    },
   });
 }
 

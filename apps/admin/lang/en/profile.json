@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Account",
+  "title": "My profile",
+  "subtitle": "Manage your personal details, photo, and password.",
+  "account": {
+    "title": "Profile",
+    "description": "Update your name and photo.",
+    "name": "Name",
+    "name-placeholder": "Your name",
+    "email": "Email",
+    "email-helper": "Your email address can't be changed here.",
+    "role": "Role",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "success": "Profile updated",
+    "error": "Could not update profile",
+    "validation": {
+      "name-required": "Name is required"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP, or GIF. Up to {mb} MB.",
+    "upload": "Upload photo",
+    "replace": "Replace photo",
+    "remove": "Remove photo",
+    "edit-label": "Edit profile photo",
+    "upload-label": "Upload profile photo",
+    "invalid-type": "Choose a PNG, JPEG, WebP, or GIF image.",
+    "too-large": "Image must be {mb} MB or smaller."
+  },
+  "password": {
+    "title": "Password",
+    "description": "Change the password you use to sign in.",
+    "current": "Current password",
+    "current-placeholder": "Enter your current password",
+    "new": "New password",
+    "new-placeholder": "At least 8 characters",
+    "new-helper": "Use at least 8 characters.",
+    "confirm": "Confirm new password",
+    "confirm-placeholder": "Re-enter the new password",
+    "change": "Change password",
+    "changing": "Changing…",
+    "success": "Password changed",
+    "error": "Could not change password",
+    "validation": {
+      "current-required": "Enter your current password",
+      "password-min": "Password must be at least 8 characters",
+      "password-mismatch": "Passwords do not match"
+    }
+  }
+}

@@ -3,6 +3,7 @@
   "title": "Администраторы",
   "access-summary": "{count, plural, one {# человек имеет} other {# человек имеют}} доступ к этой консоли.",
   "invite-button": "Пригласить администратора",
+  "create-button": "Создать администратора",
   "empty": "Администраторов пока нет.",
   "roles": {
     "admin": "администратор",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Введите корректный email",
       "name-required": "Имя обязательно"
+    }
+  },
+  "create-dialog": {
+    "title": "Создать администратора",
+    "description": "Создайте аккаунт напрямую и задайте пароль. Они смогут войти сразу.",
+    "name": "Имя",
+    "email": "Email",
+    "password": "Пароль",
+    "password-placeholder": "Не менее 8 символов",
+    "password-helper": "Передайте этот пароль им безопасным способом.",
+    "confirm-password": "Подтвердите пароль",
+    "confirm-password-placeholder": "Введите пароль ещё раз",
+    "role": "Роль",
+    "role-admin": "Администратор",
+    "role-superadmin": "Суперадминистратор",
+    "cancel": "Отмена",
+    "submit": "Создать администратора",
+    "submitting": "Создание…",
+    "success": "Создан {name}",
+    "error": "Не удалось создать администратора",
+    "validation": {
+      "invalid-email": "Введите корректный email",
+      "name-required": "Имя обязательно",
+      "password-min": "Пароль должен содержать не менее 8 символов",
+      "password-mismatch": "Пароли не совпадают"
     }
   },
   "edit-dialog": {

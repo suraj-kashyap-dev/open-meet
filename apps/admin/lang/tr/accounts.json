@@ -3,6 +3,7 @@
   "title": "Yöneticiler",
   "access-summary": "{count, plural, one {# kişinin} other {# kişinin}} bu konsola erişimi var.",
   "invite-button": "Yönetici davet et",
+  "create-button": "Yönetici oluştur",
   "empty": "Henüz yönetici yok.",
   "roles": {
     "admin": "yönetici",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Geçerli bir e-posta girin",
       "name-required": "Ad gereklidir"
+    }
+  },
+  "create-dialog": {
+    "title": "Yönetici oluştur",
+    "description": "Hesabı doğrudan oluşturun ve bir şifre belirleyin. Hemen oturum açabilirler.",
+    "name": "Ad",
+    "email": "E-posta",
+    "password": "Şifre",
+    "password-placeholder": "En az 8 karakter",
+    "password-helper": "Bu şifreyi onlarla güvenli bir şekilde paylaşın.",
+    "confirm-password": "Şifreyi onayla",
+    "confirm-password-placeholder": "Şifreyi tekrar girin",
+    "role": "Rol",
+    "role-admin": "Yönetici",
+    "role-superadmin": "Süper yönetici",
+    "cancel": "İptal",
+    "submit": "Yönetici oluştur",
+    "submitting": "Oluşturuluyor…",
+    "success": "{name} oluşturuldu",
+    "error": "Yönetici oluşturulamadı",
+    "validation": {
+      "invalid-email": "Geçerli bir e-posta girin",
+      "name-required": "Ad gereklidir",
+      "password-min": "Şifre en az 8 karakter olmalıdır",
+      "password-mismatch": "Şifreler eşleşmiyor"
     }
   },
   "edit-dialog": {

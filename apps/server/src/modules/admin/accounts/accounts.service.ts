@@ -20,6 +20,7 @@ import {
   type AdminAccountDto,
   type AdminAccountListResponseDto,
   type AdminAcceptInviteDto,
+  type AdminCreateAccountDto,
   type AdminCreateInviteDto,
   type AdminInviteDto,
   type AdminInviteListResponseDto,
@@ -31,6 +32,7 @@ import {
 
 import { renderEmail } from '../../../integrations/mail/email-layout';
 import { MailService } from '../../../integrations/mail/mail.service';
+import { StorageService } from '../../../storage/storage.service';
 
 import { AdminRepository } from '../admin.repository';
 import { AdminInviteRepository } from './admin-invite.repository';
@@ -49,6 +51,7 @@ export class AdminAccountsService {
     private readonly mail: MailService,
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly i18n: I18nService,
+    private readonly storage: StorageService,
   ) {}
 
   /** Locale resolved for the current request, falling back to English. */
@@ -69,6 +72,40 @@ export class AdminAccountsService {
   async listInvites(): Promise<AdminInviteListResponseDto> {
     const rows = await this.invites.listPending();
     return { items: rows.map((i) => this.toInviteDto(i)) };
+  }
+
+  async create(dto: AdminCreateAccountDto): Promise<AdminAccountDto> {
+    const email = dto.email.trim().toLowerCase();
+    const name = dto.name.trim();
+
+    if (!name) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: this.t('errors.name-required'),
+      });
+    }
+
+    const existing = await this.admins.findByEmail(email);
+
+    if (existing) {
+      throw new ConflictException({
+        code: ApiErrorCode.EMAIL_TAKEN,
+        message: this.t('errors.email-taken'),
+      });
+    }
+
+    const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
+    const created = await this.admins.create({
+      email,
+      name,
+      passwordHash,
+      role: dto.role ?? AdminRole.ADMIN,
+    });
+
+    // The account now exists, so any outstanding invite for this email is moot.
+    await this.invites.deleteByEmail(email);
+
+    return this.toDto(created);
   }
 
   async createInvite(actingAdminId: string, dto: AdminCreateInviteDto): Promise<AdminInviteDto> {
@@ -362,6 +399,7 @@ export class AdminAccountsService {
       email: admin.email,
       name: admin.name,
       role: admin.role,
+      avatar: admin.avatarKey ? this.storage.publicUrl(admin.avatarKey) : null,
       createdAt: admin.createdAt.toISOString(),
       lastLoginAt: admin.lastLoginAt?.toISOString() ?? null,
     };

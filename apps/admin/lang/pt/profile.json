@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Conta",
+  "title": "Meu perfil",
+  "subtitle": "Gerencie seus dados pessoais, foto e senha.",
+  "account": {
+    "title": "Perfil",
+    "description": "Atualize seu nome e foto.",
+    "name": "Nome",
+    "name-placeholder": "Seu nome",
+    "email": "E-mail",
+    "email-helper": "Seu endereço de e-mail não pode ser alterado aqui.",
+    "role": "Papel",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "save": "Salvar alterações",
+    "saving": "Salvando…",
+    "success": "Perfil atualizado",
+    "error": "Não foi possível atualizar o perfil",
+    "validation": {
+      "name-required": "O nome é obrigatório"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP ou GIF. Até {mb} MB.",
+    "upload": "Enviar foto",
+    "replace": "Substituir foto",
+    "remove": "Remover foto",
+    "edit-label": "Editar foto de perfil",
+    "upload-label": "Enviar foto de perfil",
+    "invalid-type": "Escolha uma imagem PNG, JPEG, WebP ou GIF.",
+    "too-large": "A imagem deve ter {mb} MB ou menos."
+  },
+  "password": {
+    "title": "Senha",
+    "description": "Altere a senha que você usa para entrar.",
+    "current": "Senha atual",
+    "current-placeholder": "Insira sua senha atual",
+    "new": "Nova senha",
+    "new-placeholder": "Pelo menos 8 caracteres",
+    "new-helper": "Use pelo menos 8 caracteres.",
+    "confirm": "Confirmar nova senha",
+    "confirm-placeholder": "Insira a nova senha novamente",
+    "change": "Alterar senha",
+    "changing": "Alterando…",
+    "success": "Senha alterada",
+    "error": "Não foi possível alterar a senha",
+    "validation": {
+      "current-required": "Insira sua senha atual",
+      "password-min": "A senha deve ter pelo menos 8 caracteres",
+      "password-mismatch": "As senhas não coincidem"
+    }
+  }
+}
