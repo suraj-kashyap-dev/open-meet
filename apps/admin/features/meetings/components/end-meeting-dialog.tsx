@@ -59,11 +59,11 @@ export function EndMeetingDialog({ meeting, onClose }: Props) {
 
         {meeting ? (
           <div className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
-            <p>
+            <p className="break-words">
               <span className="font-mono">{meeting.code}</span>
               {meeting.title ? ` · ${meeting.title}` : null}
             </p>
-            <p className="mt-0.5">hosted by {meeting.hostName}</p>
+            <p className="mt-0.5 break-words">hosted by {meeting.hostName}</p>
           </div>
         ) : null}
 

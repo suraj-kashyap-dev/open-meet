@@ -2,13 +2,13 @@
 
 import { cn } from '@open-meet/ui/cn';
 
-import { AdminSidebarContent } from './admin-sidebar-content';
+import { SidebarContent } from './sidebar-content';
 
 interface Props {
   open: boolean;
 }
 
-export function AdminSidebar({ open }: Props) {
+export function Sidebar({ open }: Props) {
   return (
     <aside
       className={cn(
@@ -16,7 +16,7 @@ export function AdminSidebar({ open }: Props) {
         open ? 'w-64' : 'w-16',
       )}
     >
-      <AdminSidebarContent collapsed={!open} />
+      <SidebarContent collapsed={!open} />
     </aside>
   );
 }

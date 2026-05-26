@@ -1,7 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
-import { SettingsTabs } from '@/components/settings-tabs';
+import { SettingsTabs } from '@/components/settings/tabs';
 
 export default async function SettingsLayout({
   children,
@@ -16,7 +16,7 @@ export default async function SettingsLayout({
   const tConfig = await getTranslations('configuration');
 
   return (
-    <div className="flex h-[calc(100dvh-3.5rem)] flex-col">
+    <div className="flex flex-col lg:h-[calc(100dvh-3.5rem)]">
       <div className="shrink-0 px-4 pt-8 sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-5xl space-y-6">
           <header className="space-y-1">
@@ -33,7 +33,7 @@ export default async function SettingsLayout({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-4 pb-12 pt-6 sm:px-6 lg:px-8">
+      <div className="px-4 pb-12 pt-6 sm:px-6 lg:flex-1 lg:overflow-y-auto lg:px-8">
         <div className="mx-auto w-full max-w-5xl">{children}</div>
       </div>
     </div>

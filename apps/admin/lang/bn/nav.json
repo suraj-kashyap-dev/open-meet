@@ -17,7 +17,8 @@
     "settings": "সেটিংস",
     "administrators": "অ্যাডমিনিস্ট্রেটর",
     "branding": "ব্র্যান্ডিং",
-    "configuration": "কনফিগারেশন"
+    "configuration": "কনফিগারেশন",
+    "more": "আরও"
   },
   "topbar": {
     "root": "অ্যাডমিন",

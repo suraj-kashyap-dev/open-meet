@@ -119,6 +119,7 @@ export default function AdministratorsPage() {
         cell: (info) => (
           <span className="text-sm text-muted-foreground">{formatJoined(info.getValue())}</span>
         ),
+        meta: { headerClassName: 'hidden md:table-cell', cellClassName: 'hidden md:table-cell' },
       }),
       column.accessor('lastLoginAt', {
         header: t('table.last-login'),
@@ -127,6 +128,7 @@ export default function AdministratorsPage() {
             {formatLastLogin(info.getValue(), t('table.never'))}
           </span>
         ),
+        meta: { headerClassName: 'hidden lg:table-cell', cellClassName: 'hidden lg:table-cell' },
       }),
     ];
 
@@ -141,18 +143,24 @@ export default function AdministratorsPage() {
         header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
           <div className="flex items-center justify-end gap-1">
-            <Button size="sm" variant="ghost" onClick={() => setEditing(row.original)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => setEditing(row.original)}
+              aria-label={t('table.edit')}
+            >
               <Pencil className="h-4 w-4" />
-              {t('table.edit')}
+              <span className="hidden sm:inline">{t('table.edit')}</span>
             </Button>
             <Button
               size="sm"
               variant="ghost"
               onClick={() => setDeleting(row.original)}
+              aria-label={t('table.delete')}
               className="text-destructive hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
-              {t('table.delete')}
+              <span className="hidden sm:inline">{t('table.delete')}</span>
             </Button>
           </div>
         ),

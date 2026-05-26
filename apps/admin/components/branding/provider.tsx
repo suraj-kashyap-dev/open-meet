@@ -8,10 +8,6 @@ const FALLBACK: PublicConfigDto = { appName: 'Open Meet', logoUrl: null };
 
 const BrandingContext = createContext<PublicConfigDto>(FALLBACK);
 
-/**
- * Seeds server-fetched branding into the client tree so the sidebar renders the
- * live app name/logo on first paint (no flicker on refresh).
- */
 export function BrandingProvider({
   value,
   children,

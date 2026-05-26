@@ -17,7 +17,8 @@
     "settings": "Configuración",
     "administrators": "Administradores",
     "branding": "Marca",
-    "configuration": "Configuración"
+    "configuration": "Configuración",
+    "more": "Más"
   },
   "topbar": {
     "root": "Administración",

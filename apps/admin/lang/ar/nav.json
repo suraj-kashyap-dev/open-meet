@@ -17,7 +17,8 @@
     "settings": "الإعدادات",
     "administrators": "المسؤولون",
     "branding": "العلامة التجارية",
-    "configuration": "الإعدادات العامة"
+    "configuration": "الإعدادات العامة",
+    "more": "المزيد"
   },
   "topbar": {
     "root": "الإدارة",

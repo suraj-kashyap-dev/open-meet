@@ -17,7 +17,8 @@
     "settings": "Pengaturan",
     "administrators": "Administrator",
     "branding": "Merek",
-    "configuration": "Konfigurasi"
+    "configuration": "Konfigurasi",
+    "more": "Lainnya"
   },
   "topbar": {
     "root": "Admin",

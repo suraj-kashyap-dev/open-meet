@@ -38,7 +38,7 @@ export function Providers({ children }: { children: ReactNode }) {
         <UnauthorizedBridge />
         <TopProgress />
         {children}
-        {process.env.NODE_ENV === 'development' ? (
+        {process.env.APP_DEBUG == 'true' ? (
           <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
         ) : null}
       </QueryClientProvider>

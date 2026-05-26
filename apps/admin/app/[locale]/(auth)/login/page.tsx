@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Logo } from '@open-meet/ui/logo';
 
-import { LanguageSwitcher } from '@/components/language-switcher';
+import { LanguageSwitcher } from '@/components/shared/language-switcher';
 import { AdminLoginForm } from '@/features/auth/components/admin-login-form';
 import { env } from '@/lib/env';
 

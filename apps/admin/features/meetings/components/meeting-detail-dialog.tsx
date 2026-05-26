@@ -62,7 +62,7 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Meeting details</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="break-words">
             {data ? (
               <>
                 <span className="font-mono">{data.code}</span>

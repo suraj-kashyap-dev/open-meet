@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 import { cn } from './cn';
 
 interface Props {
@@ -15,6 +17,13 @@ interface Props {
  * every definition is byte-identical and `url(#…)` resolves to the first.
  */
 export function Logo({ className, title = 'Open Meet' }: Props) {
+  // Unique ids per instance — multiple logos render at once (header, sidebar,
+  // sheet) and shared ids resolve to whichever is first in the DOM, which can
+  // sit inside a `display:none` container and make the mark render blank.
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
+  const gradId = `omAccent-${uid}`;
+  const maskId = `omIris-${uid}`;
+
   return (
     <svg
       viewBox="0 0 32 32"
@@ -24,13 +33,13 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
       className={cn('shrink-0 rounded-full', className)}
     >
       <defs>
-        <linearGradient id="omAccent" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+        <linearGradient id={gradId} x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#60a5fa" />
           <stop offset="0.55" stopColor="#3b82f6" />
           <stop offset="1" stopColor="#2563eb" />
         </linearGradient>
 
-        <mask id="omIris">
+        <mask id={maskId}>
           <circle cx="16" cy="16" r="13.44" fill="#fff" />
           <polygon
             points="22.25,16 19.12,21.41 12.88,21.41 9.75,16 12.87,10.59 19.12,10.59"
@@ -47,7 +56,7 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
         </mask>
       </defs>
 
-      <rect width="32" height="32" fill="url(#omAccent)" mask="url(#omIris)" />
+      <rect width="32" height="32" fill={`url(#${gradId})`} mask={`url(#${maskId})`} />
     </svg>
   );
 }
@@ -57,6 +66,8 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
  * `currentColor` instead of the gradient.
  */
 export function LogoMark({ className }: { className?: string }) {
+  const maskId = `omIrisMono-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
+
   return (
     <svg
       viewBox="0 0 32 32"
@@ -64,7 +75,7 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden
       className={cn('shrink-0 rounded-full', className)}
     >
-      <mask id="omIrisMono">
+      <mask id={maskId}>
         <circle cx="16" cy="16" r="13.44" fill="#fff" />
         <polygon
           points="22.25,16 19.12,21.41 12.88,21.41 9.75,16 12.87,10.59 19.12,10.59"
@@ -80,7 +91,7 @@ export function LogoMark({ className }: { className?: string }) {
         </g>
       </mask>
 
-      <rect width="32" height="32" fill="currentColor" mask="url(#omIrisMono)" />
+      <rect width="32" height="32" fill="currentColor" mask={`url(#${maskId})`} />
     </svg>
   );
 }

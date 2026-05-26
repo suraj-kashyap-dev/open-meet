@@ -8,26 +8,26 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
-export interface AdminNavChild {
+export interface NavChild {
   labelKey: string;
   href: string;
 }
 
-export interface AdminNavItem {
+export interface NavItem {
   labelKey: string;
   href: string;
   icon: LucideIcon;
   badge?: string;
   disabled?: boolean;
-  children?: AdminNavChild[];
+  children?: NavChild[];
 }
 
-export interface AdminNavSection {
+export interface NavSection {
   labelKey: string;
-  items: AdminNavItem[];
+  items: NavItem[];
 }
 
-export const adminNav: AdminNavSection[] = [
+export const nav: NavSection[] = [
   {
     labelKey: 'sections.overview',
     items: [{ labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard }],

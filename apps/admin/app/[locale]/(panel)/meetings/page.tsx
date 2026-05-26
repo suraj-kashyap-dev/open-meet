@@ -88,7 +88,9 @@ export default function AdminMeetingsPage() {
               className="flex min-w-0 flex-col items-start gap-0.5 text-start hover:underline"
               onClick={() => setDetailId(m.id)}
             >
-              <span className="truncate text-sm font-medium">{title}</span>
+              <span className="block max-w-[180px] truncate text-sm font-medium sm:max-w-[260px] lg:max-w-[360px] xl:max-w-[460px]">
+                {title}
+              </span>
               <span className="font-mono text-[11px] text-muted-foreground">{m.code}</span>
             </button>
           );
@@ -102,6 +104,7 @@ export default function AdminMeetingsPage() {
             <p className="truncate text-xs text-muted-foreground">{row.original.hostEmail}</p>
           </div>
         ),
+        meta: { headerClassName: 'hidden lg:table-cell', cellClassName: 'hidden lg:table-cell' },
       }),
       column.accessor('status', {
         header: 'Status',
@@ -135,6 +138,7 @@ export default function AdminMeetingsPage() {
             {formatStarted(info.getValue() ?? null, info.row.original.createdAt)}
           </span>
         ),
+        meta: { headerClassName: 'hidden md:table-cell', cellClassName: 'hidden md:table-cell' },
       }),
       column.accessor('durationMinutes', {
         header: 'Duration',
@@ -143,10 +147,12 @@ export default function AdminMeetingsPage() {
             {formatDuration(info.getValue())}
           </span>
         ),
+        meta: { headerClassName: 'hidden lg:table-cell', cellClassName: 'hidden lg:table-cell' },
       }),
       column.accessor('participantCount', {
         header: () => <span className="block text-end">Total</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
+        meta: { headerClassName: 'hidden sm:table-cell', cellClassName: 'hidden sm:table-cell' },
       }),
       column.display({
         id: 'actions',
@@ -157,24 +163,25 @@ export default function AdminMeetingsPage() {
 
           return (
             <div className="flex items-center justify-end gap-1">
-              <Button size="sm" variant="ghost" onClick={() => setDetailId(m.id)}>
+              <Button size="sm" variant="ghost" onClick={() => setDetailId(m.id)} aria-label="View">
                 <Eye className="h-4 w-4" />
-                View
+                <span className="hidden sm:inline">View</span>
               </Button>
               {canEnd ? (
-                <Button size="sm" variant="ghost" onClick={() => setEndTarget(m)}>
+                <Button size="sm" variant="ghost" onClick={() => setEndTarget(m)} aria-label="End">
                   <PhoneOff className="h-4 w-4" />
-                  End
+                  <span className="hidden sm:inline">End</span>
                 </Button>
               ) : null}
               <Button
                 size="sm"
                 variant="ghost"
                 onClick={() => setDeleteTarget(m)}
+                aria-label="Delete"
                 className="text-destructive hover:text-destructive"
               >
                 <Trash2 className="h-4 w-4" />
-                Delete
+                <span className="hidden sm:inline">Delete</span>
               </Button>
             </div>
           );
@@ -264,11 +271,11 @@ export default function AdminMeetingsPage() {
         }
       />
 
-      <footer className="flex items-center justify-between text-sm">
-        <p className="text-muted-foreground">
+      <footer className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-center text-muted-foreground sm:text-start">
           {total === 0 ? 'No results' : `Showing ${from}–${to} of ${total}`}
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2 sm:justify-end">
           <Button
             variant="outline"
             size="sm"

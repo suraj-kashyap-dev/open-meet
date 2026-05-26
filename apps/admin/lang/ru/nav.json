@@ -17,7 +17,8 @@
     "settings": "Настройки",
     "administrators": "Администраторы",
     "branding": "Брендинг",
-    "configuration": "Конфигурация"
+    "configuration": "Конфигурация",
+    "more": "Ещё"
   },
   "topbar": {
     "root": "Администратор",

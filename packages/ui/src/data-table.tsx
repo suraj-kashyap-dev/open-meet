@@ -6,18 +6,24 @@ import {
   useReactTable,
   type ColumnDef,
   type Row,
+  type RowData,
 } from '@tanstack/react-table';
 import { type ReactNode } from 'react';
 
 import { cn } from './cn';
 
+declare module '@tanstack/react-table' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface ColumnMeta<TData extends RowData, TValue> {
+    /** Extra classes applied to this column's `<th>` (e.g. `hidden md:table-cell`). */
+    headerClassName?: string;
+    /** Extra classes applied to this column's `<td>` — keep in sync with `headerClassName`. */
+    cellClassName?: string;
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyColumnDef<TData> = ColumnDef<TData, any>;
-
-interface ColumnMeta {
-  headerClassName?: string;
-  cellClassName?: string;
-}
 
 interface Props<TData> {
   data: TData[];
@@ -52,7 +58,7 @@ export function DataTable<TData>({
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
-                  const meta = header.column.columnDef.meta as ColumnMeta | undefined;
+                  const meta = header.column.columnDef.meta;
 
                   return (
                     <th
@@ -102,7 +108,7 @@ export function DataTable<TData>({
                   )}
                 >
                   {row.getVisibleCells().map((cell) => {
-                    const meta = cell.column.columnDef.meta as ColumnMeta | undefined;
+                    const meta = cell.column.columnDef.meta;
 
                     return (
                       <td
