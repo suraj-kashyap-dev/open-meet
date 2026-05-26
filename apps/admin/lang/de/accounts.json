@@ -3,6 +3,7 @@
   "title": "Administratoren",
   "access-summary": "{count, plural, one {# Person hat} other {# Personen haben}} Zugang zu dieser Konsole.",
   "invite-button": "Admin einladen",
+  "create-button": "Admin erstellen",
   "empty": "Noch keine Administratoren.",
   "roles": {
     "admin": "admin",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Gültige E-Mail-Adresse eingeben",
       "name-required": "Name ist erforderlich"
+    }
+  },
+  "create-dialog": {
+    "title": "Einen Admin erstellen",
+    "description": "Erstellen Sie das Konto direkt und legen Sie ein Passwort fest. Die Person kann sich sofort anmelden.",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "password-placeholder": "Mindestens 8 Zeichen",
+    "password-helper": "Teilen Sie dieses Passwort sicher mit der Person.",
+    "confirm-password": "Passwort bestätigen",
+    "confirm-password-placeholder": "Passwort erneut eingeben",
+    "role": "Rolle",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Abbrechen",
+    "submit": "Admin erstellen",
+    "submitting": "Wird erstellt…",
+    "success": "{name} erstellt",
+    "error": "Admin konnte nicht erstellt werden",
+    "validation": {
+      "invalid-email": "Gültige E-Mail-Adresse eingeben",
+      "name-required": "Name ist erforderlich",
+      "password-min": "Das Passwort muss mindestens 8 Zeichen lang sein",
+      "password-mismatch": "Die Passwörter stimmen nicht überein"
     }
   },
   "edit-dialog": {

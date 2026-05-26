@@ -3,6 +3,7 @@
   "title": "管理员",
   "access-summary": "{count, plural, one {# 人拥有} other {# 人拥有}}此控制台的访问权限。",
   "invite-button": "邀请管理员",
+  "create-button": "创建管理员",
   "empty": "暂无管理员。",
   "roles": {
     "admin": "管理员",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "请输入有效的电子邮件",
       "name-required": "姓名为必填项"
+    }
+  },
+  "create-dialog": {
+    "title": "创建管理员",
+    "description": "直接创建账户并设置密码。他们可以立即登录。",
+    "name": "姓名",
+    "email": "电子邮件",
+    "password": "密码",
+    "password-placeholder": "至少 8 个字符",
+    "password-helper": "请通过安全方式将此密码告知对方。",
+    "confirm-password": "确认密码",
+    "confirm-password-placeholder": "重新输入密码",
+    "role": "角色",
+    "role-admin": "管理员",
+    "role-superadmin": "超级管理员",
+    "cancel": "取消",
+    "submit": "创建管理员",
+    "submitting": "正在创建…",
+    "success": "已创建 {name}",
+    "error": "无法创建管理员",
+    "validation": {
+      "invalid-email": "请输入有效的电子邮件",
+      "name-required": "姓名为必填项",
+      "password-min": "密码必须至少包含 8 个字符",
+      "password-mismatch": "密码不匹配"
     }
   },
   "edit-dialog": {

@@ -35,7 +35,10 @@ export class AdminRepository {
     return this.prisma.admin.create({ data });
   }
 
-  update(id: string, data: { name?: string; role?: AdminRole }): Promise<Admin> {
+  update(
+    id: string,
+    data: { name?: string; role?: AdminRole; avatarKey?: string | null; passwordHash?: string },
+  ): Promise<Admin> {
     return this.prisma.admin.update({ where: { id }, data });
   }
 

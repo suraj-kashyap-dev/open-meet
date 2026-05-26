@@ -16,6 +16,7 @@ import type { AdminRepository } from '@/modules/admin/admin.repository';
 import type { AdminInviteRepository } from '@/modules/admin/accounts/admin-invite.repository';
 import { AdminAccountsService } from '@/modules/admin/accounts/accounts.service';
 import type { MailService } from '@/integrations/mail/mail.service';
+import type { StorageService } from '@/storage/storage.service';
 
 vi.mock('argon2', () => ({ hash: vi.fn().mockResolvedValue('HASH'), argon2id: 2 }));
 
@@ -29,6 +30,7 @@ describe('AdminAccountsService', () => {
   let mail: { send: ReturnType<typeof vi.fn> };
   let config: { getOrThrow: ReturnType<typeof vi.fn> };
   let i18n: { translate: ReturnType<typeof vi.fn> };
+  let storage: { publicUrl: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     admins = {
@@ -79,11 +81,13 @@ describe('AdminAccountsService', () => {
         }),
       ),
       delete: vi.fn().mockResolvedValue({ id: 'inv1' }),
+      deleteByEmail: vi.fn().mockResolvedValue(undefined),
     };
 
     mail = { send: vi.fn().mockResolvedValue(undefined) };
     config = { getOrThrow: vi.fn().mockReturnValue('http://localhost:3001') };
     i18n = { translate: vi.fn((key: string) => key) };
+    storage = { publicUrl: vi.fn((key: string) => `https://cdn.example/${key}`) };
 
     service = new AdminAccountsService(
       admins as unknown as AdminRepository,
@@ -91,7 +95,54 @@ describe('AdminAccountsService', () => {
       mail as unknown as MailService,
       config as unknown as ConfigService<ApiEnv, true>,
       i18n as unknown as I18nService,
+      storage as unknown as StorageService,
     );
+  });
+
+  describe('create()', () => {
+    it('should reject a blank name', async () => {
+      await expect(
+        service.create({ email: 'a@x.com', name: '   ', password: 'password1' }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+    });
+
+    it('should reject an email that already belongs to an admin', async () => {
+      admins.findByEmail.mockResolvedValueOnce({ id: 'dup' });
+      await expect(
+        service.create({ email: 'a@x.com', name: 'A', password: 'password1' }),
+      ).rejects.toBeInstanceOf(ConflictException);
+    });
+
+    it('should normalize the email, default the role to ADMIN, and persist a hashed password', async () => {
+      const result = await service.create({
+        email: '  A@X.COM ',
+        name: '  Jo ',
+        password: 'password1',
+      });
+
+      expect(admins.create).toHaveBeenCalledWith({
+        email: 'a@x.com',
+        name: 'Jo',
+        passwordHash: 'HASH',
+        role: AdminRole.ADMIN,
+      });
+      expect(result.email).toBe('a@x.com');
+      expect(result.role).toBe(AdminRole.ADMIN);
+    });
+
+    it('should honor the requested role and clear any pending invite for the email', async () => {
+      await service.create({
+        email: 'a@x.com',
+        name: 'Jo',
+        password: 'password1',
+        role: AdminRole.SUPERADMIN,
+      });
+
+      expect(admins.create).toHaveBeenCalledWith(
+        expect.objectContaining({ role: AdminRole.SUPERADMIN }),
+      );
+      expect(invites.deleteByEmail).toHaveBeenCalledWith('a@x.com');
+    });
   });
 
   describe('createInvite()', () => {

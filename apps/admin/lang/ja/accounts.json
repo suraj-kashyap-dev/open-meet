@@ -3,6 +3,7 @@
   "title": "管理者",
   "access-summary": "{count, plural, one {# 人} other {# 人}} がこのコンソールにアクセスできます。",
   "invite-button": "管理者を招待",
+  "create-button": "管理者を作成",
   "empty": "まだ管理者がいません。",
   "roles": {
     "admin": "管理者",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "有効なメールアドレスを入力してください",
       "name-required": "名前は必須です"
+    }
+  },
+  "create-dialog": {
+    "title": "管理者を作成",
+    "description": "アカウントを直接作成し、パスワードを設定します。作成された方はすぐにサインインできます。",
+    "name": "名前",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "password-placeholder": "8文字以上",
+    "password-helper": "このパスワードは安全な方法で本人に共有してください。",
+    "confirm-password": "パスワードの確認",
+    "confirm-password-placeholder": "パスワードを再入力してください",
+    "role": "役割",
+    "role-admin": "管理者",
+    "role-superadmin": "スーパー管理者",
+    "cancel": "キャンセル",
+    "submit": "管理者を作成",
+    "submitting": "作成中…",
+    "success": "{name} を作成しました",
+    "error": "管理者を作成できませんでした",
+    "validation": {
+      "invalid-email": "有効なメールアドレスを入力してください",
+      "name-required": "名前は必須です",
+      "password-min": "パスワードは8文字以上である必要があります",
+      "password-mismatch": "パスワードが一致しません"
     }
   },
   "edit-dialog": {

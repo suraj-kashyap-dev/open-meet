@@ -3,6 +3,7 @@
   "title": "प्रशासक",
   "access-summary": "{count, plural, one {# व्यक्ति की} other {# लोगों की}} इस कंसोल तक पहुंच है।",
   "invite-button": "एडमिन आमंत्रित करें",
+  "create-button": "एडमिन बनाएं",
   "empty": "अभी तक कोई प्रशासक नहीं।",
   "roles": {
     "admin": "admin",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "एक वैध ईमेल दर्ज करें",
       "name-required": "नाम आवश्यक है"
+    }
+  },
+  "create-dialog": {
+    "title": "एडमिन बनाएं",
+    "description": "खाता सीधे बनाएं और पासवर्ड सेट करें। वे तुरंत साइन इन कर सकते हैं।",
+    "name": "नाम",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "password-placeholder": "कम से कम 8 अक्षर",
+    "password-helper": "यह पासवर्ड उनके साथ सुरक्षित रूप से साझा करें।",
+    "confirm-password": "पासवर्ड की पुष्टि करें",
+    "confirm-password-placeholder": "पासवर्ड फिर से दर्ज करें",
+    "role": "भूमिका",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "रद्द करें",
+    "submit": "एडमिन बनाएं",
+    "submitting": "बनाया जा रहा है…",
+    "success": "{name} बनाया गया",
+    "error": "एडमिन नहीं बनाया जा सका",
+    "validation": {
+      "invalid-email": "एक वैध ईमेल दर्ज करें",
+      "name-required": "नाम आवश्यक है",
+      "password-min": "पासवर्ड कम से कम 8 अक्षर का होना चाहिए",
+      "password-mismatch": "पासवर्ड मेल नहीं खाते"
     }
   },
   "edit-dialog": {

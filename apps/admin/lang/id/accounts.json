@@ -3,6 +3,7 @@
   "title": "Administrator",
   "access-summary": "{count, plural, one {# orang memiliki} other {# orang memiliki}} akses ke konsol ini.",
   "invite-button": "Undang admin",
+  "create-button": "Buat admin",
   "empty": "Belum ada administrator.",
   "roles": {
     "admin": "admin",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Masukkan email yang valid",
       "name-required": "Nama diperlukan"
+    }
+  },
+  "create-dialog": {
+    "title": "Buat admin",
+    "description": "Buat akun secara langsung dan tetapkan kata sandi. Mereka dapat langsung masuk.",
+    "name": "Nama",
+    "email": "Email",
+    "password": "Kata sandi",
+    "password-placeholder": "Minimal 8 karakter",
+    "password-helper": "Bagikan kata sandi ini kepada mereka dengan aman.",
+    "confirm-password": "Konfirmasi kata sandi",
+    "confirm-password-placeholder": "Masukkan kembali kata sandi",
+    "role": "Peran",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Batal",
+    "submit": "Buat admin",
+    "submitting": "Membuat…",
+    "success": "{name} dibuat",
+    "error": "Tidak dapat membuat admin",
+    "validation": {
+      "invalid-email": "Masukkan email yang valid",
+      "name-required": "Nama diperlukan",
+      "password-min": "Kata sandi minimal harus 8 karakter",
+      "password-mismatch": "Kata sandi tidak cocok"
     }
   },
   "edit-dialog": {

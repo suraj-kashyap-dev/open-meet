@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Compte",
+  "title": "Mon profil",
+  "subtitle": "Gérez vos informations personnelles, votre photo et votre mot de passe.",
+  "account": {
+    "title": "Profil",
+    "description": "Mettez à jour votre nom et votre photo.",
+    "name": "Nom",
+    "name-placeholder": "Votre nom",
+    "email": "E-mail",
+    "email-helper": "Votre adresse e-mail ne peut pas être modifiée ici.",
+    "role": "Rôle",
+    "role-admin": "Administrateur",
+    "role-superadmin": "Super-administrateur",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement…",
+    "success": "Profil mis à jour",
+    "error": "Impossible de mettre à jour le profil",
+    "validation": {
+      "name-required": "Le nom est requis"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP ou GIF. Jusqu'à {mb} Mo.",
+    "upload": "Téléverser une photo",
+    "replace": "Remplacer la photo",
+    "remove": "Supprimer la photo",
+    "edit-label": "Modifier la photo de profil",
+    "upload-label": "Téléverser une photo de profil",
+    "invalid-type": "Choisissez une image PNG, JPEG, WebP ou GIF.",
+    "too-large": "L'image doit faire {mb} Mo ou moins."
+  },
+  "password": {
+    "title": "Mot de passe",
+    "description": "Modifiez le mot de passe que vous utilisez pour vous connecter.",
+    "current": "Mot de passe actuel",
+    "current-placeholder": "Saisissez votre mot de passe actuel",
+    "new": "Nouveau mot de passe",
+    "new-placeholder": "Au moins 8 caractères",
+    "new-helper": "Utilisez au moins 8 caractères.",
+    "confirm": "Confirmer le nouveau mot de passe",
+    "confirm-placeholder": "Saisissez à nouveau le nouveau mot de passe",
+    "change": "Changer le mot de passe",
+    "changing": "Modification…",
+    "success": "Mot de passe modifié",
+    "error": "Impossible de changer le mot de passe",
+    "validation": {
+      "current-required": "Saisissez votre mot de passe actuel",
+      "password-min": "Le mot de passe doit contenir au moins 8 caractères",
+      "password-mismatch": "Les mots de passe ne correspondent pas"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Cuenta",
+  "title": "Mi perfil",
+  "subtitle": "Gestiona tus datos personales, foto y contraseña.",
+  "account": {
+    "title": "Perfil",
+    "description": "Actualiza tu nombre y foto.",
+    "name": "Nombre",
+    "name-placeholder": "Tu nombre",
+    "email": "Correo electrónico",
+    "email-helper": "Tu correo electrónico no se puede cambiar aquí.",
+    "role": "Rol",
+    "role-admin": "Administrador",
+    "role-superadmin": "Superadministrador",
+    "save": "Guardar cambios",
+    "saving": "Guardando…",
+    "success": "Perfil actualizado",
+    "error": "No se pudo actualizar el perfil",
+    "validation": {
+      "name-required": "El nombre es obligatorio"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP o GIF. Hasta {mb} MB.",
+    "upload": "Subir foto",
+    "replace": "Reemplazar foto",
+    "remove": "Eliminar foto",
+    "edit-label": "Editar foto de perfil",
+    "upload-label": "Subir foto de perfil",
+    "invalid-type": "Elige una imagen PNG, JPEG, WebP o GIF.",
+    "too-large": "La imagen debe ser de {mb} MB o menos."
+  },
+  "password": {
+    "title": "Contraseña",
+    "description": "Cambia la contraseña que usas para iniciar sesión.",
+    "current": "Contraseña actual",
+    "current-placeholder": "Ingresa tu contraseña actual",
+    "new": "Nueva contraseña",
+    "new-placeholder": "Al menos 8 caracteres",
+    "new-helper": "Usa al menos 8 caracteres.",
+    "confirm": "Confirmar nueva contraseña",
+    "confirm-placeholder": "Vuelve a escribir la nueva contraseña",
+    "change": "Cambiar contraseña",
+    "changing": "Cambiando…",
+    "success": "Contraseña cambiada",
+    "error": "No se pudo cambiar la contraseña",
+    "validation": {
+      "current-required": "Ingresa tu contraseña actual",
+      "password-min": "La contraseña debe tener al menos 8 caracteres",
+      "password-mismatch": "Las contraseñas no coinciden"
+    }
+  }
+}

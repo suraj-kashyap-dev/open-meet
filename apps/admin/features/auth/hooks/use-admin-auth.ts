@@ -53,3 +53,41 @@ export function useAdminLogout() {
     },
   });
 }
+
+function onAdminUpdated(qc: ReturnType<typeof useQueryClient>) {
+  return (admin: AdminDto) => {
+    qc.setQueryData(ADMIN_ME_KEY, admin);
+    // The administrators list shows name/avatar, so refresh it too.
+    void qc.invalidateQueries({ queryKey: ['admin-accounts'] });
+  };
+}
+
+export function useUpdateAdminProfile() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: adminAuthApi.updateMe,
+    onSuccess: onAdminUpdated(qc),
+  });
+}
+
+export function useChangeAdminPassword() {
+  return useMutation({
+    mutationFn: adminAuthApi.changePassword,
+  });
+}
+
+export function useUploadAdminAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (file: File) => adminAuthApi.uploadAvatar(file),
+    onSuccess: onAdminUpdated(qc),
+  });
+}
+
+export function useRemoveAdminAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => adminAuthApi.deleteAvatar(),
+    onSuccess: onAdminUpdated(qc),
+  });
+}

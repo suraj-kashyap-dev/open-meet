@@ -7,3 +7,6 @@ out/
 .env.local
 !.env.example
 coverage/
+test-results/
+playwright-report/
+playwright/.cache/

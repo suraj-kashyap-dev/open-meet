@@ -3,6 +3,7 @@
   "title": "অ্যাডমিনিস্ট্রেটর",
   "access-summary": "{count, plural, one {# জনের} other {# জনের}} এই কনসোলে অ্যাক্সেস আছে।",
   "invite-button": "অ্যাডমিন আমন্ত্রণ করুন",
+  "create-button": "অ্যাডমিন তৈরি করুন",
   "empty": "এখনো কোনো অ্যাডমিনিস্ট্রেটর নেই।",
   "roles": {
     "admin": "অ্যাডমিন",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "একটি বৈধ ইমেইল লিখুন",
       "name-required": "নাম প্রয়োজন"
+    }
+  },
+  "create-dialog": {
+    "title": "একজন অ্যাডমিন তৈরি করুন",
+    "description": "সরাসরি অ্যাকাউন্ট তৈরি করুন এবং একটি পাসওয়ার্ড নির্ধারণ করুন। তারা এখনই সাইন ইন করতে পারবেন।",
+    "name": "নাম",
+    "email": "ইমেইল",
+    "password": "পাসওয়ার্ড",
+    "password-placeholder": "কমপক্ষে ৮টি অক্ষর",
+    "password-helper": "এই পাসওয়ার্ডটি তাদের সাথে নিরাপদে শেয়ার করুন।",
+    "confirm-password": "পাসওয়ার্ড নিশ্চিত করুন",
+    "confirm-password-placeholder": "পাসওয়ার্ড পুনরায় লিখুন",
+    "role": "ভূমিকা",
+    "role-admin": "অ্যাডমিন",
+    "role-superadmin": "সুপারঅ্যাডমিন",
+    "cancel": "বাতিল",
+    "submit": "অ্যাডমিন তৈরি করুন",
+    "submitting": "তৈরি হচ্ছে…",
+    "success": "{name} তৈরি হয়েছে",
+    "error": "অ্যাডমিন তৈরি করা যায়নি",
+    "validation": {
+      "invalid-email": "একটি বৈধ ইমেইল লিখুন",
+      "name-required": "নাম প্রয়োজন",
+      "password-min": "পাসওয়ার্ড কমপক্ষে ৮টি অক্ষরের হতে হবে",
+      "password-mismatch": "পাসওয়ার্ড মিলছে না"
     }
   },
   "edit-dialog": {

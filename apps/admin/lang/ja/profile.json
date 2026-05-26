@@ -1,0 +1,53 @@
+{
+  "eyebrow": "アカウント",
+  "title": "マイプロフィール",
+  "subtitle": "個人情報、写真、パスワードを管理します。",
+  "account": {
+    "title": "プロフィール",
+    "description": "名前と写真を更新します。",
+    "name": "名前",
+    "name-placeholder": "お名前",
+    "email": "メールアドレス",
+    "email-helper": "メールアドレスはここでは変更できません。",
+    "role": "役割",
+    "role-admin": "管理者",
+    "role-superadmin": "スーパー管理者",
+    "save": "変更を保存",
+    "saving": "保存中…",
+    "success": "プロフィールを更新しました",
+    "error": "プロフィールを更新できませんでした",
+    "validation": {
+      "name-required": "名前は必須です"
+    }
+  },
+  "avatar": {
+    "helper": "PNG、JPEG、WebP、または GIF。最大 {mb} MB。",
+    "upload": "写真をアップロード",
+    "replace": "写真を変更",
+    "remove": "写真を削除",
+    "edit-label": "プロフィール写真を編集",
+    "upload-label": "プロフィール写真をアップロード",
+    "invalid-type": "PNG、JPEG、WebP、または GIF の画像を選択してください。",
+    "too-large": "画像は {mb} MB 以下である必要があります。"
+  },
+  "password": {
+    "title": "パスワード",
+    "description": "サインインに使用するパスワードを変更します。",
+    "current": "現在のパスワード",
+    "current-placeholder": "現在のパスワードを入力してください",
+    "new": "新しいパスワード",
+    "new-placeholder": "8文字以上",
+    "new-helper": "8文字以上を使用してください。",
+    "confirm": "新しいパスワードの確認",
+    "confirm-placeholder": "新しいパスワードを再入力してください",
+    "change": "パスワードを変更",
+    "changing": "変更中…",
+    "success": "パスワードを変更しました",
+    "error": "パスワードを変更できませんでした",
+    "validation": {
+      "current-required": "現在のパスワードを入力してください",
+      "password-min": "パスワードは8文字以上である必要があります",
+      "password-mismatch": "パスワードが一致しません"
+    }
+  }
+}

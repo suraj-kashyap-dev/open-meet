@@ -3,6 +3,7 @@
   "title": "Administrators",
   "access-summary": "{count, plural, one {# person has} other {# people have}} access to this console.",
   "invite-button": "Invite admin",
+  "create-button": "Create admin",
   "empty": "No administrators yet.",
   "roles": {
     "admin": "admin",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "Enter a valid email",
       "name-required": "Name is required"
+    }
+  },
+  "create-dialog": {
+    "title": "Create an admin",
+    "description": "Create the account directly and set a password. They can sign in right away.",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "password-placeholder": "At least 8 characters",
+    "password-helper": "Share this password with them securely.",
+    "confirm-password": "Confirm password",
+    "confirm-password-placeholder": "Re-enter the password",
+    "role": "Role",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "cancel": "Cancel",
+    "submit": "Create admin",
+    "submitting": "Creating…",
+    "success": "Created {name}",
+    "error": "Could not create admin",
+    "validation": {
+      "invalid-email": "Enter a valid email",
+      "name-required": "Name is required",
+      "password-min": "Password must be at least 8 characters",
+      "password-mismatch": "Passwords do not match"
     }
   },
   "edit-dialog": {

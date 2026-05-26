@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Account",
+  "title": "Il mio profilo",
+  "subtitle": "Gestisci i tuoi dati personali, la foto e la password.",
+  "account": {
+    "title": "Profilo",
+    "description": "Aggiorna il tuo nome e la tua foto.",
+    "name": "Nome",
+    "name-placeholder": "Il tuo nome",
+    "email": "Email",
+    "email-helper": "Il tuo indirizzo email non può essere modificato qui.",
+    "role": "Ruolo",
+    "role-admin": "Amministratore",
+    "role-superadmin": "Superamministratore",
+    "save": "Salva modifiche",
+    "saving": "Salvataggio…",
+    "success": "Profilo aggiornato",
+    "error": "Impossibile aggiornare il profilo",
+    "validation": {
+      "name-required": "Il nome è obbligatorio"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP o GIF. Fino a {mb} MB.",
+    "upload": "Carica foto",
+    "replace": "Sostituisci foto",
+    "remove": "Rimuovi foto",
+    "edit-label": "Modifica foto profilo",
+    "upload-label": "Carica foto profilo",
+    "invalid-type": "Scegli un'immagine PNG, JPEG, WebP o GIF.",
+    "too-large": "L'immagine deve essere di {mb} MB o inferiore."
+  },
+  "password": {
+    "title": "Password",
+    "description": "Cambia la password che usi per accedere.",
+    "current": "Password attuale",
+    "current-placeholder": "Inserisci la tua password attuale",
+    "new": "Nuova password",
+    "new-placeholder": "Almeno 8 caratteri",
+    "new-helper": "Usa almeno 8 caratteri.",
+    "confirm": "Conferma nuova password",
+    "confirm-placeholder": "Reinserisci la nuova password",
+    "change": "Cambia password",
+    "changing": "Modifica in corso…",
+    "success": "Password modificata",
+    "error": "Impossibile cambiare la password",
+    "validation": {
+      "current-required": "Inserisci la tua password attuale",
+      "password-min": "La password deve contenere almeno 8 caratteri",
+      "password-mismatch": "Le password non corrispondono"
+    }
+  }
+}

@@ -8,6 +8,7 @@ import { AppConfigModule } from '../config/config.module';
 
 import { AdminAuthController } from './auth/auth.controller';
 import { AdminAuthService } from './auth/auth.service';
+import { AdminAvatarsService } from './auth/admin-avatars.service';
 import { AdminJwtStrategy } from './auth/strategies/admin-jwt.strategy';
 import { AdminAnalyticsController } from './analytics/analytics.controller';
 import { AdminAnalyticsService } from './analytics/analytics.service';
@@ -41,6 +42,7 @@ import { AdminBootstrapService } from './bootstrap.service';
   ],
   providers: [
     AdminAuthService,
+    AdminAvatarsService,
     AdminRepository,
     AdminJwtStrategy,
     AdminAnalyticsService,

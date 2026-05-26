@@ -3,6 +3,7 @@
   "title": "المسؤولون",
   "access-summary": "{count, plural, zero {لا يملك أحد} one {يملك شخص واحد} two {يملك شخصان} few {يملك # أشخاص} many {يملك # شخصًا} other {يملك # شخص}} صلاحية الوصول إلى وحدة التحكم هذه.",
   "invite-button": "دعوة مسؤول",
+  "create-button": "إنشاء مسؤول",
   "empty": "لا يوجد مسؤولون بعد.",
   "roles": {
     "admin": "مسؤول",
@@ -44,6 +45,31 @@
     "validation": {
       "invalid-email": "أدخل بريدًا إلكترونيًا صالحًا",
       "name-required": "الاسم مطلوب"
+    }
+  },
+  "create-dialog": {
+    "title": "إنشاء مسؤول",
+    "description": "أنشئ الحساب مباشرةً وعيّن كلمة مرور. يمكنهم تسجيل الدخول على الفور.",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "password-placeholder": "‏8 أحرف على الأقل",
+    "password-helper": "شارك كلمة المرور هذه معهم بأمان.",
+    "confirm-password": "تأكيد كلمة المرور",
+    "confirm-password-placeholder": "أعد إدخال كلمة المرور",
+    "role": "الدور",
+    "role-admin": "مسؤول",
+    "role-superadmin": "مسؤول أعلى",
+    "cancel": "إلغاء",
+    "submit": "إنشاء مسؤول",
+    "submitting": "جارٍ الإنشاء…",
+    "success": "تم إنشاء {name}",
+    "error": "تعذّر إنشاء المسؤول",
+    "validation": {
+      "invalid-email": "أدخل بريدًا إلكترونيًا صالحًا",
+      "name-required": "الاسم مطلوب",
+      "password-min": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "password-mismatch": "كلمتا المرور غير متطابقتين"
     }
   },
   "edit-dialog": {

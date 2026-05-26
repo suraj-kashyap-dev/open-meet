@@ -1,7 +1,7 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { Crown, Pencil, Plus, Trash2 } from 'lucide-react';
+import { Crown, Pencil, Plus, Trash2, UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
@@ -20,6 +20,7 @@ import {
   DialogTitle,
 } from '@open-meet/ui/dialog';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
+import { CreateAdminDialog } from '@/features/accounts/components/create-admin-dialog';
 import { EditAdminDialog } from '@/features/accounts/components/edit-admin-dialog';
 import { InviteAdminDialog } from '@/features/accounts/components/invite-admin-dialog';
 import { PendingInvites } from '@/features/accounts/components/pending-invites';
@@ -60,6 +61,7 @@ export default function AdministratorsPage() {
   const remove = useDeleteAdminAccount();
 
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
   const [editing, setEditing] = useState<AdminAccountDto | null>(null);
   const [deleting, setDeleting] = useState<AdminAccountDto | null>(null);
 
@@ -87,7 +89,10 @@ export default function AdministratorsPage() {
         header: t('table.administrator'),
         cell: ({ row }) => (
           <div className="flex items-center gap-3">
-            <UserAvatar user={{ name: row.original.name }} size="md" />
+            <UserAvatar
+              user={{ name: row.original.name, avatar: row.original.avatar }}
+              size="md"
+            />
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{row.original.name}</p>
               <p className="truncate text-xs text-muted-foreground">{row.original.email}</p>
@@ -180,10 +185,16 @@ export default function AdministratorsPage() {
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
 
           {isSuperadmin ? (
-            <Button onClick={() => setInviteOpen(true)} className="gap-2">
-              <Plus className="h-4 w-4" />
-              {t('invite-button')}
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant="outline" onClick={() => setInviteOpen(true)} className="gap-2">
+                <Plus className="h-4 w-4" />
+                {t('invite-button')}
+              </Button>
+              <Button onClick={() => setCreateOpen(true)} className="gap-2">
+                <UserPlus className="h-4 w-4" />
+                {t('create-button')}
+              </Button>
+            </div>
           ) : null}
         </div>
         <p className="text-sm text-muted-foreground">{t('access-summary', { count: total })}</p>
@@ -211,6 +222,7 @@ export default function AdministratorsPage() {
         </section>
       ) : null}
 
+      <CreateAdminDialog open={createOpen} onClose={() => setCreateOpen(false)} />
       <InviteAdminDialog open={inviteOpen} onClose={() => setInviteOpen(false)} />
       <EditAdminDialog admin={editing} onClose={() => setEditing(null)} />
 

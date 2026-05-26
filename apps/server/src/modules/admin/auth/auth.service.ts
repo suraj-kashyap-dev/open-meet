@@ -1,11 +1,13 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
 
-import type { AdminDto } from '@open-meet/types';
+import type { AdminChangePasswordDto, AdminDto, AdminUpdateProfileDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
+
+import { StorageService } from '../../../storage/storage.service';
 
 import { AdminRepository } from '../admin.repository';
 import type { AdminLoginDto } from './dto/admin-login.dto';
@@ -27,6 +29,7 @@ export class AdminAuthService {
     private readonly admins: AdminRepository,
     private readonly jwt: JwtService,
     private readonly config: ConfigService<ApiEnv, true>,
+    private readonly storage: StorageService,
   ) {}
 
   async login(dto: AdminLoginDto): Promise<{ admin: AdminDto; tokens: IssuedAdminTokens }> {
@@ -60,6 +63,53 @@ export class AdminAuthService {
     return this.toDto(admin);
   }
 
+  async updateProfile(id: string, dto: AdminUpdateProfileDto): Promise<AdminDto> {
+    const data: { name?: string } = {};
+
+    if (dto.name !== undefined) {
+      const name = dto.name.trim();
+
+      if (!name) {
+        throw new BadRequestException({
+          code: ApiErrorCode.VALIDATION_FAILED,
+          message: 'Name cannot be empty',
+        });
+      }
+
+      data.name = name;
+    }
+
+    if (Object.keys(data).length === 0) {
+      return this.getAdminDtoById(id);
+    }
+
+    const updated = await this.admins.update(id, data);
+    return this.toDto(updated);
+  }
+
+  async changePassword(id: string, dto: AdminChangePasswordDto): Promise<void> {
+    const admin = await this.admins.findById(id);
+
+    if (!admin) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'Admin not found',
+      });
+    }
+
+    const valid = await argon2.verify(admin.passwordHash, dto.currentPassword);
+
+    if (!valid) {
+      throw new BadRequestException({
+        code: ApiErrorCode.INVALID_CREDENTIALS,
+        message: 'Current password is incorrect',
+      });
+    }
+
+    const passwordHash = await argon2.hash(dto.newPassword, { type: argon2.argon2id });
+    await this.admins.update(id, { passwordHash });
+  }
+
   private async issueTokens(
     adminId: string,
     email: string,
@@ -80,6 +130,7 @@ export class AdminAuthService {
     email: string;
     name: string;
     role: string;
+    avatarKey: string | null;
     createdAt: Date;
     lastLoginAt: Date | null;
   }): AdminDto {
@@ -88,6 +139,7 @@ export class AdminAuthService {
       email: a.email,
       name: a.name,
       role: a.role as AdminDto['role'],
+      avatar: a.avatarKey ? this.storage.publicUrl(a.avatarKey) : null,
       createdAt: a.createdAt.toISOString(),
       lastLoginAt: a.lastLoginAt?.toISOString() ?? null,
     };

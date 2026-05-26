@@ -1,0 +1,53 @@
+{
+  "eyebrow": "Konto",
+  "title": "Mein Profil",
+  "subtitle": "Verwalten Sie Ihre persönlichen Daten, Ihr Foto und Ihr Passwort.",
+  "account": {
+    "title": "Profil",
+    "description": "Aktualisieren Sie Ihren Namen und Ihr Foto.",
+    "name": "Name",
+    "name-placeholder": "Ihr Name",
+    "email": "E-Mail",
+    "email-helper": "Ihre E-Mail-Adresse kann hier nicht geändert werden.",
+    "role": "Rolle",
+    "role-admin": "Admin",
+    "role-superadmin": "Superadmin",
+    "save": "Änderungen speichern",
+    "saving": "Wird gespeichert…",
+    "success": "Profil aktualisiert",
+    "error": "Profil konnte nicht aktualisiert werden",
+    "validation": {
+      "name-required": "Name ist erforderlich"
+    }
+  },
+  "avatar": {
+    "helper": "PNG, JPEG, WebP oder GIF. Bis zu {mb} MB.",
+    "upload": "Foto hochladen",
+    "replace": "Foto ersetzen",
+    "remove": "Foto entfernen",
+    "edit-label": "Profilfoto bearbeiten",
+    "upload-label": "Profilfoto hochladen",
+    "invalid-type": "Wählen Sie ein PNG-, JPEG-, WebP- oder GIF-Bild.",
+    "too-large": "Das Bild darf höchstens {mb} MB groß sein."
+  },
+  "password": {
+    "title": "Passwort",
+    "description": "Ändern Sie das Passwort, mit dem Sie sich anmelden.",
+    "current": "Aktuelles Passwort",
+    "current-placeholder": "Geben Sie Ihr aktuelles Passwort ein",
+    "new": "Neues Passwort",
+    "new-placeholder": "Mindestens 8 Zeichen",
+    "new-helper": "Verwenden Sie mindestens 8 Zeichen.",
+    "confirm": "Neues Passwort bestätigen",
+    "confirm-placeholder": "Geben Sie das neue Passwort erneut ein",
+    "change": "Passwort ändern",
+    "changing": "Wird geändert…",
+    "success": "Passwort geändert",
+    "error": "Passwort konnte nicht geändert werden",
+    "validation": {
+      "current-required": "Geben Sie Ihr aktuelles Passwort ein",
+      "password-min": "Das Passwort muss mindestens 8 Zeichen lang sein",
+      "password-mismatch": "Die Passwörter stimmen nicht überein"
+    }
+  }
+}

@@ -13,8 +13,6 @@ export default defineConfig({
     include: ['test/unit/**/*.spec.{ts,tsx}'],
     exclude: ['node_modules', '.next'],
     setupFiles: ['./test/setup.ts'],
-    // Workspace packages ship as TS/TSX source — inline them so Vitest transforms
-    // them instead of treating them as pre-built externals.
     server: {
       deps: {
         inline: [/^@open-meet\//],
