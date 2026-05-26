@@ -1,0 +1,58 @@
+{
+  "eyebrow": "Genel Bakış",
+  "title": "Konsol",
+  "load-error": "Genel bakış yüklenemedi.",
+  "stats": {
+    "users": "Kullanıcılar",
+    "users-hint": "Toplam kayıtlı hesaplar",
+    "meetings": "Toplantılar",
+    "meetings-hint": "Tüm zamanlarda oluşturulan toplantı odaları",
+    "active-now": "Şu an aktif",
+    "active-now-hint": "Durumu ACTIVE olan odalar",
+    "messages-24h": "24s Mesajlar",
+    "messages-24h-hint": "Son 24 saatteki sohbet mesajları"
+  },
+  "trends": {
+    "signups": "Yeni kayıtlar",
+    "meetings": "Yeni toplantılar",
+    "range": "son 14 gün · {total, number}",
+    "today": "Bugün"
+  },
+  "status": {
+    "active": "Aktif",
+    "waiting": "Bekliyor",
+    "ended": "Sona erdi"
+  },
+  "recent": {
+    "title": "Son toplantılar",
+    "empty": "Henüz toplantı yok.",
+    "columns": {
+      "code": "Kod",
+      "host": "Düzenleyen",
+      "status": "Durum",
+      "participants": "Katılımcılar",
+      "duration": "Süre",
+      "started": "Başladı"
+    }
+  },
+  "upcoming": {
+    "title": "Yaklaşan",
+    "empty": "Planlanmış toplantı yok.",
+    "untitled": "{date} tarihindeki toplantı",
+    "columns": {
+      "code": "Kod",
+      "title": "Başlık",
+      "host": "Düzenleyen",
+      "invitees": "Davetliler",
+      "duration": "Süre",
+      "when": "Ne Zaman"
+    },
+    "recurrence": {
+      "repeats": "Tekrarlar",
+      "daily": "Günlük",
+      "weekly": "Haftalık",
+      "monthly": "Aylık",
+      "yearly": "Yıllık"
+    }
+  }
+}

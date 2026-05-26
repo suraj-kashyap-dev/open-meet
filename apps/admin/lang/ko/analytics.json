@@ -1,0 +1,29 @@
+{
+  "eyebrow": "인사이트",
+  "title": "분석",
+  "subtitle": "최근 30일 트렌드 및 전체 누적 집계. 매분 새로 고침됩니다.",
+  "load-error": "분석 데이터를 불러오지 못했습니다.",
+  "kpi": {
+    "avg-length": "평균 회의 시간",
+    "avg-length-hint": "{count, number}건 완료",
+    "top-host": "최다 호스트",
+    "top-host-hint": "{count, plural, one {회의 # 건 호스팅} other {회의 # 건 호스팅}}",
+    "top-host-empty": "아직 완료된 회의가 없습니다",
+    "peak-hour": "피크 시간대",
+    "peak-hour-hint": "동시 회의 수가 가장 많은 시간대 (UTC)",
+    "dau-today": "오늘의 DAU",
+    "dau-today-hint": "오늘 회의에 참가한 고유 사용자 수"
+  },
+  "dau-trend-title": "일일 활성 사용자",
+  "concurrency": {
+    "title": "시간대별 최대 동시 접속 수",
+    "range": "최근 30일 (UTC)"
+  },
+  "top-hosts": {
+    "title": "최다 호스트",
+    "subtitle": "완료된 회의 수 기준",
+    "empty": "아직 완료된 회의가 없습니다.",
+    "hosted": "{count, plural, one {회의 # 건} other {회의 # 건}}",
+    "total-duration": "{duration} 합계"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "eyebrow": "الإحصاءات",
+  "title": "التحليلات",
+  "subtitle": "اتجاهات 30 يوماً الأخيرة + إجماليات مدى الحياة. يُحدَّث كل دقيقة.",
+  "load-error": "تعذّر تحميل التحليلات.",
+  "kpi": {
+    "avg-length": "متوسط مدة الاجتماع",
+    "avg-length-hint": "{count, number} مكتمل",
+    "top-host": "أبرز مضيف",
+    "top-host-hint": "{count, plural, one {# اجتماع مُستضاف} other {# اجتماعات مُستضافة}}",
+    "top-host-empty": "لا توجد اجتماعات مكتملة بعد",
+    "peak-hour": "ساعة الذروة",
+    "peak-hour-hint": "أعلى اجتماعات متزامنة (UTC)",
+    "dau-today": "DAU اليوم",
+    "dau-today-hint": "المستخدمون المميزون في اجتماع اليوم"
+  },
+  "dau-trend-title": "المستخدمون النشطون يومياً",
+  "concurrency": {
+    "title": "ذروة التزامن حسب الساعة",
+    "range": "آخر 30 يوماً (UTC)"
+  },
+  "top-hosts": {
+    "title": "أبرز المضيفين",
+    "subtitle": "حسب الاجتماعات المكتملة",
+    "empty": "لا توجد اجتماعات مكتملة بعد.",
+    "hosted": "{count, plural, one {# اجتماع} other {# اجتماعات}}",
+    "total-duration": "{duration} إجمالاً"
+  }
+}

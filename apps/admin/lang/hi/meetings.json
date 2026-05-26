@@ -1,0 +1,97 @@
+{
+  "eyebrow": "संचालन",
+  "title": "मीटिंग",
+  "total-count": "कुल {count, number}",
+  "end-all": "सभी सक्रिय समाप्त करें",
+  "search-placeholder": "कोड, शीर्षक, होस्ट से खोजें",
+  "refreshing": "रिफ्रेश हो रहा है…",
+  "filters": {
+    "all": "सभी",
+    "active": "सक्रिय",
+    "waiting": "प्रतीक्षारत",
+    "ended": "समाप्त"
+  },
+  "status": {
+    "active": "सक्रिय",
+    "waiting": "प्रतीक्षारत",
+    "ended": "समाप्त"
+  },
+  "columns": {
+    "meeting": "मीटिंग",
+    "host": "होस्ट",
+    "status": "स्थिति",
+    "started": "शुरू हुई",
+    "duration": "अवधि",
+    "total": "कुल"
+  },
+  "untitled": "शीर्षकहीन ({date})",
+  "live-count": "{count, number} लाइव",
+  "actions": {
+    "label": "कार्रवाई",
+    "view": "देखें",
+    "end": "समाप्त करें",
+    "delete": "हटाएं"
+  },
+  "empty-filtered": "वर्तमान फ़िल्टर से कोई मीटिंग मेल नहीं खाती।",
+  "empty": "अभी तक कोई मीटिंग दर्ज नहीं।",
+  "pagination": {
+    "no-results": "कोई परिणाम नहीं",
+    "showing": "{from}-{to} दिखाया जा रहा है, कुल {total} में से",
+    "previous": "पिछला",
+    "next": "अगला",
+    "page-of": "पृष्ठ {page} / {pageCount}"
+  },
+  "detail": {
+    "title": "मीटिंग विवरण",
+    "hosted-by": "{host} द्वारा होस्ट",
+    "loading": "लोड हो रहा है…",
+    "stats": {
+      "status": "स्थिति",
+      "active-now": "अभी सक्रिय",
+      "total-participants": "कुल प्रतिभागी",
+      "messages": "संदेश"
+    },
+    "participants": "प्रतिभागी",
+    "no-participants": "इस मीटिंग में कोई प्रतिभागी नहीं जुड़ा।",
+    "host-badge": "होस्ट",
+    "joined": "{time} को जुड़े",
+    "left": "{time} को छोड़ा",
+    "kick": "हटाएं",
+    "kick-aria": "{name} को हटाएं",
+    "kick-success": "{name} को हटाया गया",
+    "kick-error": "{name} को नहीं हटाया जा सका"
+  },
+  "end-dialog": {
+    "title": "इस मीटिंग को जबरदस्ती समाप्त करें?",
+    "description-active": "इस समय रूम में {count, plural, one {# प्रतिभागी है} other {# प्रतिभागी हैं}}। उन्हें तुरंत डिस्कनेक्ट कर दिया जाएगा।",
+    "description-idle": "मीटिंग की स्थिति ENDED के रूप में चिह्नित की जाएगी और उसका LiveKit रूम (यदि कोई हो) बंद कर दिया जाएगा।",
+    "hosted-by": "{host} द्वारा होस्ट",
+    "cancel": "रद्द करें",
+    "submit": "मीटिंग समाप्त करें",
+    "submitting": "समाप्त हो रहा है…",
+    "success": "मीटिंग {code} समाप्त हुई",
+    "error": "मीटिंग समाप्त नहीं हो सकी"
+  },
+  "end-all-dialog": {
+    "title": "सभी सक्रिय मीटिंग समाप्त करें?",
+    "description": "यह ACTIVE स्थिति वाली प्रत्येक मीटिंग को ENDED के रूप में चिह्नित करेगा और उनके LiveKit रूम बंद कर देगा। किसी कॉल में मौजूद प्रत्येक प्रतिभागी को तुरंत डिस्कनेक्ट कर दिया जाएगा।",
+    "active-summary": "वर्तमान में {count, plural, one {# मीटिंग} other {# मीटिंग}} सक्रिय।",
+    "none-active": "अभी कोई सक्रिय मीटिंग नहीं — कुछ नहीं होगा।",
+    "cancel": "रद्द करें",
+    "submit": "सभी सक्रिय समाप्त करें",
+    "submitting": "समाप्त हो रहा है…",
+    "success": "{count, plural, one {# मीटिंग समाप्त हुई} other {# मीटिंग समाप्त हुईं}}",
+    "error": "सक्रिय मीटिंग समाप्त नहीं हो सकीं"
+  },
+  "delete-dialog": {
+    "title": "इस मीटिंग को स्थायी रूप से हटाएं?",
+    "description": "यह मीटिंग पंक्ति के साथ-साथ उससे जुड़े सभी चैट संदेश, अटैचमेंट और प्रतिभागी रिकॉर्ड हटा देता है। यह पूर्ववत नहीं किया जा सकता।",
+    "summary": "{participants, number} प्रतिभागी पंक्तियां · {messages, number} संदेश",
+    "confirm-label": "पुष्टि के लिए मीटिंग कोड <mono>{code}</mono> टाइप करें",
+    "cancel": "रद्द करें",
+    "submit": "हमेशा के लिए हटाएं",
+    "submitting": "हटाया जा रहा है…",
+    "success": "मीटिंग {code} हटाई गई",
+    "error": "मीटिंग हटाई नहीं जा सकी"
+  }
+}

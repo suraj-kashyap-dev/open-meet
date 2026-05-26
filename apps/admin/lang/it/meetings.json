@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Modera",
+  "title": "Riunioni",
+  "total-count": "{count, number} in totale",
+  "end-all": "Termina tutte le attive",
+  "search-placeholder": "Cerca per codice, titolo, host",
+  "refreshing": "Aggiornamento…",
+  "filters": {
+    "all": "Tutte",
+    "active": "Attiva",
+    "waiting": "In attesa",
+    "ended": "Terminata"
+  },
+  "status": {
+    "active": "Attiva",
+    "waiting": "In attesa",
+    "ended": "Terminata"
+  },
+  "columns": {
+    "meeting": "Riunione",
+    "host": "Host",
+    "status": "Stato",
+    "started": "Iniziata",
+    "duration": "Durata",
+    "total": "Totale"
+  },
+  "untitled": "Senza titolo ({date})",
+  "live-count": "{count, number} in diretta",
+  "actions": {
+    "label": "Azioni",
+    "view": "Visualizza",
+    "end": "Termina",
+    "delete": "Elimina"
+  },
+  "empty-filtered": "Nessuna riunione corrisponde ai filtri attuali.",
+  "empty": "Ancora nessuna riunione registrata.",
+  "pagination": {
+    "no-results": "Nessun risultato",
+    "showing": "Visualizzazione {from}-{to} di {total}",
+    "previous": "Precedente",
+    "next": "Successivo",
+    "page-of": "Pagina {page} di {pageCount}"
+  },
+  "detail": {
+    "title": "Dettagli riunione",
+    "hosted-by": "ospitata da {host}",
+    "loading": "Caricamento…",
+    "stats": {
+      "status": "Stato",
+      "active-now": "Attivi ora",
+      "total-participants": "Partecipanti totali",
+      "messages": "Messaggi"
+    },
+    "participants": "Partecipanti",
+    "no-participants": "Nessun partecipante ha partecipato a questa riunione.",
+    "host-badge": "Host",
+    "joined": "Entrato {time}",
+    "left": "Uscito {time}",
+    "kick": "Espelli",
+    "kick-aria": "Espelli {name}",
+    "kick-success": "{name} espulso",
+    "kick-error": "Impossibile espellere {name}"
+  },
+  "end-dialog": {
+    "title": "Terminare forzatamente questa riunione?",
+    "description-active": "{count, plural, one {# partecipante è} other {# partecipanti sono}} attualmente nella sala. Verranno disconnessi immediatamente.",
+    "description-idle": "Lo stato della riunione verrà segnato come ENDED e la sua sala LiveKit (se presente) verrà chiusa.",
+    "hosted-by": "ospitata da {host}",
+    "cancel": "Annulla",
+    "submit": "Termina riunione",
+    "submitting": "Terminazione in corso…",
+    "success": "Riunione {code} terminata",
+    "error": "Impossibile terminare la riunione"
+  },
+  "end-all-dialog": {
+    "title": "Terminare tutte le riunioni attive?",
+    "description": "Questa operazione segnerà come ENDED tutte le riunioni con stato ACTIVE e chiuderà le relative sale LiveKit. Ogni partecipante attualmente in una chiamata verrà disconnesso immediatamente.",
+    "active-summary": "{count, plural, one {# riunione} other {# riunioni}} attualmente attiva/e.",
+    "none-active": "Nessuna riunione attiva al momento — non accadrà nulla.",
+    "cancel": "Annulla",
+    "submit": "Termina tutte le attive",
+    "submitting": "Terminazione in corso…",
+    "success": "{count, plural, one {# riunione terminata} other {# riunioni terminate}}",
+    "error": "Impossibile terminare le riunioni attive"
+  },
+  "delete-dialog": {
+    "title": "Eliminare definitivamente questa riunione?",
+    "description": "Questa operazione rimuove la riga della riunione insieme a ogni messaggio chat, allegato e record di partecipante collegato. Questa azione non può essere annullata.",
+    "summary": "{participants, number} record partecipanti · {messages, number} messaggi",
+    "confirm-label": "Digita il codice riunione <mono>{code}</mono> per confermare",
+    "cancel": "Annulla",
+    "submit": "Elimina definitivamente",
+    "submitting": "Eliminazione in corso…",
+    "success": "Riunione {code} eliminata",
+    "error": "Impossibile eliminare la riunione"
+  }
+}

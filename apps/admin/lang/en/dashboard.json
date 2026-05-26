@@ -1,0 +1,58 @@
+{
+  "eyebrow": "Overview",
+  "title": "Console",
+  "load-error": "Failed to load overview.",
+  "stats": {
+    "users": "Users",
+    "users-hint": "Total registered accounts",
+    "meetings": "Meetings",
+    "meetings-hint": "All-time meeting rooms created",
+    "active-now": "Active now",
+    "active-now-hint": "Rooms with status = ACTIVE",
+    "messages-24h": "Messages 24h",
+    "messages-24h-hint": "Chat messages in last 24h"
+  },
+  "trends": {
+    "signups": "New signups",
+    "meetings": "New meetings",
+    "range": "last 14 days · {total, number}",
+    "today": "Today"
+  },
+  "status": {
+    "active": "Active",
+    "waiting": "Waiting",
+    "ended": "Ended"
+  },
+  "recent": {
+    "title": "Recent meetings",
+    "empty": "No meetings yet.",
+    "columns": {
+      "code": "Code",
+      "host": "Host",
+      "status": "Status",
+      "participants": "Participants",
+      "duration": "Duration",
+      "started": "Started"
+    }
+  },
+  "upcoming": {
+    "title": "Coming up",
+    "empty": "No scheduled meetings.",
+    "untitled": "Meeting on {date}",
+    "columns": {
+      "code": "Code",
+      "title": "Title",
+      "host": "Host",
+      "invitees": "Invitees",
+      "duration": "Duration",
+      "when": "When"
+    },
+    "recurrence": {
+      "repeats": "Repeats",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    }
+  }
+}

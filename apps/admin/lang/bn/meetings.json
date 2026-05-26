@@ -1,0 +1,97 @@
+{
+  "eyebrow": "মডারেট",
+  "title": "মিটিং",
+  "total-count": "{count, number} মোট",
+  "end-all": "সব সক্রিয় শেষ করুন",
+  "search-placeholder": "কোড, শিরোনাম বা হোস্ট দিয়ে অনুসন্ধান করুন",
+  "refreshing": "রিফ্রেশ হচ্ছে…",
+  "filters": {
+    "all": "সব",
+    "active": "সক্রিয়",
+    "waiting": "অপেক্ষায়",
+    "ended": "শেষ হয়েছে"
+  },
+  "status": {
+    "active": "সক্রিয়",
+    "waiting": "অপেক্ষায়",
+    "ended": "শেষ হয়েছে"
+  },
+  "columns": {
+    "meeting": "মিটিং",
+    "host": "হোস্ট",
+    "status": "স্ট্যাটাস",
+    "started": "শুরু হয়েছে",
+    "duration": "সময়কাল",
+    "total": "মোট"
+  },
+  "untitled": "শিরোনামহীন ({date})",
+  "live-count": "{count, number}টি লাইভ",
+  "actions": {
+    "label": "কার্যক্রম",
+    "view": "দেখুন",
+    "end": "শেষ করুন",
+    "delete": "মুছুন"
+  },
+  "empty-filtered": "বর্তমান ফিল্টারের সাথে কোনো মিটিং মিলছে না।",
+  "empty": "এখনো কোনো মিটিং রেকর্ড করা হয়নি।",
+  "pagination": {
+    "no-results": "কোনো ফলাফল নেই",
+    "showing": "{total}-এর মধ্যে {from}-{to} দেখাচ্ছে",
+    "previous": "পূর্ববর্তী",
+    "next": "পরবর্তী",
+    "page-of": "{pageCount}-এর মধ্যে {page} পেজ"
+  },
+  "detail": {
+    "title": "মিটিংয়ের বিবরণ",
+    "hosted-by": "{host} কর্তৃক হোস্ট করা",
+    "loading": "লোড হচ্ছে…",
+    "stats": {
+      "status": "স্ট্যাটাস",
+      "active-now": "এখন সক্রিয়",
+      "total-participants": "মোট অংশগ্রহণকারী",
+      "messages": "বার্তা"
+    },
+    "participants": "অংশগ্রহণকারী",
+    "no-participants": "এই মিটিংয়ে কোনো অংশগ্রহণকারী যোগ দেননি।",
+    "host-badge": "হোস্ট",
+    "joined": "{time}-এ যোগ দিয়েছেন",
+    "left": "{time}-এ ছেড়েছেন",
+    "kick": "বের করুন",
+    "kick-aria": "{name}-কে বের করুন",
+    "kick-success": "{name}-কে বের করা হয়েছে",
+    "kick-error": "{name}-কে বের করা যায়নি"
+  },
+  "end-dialog": {
+    "title": "এই মিটিং জোর করে শেষ করবেন?",
+    "description-active": "বর্তমানে রুমে {count, plural, one {# জন অংশগ্রহণকারী আছেন} other {# জন অংশগ্রহণকারী আছেন}}। তাদের সংযোগ তাৎক্ষণিকভাবে বিচ্ছিন্ন করা হবে।",
+    "description-idle": "মিটিংয়ের স্ট্যাটাস ENDED চিহ্নিত হবে এবং এর LiveKit রুম (যদি থাকে) বন্ধ করা হবে।",
+    "hosted-by": "{host} কর্তৃক হোস্ট করা",
+    "cancel": "বাতিল",
+    "submit": "মিটিং শেষ করুন",
+    "submitting": "শেষ হচ্ছে…",
+    "success": "মিটিং {code} শেষ করা হয়েছে",
+    "error": "মিটিং শেষ করা যায়নি"
+  },
+  "end-all-dialog": {
+    "title": "সব সক্রিয় মিটিং শেষ করবেন?",
+    "description": "ACTIVE স্ট্যাটাসের সব মিটিং ENDED হিসেবে চিহ্নিত হবে এবং তাদের LiveKit রুম বন্ধ করা হবে। বর্তমানে কলে থাকা সব অংশগ্রহণকারীর সংযোগ তাৎক্ষণিকভাবে বিচ্ছিন্ন হবে।",
+    "active-summary": "বর্তমানে {count, plural, one {# টি মিটিং} other {# টি মিটিং}} সক্রিয়।",
+    "none-active": "এখন কোনো সক্রিয় মিটিং নেই — কিছু হবে না।",
+    "cancel": "বাতিল",
+    "submit": "সব সক্রিয় শেষ করুন",
+    "submitting": "শেষ হচ্ছে…",
+    "success": "{count, plural, one {# টি মিটিং শেষ করা হয়েছে} other {# টি মিটিং শেষ করা হয়েছে}}",
+    "error": "সক্রিয় মিটিং শেষ করা যায়নি"
+  },
+  "delete-dialog": {
+    "title": "এই মিটিং স্থায়িভাবে মুছবেন?",
+    "description": "এটি মিটিংয়ের রো এবং এর সাথে সংযুক্ত সব চ্যাট বার্তা, সংযুক্তি ও অংশগ্রহণকারীর রেকর্ড মুছে ফেলবে। এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+    "summary": "{participants, number}টি অংশগ্রহণকারী রো · {messages, number}টি বার্তা",
+    "confirm-label": "নিশ্চিত করতে মিটিং কোড <mono>{code}</mono> টাইপ করুন",
+    "cancel": "বাতিল",
+    "submit": "চিরতরে মুছুন",
+    "submitting": "মুছে হচ্ছে…",
+    "success": "মিটিং {code} মুছে ফেলা হয়েছে",
+    "error": "মিটিং মুছতে পারা যায়নি"
+  }
+}

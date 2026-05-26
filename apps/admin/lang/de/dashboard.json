@@ -1,0 +1,58 @@
+{
+  "eyebrow": "Übersicht",
+  "title": "Konsole",
+  "load-error": "Übersicht konnte nicht geladen werden.",
+  "stats": {
+    "users": "Benutzer",
+    "users-hint": "Gesamt registrierte Konten",
+    "meetings": "Besprechungen",
+    "meetings-hint": "Alle jemals erstellten Besprechungsräume",
+    "active-now": "Jetzt aktiv",
+    "active-now-hint": "Räume mit Status = ACTIVE",
+    "messages-24h": "Nachrichten 24h",
+    "messages-24h-hint": "Chatnachrichten in den letzten 24h"
+  },
+  "trends": {
+    "signups": "Neue Anmeldungen",
+    "meetings": "Neue Besprechungen",
+    "range": "letzte 14 Tage · {total, number}",
+    "today": "Heute"
+  },
+  "status": {
+    "active": "Aktiv",
+    "waiting": "Wartend",
+    "ended": "Beendet"
+  },
+  "recent": {
+    "title": "Letzte Besprechungen",
+    "empty": "Noch keine Besprechungen.",
+    "columns": {
+      "code": "Code",
+      "host": "Host",
+      "status": "Status",
+      "participants": "Teilnehmer",
+      "duration": "Dauer",
+      "started": "Gestartet"
+    }
+  },
+  "upcoming": {
+    "title": "Demnächst",
+    "empty": "Keine geplanten Besprechungen.",
+    "untitled": "Besprechung am {date}",
+    "columns": {
+      "code": "Code",
+      "title": "Titel",
+      "host": "Host",
+      "invitees": "Eingeladene",
+      "duration": "Dauer",
+      "when": "Wann"
+    },
+    "recurrence": {
+      "repeats": "Wiederholt",
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "yearly": "Jährlich"
+    }
+  }
+}

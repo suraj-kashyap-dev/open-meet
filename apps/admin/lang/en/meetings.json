@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Moderate",
+  "title": "Meetings",
+  "total-count": "{count, number} total",
+  "end-all": "End all active",
+  "search-placeholder": "Search by code, title, host",
+  "refreshing": "Refreshing…",
+  "filters": {
+    "all": "All",
+    "active": "Active",
+    "waiting": "Waiting",
+    "ended": "Ended"
+  },
+  "status": {
+    "active": "Active",
+    "waiting": "Waiting",
+    "ended": "Ended"
+  },
+  "columns": {
+    "meeting": "Meeting",
+    "host": "Host",
+    "status": "Status",
+    "started": "Started",
+    "duration": "Duration",
+    "total": "Total"
+  },
+  "untitled": "Untitled ({date})",
+  "live-count": "{count, number} live",
+  "actions": {
+    "label": "Actions",
+    "view": "View",
+    "end": "End",
+    "delete": "Delete"
+  },
+  "empty-filtered": "No meetings match the current filters.",
+  "empty": "No meetings recorded yet.",
+  "pagination": {
+    "no-results": "No results",
+    "showing": "Showing {from}-{to} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "page-of": "Page {page} of {pageCount}"
+  },
+  "detail": {
+    "title": "Meeting details",
+    "hosted-by": "hosted by {host}",
+    "loading": "Loading…",
+    "stats": {
+      "status": "Status",
+      "active-now": "Active now",
+      "total-participants": "Total participants",
+      "messages": "Messages"
+    },
+    "participants": "Participants",
+    "no-participants": "No participants joined this meeting.",
+    "host-badge": "Host",
+    "joined": "Joined {time}",
+    "left": "Left {time}",
+    "kick": "Kick",
+    "kick-aria": "Kick {name}",
+    "kick-success": "Kicked {name}",
+    "kick-error": "Could not kick {name}"
+  },
+  "end-dialog": {
+    "title": "Force-end this meeting?",
+    "description-active": "{count, plural, one {# participant is} other {# participants are}} currently in the room. They'll be disconnected immediately.",
+    "description-idle": "The meeting status will be marked ENDED and its LiveKit room (if any) will be closed.",
+    "hosted-by": "hosted by {host}",
+    "cancel": "Cancel",
+    "submit": "End meeting",
+    "submitting": "Ending…",
+    "success": "Ended meeting {code}",
+    "error": "Could not end meeting"
+  },
+  "end-all-dialog": {
+    "title": "End every active meeting?",
+    "description": "This will mark every meeting with status ACTIVE as ENDED and close their LiveKit rooms. Every participant currently in a call will be disconnected immediately.",
+    "active-summary": "{count, plural, one {# meeting} other {# meetings}} currently active.",
+    "none-active": "No active meetings right now — nothing will happen.",
+    "cancel": "Cancel",
+    "submit": "End all active",
+    "submitting": "Ending…",
+    "success": "{count, plural, one {Ended # meeting} other {Ended # meetings}}",
+    "error": "Could not end active meetings"
+  },
+  "delete-dialog": {
+    "title": "Permanently delete this meeting?",
+    "description": "This removes the meeting row plus every chat message, attachment, and participant record attached to it. This cannot be undone.",
+    "summary": "{participants, number} participant rows · {messages, number} messages",
+    "confirm-label": "Type the meeting code <mono>{code}</mono> to confirm",
+    "cancel": "Cancel",
+    "submit": "Delete forever",
+    "submitting": "Deleting…",
+    "success": "Deleted meeting {code}",
+    "error": "Could not delete meeting"
+  }
+}

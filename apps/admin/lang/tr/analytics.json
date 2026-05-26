@@ -1,0 +1,29 @@
+{
+  "eyebrow": "İçgörüler",
+  "title": "Analitik",
+  "subtitle": "Son 30 günlük eğilimler + tüm zamanlardaki toplamlar. Her dakika yenilenir.",
+  "load-error": "Analitik yüklenemedi.",
+  "kpi": {
+    "avg-length": "Ort. toplantı süresi",
+    "avg-length-hint": "{count, number} tamamlandı",
+    "top-host": "En iyi düzenleyen",
+    "top-host-hint": "{count, plural, one {# toplantı düzenlendi} other {# toplantı düzenlendi}}",
+    "top-host-empty": "Henüz tamamlanmış toplantı yok",
+    "peak-hour": "Yoğun saat",
+    "peak-hour-hint": "En yüksek eş zamanlı toplantılar (UTC)",
+    "dau-today": "Bugün DAU",
+    "dau-today-hint": "Bugün bir toplantıda yer alan benzersiz kullanıcılar"
+  },
+  "dau-trend-title": "Günlük aktif kullanıcılar",
+  "concurrency": {
+    "title": "Saate göre en yüksek eş zamanlılık",
+    "range": "son 30 gün (UTC)"
+  },
+  "top-hosts": {
+    "title": "En iyi düzenleyenler",
+    "subtitle": "tamamlanan toplantılara göre",
+    "empty": "Henüz tamamlanmış toplantı yok.",
+    "hosted": "{count, plural, one {# toplantı} other {# toplantı}}",
+    "total-duration": "Toplam {duration}"
+  }
+}

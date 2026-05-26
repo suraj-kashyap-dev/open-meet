@@ -1,0 +1,58 @@
+{
+  "eyebrow": "अवलोकन",
+  "title": "कंसोल",
+  "load-error": "अवलोकन लोड करने में विफल।",
+  "stats": {
+    "users": "उपयोगकर्ता",
+    "users-hint": "कुल पंजीकृत खाते",
+    "meetings": "मीटिंग",
+    "meetings-hint": "अब तक बनाए गए सभी मीटिंग रूम",
+    "active-now": "अभी सक्रिय",
+    "active-now-hint": "ACTIVE स्थिति वाले रूम",
+    "messages-24h": "संदेश 24 घंटे",
+    "messages-24h-hint": "पिछले 24 घंटों में चैट संदेश"
+  },
+  "trends": {
+    "signups": "नए पंजीकरण",
+    "meetings": "नई मीटिंग",
+    "range": "पिछले 14 दिन · {total, number}",
+    "today": "आज"
+  },
+  "status": {
+    "active": "सक्रिय",
+    "waiting": "प्रतीक्षारत",
+    "ended": "समाप्त"
+  },
+  "recent": {
+    "title": "हाल की मीटिंग",
+    "empty": "अभी तक कोई मीटिंग नहीं।",
+    "columns": {
+      "code": "कोड",
+      "host": "होस्ट",
+      "status": "स्थिति",
+      "participants": "प्रतिभागी",
+      "duration": "अवधि",
+      "started": "शुरू हुई"
+    }
+  },
+  "upcoming": {
+    "title": "आगामी",
+    "empty": "कोई निर्धारित मीटिंग नहीं।",
+    "untitled": "{date} को मीटिंग",
+    "columns": {
+      "code": "कोड",
+      "title": "शीर्षक",
+      "host": "होस्ट",
+      "invitees": "आमंत्रित",
+      "duration": "अवधि",
+      "when": "कब"
+    },
+    "recurrence": {
+      "repeats": "दोहराव",
+      "daily": "दैनिक",
+      "weekly": "साप्ताहिक",
+      "monthly": "मासिक",
+      "yearly": "वार्षिक"
+    }
+  }
+}

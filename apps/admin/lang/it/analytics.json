@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Analisi",
+  "title": "Analisi",
+  "subtitle": "Tendenze degli ultimi 30 giorni + aggregati cumulativi. Aggiornamento ogni minuto.",
+  "load-error": "Caricamento delle analisi non riuscito.",
+  "kpi": {
+    "avg-length": "Durata media riunione",
+    "avg-length-hint": "{count, number} completate",
+    "top-host": "Host principale",
+    "top-host-hint": "{count, plural, one {# riunione ospitata} other {# riunioni ospitate}}",
+    "top-host-empty": "Ancora nessuna riunione completata",
+    "peak-hour": "Ora di punta",
+    "peak-hour-hint": "Riunioni simultanee massime (UTC)",
+    "dau-today": "DAU oggi",
+    "dau-today-hint": "Utenti distinti in una riunione oggi"
+  },
+  "dau-trend-title": "Utenti attivi giornalieri",
+  "concurrency": {
+    "title": "Picco di concorrenza per ora",
+    "range": "ultimi 30 giorni (UTC)"
+  },
+  "top-hosts": {
+    "title": "Host principali",
+    "subtitle": "per riunioni completate",
+    "empty": "Ancora nessuna riunione completata.",
+    "hosted": "{count, plural, one {# riunione} other {# riunioni}}",
+    "total-duration": "{duration} in totale"
+  }
+}

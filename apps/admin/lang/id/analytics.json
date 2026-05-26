@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Wawasan",
+  "title": "Analitik",
+  "subtitle": "Tren 30 hari terakhir + agregat seumur hidup. Diperbarui setiap menit.",
+  "load-error": "Gagal memuat analitik.",
+  "kpi": {
+    "avg-length": "Durasi rapat rata-rata",
+    "avg-length-hint": "{count, number} selesai",
+    "top-host": "Host teratas",
+    "top-host-hint": "{count, plural, one {# rapat di-host} other {# rapat di-host}}",
+    "top-host-empty": "Belum ada rapat yang selesai",
+    "peak-hour": "Jam puncak",
+    "peak-hour-hint": "Rapat serentak tertinggi (UTC)",
+    "dau-today": "DAU hari ini",
+    "dau-today-hint": "Pengguna unik dalam rapat hari ini"
+  },
+  "dau-trend-title": "Pengguna aktif harian",
+  "concurrency": {
+    "title": "Puncak konkurensi per jam",
+    "range": "30 hari terakhir (UTC)"
+  },
+  "top-hosts": {
+    "title": "Host teratas",
+    "subtitle": "berdasarkan rapat selesai",
+    "empty": "Belum ada rapat yang selesai.",
+    "hosted": "{count, plural, one {# rapat} other {# rapat}}",
+    "total-duration": "{duration} total"
+  }
+}

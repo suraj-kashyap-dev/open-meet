@@ -1,0 +1,97 @@
+{
+  "eyebrow": "管控",
+  "title": "会议",
+  "total-count": "共 {count, number} 场",
+  "end-all": "结束所有活跃会议",
+  "search-placeholder": "按代码、标题、主持人搜索",
+  "refreshing": "正在刷新…",
+  "filters": {
+    "all": "全部",
+    "active": "活跃",
+    "waiting": "等待中",
+    "ended": "已结束"
+  },
+  "status": {
+    "active": "活跃",
+    "waiting": "等待中",
+    "ended": "已结束"
+  },
+  "columns": {
+    "meeting": "会议",
+    "host": "主持人",
+    "status": "状态",
+    "started": "开始时间",
+    "duration": "时长",
+    "total": "总计"
+  },
+  "untitled": "无标题（{date}）",
+  "live-count": "{count, number} 场进行中",
+  "actions": {
+    "label": "操作",
+    "view": "查看",
+    "end": "结束",
+    "delete": "删除"
+  },
+  "empty-filtered": "没有会议符合当前筛选条件。",
+  "empty": "暂无会议记录。",
+  "pagination": {
+    "no-results": "无结果",
+    "showing": "显示 {from}-{to}，共 {total}",
+    "previous": "上一页",
+    "next": "下一页",
+    "page-of": "第 {page} 页，共 {pageCount} 页"
+  },
+  "detail": {
+    "title": "会议详情",
+    "hosted-by": "由 {host} 主持",
+    "loading": "正在加载…",
+    "stats": {
+      "status": "状态",
+      "active-now": "当前活跃",
+      "total-participants": "参与者总数",
+      "messages": "消息"
+    },
+    "participants": "参与者",
+    "no-participants": "没有参与者加入此会议。",
+    "host-badge": "主持人",
+    "joined": "{time} 加入",
+    "left": "{time} 离开",
+    "kick": "移除",
+    "kick-aria": "移除 {name}",
+    "kick-success": "已移除 {name}",
+    "kick-error": "无法移除 {name}"
+  },
+  "end-dialog": {
+    "title": "强制结束此会议？",
+    "description-active": "当前房间内有 {count, plural, one {# 位参与者} other {# 位参与者}}，他们将被立即断开连接。",
+    "description-idle": "会议状态将被标记为 ENDED，其 LiveKit 房间（如有）将被关闭。",
+    "hosted-by": "由 {host} 主持",
+    "cancel": "取消",
+    "submit": "结束会议",
+    "submitting": "正在结束…",
+    "success": "会议 {code} 已结束",
+    "error": "无法结束会议"
+  },
+  "end-all-dialog": {
+    "title": "结束所有活跃会议？",
+    "description": "此操作将把所有状态为 ACTIVE 的会议标记为 ENDED 并关闭其 LiveKit 房间。所有当前在通话中的参与者将被立即断开连接。",
+    "active-summary": "当前有 {count, plural, one {# 场会议} other {# 场会议}} 处于活跃状态。",
+    "none-active": "当前没有活跃会议 — 不会有任何操作。",
+    "cancel": "取消",
+    "submit": "结束所有活跃会议",
+    "submitting": "正在结束…",
+    "success": "{count, plural, one {已结束 # 场会议} other {已结束 # 场会议}}",
+    "error": "无法结束活跃会议"
+  },
+  "delete-dialog": {
+    "title": "永久删除此会议？",
+    "description": "此操作将删除会议记录及其所有聊天消息、附件和参与者记录，且无法撤销。",
+    "summary": "{participants, number} 条参与者记录 · {messages, number} 条消息",
+    "confirm-label": "输入会议代码 <mono>{code}</mono> 以确认",
+    "cancel": "取消",
+    "submit": "永久删除",
+    "submitting": "正在删除…",
+    "success": "会议 {code} 已删除",
+    "error": "无法删除会议"
+  }
+}

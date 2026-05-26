@@ -1,6 +1,7 @@
 'use client';
 
 import { Loader2, UserMinus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -35,6 +36,8 @@ function formatTimestamp(iso: string): string {
 }
 
 export function MeetingDetailDialog({ meetingId, onClose }: Props) {
+  const t = useTranslations('meetings.detail');
+  const tStatus = useTranslations('meetings.status');
   const { data, isLoading } = useAdminMeetingDetail(meetingId);
   const kick = useKickParticipant();
   const [kicking, setKicking] = useState<string | null>(null);
@@ -48,9 +51,9 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
 
     try {
       await kick.mutateAsync({ meetingId: data.id, userId });
-      toast.success(`Kicked ${name}`);
+      toast.success(t('kick-success', { name }));
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : `Could not kick ${name}`;
+      const message = err instanceof ApiClientError ? err.message : t('kick-error', { name });
       toast.error(message);
     } finally {
       setKicking(null);
@@ -61,17 +64,17 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
     <Dialog open={Boolean(meetingId)} onOpenChange={(open) => (!open ? onClose() : null)}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Meeting details</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription className="break-words">
             {data ? (
               <>
                 <span className="font-mono">{data.code}</span>
                 {data.title ? ` · ${data.title}` : null}
                 {' · '}
-                hosted by {data.hostName}
+                {t('hosted-by', { host: data.hostName })}
               </>
             ) : isLoading ? (
-              'Loading…'
+              t('loading')
             ) : null}
           </DialogDescription>
         </DialogHeader>
@@ -83,20 +86,23 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
         ) : (
           <div className="space-y-4">
             <section className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-4">
-              <Stat label="Status" value={data.status.toLowerCase()} />
-              <Stat label="Active now" value={data.activeParticipantCount.toString()} />
-              <Stat label="Total participants" value={data.participantCount.toString()} />
-              <Stat label="Messages" value={data.messageCount.toString()} />
+              <Stat label={t('stats.status')} value={tStatus(data.status.toLowerCase())} />
+              <Stat label={t('stats.active-now')} value={data.activeParticipantCount.toString()} />
+              <Stat
+                label={t('stats.total-participants')}
+                value={data.participantCount.toString()}
+              />
+              <Stat label={t('stats.messages')} value={data.messageCount.toString()} />
             </section>
 
             <section>
               <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                Participants
+                {t('participants')}
               </h3>
               <div className="max-h-72 overflow-y-auto rounded-md border border-border">
                 {data.participants.length === 0 ? (
                   <p className="px-3 py-4 text-center text-xs text-muted-foreground">
-                    No participants joined this meeting.
+                    {t('no-participants')}
                   </p>
                 ) : (
                   <ul className="divide-y divide-border">
@@ -112,7 +118,7 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
                               {p.name}
                               {p.role === 'HOST' ? (
                                 <span className="ms-2 inline-flex items-center rounded-full border border-warning/30 bg-warning/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-warning">
-                                  Host
+                                  {t('host-badge')}
                                 </span>
                               ) : null}
                             </p>
@@ -120,8 +126,10 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
                           </div>
 
                           <div className="text-end text-[10px] text-muted-foreground">
-                            <p>Joined {formatTimestamp(p.joinedAt)}</p>
-                            {p.leftAt ? <p>Left {formatTimestamp(p.leftAt)}</p> : null}
+                            <p>{t('joined', { time: formatTimestamp(p.joinedAt) })}</p>
+                            {p.leftAt ? (
+                              <p>{t('left', { time: formatTimestamp(p.leftAt) })}</p>
+                            ) : null}
                           </div>
 
                           <Button
@@ -133,14 +141,14 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
                             )}
                             disabled={!isActive || kicking === p.userId}
                             onClick={() => onKick(p.userId, p.name)}
-                            aria-label={`Kick ${p.name}`}
+                            aria-label={t('kick-aria', { name: p.name })}
                           >
                             {kicking === p.userId ? (
                               <Loader2 className="h-3.5 w-3.5 animate-spin" />
                             ) : (
                               <UserMinus className="h-3.5 w-3.5" />
                             )}
-                            Kick
+                            {t('kick')}
                           </Button>
                         </li>
                       );

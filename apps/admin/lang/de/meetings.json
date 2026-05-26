@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Moderieren",
+  "title": "Besprechungen",
+  "total-count": "{count, number} insgesamt",
+  "end-all": "Alle aktiven beenden",
+  "search-placeholder": "Nach Code, Titel, Host suchen",
+  "refreshing": "Wird aktualisiert…",
+  "filters": {
+    "all": "Alle",
+    "active": "Aktiv",
+    "waiting": "Wartend",
+    "ended": "Beendet"
+  },
+  "status": {
+    "active": "Aktiv",
+    "waiting": "Wartend",
+    "ended": "Beendet"
+  },
+  "columns": {
+    "meeting": "Besprechung",
+    "host": "Host",
+    "status": "Status",
+    "started": "Gestartet",
+    "duration": "Dauer",
+    "total": "Gesamt"
+  },
+  "untitled": "Ohne Titel ({date})",
+  "live-count": "{count, number} live",
+  "actions": {
+    "label": "Aktionen",
+    "view": "Ansehen",
+    "end": "Beenden",
+    "delete": "Löschen"
+  },
+  "empty-filtered": "Keine Besprechungen entsprechen den aktuellen Filtern.",
+  "empty": "Noch keine Besprechungen aufgezeichnet.",
+  "pagination": {
+    "no-results": "Keine Ergebnisse",
+    "showing": "{from}–{to} von {total} angezeigt",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page-of": "Seite {page} von {pageCount}"
+  },
+  "detail": {
+    "title": "Besprechungsdetails",
+    "hosted-by": "gehostet von {host}",
+    "loading": "Wird geladen…",
+    "stats": {
+      "status": "Status",
+      "active-now": "Jetzt aktiv",
+      "total-participants": "Gesamtteilnehmer",
+      "messages": "Nachrichten"
+    },
+    "participants": "Teilnehmer",
+    "no-participants": "Keine Teilnehmer haben an dieser Besprechung teilgenommen.",
+    "host-badge": "Host",
+    "joined": "Beigetreten {time}",
+    "left": "Verlassen {time}",
+    "kick": "Entfernen",
+    "kick-aria": "{name} entfernen",
+    "kick-success": "{name} wurde entfernt",
+    "kick-error": "{name} konnte nicht entfernt werden"
+  },
+  "end-dialog": {
+    "title": "Diese Besprechung erzwungen beenden?",
+    "description-active": "{count, plural, one {# Teilnehmer ist} other {# Teilnehmer sind}} derzeit im Raum. Die Verbindung wird sofort getrennt.",
+    "description-idle": "Der Besprechungsstatus wird als ENDED markiert und der LiveKit-Raum (falls vorhanden) wird geschlossen.",
+    "hosted-by": "gehostet von {host}",
+    "cancel": "Abbrechen",
+    "submit": "Besprechung beenden",
+    "submitting": "Wird beendet…",
+    "success": "Besprechung {code} beendet",
+    "error": "Besprechung konnte nicht beendet werden"
+  },
+  "end-all-dialog": {
+    "title": "Alle aktiven Besprechungen beenden?",
+    "description": "Dies markiert alle Besprechungen mit Status ACTIVE als ENDED und schließt ihre LiveKit-Räume. Alle Teilnehmer, die sich derzeit in einem Anruf befinden, werden sofort getrennt.",
+    "active-summary": "{count, plural, one {# Besprechung} other {# Besprechungen}} derzeit aktiv.",
+    "none-active": "Derzeit keine aktiven Besprechungen — es wird nichts passieren.",
+    "cancel": "Abbrechen",
+    "submit": "Alle aktiven beenden",
+    "submitting": "Wird beendet…",
+    "success": "{count, plural, one {# Besprechung beendet} other {# Besprechungen beendet}}",
+    "error": "Aktive Besprechungen konnten nicht beendet werden"
+  },
+  "delete-dialog": {
+    "title": "Diese Besprechung dauerhaft löschen?",
+    "description": "Dies entfernt den Besprechungseintrag sowie alle Chatnachrichten, Anhänge und Teilnehmerdatensätze, die damit verknüpft sind. Dies kann nicht rückgängig gemacht werden.",
+    "summary": "{participants, number} Teilnehmereinträge · {messages, number} Nachrichten",
+    "confirm-label": "Geben Sie den Besprechungscode <mono>{code}</mono> ein, um zu bestätigen",
+    "cancel": "Abbrechen",
+    "submit": "Endgültig löschen",
+    "submitting": "Wird gelöscht…",
+    "success": "Besprechung {code} gelöscht",
+    "error": "Besprechung konnte nicht gelöscht werden"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "eyebrow": "洞察",
+  "title": "分析",
+  "subtitle": "过去30天趋势 + 全生命周期汇总，每分钟刷新。",
+  "load-error": "加载分析数据失败。",
+  "kpi": {
+    "avg-length": "平均会议时长",
+    "avg-length-hint": "已完成 {count, number} 场",
+    "top-host": "最佳主持人",
+    "top-host-hint": "{count, plural, one {已主持 # 场会议} other {已主持 # 场会议}}",
+    "top-host-empty": "暂无已完成的会议",
+    "peak-hour": "高峰时段",
+    "peak-hour-hint": "同时进行会议最多的小时 (UTC)",
+    "dau-today": "今日 DAU",
+    "dau-today-hint": "今天参与会议的独立用户数"
+  },
+  "dau-trend-title": "每日活跃用户",
+  "concurrency": {
+    "title": "按小时划分的峰值并发数",
+    "range": "过去30天 (UTC)"
+  },
+  "top-hosts": {
+    "title": "最佳主持人",
+    "subtitle": "按已完成会议数排名",
+    "empty": "暂无已完成的会议。",
+    "hosted": "{count, plural, one {# 场会议} other {# 场会议}}",
+    "total-duration": "共 {duration}"
+  }
+}

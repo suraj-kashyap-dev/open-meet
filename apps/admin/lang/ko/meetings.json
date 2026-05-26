@@ -1,0 +1,97 @@
+{
+  "eyebrow": "관리",
+  "title": "회의",
+  "total-count": "{count, number} 건 총",
+  "end-all": "활성 회의 모두 종료",
+  "search-placeholder": "코드, 제목, 호스트로 검색",
+  "refreshing": "새로 고침 중…",
+  "filters": {
+    "all": "전체",
+    "active": "활성",
+    "waiting": "대기 중",
+    "ended": "종료됨"
+  },
+  "status": {
+    "active": "활성",
+    "waiting": "대기 중",
+    "ended": "종료됨"
+  },
+  "columns": {
+    "meeting": "회의",
+    "host": "호스트",
+    "status": "상태",
+    "started": "시작",
+    "duration": "시간",
+    "total": "합계"
+  },
+  "untitled": "제목 없음 ({date})",
+  "live-count": "{count, number}건 라이브",
+  "actions": {
+    "label": "작업",
+    "view": "보기",
+    "end": "종료",
+    "delete": "삭제"
+  },
+  "empty-filtered": "현재 필터에 일치하는 회의가 없습니다.",
+  "empty": "아직 기록된 회의가 없습니다.",
+  "pagination": {
+    "no-results": "결과 없음",
+    "showing": "{total} 중 {from}-{to} 표시",
+    "previous": "이전",
+    "next": "다음",
+    "page-of": "{pageCount} 페이지 중 {page} 페이지"
+  },
+  "detail": {
+    "title": "회의 상세 정보",
+    "hosted-by": "{host} 호스팅",
+    "loading": "로딩 중…",
+    "stats": {
+      "status": "상태",
+      "active-now": "현재 활성",
+      "total-participants": "총 참가자",
+      "messages": "메시지"
+    },
+    "participants": "참가자",
+    "no-participants": "이 회의에 참가한 참가자가 없습니다.",
+    "host-badge": "호스트",
+    "joined": "{time}에 참가",
+    "left": "{time}에 퇴장",
+    "kick": "강퇴",
+    "kick-aria": "{name} 강퇴",
+    "kick-success": "{name}을(를) 강퇴했습니다",
+    "kick-error": "{name}을(를) 강퇴할 수 없습니다"
+  },
+  "end-dialog": {
+    "title": "이 회의를 강제 종료하시겠습니까?",
+    "description-active": "현재 {count, plural, one {참가자 # 명이} other {참가자 # 명이}} 룸에 있습니다. 즉시 연결이 끊어집니다.",
+    "description-idle": "회의 상태가 ENDED로 표시되고 LiveKit 룸(있는 경우)이 닫힙니다.",
+    "hosted-by": "{host} 호스팅",
+    "cancel": "취소",
+    "submit": "회의 종료",
+    "submitting": "종료 중…",
+    "success": "회의 {code} 종료 완료",
+    "error": "회의를 종료할 수 없습니다"
+  },
+  "end-all-dialog": {
+    "title": "모든 활성 회의를 종료하시겠습니까?",
+    "description": "상태가 ACTIVE인 모든 회의를 ENDED로 표시하고 LiveKit 룸을 닫습니다. 현재 통화 중인 모든 참가자는 즉시 연결이 끊어집니다.",
+    "active-summary": "현재 {count, plural, one {회의 # 건이} other {회의 # 건이}} 활성 상태입니다.",
+    "none-active": "현재 활성 회의가 없습니다 — 아무것도 실행되지 않습니다.",
+    "cancel": "취소",
+    "submit": "활성 회의 모두 종료",
+    "submitting": "종료 중…",
+    "success": "{count, plural, one {회의 # 건 종료 완료} other {회의 # 건 종료 완료}}",
+    "error": "활성 회의를 종료할 수 없습니다"
+  },
+  "delete-dialog": {
+    "title": "이 회의를 영구 삭제하시겠습니까?",
+    "description": "회의 행과 이에 연결된 모든 채팅 메시지, 첨부 파일, 참가자 레코드가 삭제됩니다. 이 작업은 취소할 수 없습니다.",
+    "summary": "참가자 행 {participants, number}건 · 메시지 {messages, number}건",
+    "confirm-label": "확인하려면 회의 코드 <mono>{code}</mono>를 입력하세요",
+    "cancel": "취소",
+    "submit": "영구 삭제",
+    "submitting": "삭제 중…",
+    "success": "회의 {code} 삭제 완료",
+    "error": "회의를 삭제할 수 없습니다"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Moderar",
+  "title": "Reuniones",
+  "total-count": "{count, number} en total",
+  "end-all": "Finalizar todas las activas",
+  "search-placeholder": "Buscar por código, título, host",
+  "refreshing": "Actualizando…",
+  "filters": {
+    "all": "Todas",
+    "active": "Activa",
+    "waiting": "En espera",
+    "ended": "Finalizada"
+  },
+  "status": {
+    "active": "Activa",
+    "waiting": "En espera",
+    "ended": "Finalizada"
+  },
+  "columns": {
+    "meeting": "Reunión",
+    "host": "Host",
+    "status": "Estado",
+    "started": "Iniciada",
+    "duration": "Duración",
+    "total": "Total"
+  },
+  "untitled": "Sin título ({date})",
+  "live-count": "{count, number} en directo",
+  "actions": {
+    "label": "Acciones",
+    "view": "Ver",
+    "end": "Finalizar",
+    "delete": "Eliminar"
+  },
+  "empty-filtered": "Ninguna reunión coincide con los filtros actuales.",
+  "empty": "Aún no hay reuniones registradas.",
+  "pagination": {
+    "no-results": "Sin resultados",
+    "showing": "Mostrando {from}-{to} de {total}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page-of": "Página {page} de {pageCount}"
+  },
+  "detail": {
+    "title": "Detalles de la reunión",
+    "hosted-by": "organizada por {host}",
+    "loading": "Cargando…",
+    "stats": {
+      "status": "Estado",
+      "active-now": "Activos ahora",
+      "total-participants": "Total de participantes",
+      "messages": "Mensajes"
+    },
+    "participants": "Participantes",
+    "no-participants": "Ningún participante se unió a esta reunión.",
+    "host-badge": "Host",
+    "joined": "Se unió {time}",
+    "left": "Salió {time}",
+    "kick": "Expulsar",
+    "kick-aria": "Expulsar a {name}",
+    "kick-success": "{name} expulsado",
+    "kick-error": "No se pudo expulsar a {name}"
+  },
+  "end-dialog": {
+    "title": "¿Forzar el fin de esta reunión?",
+    "description-active": "{count, plural, one {# participante está} other {# participantes están}} actualmente en la sala. Se desconectarán de inmediato.",
+    "description-idle": "El estado de la reunión se marcará como ENDED y su sala LiveKit (si existe) se cerrará.",
+    "hosted-by": "organizada por {host}",
+    "cancel": "Cancelar",
+    "submit": "Finalizar reunión",
+    "submitting": "Finalizando…",
+    "success": "Reunión {code} finalizada",
+    "error": "No se pudo finalizar la reunión"
+  },
+  "end-all-dialog": {
+    "title": "¿Finalizar todas las reuniones activas?",
+    "description": "Esto marcará todas las reuniones con estado ACTIVE como ENDED y cerrará sus salas LiveKit. Todos los participantes que estén actualmente en una llamada serán desconectados de inmediato.",
+    "active-summary": "{count, plural, one {# reunión} other {# reuniones}} actualmente activa.",
+    "none-active": "No hay reuniones activas en este momento — no ocurrirá nada.",
+    "cancel": "Cancelar",
+    "submit": "Finalizar todas las activas",
+    "submitting": "Finalizando…",
+    "success": "{count, plural, one {# reunión finalizada} other {# reuniones finalizadas}}",
+    "error": "No se pudieron finalizar las reuniones activas"
+  },
+  "delete-dialog": {
+    "title": "¿Eliminar esta reunión permanentemente?",
+    "description": "Esto elimina el registro de la reunión junto con todos los mensajes de chat, archivos adjuntos y registros de participantes asociados. Esta acción no se puede deshacer.",
+    "summary": "{participants, number} registros de participantes · {messages, number} mensajes",
+    "confirm-label": "Escribe el código de la reunión <mono>{code}</mono> para confirmar",
+    "cancel": "Cancelar",
+    "submit": "Eliminar definitivamente",
+    "submitting": "Eliminando…",
+    "success": "Reunión {code} eliminada",
+    "error": "No se pudo eliminar la reunión"
+  }
+}

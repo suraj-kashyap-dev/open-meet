@@ -1,0 +1,58 @@
+{
+  "eyebrow": "Ikhtisar",
+  "title": "Konsol",
+  "load-error": "Gagal memuat ikhtisar.",
+  "stats": {
+    "users": "Pengguna",
+    "users-hint": "Total akun terdaftar",
+    "meetings": "Rapat",
+    "meetings-hint": "Ruang rapat yang pernah dibuat",
+    "active-now": "Aktif sekarang",
+    "active-now-hint": "Ruang dengan status = ACTIVE",
+    "messages-24h": "Pesan 24j",
+    "messages-24h-hint": "Pesan obrolan dalam 24 jam terakhir"
+  },
+  "trends": {
+    "signups": "Pendaftaran baru",
+    "meetings": "Rapat baru",
+    "range": "14 hari terakhir · {total, number}",
+    "today": "Hari ini"
+  },
+  "status": {
+    "active": "Aktif",
+    "waiting": "Menunggu",
+    "ended": "Selesai"
+  },
+  "recent": {
+    "title": "Rapat terbaru",
+    "empty": "Belum ada rapat.",
+    "columns": {
+      "code": "Kode",
+      "host": "Host",
+      "status": "Status",
+      "participants": "Peserta",
+      "duration": "Durasi",
+      "started": "Dimulai"
+    }
+  },
+  "upcoming": {
+    "title": "Akan datang",
+    "empty": "Tidak ada rapat terjadwal.",
+    "untitled": "Rapat pada {date}",
+    "columns": {
+      "code": "Kode",
+      "title": "Judul",
+      "host": "Host",
+      "invitees": "Undangan",
+      "duration": "Durasi",
+      "when": "Kapan"
+    },
+    "recurrence": {
+      "repeats": "Berulang",
+      "daily": "Harian",
+      "weekly": "Mingguan",
+      "monthly": "Bulanan",
+      "yearly": "Tahunan"
+    }
+  }
+}

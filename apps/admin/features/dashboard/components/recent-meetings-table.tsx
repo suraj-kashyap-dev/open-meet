@@ -1,6 +1,7 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 import type { RecentMeetingDto } from '@open-meet/types';
@@ -36,15 +37,16 @@ function formatRelative(iso: string | null): string {
 const column = createColumnHelper<RecentMeetingDto>();
 
 export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[] }) {
+  const t = useTranslations('dashboard');
   const columns = useMemo(
     () => [
       column.accessor('code', {
-        header: 'Code',
+        header: t('recent.columns.code'),
         cell: (info) => <span className="font-mono text-xs">{info.getValue()}</span>,
       }),
       column.display({
         id: 'host',
-        header: 'Host',
+        header: t('recent.columns.host'),
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="text-sm">{row.original.hostName}</span>
@@ -53,7 +55,7 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
         ),
       }),
       column.accessor('status', {
-        header: 'Status',
+        header: t('recent.columns.status'),
         cell: (info) => (
           <span
             className={cn(
@@ -61,16 +63,16 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
               statusClasses(info.getValue()),
             )}
           >
-            {info.getValue()}
+            {t(`status.${info.getValue().toLowerCase()}`)}
           </span>
         ),
       }),
       column.accessor('participantCount', {
-        header: () => <span className="block text-end">Participants</span>,
+        header: () => <span className="block text-end">{t('recent.columns.participants')}</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('durationMinutes', {
-        header: () => <span className="block text-end">Duration</span>,
+        header: () => <span className="block text-end">{t('recent.columns.duration')}</span>,
         cell: (info) => (
           <span className="block text-end tabular-nums">
             {info.getValue() !== null ? `${info.getValue()}m` : '—'}
@@ -78,7 +80,7 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
         ),
       }),
       column.accessor('startedAt', {
-        header: () => <span className="block text-end">Started</span>,
+        header: () => <span className="block text-end">{t('recent.columns.started')}</span>,
         cell: (info) => (
           <span className="block text-end text-muted-foreground">
             {formatRelative(info.getValue())}
@@ -86,16 +88,16 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
         ),
       }),
     ],
-    [],
+    [t],
   );
 
   return (
     <section className="space-y-3">
       <header className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold tracking-tight">Recent meetings</h3>
+        <h3 className="text-sm font-semibold tracking-tight">{t('recent.title')}</h3>
         <span className="text-xs text-muted-foreground">{meetings.length}</span>
       </header>
-      <DataTable data={meetings} columns={columns} emptyMessage="No meetings yet." />
+      <DataTable data={meetings} columns={columns} emptyMessage={t('recent.empty')} />
     </section>
   );
 }

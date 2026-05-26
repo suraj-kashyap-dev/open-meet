@@ -1,6 +1,7 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
+import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
 import type { AdminUpcomingMeetingDto } from '@open-meet/types';
@@ -33,7 +34,9 @@ function formatDuration(min: number | null): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-function recurrenceLabel(rrule: string | null): string | null {
+type RecurrenceKey = 'repeats' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+
+function recurrenceKey(rrule: string | null): RecurrenceKey | null {
   if (!rrule) {
     return null;
   }
@@ -41,20 +44,20 @@ function recurrenceLabel(rrule: string | null): string | null {
   const freq = rrule.match(/FREQ=([A-Z]+)/);
 
   if (!freq) {
-    return 'Repeats';
+    return 'repeats';
   }
 
   switch (freq[1]) {
     case 'DAILY':
-      return 'Daily';
+      return 'daily';
     case 'WEEKLY':
-      return 'Weekly';
+      return 'weekly';
     case 'MONTHLY':
-      return 'Monthly';
+      return 'monthly';
     case 'YEARLY':
-      return 'Yearly';
+      return 'yearly';
     default:
-      return 'Repeats';
+      return 'repeats';
   }
 }
 
@@ -65,27 +68,29 @@ function minutesUntil(iso: string): number {
 const column = createColumnHelper<AdminUpcomingMeetingDto>();
 
 export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMeetingDto[] }) {
+  const t = useTranslations('dashboard');
   const columns = useMemo(
     () => [
       column.accessor('code', {
-        header: 'Code',
+        header: t('upcoming.columns.code'),
         cell: (info) => <span className="font-mono text-xs">{info.getValue()}</span>,
       }),
       column.display({
         id: 'title',
-        header: 'Title',
+        header: t('upcoming.columns.title'),
         cell: ({ row }) => {
-          const repeats = recurrenceLabel(row.original.recurrence);
+          const repeats = recurrenceKey(row.original.recurrence);
 
           return (
             <div className="flex items-center gap-2">
               <span className="truncate text-sm">
-                {row.original.title ?? `Meeting on ${formatScheduled(row.original.scheduledFor)}`}
+                {row.original.title ??
+                  t('upcoming.untitled', { date: formatScheduled(row.original.scheduledFor) })}
               </span>
 
               {repeats ? (
                 <span className="inline-flex shrink-0 items-center rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {repeats}
+                  {t(`upcoming.recurrence.${repeats}`)}
                 </span>
               ) : null}
             </div>
@@ -94,7 +99,7 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
       }),
       column.display({
         id: 'host',
-        header: 'Host',
+        header: t('upcoming.columns.host'),
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="text-sm">{row.original.hostName}</span>
@@ -103,17 +108,17 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
         ),
       }),
       column.accessor('inviteeCount', {
-        header: () => <span className="block text-end">Invitees</span>,
+        header: () => <span className="block text-end">{t('upcoming.columns.invitees')}</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
       }),
       column.accessor('durationMin', {
-        header: () => <span className="block text-end">Duration</span>,
+        header: () => <span className="block text-end">{t('upcoming.columns.duration')}</span>,
         cell: (info) => (
           <span className="block text-end tabular-nums">{formatDuration(info.getValue())}</span>
         ),
       }),
       column.accessor('scheduledFor', {
-        header: () => <span className="block text-end">When</span>,
+        header: () => <span className="block text-end">{t('upcoming.columns.when')}</span>,
         cell: (info) => {
           const startsIn = minutesUntil(info.getValue());
           const isStartingSoon = startsIn >= 0 && startsIn <= 15;
@@ -131,16 +136,16 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
         },
       }),
     ],
-    [],
+    [t],
   );
 
   return (
     <section className="space-y-3">
       <header className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold tracking-tight">Coming up</h3>
+        <h3 className="text-sm font-semibold tracking-tight">{t('upcoming.title')}</h3>
         <span className="text-xs text-muted-foreground">{meetings.length}</span>
       </header>
-      <DataTable data={meetings} columns={columns} emptyMessage="No scheduled meetings." />
+      <DataTable data={meetings} columns={columns} emptyMessage={t('upcoming.empty')} />
     </section>
   );
 }

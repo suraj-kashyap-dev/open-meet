@@ -1,0 +1,97 @@
+{
+  "eyebrow": "الإشراف",
+  "title": "الاجتماعات",
+  "total-count": "{count, number} إجمالاً",
+  "end-all": "إنهاء جميع النشطة",
+  "search-placeholder": "ابحث بالرمز أو العنوان أو المضيف",
+  "refreshing": "جارٍ التحديث…",
+  "filters": {
+    "all": "الكل",
+    "active": "نشط",
+    "waiting": "انتظار",
+    "ended": "منتهٍ"
+  },
+  "status": {
+    "active": "نشط",
+    "waiting": "انتظار",
+    "ended": "منتهٍ"
+  },
+  "columns": {
+    "meeting": "الاجتماع",
+    "host": "المضيف",
+    "status": "الحالة",
+    "started": "بدأ في",
+    "duration": "المدة",
+    "total": "الإجمالي"
+  },
+  "untitled": "بدون عنوان ({date})",
+  "live-count": "{count, number} مباشر",
+  "actions": {
+    "label": "إجراءات",
+    "view": "عرض",
+    "end": "إنهاء",
+    "delete": "حذف"
+  },
+  "empty-filtered": "لا توجد اجتماعات تطابق المرشحات الحالية.",
+  "empty": "لم يُسجَّل أي اجتماع بعد.",
+  "pagination": {
+    "no-results": "لا توجد نتائج",
+    "showing": "عرض {from}-{to} من {total}",
+    "previous": "السابق",
+    "next": "التالي",
+    "page-of": "صفحة {page} من {pageCount}"
+  },
+  "detail": {
+    "title": "تفاصيل الاجتماع",
+    "hosted-by": "يستضيفه {host}",
+    "loading": "جارٍ التحميل…",
+    "stats": {
+      "status": "الحالة",
+      "active-now": "نشط الآن",
+      "total-participants": "إجمالي المشاركين",
+      "messages": "الرسائل"
+    },
+    "participants": "المشاركون",
+    "no-participants": "لم ينضم أي مشارك إلى هذا الاجتماع.",
+    "host-badge": "المضيف",
+    "joined": "انضم في {time}",
+    "left": "غادر في {time}",
+    "kick": "طرد",
+    "kick-aria": "طرد {name}",
+    "kick-success": "تم طرد {name}",
+    "kick-error": "تعذّر طرد {name}"
+  },
+  "end-dialog": {
+    "title": "إنهاء هذا الاجتماع قسراً؟",
+    "description-active": "{count, plural, one {يوجد # مشارك} other {يوجد # مشاركون}} في الغرفة حالياً. سيتم قطع اتصالهم فوراً.",
+    "description-idle": "سيُوضع الاجتماع بحالة ENDED وستُغلق غرفة LiveKit الخاصة به (إن وجدت).",
+    "hosted-by": "يستضيفه {host}",
+    "cancel": "إلغاء",
+    "submit": "إنهاء الاجتماع",
+    "submitting": "جارٍ الإنهاء…",
+    "success": "تم إنهاء الاجتماع {code}",
+    "error": "تعذّر إنهاء الاجتماع"
+  },
+  "end-all-dialog": {
+    "title": "إنهاء جميع الاجتماعات النشطة؟",
+    "description": "سيتم تعيين حالة جميع الاجتماعات ذات الحالة ACTIVE إلى ENDED وإغلاق غرف LiveKit الخاصة بها. سيتم قطع اتصال جميع المشاركين الموجودين في مكالمة فوراً.",
+    "active-summary": "{count, plural, one {# اجتماع} other {# اجتماعات}} نشط حالياً.",
+    "none-active": "لا توجد اجتماعات نشطة الآن — لن يحدث شيء.",
+    "cancel": "إلغاء",
+    "submit": "إنهاء جميع النشطة",
+    "submitting": "جارٍ الإنهاء…",
+    "success": "{count, plural, one {تم إنهاء # اجتماع} other {تم إنهاء # اجتماعات}}",
+    "error": "تعذّر إنهاء الاجتماعات النشطة"
+  },
+  "delete-dialog": {
+    "title": "حذف هذا الاجتماع نهائياً؟",
+    "description": "سيؤدي هذا إلى حذف سجل الاجتماع إضافةً إلى جميع رسائل الدردشة والمرفقات وسجلات المشاركين المرتبطة به. لا يمكن التراجع عن هذا الإجراء.",
+    "summary": "{participants, number} صف مشاركين · {messages, number} رسائل",
+    "confirm-label": "اكتب رمز الاجتماع <mono>{code}</mono> للتأكيد",
+    "cancel": "إلغاء",
+    "submit": "حذف نهائياً",
+    "submitting": "جارٍ الحذف…",
+    "success": "تم حذف الاجتماع {code}",
+    "error": "تعذّر حذف الاجتماع"
+  }
+}

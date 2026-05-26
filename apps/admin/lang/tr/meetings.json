@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Denetle",
+  "title": "Toplantılar",
+  "total-count": "Toplam {count, number}",
+  "end-all": "Tüm aktif olanları sonlandır",
+  "search-placeholder": "Kod, başlık veya düzenleyene göre ara",
+  "refreshing": "Yenileniyor…",
+  "filters": {
+    "all": "Tümü",
+    "active": "Aktif",
+    "waiting": "Bekliyor",
+    "ended": "Sona erdi"
+  },
+  "status": {
+    "active": "Aktif",
+    "waiting": "Bekliyor",
+    "ended": "Sona erdi"
+  },
+  "columns": {
+    "meeting": "Toplantı",
+    "host": "Düzenleyen",
+    "status": "Durum",
+    "started": "Başladı",
+    "duration": "Süre",
+    "total": "Toplam"
+  },
+  "untitled": "Başlıksız ({date})",
+  "live-count": "{count, number} canlı",
+  "actions": {
+    "label": "İşlemler",
+    "view": "Görüntüle",
+    "end": "Sonlandır",
+    "delete": "Sil"
+  },
+  "empty-filtered": "Mevcut filtrelerle eşleşen toplantı yok.",
+  "empty": "Henüz kaydedilmiş toplantı yok.",
+  "pagination": {
+    "no-results": "Sonuç yok",
+    "showing": "{from}-{to} / {total} gösteriliyor",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "page-of": "{pageCount} sayfadan {page}. sayfa"
+  },
+  "detail": {
+    "title": "Toplantı ayrıntıları",
+    "hosted-by": "{host} tarafından düzenlendi",
+    "loading": "Yükleniyor…",
+    "stats": {
+      "status": "Durum",
+      "active-now": "Şu an aktif",
+      "total-participants": "Toplam katılımcılar",
+      "messages": "Mesajlar"
+    },
+    "participants": "Katılımcılar",
+    "no-participants": "Bu toplantıya hiç katılımcı katılmadı.",
+    "host-badge": "Düzenleyen",
+    "joined": "{time} tarihinde katıldı",
+    "left": "{time} tarihinde ayrıldı",
+    "kick": "At",
+    "kick-aria": "{name} kullanıcısını at",
+    "kick-success": "{name} atıldı",
+    "kick-error": "{name} kullanıcısı atılamadı"
+  },
+  "end-dialog": {
+    "title": "Bu toplantı zorla sonlandırılsın mı?",
+    "description-active": "Odada şu an {count, plural, one {# katılımcı} other {# katılımcı}} bulunuyor. Hemen bağlantıları kesilecek.",
+    "description-idle": "Toplantı durumu ENDED olarak işaretlenecek ve LiveKit odası (varsa) kapatılacak.",
+    "hosted-by": "{host} tarafından düzenlendi",
+    "cancel": "İptal",
+    "submit": "Toplantıyı sonlandır",
+    "submitting": "Sonlandırılıyor…",
+    "success": "{code} toplantısı sonlandırıldı",
+    "error": "Toplantı sonlandırılamadı"
+  },
+  "end-all-dialog": {
+    "title": "Tüm aktif toplantılar sonlandırılsın mı?",
+    "description": "Bu işlem ACTIVE durumdaki her toplantıyı ENDED olarak işaretler ve LiveKit odalarını kapatır. Bir görüşmede bulunan tüm katılımcıların bağlantısı hemen kesilecek.",
+    "active-summary": "Şu an {count, plural, one {# toplantı} other {# toplantı}} aktif.",
+    "none-active": "Şu an aktif toplantı yok — hiçbir şey olmayacak.",
+    "cancel": "İptal",
+    "submit": "Tüm aktif olanları sonlandır",
+    "submitting": "Sonlandırılıyor…",
+    "success": "{count, plural, one {# toplantı sonlandırıldı} other {# toplantı sonlandırıldı}}",
+    "error": "Aktif toplantılar sonlandırılamadı"
+  },
+  "delete-dialog": {
+    "title": "Bu toplantı kalıcı olarak silinsin mi?",
+    "description": "Bu işlem toplantı kaydını ve ekli tüm sohbet mesajlarını, ekleri ve katılımcı kayıtlarını kaldırır. Bu işlem geri alınamaz.",
+    "summary": "{participants, number} katılımcı satırı · {messages, number} mesaj",
+    "confirm-label": "Onaylamak için toplantı kodunu yazın <mono>{code}</mono>",
+    "cancel": "İptal",
+    "submit": "Kalıcı olarak sil",
+    "submitting": "Siliniyor…",
+    "success": "{code} toplantısı silindi",
+    "error": "Toplantı silinemedi"
+  }
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export function EndAllActiveDialog({ open, activeCount, onClose }: Props) {
+  const t = useTranslations('meetings.end-all-dialog');
   const bulkEnd = useBulkEndActiveMeetings();
   const [busy, setBusy] = useState(false);
 
@@ -30,10 +32,10 @@ export function EndAllActiveDialog({ open, activeCount, onClose }: Props) {
 
     try {
       const { ended } = await bulkEnd.mutateAsync();
-      toast.success(`Ended ${ended} meeting${ended === 1 ? '' : 's'}`);
+      toast.success(t('success', { count: ended }));
       onClose();
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not end active meetings';
+      const message = err instanceof ApiClientError ? err.message : t('error');
       toast.error(message);
     } finally {
       setBusy(false);
@@ -44,25 +46,20 @@ export function EndAllActiveDialog({ open, activeCount, onClose }: Props) {
     <Dialog open={open} onOpenChange={(o) => (!o ? onClose() : null)}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>End every active meeting?</DialogTitle>
-          <DialogDescription>
-            This will mark every meeting with status ACTIVE as ENDED and close their LiveKit rooms.
-            Every participant currently in a call will be disconnected immediately.
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
 
         <div className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
-          {activeCount > 0
-            ? `${activeCount} meeting${activeCount === 1 ? '' : 's'} currently active.`
-            : 'No active meetings right now — nothing will happen.'}
+          {activeCount > 0 ? t('active-summary', { count: activeCount }) : t('none-active')}
         </div>
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={busy}>
-            Cancel
+            {t('cancel')}
           </Button>
           <Button variant="destructive" onClick={onConfirm} disabled={busy || activeCount === 0}>
-            {busy ? 'Ending…' : 'End all active'}
+            {busy ? t('submitting') : t('submit')}
           </Button>
         </DialogFooter>
       </DialogContent>

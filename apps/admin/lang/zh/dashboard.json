@@ -1,0 +1,58 @@
+{
+  "eyebrow": "概览",
+  "title": "控制台",
+  "load-error": "加载概览失败。",
+  "stats": {
+    "users": "用户",
+    "users-hint": "已注册账户总数",
+    "meetings": "会议",
+    "meetings-hint": "累计创建的会议室数量",
+    "active-now": "当前活跃",
+    "active-now-hint": "状态为 ACTIVE 的会议室",
+    "messages-24h": "24小时消息",
+    "messages-24h-hint": "过去24小时内的聊天消息"
+  },
+  "trends": {
+    "signups": "新注册",
+    "meetings": "新会议",
+    "range": "过去14天 · {total, number}",
+    "today": "今天"
+  },
+  "status": {
+    "active": "活跃",
+    "waiting": "等待中",
+    "ended": "已结束"
+  },
+  "recent": {
+    "title": "近期会议",
+    "empty": "暂无会议。",
+    "columns": {
+      "code": "代码",
+      "host": "主持人",
+      "status": "状态",
+      "participants": "参与者",
+      "duration": "时长",
+      "started": "开始时间"
+    }
+  },
+  "upcoming": {
+    "title": "即将召开",
+    "empty": "暂无已排期的会议。",
+    "untitled": "{date} 的会议",
+    "columns": {
+      "code": "代码",
+      "title": "标题",
+      "host": "主持人",
+      "invitees": "受邀者",
+      "duration": "时长",
+      "when": "时间"
+    },
+    "recurrence": {
+      "repeats": "重复",
+      "daily": "每天",
+      "weekly": "每周",
+      "monthly": "每月",
+      "yearly": "每年"
+    }
+  }
+}
