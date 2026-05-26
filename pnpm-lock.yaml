@@ -425,6 +425,9 @@ importers:
       '@open-meet/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@playwright/test':
+        specifier: ^1.60.0
+        version: 1.60.0
       '@tailwindcss/postcss':
         specifier: ^4.0.0
         version: 4.3.0
