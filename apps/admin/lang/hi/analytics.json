@@ -1,0 +1,29 @@
+{
+  "eyebrow": "अंतर्दृष्टि",
+  "title": "Analytics",
+  "subtitle": "पिछले 30 दिनों के रुझान + संपूर्ण अवधि के योग। हर मिनट अपडेट होता है।",
+  "load-error": "Analytics लोड करने में विफल।",
+  "kpi": {
+    "avg-length": "औसत मीटिंग अवधि",
+    "avg-length-hint": "{count, number} पूर्ण",
+    "top-host": "शीर्ष होस्ट",
+    "top-host-hint": "{count, plural, one {# मीटिंग होस्ट की} other {# मीटिंग होस्ट की}}",
+    "top-host-empty": "अभी तक कोई पूर्ण मीटिंग नहीं",
+    "peak-hour": "पीक घंटा",
+    "peak-hour-hint": "सर्वाधिक एक साथ चलने वाली मीटिंग (UTC)",
+    "dau-today": "आज DAU",
+    "dau-today-hint": "आज मीटिंग में शामिल अलग-अलग उपयोगकर्ता"
+  },
+  "dau-trend-title": "दैनिक सक्रिय उपयोगकर्ता",
+  "concurrency": {
+    "title": "घंटे के अनुसार पीक समानांतरता",
+    "range": "पिछले 30 दिन (UTC)"
+  },
+  "top-hosts": {
+    "title": "शीर्ष होस्ट",
+    "subtitle": "पूर्ण मीटिंग के अनुसार",
+    "empty": "अभी तक कोई पूर्ण मीटिंग नहीं।",
+    "hosted": "{count, plural, one {# मीटिंग} other {# मीटिंग}}",
+    "total-duration": "कुल {duration}"
+  }
+}

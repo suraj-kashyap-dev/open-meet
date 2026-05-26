@@ -17,7 +17,8 @@
     "settings": "설정",
     "administrators": "관리자",
     "branding": "브랜딩",
-    "configuration": "구성"
+    "configuration": "구성",
+    "more": "더 보기"
   },
   "topbar": {
     "root": "관리자",

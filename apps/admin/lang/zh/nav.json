@@ -17,7 +17,8 @@
     "settings": "设置",
     "administrators": "管理员",
     "branding": "品牌",
-    "configuration": "配置"
+    "configuration": "配置",
+    "more": "更多"
   },
   "topbar": {
     "root": "管理",

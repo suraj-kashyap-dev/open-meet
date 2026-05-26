@@ -17,7 +17,8 @@
     "settings": "Configurações",
     "administrators": "Administradores",
     "branding": "Identidade visual",
-    "configuration": "Configuração"
+    "configuration": "Configuração",
+    "more": "Mais"
   },
   "topbar": {
     "root": "Admin",

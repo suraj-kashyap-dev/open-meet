@@ -1,0 +1,97 @@
+{
+  "eyebrow": "Moderasi",
+  "title": "Rapat",
+  "total-count": "{count, number} total",
+  "end-all": "Akhiri semua yang aktif",
+  "search-placeholder": "Cari berdasarkan kode, judul, host",
+  "refreshing": "Memperbarui…",
+  "filters": {
+    "all": "Semua",
+    "active": "Aktif",
+    "waiting": "Menunggu",
+    "ended": "Selesai"
+  },
+  "status": {
+    "active": "Aktif",
+    "waiting": "Menunggu",
+    "ended": "Selesai"
+  },
+  "columns": {
+    "meeting": "Rapat",
+    "host": "Host",
+    "status": "Status",
+    "started": "Dimulai",
+    "duration": "Durasi",
+    "total": "Total"
+  },
+  "untitled": "Tanpa judul ({date})",
+  "live-count": "{count, number} langsung",
+  "actions": {
+    "label": "Tindakan",
+    "view": "Lihat",
+    "end": "Akhiri",
+    "delete": "Hapus"
+  },
+  "empty-filtered": "Tidak ada rapat yang cocok dengan filter saat ini.",
+  "empty": "Belum ada rapat yang tercatat.",
+  "pagination": {
+    "no-results": "Tidak ada hasil",
+    "showing": "Menampilkan {from}-{to} dari {total}",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "page-of": "Halaman {page} dari {pageCount}"
+  },
+  "detail": {
+    "title": "Detail rapat",
+    "hosted-by": "di-host oleh {host}",
+    "loading": "Memuat…",
+    "stats": {
+      "status": "Status",
+      "active-now": "Aktif sekarang",
+      "total-participants": "Total peserta",
+      "messages": "Pesan"
+    },
+    "participants": "Peserta",
+    "no-participants": "Tidak ada peserta yang bergabung dalam rapat ini.",
+    "host-badge": "Host",
+    "joined": "Bergabung {time}",
+    "left": "Keluar {time}",
+    "kick": "Keluarkan",
+    "kick-aria": "Keluarkan {name}",
+    "kick-success": "{name} dikeluarkan",
+    "kick-error": "Tidak dapat mengeluarkan {name}"
+  },
+  "end-dialog": {
+    "title": "Paksa akhiri rapat ini?",
+    "description-active": "{count, plural, one {# peserta} other {# peserta}} sedang berada di ruangan. Mereka akan langsung terputus.",
+    "description-idle": "Status rapat akan ditandai ENDED dan ruang LiveKit-nya (jika ada) akan ditutup.",
+    "hosted-by": "di-host oleh {host}",
+    "cancel": "Batal",
+    "submit": "Akhiri rapat",
+    "submitting": "Mengakhiri…",
+    "success": "Rapat {code} diakhiri",
+    "error": "Tidak dapat mengakhiri rapat"
+  },
+  "end-all-dialog": {
+    "title": "Akhiri semua rapat aktif?",
+    "description": "Ini akan menandai setiap rapat dengan status ACTIVE sebagai ENDED dan menutup ruang LiveKit mereka. Setiap peserta yang sedang dalam panggilan akan langsung terputus.",
+    "active-summary": "{count, plural, one {# rapat} other {# rapat}} sedang aktif.",
+    "none-active": "Tidak ada rapat aktif saat ini — tidak ada yang akan terjadi.",
+    "cancel": "Batal",
+    "submit": "Akhiri semua yang aktif",
+    "submitting": "Mengakhiri…",
+    "success": "{count, plural, one {# rapat diakhiri} other {# rapat diakhiri}}",
+    "error": "Tidak dapat mengakhiri rapat aktif"
+  },
+  "delete-dialog": {
+    "title": "Hapus rapat ini secara permanen?",
+    "description": "Ini akan menghapus baris rapat beserta setiap pesan obrolan, lampiran, dan catatan peserta yang terkait. Ini tidak dapat dibatalkan.",
+    "summary": "{participants, number} baris peserta · {messages, number} pesan",
+    "confirm-label": "Ketik kode rapat <mono>{code}</mono> untuk mengonfirmasi",
+    "cancel": "Batal",
+    "submit": "Hapus selamanya",
+    "submitting": "Menghapus…",
+    "success": "Rapat {code} dihapus",
+    "error": "Tidak dapat menghapus rapat"
+  }
+}

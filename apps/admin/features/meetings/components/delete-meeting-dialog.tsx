@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -25,6 +26,7 @@ interface Props {
 }
 
 export function DeleteMeetingDialog({ meeting, onClose }: Props) {
+  const t = useTranslations('meetings.delete-dialog');
   const remove = useDeleteAdminMeeting();
   const [typed, setTyped] = useState('');
   const [busy, setBusy] = useState(false);
@@ -46,10 +48,10 @@ export function DeleteMeetingDialog({ meeting, onClose }: Props) {
 
     try {
       await remove.mutateAsync(meeting.id);
-      toast.success(`Deleted meeting ${meeting.code}`);
+      toast.success(t('success', { code: meeting.code }));
       onClose();
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not delete meeting';
+      const message = err instanceof ApiClientError ? err.message : t('error');
       toast.error(message);
     } finally {
       setBusy(false);
@@ -60,28 +62,31 @@ export function DeleteMeetingDialog({ meeting, onClose }: Props) {
     <Dialog open={Boolean(meeting)} onOpenChange={(open) => (!open ? onClose() : null)}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Permanently delete this meeting?</DialogTitle>
-          <DialogDescription>
-            This removes the meeting row plus every chat message, attachment, and participant record
-            attached to it. This cannot be undone.
-          </DialogDescription>
+          <DialogTitle>{t('title')}</DialogTitle>
+          <DialogDescription>{t('description')}</DialogDescription>
         </DialogHeader>
 
         {meeting ? (
           <div className="space-y-3">
             <div className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
-              <p>
+              <p className="break-words">
                 <span className="font-mono">{meeting.code}</span>
                 {meeting.title ? ` · ${meeting.title}` : null}
               </p>
               <p className="mt-0.5">
-                {meeting.participantCount} participant rows · {meeting.messageCount} messages
+                {t('summary', {
+                  participants: meeting.participantCount,
+                  messages: meeting.messageCount,
+                })}
               </p>
             </div>
 
             <div className="space-y-1.5">
               <Label htmlFor="confirm-code" className="text-xs text-muted-foreground">
-                Type the meeting code <span className="font-mono">{meeting.code}</span> to confirm
+                {t.rich('confirm-label', {
+                  code: meeting.code,
+                  mono: (chunks) => <span className="font-mono">{chunks}</span>,
+                })}
               </Label>
               <Input
                 id="confirm-code"
@@ -97,10 +102,10 @@ export function DeleteMeetingDialog({ meeting, onClose }: Props) {
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={busy}>
-            Cancel
+            {t('cancel')}
           </Button>
           <Button variant="destructive" onClick={onConfirm} disabled={busy || !canDelete}>
-            {busy ? 'Deleting…' : 'Delete forever'}
+            {busy ? t('submitting') : t('submit')}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,0 +1,58 @@
+{
+  "eyebrow": "نظرة عامة",
+  "title": "وحدة التحكم",
+  "load-error": "تعذّر تحميل النظرة العامة.",
+  "stats": {
+    "users": "المستخدمون",
+    "users-hint": "إجمالي الحسابات المسجّلة",
+    "meetings": "الاجتماعات",
+    "meetings-hint": "غرف الاجتماعات التي أُنشئت منذ البداية",
+    "active-now": "نشط الآن",
+    "active-now-hint": "الغرف ذات الحالة = ACTIVE",
+    "messages-24h": "الرسائل خلال 24 ساعة",
+    "messages-24h-hint": "رسائل الدردشة في آخر 24 ساعة"
+  },
+  "trends": {
+    "signups": "تسجيلات جديدة",
+    "meetings": "اجتماعات جديدة",
+    "range": "آخر 14 يوماً · {total, number}",
+    "today": "اليوم"
+  },
+  "status": {
+    "active": "نشط",
+    "waiting": "انتظار",
+    "ended": "منتهٍ"
+  },
+  "recent": {
+    "title": "الاجتماعات الأخيرة",
+    "empty": "لا توجد اجتماعات بعد.",
+    "columns": {
+      "code": "الرمز",
+      "host": "المضيف",
+      "status": "الحالة",
+      "participants": "المشاركون",
+      "duration": "المدة",
+      "started": "بدأ في"
+    }
+  },
+  "upcoming": {
+    "title": "القادم",
+    "empty": "لا توجد اجتماعات مجدولة.",
+    "untitled": "اجتماع بتاريخ {date}",
+    "columns": {
+      "code": "الرمز",
+      "title": "العنوان",
+      "host": "المضيف",
+      "invitees": "المدعوون",
+      "duration": "المدة",
+      "when": "الموعد"
+    },
+    "recurrence": {
+      "repeats": "يتكرر",
+      "daily": "يومياً",
+      "weekly": "أسبوعياً",
+      "monthly": "شهرياً",
+      "yearly": "سنوياً"
+    }
+  }
+}

@@ -17,7 +17,8 @@
     "settings": "Ayarlar",
     "administrators": "Yöneticiler",
     "branding": "Marka",
-    "configuration": "Yapılandırma"
+    "configuration": "Yapılandırma",
+    "more": "Daha fazla"
   },
   "topbar": {
     "root": "Yönetici",

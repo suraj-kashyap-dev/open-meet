@@ -57,32 +57,41 @@ export default function AdminUsersPage() {
         cell: (info) => (
           <span className="text-sm text-muted-foreground">{formatJoined(info.getValue())}</span>
         ),
+        meta: { headerClassName: 'hidden md:table-cell', cellClassName: 'hidden md:table-cell' },
       }),
       column.accessor('meetingsHosted', {
         header: () => <span className="block text-end">{t('table.hosted')}</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
+        meta: { headerClassName: 'hidden sm:table-cell', cellClassName: 'hidden sm:table-cell' },
       }),
       column.accessor('meetingsAttended', {
         header: () => <span className="block text-end">{t('table.attended')}</span>,
         cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
+        meta: { headerClassName: 'hidden sm:table-cell', cellClassName: 'hidden sm:table-cell' },
       }),
       column.display({
         id: 'actions',
         header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
           <div className="flex items-center justify-end gap-1">
-            <Button size="sm" variant="ghost" onClick={() => setEditing(row.original)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => setEditing(row.original)}
+              aria-label={t('table.edit')}
+            >
               <Pencil className="h-4 w-4" />
-              {t('table.edit')}
+              <span className="hidden sm:inline">{t('table.edit')}</span>
             </Button>
             <Button
               size="sm"
               variant="ghost"
               onClick={() => setDeleting(row.original)}
+              aria-label={t('table.delete')}
               className="text-destructive hover:text-destructive"
             >
               <Trash2 className="h-4 w-4" />
-              {t('table.delete')}
+              <span className="hidden sm:inline">{t('table.delete')}</span>
             </Button>
           </div>
         ),
@@ -136,11 +145,11 @@ export default function AdminUsersPage() {
         emptyMessage={search ? t('empty-search', { query: search }) : t('empty')}
       />
 
-      <footer className="flex items-center justify-between text-sm">
-        <p className="text-muted-foreground">
+      <footer className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-center text-muted-foreground sm:text-start">
           {total === 0 ? t('pagination.no-results') : t('pagination.showing', { from, to, total })}
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2 sm:justify-end">
           <Button
             variant="outline"
             size="sm"

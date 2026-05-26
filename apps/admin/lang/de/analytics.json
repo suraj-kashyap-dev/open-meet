@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Einblicke",
+  "title": "Analysen",
+  "subtitle": "Trends der letzten 30 Tage und Gesamtstatistiken. Wird jede Minute aktualisiert.",
+  "load-error": "Analysen konnten nicht geladen werden.",
+  "kpi": {
+    "avg-length": "Durchschn. Besprechungsdauer",
+    "avg-length-hint": "{count, number} abgeschlossen",
+    "top-host": "Aktivster Host",
+    "top-host-hint": "{count, plural, one {# Besprechung gehostet} other {# Besprechungen gehostet}}",
+    "top-host-empty": "Noch keine abgeschlossenen Besprechungen",
+    "peak-hour": "Spitzenstunde",
+    "peak-hour-hint": "Höchste gleichzeitige Besprechungen (UTC)",
+    "dau-today": "DAU heute",
+    "dau-today-hint": "Eindeutige Benutzer in einer Besprechung heute"
+  },
+  "dau-trend-title": "Täglich aktive Benutzer",
+  "concurrency": {
+    "title": "Spitzenparallelität nach Stunde",
+    "range": "letzte 30 Tage (UTC)"
+  },
+  "top-hosts": {
+    "title": "Aktivste Hosts",
+    "subtitle": "nach abgeschlossenen Besprechungen",
+    "empty": "Noch keine abgeschlossenen Besprechungen.",
+    "hosted": "{count, plural, one {# Besprechung} other {# Besprechungen}}",
+    "total-duration": "{duration} gesamt"
+  }
+}

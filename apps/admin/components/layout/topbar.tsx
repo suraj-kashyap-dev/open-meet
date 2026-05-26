@@ -16,18 +16,16 @@ import {
   DropdownMenuTrigger,
 } from '@open-meet/ui/dropdown-menu';
 import { ThemeToggle } from '@open-meet/ui/theme-toggle';
-import { LanguageSwitcher } from '@/components/language-switcher';
-import { useBranding } from '@/components/branding-provider';
+import { LanguageSwitcher } from '@/components/shared/language-switcher';
+import { useBranding } from '@/components/branding/provider';
 import { useAdminLogout, useCurrentAdmin } from '@/features/auth/hooks/use-admin-auth';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@open-meet/ui/cn';
 
-import { adminNav } from './admin-nav-config';
+import { nav } from './nav-config';
 
 interface Crumb {
-  /** A `nav` translation key. When present it is translated for display. */
   labelKey?: string;
-  /** A literal label (e.g. a dynamic URL segment) shown as-is. */
   label?: string;
   href?: string;
 }
@@ -37,7 +35,7 @@ function deriveCrumbs(pathname: string): Crumb[] {
     return [{ labelKey: 'topbar.dashboard' }];
   }
 
-  for (const section of adminNav) {
+  for (const section of nav) {
     for (const item of section.items) {
       if (pathname === item.href || pathname.startsWith(`${item.href}/`)) {
         const crumbs: Crumb[] = [
@@ -65,7 +63,7 @@ interface Props {
   onToggleDesktopSidebar?: () => void;
 }
 
-export function AdminTopbar({
+export function Topbar({
   onOpenSidebar,
   desktopSidebarOpen = true,
   onToggleDesktopSidebar,
@@ -91,7 +89,6 @@ export function AdminTopbar({
         </Button>
       ) : null}
 
-      {/* Mobile-only brand: the desktop sidebar (with the logo) is hidden here. */}
       <Link
         href="/"
         aria-label={appName}

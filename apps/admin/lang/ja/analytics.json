@@ -1,0 +1,29 @@
+{
+  "eyebrow": "インサイト",
+  "title": "アナリティクス",
+  "subtitle": "過去 30 日間のトレンドと累計集計。毎分更新されます。",
+  "load-error": "アナリティクスの読み込みに失敗しました。",
+  "kpi": {
+    "avg-length": "平均ミーティング時間",
+    "avg-length-hint": "{count, number} 件完了",
+    "top-host": "トップホスト",
+    "top-host-hint": "{count, plural, one {# 件のミーティングを主催} other {# 件のミーティングを主催}}",
+    "top-host-empty": "まだ完了したミーティングがありません",
+    "peak-hour": "ピーク時間帯",
+    "peak-hour-hint": "同時ミーティング数が最多の時間帯 (UTC)",
+    "dau-today": "本日の DAU",
+    "dau-today-hint": "本日ミーティングに参加したユニークユーザー数"
+  },
+  "dau-trend-title": "デイリーアクティブユーザー",
+  "concurrency": {
+    "title": "時間帯別ピーク同時接続数",
+    "range": "過去 30 日間 (UTC)"
+  },
+  "top-hosts": {
+    "title": "トップホスト",
+    "subtitle": "完了済みミーティング数順",
+    "empty": "まだ完了したミーティングがありません。",
+    "hosted": "{count, plural, one {# 件のミーティング} other {# 件のミーティング}}",
+    "total-duration": "{duration} 合計"
+  }
+}

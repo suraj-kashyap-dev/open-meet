@@ -1,0 +1,58 @@
+{
+  "eyebrow": "Resumen",
+  "title": "Consola",
+  "load-error": "Error al cargar el resumen.",
+  "stats": {
+    "users": "Usuarios",
+    "users-hint": "Total de cuentas registradas",
+    "meetings": "Reuniones",
+    "meetings-hint": "Salas de reuniones creadas en total",
+    "active-now": "Activas ahora",
+    "active-now-hint": "Salas con estado = ACTIVE",
+    "messages-24h": "Mensajes 24h",
+    "messages-24h-hint": "Mensajes de chat en las últimas 24h"
+  },
+  "trends": {
+    "signups": "Nuevos registros",
+    "meetings": "Nuevas reuniones",
+    "range": "últimos 14 días · {total, number}",
+    "today": "Hoy"
+  },
+  "status": {
+    "active": "Activa",
+    "waiting": "En espera",
+    "ended": "Finalizada"
+  },
+  "recent": {
+    "title": "Reuniones recientes",
+    "empty": "Aún no hay reuniones.",
+    "columns": {
+      "code": "Código",
+      "host": "Host",
+      "status": "Estado",
+      "participants": "Participantes",
+      "duration": "Duración",
+      "started": "Iniciada"
+    }
+  },
+  "upcoming": {
+    "title": "Próximamente",
+    "empty": "No hay reuniones programadas.",
+    "untitled": "Reunión el {date}",
+    "columns": {
+      "code": "Código",
+      "title": "Título",
+      "host": "Host",
+      "invitees": "Invitados",
+      "duration": "Duración",
+      "when": "Cuándo"
+    },
+    "recurrence": {
+      "repeats": "Se repite",
+      "daily": "Diariamente",
+      "weekly": "Semanalmente",
+      "monthly": "Mensualmente",
+      "yearly": "Anualmente"
+    }
+  }
+}

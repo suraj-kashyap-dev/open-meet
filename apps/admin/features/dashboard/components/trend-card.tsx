@@ -1,3 +1,7 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 import type { DailyCountPoint } from '@open-meet/types';
 
 interface Props {
@@ -11,6 +15,7 @@ function formatDay(iso: string): string {
 }
 
 export function TrendCard({ title, series }: Props) {
+  const t = useTranslations('dashboard.trends');
   const max = Math.max(1, ...series.map((p) => p.count));
   const total = series.reduce((sum, p) => sum + p.count, 0);
   const last = series[series.length - 1];
@@ -19,7 +24,7 @@ export function TrendCard({ title, series }: Props) {
     <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold tracking-tight">{title}</h3>
-        <span className="text-xs text-muted-foreground">last 14 days · {total}</span>
+        <span className="text-xs text-muted-foreground">{t('range', { total })}</span>
       </div>
 
       <div className="mt-6 flex h-32 items-end gap-1.5">
@@ -38,7 +43,7 @@ export function TrendCard({ title, series }: Props) {
 
       {last ? (
         <p className="mt-3 text-xs text-muted-foreground">
-          Today <span className="font-medium text-foreground">{last.count}</span>
+          {t('today')} <span className="font-medium text-foreground">{last.count}</span>
         </p>
       ) : null}
     </div>

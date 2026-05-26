@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -23,6 +24,7 @@ interface Props {
 }
 
 export function EndMeetingDialog({ meeting, onClose }: Props) {
+  const t = useTranslations('meetings.end-dialog');
   const forceEnd = useForceEndMeeting();
   const [busy, setBusy] = useState(false);
 
@@ -35,44 +37,46 @@ export function EndMeetingDialog({ meeting, onClose }: Props) {
 
     try {
       await forceEnd.mutateAsync(meeting.id);
-      toast.success(`Ended meeting ${meeting.code}`);
+      toast.success(t('success', { code: meeting.code }));
       onClose();
     } catch (err) {
-      const message = err instanceof ApiClientError ? err.message : 'Could not end meeting';
+      const message = err instanceof ApiClientError ? err.message : t('error');
       toast.error(message);
     } finally {
       setBusy(false);
     }
   };
 
+  const activeCount = meeting?.activeParticipantCount ?? 0;
+
   return (
     <Dialog open={Boolean(meeting)} onOpenChange={(open) => (!open ? onClose() : null)}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Force-end this meeting?</DialogTitle>
+          <DialogTitle>{t('title')}</DialogTitle>
           <DialogDescription>
-            {meeting?.activeParticipantCount && meeting.activeParticipantCount > 0
-              ? `${meeting.activeParticipantCount} participant${meeting.activeParticipantCount === 1 ? ' is' : 's are'} currently in the room. They'll be disconnected immediately.`
-              : 'The meeting status will be marked ENDED and its LiveKit room (if any) will be closed.'}
+            {activeCount > 0
+              ? t('description-active', { count: activeCount })
+              : t('description-idle')}
           </DialogDescription>
         </DialogHeader>
 
         {meeting ? (
           <div className="rounded-md border border-border bg-muted/40 px-3 py-2 text-xs text-muted-foreground">
-            <p>
+            <p className="break-words">
               <span className="font-mono">{meeting.code}</span>
               {meeting.title ? ` · ${meeting.title}` : null}
             </p>
-            <p className="mt-0.5">hosted by {meeting.hostName}</p>
+            <p className="mt-0.5 break-words">{t('hosted-by', { host: meeting.hostName })}</p>
           </div>
         ) : null}
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose} disabled={busy}>
-            Cancel
+            {t('cancel')}
           </Button>
           <Button variant="destructive" onClick={onConfirm} disabled={busy}>
-            {busy ? 'Ending…' : 'End meeting'}
+            {busy ? t('submitting') : t('submit')}
           </Button>
         </DialogFooter>
       </DialogContent>

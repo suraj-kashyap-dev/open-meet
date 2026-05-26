@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { Clock, TrendingUp, Trophy, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import type { AdminConcurrencyPointDto, AdminTopHostDto } from '@open-meet/types';
 
@@ -26,6 +27,7 @@ function formatDuration(min: number): string {
 }
 
 export default function AdminAnalyticsPage() {
+  const t = useTranslations('analytics');
   const { data, isLoading, error } = useQuery({
     queryKey: ['admin', 'analytics', 'deep'],
     queryFn: ({ signal }) => adminAnalyticsApi.deep(signal),
@@ -43,56 +45,56 @@ export default function AdminAnalyticsPage() {
   if (error || !data) {
     return (
       <main className="w-full px-4 py-10 text-sm text-destructive sm:px-6 lg:px-8">
-        Failed to load analytics.
+        {t('load-error')}
       </main>
     );
   }
+
+  const topHost = data.topHosts[0];
 
   return (
     <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          Insights
+          {t('eyebrow')}
         </p>
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Analytics</h1>
-        <p className="text-sm text-muted-foreground">
-          Trailing 30-day trends + lifetime aggregates. Refreshes every minute.
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
+        <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           icon={Clock}
-          label="Avg meeting length"
+          label={t('kpi.avg-length')}
           value={formatDuration(data.averageMeetingMinutes)}
-          hint={`${data.totalCompletedMeetings.toLocaleString()} completed`}
+          hint={t('kpi.avg-length-hint', { count: data.totalCompletedMeetings })}
         />
         <KpiCard
           icon={Trophy}
-          label="Top host"
-          value={data.topHosts[0]?.name ?? '—'}
+          label={t('kpi.top-host')}
+          value={topHost?.name ?? '—'}
           hint={
-            data.topHosts[0]
-              ? `${data.topHosts[0].hostedCount} meetings hosted`
-              : 'No completed meetings yet'
+            topHost
+              ? t('kpi.top-host-hint', { count: topHost.hostedCount })
+              : t('kpi.top-host-empty')
           }
         />
         <KpiCard
           icon={TrendingUp}
-          label="Peak hour"
+          label={t('kpi.peak-hour')}
           value={pickPeakHour(data.peakConcurrencyByHour)}
-          hint="Highest concurrent meetings (UTC)"
+          hint={t('kpi.peak-hour-hint')}
         />
         <KpiCard
           icon={Users}
-          label="DAU today"
+          label={t('kpi.dau-today')}
           value={(data.dailyActiveUsers[data.dailyActiveUsers.length - 1]?.count ?? 0).toString()}
-          hint="Distinct users in a meeting today"
+          hint={t('kpi.dau-today-hint')}
         />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <TrendCard title="Daily active users" series={data.dailyActiveUsers} />
+        <TrendCard title={t('dau-trend-title')} series={data.dailyActiveUsers} />
         <HourlyConcurrencyCard series={data.peakConcurrencyByHour} />
       </section>
 
@@ -147,13 +149,14 @@ function KpiCard({
 }
 
 function HourlyConcurrencyCard({ series }: { series: AdminConcurrencyPointDto[] }) {
+  const t = useTranslations('analytics.concurrency');
   const max = Math.max(1, ...series.map((p) => p.count));
 
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold tracking-tight">Peak concurrency by hour</h3>
-        <span className="text-xs text-muted-foreground">last 30 days (UTC)</span>
+        <h3 className="text-sm font-semibold tracking-tight">{t('title')}</h3>
+        <span className="text-xs text-muted-foreground">{t('range')}</span>
       </div>
 
       <div className="mt-6 flex h-32 items-end gap-[2px]">
@@ -183,17 +186,17 @@ function HourlyConcurrencyCard({ series }: { series: AdminConcurrencyPointDto[] 
 }
 
 function TopHostsTable({ hosts }: { hosts: AdminTopHostDto[] }) {
+  const t = useTranslations('analytics.top-hosts');
+
   return (
     <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-sm font-semibold tracking-tight">Top hosts</h3>
-        <span className="text-xs text-muted-foreground">by completed meetings</span>
+        <h3 className="text-sm font-semibold tracking-tight">{t('title')}</h3>
+        <span className="text-xs text-muted-foreground">{t('subtitle')}</span>
       </div>
 
       {hosts.length === 0 ? (
-        <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-          No completed meetings yet.
-        </p>
+        <p className="px-2 py-6 text-center text-sm text-muted-foreground">{t('empty')}</p>
       ) : (
         <ol className="divide-y divide-border">
           {hosts.map((h, i) => (
@@ -212,9 +215,9 @@ function TopHostsTable({ hosts }: { hosts: AdminTopHostDto[] }) {
                 <p className="truncate text-xs text-muted-foreground">{h.email}</p>
               </div>
               <div className="text-end text-xs">
-                <p className="font-medium tabular-nums">{h.hostedCount} meetings</p>
+                <p className="font-medium tabular-nums">{t('hosted', { count: h.hostedCount })}</p>
                 <p className="text-muted-foreground">
-                  {formatDuration(h.totalDurationMinutes)} total
+                  {t('total-duration', { duration: formatDuration(h.totalDurationMinutes) })}
                 </p>
               </div>
             </li>

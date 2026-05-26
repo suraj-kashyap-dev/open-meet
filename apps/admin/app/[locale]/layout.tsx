@@ -9,7 +9,7 @@ import { Toaster } from '@open-meet/ui/sonner';
 
 import { isRtl, routing } from '@/i18n/routing';
 import { getBranding } from '@/lib/branding';
-import { BrandingProvider } from '@/components/branding-provider';
+import { BrandingProvider } from '@/components/branding/provider';
 import { Providers } from '@/providers';
 import '../globals.css';
 

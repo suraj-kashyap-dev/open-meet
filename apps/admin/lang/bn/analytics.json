@@ -1,0 +1,29 @@
+{
+  "eyebrow": "ইনসাইটস",
+  "title": "অ্যানালিটিক্স",
+  "subtitle": "শেষ ৩০ দিনের প্রবণতা + সর্বকালীন সমষ্টি। প্রতি মিনিটে রিফ্রেশ হয়।",
+  "load-error": "অ্যানালিটিক্স লোড করা যায়নি।",
+  "kpi": {
+    "avg-length": "গড় মিটিং দৈর্ঘ্য",
+    "avg-length-hint": "{count, number}টি সম্পন্ন",
+    "top-host": "শীর্ষ হোস্ট",
+    "top-host-hint": "{count, plural, one {# টি মিটিং হোস্ট করা হয়েছে} other {# টি মিটিং হোস্ট করা হয়েছে}}",
+    "top-host-empty": "এখনো কোনো সম্পন্ন মিটিং নেই",
+    "peak-hour": "পিক আওয়ার",
+    "peak-hour-hint": "সর্বোচ্চ একযোগে মিটিং (UTC)",
+    "dau-today": "আজকের DAU",
+    "dau-today-hint": "আজ মিটিংয়ে স্বতন্ত্র ব্যবহারকারী"
+  },
+  "dau-trend-title": "দৈনিক সক্রিয় ব্যবহারকারী",
+  "concurrency": {
+    "title": "ঘণ্টা অনুযায়ী পিক একযোগিতা",
+    "range": "শেষ ৩০ দিন (UTC)"
+  },
+  "top-hosts": {
+    "title": "শীর্ষ হোস্ট",
+    "subtitle": "সম্পন্ন মিটিং অনুযায়ী",
+    "empty": "এখনো কোনো সম্পন্ন মিটিং নেই।",
+    "hosted": "{count, plural, one {# টি মিটিং} other {# টি মিটিং}}",
+    "total-duration": "মোট {duration}"
+  }
+}

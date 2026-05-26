@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { CalendarRange, MessageSquare, Radio, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { RecentMeetingsTable } from '@/features/dashboard/components/recent-meetings-table';
 import { StatCard } from '@/features/dashboard/components/stat-card';
@@ -10,6 +11,7 @@ import { UpcomingMeetingsTable } from '@/features/dashboard/components/upcoming-
 import { adminAnalyticsApi } from '@/features/analytics/services/analytics';
 
 export default function AdminOverviewPage() {
+  const t = useTranslations('dashboard');
   const { data, isLoading, error } = useQuery({
     queryKey: ['admin', 'overview'],
     queryFn: ({ signal }) => adminAnalyticsApi.overview(signal),
@@ -27,7 +29,7 @@ export default function AdminOverviewPage() {
   if (error || !data) {
     return (
       <main className="w-full px-4 py-10 text-sm text-destructive sm:px-6 lg:px-8">
-        Failed to load overview.
+        {t('load-error')}
       </main>
     );
   }
@@ -36,41 +38,41 @@ export default function AdminOverviewPage() {
     <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          Overview
+          {t('eyebrow')}
         </p>
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Console</h1>
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          label="Users"
+          label={t('stats.users')}
           value={data.totals.users.toLocaleString()}
           icon={Users}
-          hint="Total registered accounts"
+          hint={t('stats.users-hint')}
         />
         <StatCard
-          label="Meetings"
+          label={t('stats.meetings')}
           value={data.totals.meetings.toLocaleString()}
           icon={CalendarRange}
-          hint="All-time meeting rooms created"
+          hint={t('stats.meetings-hint')}
         />
         <StatCard
-          label="Active now"
+          label={t('stats.active-now')}
           value={data.totals.activeMeetings.toLocaleString()}
           icon={Radio}
-          hint="Rooms with status = ACTIVE"
+          hint={t('stats.active-now-hint')}
         />
         <StatCard
-          label="Messages 24h"
+          label={t('stats.messages-24h')}
           value={data.totals.messagesLast24h.toLocaleString()}
           icon={MessageSquare}
-          hint="Chat messages in last 24h"
+          hint={t('stats.messages-24h-hint')}
         />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        <TrendCard title="New signups" series={data.trends.signups} />
-        <TrendCard title="New meetings" series={data.trends.meetings} />
+        <TrendCard title={t('trends.signups')} series={data.trends.signups} />
+        <TrendCard title={t('trends.meetings')} series={data.trends.meetings} />
       </section>
 
       <UpcomingMeetingsTable meetings={data.upcomingMeetings} />

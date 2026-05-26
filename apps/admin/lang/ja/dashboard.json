@@ -1,0 +1,58 @@
+{
+  "eyebrow": "概要",
+  "title": "コンソール",
+  "load-error": "概要の読み込みに失敗しました。",
+  "stats": {
+    "users": "ユーザー",
+    "users-hint": "登録済みアカウントの合計",
+    "meetings": "ミーティング",
+    "meetings-hint": "作成されたミーティングルームの累計",
+    "active-now": "現在アクティブ",
+    "active-now-hint": "ステータスが ACTIVE のルーム",
+    "messages-24h": "24h メッセージ",
+    "messages-24h-hint": "過去 24 時間のチャットメッセージ"
+  },
+  "trends": {
+    "signups": "新規登録",
+    "meetings": "新規ミーティング",
+    "range": "過去 14 日間 · {total, number}",
+    "today": "今日"
+  },
+  "status": {
+    "active": "アクティブ",
+    "waiting": "待機中",
+    "ended": "終了"
+  },
+  "recent": {
+    "title": "最近のミーティング",
+    "empty": "まだミーティングがありません。",
+    "columns": {
+      "code": "コード",
+      "host": "ホスト",
+      "status": "ステータス",
+      "participants": "参加者",
+      "duration": "時間",
+      "started": "開始"
+    }
+  },
+  "upcoming": {
+    "title": "予定",
+    "empty": "予定されたミーティングはありません。",
+    "untitled": "{date} のミーティング",
+    "columns": {
+      "code": "コード",
+      "title": "タイトル",
+      "host": "ホスト",
+      "invitees": "招待者",
+      "duration": "時間",
+      "when": "日時"
+    },
+    "recurrence": {
+      "repeats": "繰り返し",
+      "daily": "毎日",
+      "weekly": "毎週",
+      "monthly": "毎月",
+      "yearly": "毎年"
+    }
+  }
+}

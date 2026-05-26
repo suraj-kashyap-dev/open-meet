@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Insights",
+  "title": "Análises",
+  "subtitle": "Tendências dos últimos 30 dias + agregados acumulados. Atualiza a cada minuto.",
+  "load-error": "Falha ao carregar as análises.",
+  "kpi": {
+    "avg-length": "Duração média das reuniões",
+    "avg-length-hint": "{count, number} concluídas",
+    "top-host": "Principal anfitrião",
+    "top-host-hint": "{count, plural, one {# reunião organizada} other {# reuniões organizadas}}",
+    "top-host-empty": "Nenhuma reunião concluída ainda",
+    "peak-hour": "Horário de pico",
+    "peak-hour-hint": "Maior número de reuniões simultâneas (UTC)",
+    "dau-today": "DAU hoje",
+    "dau-today-hint": "Usuários distintos em uma reunião hoje"
+  },
+  "dau-trend-title": "Usuários ativos diários",
+  "concurrency": {
+    "title": "Pico de simultaneidade por hora",
+    "range": "últimos 30 dias (UTC)"
+  },
+  "top-hosts": {
+    "title": "Principais anfitriões",
+    "subtitle": "por reuniões concluídas",
+    "empty": "Nenhuma reunião concluída ainda.",
+    "hosted": "{count, plural, one {# reunião} other {# reuniões}}",
+    "total-duration": "{duration} no total"
+  }
+}

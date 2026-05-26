@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Insights",
+  "title": "Analytics",
+  "subtitle": "Trailing 30-day trends + lifetime aggregates. Refreshes every minute.",
+  "load-error": "Failed to load analytics.",
+  "kpi": {
+    "avg-length": "Avg meeting length",
+    "avg-length-hint": "{count, number} completed",
+    "top-host": "Top host",
+    "top-host-hint": "{count, plural, one {# meeting hosted} other {# meetings hosted}}",
+    "top-host-empty": "No completed meetings yet",
+    "peak-hour": "Peak hour",
+    "peak-hour-hint": "Highest concurrent meetings (UTC)",
+    "dau-today": "DAU today",
+    "dau-today-hint": "Distinct users in a meeting today"
+  },
+  "dau-trend-title": "Daily active users",
+  "concurrency": {
+    "title": "Peak concurrency by hour",
+    "range": "last 30 days (UTC)"
+  },
+  "top-hosts": {
+    "title": "Top hosts",
+    "subtitle": "by completed meetings",
+    "empty": "No completed meetings yet.",
+    "hosted": "{count, plural, one {# meeting} other {# meetings}}",
+    "total-duration": "{duration} total"
+  }
+}

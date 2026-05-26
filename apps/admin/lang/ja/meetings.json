@@ -1,0 +1,97 @@
+{
+  "eyebrow": "モデレート",
+  "title": "ミーティング",
+  "total-count": "{count, number} 件",
+  "end-all": "アクティブをすべて終了",
+  "search-placeholder": "コード、タイトル、ホストで検索",
+  "refreshing": "更新中…",
+  "filters": {
+    "all": "すべて",
+    "active": "アクティブ",
+    "waiting": "待機中",
+    "ended": "終了"
+  },
+  "status": {
+    "active": "アクティブ",
+    "waiting": "待機中",
+    "ended": "終了"
+  },
+  "columns": {
+    "meeting": "ミーティング",
+    "host": "ホスト",
+    "status": "ステータス",
+    "started": "開始",
+    "duration": "時間",
+    "total": "合計"
+  },
+  "untitled": "タイトルなし（{date}）",
+  "live-count": "{count, number} 件ライブ",
+  "actions": {
+    "label": "操作",
+    "view": "表示",
+    "end": "終了",
+    "delete": "削除"
+  },
+  "empty-filtered": "現在のフィルターに一致するミーティングはありません。",
+  "empty": "まだミーティングの記録がありません。",
+  "pagination": {
+    "no-results": "結果なし",
+    "showing": "{total} 件中 {from}〜{to} 件を表示",
+    "previous": "前へ",
+    "next": "次へ",
+    "page-of": "{pageCount} ページ中 {page} ページ目"
+  },
+  "detail": {
+    "title": "ミーティング詳細",
+    "hosted-by": "{host} が主催",
+    "loading": "読み込み中…",
+    "stats": {
+      "status": "ステータス",
+      "active-now": "現在アクティブ",
+      "total-participants": "参加者合計",
+      "messages": "メッセージ"
+    },
+    "participants": "参加者",
+    "no-participants": "このミーティングに参加した参加者はいません。",
+    "host-badge": "ホスト",
+    "joined": "{time} に参加",
+    "left": "{time} に退出",
+    "kick": "退出させる",
+    "kick-aria": "{name} を退出させる",
+    "kick-success": "{name} を退出させました",
+    "kick-error": "{name} を退出させることができませんでした"
+  },
+  "end-dialog": {
+    "title": "このミーティングを強制終了しますか？",
+    "description-active": "現在 {count, plural, one {# 名の参加者} other {# 名の参加者}} がルームにいます。直ちに切断されます。",
+    "description-idle": "ミーティングのステータスが ENDED としてマークされ、LiveKit ルーム（存在する場合）が閉じられます。",
+    "hosted-by": "{host} が主催",
+    "cancel": "キャンセル",
+    "submit": "ミーティングを終了",
+    "submitting": "終了中…",
+    "success": "ミーティング {code} を終了しました",
+    "error": "ミーティングを終了できませんでした"
+  },
+  "end-all-dialog": {
+    "title": "すべてのアクティブなミーティングを終了しますか？",
+    "description": "ステータスが ACTIVE のすべてのミーティングを ENDED としてマークし、LiveKit ルームを閉じます。現在通話中のすべての参加者は直ちに切断されます。",
+    "active-summary": "現在 {count, plural, one {# 件のミーティング} other {# 件のミーティング}} がアクティブです。",
+    "none-active": "現在アクティブなミーティングはありません — 何も起きません。",
+    "cancel": "キャンセル",
+    "submit": "アクティブをすべて終了",
+    "submitting": "終了中…",
+    "success": "{count, plural, one {# 件のミーティングを終了しました} other {# 件のミーティングを終了しました}}",
+    "error": "アクティブなミーティングを終了できませんでした"
+  },
+  "delete-dialog": {
+    "title": "このミーティングを完全に削除しますか？",
+    "description": "ミーティングの行と、それに紐付くすべてのチャットメッセージ、添付ファイル、参加者レコードが削除されます。この操作は元に戻せません。",
+    "summary": "{participants, number} 件の参加者行 · {messages, number} 件のメッセージ",
+    "confirm-label": "確認するにはミーティングコード <mono>{code}</mono> を入力してください",
+    "cancel": "キャンセル",
+    "submit": "完全に削除",
+    "submitting": "削除中…",
+    "success": "ミーティング {code} を削除しました",
+    "error": "ミーティングを削除できませんでした"
+  }
+}

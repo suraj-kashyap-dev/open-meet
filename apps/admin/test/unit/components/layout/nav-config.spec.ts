@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isActive } from '@/components/admin-nav-config';
+import { isActive } from '@/components/layout/nav-config';
 
 describe('isActive()', () => {
   it('should match the dashboard only on the exact root path', () => {

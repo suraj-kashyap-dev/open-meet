@@ -2,11 +2,62 @@
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
-import { forwardRef, type HTMLAttributes } from 'react';
+import { forwardRef, useEffect, useId, useRef, type HTMLAttributes } from 'react';
 
 import { cn } from './cn';
 
-export const Dialog = DialogPrimitive.Root;
+function useDialogHistory(
+  open: boolean | undefined,
+  onOpenChange: ((open: boolean) => void) | undefined,
+) {
+  const id = useId();
+
+  const onOpenChangeRef = useRef(onOpenChange);
+
+  onOpenChangeRef.current = onOpenChange;
+
+  useEffect(() => {
+    if (!open || typeof window === 'undefined' || !onOpenChangeRef.current) {
+      return;
+    }
+
+    let pushed = false;
+
+    const frame = window.requestAnimationFrame(() => {
+      const state = window.history.state as Record<string, unknown> | null;
+      window.history.pushState({ ...state, __omDialogId: id }, '');
+      pushed = true;
+    });
+
+    const onPopState = () => {
+      onOpenChangeRef.current?.(false);
+    };
+
+    window.addEventListener('popstate', onPopState);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('popstate', onPopState);
+
+      const state = window.history.state as { __omDialogId?: string } | null;
+
+      if (pushed && state?.__omDialogId === id) {
+        window.history.back();
+      }
+    };
+  }, [open, id]);
+}
+
+export function Dialog({
+  open,
+  onOpenChange,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Root>) {
+  useDialogHistory(open, onOpenChange);
+
+  return <DialogPrimitive.Root open={open} onOpenChange={onOpenChange} {...props} />;
+}
+
 export const DialogTrigger = DialogPrimitive.Trigger;
 export const DialogPortal = DialogPrimitive.Portal;
 export const DialogClose = DialogPrimitive.Close;
@@ -35,7 +86,7 @@ export const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed left-1/2 top-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto border border-border bg-card p-6 shadow-lg rounded-lg data-[state=open]:animate-content-show data-[state=closed]:animate-content-hide',
+        'fixed left-1/2 top-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto border border-border bg-card p-4 shadow-lg rounded-lg data-[state=open]:animate-content-show data-[state=closed]:animate-content-hide sm:p-6',
         className,
       )}
       {...props}
@@ -57,7 +108,11 @@ DialogHeader.displayName = 'DialogHeader';
 
 export const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:space-x-2', className)}
+    className={cn(
+      'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:space-x-2',
+      '[&>button]:w-full sm:[&>button]:w-auto',
+      className,
+    )}
     {...props}
   />
 );

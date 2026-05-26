@@ -10,23 +10,16 @@ import { cn } from '@open-meet/ui/cn';
 import { Link, usePathname } from '@/i18n/navigation';
 import { isRtl } from '@/i18n/routing';
 import { env } from '@/lib/env';
-import { useBranding } from '@/components/branding-provider';
+import { useBranding } from '@/components/branding/provider';
 
-import { adminNav, isActive } from './admin-nav-config';
+import { nav, isActive } from './nav-config';
 
 interface Props {
   onNavigate?: () => void;
-  /** Render as a narrow icon-only rail with tooltips (desktop collapsed state). */
   collapsed?: boolean;
 }
 
-/**
- * The inner content of the admin sidebar — brand, navigation, and footer.
- * Shared by the fixed desktop rail (`AdminSidebar`) and the mobile sheet.
- * When `collapsed`, it becomes an icon-only rail and every item gets a
- * hover/focus tooltip with its label.
- */
-export function AdminSidebarContent({ onNavigate, collapsed = false }: Props) {
+export function SidebarContent({ onNavigate, collapsed = false }: Props) {
   const pathname = usePathname();
   const t = useTranslations('nav');
   const tooltipSide = isRtl(useLocale()) ? 'left' : 'right';
@@ -73,7 +66,7 @@ export function AdminSidebarContent({ onNavigate, collapsed = false }: Props) {
             collapsed ? 'space-y-2 px-2' : 'space-y-6 px-3',
           )}
         >
-          {adminNav.map((section, sectionIndex) => (
+          {nav.map((section, sectionIndex) => (
             <div key={section.labelKey} className="space-y-1">
               {collapsed ? (
                 sectionIndex > 0 ? (
