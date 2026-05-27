@@ -8,8 +8,12 @@ test.describe('Web home dashboard', () => {
     await mockWebApi(page, { history: emptyHistory });
     await page.goto('/en');
 
-    await expect(page.getByRole('heading', { name: 'Start a new meeting', exact: true })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Join with a code', exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Start a new meeting', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Join with a code', exact: true }),
+    ).toBeVisible();
     await expect(page.getByRole('button', { name: 'New meeting' })).toBeVisible();
     await expect(page.getByLabel('Meeting code')).toBeVisible();
   });

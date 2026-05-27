@@ -47,7 +47,7 @@
 
 ## Quick start
 
-> **Prerequisites** — Node 22 LTS · pnpm ≥ 9 · Docker Desktop (running).
+> **Prerequisites** — Node 22 LTS · pnpm ≥ 9 · Docker.
 
 ```bash
 ./setup.sh      # generate secrets + env files, start infra, run migrations

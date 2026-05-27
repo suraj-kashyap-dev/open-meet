@@ -1,4 +1,4 @@
-name: Tests
+name: Unit
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: tests-${{ github.ref }}
+  group: unit-${{ github.ref }}
   cancel-in-progress: true
 
 env:

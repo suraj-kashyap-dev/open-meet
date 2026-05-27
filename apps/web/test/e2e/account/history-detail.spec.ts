@@ -22,7 +22,9 @@ test.describe('Web meeting history detail page', () => {
     await expect(page.getByRole('link', { name: 'Download' })).toBeVisible();
   });
 
-  test('should show empty states for a meeting without recordings or messages', async ({ page }) => {
+  test('should show empty states for a meeting without recordings or messages', async ({
+    page,
+  }) => {
     await mockWebApi(page, {
       meeting: endedMeeting,
       recordings: emptyRecordings,
