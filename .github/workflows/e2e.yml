@@ -14,8 +14,8 @@ env:
   CI: true
 
 jobs:
-  e2e:
-    name: API e2e (Supertest)
+  api:
+    name: API (Supertest)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     services:
@@ -64,3 +64,44 @@ jobs:
 
       - name: API e2e tests
         run: pnpm --filter @open-meet/server test:e2e
+
+  playwright:
+    name: ${{ matrix.app }} (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [web, admin]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build workspace packages
+        run: pnpm exec turbo run build --filter='./packages/*'
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @open-meet/${{ matrix.app }} exec playwright install --with-deps chromium
+
+      - name: ${{ matrix.app }} E2E tests
+        run: pnpm --filter @open-meet/${{ matrix.app }} test:e2e
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-playwright-report
+          path: apps/${{ matrix.app }}/playwright-report
+          retention-days: 7

@@ -38,6 +38,8 @@ test.describe('Web register page', () => {
     await page.getByRole('button', { name: 'Create account' }).click();
 
     await expect(page).toHaveURL(/\/en$/);
-    await expect(page.getByRole('heading', { name: 'Start a new meeting', exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Start a new meeting', exact: true }),
+    ).toBeVisible();
   });
 });
