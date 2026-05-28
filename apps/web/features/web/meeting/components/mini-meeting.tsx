@@ -37,6 +37,7 @@ export function MiniMeeting({ code, meeting }: Props) {
   const position = useActiveMeeting((s) => s.position);
   const setPosition = useActiveMeeting((s) => s.setPosition);
   const maximize = useActiveMeeting((s) => s.maximize);
+  const authToken = useActiveMeeting((s) => (s.session?.code === code ? s.session.authToken : null));
 
   const [leaving, setLeaving] = useState(false);
 
@@ -89,7 +90,7 @@ export function MiniMeeting({ code, meeting }: Props) {
     setLeaving(true);
 
     try {
-      await meetingsApi.leave(code);
+      await meetingsApi.leave(code, authToken);
     } catch {
       // best-effort — disconnect locally regardless
     }

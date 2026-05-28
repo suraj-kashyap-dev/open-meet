@@ -34,14 +34,29 @@ describe('JwtAuthGuard', () => {
 
   describe('handleRequest()', () => {
     it('should return the user when authenticated', () => {
-      expect(guard.handleRequest(null, { id: 'u1' })).toEqual({ id: 'u1' });
+      expect(guard.handleRequest(null, { id: 'u1' }, null, ctx('/api/meetings/abc/join'))).toEqual({
+        id: 'u1',
+      });
     });
 
     it('should throw when there is no user or an error', () => {
-      expect(() => guard.handleRequest(null, null)).toThrow(UnauthorizedException);
-      expect(() => guard.handleRequest(new Error('x'), { id: 'u1' })).toThrow(
+      expect(() => guard.handleRequest(null, null, null, ctx('/api/meetings/abc/join'))).toThrow(
         UnauthorizedException,
       );
+      expect(() =>
+        guard.handleRequest(new Error('x'), { id: 'u1' }, null, ctx('/api/meetings/abc/join')),
+      ).toThrow(UnauthorizedException);
+    });
+
+    it('should reject guest tokens on non-meeting routes', () => {
+      expect(() =>
+        guard.handleRequest(
+          null,
+          { id: 'u1', isGuest: true, guestMeetingCode: 'abc-defg-hijk' },
+          null,
+          ctx('/api/auth/me'),
+        ),
+      ).toThrow(UnauthorizedException);
     });
   });
 });

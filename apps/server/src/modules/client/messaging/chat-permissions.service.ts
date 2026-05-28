@@ -48,6 +48,13 @@ export class ChatPermissionsService {
       });
     }
 
+    if (!target.allowDirectMessages) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.FORBIDDEN,
+        message: 'This user does not accept direct messages.',
+      });
+    }
+
     if (!(await this.repo.shareTeam(actorId, targetId))) {
       throw new ForbiddenException({
         code: ApiErrorCode.NOT_TEAMMATES,
@@ -76,12 +83,22 @@ export class ChatPermissionsService {
   /** Write gate: membership plus the user not being chat-disabled. */
   async assertCanPost(conversationId: string, userId: string): Promise<ConversationMember> {
     const membership = await this.assertConversationMember(conversationId, userId);
-    const user = await this.repo.findUserBasics(userId);
+    const [user, directPeer] = await Promise.all([
+      this.repo.findUserBasics(userId),
+      this.repo.getDirectPeer(conversationId, userId),
+    ]);
 
     if (user?.chatDisabled) {
       throw new ForbiddenException({
         code: ApiErrorCode.CHAT_DISABLED,
         message: 'Your chat access has been disabled.',
+      });
+    }
+
+    if (directPeer && !directPeer.allowDirectMessages) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.FORBIDDEN,
+        message: 'This user does not accept direct messages.',
       });
     }
 

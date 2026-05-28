@@ -206,11 +206,6 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
     const trimmedTitle = title.trim();
 
-    if (!trimmedTitle) {
-      toast.error(t('toast.title-required'));
-      return;
-    }
-
     if (Number.isNaN(startAt.getTime())) {
       toast.error(t('toast.valid-datetime'));
       return;
@@ -235,7 +230,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
     try {
       const meeting = await schedule.mutateAsync({
-        title: trimmedTitle,
+        title: trimmedTitle.length > 0 ? trimmedTitle : undefined,
         scheduledFor: startAt.toISOString(),
         durationMin,
         recurrence: recurrence === 'none' ? null : recurrence,
@@ -244,7 +239,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
       setResult({
         code: meeting.code,
-        title: trimmedTitle,
+        title: meeting.title ?? trimmedTitle,
         scheduledFor: meeting.scheduledFor ?? startAt.toISOString(),
       });
 

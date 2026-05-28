@@ -13,12 +13,17 @@ import { RecordingService } from '@/modules/client/recording/recording.service';
 
 describe('LiveKitService', () => {
   let service: LiveKitService;
-  let meetings: { findRawByCode: ReturnType<typeof vi.fn>; end: ReturnType<typeof vi.fn> };
+  let meetings: {
+    assertWithinDurationLimit: ReturnType<typeof vi.fn>;
+    findRawByCode: ReturnType<typeof vi.fn>;
+    end: ReturnType<typeof vi.fn>;
+  };
   let users: { findById: ReturnType<typeof vi.fn> };
   let avatars: { resolveUrl: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     meetings = {
+      assertWithinDurationLimit: vi.fn().mockResolvedValue(undefined),
       findRawByCode: vi.fn(),
       end: vi.fn(),
     };
@@ -107,6 +112,7 @@ describe('LiveKitService', () => {
       expect(result.room).toBe('abcd-efgh-ijkl');
       expect(result.identity).toBe('u1');
       expect(result.token.split('.').length).toBe(3);
+      expect(meetings.assertWithinDurationLimit).toHaveBeenCalledWith('abcd-efgh-ijkl');
     });
 
     it('should return the browser-reachable LIVEKIT_PUBLIC_URL, not the internal host', async () => {

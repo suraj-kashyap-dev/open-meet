@@ -8,6 +8,7 @@ export interface TeammateRow {
   email: string;
   avatarKey: string | null;
   chatDisabled: boolean;
+  allowDirectMessages: boolean;
 }
 
 @Injectable()
@@ -31,10 +32,26 @@ export class TeammatesRepository {
             }
           : {}),
       },
-      select: { id: true, name: true, email: true, avatarKey: true, chatDisabled: true },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        avatarKey: true,
+        chatDisabled: true,
+        settings: { select: { allowDirectMessages: true } },
+      },
       orderBy: { name: 'asc' },
       take: 50,
-    });
+    }).then((rows) =>
+      rows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        avatarKey: row.avatarKey,
+        chatDisabled: row.chatDisabled,
+        allowDirectMessages: row.settings?.allowDirectMessages ?? true,
+      })),
+    );
   }
 
   /** Maps each teammate id to an existing DIRECT conversation id, when one exists. */

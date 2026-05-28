@@ -20,6 +20,8 @@ export interface StagedAttachment {
 export interface UseStagedAttachmentsOptions {
   /** Maximum number of attachments staged at once. */
   max?: number;
+  /** Optional bearer token for guest meeting uploads. */
+  authToken?: string | null;
   /** Called when a stage attempt exceeds the cap (no items are added). */
   onCapacityExceeded?: (max: number) => void;
   /** Called once per failed upload, with the resolved message. */
@@ -52,7 +54,7 @@ function makeId(): string {
 export function useStagedAttachments(
   options: UseStagedAttachmentsOptions = {},
 ): UseStagedAttachments {
-  const { max = 5, onCapacityExceeded, onUploadError, resolveUploadError } = options;
+  const { max = 5, authToken, onCapacityExceeded, onUploadError, resolveUploadError } = options;
 
   const [staged, setStaged] = useState<StagedAttachment[]>([]);
   const stagedRef = useRef(staged);
@@ -86,6 +88,7 @@ export function useStagedAttachments(
       newItems.forEach(async (item) => {
         try {
           const attachment = await uploadAttachment(item.file, {
+            authToken,
             onProgress: (loaded, total) => {
               const pct = total > 0 ? (loaded / total) * 100 : 0;
               setStaged((prev) =>
@@ -112,7 +115,7 @@ export function useStagedAttachments(
         }
       });
     },
-    [max, onCapacityExceeded, onUploadError, resolveUploadError],
+    [authToken, max, onCapacityExceeded, onUploadError, resolveUploadError],
   );
 
   const removeStaged = useCallback((id: string) => {

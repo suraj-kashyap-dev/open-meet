@@ -2,13 +2,16 @@
 
 import { create } from 'zustand';
 
-import type { MeetingDto, PresenceDto } from '@open-meet/types';
+import type { MeetingDefaultView, MeetingDto, PresenceDto } from '@open-meet/types';
+import { MeetingDefaultView as MeetingView } from '@open-meet/types';
 
 interface MeetingState {
   meeting: MeetingDto | null;
+  layoutMode: MeetingDefaultView;
   raisedHands: Record<string, { name: string; at: number }>;
   presence: Record<string, PresenceDto>;
   setMeeting: (meeting: MeetingDto | null) => void;
+  setLayoutMode: (layoutMode: MeetingDefaultView) => void;
   raiseHand: (userId: string, name: string) => void;
   lowerHand: (userId: string) => void;
   upsertPresence: (entry: PresenceDto) => void;
@@ -18,10 +21,14 @@ interface MeetingState {
 
 export const useMeetingStore = create<MeetingState>((set) => ({
   meeting: null,
+  layoutMode: MeetingView.GALLERY,
   raisedHands: {},
   presence: {},
   setMeeting: (meeting) => {
     set({ meeting });
+  },
+  setLayoutMode: (layoutMode) => {
+    set({ layoutMode });
   },
   raiseHand: (userId, name) => {
     set((s) => ({
@@ -46,6 +53,6 @@ export const useMeetingStore = create<MeetingState>((set) => ({
     });
   },
   reset: () => {
-    set({ meeting: null, raisedHands: {}, presence: {} });
+    set({ meeting: null, layoutMode: MeetingView.GALLERY, raisedHands: {}, presence: {} });
   },
 }));

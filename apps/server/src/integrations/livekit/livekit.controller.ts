@@ -27,6 +27,8 @@ export class LiveKitController {
       meetingCode: dto.meetingCode,
       userId: user.id,
       name: user.name,
+      isGuest: user.isGuest,
+      guestMeetingCode: user.guestMeetingCode,
     });
   }
 

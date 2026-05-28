@@ -33,10 +33,19 @@ const schema = z.object({
     ProfileVisibility.PARTICIPANTS_ONLY,
     ProfileVisibility.PRIVATE,
   ]),
-  shareUsageData: z.boolean(),
 });
 
 type Values = z.infer<typeof schema>;
+
+function privacyValues(settings: UserSettingsDto | undefined): Values {
+  const current = settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS;
+
+  return {
+    showEmailToParticipants: current.showEmailToParticipants,
+    allowDirectMessages: current.allowDirectMessages,
+    profileVisibility: current.profileVisibility,
+  };
+}
 
 function messageFromError(err: unknown, fallback: string): string {
   return err instanceof ApiClientError ? err.message : fallback;
@@ -46,8 +55,6 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
   const t = useTranslations('account');
   const updateSettings = useUpdateUserSettings();
 
-  const current = settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS;
-
   const {
     handleSubmit,
     reset,
@@ -56,11 +63,11 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
     formState: { isSubmitting, isDirty },
   } = useForm<Values>({
     resolver: zodResolver(schema),
-    defaultValues: current,
+    defaultValues: privacyValues(settings),
   });
 
   useEffect(() => {
-    reset(settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS);
+    reset(privacyValues(settings));
   }, [settings, reset]);
 
   const values = watch();
@@ -133,20 +140,10 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
         />
       </Row>
 
-      <Row
-        title={t('preferences.usage-data-title')}
-        description={t('preferences.usage-data-description')}
-      >
-        <Switch
-          checked={values.shareUsageData}
-          onCheckedChange={(c) => setValue('shareUsageData', c, { shouldDirty: true })}
-        />
-      </Row>
-
       <FormActions
         pending={pending}
         dirty={isDirty}
-        onReset={() => reset(settings?.privacySettings ?? DEFAULT_PRIVACY_SETTINGS)}
+        onReset={() => reset(privacyValues(settings))}
       />
     </form>
   );

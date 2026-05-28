@@ -37,5 +37,16 @@
     "add": "채널 추가",
     "delete": "채널 삭제",
     "name-placeholder": "새 채널 이름"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Team updated",
+    "request-error": "Could not update this team",
+    "empty-title": "Team not found",
+    "empty-description": "This team may have been removed or you may not have access to it.",
+    "delete-description": "Removing this team also removes access to its channels for every member.",
+    "delete-success": "Team deleted",
+    "delete-error": "Could not delete team"
   }
 }

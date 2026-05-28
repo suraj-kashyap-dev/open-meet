@@ -24,13 +24,14 @@ const RETRY_INTERVAL_MS = 5000;
 interface Props {
   code: string;
   displayName: string;
+  authToken?: string | null;
   onAdmitted: () => void;
 }
 
-export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
+export function WaitingRoom({ code, displayName, authToken, onAdmitted }: Props) {
   const t = useTranslations('meeting');
   const router = useRouter();
-  const { socket } = useMeetingSocket(true);
+  const { socket } = useMeetingSocket(true, authToken);
   const [status, setStatus] = useState<Status>('connecting');
   const knockSentRef = useRef(false);
   const admittedRef = useRef(false);

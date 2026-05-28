@@ -31,14 +31,19 @@ export class WsJwtGuard implements CanActivate {
     }
 
     try {
-      const payload = await this.jwt.verifyAsync<{ sub: string; email: string; name: string }>(
-        token,
-        { secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET') },
-      );
+      const payload = await this.jwt.verifyAsync<{
+        sub: string;
+        email: string;
+        name: string;
+        guest?: boolean;
+        guestMeetingCode?: string;
+      }>(token, { secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET') });
       socket.data.user = {
         id: payload.sub,
         email: payload.email,
         name: payload.name,
+        isGuest: payload.guest === true,
+        guestMeetingCode: payload.guestMeetingCode ?? null,
       };
       return true;
     } catch (err) {

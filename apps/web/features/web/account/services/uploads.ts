@@ -6,6 +6,7 @@ import { ApiClientError } from '@/lib/api/client';
 interface UploadOptions {
   onProgress?: (loaded: number, total: number) => void;
   signal?: AbortSignal;
+  authToken?: string | null;
 }
 
 export function uploadAttachment(file: File, options: UploadOptions = {}): Promise<AttachmentDto> {
@@ -17,6 +18,10 @@ export function uploadAttachment(file: File, options: UploadOptions = {}): Promi
     const xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.withCredentials = true;
+
+    if (options.authToken) {
+      xhr.setRequestHeader('Authorization', `Bearer ${options.authToken}`);
+    }
 
     if (options.onProgress) {
       xhr.upload.onprogress = (event) => {

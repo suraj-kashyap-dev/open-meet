@@ -148,7 +148,7 @@
     "end-meeting-error": "Could not end meeting",
     "load-meeting-error": "Failed to load meeting",
     "join-meeting-error": "Failed to join meeting",
-    "host-ended": "The host ended the meeting",
+    "host-ended": "The meeting has ended",
     "hand-raised": "✋ {name} raised their hand",
     "recording-started": "{name} is recording this meeting",
     "recording-started-description": "Everyone will see a “Recording” indicator while it is active.",

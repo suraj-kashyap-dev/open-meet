@@ -11,9 +11,8 @@ import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import { cn } from '@open-meet/ui/cn';
 
-import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';
-import { useChatStore } from '@/features/web/meeting/stores';
+import { useActiveMeeting, useChatStore } from '@/features/web/meeting/stores';
 import { ApiClientError } from '@/lib/api/client';
 import {
   AttachmentBlock,
@@ -28,14 +27,16 @@ import {
 interface Props {
   code: string;
   socket: MeetingSocket | null;
+  authToken?: string | null;
   onClose: () => void;
 }
 
 const MAX_ATTACHMENTS = 5;
 
-export function ChatPanel({ code, socket, onClose }: Props) {
+export function ChatPanel({ code, socket, authToken, onClose }: Props) {
   const t = useTranslations('meeting');
-  const { data: user } = useCurrentUser();
+  const session = useActiveMeeting((s) => s.session);
+  const viewer = session?.code === code ? session.viewer : null;
   const messages = useChatStore((s) => s.messages);
 
   const [text, setText] = useState('');
@@ -60,6 +61,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   );
 
   const attachments = useStagedAttachments({
+    authToken,
     max: MAX_ATTACHMENTS,
     onCapacityExceeded: (max) => toast.error(t('toast.max-attachments', { max })),
     resolveUploadError: (err) =>
@@ -72,7 +74,7 @@ export function ChatPanel({ code, socket, onClose }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const rows = useMemo(() => buildMessageRows(messages, user?.id), [messages, user?.id]);
+  const rows = useMemo(() => buildMessageRows(messages, viewer?.id), [messages, viewer?.id]);
 
   const isPinnedToBottom = useCallback(() => {
     const el = scrollRef.current;

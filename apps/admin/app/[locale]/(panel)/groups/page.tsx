@@ -11,23 +11,30 @@ import { Button } from '@open-meet/ui/button';
 import { DataTable } from '@open-meet/ui/data-table';
 
 import { CreateGroupDialog } from '@/features/groups/components/create-group-dialog';
-import { ManageGroupDialog } from '@/features/groups/components/manage-group-dialog';
 import { useAdminGroups, useDeleteGroup } from '@/features/groups/hooks/use-admin-groups';
+import { Link, useRouter } from '@/i18n/navigation';
 
 const column = createColumnHelper<AdminGroupDto>();
 
 export default function AdminGroupsPage() {
   const t = useTranslations('groups');
+  const router = useRouter();
   const { data, isLoading } = useAdminGroups();
   const del = useDeleteGroup();
   const [createOpen, setCreateOpen] = useState(false);
-  const [managing, setManaging] = useState<string | null>(null);
 
   const columns = useMemo(
     () => [
       column.accessor('title', {
         header: t('columns.name'),
-        cell: (c) => <span className="font-medium">{c.getValue()}</span>,
+        cell: ({ row }) => (
+          <Link
+            href={`/groups/${row.original.id}`}
+            className="font-medium text-foreground transition-colors hover:text-foreground/70"
+          >
+            {row.original.title}
+          </Link>
+        ),
       }),
       column.accessor('memberCount', {
         header: t('columns.members'),
@@ -42,7 +49,7 @@ export default function AdminGroupsPage() {
               variant="ghost"
               size="icon"
               aria-label={t('actions.manage')}
-              onClick={() => setManaging(row.original.id)}
+              onClick={() => router.push(`/groups/${row.original.id}`)}
             >
               <Settings2 className="h-4 w-4" />
             </Button>
@@ -60,7 +67,7 @@ export default function AdminGroupsPage() {
         ),
       }),
     ],
-    [t, del],
+    [t, del, router],
   );
 
   return (
@@ -89,13 +96,6 @@ export default function AdminGroupsPage() {
       </section>
 
       <CreateGroupDialog open={createOpen} onOpenChange={setCreateOpen} />
-      <ManageGroupDialog
-        groupId={managing ?? ''}
-        open={managing !== null}
-        onOpenChange={(open) => {
-          if (!open) setManaging(null);
-        }}
-      />
     </main>
   );
 }

@@ -30,6 +30,7 @@ export class TeammatesService {
         email: r.email,
         avatar: r.avatarKey ? this.storage.publicUrl(r.avatarKey) : null,
         chatDisabled: r.chatDisabled,
+        allowDirectMessages: r.allowDirectMessages,
         online: online.has(r.id),
         conversationId: directIds.get(r.id) ?? null,
       })),

@@ -57,11 +57,14 @@ import {
 } from '@open-meet/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@open-meet/ui/popover';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-meet/ui/tooltip';
-import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useEndMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { recordingApi } from '@/features/web/meeting/services/recording';
-import { useChatStore, useRecordingStore } from '@/features/web/meeting/stores';
+import {
+  useActiveMeeting,
+  useChatStore,
+  useRecordingStore,
+} from '@/features/web/meeting/stores';
 import { useUIStore } from '@/stores';
 import { ApiClientError } from '@/lib/api/client';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';
@@ -70,14 +73,16 @@ interface Props {
   code: string;
   socket: MeetingSocket | null;
   hostId: string;
+  authToken?: string | null;
 }
 
-export function MeetingControls({ code, socket, hostId }: Props) {
+export function MeetingControls({ code, socket, hostId, authToken }: Props) {
   const t = useTranslations('meeting');
   const room = useRoomContext();
   const { localParticipant, isMicrophoneEnabled, isCameraEnabled, isScreenShareEnabled } =
     useLocalParticipant();
-  const { data: user } = useCurrentUser();
+  const session = useActiveMeeting((s) => s.session);
+  const viewer = session?.code === code ? session.viewer : null;
   const setChatOpen = useChatStore((s) => s.setOpen);
   const isChatOpen = useChatStore((s) => s.isOpen);
   const unread = useChatStore((s) => s.unread);
@@ -103,7 +108,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
 
   const pickerTheme = resolvedTheme === 'dark' ? EmojiPickerTheme.DARK : EmojiPickerTheme.LIGHT;
 
-  const isHost = user?.id === hostId;
+  const isHost = viewer?.id === hostId;
   const micEnabled = isMicrophoneEnabled;
   const cameraEnabled = isCameraEnabled;
   const isScreenSharing = isScreenShareEnabled;
@@ -242,7 +247,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     setRecordingConfirmOpen(false);
 
     try {
-      const started = await recordingApi.start(code);
+      const started = await recordingApi.start(code, authToken);
       setActiveRecording(started);
     } catch (err) {
       const message =
@@ -261,7 +266,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     setRecordingBusy(true);
 
     try {
-      await recordingApi.stop(code);
+      await recordingApi.stop(code, authToken);
       // Optimistic clear: the egress takes a few seconds to finalize the
       // MP4 and a few more for the webhook to land, but from the host's
       // point of view the meeting is no longer being recorded. Clear the
@@ -314,7 +319,7 @@ export function MeetingControls({ code, socket, hostId }: Props) {
     setLeaving(true);
 
     try {
-      await meetingsApi.leave(code);
+      await meetingsApi.leave(code, authToken);
     } catch {
       // best-effort
     }

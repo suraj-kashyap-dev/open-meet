@@ -86,6 +86,10 @@ export class ConversationGateway
         { secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET') },
       );
 
+      if ((payload as { guest?: boolean }).guest === true) {
+        throw new Error('Guest tokens cannot access team chat');
+      }
+
       client.data.user = { id: payload.sub, email: payload.email, name: payload.name };
 
       const userId = payload.sub;

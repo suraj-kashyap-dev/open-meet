@@ -37,8 +37,15 @@ export function UnauthorizedBridge() {
 
       qc.setQueryData(ME_KEY, null);
 
+      const isGuestMeetingPath =
+        /^\/[a-z2-9]{4}-[a-z2-9]{4}-[a-z2-9]{4}$/.test(pathname) ||
+        /^\/[a-z2-9]{4}-[a-z2-9]{4}-[a-z2-9]{4}\/lobby$/.test(pathname);
+
       const isPublic =
-        pathname === '/' || pathname.startsWith('/login') || pathname.startsWith('/register');
+        pathname === '/' ||
+        pathname.startsWith('/login') ||
+        pathname.startsWith('/register') ||
+        isGuestMeetingPath;
 
       if (isPublic) {
         return;

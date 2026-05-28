@@ -72,7 +72,7 @@ test.describe('Admin groups page', () => {
     expect(body.memberIds).toContain('u-1');
   });
 
-  test('should show members when managing a group', async ({ page }) => {
+  test('should open the separate edit page for a group', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en/groups');
 
@@ -81,8 +81,9 @@ test.describe('Admin groups page', () => {
       .getByRole('button', { name: 'Manage members' })
       .click();
 
-    const dialog = page.getByRole('dialog');
-    await expect(dialog.getByText('Ada Lovelace')).toBeVisible();
-    await expect(dialog.getByText('alan@example.com')).toBeVisible();
+    await expect(page).toHaveURL(/\/en\/groups\/g-1$/);
+    await expect(page.getByRole('heading', { name: 'Product launch', exact: true })).toBeVisible();
+    await expect(page.getByText('Ada Lovelace')).toBeVisible();
+    await expect(page.getByText('alan@example.com')).toBeVisible();
   });
 });

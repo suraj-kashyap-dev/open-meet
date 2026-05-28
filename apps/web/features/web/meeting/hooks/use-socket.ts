@@ -10,7 +10,10 @@ import { env } from '@/lib/env';
 
 export type MeetingSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function useMeetingSocket(enabled: boolean = true): { socket: MeetingSocket | null } {
+export function useMeetingSocket(
+  enabled: boolean = true,
+  authToken?: string | null,
+): { socket: MeetingSocket | null } {
   const [socket, setSocket] = useState<MeetingSocket | null>(null);
 
   useEffect(() => {
@@ -23,6 +26,7 @@ export function useMeetingSocket(enabled: boolean = true): { socket: MeetingSock
       withCredentials: true,
       transports: ['websocket', 'polling'],
       autoConnect: true,
+      auth: authToken ? { token: authToken } : undefined,
     });
 
     setSocket(next);
@@ -31,7 +35,7 @@ export function useMeetingSocket(enabled: boolean = true): { socket: MeetingSock
       next.disconnect();
       setSocket(null);
     };
-  }, [enabled]);
+  }, [authToken, enabled]);
 
   return { socket };
 }

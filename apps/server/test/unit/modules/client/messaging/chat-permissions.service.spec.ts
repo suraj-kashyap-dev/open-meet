@@ -9,13 +9,24 @@ describe('ChatPermissionsService', () => {
     findUserBasics: ReturnType<typeof vi.fn>;
     shareTeam: ReturnType<typeof vi.fn>;
     getMembership: ReturnType<typeof vi.fn>;
+    getDirectPeer: ReturnType<typeof vi.fn>;
   };
   let service: ChatPermissionsService;
 
-  const enabled = (id: string) => ({ id, name: id, chatDisabled: false });
+  const enabled = (id: string) => ({
+    id,
+    name: id,
+    chatDisabled: false,
+    allowDirectMessages: true,
+  });
 
   beforeEach(() => {
-    repo = { findUserBasics: vi.fn(), shareTeam: vi.fn(), getMembership: vi.fn() };
+    repo = {
+      findUserBasics: vi.fn(),
+      shareTeam: vi.fn(),
+      getMembership: vi.fn(),
+      getDirectPeer: vi.fn(),
+    };
     service = new ChatPermissionsService(repo as unknown as ChatPermissionsRepository);
   });
 
@@ -36,7 +47,12 @@ describe('ChatPermissionsService', () => {
     it('should reject when the target is chat-disabled', async () => {
       repo.findUserBasics
         .mockResolvedValueOnce(enabled('u1'))
-        .mockResolvedValueOnce({ id: 'u2', name: 'u2', chatDisabled: true });
+        .mockResolvedValueOnce({
+          id: 'u2',
+          name: 'u2',
+          chatDisabled: true,
+          allowDirectMessages: true,
+        });
       await expect(service.assertCanDirectMessage('u1', 'u2')).rejects.toBeInstanceOf(
         ForbiddenException,
       );
@@ -44,8 +60,27 @@ describe('ChatPermissionsService', () => {
 
     it('should reject when the actor is chat-disabled', async () => {
       repo.findUserBasics
-        .mockResolvedValueOnce({ id: 'u1', name: 'u1', chatDisabled: true })
+        .mockResolvedValueOnce({
+          id: 'u1',
+          name: 'u1',
+          chatDisabled: true,
+          allowDirectMessages: true,
+        })
         .mockResolvedValueOnce(enabled('u2'));
+      await expect(service.assertCanDirectMessage('u1', 'u2')).rejects.toBeInstanceOf(
+        ForbiddenException,
+      );
+    });
+
+    it('should reject when the target blocks direct messages', async () => {
+      repo.findUserBasics
+        .mockResolvedValueOnce(enabled('u1'))
+        .mockResolvedValueOnce({
+          id: 'u2',
+          name: 'u2',
+          chatDisabled: false,
+          allowDirectMessages: false,
+        });
       await expect(service.assertCanDirectMessage('u1', 'u2')).rejects.toBeInstanceOf(
         ForbiddenException,
       );
@@ -84,7 +119,20 @@ describe('ChatPermissionsService', () => {
   describe('assertCanPost()', () => {
     it('should reject a chat-disabled member', async () => {
       repo.getMembership.mockResolvedValue({ id: 'm1', conversationId: 'c1', userId: 'u1' });
-      repo.findUserBasics.mockResolvedValue({ id: 'u1', name: 'u1', chatDisabled: true });
+      repo.findUserBasics.mockResolvedValue({
+        id: 'u1',
+        name: 'u1',
+        chatDisabled: true,
+        allowDirectMessages: true,
+      });
+      repo.getDirectPeer.mockResolvedValue(null);
+      await expect(service.assertCanPost('c1', 'u1')).rejects.toBeInstanceOf(ForbiddenException);
+    });
+
+    it('should reject posting in a direct chat when the peer blocks direct messages', async () => {
+      repo.getMembership.mockResolvedValue({ id: 'm1', conversationId: 'c1', userId: 'u1' });
+      repo.findUserBasics.mockResolvedValue(enabled('u1'));
+      repo.getDirectPeer.mockResolvedValue({ userId: 'u2', allowDirectMessages: false });
       await expect(service.assertCanPost('c1', 'u1')).rejects.toBeInstanceOf(ForbiddenException);
     });
 
@@ -92,6 +140,7 @@ describe('ChatPermissionsService', () => {
       const membership = { id: 'm1', conversationId: 'c1', userId: 'u1' };
       repo.getMembership.mockResolvedValue(membership);
       repo.findUserBasics.mockResolvedValue(enabled('u1'));
+      repo.getDirectPeer.mockResolvedValue(null);
       await expect(service.assertCanPost('c1', 'u1')).resolves.toBe(membership);
     });
   });

@@ -248,6 +248,7 @@ export interface TeammateDto {
   email: string;
   avatar: string | null;
   chatDisabled: boolean;
+  allowDirectMessages: boolean;
   online: boolean;
   /** An existing DM with this teammate, if one exists. */
   conversationId: string | null;

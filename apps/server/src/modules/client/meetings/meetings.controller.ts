@@ -15,6 +15,7 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import type { FastifyReply } from 'fastify';
 
 import type {
+  GuestMeetingSessionDto,
   MeetingDto,
   MeetingHistoryItemDto,
   MeetingHistoryListResponseDto,
@@ -23,7 +24,9 @@ import type {
 } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
+import { Public } from '../../../common/decorators/public.decorator';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
+import { CreateGuestSessionDto } from './dto/create-guest-session.dto';
 import { HistoryQueryDto } from './dto/history-query.dto';
 import { ScheduleMeetingApiDto } from './dto/schedule-meeting.dto';
 import { UpdateMeetingDto } from './dto/update-meeting.dto';
@@ -104,10 +107,23 @@ export class MeetingsController {
   }
 
   @Get(':code')
+  @Public()
   @ApiParam({ name: 'code', example: 'abcd-efgh-ijkl' })
   @ApiOperation({ summary: 'Look up a meeting by code' })
   async get(@Param('code') code: string): Promise<MeetingDto> {
     return this.meetings.getByCode(code);
+  }
+
+  @Post(':code/guest-session')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @ApiParam({ name: 'code', example: 'abcd-efgh-ijkl' })
+  @ApiOperation({ summary: 'Create a scoped guest session for an unauthenticated participant' })
+  async createGuestSession(
+    @Param('code') code: string,
+    @Body() dto: CreateGuestSessionDto,
+  ): Promise<GuestMeetingSessionDto> {
+    return this.meetings.createGuestSession(code, dto.name);
   }
 
   @Patch(':code')
@@ -118,7 +134,7 @@ export class MeetingsController {
     @Body() dto: UpdateMeetingDto,
     @CurrentUser() user: RequestUser,
   ): Promise<MeetingDto> {
-    return this.meetings.updateTitle(code, user.id, dto.title);
+    return this.meetings.updateTitle(code, user, dto.title);
   }
 
   @Post(':code/join')
@@ -128,27 +144,30 @@ export class MeetingsController {
     @Param('code') code: string,
     @CurrentUser() user: RequestUser,
   ): Promise<{ meeting: MeetingDto; participant: ParticipantDto }> {
-    return this.meetings.join(code, user.id);
+    return this.meetings.join(code, user);
   }
 
   @Post(':code/leave')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Leave the meeting' })
   async leave(@Param('code') code: string, @CurrentUser() user: RequestUser): Promise<void> {
-    await this.meetings.leave(code, user.id);
+    await this.meetings.leave(code, user);
   }
 
   @Post(':code/end')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'End the meeting (host only)' })
   async end(@Param('code') code: string, @CurrentUser() user: RequestUser): Promise<MeetingDto> {
-    return this.meetings.end(code, user.id);
+    return this.meetings.end(code, user);
   }
 
   @Get(':code/participants')
   @ApiOperation({ summary: 'List currently active participants' })
-  async participants(@Param('code') code: string): Promise<ParticipantDto[]> {
-    return this.meetings.listParticipants(code);
+  async participants(
+    @Param('code') code: string,
+    @CurrentUser() user: RequestUser,
+  ): Promise<ParticipantDto[]> {
+    return this.meetings.listParticipants(code, user);
   }
 
   @Get(':code/ics')

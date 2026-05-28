@@ -9,11 +9,32 @@ export class ChatPermissionsRepository {
 
   findUserBasics(
     userId: string,
-  ): Promise<{ id: string; name: string; chatDisabled: boolean } | null> {
+  ): Promise<
+    {
+      id: string;
+      name: string;
+      chatDisabled: boolean;
+      allowDirectMessages: boolean;
+    } | null
+  > {
     return this.prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, chatDisabled: true },
-    });
+      select: {
+        id: true,
+        name: true,
+        chatDisabled: true,
+        settings: { select: { allowDirectMessages: true } },
+      },
+    }).then((row) =>
+      row
+        ? {
+            id: row.id,
+            name: row.name,
+            chatDisabled: row.chatDisabled,
+            allowDirectMessages: row.settings?.allowDirectMessages ?? true,
+          }
+        : null,
+    );
   }
 
   /** Whether two users belong to at least one team in common. */
@@ -51,6 +72,45 @@ export class ChatPermissionsRepository {
     return this.prisma.conversationMember.findUnique({
       where: { conversationId_userId: { conversationId, userId } },
     });
+  }
+
+  async getDirectPeer(
+    conversationId: string,
+    userId: string,
+  ): Promise<{ userId: string; allowDirectMessages: boolean } | null> {
+    const conversation = await this.prisma.conversation.findUnique({
+      where: { id: conversationId },
+      select: {
+        type: true,
+        members: {
+          where: { userId: { not: userId } },
+          take: 1,
+          select: {
+            user: {
+              select: {
+                id: true,
+                settings: { select: { allowDirectMessages: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!conversation || conversation.type !== 'DIRECT') {
+      return null;
+    }
+
+    const peer = conversation.members[0]?.user;
+
+    if (!peer) {
+      return null;
+    }
+
+    return {
+      userId: peer.id,
+      allowDirectMessages: peer.settings?.allowDirectMessages ?? true,
+    };
   }
 
   /** Workspace toggle: whether non-admin users may create groups. */

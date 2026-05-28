@@ -4,6 +4,8 @@ export interface RequestUser {
   id: string;
   email: string;
   name: string;
+  isGuest?: boolean;
+  guestMeetingCode?: string | null;
 }
 
 export const CurrentUser = createParamDecorator(

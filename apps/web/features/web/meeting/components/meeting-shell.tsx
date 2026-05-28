@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 
 import {
   ClientEvent,
+  MeetingDefaultView,
   ServerEvent,
   type ChatMessagePayload,
   type HandLoweredPayload,
@@ -19,10 +20,15 @@ import {
   type RecordingStoppedPayload,
 } from '@open-meet/types';
 
-import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 import { useMeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { recordingApi } from '@/features/web/meeting/services/recording';
-import { useChatStore, useMeetingStore, useRecordingStore } from '@/features/web/meeting/stores';
+import {
+  useActiveMeeting,
+  useChatStore,
+  useMeetingStore,
+  useRecordingStore,
+} from '@/features/web/meeting/stores';
 import { useNotification } from '@/hooks/use-notification';
 import { useSound } from '@/hooks/use-sound';
 import { cn } from '@open-meet/ui/cn';
@@ -46,10 +52,13 @@ interface Props {
 export function MeetingShell({ code, meeting, minimized }: Props) {
   const t = useTranslations('meeting');
   const room = useRoomContext();
-  const { socket } = useMeetingSocket();
-  const { data: user } = useCurrentUser();
-  const isHost = user?.id === meeting.hostId;
+  const session = useActiveMeeting((s) => s.session);
+  const viewer = session?.code === code ? session.viewer : null;
+  const authToken = session?.code === code ? session.authToken : null;
+  const { socket } = useMeetingSocket(true, authToken);
+  const isHost = viewer?.id === meeting.hostId;
   const setMeeting = useMeetingStore((s) => s.setMeeting);
+  const setLayoutMode = useMeetingStore((s) => s.setLayoutMode);
   const raiseHand = useMeetingStore((s) => s.raiseHand);
   const lowerHand = useMeetingStore((s) => s.lowerHand);
   const addMessage = useChatStore((s) => s.add);
@@ -69,6 +78,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
   const resetRecording = useRecordingStore((s) => s.reset);
   const notification = useNotification();
   const settledAt = useRef<number>(Date.now());
+  const settings = useUserSettings(Boolean(viewer && !viewer.isGuest));
 
   const activePanel: 'chat' | 'participants' | null = isChatOpen
     ? 'chat'
@@ -82,10 +92,18 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
   }, [meeting, setMeeting]);
 
   useEffect(() => {
+    const nextMode = viewer?.isGuest
+      ? MeetingDefaultView.GALLERY
+      : settings.data?.meetingPreferences.defaultView ?? MeetingDefaultView.GALLERY;
+
+    setLayoutMode(nextMode);
+  }, [code, setLayoutMode, settings.data?.meetingPreferences.defaultView, viewer?.isGuest]);
+
+  useEffect(() => {
     const controller = new AbortController();
 
     recordingApi
-      .active(code, controller.signal)
+      .active(code, controller.signal, authToken)
       .then((state) => {
         if (state.recording) {
           setActiveRecording(state.recording);
@@ -99,7 +117,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
       controller.abort();
       resetRecording();
     };
-  }, [code, setActiveRecording, resetRecording]);
+  }, [authToken, code, setActiveRecording, resetRecording]);
 
   useEffect(() => {
     if (!socket) {
@@ -110,7 +128,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
 
     socket.on(ServerEvent.CHAT_MESSAGE, (msg: ChatMessagePayload) => {
       addMessage(msg);
-      if (msg.sender.id !== user?.id) {
+      if (msg.sender.id !== viewer?.id) {
         messageSound.play();
         notification.notify(msg.sender.name || t('toast.new-message'), {
           body: msg.content,
@@ -120,7 +138,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
     });
     socket.on(ServerEvent.REACTION_RECEIVED, (r: ReactionReceivedPayload) => {
       pushReaction(r.emoji, r.senderName);
-      if (r.senderId !== user?.id) {
+      if (r.senderId !== viewer?.id) {
         reactionSound.play();
       }
     });
@@ -174,7 +192,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
     raiseHand,
     lowerHand,
     room,
-    user?.id,
+    viewer?.id,
     messageSound,
     reactionSound,
     notification,
@@ -245,7 +263,12 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
           >
             <div className="h-full w-full sm:w-96">
               {activePanel === 'chat' ? (
-                <ChatPanel code={code} socket={socket} onClose={() => setChatOpen(false)} />
+                <ChatPanel
+                  code={code}
+                  socket={socket}
+                  authToken={authToken}
+                  onClose={() => setChatOpen(false)}
+                />
               ) : null}
 
               {activePanel === 'participants' ? (
@@ -255,7 +278,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
           </aside>
         </div>
 
-        <MeetingControls code={code} socket={socket} hostId={meeting.hostId} />
+        <MeetingControls code={code} socket={socket} hostId={meeting.hostId} authToken={authToken} />
 
         <ReactionOverlay />
       </div>

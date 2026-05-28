@@ -32,6 +32,17 @@ export class AuthRepository {
     });
   }
 
+  /** Create an ephemeral guest user for a meeting-scoped access token. */
+  createGuest(input: { name: string; email: string }): Promise<User> {
+    return this.prisma.user.create({
+      data: {
+        name: input.name,
+        email: input.email.toLowerCase(),
+        emailVerifiedAt: new Date(),
+      },
+    });
+  }
+
   createGoogleUser(input: {
     name: string;
     email: string;

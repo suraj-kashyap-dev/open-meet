@@ -14,6 +14,13 @@ import { ChatGateway } from '@/modules/client/chat/chat.gateway';
 import type { SocketUser } from '@/modules/client/chat/ws-auth.util';
 
 const USER: SocketUser = { id: 'u1', email: 'a@x.com', name: 'Alice' };
+const GUEST_USER: SocketUser = {
+  id: 'g1',
+  email: 'guest@x.com',
+  name: 'Guest',
+  isGuest: true,
+  guestMeetingCode: 'guest-room',
+};
 
 function makeServer() {
   const emits: Array<{ room: string; event: string; payload: unknown }> = [];
@@ -92,7 +99,13 @@ describe('ChatGateway', () => {
     it('should authenticate and attach the user from the token', async () => {
       const { client } = makeClient(undefined, { auth: { token: 'tok' }, headers: {} });
       await gateway.handleConnection(client as never);
-      expect(client.data.user).toEqual({ id: 'u1', email: 'a@x.com', name: 'Alice' });
+      expect(client.data.user).toEqual({
+        id: 'u1',
+        email: 'a@x.com',
+        name: 'Alice',
+        isGuest: false,
+        guestMeetingCode: null,
+      });
       expect(client.disconnect).not.toHaveBeenCalled();
     });
 
@@ -141,7 +154,7 @@ describe('ChatGateway', () => {
     it('should leave the room and broadcast PARTICIPANT_LEFT', async () => {
       const { client } = makeClient(USER);
       await gateway.onLeave(client as never, { meetingCode: 'abc' });
-      expect(meetings.leave).toHaveBeenCalledWith('abc', 'u1');
+      expect(meetings.leave).toHaveBeenCalledWith('abc', USER);
       expect(client.leave).toHaveBeenCalledWith('abc');
       expect(srv.emits).toContainEqual({
         room: 'abc',
@@ -198,6 +211,13 @@ describe('ChatGateway', () => {
         event: ServerEvent.REACTION_RECEIVED,
         payload: { emoji: '🎉', senderId: 'u1', senderName: 'Alice' },
       });
+    });
+
+    it('should reject a guest token targeting a different meeting code', async () => {
+      const { client } = makeClient(GUEST_USER);
+      await expect(
+        gateway.onReaction(client as never, { meetingCode: 'abc', emoji: '🎉' }),
+      ).rejects.toBeInstanceOf(WsException);
     });
   });
 

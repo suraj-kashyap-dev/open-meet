@@ -54,7 +54,11 @@ export function useAddTeamMembers() {
   return useMutation({
     mutationFn: (input: { id: string; userIds: string[] }) =>
       adminTeamsApi.addMembers(input.id, { userIds: input.userIds }),
-    onSuccess: () => void qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
+    onSuccess: (_res, { id }) =>
+      Promise.all([
+        qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
+        qc.invalidateQueries({ queryKey: [CHANNELS_KEY, id] }),
+      ]),
   });
 }
 
@@ -63,7 +67,11 @@ export function useRemoveTeamMember() {
   return useMutation({
     mutationFn: (input: { id: string; userId: string }) =>
       adminTeamsApi.removeMember(input.id, input.userId),
-    onSuccess: () => void qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
+    onSuccess: (_res, { id }) =>
+      Promise.all([
+        qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
+        qc.invalidateQueries({ queryKey: [CHANNELS_KEY, id] }),
+      ]),
   });
 }
 

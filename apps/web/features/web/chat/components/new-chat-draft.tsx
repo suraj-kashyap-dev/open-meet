@@ -105,7 +105,7 @@ export function NewChatDraft() {
                     <li key={teammate.id}>
                       <button
                         type="button"
-                        disabled={teammate.chatDisabled}
+                        disabled={teammate.chatDisabled || !teammate.allowDirectMessages}
                         onClick={() => {
                           setRecipient(teammate);
                           setSearch('');
@@ -121,7 +121,7 @@ export function NewChatDraft() {
                             {teammate.email}
                           </span>
                         </span>
-                        {teammate.chatDisabled ? (
+                        {teammate.chatDisabled || !teammate.allowDirectMessages ? (
                           <span className="text-[10px] text-muted-foreground">
                             {t('new-chat.disabled')}
                           </span>

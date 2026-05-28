@@ -30,6 +30,8 @@ interface AccessTokenPayload {
   sub: string;
   email: string;
   name: string;
+  guest?: boolean;
+  guestMeetingCode?: string;
 }
 
 interface RefreshTokenPayload {
@@ -44,9 +46,16 @@ export interface IssuedTokens {
   accessTtlMs: number;
 }
 
+export interface GuestAccessToken {
+  accessToken: string;
+  expiresAt: string;
+  accessTtlMs: number;
+}
+
 @Injectable()
 export class AuthService {
   private readonly refreshTtlSeconds = 60 * 60 * 24 * 7; // 7d in seconds
+  private readonly guestAccessTtlMs = 12 * 60 * 60 * 1000; // 12h
 
   constructor(
     private readonly users: AuthRepository,
@@ -236,6 +245,32 @@ export class AuthService {
       });
     }
     return this.avatars.toUserDto(user);
+  }
+
+  async issueGuestAccessToken(input: {
+    userId: string;
+    email: string;
+    name: string;
+    meetingCode: string;
+  }): Promise<GuestAccessToken> {
+    const accessPayload: AccessTokenPayload = {
+      sub: input.userId,
+      email: input.email,
+      name: input.name,
+      guest: true,
+      guestMeetingCode: input.meetingCode,
+    };
+
+    const accessToken = await this.jwt.signAsync(accessPayload, {
+      secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET'),
+      expiresIn: Math.floor(this.guestAccessTtlMs / 1000),
+    });
+
+    return {
+      accessToken,
+      accessTtlMs: this.guestAccessTtlMs,
+      expiresAt: new Date(Date.now() + this.guestAccessTtlMs).toISOString(),
+    };
   }
 
   /**
