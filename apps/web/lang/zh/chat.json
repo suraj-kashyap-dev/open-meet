@@ -1,6 +1,7 @@
 {
   "list": {
     "title": "聊天",
+    "subtitle": "您的私聊和群聊。",
     "new": "新消息",
     "recent": "最近",
     "filter": "筛选",
@@ -18,7 +19,11 @@
     "mute": "静音",
     "unmute": "取消静音",
     "mark-unread": "标记为未读",
-    "hide": "隐藏"
+    "hide": "隐藏",
+    "unhide": "显示",
+    "show-hidden": "显示隐藏的聊天",
+    "hide-confirmed": "聊天已隐藏",
+    "hide-undo": "撤销"
   },
   "view": {
     "empty": "选择一个会话开始聊天。",
@@ -31,7 +36,12 @@
     "you-disabled": "您的聊天权限已被禁用。"
   },
   "header": {
-    "members": "{count, plural, one {# 位成员} other {# 位成员}}"
+    "members": "{count, plural, one {# 位成员} other {# 位成员}}",
+    "actions": "对话操作",
+    "clear": "清空聊天",
+    "delete": "删除聊天",
+    "clear-confirmed": "已从您的视图中清除消息",
+    "delete-confirmed": "聊天已删除"
   },
   "presence": {
     "online": "在线",
@@ -118,6 +128,33 @@
     "votes": "{count, plural, one {# 票} other {# 票}}",
     "closed": "已关闭"
   },
+  "group": {
+    "compose-chat": "新聊天",
+    "compose-group": "新群组",
+    "create-title": "新群组",
+    "create-subtitle": "取一个名字并邀请一些人。",
+    "name-label": "群组名称",
+    "name-placeholder": "例如: Q4 发布团队",
+    "description-label": "描述（可选）",
+    "description-placeholder": "这个群组关于什么?",
+    "members-label": "成员",
+    "members-placeholder": "搜索队友…",
+    "no-teammates": "未找到队友。",
+    "create-submit": "创建群组",
+    "create-failed": "无法创建群组",
+    "cancel": "取消",
+    "admin-badge": "管理员",
+    "you-badge": "您",
+    "promote": "设为管理员",
+    "demote": "移除管理员",
+    "remove-member": "从群组中移除",
+    "leave": "退出群组",
+    "leave-confirm": "退出此群组?",
+    "last-admin-warning": "您是唯一管理员。请先提升他人。",
+    "delete": "删除群组",
+    "delete-confirm": "删除此群组? 无法撤销。",
+    "groups-disabled": "管理员当前已禁用群组创建。"
+  },
   "new-dm": {
     "title": "新会话",
     "search": "搜索队友",
@@ -136,17 +173,25 @@
   },
   "teams": {
     "title": "团队",
+    "subtitle": "您的团队和频道。",
     "empty": "您还不是任何团队的成员。",
+    "empty-title": "暂无团队",
+    "empty-subtitle": "管理员会将您添加到团队以开始协作。",
     "no-channels": "暂无频道。"
   },
   "activity": {
     "title": "动态",
     "subtitle": "@提及您的消息。",
-    "empty": "暂无提及。"
+    "empty": "暂无提及。",
+    "empty-title": "暂无提及",
+    "empty-subtitle": "当有人@提及您时，会显示在这里。"
   },
   "saved": {
     "title": "已保存",
-    "empty": "您还没有保存任何消息。"
+    "subtitle": "您已保存以便稍后查看的消息。",
+    "empty": "您还没有保存任何消息。",
+    "empty-title": "暂无已保存的消息",
+    "empty-subtitle": "从聊天中保存消息以便在此处找到。"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

@@ -33,9 +33,18 @@ export class AdminBrandingController {
   }
 
   @Patch()
-  @ApiOperation({ summary: 'Update the application name' })
-  updateName(@Body() dto: UpdateBrandingDto): Promise<AdminBrandingDto> {
-    return this.branding.updateAppName(dto.appName);
+  @ApiOperation({ summary: 'Update branding (app name, accent color, group policy)' })
+  async update(@Body() dto: UpdateBrandingDto): Promise<AdminBrandingDto> {
+    if (dto.appName !== undefined) {
+      await this.branding.updateAppName(dto.appName);
+    }
+    if (dto.accentColor !== undefined) {
+      await this.branding.updateAccentColor(dto.accentColor);
+    }
+    if (dto.userCanCreateGroups !== undefined) {
+      await this.branding.updateUserCanCreateGroups(dto.userCanCreateGroups);
+    }
+    return this.branding.getBranding();
   }
 
   @Post('logo')

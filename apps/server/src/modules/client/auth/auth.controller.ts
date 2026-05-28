@@ -193,10 +193,11 @@ export class AuthController {
   @Post('logout')
   @ApiOperation({ summary: 'Invalidate refresh token and clear cookies' })
   async logout(
+    @CurrentUser() user: RequestUser,
     @Req() req: FastifyRequest,
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<{ loggedOut: true }> {
-    await this.auth.logout(req.cookies?.[REFRESH_COOKIE]);
+    await this.auth.logout(req.cookies?.[REFRESH_COOKIE], user.id);
     this.clearAuthCookies(res);
     return { loggedOut: true };
   }

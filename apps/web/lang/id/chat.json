@@ -1,6 +1,7 @@
 {
   "list": {
     "title": "Obrolan",
+    "subtitle": "Pesan langsung dan obrolan grup Anda.",
     "new": "Pesan baru",
     "recent": "Terbaru",
     "filter": "Filter",
@@ -18,7 +19,11 @@
     "mute": "Bisukan",
     "unmute": "Bunyikan",
     "mark-unread": "Tandai belum dibaca",
-    "hide": "Sembunyikan"
+    "hide": "Sembunyikan",
+    "unhide": "Tampilkan",
+    "show-hidden": "Tampilkan obrolan tersembunyi",
+    "hide-confirmed": "Obrolan disembunyikan",
+    "hide-undo": "Urungkan"
   },
   "view": {
     "empty": "Pilih percakapan untuk mulai mengobrol.",
@@ -31,7 +36,12 @@
     "you-disabled": "Akses obrolan Anda telah dinonaktifkan."
   },
   "header": {
-    "members": "{count, plural, one {# anggota} other {# anggota}}"
+    "members": "{count, plural, one {# anggota} other {# anggota}}",
+    "actions": "Tindakan percakapan",
+    "clear": "Bersihkan obrolan",
+    "delete": "Hapus obrolan",
+    "clear-confirmed": "Pesan dihapus dari tampilan Anda",
+    "delete-confirmed": "Obrolan dihapus"
   },
   "presence": {
     "online": "Online",
@@ -118,6 +128,33 @@
     "votes": "{count, plural, one {# suara} other {# suara}}",
     "closed": "Ditutup"
   },
+  "group": {
+    "compose-chat": "Obrolan baru",
+    "compose-group": "Grup baru",
+    "create-title": "Grup baru",
+    "create-subtitle": "Pilih nama dan undang beberapa orang.",
+    "name-label": "Nama grup",
+    "name-placeholder": "misal: tim peluncuran Q4",
+    "description-label": "Deskripsi (opsional)",
+    "description-placeholder": "Tentang apa grup ini?",
+    "members-label": "Anggota",
+    "members-placeholder": "Cari rekan…",
+    "no-teammates": "Tidak ada rekan ditemukan.",
+    "create-submit": "Buat grup",
+    "create-failed": "Tidak dapat membuat grup",
+    "cancel": "Batal",
+    "admin-badge": "Admin",
+    "you-badge": "Anda",
+    "promote": "Jadikan admin",
+    "demote": "Hapus admin",
+    "remove-member": "Hapus dari grup",
+    "leave": "Keluar dari grup",
+    "leave-confirm": "Keluar dari grup ini?",
+    "last-admin-warning": "Anda satu-satunya admin. Promosikan seseorang dulu.",
+    "delete": "Hapus grup",
+    "delete-confirm": "Hapus grup ini? Tidak dapat dibatalkan.",
+    "groups-disabled": "Pembuatan grup dinonaktifkan oleh admin."
+  },
   "new-dm": {
     "title": "Percakapan baru",
     "search": "Cari rekan tim",
@@ -136,17 +173,25 @@
   },
   "teams": {
     "title": "Tim",
+    "subtitle": "Tim dan saluran Anda.",
     "empty": "Anda belum menjadi anggota tim mana pun.",
+    "empty-title": "Belum ada tim",
+    "empty-subtitle": "Admin akan menambahkan Anda ke tim untuk mulai berkolaborasi.",
     "no-channels": "Belum ada kanal."
   },
   "activity": {
     "title": "Aktivitas",
     "subtitle": "Pesan yang me-@mention Anda.",
-    "empty": "Belum ada sebutan."
+    "empty": "Belum ada sebutan.",
+    "empty-title": "Belum ada sebutan",
+    "empty-subtitle": "Saat seseorang @menyebut Anda, akan muncul di sini."
   },
   "saved": {
     "title": "Tersimpan",
-    "empty": "Anda belum menyimpan pesan apa pun."
+    "subtitle": "Pesan yang Anda simpan untuk nanti.",
+    "empty": "Anda belum menyimpan pesan apa pun.",
+    "empty-title": "Tidak ada pesan tersimpan",
+    "empty-subtitle": "Simpan pesan dari obrolan untuk menemukannya di sini."
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

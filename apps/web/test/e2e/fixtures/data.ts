@@ -53,6 +53,9 @@ export const userSettings: UserSettingsDto = {
     profileVisibility: 'PARTICIPANTS_ONLY',
     shareUsageData: false,
   },
+  appearance: {
+    accentColorOverride: null,
+  },
 };
 
 /** A meeting the current user hosts (used for the lobby + host paths). */
@@ -243,6 +246,8 @@ export const dmConversation: ConversationDto = {
   unreadCount: 0,
   muted: false,
   pinned: false,
+  hidden: false,
+  youAreAdmin: false,
   createdAt: '2026-05-20T09:00:00.000Z',
 };
 

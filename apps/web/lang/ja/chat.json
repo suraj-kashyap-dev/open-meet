@@ -1,6 +1,7 @@
 {
   "list": {
     "title": "チャット",
+    "subtitle": "あなたのダイレクトメッセージとグループチャット。",
     "new": "新しいメッセージ",
     "recent": "最近",
     "filter": "フィルター",
@@ -18,7 +19,11 @@
     "mute": "ミュート",
     "unmute": "ミュート解除",
     "mark-unread": "未読にする",
-    "hide": "非表示"
+    "hide": "非表示",
+    "unhide": "表示",
+    "show-hidden": "非表示のチャットを表示",
+    "hide-confirmed": "チャットを非表示にしました",
+    "hide-undo": "元に戻す"
   },
   "view": {
     "empty": "会話を選択してチャットを開始してください。",
@@ -31,7 +36,12 @@
     "you-disabled": "あなたのチャットアクセスは無効になっています。"
   },
   "header": {
-    "members": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}"
+    "members": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}",
+    "actions": "会話のアクション",
+    "clear": "チャットをクリア",
+    "delete": "チャットを削除",
+    "clear-confirmed": "あなたのビューからメッセージをクリアしました",
+    "delete-confirmed": "チャットを削除しました"
   },
   "presence": {
     "online": "オンライン",
@@ -118,6 +128,33 @@
     "votes": "{count, plural, one {# 票} other {# 票}}",
     "closed": "終了"
   },
+  "group": {
+    "compose-chat": "新しいチャット",
+    "compose-group": "新しいグループ",
+    "create-title": "新しいグループ",
+    "create-subtitle": "名前を選んでメンバーを招待します。",
+    "name-label": "グループ名",
+    "name-placeholder": "例: Q4ローンチチーム",
+    "description-label": "説明（任意）",
+    "description-placeholder": "このグループについて",
+    "members-label": "メンバー",
+    "members-placeholder": "チームメイトを検索…",
+    "no-teammates": "チームメイトが見つかりません。",
+    "create-submit": "グループ作成",
+    "create-failed": "グループを作成できませんでした",
+    "cancel": "キャンセル",
+    "admin-badge": "管理者",
+    "you-badge": "あなた",
+    "promote": "管理者にする",
+    "demote": "管理者を解除",
+    "remove-member": "グループから削除",
+    "leave": "グループを退出",
+    "leave-confirm": "このグループを退出しますか?",
+    "last-admin-warning": "唯一の管理者です。先に誰かを管理者にしてください。",
+    "delete": "グループを削除",
+    "delete-confirm": "このグループを削除しますか? 取り消せません。",
+    "groups-disabled": "グループ作成は管理者により無効化されています。"
+  },
   "new-dm": {
     "title": "新しい会話",
     "search": "チームメイトを検索",
@@ -136,17 +173,25 @@
   },
   "teams": {
     "title": "チーム",
+    "subtitle": "あなたのチームとチャンネル。",
     "empty": "まだどのチームのメンバーでもありません。",
+    "empty-title": "まだチームがありません",
+    "empty-subtitle": "管理者がチームに追加してコラボレーションを開始します。",
     "no-channels": "まだチャンネルがありません。"
   },
   "activity": {
     "title": "アクティビティ",
     "subtitle": "あなたを @メンション したメッセージ。",
-    "empty": "まだメンションがありません。"
+    "empty": "まだメンションがありません。",
+    "empty-title": "まだメンションはありません",
+    "empty-subtitle": "誰かが@メンションすると、ここに表示されます。"
   },
   "saved": {
     "title": "保存済み",
-    "empty": "まだメッセージを保存していません。"
+    "subtitle": "後で読むために保存したメッセージ。",
+    "empty": "まだメッセージを保存していません。",
+    "empty-title": "保存されたメッセージはありません",
+    "empty-subtitle": "チャットからメッセージを保存すると、ここに表示されます。"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

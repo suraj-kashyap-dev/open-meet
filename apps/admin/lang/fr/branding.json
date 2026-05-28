@@ -17,6 +17,29 @@
     "remove": "Supprimer",
     "hint": "Recommandé : une image carrée, d'au moins 64×64px, jusqu'à 2MB."
   },
+  "accent": {
+    "title": "Accent de marque",
+    "description": "Couleur des boutons, liens et anneaux de focus dans les applications.",
+    "advanced": "Utiliser une couleur personnalisée",
+    "hex-picker": "Sélecteur de couleur",
+    "hex-input": "Valeur hex",
+    "apply-hex": "Appliquer",
+    "preset": {
+      "indigo": "Indigo",
+      "blue": "Bleu",
+      "green": "Vert",
+      "purple": "Violet",
+      "rose": "Rose",
+      "amber": "Ambre",
+      "teal": "Sarcelle"
+    }
+  },
+  "groups": {
+    "title": "Groupes créés par les utilisateurs",
+    "description": "Permettre aux coéquipiers de démarrer leurs propres discussions de groupe depuis la liste.",
+    "label": "Autoriser les utilisateurs à créer des groupes",
+    "hint": "Désactivé, seuls les administrateurs peuvent créer des groupes."
+  },
   "form": {
     "name-required": "Saisissez un nom d'application.",
     "name-too-long": "Le nom ne doit pas dépasser 60 caractères.",
@@ -25,6 +48,8 @@
     "logo-removed": "Logo supprimé",
     "logo-invalid-type": "Le logo doit être une image PNG, JPEG, WebP ou GIF.",
     "logo-too-large": "Le logo ne doit pas dépasser 2MB.",
+    "accent-saved": "Couleur d'accent mise à jour",
+    "groups-saved": "Paramètres de groupes mis à jour",
     "save": "Enregistrer",
     "saving": "Enregistrement…",
     "uploading": "Téléversement…",

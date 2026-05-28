@@ -19,6 +19,6 @@ test.describe('Web saved page', () => {
     await page.goto('/en/saved');
 
     await expect(page.getByRole('heading', { name: 'Saved' })).toBeVisible();
-    await expect(page.getByText("You haven't saved any messages yet.")).toBeVisible();
+    await expect(page.getByText('No saved messages')).toBeVisible();
   });
 });

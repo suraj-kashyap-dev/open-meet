@@ -16,6 +16,9 @@ import { ConversationsController } from './conversations.controller';
 import { ConversationsRepository } from './conversations.repository';
 import { ConversationsService } from './conversations.service';
 import { GifsService } from './gifs.service';
+import { GroupsController } from './groups.controller';
+import { GroupsRepository } from './groups.repository';
+import { GroupsService } from './groups.service';
 import { MessagesController } from './messages.controller';
 import { MessagesRepository } from './messages.repository';
 import { MessagesService } from './messages.service';
@@ -37,7 +40,13 @@ import { TeammatesService } from './teammates.service';
 
 @Module({
   imports: [UploadsModule, JwtModule.register({})],
-  controllers: [ConversationsController, MessagesController, PollsController, TeammatesController],
+  controllers: [
+    ConversationsController,
+    GroupsController,
+    MessagesController,
+    PollsController,
+    TeammatesController,
+  ],
   providers: [
     ConversationGateway,
     WsJwtGuard,
@@ -66,6 +75,9 @@ import { TeammatesService } from './teammates.service';
     ActivityService,
     TeammatesRepository,
     TeammatesService,
+    GroupsRepository,
+    GroupsService,
   ],
+  exports: [PresenceService],
 })
 export class MessagingModule {}

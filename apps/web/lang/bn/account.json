@@ -47,6 +47,8 @@
     "eyebrow": "অ্যাকাউন্ট",
     "title": "সেটিংস",
     "description": "মিটিংয়ের ডিফল্ট, অন্যরা কী দেখতে পাবে এবং আপনার ভাষা।",
+    "appearance-title": "অ্যাপিয়ারেন্স",
+    "appearance-description": "এই ডিভাইসের থিম ও ব্র্যান্ড অ্যাকসেন্ট।",
     "localization-title": "স্থানীয়করণ",
     "localization-description": "মিটিংয়ের সময়, তারিখ এবং UI ভাষার জন্য ব্যবহৃত।",
     "defaults-title": "মিটিং ডিফল্ট",
@@ -84,6 +86,29 @@
     "direct-messages-description": "মিটিংয়ের বাইরে অন্যরা আপনার সাথে ১-১ চ্যাট শুরু করতে পারুক।",
     "usage-data-title": "বেনামী ব্যবহারের ডেটা শেয়ার করুন",
     "usage-data-description": "Open Meet উন্নত করতে সাহায্য করে। কোনো মিটিং কন্টেন্ট কখনো শেয়ার হয় না।"
+  },
+  "appearance": {
+    "theme-label": "থিম",
+    "theme-hint": "হালকা ও গাঢ় পরিবর্তন করুন।",
+    "light": "হালকা",
+    "dark": "গাঢ়",
+    "accent-label": "ব্র্যান্ড অ্যাকসেন্ট",
+    "accent-hint": "বোতাম ও লিঙ্কের রঙ।",
+    "advanced": "কাস্টম রঙ ব্যবহার করুন",
+    "hex-picker": "কাস্টম রঙ পিকার",
+    "hex-input": "হেক্স রঙ মান",
+    "apply-hex": "প্রয়োগ",
+    "reset": "কর্মস্থলের ডিফল্টে ফিরে যান",
+    "using-workspace": "কর্মস্থলের ডিফল্ট ব্যবহার হচ্ছে।",
+    "preset": {
+      "indigo": "ইন্ডিগো",
+      "blue": "নীল",
+      "green": "সবুজ",
+      "purple": "বেগুনি",
+      "rose": "গোলাপি",
+      "amber": "অ্যাম্বার",
+      "teal": "টিল"
+    }
   },
   "actions": {
     "reset": "রিসেট",

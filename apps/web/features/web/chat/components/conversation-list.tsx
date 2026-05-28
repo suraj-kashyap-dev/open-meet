@@ -1,12 +1,22 @@
 'use client';
 
-import { ListFilter, Search, SquarePen, Video } from 'lucide-react';
+import { ArrowLeft, ChevronRight, EyeOff, MessageSquare, Search, SquarePen, Users, Video, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@open-meet/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@open-meet/ui/dropdown-menu';
 import { Input } from '@open-meet/ui/input';
+
+import { useBranding } from '@/components/web/branding/branding-provider';
+
+import { NewGroupDialog } from './new-group-dialog';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
@@ -23,21 +33,29 @@ export function ConversationList() {
   const t = useTranslations('chat');
   const tNav = useTranslations('nav');
   const { data: user } = useCurrentUser();
-  const { data, isLoading } = useConversations();
+  const { data, isLoading } = useConversations({ includeHidden: true });
   const pathname = usePathname();
   const nav = useNavigateTransition();
   const createMeeting = useCreateMeeting();
   const setPresence = useChatStore((s) => s.setPresence);
   const [filter, setFilter] = useState('');
-  const [showFilter, setShowFilter] = useState(false);
+  const [hiddenMode, setHiddenMode] = useState(false);
+  const [newGroupOpen, setNewGroupOpen] = useState(false);
+  const { userCanCreateGroups } = useBranding();
 
-  // Seed the presence store from each conversation's members so other users'
-  // status dots show their REAL current state on first load — without this,
-  // dots stay OFFLINE until a live socket event fires for that user.
   useEffect(() => {
-    if (!data?.items) return;
+    if (!data?.items) {
+      return;
+    }
+
+    const tracked = useChatStore.getState().presenceByUser;
+
     for (const conv of data.items) {
       for (const member of conv.members) {
+        if (member.userId in tracked) {
+          continue;
+        }
+        
         setPresence(member.userId, {
           online: member.online,
           status: member.status ?? (member.online ? 'AVAILABLE' : 'OFFLINE'),
@@ -61,62 +79,120 @@ export function ConversationList() {
     }
   };
 
-  const items = (data?.items ?? []).filter((c) => {
-    if (!filter.trim()) {
-      return true;
-    }
+  const all = data?.items ?? [];
+  const hiddenChats = all.filter((c) => c.hidden);
+  const visibleChats = all.filter((c) => !c.hidden);
+  const scope = hiddenMode ? hiddenChats : visibleChats;
+  const items = scope.filter((c) => {
+    if (!filter.trim()) return true;
     return conversationDisplay(c, user?.id).title.toLowerCase().includes(filter.toLowerCase());
   });
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between gap-2 px-4 py-3">
-        <h1 className="text-lg font-semibold tracking-tight">{t('list.title')}</h1>
-        <div className="flex items-center gap-0.5">
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => setShowFilter((v) => !v)}
-            aria-label={t('list.filter')}
-            aria-pressed={showFilter}
-          >
-            <ListFilter className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={startMeeting}
-            disabled={createMeeting.isPending}
-            aria-label={t('list.start-meeting')}
-          >
-            <Video className="h-4 w-4" />
-          </Button>
+      <header className="flex items-center justify-end gap-0.5 px-3 py-2">
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={startMeeting}
+          disabled={createMeeting.isPending}
+          aria-label={t('list.start-meeting')}
+        >
+          <Video className="h-4 w-4" />
+        </Button>
+        {userCanCreateGroups ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="icon" variant="ghost" aria-label={t('list.compose')}>
+                <SquarePen className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem asChild>
+                <Link href="/chat/new" className="flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4" />
+                  {t('group.compose-chat')}
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setNewGroupOpen(true)}>
+                <Users className="me-2 h-4 w-4" />
+                {t('group.compose-group')}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
           <Button asChild size="icon" variant="ghost" aria-label={t('list.compose')}>
             <Link href="/chat/new">
               <SquarePen className="h-4 w-4" />
             </Link>
           </Button>
-        </div>
+        )}
       </header>
 
-      {showFilter ? (
-        <div className="px-3 pb-2">
-          <div className="relative">
-            <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              placeholder={t('list.search')}
-              className="ps-9"
-              autoFocus
-            />
-          </div>
-        </div>
-      ) : null}
+      <NewGroupDialog open={newGroupOpen} onOpenChange={setNewGroupOpen} />
 
-      <p className="px-4 pb-1 pt-1 text-xs font-medium text-muted-foreground">{t('list.recent')}</p>
+      <div className="px-3 pb-2">
+        <div className="relative">
+          <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder={t('list.search')}
+            className="h-9 rounded-full border-border bg-muted/40 ps-9 pe-9 focus-visible:bg-card"
+          />
+          {filter ? (
+            <button
+              type="button"
+              onClick={() => setFilter('')}
+              aria-label={t('list.search')}
+              className="absolute end-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          ) : null}
+        </div>
+      </div>
 
       <div className="flex-1 overflow-y-auto px-2 pb-2">
+        {hiddenMode ? (
+          <div className="mb-1 flex items-center gap-2 px-1 py-1">
+            <button
+              type="button"
+              onClick={() => setHiddenMode(false)}
+              aria-label={t('view.back')}
+              className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+            <h2 className="text-sm font-semibold">{t('list.show-hidden')}</h2>
+          </div>
+        ) : null}
+
+        {!hiddenMode && hiddenChats.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => setHiddenMode(true)}
+            className="group mb-1 flex w-full items-center gap-3 rounded-lg px-2 py-2 text-start transition-colors hover:bg-muted/60"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors group-hover:text-foreground">
+              <EyeOff className="h-5 w-5" />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block text-sm font-medium">{t('list.show-hidden')}</span>
+              <span className="block truncate text-xs text-muted-foreground">
+                {hiddenChats.length}
+              </span>
+            </span>
+            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground rtl:rotate-180" />
+          </button>
+        ) : null}
+
+        {!hiddenMode ? (
+          <p className="px-2 pb-1 pt-1 text-xs font-medium text-muted-foreground">
+            {t('list.recent')}
+          </p>
+        ) : null}
+
         {isLoading ? (
           <p className="px-2 py-4 text-xs text-muted-foreground">{t('list.loading')}</p>
         ) : items.length === 0 ? (

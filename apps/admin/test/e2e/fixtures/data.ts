@@ -165,7 +165,12 @@ export const accounts: AdminAccountListResponseDto = {
 
 export const invites: AdminInviteListResponseDto = { items: [] };
 
-export const branding: AdminBrandingDto = { appName: 'Acme Meet', logoUrl: null };
+export const branding: AdminBrandingDto = {
+  appName: 'Acme Meet',
+  logoUrl: null,
+  accentColor: 'indigo',
+  userCanCreateGroups: false,
+};
 
 export const configuration: WorkspaceConfigDto = {
   defaultMeetingTitle: 'Team Sync',

@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsEnum, IsOptional, ValidateNested } from 'class-validator';
+import { IsBoolean, IsEnum, IsOptional, Matches, ValidateIf, ValidateNested } from 'class-validator';
 
 import { MeetingDefaultView, ProfileVisibility } from '@open-meet/types';
+
+const ACCENT_VALUE_PATTERN = /^(indigo|blue|green|purple|rose|amber|teal|#[0-9a-fA-F]{6})$/;
 
 export class MeetingPreferencesInputDto {
   @IsOptional()
@@ -44,6 +46,15 @@ export class PrivacySettingsInputDto {
   shareUsageData?: boolean;
 }
 
+export class AppearanceSettingsInputDto {
+  @IsOptional()
+  @ValidateIf((_, v) => v !== null)
+  @Matches(ACCENT_VALUE_PATTERN, {
+    message: 'accentColorOverride must be a preset slug or a #RRGGBB hex',
+  })
+  accentColorOverride?: string | null;
+}
+
 export class UpdateUserSettingsBodyDto {
   @ApiProperty({ type: () => MeetingPreferencesInputDto, required: false })
   @IsOptional()
@@ -56,4 +67,10 @@ export class UpdateUserSettingsBodyDto {
   @ValidateNested()
   @Type(() => PrivacySettingsInputDto)
   privacySettings?: PrivacySettingsInputDto;
+
+  @ApiProperty({ type: () => AppearanceSettingsInputDto, required: false })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => AppearanceSettingsInputDto)
+  appearance?: AppearanceSettingsInputDto;
 }

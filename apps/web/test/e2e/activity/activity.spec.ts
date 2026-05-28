@@ -21,6 +21,6 @@ test.describe('Web activity page', () => {
     await page.goto('/en/activity');
 
     await expect(page.getByRole('heading', { name: 'Activity' })).toBeVisible();
-    await expect(page.getByText('No mentions yet.')).toBeVisible();
+    await expect(page.getByText('No mentions yet', { exact: true })).toBeVisible();
   });
 });

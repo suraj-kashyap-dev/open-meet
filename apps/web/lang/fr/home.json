@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "Réunion",
+    "subtitle": "Démarrez une réunion instantanée ou rejoignez-la avec un code."
+  },
   "greeting": {
     "up-late": "Vous veilllez tard",
     "good-morning": "Bonjour",

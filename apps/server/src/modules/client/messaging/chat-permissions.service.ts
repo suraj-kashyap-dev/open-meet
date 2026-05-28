@@ -87,4 +87,65 @@ export class ChatPermissionsService {
 
     return membership;
   }
+
+  /** User-initiated group creation: blocked when the workspace toggle is OFF
+   * or the user is chatDisabled. Admins use a separate `/api/admin/groups`. */
+  async assertCanCreateGroup(userId: string): Promise<void> {
+    const user = await this.repo.findUserBasics(userId);
+
+    if (user?.chatDisabled) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.CHAT_DISABLED,
+        message: 'Your chat access has been disabled.',
+      });
+    }
+
+    const allowed = await this.repo.getUserCanCreateGroups();
+    if (!allowed) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.GROUPS_DISABLED,
+        message: 'Group creation is currently disabled by the workspace admin.',
+      });
+    }
+  }
+
+  /** Group-management gate: viewer must be a member with role=ADMIN of a GROUP. */
+  async assertGroupAdmin(conversationId: string, userId: string): Promise<ConversationMember> {
+    const meta = await this.repo.getConversationMeta(conversationId);
+    if (!meta || meta.type !== 'GROUP') {
+      throw new NotFoundException({
+        code: ApiErrorCode.CONVERSATION_NOT_FOUND,
+        message: 'Group not found.',
+      });
+    }
+    const membership = await this.assertConversationMember(conversationId, userId);
+    if (membership.role !== 'ADMIN') {
+      throw new ForbiddenException({
+        code: ApiErrorCode.NOT_GROUP_ADMIN,
+        message: 'Only a group admin can perform this action.',
+      });
+    }
+    return membership;
+  }
+
+  /** For `DELETE /groups/:id/members/:userId` — the actor either leaves
+   * themselves (actor === target) or, as admin, removes someone else. */
+  async assertGroupAdminOrSelf(
+    conversationId: string,
+    actorId: string,
+    targetId: string,
+  ): Promise<{ membership: ConversationMember; isAdmin: boolean }> {
+    if (actorId === targetId) {
+      const membership = await this.assertConversationMember(conversationId, actorId);
+      return { membership, isAdmin: membership.role === 'ADMIN' };
+    }
+    const membership = await this.assertGroupAdmin(conversationId, actorId);
+    return { membership, isAdmin: true };
+  }
+
+  /** Count of ADMIN members currently in a group (for last-admin guards). */
+  async groupAdminCount(conversationId: string): Promise<number> {
+    const meta = await this.repo.getConversationMeta(conversationId);
+    return meta?.adminCount ?? 0;
+  }
 }

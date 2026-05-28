@@ -1,6 +1,7 @@
 {
   "list": {
     "title": "Sohbet",
+    "subtitle": "Doğrudan mesajlarınız ve grup sohbetleri.",
     "new": "Yeni mesaj",
     "recent": "Son",
     "filter": "Filtrele",
@@ -18,7 +19,11 @@
     "mute": "Sessize al",
     "unmute": "Sesi aç",
     "mark-unread": "Okunmadı olarak işaretle",
-    "hide": "Gizle"
+    "hide": "Gizle",
+    "unhide": "Göster",
+    "show-hidden": "Gizli sohbetleri göster",
+    "hide-confirmed": "Sohbet gizlendi",
+    "hide-undo": "Geri al"
   },
   "view": {
     "empty": "Sohbete başlamak için bir konuşma seçin.",
@@ -31,7 +36,12 @@
     "you-disabled": "Sohbet erişiminiz devre dışı bırakıldı."
   },
   "header": {
-    "members": "{count, plural, one {# üye} other {# üye}}"
+    "members": "{count, plural, one {# üye} other {# üye}}",
+    "actions": "Konuşma işlemleri",
+    "clear": "Sohbeti temizle",
+    "delete": "Sohbeti sil",
+    "clear-confirmed": "Mesajlar görünümünüzden temizlendi",
+    "delete-confirmed": "Sohbet silindi"
   },
   "presence": {
     "online": "Çevrimiçi",
@@ -118,6 +128,33 @@
     "votes": "{count, plural, one {# oy} other {# oy}}",
     "closed": "Kapatıldı"
   },
+  "group": {
+    "compose-chat": "Yeni sohbet",
+    "compose-group": "Yeni grup",
+    "create-title": "Yeni grup",
+    "create-subtitle": "Bir isim seçin ve birkaç kişiyi davet edin.",
+    "name-label": "Grup adı",
+    "name-placeholder": "örn. Q4 lansman ekibi",
+    "description-label": "Açıklama (opsiyonel)",
+    "description-placeholder": "Bu grup ne hakkında?",
+    "members-label": "Üyeler",
+    "members-placeholder": "Takım arkadaşı ara…",
+    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "create-submit": "Grup oluştur",
+    "create-failed": "Grup oluşturulamadı",
+    "cancel": "İptal",
+    "admin-badge": "Yönetici",
+    "you-badge": "Sen",
+    "promote": "Yönetici yap",
+    "demote": "Yöneticiyi kaldır",
+    "remove-member": "Gruptan çıkar",
+    "leave": "Gruptan ayrıl",
+    "leave-confirm": "Bu gruptan ayrılınsın mı?",
+    "last-admin-warning": "Tek yöneticisiniz. Önce birini yönetici yapın.",
+    "delete": "Grubu sil",
+    "delete-confirm": "Bu grup silinsin mi? Geri alınamaz.",
+    "groups-disabled": "Grup oluşturma şu anda yönetici tarafından devre dışı."
+  },
   "new-dm": {
     "title": "Yeni sohbet",
     "search": "Takım arkadaşı ara",
@@ -136,17 +173,25 @@
   },
   "teams": {
     "title": "Takımlar",
+    "subtitle": "Takımlarınız ve kanallarınız.",
     "empty": "Henüz hiçbir takımın üyesi değilsiniz.",
+    "empty-title": "Henüz takım yok",
+    "empty-subtitle": "Bir yönetici işbirliğine başlamanız için sizi bir takıma ekleyecek.",
     "no-channels": "Henüz kanal yok."
   },
   "activity": {
     "title": "Etkinlik",
     "subtitle": "Sizi @bahseden mesajlar.",
-    "empty": "Henüz bahsetme yok."
+    "empty": "Henüz bahsetme yok.",
+    "empty-title": "Henüz bahsetme yok",
+    "empty-subtitle": "Birisi sizi @ile bahsettiğinde burada görünecek."
   },
   "saved": {
     "title": "Kaydedilenler",
-    "empty": "Henüz hiçbir mesaj kaydetmediniz."
+    "subtitle": "Sonra için kaydettiğiniz mesajlar.",
+    "empty": "Henüz hiçbir mesaj kaydetmediniz.",
+    "empty-title": "Kaydedilmiş mesaj yok",
+    "empty-subtitle": "Burada bulmak için sohbetten bir mesaj kaydedin."
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

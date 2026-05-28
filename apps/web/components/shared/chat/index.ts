@@ -4,7 +4,8 @@ export {
   toAbsoluteMediaUrl,
   type StagedAttachmentLabels,
 } from './attachment-block';
-export { byteSize, formatTime, type ByteSize } from './format';
+export { byteSize, formatTime, previewText, type ByteSize } from './format';
+export { MediaLightbox } from './media-lightbox';
 export { MessageContent } from './message-content';
 export {
   buildMessageRows,

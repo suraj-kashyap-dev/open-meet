@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 
+import { AppearanceSettings } from './appearance-settings';
 import { LocalizationSettings } from './localization-settings';
 import { MeetingPreferences } from './meeting-preferences';
 import { PageHeader, SectionCard } from './section';
@@ -30,6 +31,13 @@ export function SettingsForm() {
         title={t('settings.title')}
         description={t('settings.description')}
       />
+
+      <SectionCard
+        title={t('settings.appearance-title')}
+        description={t('settings.appearance-description')}
+      >
+        <AppearanceSettings settings={settings} />
+      </SectionCard>
 
       <SectionCard
         title={t('settings.localization-title')}

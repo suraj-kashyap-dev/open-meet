@@ -1,7 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, BarChart3, Eraser, MoreVertical, Trash2, Users } from 'lucide-react';
+import { ArrowLeft, BarChart3, Eraser, Info, MoreVertical, Trash2, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -50,6 +50,8 @@ export function ConversationHeader({
   const presence = useChatStore((s) =>
     display.peer ? s.presenceByUser[display.peer.userId] : undefined,
   );
+  const infoOpen = useChatStore((s) => s.infoOpen);
+  const toggleInfo = useChatStore((s) => s.toggleInfo);
 
   const subtitle = display.isGroup
     ? t('header.members', { count: conversation.members.length })
@@ -112,6 +114,16 @@ export function ConversationHeader({
         <p className="truncate text-sm font-semibold">{display.title || t('list.untitled')}</p>
         <p className="truncate text-xs text-muted-foreground">{subtitle}</p>
       </div>
+
+      <button
+        type="button"
+        onClick={toggleInfo}
+        aria-label={t('header.info')}
+        aria-pressed={infoOpen}
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground aria-pressed:bg-muted aria-pressed:text-foreground"
+      >
+        <Info className="h-4 w-4" />
+      </button>
 
       <DropdownMenu>
         <DropdownMenuTrigger

@@ -156,7 +156,32 @@ export interface ConversationDto {
   muted: boolean;
   pinned: boolean;
   hidden: boolean;
+  /** True when the viewer's ConversationMember.role is ADMIN — derived. */
+  youAreAdmin: boolean;
   createdAt: string;
+}
+
+/** Request body for `POST /messaging/groups` — user-initiated group creation. */
+export interface CreateGroupBodyDto {
+  title: string;
+  description?: string | null;
+  memberIds: string[];
+}
+
+/** Request body for `PATCH /messaging/groups/:id`. */
+export interface UpdateGroupBodyDto {
+  title?: string;
+  description?: string | null;
+}
+
+/** Request body for `POST /messaging/groups/:id/members`. */
+export interface AddGroupMembersBodyDto {
+  userIds: string[];
+}
+
+/** Request body for `POST /messaging/groups/:id/members/:userId/role`. */
+export interface UpdateGroupMemberRoleBodyDto {
+  role: ConversationMemberRole;
 }
 
 export interface ConversationListDto {

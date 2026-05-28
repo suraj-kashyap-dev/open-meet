@@ -18,6 +18,8 @@ interface TypingEntry {
 interface ChatStoreState {
   /** Conversation currently open on screen (suppresses its unread + toasts). */
   activeConversationId: string | null;
+  /** Whether the right-side info panel is open for the active conversation. */
+  infoOpen: boolean;
   totalUnread: number;
   unreadByConversation: Record<string, number>;
   presenceByUser: Record<string, PresenceEntry>;
@@ -25,6 +27,8 @@ interface ChatStoreState {
   connection: ConnectionStatus;
 
   setActiveConversation: (id: string | null) => void;
+  toggleInfo: () => void;
+  setInfoOpen: (open: boolean) => void;
   setUnreadSummary: (byConversation: Record<string, number>) => void;
   setConversationUnread: (conversationId: string, count: number) => void;
   bumpUnread: (conversationId: string) => void;
@@ -42,13 +46,17 @@ function sum(map: Record<string, number>): number {
 
 export const useChatStore = create<ChatStoreState>((set) => ({
   activeConversationId: null,
+  infoOpen: false,
   totalUnread: 0,
   unreadByConversation: {},
   presenceByUser: {},
   typingByConversation: {},
   connection: 'connected',
 
-  setActiveConversation: (id) => set({ activeConversationId: id }),
+  setActiveConversation: (id) => set({ activeConversationId: id, infoOpen: false }),
+
+  toggleInfo: () => set((s) => ({ infoOpen: !s.infoOpen })),
+  setInfoOpen: (open) => set({ infoOpen: open }),
 
   setUnreadSummary: (byConversation) =>
     set({ unreadByConversation: byConversation, totalUnread: sum(byConversation) }),
@@ -125,6 +133,7 @@ export const useChatStore = create<ChatStoreState>((set) => ({
   reset: () =>
     set({
       activeConversationId: null,
+      infoOpen: false,
       totalUnread: 0,
       unreadByConversation: {},
       presenceByUser: {},

@@ -1,6 +1,7 @@
 {
   "list": {
     "title": "Chat",
+    "subtitle": "I tuoi messaggi diretti e chat di gruppo.",
     "new": "Nuovo messaggio",
     "recent": "Recenti",
     "filter": "Filtra",
@@ -18,7 +19,11 @@
     "mute": "Silenzia",
     "unmute": "Riattiva audio",
     "mark-unread": "Segna come non letto",
-    "hide": "Nascondi"
+    "hide": "Nascondi",
+    "unhide": "Mostra",
+    "show-hidden": "Mostra chat nascoste",
+    "hide-confirmed": "Chat nascosta",
+    "hide-undo": "Annulla"
   },
   "view": {
     "empty": "Seleziona una conversazione per iniziare a chattare.",
@@ -31,7 +36,12 @@
     "you-disabled": "Il tuo accesso alla chat è stato disabilitato."
   },
   "header": {
-    "members": "{count, plural, one {# membro} other {# membri}}"
+    "members": "{count, plural, one {# membro} other {# membri}}",
+    "actions": "Azioni conversazione",
+    "clear": "Pulisci chat",
+    "delete": "Elimina chat",
+    "clear-confirmed": "Messaggi rimossi dalla tua vista",
+    "delete-confirmed": "Chat eliminata"
   },
   "presence": {
     "online": "Online",
@@ -118,6 +128,33 @@
     "votes": "{count, plural, one {# voto} other {# voti}}",
     "closed": "Chiuso"
   },
+  "group": {
+    "compose-chat": "Nuova chat",
+    "compose-group": "Nuovo gruppo",
+    "create-title": "Nuovo gruppo",
+    "create-subtitle": "Scegli un nome e invita alcune persone.",
+    "name-label": "Nome gruppo",
+    "name-placeholder": "es. team di lancio Q4",
+    "description-label": "Descrizione (facoltativo)",
+    "description-placeholder": "Di cosa parla questo gruppo?",
+    "members-label": "Membri",
+    "members-placeholder": "Cerca colleghi…",
+    "no-teammates": "Nessun collega trovato.",
+    "create-submit": "Crea gruppo",
+    "create-failed": "Impossibile creare il gruppo",
+    "cancel": "Annulla",
+    "admin-badge": "Admin",
+    "you-badge": "Tu",
+    "promote": "Promuovi ad admin",
+    "demote": "Rimuovi admin",
+    "remove-member": "Rimuovi dal gruppo",
+    "leave": "Esci dal gruppo",
+    "leave-confirm": "Uscire da questo gruppo?",
+    "last-admin-warning": "Sei l'unico admin. Promuovi qualcuno prima.",
+    "delete": "Elimina gruppo",
+    "delete-confirm": "Eliminare questo gruppo? L'azione è irreversibile.",
+    "groups-disabled": "La creazione di gruppi è disabilitata dall'amministratore."
+  },
   "new-dm": {
     "title": "Nuova conversazione",
     "search": "Cerca compagni di squadra",
@@ -136,17 +173,25 @@
   },
   "teams": {
     "title": "Team",
+    "subtitle": "I tuoi team e canali.",
     "empty": "Non sei ancora membro di nessun team.",
+    "empty-title": "Ancora nessun team",
+    "empty-subtitle": "Un amministratore ti aggiungerà a un team per iniziare a collaborare.",
     "no-channels": "Ancora nessun canale."
   },
   "activity": {
     "title": "Attività",
     "subtitle": "Messaggi che ti @menzionano.",
-    "empty": "Ancora nessuna menzione."
+    "empty": "Ancora nessuna menzione.",
+    "empty-title": "Ancora nessuna menzione",
+    "empty-subtitle": "Quando qualcuno ti @menziona, apparirà qui."
   },
   "saved": {
     "title": "Salvati",
-    "empty": "Non hai ancora salvato alcun messaggio."
+    "subtitle": "Messaggi che hai salvato per dopo.",
+    "empty": "Non hai ancora salvato alcun messaggio.",
+    "empty-title": "Nessun messaggio salvato",
+    "empty-subtitle": "Salva un messaggio dalla chat per trovarlo qui."
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

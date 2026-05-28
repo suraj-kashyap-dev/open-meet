@@ -17,6 +17,29 @@
     "remove": "削除",
     "hint": "推奨: 正方形の画像、最小 64×64px、最大 2MB。"
   },
+  "accent": {
+    "title": "ブランドアクセント",
+    "description": "アプリ全体のボタン、リンク、フォーカスリングに使用される色。",
+    "advanced": "カスタムカラーを使用",
+    "hex-picker": "カラーピッカー",
+    "hex-input": "Hex値",
+    "apply-hex": "適用",
+    "preset": {
+      "indigo": "インディゴ",
+      "blue": "ブルー",
+      "green": "グリーン",
+      "purple": "パープル",
+      "rose": "ローズ",
+      "amber": "アンバー",
+      "teal": "ティール"
+    }
+  },
+  "groups": {
+    "title": "ユーザー作成グループ",
+    "description": "チームメイトが会話リストから独自のグループチャットを開始できるようにします。",
+    "label": "ユーザーにグループ作成を許可",
+    "hint": "オフの場合、管理者のみがグループを作成できます。"
+  },
   "form": {
     "name-required": "アプリケーション名を入力してください。",
     "name-too-long": "名前は 60 文字以下にしてください。",
@@ -25,6 +48,8 @@
     "logo-removed": "ロゴを削除しました",
     "logo-invalid-type": "ロゴは PNG、JPEG、WebP、または GIF 画像にしてください。",
     "logo-too-large": "ロゴは 2MB 以下にしてください。",
+    "accent-saved": "アクセントカラーを更新しました",
+    "groups-saved": "グループ設定を更新しました",
     "save": "保存",
     "saving": "保存中…",
     "uploading": "アップロード中…",

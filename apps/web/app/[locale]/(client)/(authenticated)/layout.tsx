@@ -5,8 +5,6 @@ import { CommandPalette } from '@/components/shared/command-palette';
 import { ActiveMeetingMount } from '@/features/web/meeting/components/active-meeting-mount';
 import { ChatSocketProvider } from '@/features/web/chat/components/chat-socket-provider';
 
-export const dynamic = 'force-dynamic';
-
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <AuthGuard>

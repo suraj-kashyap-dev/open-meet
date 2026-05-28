@@ -10,6 +10,7 @@ import type {
   MyTeamsResponseDto,
   PinnedMessageListDto,
   PollDto,
+  PublicUserDto,
   SavedMessageListDto,
   SendChatMessageDto,
   TeammateListDto,
@@ -34,8 +35,11 @@ function query(params: Record<string, string | number | undefined>): string {
 }
 
 export const chatApi = {
-  conversations: (signal?: AbortSignal) =>
-    api.get<ConversationListDto>('/messaging/conversations', { signal }),
+  conversations: (params: { includeHidden?: boolean } = {}, signal?: AbortSignal) =>
+    api.get<ConversationListDto>(
+      `/messaging/conversations${query({ includeHidden: params.includeHidden ? 1 : undefined })}`,
+      { signal },
+    ),
 
   conversation: (id: string, signal?: AbortSignal) =>
     api.get<ConversationDto>(`/messaging/conversations/${id}`, { signal }),
@@ -50,6 +54,23 @@ export const chatApi = {
 
   openDirect: (targetUserId: string) =>
     api.post<ConversationDto>('/messaging/conversations/direct', { targetUserId }),
+
+  createGroup: (body: { title: string; description?: string | null; memberIds: string[] }) =>
+    api.post<ConversationDto>('/messaging/groups', body),
+
+  updateGroup: (id: string, body: { title?: string; description?: string | null }) =>
+    api.patch<ConversationDto>(`/messaging/groups/${id}`, body),
+
+  addGroupMembers: (id: string, userIds: string[]) =>
+    api.post<ConversationDto>(`/messaging/groups/${id}/members`, { userIds }),
+
+  removeGroupMember: (id: string, userId: string) =>
+    api.delete<void>(`/messaging/groups/${id}/members/${userId}`),
+
+  setGroupMemberRole: (id: string, userId: string, role: 'ADMIN' | 'MEMBER') =>
+    api.post<ConversationDto>(`/messaging/groups/${id}/members/${userId}/role`, { role }),
+
+  deleteGroup: (id: string) => api.delete<void>(`/messaging/groups/${id}`),
 
   markRead: (id: string, messageId?: string) =>
     api.post<{ unread: number }>(`/messaging/conversations/${id}/read`, { messageId }),
@@ -112,4 +133,7 @@ export const chatApi = {
 
   thread: (rootId: string, signal?: AbortSignal) =>
     api.get<ThreadDto>(`/messaging/threads/${rootId}`, { signal }),
+
+  publicUser: (userId: string, signal?: AbortSignal) =>
+    api.get<PublicUserDto>(`/users/${userId}/public`, { signal }),
 };

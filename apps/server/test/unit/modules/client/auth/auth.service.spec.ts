@@ -9,6 +9,7 @@ import { AuthService } from '@/modules/client/auth/auth.service';
 import { AuthRepository } from '@/modules/client/auth/auth.repository';
 import { AvatarsService } from '@/modules/client/auth/avatars.service';
 import { UserInviteRepository } from '@/modules/client/auth/user-invite.repository';
+import { PresenceService } from '@/modules/client/messaging/presence.service';
 import { RedisService } from '@/integrations/redis/redis.service';
 
 function makeUser(overrides: Partial<{ id: string; email: string; name: string }> = {}) {
@@ -127,6 +128,7 @@ describe('AuthService', () => {
         { provide: ConfigService, useValue: config },
         { provide: RedisService, useValue: redis },
         { provide: UserInviteRepository, useValue: userInvites },
+        { provide: PresenceService, useValue: { forceOffline: vi.fn() } },
       ],
     }).compile();
 

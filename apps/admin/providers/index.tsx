@@ -7,6 +7,8 @@ import { useState, type ReactNode } from 'react';
 
 import { TopProgress } from '@open-meet/ui/top-progress';
 
+import { AccentProvider } from '@/components/branding/accent-provider';
+
 import { UnauthorizedBridge } from './unauthorized-bridge';
 
 export function Providers({ children }: { children: ReactNode }) {
@@ -37,7 +39,7 @@ export function Providers({ children }: { children: ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <UnauthorizedBridge />
         <TopProgress />
-        {children}
+        <AccentProvider>{children}</AccentProvider>
         {process.env.APP_DEBUG == 'true' ? (
           <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
         ) : null}

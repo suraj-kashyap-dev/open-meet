@@ -27,6 +27,6 @@ test.describe('Web teams page', () => {
     await page.goto('/en/teams');
 
     await expect(page.getByRole('heading', { name: 'Teams', exact: true })).toBeVisible();
-    await expect(page.getByText("You're not a member of any team yet.")).toBeVisible();
+    await expect(page.getByText('No teams yet')).toBeVisible();
   });
 });

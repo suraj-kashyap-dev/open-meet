@@ -17,6 +17,7 @@ import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
 import { RedisService } from '../../../integrations/redis/redis.service';
+import { PresenceService } from '../messaging/presence.service';
 import { AuthRepository } from './auth.repository';
 import { AvatarsService } from './avatars.service';
 import type { AcceptUserInviteDto } from './dto/accept-user-invite.dto';
@@ -54,6 +55,7 @@ export class AuthService {
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly redis: RedisService,
     private readonly userInvites: UserInviteRepository,
+    private readonly presence: PresenceService,
   ) {}
 
   /** Look up a pending user invite by its raw token (public, pre-account). */
@@ -201,15 +203,27 @@ export class AuthService {
     return this.issueTokens(user.id, user.email, user.name);
   }
 
-  async logout(refreshToken: string | undefined): Promise<void> {
-    if (!refreshToken) return;
-    try {
-      const payload = await this.jwt.verifyAsync<RefreshTokenPayload>(refreshToken, {
-        secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
-      });
-      await this.redis.client.del(this.refreshKey(payload.sub, payload.jti));
-    } catch {
-      // Silent: logout should be best-effort
+  async logout(refreshToken: string | undefined, userId?: string): Promise<void> {
+    let presenceTarget: string | undefined = userId;
+    if (refreshToken) {
+      try {
+        const payload = await this.jwt.verifyAsync<RefreshTokenPayload>(refreshToken, {
+          secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
+        });
+        await this.redis.client.del(this.refreshKey(payload.sub, payload.jti));
+        presenceTarget = presenceTarget ?? payload.sub;
+      } catch {
+        // Silent: logout should be best-effort
+      }
+    }
+    // Mark the user offline immediately so peers see them disconnect without
+    // waiting for socket.io's idle timeout. Best-effort — never fail logout.
+    if (presenceTarget) {
+      try {
+        await this.presence.forceOffline(presenceTarget);
+      } catch {
+        // Silent
+      }
     }
   }
 
@@ -222,6 +236,67 @@ export class AuthService {
       });
     }
     return this.avatars.toUserDto(user);
+  }
+
+  /**
+   * Peer-visible profile of `targetId` as seen by `viewerId`. Honors the
+   * target's `UserSettings.profileVisibility`:
+   *   - PUBLIC            → everything is exposed.
+   *   - PARTICIPANTS_ONLY → full profile only when the two share a team or a
+   *                        conversation; otherwise minimal.
+   *   - PRIVATE           → only id/name/avatar.
+   * Always auth-required; "public" here means peer-visible.
+   */
+  async getPublicProfile(
+    viewerId: string,
+    targetId: string,
+    haveSharedSurface: () => Promise<boolean>,
+  ): Promise<import('@open-meet/types').PublicUserDto> {
+    const row = await this.users.findByIdWithSettings(targetId);
+    if (!row) {
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: 'User not found.',
+      });
+    }
+
+    const visibility = row.settings?.profileVisibility ?? 'PARTICIPANTS_ONLY';
+    const isSelf = viewerId === targetId;
+    const sharedSurface = isSelf || (await haveSharedSurface());
+    const showFull =
+      isSelf ||
+      visibility === 'PUBLIC' ||
+      (visibility === 'PARTICIPANTS_ONLY' && sharedSurface);
+    const avatar = this.avatars.resolveUrl(row.avatarKey) ?? row.avatarUrl ?? null;
+
+    if (!showFull) {
+      return {
+        id: row.id,
+        name: row.name,
+        avatar,
+        bio: null,
+        timezone: null,
+        language: null,
+        email: null,
+        joinedAt: null,
+        visibility,
+      };
+    }
+
+    const showEmail =
+      visibility === 'PUBLIC' || (showFull && (row.settings?.showEmailToParticipants ?? true));
+
+    return {
+      id: row.id,
+      name: row.name,
+      avatar,
+      bio: row.bio,
+      timezone: row.timezone,
+      language: row.language,
+      email: showEmail ? row.email : null,
+      joinedAt: row.createdAt.toISOString(),
+      visibility,
+    };
   }
 
   async updateProfile(id: string, input: UpdateProfileDto): Promise<UserDto> {

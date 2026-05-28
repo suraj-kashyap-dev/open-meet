@@ -41,6 +41,8 @@ describe('BrandingService', () => {
         appName: 'Open Meet',
         logoUrl: null,
         gifsEnabled: false,
+        accentColor: 'indigo',
+        userCanCreateGroups: false,
       });
     });
 
@@ -51,6 +53,8 @@ describe('BrandingService', () => {
         appName: 'Acme',
         logoUrl: 'http://cdn.test/api/uploads/public/branding/logo_abc.png',
         gifsEnabled: false,
+        accentColor: 'indigo',
+        userCanCreateGroups: false,
       });
     });
   });

@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "Rapat",
+    "subtitle": "Mulai rapat instan atau bergabung dengan kode."
+  },
   "greeting": {
     "up-late": "Masih terjaga",
     "good-morning": "Selamat pagi",

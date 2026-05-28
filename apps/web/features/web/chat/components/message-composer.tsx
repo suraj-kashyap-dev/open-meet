@@ -204,7 +204,7 @@ export function MessageComposer({
   const hasReadyContent = text.trim().length > 0 || attachments.readyAttachments.length > 0;
 
   return (
-    <div>
+    <div className="border-t border-border bg-card">
       <StagedAttachmentPreview
         items={attachments.staged}
         onRemove={attachments.removeStaged}
@@ -217,7 +217,7 @@ export function MessageComposer({
       />
 
       {replyingTo ? (
-        <div className="border-t border-border px-3 pt-2">
+        <div className="px-3 pt-2">
           <ReplyPreview
             senderName={replyingTo.sender?.name ?? null}
             content={replyingTo.content}
@@ -232,7 +232,7 @@ export function MessageComposer({
           e.preventDefault();
           submit();
         }}
-        className="flex items-end gap-2 border-t border-border px-3 py-3"
+        className="flex items-end gap-2 px-3 py-3"
       >
         <input
           ref={fileInputRef}
@@ -360,6 +360,7 @@ export function MessageComposer({
             className={cn(
               'w-full resize-none rounded-md border border-border bg-input py-2 pe-9 ps-3 text-sm leading-6 outline-none',
               'placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring',
+              'overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
             )}
           />
           <div className="absolute bottom-1.5 end-1.5">

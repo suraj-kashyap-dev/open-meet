@@ -17,21 +17,6 @@ export function ActivityView() {
 
   return (
     <div className="min-h-full bg-card">
-      <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-card/95 px-6 py-4 backdrop-blur">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-accent/20">
-          <AtSign className="h-4 w-4" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <h1 className="text-lg font-semibold tracking-tight">{t('activity.title')}</h1>
-          <p className="truncate text-xs text-muted-foreground">{t('activity.subtitle')}</p>
-        </div>
-        {items.length > 0 ? (
-          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-            {items.length}
-          </span>
-        ) : null}
-      </header>
-
       <div className="mx-auto w-full max-w-3xl px-6 py-6">
         {isLoading ? (
           <p className="text-sm text-muted-foreground">{t('list.loading')}</p>

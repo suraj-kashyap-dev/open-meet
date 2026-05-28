@@ -3,7 +3,6 @@ import type { WorkspaceSettings } from '@prisma/client';
 
 import { PrismaService } from '../../database/prisma.service';
 
-// WorkspaceSettings is a singleton row keyed by this id.
 const SINGLETON_ID = 'default';
 
 @Injectable()
@@ -27,6 +26,22 @@ export class BrandingRepository {
       where: { id: SINGLETON_ID },
       update: { logoKey },
       create: { id: SINGLETON_ID, logoKey },
+    });
+  }
+
+  setAccentColor(accentColor: string): Promise<WorkspaceSettings> {
+    return this.prisma.workspaceSettings.upsert({
+      where: { id: SINGLETON_ID },
+      update: { accentColor },
+      create: { id: SINGLETON_ID, accentColor },
+    });
+  }
+
+  setUserCanCreateGroups(userCanCreateGroups: boolean): Promise<WorkspaceSettings> {
+    return this.prisma.workspaceSettings.upsert({
+      where: { id: SINGLETON_ID },
+      update: { userCanCreateGroups },
+      create: { id: SINGLETON_ID, userCanCreateGroups },
     });
   }
 }

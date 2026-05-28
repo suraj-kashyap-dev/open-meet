@@ -28,9 +28,16 @@ export interface PrivacySettingsDto {
   shareUsageData: boolean;
 }
 
+export interface AppearanceSettingsDto {
+  /** Preset slug ("indigo", "blue", "green", "purple", "rose", "amber", "teal")
+   *  or `#RRGGBB` hex. `null` falls back to the workspace default. */
+  accentColorOverride: string | null;
+}
+
 export interface UserSettingsDto {
   meetingPreferences: MeetingPreferencesDto;
   privacySettings: PrivacySettingsDto;
+  appearance: AppearanceSettingsDto;
 }
 
 export const DEFAULT_MEETING_PREFERENCES: MeetingPreferencesDto = {
@@ -48,9 +55,14 @@ export const DEFAULT_PRIVACY_SETTINGS: PrivacySettingsDto = {
   shareUsageData: false,
 };
 
+export const DEFAULT_APPEARANCE_SETTINGS: AppearanceSettingsDto = {
+  accentColorOverride: null,
+};
+
 export const DEFAULT_USER_SETTINGS: UserSettingsDto = {
   meetingPreferences: DEFAULT_MEETING_PREFERENCES,
   privacySettings: DEFAULT_PRIVACY_SETTINGS,
+  appearance: DEFAULT_APPEARANCE_SETTINGS,
 };
 
 export interface UserDto {
@@ -74,6 +86,22 @@ export interface UpdateProfileDto {
 export interface UpdateUserSettingsDto {
   meetingPreferences?: Partial<MeetingPreferencesDto>;
   privacySettings?: Partial<PrivacySettingsDto>;
+  appearance?: Partial<AppearanceSettingsDto>;
+}
+
+/** A peer-visible profile. Email is gated by the target's profileVisibility. */
+export interface PublicUserDto {
+  id: string;
+  name: string;
+  avatar: string | null;
+  bio: string | null;
+  timezone: string | null;
+  language: string | null;
+  email: string | null;
+  /** ISO timestamp when the account joined. Hidden for PRIVATE visibility. */
+  joinedAt: string | null;
+  /** Effective visibility level the server applied to compute this DTO. */
+  visibility: ProfileVisibility;
 }
 
 export interface ChangePasswordDto {

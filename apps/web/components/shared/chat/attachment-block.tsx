@@ -6,6 +6,7 @@ import type { AttachmentDto } from '@open-meet/types';
 
 import { env } from '@/lib/env';
 
+import { MediaLightbox } from './media-lightbox';
 import type { StagedAttachment } from './use-staged-attachments';
 
 /** Resolves a possibly-relative attachment URL to an absolute one against the API host. */
@@ -29,23 +30,17 @@ export function AttachmentBlock({
   formatSize: (bytes: number) => string;
 }) {
   const src = toAbsoluteMediaUrl(a.url);
+  const filename = a.url.split('/').pop()?.split('?')[0];
 
   if (a.mime.startsWith('image/')) {
     return (
-      <a
-        href={src}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block max-w-xs overflow-hidden rounded-lg border border-border"
-      >
-        <img
-          src={src}
-          alt=""
-          crossOrigin="use-credentials"
-          className="block max-h-72 w-full object-cover"
-          loading="lazy"
-        />
-      </a>
+      <MediaLightbox
+        src={src}
+        alt={filename ?? ''}
+        download={filename}
+        className="max-w-xs"
+        thumbClassName="max-h-72 w-full object-cover"
+      />
     );
   }
 
@@ -76,8 +71,7 @@ export function AttachmentBlock({
   return (
     <a
       href={src}
-      target="_blank"
-      rel="noopener noreferrer"
+      download={filename}
       className="flex max-w-xs items-center gap-3 rounded-lg border border-border bg-card px-3 py-2 transition-colors hover:bg-muted"
     >
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
@@ -85,7 +79,7 @@ export function AttachmentBlock({
       </span>
 
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-medium">{a.url.split('/').pop()}</span>
+        <span className="block truncate text-sm font-medium">{filename}</span>
         <span className="block text-xs text-muted-foreground">
           {a.mime} · {formatSize(a.size)}
         </span>

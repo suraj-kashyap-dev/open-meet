@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ImageIcon, Loader2, Trash2, Upload } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useRef, type ChangeEvent } from 'react';
+import { useMemo, useRef, useState, type ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,10 +12,13 @@ import { Button } from '@open-meet/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@open-meet/ui/card';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
+import { Switch } from '@open-meet/ui/switch';
 
+import { AccentPicker } from '@/components/branding/accent-picker';
 import {
   useAdminBranding,
   useRemoveBrandingLogo,
+  useUpdateBranding,
   useUpdateBrandingName,
   useUploadBrandingLogo,
 } from '@/features/branding/hooks/use-admin-branding';
@@ -29,6 +32,7 @@ export function BrandingForm() {
   const t = useTranslations('branding');
   const { data, isLoading } = useAdminBranding();
   const updateName = useUpdateBrandingName();
+  const updateBranding = useUpdateBranding();
   const uploadLogo = useUploadBrandingLogo();
   const removeLogo = useRemoveBrandingLogo();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -96,7 +100,33 @@ export function BrandingForm() {
     }
   };
 
+  const onAccentChange = async (next: string) => {
+    try {
+      await updateBranding.mutateAsync({ accentColor: next });
+      toast.success(t('form.accent-saved'));
+      router.refresh();
+    } catch (err) {
+      toast.error(err instanceof ApiClientError ? err.message : t('form.error'));
+    }
+  };
+
+  const [groupsToggleBusy, setGroupsToggleBusy] = useState(false);
+  const onGroupsToggle = async (next: boolean) => {
+    setGroupsToggleBusy(true);
+    try {
+      await updateBranding.mutateAsync({ userCanCreateGroups: next });
+      toast.success(t('form.groups-saved'));
+      router.refresh();
+    } catch (err) {
+      toast.error(err instanceof ApiClientError ? err.message : t('form.error'));
+    } finally {
+      setGroupsToggleBusy(false);
+    }
+  };
+
   const logoUrl = data?.logoUrl ?? null;
+  const accentColor = data?.accentColor ?? 'indigo';
+  const userCanCreateGroups = data?.userCanCreateGroups ?? false;
 
   return (
     <div className="grid gap-6 lg:grid-cols-2">
@@ -144,7 +174,6 @@ export function BrandingForm() {
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted">
               {logoUrl ? (
-                // Remote, admin-uploaded asset of unknown aspect ratio.
                 <img
                   src={logoUrl}
                   alt={t('logo.alt')}
@@ -200,6 +229,43 @@ export function BrandingForm() {
           </div>
 
           <p className="text-xs text-muted-foreground">{t('logo.hint')}</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('accent.title')}</CardTitle>
+          <CardDescription>{t('accent.description')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AccentPicker
+            value={accentColor}
+            onChange={onAccentChange}
+            disabled={isLoading || updateBranding.isPending}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('groups.title')}</CardTitle>
+          <CardDescription>{t('groups.description')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between gap-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="userCanCreateGroups" className="cursor-pointer">
+                {t('groups.label')}
+              </Label>
+              <p className="text-xs text-muted-foreground">{t('groups.hint')}</p>
+            </div>
+            <Switch
+              id="userCanCreateGroups"
+              checked={userCanCreateGroups}
+              onCheckedChange={onGroupsToggle}
+              disabled={isLoading || groupsToggleBusy}
+            />
+          </div>
         </CardContent>
       </Card>
     </div>

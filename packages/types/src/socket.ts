@@ -181,6 +181,8 @@ export const ChatServerEvent = {
   PRESENCE_UPDATE: 'chat:presence:update',
   UNREAD_UPDATE: 'chat:unread:update',
   CONVERSATION_NEW: 'chat:conversation:new',
+  CONVERSATION_UPDATE: 'chat:conversation:update',
+  CONVERSATION_REMOVED: 'chat:conversation:removed',
   POLL_UPDATE: 'chat:poll:update',
   PIN_UPDATE: 'chat:pin:update',
 } as const;
@@ -259,6 +261,10 @@ export interface ChatUnreadUpdatePayload {
   total: number;
 }
 export type ChatConversationNewPayload = ConversationDto;
+export type ChatConversationUpdatePayload = ConversationDto;
+export interface ChatConversationRemovedPayload {
+  conversationId: string;
+}
 export interface ChatPollUpdatePayload {
   conversationId: string;
   messageId: string;
@@ -296,6 +302,8 @@ export interface ChatServerToClientEvents {
   [ChatServerEvent.PRESENCE_UPDATE]: (payload: ChatPresencePayload) => void;
   [ChatServerEvent.UNREAD_UPDATE]: (payload: ChatUnreadUpdatePayload) => void;
   [ChatServerEvent.CONVERSATION_NEW]: (payload: ChatConversationNewPayload) => void;
+  [ChatServerEvent.CONVERSATION_UPDATE]: (payload: ChatConversationUpdatePayload) => void;
+  [ChatServerEvent.CONVERSATION_REMOVED]: (payload: ChatConversationRemovedPayload) => void;
   [ChatServerEvent.POLL_UPDATE]: (payload: ChatPollUpdatePayload) => void;
   [ChatServerEvent.PIN_UPDATE]: (payload: ChatPinUpdatePayload) => void;
 }

@@ -47,6 +47,8 @@
     "eyebrow": "Account",
     "title": "Impostazioni",
     "description": "Impostazioni predefinite per le riunioni, ciò che gli altri possono vedere e la tua lingua.",
+    "appearance-title": "Aspetto",
+    "appearance-description": "Tema e accento del marchio per questo dispositivo.",
     "localization-title": "Localizzazione",
     "localization-description": "Usata per orari, date delle riunioni e la lingua dell'interfaccia.",
     "defaults-title": "Impostazioni predefinite riunioni",
@@ -84,6 +86,29 @@
     "direct-messages-description": "Permetti ad altri di avviare una chat 1-1 con te al di fuori delle riunioni.",
     "usage-data-title": "Condividi dati di utilizzo anonimi",
     "usage-data-description": "Ci aiuta a migliorare Open Meet. Nessun contenuto delle riunioni viene mai condiviso."
+  },
+  "appearance": {
+    "theme-label": "Tema",
+    "theme-hint": "Alterna tra chiaro e scuro.",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "accent-label": "Accento del marchio",
+    "accent-hint": "Colore di pulsanti, link e focus.",
+    "advanced": "Usa un colore personalizzato",
+    "hex-picker": "Selettore colore",
+    "hex-input": "Valore hex",
+    "apply-hex": "Applica",
+    "reset": "Ripristina al predefinito dell'area",
+    "using-workspace": "In uso il predefinito dell'area.",
+    "preset": {
+      "indigo": "Indaco",
+      "blue": "Blu",
+      "green": "Verde",
+      "purple": "Viola",
+      "rose": "Rosa",
+      "amber": "Ambra",
+      "teal": "Verde acqua"
+    }
   },
   "actions": {
     "reset": "Reimposta",

@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "Toplantı",
+    "subtitle": "Anlık toplantı başlatın veya kodla katılın."
+  },
   "greeting": {
     "up-late": "Geç saatlere kadar",
     "good-morning": "Günaydın",

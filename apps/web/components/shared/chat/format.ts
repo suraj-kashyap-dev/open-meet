@@ -27,3 +27,18 @@ export function byteSize(bytes: number): ByteSize {
 
   return { unit: 'MB', mb: (bytes / (1024 * 1024)).toFixed(1) };
 }
+
+/**
+ * Strips message markdown into a single-line preview safe for the conversation
+ * list (and any other "one-liner" view). Mentions encoded as `[@name](userId)`
+ * collapse to `@name`; embedded GIFs / image markdown to a short label; other
+ * inline markdown characters are left as-is so the preview still reads.
+ */
+export function previewText(content: string): string {
+  return content
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, '🖼') // image / gif markdown
+    .replace(/\[@([^\]]+)\]\([^)]+\)/g, '@$1') // mention chip
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // any other link
+    .replace(/[`*_~]/g, '') // strip basic inline markers
+    .trim();
+}

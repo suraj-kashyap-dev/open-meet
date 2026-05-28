@@ -25,9 +25,52 @@ export class ChatPermissionsRepository {
     return count > 0;
   }
 
+  /** Whether two users share a conversation (DM, group, or channel). */
+  async shareConversation(userAId: string, userBId: string): Promise<boolean> {
+    const count = await this.prisma.conversationMember.count({
+      where: {
+        userId: userAId,
+        conversation: { members: { some: { userId: userBId } } },
+      },
+    });
+    return count > 0;
+  }
+
+  /** Used by PublicProfile PARTICIPANTS_ONLY visibility: viewer either shares
+   * a team OR a conversation with the target. */
+  async haveSharedSurface(viewerId: string, targetId: string): Promise<boolean> {
+    if (viewerId === targetId) return true;
+    const [team, conv] = await Promise.all([
+      this.shareTeam(viewerId, targetId),
+      this.shareConversation(viewerId, targetId),
+    ]);
+    return team || conv;
+  }
+
   getMembership(conversationId: string, userId: string): Promise<ConversationMember | null> {
     return this.prisma.conversationMember.findUnique({
       where: { conversationId_userId: { conversationId, userId } },
     });
+  }
+
+  /** Workspace toggle: whether non-admin users may create groups. */
+  async getUserCanCreateGroups(): Promise<boolean> {
+    const row = await this.prisma.workspaceSettings.findUnique({
+      where: { id: 'default' },
+      select: { userCanCreateGroups: true },
+    });
+    return row?.userCanCreateGroups ?? false;
+  }
+
+  /** Conversation type + how many ADMIN members remain — used for group rules. */
+  async getConversationMeta(
+    conversationId: string,
+  ): Promise<{ type: string; adminCount: number } | null> {
+    const conv = await this.prisma.conversation.findUnique({
+      where: { id: conversationId },
+      select: { type: true, members: { where: { role: 'ADMIN' }, select: { userId: true } } },
+    });
+    if (!conv) return null;
+    return { type: conv.type, adminCount: conv.members.length };
   }
 }

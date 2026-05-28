@@ -47,6 +47,8 @@
     "eyebrow": "Cuenta",
     "title": "Configuración",
     "description": "Valores predeterminados para reuniones, lo que otros pueden ver y tu idioma.",
+    "appearance-title": "Apariencia",
+    "appearance-description": "Tema y acento de marca para este dispositivo.",
     "localization-title": "Localización",
     "localization-description": "Se usa para horarios de reuniones, fechas y el idioma de la interfaz.",
     "defaults-title": "Valores predeterminados de reunión",
@@ -84,6 +86,29 @@
     "direct-messages-description": "Permite que otros inicien un chat 1 a 1 contigo fuera de las reuniones.",
     "usage-data-title": "Compartir datos de uso anónimos",
     "usage-data-description": "Nos ayuda a mejorar Open Meet. Nunca se comparte el contenido de las reuniones."
+  },
+  "appearance": {
+    "theme-label": "Tema",
+    "theme-hint": "Alterna entre claro y oscuro.",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "accent-label": "Acento de marca",
+    "accent-hint": "Color de botones, enlaces y foco.",
+    "advanced": "Usar un color personalizado",
+    "hex-picker": "Selector de color",
+    "hex-input": "Valor hex",
+    "apply-hex": "Aplicar",
+    "reset": "Restablecer al predeterminado del espacio",
+    "using-workspace": "Usando el predeterminado del espacio.",
+    "preset": {
+      "indigo": "Índigo",
+      "blue": "Azul",
+      "green": "Verde",
+      "purple": "Morado",
+      "rose": "Rosa",
+      "amber": "Ámbar",
+      "teal": "Verde azulado"
+    }
   },
   "actions": {
     "reset": "Restablecer",

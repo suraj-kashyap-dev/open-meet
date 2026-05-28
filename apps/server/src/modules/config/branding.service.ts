@@ -11,6 +11,8 @@ import { BrandingRepository } from './branding.repository';
 const DEFAULT_APP_NAME = 'Open Meet';
 const APP_NAME_MAX = 60;
 const LOGO_MAX_BYTES = 2 * 1024 * 1024;
+const ACCENT_DEFAULT = 'indigo';
+const ACCENT_PATTERN = /^(indigo|blue|green|purple|rose|amber|teal|#[0-9a-fA-F]{6})$/;
 
 // Logos are raster images only; SVG is intentionally excluded to avoid
 // serving attacker-controlled markup from the file origin.
@@ -36,12 +38,31 @@ export class BrandingService {
       appName: settings?.appName ?? DEFAULT_APP_NAME,
       logoUrl: settings?.logoKey ? this.storage.publicUrl(settings.logoKey) : null,
       gifsEnabled: Boolean(this.config.get('TENOR_API_KEY')),
+      accentColor: settings?.accentColor ?? ACCENT_DEFAULT,
+      userCanCreateGroups: settings?.userCanCreateGroups ?? false,
     };
   }
 
   // The admin read uses the same shape as the public config.
   getBranding(): Promise<AdminBrandingDto> {
     return this.getPublicConfig();
+  }
+
+  async updateAccentColor(rawAccent: string): Promise<AdminBrandingDto> {
+    const accent = rawAccent.trim();
+    if (!ACCENT_PATTERN.test(accent)) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'accentColor must be a preset slug or a #RRGGBB hex',
+      });
+    }
+    await this.repo.setAccentColor(accent);
+    return this.getBranding();
+  }
+
+  async updateUserCanCreateGroups(value: boolean): Promise<AdminBrandingDto> {
+    await this.repo.setUserCanCreateGroups(value);
+    return this.getBranding();
   }
 
   async updateAppName(rawAppName: string): Promise<AdminBrandingDto> {

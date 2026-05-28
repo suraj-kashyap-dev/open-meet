@@ -48,6 +48,10 @@ model UserSettings {
   profileVisibility       ProfileVisibility @default(PARTICIPANTS_ONLY)
   shareUsageData          Boolean           @default(false)
 
+  // Per-user accent override; null = inherit workspace accent.
+  // Same shape as WorkspaceSettings.accentColor (preset slug or #RRGGBB).
+  accentColorOverride String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

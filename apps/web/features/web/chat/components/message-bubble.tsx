@@ -225,7 +225,7 @@ export function MessageBubble({
             </div>
           </div>
         ) : deleted ? (
-          <p className="rounded-2xl border border-dashed border-border px-3 py-2 text-sm italic text-muted-foreground">
+          <p className="rounded-2xl border border-dashed border-border/60 px-3.5 py-2 text-sm italic text-muted-foreground">
             {t('bubble.deleted')}
           </p>
         ) : hasText ? (
@@ -233,15 +233,24 @@ export function MessageBubble({
             {isMe ? renderActions() : null}
             <div
               className={cn(
-                'rounded-2xl px-3 py-2',
+                'relative px-3.5 py-2.5 text-[0.9375rem] leading-snug rounded-2xl transition-shadow',
                 isMe
-                  ? 'bg-accent text-accent-foreground'
-                  : 'border border-border bg-muted text-foreground',
+                  ? 'bg-gradient-to-br from-accent to-accent/85 text-accent-foreground shadow-md shadow-accent/15 ring-1 ring-inset ring-white/10'
+                  : 'border border-border/70 bg-card text-foreground shadow-sm',
               )}
             >
-              <MessageContent content={message.content} currentUserId={currentUserId} />
+              <MessageContent
+                content={message.content}
+                currentUserId={currentUserId}
+                inverted={isMe}
+              />
               {message.editedAt ? (
-                <span className="ms-1.5 align-baseline text-[10px] opacity-60">
+                <span
+                  className={cn(
+                    'ms-1.5 align-baseline text-[10px] italic',
+                    isMe ? 'text-accent-foreground/70' : 'text-muted-foreground',
+                  )}
+                >
                   {t('bubble.edited')}
                 </span>
               ) : null}
@@ -275,7 +284,7 @@ export function MessageBubble({
     }
 
     return (
-      <div className="flex items-center gap-0.5 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="flex items-center gap-0.5 rounded-full border border-border/60 bg-card/95 px-0.5 opacity-0 shadow-sm backdrop-blur-sm transition-opacity group-hover:opacity-100">
         {canPost ? (
           <ReactionPicker
             align={isMe ? 'end' : 'start'}

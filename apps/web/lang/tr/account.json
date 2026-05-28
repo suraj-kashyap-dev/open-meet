@@ -47,6 +47,8 @@
     "eyebrow": "Hesap",
     "title": "Ayarlar",
     "description": "Toplantı varsayılanları, diğerlerinin görebilecekleri ve diliniz.",
+    "appearance-title": "Görünüm",
+    "appearance-description": "Bu cihaz için tema ve marka vurgusu.",
     "localization-title": "Yerelleştirme",
     "localization-description": "Toplantı saatleri, tarihleri ve arayüz dili için kullanılır.",
     "defaults-title": "Toplantı varsayılanları",
@@ -84,6 +86,29 @@
     "direct-messages-description": "Diğerlerinin toplantılar dışında sizinle bire bir sohbet başlatmasına izin verin.",
     "usage-data-title": "Anonim kullanım verisi paylaş",
     "usage-data-description": "Open Meet'i geliştirmemize yardımcı olur. Toplantı içeriği asla paylaşılmaz."
+  },
+  "appearance": {
+    "theme-label": "Tema",
+    "theme-hint": "Açık ve koyu arasında geçiş yapın.",
+    "light": "Açık",
+    "dark": "Koyu",
+    "accent-label": "Marka vurgusu",
+    "accent-hint": "Düğme, bağlantı ve odak rengi.",
+    "advanced": "Özel renk kullan",
+    "hex-picker": "Renk seçici",
+    "hex-input": "Hex değeri",
+    "apply-hex": "Uygula",
+    "reset": "Çalışma alanı varsayılanına sıfırla",
+    "using-workspace": "Çalışma alanı varsayılanı kullanılıyor.",
+    "preset": {
+      "indigo": "Çivit",
+      "blue": "Mavi",
+      "green": "Yeşil",
+      "purple": "Mor",
+      "rose": "Gül",
+      "amber": "Kehribar",
+      "teal": "Petrol"
+    }
   },
   "actions": {
     "reset": "Sıfırla",

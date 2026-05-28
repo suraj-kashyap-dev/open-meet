@@ -23,6 +23,7 @@ import type {
   ConversationWithMembers,
   PollWithOptions,
 } from './messaging.includes';
+
 import type { PresenceSnapshot } from './presence.service';
 
 interface SenderRow {
@@ -31,11 +32,6 @@ interface SenderRow {
   avatarKey: string | null;
 }
 
-/**
- * Maps Prisma rows to the wire DTOs for the chat. Centralized so every service
- * and the gateway produce identical payloads (reaction aggregation, poll
- * tallies, deleted-message tombstones, viewer-relative flags).
- */
 @Injectable()
 export class MessagingSerializer {
   constructor(
@@ -172,6 +168,7 @@ export class MessagingSerializer {
       muted: mine?.muted ?? false,
       pinned: mine?.pinned ?? false,
       hidden: mine?.hidden ?? false,
+      youAreAdmin: mine?.role === 'ADMIN',
       createdAt: c.createdAt.toISOString(),
     };
   }

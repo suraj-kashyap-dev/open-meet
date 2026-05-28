@@ -12,7 +12,6 @@ import {
   ConversationStateBodyDto,
   CreatePollBodyDto,
   GifsQueryDto,
-  ListConversationsQueryDto,
   MarkReadBodyDto,
   MessagesHistoryQueryDto,
   OpenDirectBodyDto,
@@ -58,8 +57,10 @@ export class ConversationsController {
   }
 
   @Get('conversations')
-  list(@CurrentUser() user: RequestUser, @Query() query: ListConversationsQueryDto) {
-    return this.conversations.list(user.id, { includeHidden: query.includeHidden });
+  list(@CurrentUser() user: RequestUser, @Query('includeHidden') includeHidden?: string) {
+    return this.conversations.list(user.id, {
+      includeHidden: includeHidden === '1' || includeHidden === 'true',
+    });
   }
 
   @Post('conversations/direct')

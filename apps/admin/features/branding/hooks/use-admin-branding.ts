@@ -26,6 +26,16 @@ export function useUpdateBrandingName() {
   });
 }
 
+export function useUpdateBranding() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: UpdateBrandingInput) => adminBrandingApi.update(input),
+    onSuccess: (data: AdminBrandingDto) => {
+      qc.setQueryData([KEY], data);
+    },
+  });
+}
+
 export function useUploadBrandingLogo() {
   const qc = useQueryClient();
   return useMutation({

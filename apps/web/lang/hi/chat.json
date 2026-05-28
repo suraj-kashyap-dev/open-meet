@@ -1,6 +1,7 @@
 {
   "list": {
     "title": "चैट",
+    "subtitle": "आपके सीधे संदेश और समूह चैट।",
     "new": "नया संदेश",
     "recent": "हाल के",
     "filter": "फ़िल्टर",
@@ -18,7 +19,11 @@
     "mute": "म्यूट करें",
     "unmute": "अनम्यूट करें",
     "mark-unread": "अपठित के रूप में चिह्नित करें",
-    "hide": "छिपाएँ"
+    "hide": "छिपाएँ",
+    "unhide": "दिखाएँ",
+    "show-hidden": "छिपी हुई चैट दिखाएँ",
+    "hide-confirmed": "चैट छुपी",
+    "hide-undo": "पूर्ववत्"
   },
   "view": {
     "empty": "चैट शुरू करने के लिए कोई बातचीत चुनें।",
@@ -31,7 +36,12 @@
     "you-disabled": "आपकी चैट पहुंच अक्षम कर दी गई है।"
   },
   "header": {
-    "members": "{count, plural, one {# सदस्य} other {# सदस्य}}"
+    "members": "{count, plural, one {# सदस्य} other {# सदस्य}}",
+    "actions": "बातचीत क्रियाएँ",
+    "clear": "चैट साफ़ करें",
+    "delete": "चैट हटाएँ",
+    "clear-confirmed": "आपके दृश्य से संदेश साफ़ हो गए",
+    "delete-confirmed": "चैट हटाई गई"
   },
   "presence": {
     "online": "ऑनलाइन",
@@ -118,6 +128,33 @@
     "votes": "{count, plural, one {# वोट} other {# वोट}}",
     "closed": "बंद"
   },
+  "group": {
+    "compose-chat": "नई चैट",
+    "compose-group": "नया समूह",
+    "create-title": "नया समूह",
+    "create-subtitle": "नाम चुनें और कुछ लोगों को आमंत्रित करें।",
+    "name-label": "समूह का नाम",
+    "name-placeholder": "जैसे: Q4 लॉन्च टीम",
+    "description-label": "विवरण (वैकल्पिक)",
+    "description-placeholder": "यह समूह किस बारे में है?",
+    "members-label": "सदस्य",
+    "members-placeholder": "साथी खोजें…",
+    "no-teammates": "कोई साथी नहीं मिला।",
+    "create-submit": "समूह बनाएं",
+    "create-failed": "समूह नहीं बना सका",
+    "cancel": "रद्द करें",
+    "admin-badge": "एडमिन",
+    "you-badge": "आप",
+    "promote": "एडमिन बनाएं",
+    "demote": "एडमिन हटाएं",
+    "remove-member": "समूह से हटाएं",
+    "leave": "समूह छोड़ें",
+    "leave-confirm": "इस समूह को छोड़ें?",
+    "last-admin-warning": "आप एकमात्र एडमिन हैं। पहले किसी को प्रमोट करें।",
+    "delete": "समूह हटाएं",
+    "delete-confirm": "इस समूह को हटाएं? इसे पूर्ववत नहीं किया जा सकता।",
+    "groups-disabled": "समूह निर्माण वर्तमान में एडमिन द्वारा अक्षम है।"
+  },
   "new-dm": {
     "title": "नई बातचीत",
     "search": "टीम के साथियों को खोजें",
@@ -136,17 +173,25 @@
   },
   "teams": {
     "title": "टीमें",
+    "subtitle": "आपकी टीम और चैनल।",
     "empty": "आप अभी तक किसी टीम के सदस्य नहीं हैं।",
+    "empty-title": "अभी कोई टीम नहीं",
+    "empty-subtitle": "सहयोग शुरू करने के लिए एक एडमिन आपको टीम में जोड़ेगा।",
     "no-channels": "अभी तक कोई चैनल नहीं।"
   },
   "activity": {
     "title": "गतिविधि",
     "subtitle": "वे संदेश जो आपको @उल्लेख करते हैं।",
-    "empty": "अभी तक कोई उल्लेख नहीं।"
+    "empty": "अभी तक कोई उल्लेख नहीं।",
+    "empty-title": "अभी कोई उल्लेख नहीं",
+    "empty-subtitle": "जब कोई आपका @उल्लेख करेगा, यह यहाँ दिखेगा।"
   },
   "saved": {
     "title": "सहेजे गए",
-    "empty": "आपने अभी तक कोई संदेश सहेजा नहीं है।"
+    "subtitle": "संदेश जिन्हें आपने बाद के लिए सहेजा है।",
+    "empty": "आपने अभी तक कोई संदेश सहेजा नहीं है।",
+    "empty-title": "कोई सहेजे गए संदेश नहीं",
+    "empty-subtitle": "चैट से एक संदेश सहेजें ताकि वह यहाँ मिले।"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

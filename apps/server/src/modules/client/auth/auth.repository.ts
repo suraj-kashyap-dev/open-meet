@@ -54,4 +54,12 @@ export class AuthRepository {
       data,
     });
   }
+
+  /** User + their settings (for profile visibility checks). */
+  findByIdWithSettings(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: { settings: true },
+    });
+  }
 }

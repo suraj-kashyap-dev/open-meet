@@ -15,7 +15,7 @@ import { UserAvatar } from '@open-meet/ui/user-avatar';
 
 import type { ConversationDto } from '@open-meet/types';
 
-import { formatTime } from '@/components/shared/chat';
+import { formatTime, previewText } from '@/components/shared/chat';
 import { Link } from '@/i18n/navigation';
 
 import { conversationDisplay } from '../lib/conversation-display';
@@ -41,7 +41,7 @@ export function ConversationListItem({
   const preview = last
     ? last.deletedAt
       ? t('bubble.deleted')
-      : last.content || t('list.attachment')
+      : previewText(last.content) || t('list.attachment')
     : t('list.no-messages');
 
   const setState = (next: Parameters<typeof state.mutate>[0]['state']) =>
@@ -66,6 +66,7 @@ export function ConversationListItem({
       className={cn(
         'group relative flex items-center rounded-lg transition-colors',
         active ? 'bg-muted' : 'hover:bg-muted/60',
+        isHidden && 'opacity-60',
       )}
     >
       <Link

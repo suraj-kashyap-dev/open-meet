@@ -8,6 +8,7 @@ import type { ReactNode } from 'react';
 import { isRtl, routing } from '@/i18n/routing';
 import { getBranding } from '@/lib/branding';
 import { BrandingProvider } from '@/components/web/branding/branding-provider';
+import { AccentProvider } from '@/components/web/theme/accent-provider';
 import { Providers } from '@/providers';
 import { Toaster } from '@open-meet/ui/sonner';
 import '../globals.css';
@@ -68,7 +69,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <BrandingProvider value={branding}>
             <Providers>
-              {children}
+              <AccentProvider>{children}</AccentProvider>
               <Toaster position="bottom-right" />
             </Providers>
           </BrandingProvider>

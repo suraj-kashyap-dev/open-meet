@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PresenceStatus } from '@prisma/client';
 
+import { ChatServerEvent } from '@open-meet/types';
+
 import { RedisService } from '../../../integrations/redis/redis.service';
 
+import { ChatBus, conversationRoom } from './chat-bus.service';
+import { ConversationsRepository } from './conversations.repository';
 import { PresenceRepository } from './presence.repository';
 
 const ONLINE_KEY = 'chat:presence:online';
@@ -15,17 +19,13 @@ export interface PresenceSnapshot {
   lastSeen: string | null;
 }
 
-/**
- * Online/offline is a Redis connection ref-count (multi-tab safe); the chosen
- * status (Available/Busy/DND/…) + custom text are persisted in `UserPresence`.
- * The effective status shown to others is OFFLINE whenever the user has no live
- * connection (or explicitly appears offline), otherwise their chosen status.
- */
 @Injectable()
 export class PresenceService {
   constructor(
     private readonly redis: RedisService,
     private readonly repo: PresenceRepository,
+    private readonly bus: ChatBus,
+    private readonly conversations: ConversationsRepository,
   ) {}
 
   async connect(userId: string): Promise<boolean> {
@@ -45,6 +45,24 @@ export class PresenceService {
     return false;
   }
 
+  async forceOffline(userId: string): Promise<void> {
+    const lastSeen = new Date().toISOString();
+    await this.redis.client.hdel(ONLINE_KEY, userId);
+    await this.redis.client.hset(LAST_SEEN_KEY, userId, lastSeen);
+
+    const conversationIds = await this.conversations.conversationIdsForUser(userId);
+    const payload = {
+      userId,
+      online: false,
+      status: PresenceStatus.OFFLINE,
+      customText: null,
+      lastSeen,
+    };
+    for (const id of conversationIds) {
+      this.bus.emit(conversationRoom(id), ChatServerEvent.PRESENCE_UPDATE, payload);
+    }
+  }
+
   async isOnline(userId: string): Promise<boolean> {
     const value = await this.redis.client.hget(ONLINE_KEY, userId);
     return value !== null && Number(value) > 0;
@@ -60,6 +78,7 @@ export class PresenceService {
 
     userIds.forEach((id, i) => {
       const v = values[i];
+      
       if (v !== null && v !== undefined && Number(v) > 0) {
         online.add(id);
       }
@@ -76,15 +95,14 @@ export class PresenceService {
     return this.repo.upsert(userId, status, customText);
   }
 
-  /** Effective presence for one user, for the SET_PRESENCE broadcast / "me" view. */
   async forUser(userId: string): Promise<PresenceSnapshot> {
     const [snap] = await this.snapshotList([userId]);
+    
     return (
       snap ?? { online: false, status: PresenceStatus.OFFLINE, customText: null, lastSeen: null }
     );
   }
 
-  /** Effective presence for many users, keyed by id (for serializing member lists). */
   async snapshot(userIds: string[]): Promise<Map<string, PresenceSnapshot>> {
     const list = await this.snapshotList(userIds);
     return new Map(userIds.map((id, i) => [id, list[i]!]));
@@ -107,7 +125,7 @@ export class PresenceService {
       const isOnline = online.has(id);
       const chosen = byUser.get(id);
       const status =
-        !isOnline || chosen?.status === PresenceStatus.OFFLINE
+        ! isOnline || chosen?.status === PresenceStatus.OFFLINE
           ? PresenceStatus.OFFLINE
           : (chosen?.status ?? PresenceStatus.AVAILABLE);
 

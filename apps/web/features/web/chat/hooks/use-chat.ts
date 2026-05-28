@@ -10,6 +10,7 @@ import type {
   CreatePollDto,
   GifSearchResultDto,
   PinnedMessageListDto,
+  PublicUserDto,
   SavedMessageListDto,
   TeammateListDto,
   UserPresenceDto,
@@ -35,10 +36,12 @@ function makeNonce(): string {
     : `${Date.now()}-${Math.random()}`;
 }
 
-export function useConversations() {
+export function useConversations(opts: { includeHidden?: boolean } = {}) {
+  const includeHidden = opts.includeHidden ?? false;
+
   return useQuery<ConversationListDto>({
-    queryKey: chatKeys.conversations(),
-    queryFn: ({ signal }) => chatApi.conversations(signal),
+    queryKey: [...chatKeys.conversations(), { includeHidden }],
+    queryFn: ({ signal }) => chatApi.conversations({ includeHidden }, signal),
     staleTime: 15_000,
   });
 }
@@ -335,22 +338,27 @@ export function useConversationState() {
       state: ConversationStateDto;
     }) => chatApi.setState(conversationId, state),
     onSuccess: (_res, { conversationId, state }) => {
-      qc.setQueryData<ConversationListDto>(chatKeys.conversations(), (list) => {
-        if (!list) return list;
-        let items = list.items.map((c) =>
-          c.id === conversationId
-            ? {
-                ...c,
-                ...(state.muted !== undefined ? { muted: state.muted } : {}),
-                ...(state.pinned !== undefined ? { pinned: state.pinned } : {}),
-              }
-            : c,
-        );
-        if (state.hidden) {
-          items = items.filter((c) => c.id !== conversationId);
-        }
-        return { items };
-      });
+      // Update EVERY cached conversation-list variant (both includeHidden=false
+      // and includeHidden=true) via prefix-matching setQueriesData. Mutate the
+      // matched conversation's flags; the subsequent invalidateQueries refetch
+      // reconciles whether the item should stay/leave each variant.
+      qc.setQueriesData<ConversationListDto>(
+        { queryKey: chatKeys.conversations() },
+        (list) => {
+          if (!list) return list;
+          const items = list.items.map((c) =>
+            c.id === conversationId
+              ? {
+                  ...c,
+                  ...(state.muted !== undefined ? { muted: state.muted } : {}),
+                  ...(state.pinned !== undefined ? { pinned: state.pinned } : {}),
+                  ...(state.hidden !== undefined ? { hidden: state.hidden } : {}),
+                }
+              : c,
+          );
+          return { items };
+        },
+      );
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
   });
@@ -388,5 +396,79 @@ export function usePresenceMe() {
     queryKey: presenceMeKey,
     queryFn: ({ signal }) => chatApi.presenceMe(signal),
     staleTime: 30_000,
+  });
+}
+
+// --- Groups (user-initiated) ---
+
+export function useCreateGroup() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { title: string; description?: string | null; memberIds: string[] }) =>
+      chatApi.createGroup(body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useUpdateGroup(conversationId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: { title?: string; description?: string | null }) =>
+      chatApi.updateGroup(conversationId, body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useAddGroupMembers(conversationId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userIds: string[]) => chatApi.addGroupMembers(conversationId, userIds),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useRemoveGroupMember(conversationId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (userId: string) => chatApi.removeGroupMember(conversationId, userId),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useSetGroupMemberRole(conversationId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ userId, role }: { userId: string; role: 'ADMIN' | 'MEMBER' }) =>
+      chatApi.setGroupMemberRole(conversationId, userId, role),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useDeleteGroup() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (conversationId: string) => chatApi.deleteGroup(conversationId),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function usePublicUser(userId: string | null | undefined) {
+  return useQuery<PublicUserDto>({
+    queryKey: ['chat', 'public-user', userId ?? ''],
+    queryFn: ({ signal }) => chatApi.publicUser(userId as string, signal),
+    enabled: Boolean(userId),
+    staleTime: 60_000,
   });
 }

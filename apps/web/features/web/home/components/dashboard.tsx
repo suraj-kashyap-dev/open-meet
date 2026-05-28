@@ -95,16 +95,6 @@ export function Dashboard() {
 
   return (
     <div className="min-h-full bg-card">
-      <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-card/95 px-6 py-4 backdrop-blur">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-accent/20">
-          <Video className="h-4 w-4" />
-        </span>
-        <div className="min-w-0">
-          <h1 className="text-lg font-semibold tracking-tight">{t('page.title')}</h1>
-          <p className="truncate text-xs text-muted-foreground">{t('page.subtitle')}</p>
-        </div>
-      </header>
-
       <div className="mx-auto w-full max-w-5xl space-y-6 px-6 py-6">
         <ActionCard
           code={code}

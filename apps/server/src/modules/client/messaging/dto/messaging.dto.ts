@@ -1,4 +1,4 @@
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -20,13 +20,6 @@ export class OpenDirectBodyDto {
   @IsString()
   @MinLength(1)
   targetUserId!: string;
-}
-
-export class ListConversationsQueryDto {
-  @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === '1' || value === true)
-  @IsBoolean()
-  includeHidden?: boolean;
 }
 
 export class MessagesHistoryQueryDto {
