@@ -11,6 +11,8 @@
     "joined": "Inscrit",
     "hosted": "Organisées",
     "attended": "Participées",
+    "chat": "Discussion",
+    "chat-toggle": "Activer/désactiver l'accès à la discussion",
     "actions": "Actions",
     "open-actions": "Ouvrir les actions",
     "edit": "Modifier",
@@ -76,5 +78,29 @@
     "submitting": "Suppression…",
     "success": "{email} supprimé",
     "error": "Impossible de supprimer l'utilisateur"
+  },
+  "invite": {
+    "button": "Inviter un utilisateur",
+    "title": "Inviter un utilisateur",
+    "subtitle": "Il recevra un e-mail pour définir un mot de passe et activer son compte.",
+    "name": "Nom",
+    "email": "E-mail",
+    "submit": "Envoyer l'invitation",
+    "success": "Invitation envoyée à {email}",
+    "error": "Impossible d'envoyer l'invitation"
+  },
+  "pending": {
+    "title": "Invitations en attente",
+    "empty": "Aucune invitation en attente.",
+    "loading-error": "Impossible de charger les invitations.",
+    "status-pending": "En attente",
+    "status-expired": "Expirée",
+    "expires": "Expire {when}",
+    "resend-label": "Renvoyer l'invitation à {email}",
+    "revoke-label": "Révoquer l'invitation de {email}",
+    "resend-success": "Invitation renvoyée à {email}",
+    "resend-error": "Impossible de renvoyer l'invitation",
+    "revoke-success": "Invitation de {email} révoquée",
+    "revoke-error": "Impossible de révoquer l'invitation"
   }
 }

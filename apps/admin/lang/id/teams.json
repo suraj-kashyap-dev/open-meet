@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Kelola",
+  "title": "Tim",
+  "subtitle": "Tim menentukan siapa yang dapat saling berkirim pesan — pengguna dapat mengirim DM ke siapa pun di tim bersama.",
+  "empty": "Belum ada tim.",
+  "columns": {
+    "name": "Nama",
+    "members": "Anggota"
+  },
+  "actions": {
+    "manage": "Kelola anggota",
+    "delete": "Hapus tim"
+  },
+  "create": {
+    "button": "Tim baru",
+    "title": "Buat tim",
+    "name": "Nama tim",
+    "placeholder": "mis. Teknik",
+    "submit": "Buat",
+    "success": "Tim dibuat",
+    "error": "Tidak dapat membuat tim"
+  },
+  "manage": {
+    "title": "Anggota",
+    "members": "{count, plural, one {# anggota} other {# anggota}}",
+    "add": "Tambah anggota",
+    "search": "Cari pengguna",
+    "no-users": "Tidak ada pengguna yang ditemukan.",
+    "add-confirm": "Tambah",
+    "empty": "Belum ada anggota.",
+    "remove": "Hapus anggota"
+  },
+  "channels": {
+    "title": "Kanal",
+    "empty": "Belum ada kanal.",
+    "general": "Umum",
+    "add": "Tambah kanal",
+    "delete": "Hapus kanal",
+    "name-placeholder": "Nama kanal baru"
+  }
+}

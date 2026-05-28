@@ -128,13 +128,23 @@ export function useLogin(redirectTo: string = '/') {
   });
 }
 
-export function useRegister(redirectTo: string = '/') {
+export function useInviteLookup(token: string) {
+  return useQuery({
+    queryKey: ['auth', 'invite', token],
+    queryFn: ({ signal }) => authApi.lookupInvite(token, signal),
+    enabled: token.length > 0,
+    retry: false,
+    staleTime: Infinity,
+  });
+}
+
+export function useAcceptInvite(redirectTo: string = '/') {
   const router = useRouter();
 
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: authApi.register,
+    mutationFn: authApi.acceptInvite,
     onSuccess: (data) => {
       writeCachedUser(data.user);
       qc.setQueryData(ME_KEY, data.user);

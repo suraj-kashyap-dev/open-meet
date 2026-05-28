@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, PayloadTooLargeException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { randomBytes } from 'node:crypto';
 
+import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode, type AdminBrandingDto, type PublicConfigDto } from '@open-meet/types';
 
 import { StorageService } from '../../storage/storage.service';
@@ -24,6 +26,7 @@ export class BrandingService {
   constructor(
     private readonly repo: BrandingRepository,
     private readonly storage: StorageService,
+    private readonly config: ConfigService<ApiEnv, true>,
   ) {}
 
   async getPublicConfig(): Promise<PublicConfigDto> {
@@ -32,6 +35,7 @@ export class BrandingService {
     return {
       appName: settings?.appName ?? DEFAULT_APP_NAME,
       logoUrl: settings?.logoKey ? this.storage.publicUrl(settings.logoKey) : null,
+      gifsEnabled: Boolean(this.config.get('TENOR_API_KEY')),
     };
   }
 

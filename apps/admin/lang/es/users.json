@@ -11,6 +11,8 @@
     "joined": "Se unió",
     "hosted": "Organizó",
     "attended": "Asistió",
+    "chat": "Chat",
+    "chat-toggle": "Alternar acceso al chat",
     "actions": "Acciones",
     "open-actions": "Abrir acciones",
     "edit": "Editar",
@@ -76,5 +78,29 @@
     "submitting": "Eliminando…",
     "success": "{email} eliminado",
     "error": "No se pudo eliminar al usuario"
+  },
+  "invite": {
+    "button": "Invitar usuario",
+    "title": "Invitar a un usuario",
+    "subtitle": "Recibirán un correo para establecer una contraseña y activar su cuenta.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "submit": "Enviar invitación",
+    "success": "Invitación enviada a {email}",
+    "error": "No se pudo enviar la invitación"
+  },
+  "pending": {
+    "title": "Invitaciones pendientes",
+    "empty": "No hay invitaciones pendientes.",
+    "loading-error": "No se pudieron cargar las invitaciones.",
+    "status-pending": "Pendiente",
+    "status-expired": "Caducada",
+    "expires": "Caduca {when}",
+    "resend-label": "Reenviar invitación a {email}",
+    "revoke-label": "Revocar invitación de {email}",
+    "resend-success": "Invitación reenviada a {email}",
+    "resend-error": "No se pudo reenviar la invitación",
+    "revoke-success": "Invitación de {email} revocada",
+    "revoke-error": "No se pudo revocar la invitación"
   }
 }

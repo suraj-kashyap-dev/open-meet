@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Gestisci",
+  "title": "Team",
+  "subtitle": "I team decidono chi può inviare messaggi a chi: gli utenti possono inviare DM a chiunque in un team condiviso.",
+  "empty": "Ancora nessun team.",
+  "columns": {
+    "name": "Nome",
+    "members": "Membri"
+  },
+  "actions": {
+    "manage": "Gestisci membri",
+    "delete": "Elimina team"
+  },
+  "create": {
+    "button": "Nuovo team",
+    "title": "Crea team",
+    "name": "Nome del team",
+    "placeholder": "es. Ingegneria",
+    "submit": "Crea",
+    "success": "Team creato",
+    "error": "Impossibile creare il team"
+  },
+  "manage": {
+    "title": "Membri",
+    "members": "{count, plural, one {# membro} other {# membri}}",
+    "add": "Aggiungi membri",
+    "search": "Cerca utenti",
+    "no-users": "Nessun utente trovato.",
+    "add-confirm": "Aggiungi",
+    "empty": "Ancora nessun membro.",
+    "remove": "Rimuovi membro"
+  },
+  "channels": {
+    "title": "Canali",
+    "empty": "Ancora nessun canale.",
+    "general": "Generale",
+    "add": "Aggiungi canale",
+    "delete": "Elimina canale",
+    "name-placeholder": "Nome del nuovo canale"
+  }
+}

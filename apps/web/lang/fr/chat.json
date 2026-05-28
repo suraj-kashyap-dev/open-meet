@@ -1,0 +1,139 @@
+{
+  "list": {
+    "title": "Messages",
+    "new": "Nouveau message",
+    "search": "Rechercher des conversations",
+    "loading": "Chargement…",
+    "empty": "Aucune conversation pour l'instant.",
+    "untitled": "Conversation",
+    "attachment": "Pièce jointe",
+    "no-messages": "Aucun message pour l'instant",
+    "actions": "Actions de conversation",
+    "pin-chat": "Épingler en haut",
+    "unpin-chat": "Désépingler",
+    "mute": "Couper le son",
+    "unmute": "Réactiver le son",
+    "mark-unread": "Marquer comme non lu",
+    "hide": "Masquer"
+  },
+  "view": {
+    "empty": "Sélectionnez une conversation pour commencer à discuter.",
+    "no-messages": "Aucun message pour l'instant. Dites bonjour !",
+    "loading": "Chargement de la conversation…",
+    "not-found": "Conversation introuvable.",
+    "back": "Retour aux conversations",
+    "jump-to-latest": "Aller au plus récent",
+    "peer-disabled": "La discussion est désactivée pour cet utilisateur.",
+    "you-disabled": "Votre accès à la discussion a été désactivé."
+  },
+  "header": {
+    "members": "{count, plural, one {# membre} other {# membres}}"
+  },
+  "presence": {
+    "online": "En ligne",
+    "offline": "Hors ligne",
+    "last-seen": "Vu pour la dernière fois {time}",
+    "set-status": "Définir votre statut",
+    "available": "Disponible",
+    "busy": "Occupé",
+    "dnd": "Ne pas déranger",
+    "brb": "Je reviens tout de suite",
+    "away": "Absent"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "Rechercher des GIF",
+    "empty": "Aucun GIF trouvé."
+  },
+  "bubble": {
+    "you": "Vous",
+    "unknown-user": "Inconnu",
+    "deleted": "Ce message a été supprimé",
+    "edited": "(modifié)",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "reply": "Répondre",
+    "more": "Plus d'actions",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "pinned": "Épinglé",
+    "pin": "Épingler",
+    "unpin": "Désépingler",
+    "save-message": "Enregistrer",
+    "unsave-message": "Retirer des enregistrés",
+    "forward": "Transférer",
+    "copy-link": "Copier le lien",
+    "link-copied": "Lien copié"
+  },
+  "priority": {
+    "normal": "Standard",
+    "important": "Important",
+    "urgent": "Urgent",
+    "label": "Priorité"
+  },
+  "forward": {
+    "title": "Transférer à…",
+    "success": "Message transféré",
+    "error": "Impossible de transférer le message"
+  },
+  "receipts": {
+    "seen": "Vu",
+    "seen-by": "Vu par {count}"
+  },
+  "typing": {
+    "one": "{name} est en train d'écrire…",
+    "many": "{count} personnes sont en train d'écrire…"
+  },
+  "composer": {
+    "placeholder": "Écrivez un message…",
+    "send": "Envoyer le message",
+    "attach-file": "Joindre un fichier",
+    "take-photo": "Prendre une photo",
+    "cancel-reply": "Annuler la réponse",
+    "uploading": "Téléversement… {percent}%",
+    "failed": "Échec",
+    "remove-attachment": "Supprimer la pièce jointe",
+    "max-attachments": "Vous pouvez joindre jusqu'à {max} fichiers.",
+    "wait-for-uploads": "Attendez la fin des téléversements.",
+    "upload-failed": "Échec du téléversement",
+    "poll-failed": "Impossible de créer le sondage",
+    "disabled": "Vous ne pouvez pas envoyer de messages ici."
+  },
+  "poll": {
+    "create": "Créer un sondage",
+    "question": "Question",
+    "question-placeholder": "Posez une question…",
+    "options": "Options",
+    "option-placeholder": "Option {index}",
+    "add-option": "Ajouter une option",
+    "remove-option": "Supprimer l'option",
+    "allow-multiple": "Autoriser plusieurs réponses",
+    "cancel": "Annuler",
+    "create-submit": "Créer",
+    "votes": "{count, plural, one {# vote} other {# votes}}",
+    "closed": "Fermé"
+  },
+  "new-dm": {
+    "title": "Nouvelle conversation",
+    "search": "Rechercher des coéquipiers",
+    "no-teammates": "Aucun coéquipier trouvé.",
+    "disabled": "Indisponible"
+  },
+  "teams": {
+    "title": "Équipes",
+    "empty": "Vous n'êtes encore membre d'aucune équipe.",
+    "no-channels": "Aucun canal pour l'instant."
+  },
+  "activity": {
+    "title": "Activité",
+    "subtitle": "Messages qui vous @mentionnent.",
+    "empty": "Aucune mention pour l'instant."
+  },
+  "saved": {
+    "title": "Enregistrés",
+    "empty": "Vous n'avez encore enregistré aucun message."
+  },
+  "size-bytes": "{bytes} o",
+  "size-kb": "{kb} Ko",
+  "size-mb": "{mb} Mo"
+}

@@ -25,6 +25,13 @@ export class AuthRepository {
     });
   }
 
+  /** Create a user whose email is already verified (invite acceptance). */
+  createInvited(input: { name: string; email: string; passwordHash: string }): Promise<User> {
+    return this.prisma.user.create({
+      data: { ...input, email: input.email.toLowerCase(), emailVerifiedAt: new Date() },
+    });
+  }
+
   createGoogleUser(input: {
     name: string;
     email: string;

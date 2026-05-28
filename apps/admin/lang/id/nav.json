@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "Dasbor",
     "users": "Pengguna",
+    "teams": "Tim",
+    "groups": "Grup",
     "meetings": "Rapat",
     "analytics": "Analitik",
     "settings": "Pengaturan",

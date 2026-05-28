@@ -9,7 +9,9 @@ model Admin {
   updatedAt    DateTime  @updatedAt
   lastLoginAt  DateTime?
 
-  invitesSent AdminInvite[]
+  invitesSent          AdminInvite[]
+  userInvitesSent      UserInvite[]
+  conversationsCreated Conversation[]
 
   @@index([email])
 }

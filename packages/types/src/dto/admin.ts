@@ -87,6 +87,7 @@ export interface AdminUserDto {
   timezone: string;
   language: string;
   bio: string | null;
+  chatDisabled: boolean;
   createdAt: string;
   meetingsHosted: number;
   meetingsAttended: number;
@@ -112,6 +113,7 @@ export interface AdminUpdateUserDto {
   language?: string;
   bio?: string | null;
   newPassword?: string;
+  chatDisabled?: boolean;
 }
 
 export interface AdminMeetingDto {

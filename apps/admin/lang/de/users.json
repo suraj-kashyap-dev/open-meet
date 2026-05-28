@@ -11,6 +11,8 @@
     "joined": "Beigetreten",
     "hosted": "Gehostet",
     "attended": "Teilgenommen",
+    "chat": "Chat",
+    "chat-toggle": "Chat-Zugang umschalten",
     "actions": "Aktionen",
     "open-actions": "Aktionen öffnen",
     "edit": "Bearbeiten",
@@ -76,5 +78,29 @@
     "submitting": "Wird gelöscht…",
     "success": "{email} gelöscht",
     "error": "Benutzer konnte nicht gelöscht werden"
+  },
+  "invite": {
+    "button": "Benutzer einladen",
+    "title": "Einen Benutzer einladen",
+    "subtitle": "Sie erhalten eine E-Mail, um ein Passwort festzulegen und ihr Konto zu aktivieren.",
+    "name": "Name",
+    "email": "E-Mail",
+    "submit": "Einladung senden",
+    "success": "Einladung an {email} gesendet",
+    "error": "Einladung konnte nicht gesendet werden"
+  },
+  "pending": {
+    "title": "Ausstehende Einladungen",
+    "empty": "Keine ausstehenden Einladungen.",
+    "loading-error": "Einladungen konnten nicht geladen werden.",
+    "status-pending": "Ausstehend",
+    "status-expired": "Abgelaufen",
+    "expires": "Läuft ab {when}",
+    "resend-label": "Einladung an {email} erneut senden",
+    "revoke-label": "Einladung für {email} widerrufen",
+    "resend-success": "Einladung erneut an {email} gesendet",
+    "resend-error": "Einladung konnte nicht erneut gesendet werden",
+    "revoke-success": "Einladung für {email} widerrufen",
+    "revoke-error": "Einladung konnte nicht widerrufen werden"
   }
 }

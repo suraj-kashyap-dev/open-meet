@@ -11,6 +11,8 @@
     "joined": "Entrou",
     "hosted": "Organizou",
     "attended": "Participou",
+    "chat": "Chat",
+    "chat-toggle": "Alternar acesso ao chat",
     "actions": "Ações",
     "open-actions": "Abrir ações",
     "edit": "Editar",
@@ -76,5 +78,29 @@
     "submitting": "Excluindo…",
     "success": "{email} excluído",
     "error": "Não foi possível excluir o usuário"
+  },
+  "invite": {
+    "button": "Convidar usuário",
+    "title": "Convidar um usuário",
+    "subtitle": "Eles receberão um e-mail para definir uma senha e ativar a conta.",
+    "name": "Nome",
+    "email": "E-mail",
+    "submit": "Enviar convite",
+    "success": "Convite enviado para {email}",
+    "error": "Não foi possível enviar o convite"
+  },
+  "pending": {
+    "title": "Convites pendentes",
+    "empty": "Nenhum convite pendente.",
+    "loading-error": "Não foi possível carregar os convites.",
+    "status-pending": "Pendente",
+    "status-expired": "Expirado",
+    "expires": "Expira {when}",
+    "resend-label": "Reenviar convite para {email}",
+    "revoke-label": "Revogar convite de {email}",
+    "resend-success": "Convite reenviado para {email}",
+    "resend-error": "Não foi possível reenviar o convite",
+    "revoke-success": "Convite de {email} revogado",
+    "revoke-error": "Não foi possível revogar o convite"
   }
 }

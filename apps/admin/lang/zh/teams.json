@@ -1,0 +1,41 @@
+{
+  "eyebrow": "管理",
+  "title": "团队",
+  "subtitle": "团队决定谁可以向谁发送消息——用户可以向同一团队中的任何人发送私信。",
+  "empty": "暂无团队。",
+  "columns": {
+    "name": "名称",
+    "members": "成员"
+  },
+  "actions": {
+    "manage": "管理成员",
+    "delete": "删除团队"
+  },
+  "create": {
+    "button": "新建团队",
+    "title": "创建团队",
+    "name": "团队名称",
+    "placeholder": "例如：工程部",
+    "submit": "创建",
+    "success": "团队已创建",
+    "error": "无法创建团队"
+  },
+  "manage": {
+    "title": "成员",
+    "members": "{count, plural, one {# 位成员} other {# 位成员}}",
+    "add": "添加成员",
+    "search": "搜索用户",
+    "no-users": "未找到用户。",
+    "add-confirm": "添加",
+    "empty": "暂无成员。",
+    "remove": "移除成员"
+  },
+  "channels": {
+    "title": "频道",
+    "empty": "暂无频道。",
+    "general": "通用",
+    "add": "添加频道",
+    "delete": "删除频道",
+    "name-placeholder": "新频道名称"
+  }
+}

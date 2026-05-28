@@ -7,6 +7,10 @@
     "sign-out": "Выйти"
   },
   "user-menu-label": "Открыть меню аккаунта",
+  "chat-link-label": "Открыть чат",
+  "activity-link-label": "Активность",
+  "teams-link-label": "Команды",
+  "saved-link-label": "Сохранённые",
   "command": {
     "placeholder": "Введите команду или код встречи…",
     "no-results": "Нет результатов.",

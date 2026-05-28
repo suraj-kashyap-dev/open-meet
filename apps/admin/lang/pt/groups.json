@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Gerenciar",
+  "title": "Grupos",
+  "subtitle": "As conversas em grupo são criadas e gerenciadas pelos administradores.",
+  "empty": "Nenhum grupo ainda.",
+  "columns": {
+    "name": "Nome",
+    "members": "Membros"
+  },
+  "actions": {
+    "manage": "Gerenciar membros",
+    "delete": "Excluir grupo"
+  },
+  "create": {
+    "button": "Novo grupo",
+    "title": "Criar grupo",
+    "name": "Nome do grupo",
+    "placeholder": "ex.: Lançamento de produto",
+    "choose-members": "Escolher membros",
+    "choose-confirm": "Selecionar",
+    "selected": "{count, plural, one {# membro selecionado} other {# membros selecionados}}",
+    "submit": "Criar",
+    "success": "Grupo criado",
+    "error": "Não foi possível criar o grupo"
+  },
+  "manage": {
+    "title": "Membros",
+    "members": "{count, plural, one {# membro} other {# membros}}",
+    "add": "Adicionar membros",
+    "search": "Pesquisar usuários",
+    "no-users": "Nenhum usuário encontrado.",
+    "add-confirm": "Adicionar",
+    "empty": "Nenhum membro ainda.",
+    "remove": "Remover membro"
+  }
+}

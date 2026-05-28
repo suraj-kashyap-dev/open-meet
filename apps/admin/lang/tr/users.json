@@ -11,6 +11,8 @@
     "joined": "Katıldı",
     "hosted": "Düzenledi",
     "attended": "Katıldı",
+    "chat": "Sohbet",
+    "chat-toggle": "Sohbet erişimini değiştir",
     "actions": "İşlemler",
     "open-actions": "İşlemleri aç",
     "edit": "Düzenle",
@@ -76,5 +78,29 @@
     "submitting": "Siliniyor…",
     "success": "{email} silindi",
     "error": "Kullanıcı silinemedi"
+  },
+  "invite": {
+    "button": "Kullanıcı davet et",
+    "title": "Bir kullanıcı davet et",
+    "subtitle": "Şifre belirlemek ve hesaplarını etkinleştirmek için bir e-posta alacaklar.",
+    "name": "Ad",
+    "email": "E-posta",
+    "submit": "Davet gönder",
+    "success": "Davet {email} adresine gönderildi",
+    "error": "Davet gönderilemedi"
+  },
+  "pending": {
+    "title": "Bekleyen davetler",
+    "empty": "Bekleyen davet yok.",
+    "loading-error": "Davetler yüklenemedi.",
+    "status-pending": "Bekliyor",
+    "status-expired": "Süresi doldu",
+    "expires": "Sona erme {when}",
+    "resend-label": "{email} adresine daveti yeniden gönder",
+    "revoke-label": "{email} için daveti iptal et",
+    "resend-success": "Davet {email} adresine yeniden gönderildi",
+    "resend-error": "Davet yeniden gönderilemedi",
+    "revoke-success": "{email} için davet iptal edildi",
+    "revoke-error": "Davet iptal edilemedi"
   }
 }

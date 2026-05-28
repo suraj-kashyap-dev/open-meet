@@ -18,4 +18,68 @@ test.describe('Admin users page', () => {
 
     await expect(page.getByText('No users yet.')).toBeVisible();
   });
+
+  test('should open the invite form when Invite user is clicked', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    await page.getByRole('button', { name: 'Invite user' }).click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Invite a user')).toBeVisible();
+    await expect(dialog.getByLabel('Name')).toBeVisible();
+    await expect(dialog.getByLabel('Email')).toBeVisible();
+  });
+
+  test('should submit the invite to the invite endpoint', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    await page.getByRole('button', { name: 'Invite user' }).click();
+
+    const dialog = page.getByRole('dialog');
+    await dialog.getByLabel('Name').fill('Nina Newbie');
+    await dialog.getByLabel('Email').fill('newbie@example.com');
+
+    const [request] = await Promise.all([
+      page.waitForRequest(
+        (req) => req.url().endsWith('/admin/users/invite') && req.method() === 'POST',
+      ),
+      dialog.getByRole('button', { name: 'Send invite' }).click(),
+    ]);
+
+    expect(request.postDataJSON()).toMatchObject({
+      name: 'Nina Newbie',
+      email: 'newbie@example.com',
+    });
+  });
+
+  test('should list pending invitations', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    await expect(page.getByRole('heading', { name: 'Pending invitations' })).toBeVisible();
+    await expect(page.getByText('newbie@example.com')).toBeVisible();
+  });
+
+  test('should toggle a user chat access via the update endpoint', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    // First row (Ada, u-1) chat switch is on (chatDisabled: false). Turning it
+    // off must PATCH /admin/users/u-1 with chatDisabled: true.
+    const toggle = page
+      .getByRole('row', { name: /Ada Lovelace/ })
+      .getByRole('switch', { name: 'Toggle chat access' });
+    await expect(toggle).toBeVisible();
+
+    const [request] = await Promise.all([
+      page.waitForRequest(
+        (req) => req.url().includes('/admin/users/u-1') && req.method() === 'PATCH',
+      ),
+      toggle.click(),
+    ]);
+
+    expect(request.postDataJSON()).toMatchObject({ chatDisabled: true });
+  });
 });

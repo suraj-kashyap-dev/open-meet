@@ -23,6 +23,16 @@ import { AdminInviteRepository } from './accounts/admin-invite.repository';
 import { AdminUsersController } from './users/users.controller';
 import { AdminUsersService } from './users/users.service';
 import { AdminUsersRepository } from './users/users.repository';
+import { AdminUserInviteService } from './users/user-invite.service';
+import { AdminUserInviteRepository } from './users/user-invite.repository';
+import { AdminTeamsController } from './teams/teams.controller';
+import { AdminTeamsService } from './teams/teams.service';
+import { AdminTeamsRepository } from './teams/teams.repository';
+import { AdminChannelsService } from './teams/channels.service';
+import { AdminChannelsRepository } from './teams/channels.repository';
+import { AdminGroupsController } from './groups/groups.controller';
+import { AdminGroupsService } from './groups/groups.service';
+import { AdminGroupsRepository } from './groups/groups.repository';
 import { AdminBrandingController } from './branding/branding.controller';
 import { AdminConfigurationController } from './configuration/configuration.controller';
 import { AdminRepository } from './admin.repository';
@@ -37,6 +47,8 @@ import { AdminBootstrapService } from './bootstrap.service';
     AdminAccountsController,
     AdminInviteController,
     AdminUsersController,
+    AdminTeamsController,
+    AdminGroupsController,
     AdminBrandingController,
     AdminConfigurationController,
   ],
@@ -53,6 +65,14 @@ import { AdminBootstrapService } from './bootstrap.service';
     AdminInviteRepository,
     AdminUsersService,
     AdminUsersRepository,
+    AdminUserInviteService,
+    AdminUserInviteRepository,
+    AdminTeamsService,
+    AdminTeamsRepository,
+    AdminChannelsService,
+    AdminChannelsRepository,
+    AdminGroupsService,
+    AdminGroupsRepository,
     AdminBootstrapService,
   ],
 })

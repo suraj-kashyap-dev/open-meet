@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Gestionar",
+  "title": "Equipos",
+  "subtitle": "Los equipos deciden quién puede enviar mensajes a quién: los usuarios pueden enviar mensajes a cualquiera de un equipo compartido.",
+  "empty": "Aún no hay equipos.",
+  "columns": {
+    "name": "Nombre",
+    "members": "Miembros"
+  },
+  "actions": {
+    "manage": "Gestionar miembros",
+    "delete": "Eliminar equipo"
+  },
+  "create": {
+    "button": "Nuevo equipo",
+    "title": "Crear equipo",
+    "name": "Nombre del equipo",
+    "placeholder": "p. ej. Ingeniería",
+    "submit": "Crear",
+    "success": "Equipo creado",
+    "error": "No se pudo crear el equipo"
+  },
+  "manage": {
+    "title": "Miembros",
+    "members": "{count, plural, one {# miembro} other {# miembros}}",
+    "add": "Agregar miembros",
+    "search": "Buscar usuarios",
+    "no-users": "No se encontraron usuarios.",
+    "add-confirm": "Agregar",
+    "empty": "Aún no hay miembros.",
+    "remove": "Quitar miembro"
+  },
+  "channels": {
+    "title": "Canales",
+    "empty": "Aún no hay canales.",
+    "general": "General",
+    "add": "Agregar canal",
+    "delete": "Eliminar canal",
+    "name-placeholder": "Nombre del nuevo canal"
+  }
+}

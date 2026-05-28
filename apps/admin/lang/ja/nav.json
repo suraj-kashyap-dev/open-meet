@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "ダッシュボード",
     "users": "ユーザー",
+    "teams": "チーム",
+    "groups": "グループ",
     "meetings": "ミーティング",
     "analytics": "アナリティクス",
     "settings": "設定",

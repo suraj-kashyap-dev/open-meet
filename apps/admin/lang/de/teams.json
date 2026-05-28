@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Verwalten",
+  "title": "Teams",
+  "subtitle": "Teams legen fest, wer wem Nachrichten senden darf — Benutzer können jedem in einem gemeinsamen Team eine DM senden.",
+  "empty": "Noch keine Teams.",
+  "columns": {
+    "name": "Name",
+    "members": "Mitglieder"
+  },
+  "actions": {
+    "manage": "Mitglieder verwalten",
+    "delete": "Team löschen"
+  },
+  "create": {
+    "button": "Neues Team",
+    "title": "Team erstellen",
+    "name": "Teamname",
+    "placeholder": "z. B. Engineering",
+    "submit": "Erstellen",
+    "success": "Team erstellt",
+    "error": "Team konnte nicht erstellt werden"
+  },
+  "manage": {
+    "title": "Mitglieder",
+    "members": "{count, plural, one {# Mitglied} other {# Mitglieder}}",
+    "add": "Mitglieder hinzufügen",
+    "search": "Benutzer suchen",
+    "no-users": "Keine Benutzer gefunden.",
+    "add-confirm": "Hinzufügen",
+    "empty": "Noch keine Mitglieder.",
+    "remove": "Mitglied entfernen"
+  },
+  "channels": {
+    "title": "Kanäle",
+    "empty": "Noch keine Kanäle.",
+    "general": "Allgemein",
+    "add": "Kanal hinzufügen",
+    "delete": "Kanal löschen",
+    "name-placeholder": "Name des neuen Kanals"
+  }
+}

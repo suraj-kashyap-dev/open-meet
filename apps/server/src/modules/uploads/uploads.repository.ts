@@ -30,8 +30,23 @@ export class UploadsRepository {
   // attachment by guessing its id. Returns how many rows were actually linked.
   async claim(attachmentIds: string[], uploaderId: string, messageId: string): Promise<number> {
     const result = await this.prisma.attachment.updateMany({
-      where: { id: { in: attachmentIds }, uploaderId, messageId: null },
+      where: { id: { in: attachmentIds }, uploaderId, messageId: null, chatMessageId: null },
       data: { messageId },
+    });
+
+    return result.count;
+  }
+
+  // Same ownership-guarded claim, but for persistent chat messages. An
+  // attachment can be linked to a meeting message OR a chat message, never both.
+  async claimForChat(
+    attachmentIds: string[],
+    uploaderId: string,
+    chatMessageId: string,
+  ): Promise<number> {
+    const result = await this.prisma.attachment.updateMany({
+      where: { id: { in: attachmentIds }, uploaderId, messageId: null, chatMessageId: null },
+      data: { chatMessageId },
     });
 
     return result.count;

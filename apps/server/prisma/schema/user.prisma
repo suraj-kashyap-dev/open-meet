@@ -1,20 +1,32 @@
 model User {
-  id             String        @id @default(cuid())
-  name           String
-  email          String        @unique
-  passwordHash   String?
-  googleId       String?       @unique
-  avatarKey      String?
-  avatarUrl      String?
-  timezone       String        @default("UTC")
-  language       String        @default("en")
-  bio            String?
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  settings       UserSettings?
-  meetings       Participant[]
-  messages       Message[]
-  hostedMeetings Meeting[]     @relation("host")
+  id              String        @id @default(cuid())
+  name            String
+  email           String        @unique
+  passwordHash    String?
+  googleId        String?       @unique
+  avatarKey       String?
+  avatarUrl       String?
+  timezone        String        @default("UTC")
+  language        String        @default("en")
+  bio             String?
+  chatDisabled    Boolean       @default(false)
+  emailVerifiedAt DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  settings        UserSettings?
+  meetings        Participant[]
+  messages        Message[]
+  hostedMeetings  Meeting[]     @relation("host")
+
+  teamMemberships         TeamMember[]
+  conversationMemberships ConversationMember[]
+  chatMessages            ChatMessage[]
+  messageReactions        MessageReaction[]
+  messageMentions         MessageMention[]
+  pinnedMessages          PinnedMessage[]
+  savedMessages           SavedMessage[]
+  presence                UserPresence?
+  pollVotes               PollVote[]
 
   @@index([email])
   @@index([googleId])

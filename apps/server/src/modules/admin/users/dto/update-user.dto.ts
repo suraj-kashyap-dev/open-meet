@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class AdminUpdateUserBodyDto {
   @IsOptional()
@@ -32,4 +32,8 @@ export class AdminUpdateUserBodyDto {
   @MinLength(8)
   @MaxLength(128)
   newPassword?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  chatDisabled?: boolean;
 }

@@ -7,6 +7,10 @@
     "sign-out": "サインアウト"
   },
   "user-menu-label": "アカウントメニューを開く",
+  "chat-link-label": "チャットを開く",
+  "activity-link-label": "アクティビティ",
+  "teams-link-label": "チーム",
+  "saved-link-label": "保存済み",
   "command": {
     "placeholder": "コマンドまたはミーティングコードを入力…",
     "no-results": "結果がありません。",

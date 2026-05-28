@@ -121,6 +121,10 @@ export class AdminUsersService {
       data.passwordHash = await argon2.hash(dto.newPassword, { type: argon2.argon2id });
     }
 
+    if (dto.chatDisabled !== undefined) {
+      data.chatDisabled = dto.chatDisabled;
+    }
+
     const updated = await this.users.update(id, data);
     return this.toDto(updated);
   }
@@ -223,6 +227,7 @@ export class AdminUsersService {
       timezone: u.timezone,
       language: u.language,
       bio: u.bio,
+      chatDisabled: u.chatDisabled,
       createdAt: u.createdAt.toISOString(),
       meetingsHosted: u._count.hostedMeetings,
       meetingsAttended: u._count.meetings,

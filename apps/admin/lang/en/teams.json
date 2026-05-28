@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Manage",
+  "title": "Teams",
+  "subtitle": "Teams decide who can message whom — users can DM anyone on a shared team.",
+  "empty": "No teams yet.",
+  "columns": {
+    "name": "Name",
+    "members": "Members"
+  },
+  "actions": {
+    "manage": "Manage members",
+    "delete": "Delete team"
+  },
+  "create": {
+    "button": "New team",
+    "title": "Create team",
+    "name": "Team name",
+    "placeholder": "e.g. Engineering",
+    "submit": "Create",
+    "success": "Team created",
+    "error": "Could not create team"
+  },
+  "manage": {
+    "title": "Members",
+    "members": "{count, plural, one {# member} other {# members}}",
+    "add": "Add members",
+    "search": "Search users",
+    "no-users": "No users found.",
+    "add-confirm": "Add",
+    "empty": "No members yet.",
+    "remove": "Remove member"
+  },
+  "channels": {
+    "title": "Channels",
+    "empty": "No channels yet.",
+    "general": "General",
+    "add": "Add channel",
+    "delete": "Delete channel",
+    "name-placeholder": "New channel name"
+  }
+}

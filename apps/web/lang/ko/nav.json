@@ -7,6 +7,10 @@
     "sign-out": "로그아웃"
   },
   "user-menu-label": "계정 메뉴 열기",
+  "chat-link-label": "채팅 열기",
+  "activity-link-label": "활동",
+  "teams-link-label": "팀",
+  "saved-link-label": "저장됨",
   "command": {
     "placeholder": "명령어 또는 회의 코드를 입력하세요…",
     "no-results": "결과 없음.",

@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "ড্যাশবোর্ড",
     "users": "ব্যবহারকারী",
+    "teams": "টিম",
+    "groups": "গ্রুপ",
     "meetings": "মিটিং",
     "analytics": "অ্যানালিটিক্স",
     "settings": "সেটিংস",

@@ -4,7 +4,7 @@ import type { PublicConfigDto } from '@open-meet/types';
 
 import { env } from '@/lib/env';
 
-const FALLBACK: PublicConfigDto = { appName: 'Open Meet', logoUrl: null };
+const FALLBACK: PublicConfigDto = { appName: 'Open Meet', logoUrl: null, gifsEnabled: false };
 
 interface PublicConfigEnvelope {
   success?: boolean;
@@ -36,6 +36,7 @@ export const getBranding = cache(async (): Promise<PublicConfigDto> => {
     return {
       appName: json.data.appName ?? FALLBACK.appName,
       logoUrl: json.data.logoUrl ?? null,
+      gifsEnabled: json.data.gifsEnabled ?? false,
     };
   } catch {
     return FALLBACK;

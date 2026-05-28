@@ -1,0 +1,139 @@
+{
+  "list": {
+    "title": "Mesajlar",
+    "new": "Yeni mesaj",
+    "search": "Sohbetlerde ara",
+    "loading": "Yükleniyor…",
+    "empty": "Henüz sohbet yok.",
+    "untitled": "Sohbet",
+    "attachment": "Ek",
+    "no-messages": "Henüz mesaj yok",
+    "actions": "Sohbet işlemleri",
+    "pin-chat": "Üste sabitle",
+    "unpin-chat": "Sabitlemeyi kaldır",
+    "mute": "Sessize al",
+    "unmute": "Sesi aç",
+    "mark-unread": "Okunmadı olarak işaretle",
+    "hide": "Gizle"
+  },
+  "view": {
+    "empty": "Sohbete başlamak için bir konuşma seçin.",
+    "no-messages": "Henüz mesaj yok. Merhaba deyin!",
+    "loading": "Sohbet yükleniyor…",
+    "not-found": "Sohbet bulunamadı.",
+    "back": "Sohbetlere dön",
+    "jump-to-latest": "En sona git",
+    "peer-disabled": "Bu kullanıcı için sohbet devre dışı.",
+    "you-disabled": "Sohbet erişiminiz devre dışı bırakıldı."
+  },
+  "header": {
+    "members": "{count, plural, one {# üye} other {# üye}}"
+  },
+  "presence": {
+    "online": "Çevrimiçi",
+    "offline": "Çevrimdışı",
+    "last-seen": "Son görülme {time}",
+    "set-status": "Durumunuzu ayarlayın",
+    "available": "Müsait",
+    "busy": "Meşgul",
+    "dnd": "Rahatsız etmeyin",
+    "brb": "Hemen dönerim",
+    "away": "Uzakta"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "GIF ara",
+    "empty": "GIF bulunamadı."
+  },
+  "bubble": {
+    "you": "Siz",
+    "unknown-user": "Bilinmiyor",
+    "deleted": "Bu mesaj silindi",
+    "edited": "(düzenlendi)",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "reply": "Yanıtla",
+    "more": "Diğer işlemler",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "pinned": "Sabitlendi",
+    "pin": "Sabitle",
+    "unpin": "Sabitlemeyi kaldır",
+    "save-message": "Kaydet",
+    "unsave-message": "Kaydedilenlerden kaldır",
+    "forward": "İlet",
+    "copy-link": "Bağlantıyı kopyala",
+    "link-copied": "Bağlantı kopyalandı"
+  },
+  "priority": {
+    "normal": "Standart",
+    "important": "Önemli",
+    "urgent": "Acil",
+    "label": "Öncelik"
+  },
+  "forward": {
+    "title": "Şuraya ilet…",
+    "success": "Mesaj iletildi",
+    "error": "Mesaj iletilemedi"
+  },
+  "receipts": {
+    "seen": "Görüldü",
+    "seen-by": "{count} kişi tarafından görüldü"
+  },
+  "typing": {
+    "one": "{name} yazıyor…",
+    "many": "{count} kişi yazıyor…"
+  },
+  "composer": {
+    "placeholder": "Bir mesaj yazın…",
+    "send": "Mesaj gönder",
+    "attach-file": "Dosya ekle",
+    "take-photo": "Fotoğraf çek",
+    "cancel-reply": "Yanıtı iptal et",
+    "uploading": "Yükleniyor… {percent}%",
+    "failed": "Başarısız",
+    "remove-attachment": "Eki kaldır",
+    "max-attachments": "En fazla {max} dosya ekleyebilirsiniz.",
+    "wait-for-uploads": "Yüklemelerin bitmesini bekleyin.",
+    "upload-failed": "Yükleme başarısız",
+    "poll-failed": "Anket oluşturulamadı",
+    "disabled": "Burada mesaj gönderemezsiniz."
+  },
+  "poll": {
+    "create": "Anket oluştur",
+    "question": "Soru",
+    "question-placeholder": "Bir şey sorun…",
+    "options": "Seçenekler",
+    "option-placeholder": "Seçenek {index}",
+    "add-option": "Seçenek ekle",
+    "remove-option": "Seçeneği kaldır",
+    "allow-multiple": "Birden fazla yanıta izin ver",
+    "cancel": "İptal",
+    "create-submit": "Oluştur",
+    "votes": "{count, plural, one {# oy} other {# oy}}",
+    "closed": "Kapatıldı"
+  },
+  "new-dm": {
+    "title": "Yeni sohbet",
+    "search": "Takım arkadaşı ara",
+    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "disabled": "Kullanılamıyor"
+  },
+  "teams": {
+    "title": "Takımlar",
+    "empty": "Henüz hiçbir takımın üyesi değilsiniz.",
+    "no-channels": "Henüz kanal yok."
+  },
+  "activity": {
+    "title": "Etkinlik",
+    "subtitle": "Sizi @bahseden mesajlar.",
+    "empty": "Henüz bahsetme yok."
+  },
+  "saved": {
+    "title": "Kaydedilenler",
+    "empty": "Henüz hiçbir mesaj kaydetmediniz."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

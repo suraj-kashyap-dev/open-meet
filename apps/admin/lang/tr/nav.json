@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "Kontrol paneli",
     "users": "Kullanıcılar",
+    "teams": "Takımlar",
+    "groups": "Gruplar",
     "meetings": "Toplantılar",
     "analytics": "Analitik",
     "settings": "Ayarlar",

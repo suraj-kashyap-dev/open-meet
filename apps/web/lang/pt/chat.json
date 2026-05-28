@@ -1,0 +1,139 @@
+{
+  "list": {
+    "title": "Mensagens",
+    "new": "Nova mensagem",
+    "search": "Pesquisar conversas",
+    "loading": "Carregando…",
+    "empty": "Nenhuma conversa ainda.",
+    "untitled": "Conversa",
+    "attachment": "Anexo",
+    "no-messages": "Nenhuma mensagem ainda",
+    "actions": "Ações da conversa",
+    "pin-chat": "Fixar no topo",
+    "unpin-chat": "Desafixar",
+    "mute": "Silenciar",
+    "unmute": "Reativar som",
+    "mark-unread": "Marcar como não lida",
+    "hide": "Ocultar"
+  },
+  "view": {
+    "empty": "Selecione uma conversa para começar a conversar.",
+    "no-messages": "Nenhuma mensagem ainda. Diga olá!",
+    "loading": "Carregando conversa…",
+    "not-found": "Conversa não encontrada.",
+    "back": "Voltar às conversas",
+    "jump-to-latest": "Ir para a mais recente",
+    "peer-disabled": "O chat está desativado para este usuário.",
+    "you-disabled": "Seu acesso ao chat foi desativado."
+  },
+  "header": {
+    "members": "{count, plural, one {# membro} other {# membros}}"
+  },
+  "presence": {
+    "online": "Online",
+    "offline": "Offline",
+    "last-seen": "Visto por último {time}",
+    "set-status": "Defina seu status",
+    "available": "Disponível",
+    "busy": "Ocupado",
+    "dnd": "Não perturbar",
+    "brb": "Volto já",
+    "away": "Ausente"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "Pesquisar GIFs",
+    "empty": "Nenhum GIF encontrado."
+  },
+  "bubble": {
+    "you": "Você",
+    "unknown-user": "Desconhecido",
+    "deleted": "Esta mensagem foi excluída",
+    "edited": "(editada)",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "reply": "Responder",
+    "more": "Mais ações",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "pinned": "Fixada",
+    "pin": "Fixar",
+    "unpin": "Desafixar",
+    "save-message": "Salvar",
+    "unsave-message": "Remover dos salvos",
+    "forward": "Encaminhar",
+    "copy-link": "Copiar link",
+    "link-copied": "Link copiado"
+  },
+  "priority": {
+    "normal": "Padrão",
+    "important": "Importante",
+    "urgent": "Urgente",
+    "label": "Prioridade"
+  },
+  "forward": {
+    "title": "Encaminhar para…",
+    "success": "Mensagem encaminhada",
+    "error": "Não foi possível encaminhar a mensagem"
+  },
+  "receipts": {
+    "seen": "Visto",
+    "seen-by": "Visto por {count}"
+  },
+  "typing": {
+    "one": "{name} está digitando…",
+    "many": "{count} pessoas estão digitando…"
+  },
+  "composer": {
+    "placeholder": "Escreva uma mensagem…",
+    "send": "Enviar mensagem",
+    "attach-file": "Anexar arquivo",
+    "take-photo": "Tirar uma foto",
+    "cancel-reply": "Cancelar resposta",
+    "uploading": "Enviando… {percent}%",
+    "failed": "Falhou",
+    "remove-attachment": "Remover anexo",
+    "max-attachments": "Você pode anexar até {max} arquivos.",
+    "wait-for-uploads": "Aguarde a conclusão dos envios.",
+    "upload-failed": "Falha no envio",
+    "poll-failed": "Não foi possível criar a enquete",
+    "disabled": "Você não pode enviar mensagens aqui."
+  },
+  "poll": {
+    "create": "Criar enquete",
+    "question": "Pergunta",
+    "question-placeholder": "Pergunte algo…",
+    "options": "Opções",
+    "option-placeholder": "Opção {index}",
+    "add-option": "Adicionar opção",
+    "remove-option": "Remover opção",
+    "allow-multiple": "Permitir várias respostas",
+    "cancel": "Cancelar",
+    "create-submit": "Criar",
+    "votes": "{count, plural, one {# voto} other {# votos}}",
+    "closed": "Encerrada"
+  },
+  "new-dm": {
+    "title": "Nova conversa",
+    "search": "Pesquisar colegas",
+    "no-teammates": "Nenhum colega encontrado.",
+    "disabled": "Indisponível"
+  },
+  "teams": {
+    "title": "Equipes",
+    "empty": "Você ainda não é membro de nenhuma equipe.",
+    "no-channels": "Nenhum canal ainda."
+  },
+  "activity": {
+    "title": "Atividade",
+    "subtitle": "Mensagens que @mencionam você.",
+    "empty": "Nenhuma menção ainda."
+  },
+  "saved": {
+    "title": "Salvos",
+    "empty": "Você ainda não salvou nenhuma mensagem."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

@@ -7,6 +7,10 @@
     "sign-out": "Abmelden"
   },
   "user-menu-label": "Kontomenü öffnen",
+  "chat-link-label": "Chat öffnen",
+  "activity-link-label": "Aktivität",
+  "teams-link-label": "Teams",
+  "saved-link-label": "Gespeichert",
   "command": {
     "placeholder": "Befehl oder Besprechungscode eingeben…",
     "no-results": "Keine Ergebnisse.",

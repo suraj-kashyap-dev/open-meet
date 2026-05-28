@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Kelola",
+  "title": "Grup",
+  "subtitle": "Percakapan grup dibuat dan dikelola oleh admin.",
+  "empty": "Belum ada grup.",
+  "columns": {
+    "name": "Nama",
+    "members": "Anggota"
+  },
+  "actions": {
+    "manage": "Kelola anggota",
+    "delete": "Hapus grup"
+  },
+  "create": {
+    "button": "Grup baru",
+    "title": "Buat grup",
+    "name": "Nama grup",
+    "placeholder": "mis. Peluncuran produk",
+    "choose-members": "Pilih anggota",
+    "choose-confirm": "Pilih",
+    "selected": "{count, plural, one {# anggota dipilih} other {# anggota dipilih}}",
+    "submit": "Buat",
+    "success": "Grup dibuat",
+    "error": "Tidak dapat membuat grup"
+  },
+  "manage": {
+    "title": "Anggota",
+    "members": "{count, plural, one {# anggota} other {# anggota}}",
+    "add": "Tambah anggota",
+    "search": "Cari pengguna",
+    "no-users": "Tidak ada pengguna yang ditemukan.",
+    "add-confirm": "Tambah",
+    "empty": "Belum ada anggota.",
+    "remove": "Hapus anggota"
+  }
+}

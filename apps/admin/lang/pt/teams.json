@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Gerenciar",
+  "title": "Equipes",
+  "subtitle": "As equipes definem quem pode enviar mensagens a quem — os usuários podem enviar DMs a qualquer pessoa de uma equipe compartilhada.",
+  "empty": "Nenhuma equipe ainda.",
+  "columns": {
+    "name": "Nome",
+    "members": "Membros"
+  },
+  "actions": {
+    "manage": "Gerenciar membros",
+    "delete": "Excluir equipe"
+  },
+  "create": {
+    "button": "Nova equipe",
+    "title": "Criar equipe",
+    "name": "Nome da equipe",
+    "placeholder": "ex.: Engenharia",
+    "submit": "Criar",
+    "success": "Equipe criada",
+    "error": "Não foi possível criar a equipe"
+  },
+  "manage": {
+    "title": "Membros",
+    "members": "{count, plural, one {# membro} other {# membros}}",
+    "add": "Adicionar membros",
+    "search": "Pesquisar usuários",
+    "no-users": "Nenhum usuário encontrado.",
+    "add-confirm": "Adicionar",
+    "empty": "Nenhum membro ainda.",
+    "remove": "Remover membro"
+  },
+  "channels": {
+    "title": "Canais",
+    "empty": "Nenhum canal ainda.",
+    "general": "Geral",
+    "add": "Adicionar canal",
+    "delete": "Excluir canal",
+    "name-placeholder": "Nome do novo canal"
+  }
+}

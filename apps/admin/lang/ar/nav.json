@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "لوحة التحكم",
     "users": "المستخدمون",
+    "teams": "الفِرَق",
+    "groups": "المجموعات",
     "meetings": "الاجتماعات",
     "analytics": "التحليلات",
     "settings": "الإعدادات",

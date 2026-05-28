@@ -11,6 +11,8 @@
     "joined": "Joined",
     "hosted": "Hosted",
     "attended": "Attended",
+    "chat": "Chat",
+    "chat-toggle": "Toggle chat access",
     "actions": "Actions",
     "open-actions": "Open actions",
     "edit": "Edit",
@@ -76,5 +78,29 @@
     "submitting": "Deleting…",
     "success": "Deleted {email}",
     "error": "Could not delete user"
+  },
+  "invite": {
+    "button": "Invite user",
+    "title": "Invite a user",
+    "subtitle": "They'll get an email to set a password and activate their account.",
+    "name": "Name",
+    "email": "Email",
+    "submit": "Send invite",
+    "success": "Invitation sent to {email}",
+    "error": "Could not send the invite"
+  },
+  "pending": {
+    "title": "Pending invitations",
+    "empty": "No pending invitations.",
+    "loading-error": "Could not load invitations.",
+    "status-pending": "Pending",
+    "status-expired": "Expired",
+    "expires": "Expires {when}",
+    "resend-label": "Resend invite to {email}",
+    "revoke-label": "Revoke invite for {email}",
+    "resend-success": "Invitation re-sent to {email}",
+    "resend-error": "Could not resend the invite",
+    "revoke-success": "Invitation for {email} revoked",
+    "revoke-error": "Could not revoke the invite"
   }
 }

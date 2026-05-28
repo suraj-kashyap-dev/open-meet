@@ -1,0 +1,139 @@
+{
+  "list": {
+    "title": "Mensajes",
+    "new": "Nuevo mensaje",
+    "search": "Buscar conversaciones",
+    "loading": "Cargando…",
+    "empty": "Aún no hay conversaciones.",
+    "untitled": "Conversación",
+    "attachment": "Adjunto",
+    "no-messages": "Aún no hay mensajes",
+    "actions": "Acciones de conversación",
+    "pin-chat": "Fijar arriba",
+    "unpin-chat": "Desfijar",
+    "mute": "Silenciar",
+    "unmute": "Quitar silencio",
+    "mark-unread": "Marcar como no leído",
+    "hide": "Ocultar"
+  },
+  "view": {
+    "empty": "Selecciona una conversación para empezar a chatear.",
+    "no-messages": "Aún no hay mensajes. ¡Saluda!",
+    "loading": "Cargando conversación…",
+    "not-found": "Conversación no encontrada.",
+    "back": "Volver a las conversaciones",
+    "jump-to-latest": "Ir a lo más reciente",
+    "peer-disabled": "El chat está desactivado para este usuario.",
+    "you-disabled": "Tu acceso al chat ha sido desactivado."
+  },
+  "header": {
+    "members": "{count, plural, one {# miembro} other {# miembros}}"
+  },
+  "presence": {
+    "online": "En línea",
+    "offline": "Desconectado",
+    "last-seen": "Visto por última vez {time}",
+    "set-status": "Establece tu estado",
+    "available": "Disponible",
+    "busy": "Ocupado",
+    "dnd": "No molestar",
+    "brb": "Vuelvo enseguida",
+    "away": "Ausente"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "Buscar GIF",
+    "empty": "No se encontraron GIF."
+  },
+  "bubble": {
+    "you": "Tú",
+    "unknown-user": "Desconocido",
+    "deleted": "Este mensaje fue eliminado",
+    "edited": "(editado)",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "reply": "Responder",
+    "more": "Más acciones",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "pinned": "Fijado",
+    "pin": "Fijar",
+    "unpin": "Desfijar",
+    "save-message": "Guardar",
+    "unsave-message": "Quitar de guardados",
+    "forward": "Reenviar",
+    "copy-link": "Copiar enlace",
+    "link-copied": "Enlace copiado"
+  },
+  "priority": {
+    "normal": "Estándar",
+    "important": "Importante",
+    "urgent": "Urgente",
+    "label": "Prioridad"
+  },
+  "forward": {
+    "title": "Reenviar a…",
+    "success": "Mensaje reenviado",
+    "error": "No se pudo reenviar el mensaje"
+  },
+  "receipts": {
+    "seen": "Visto",
+    "seen-by": "Visto por {count}"
+  },
+  "typing": {
+    "one": "{name} está escribiendo…",
+    "many": "{count} personas están escribiendo…"
+  },
+  "composer": {
+    "placeholder": "Escribe un mensaje…",
+    "send": "Enviar mensaje",
+    "attach-file": "Adjuntar archivo",
+    "take-photo": "Tomar una foto",
+    "cancel-reply": "Cancelar respuesta",
+    "uploading": "Subiendo… {percent}%",
+    "failed": "Falló",
+    "remove-attachment": "Quitar adjunto",
+    "max-attachments": "Puedes adjuntar hasta {max} archivos.",
+    "wait-for-uploads": "Espera a que terminen las subidas.",
+    "upload-failed": "Error al subir",
+    "poll-failed": "No se pudo crear la encuesta",
+    "disabled": "No puedes enviar mensajes aquí."
+  },
+  "poll": {
+    "create": "Crear encuesta",
+    "question": "Pregunta",
+    "question-placeholder": "Pregunta algo…",
+    "options": "Opciones",
+    "option-placeholder": "Opción {index}",
+    "add-option": "Agregar opción",
+    "remove-option": "Quitar opción",
+    "allow-multiple": "Permitir varias respuestas",
+    "cancel": "Cancelar",
+    "create-submit": "Crear",
+    "votes": "{count, plural, one {# voto} other {# votos}}",
+    "closed": "Cerrada"
+  },
+  "new-dm": {
+    "title": "Nueva conversación",
+    "search": "Buscar compañeros de equipo",
+    "no-teammates": "No se encontraron compañeros de equipo.",
+    "disabled": "No disponible"
+  },
+  "teams": {
+    "title": "Equipos",
+    "empty": "Aún no eres miembro de ningún equipo.",
+    "no-channels": "Aún no hay canales."
+  },
+  "activity": {
+    "title": "Actividad",
+    "subtitle": "Mensajes que te @mencionan.",
+    "empty": "Aún no hay menciones."
+  },
+  "saved": {
+    "title": "Guardados",
+    "empty": "Aún no has guardado ningún mensaje."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

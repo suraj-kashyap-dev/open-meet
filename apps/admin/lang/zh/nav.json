@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "仪表盘",
     "users": "用户",
+    "teams": "团队",
+    "groups": "群组",
     "meetings": "会议",
     "analytics": "分析",
     "settings": "设置",

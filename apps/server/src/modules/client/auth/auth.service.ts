@@ -1,25 +1,29 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import type { UserInvite } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { createHash, randomBytes } from 'node:crypto';
 
-import type { UserDto } from '@open-meet/types';
+import type { UserDto, UserInviteLookupDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
 import { RedisService } from '../../../integrations/redis/redis.service';
 import { AuthRepository } from './auth.repository';
 import { AvatarsService } from './avatars.service';
-import type { RegisterDto } from './dto/register.dto';
+import type { AcceptUserInviteDto } from './dto/accept-user-invite.dto';
 import type { LoginDto } from './dto/login.dto';
 import type { UpdateProfileDto } from './dto/update-profile.dto';
 import type { ChangePasswordDto } from './dto/change-password.dto';
+import { UserInviteRepository } from './user-invite.repository';
 
 interface AccessTokenPayload {
   sub: string;
@@ -49,11 +53,26 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly redis: RedisService,
+    private readonly userInvites: UserInviteRepository,
   ) {}
 
-  async register(dto: RegisterDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
-    const existing = await this.users.findByEmail(dto.email);
+  /** Look up a pending user invite by its raw token (public, pre-account). */
+  async lookupUserInvite(token: string): Promise<UserInviteLookupDto> {
+    const invite = await this.requireValidUserInvite(token);
+    return {
+      email: invite.email,
+      name: invite.name,
+      expiresAt: invite.expiresAt.toISOString(),
+    };
+  }
+
+  /** Claim an invite: create the verified account, consume the invite, sign in. */
+  async acceptUserInvite(dto: AcceptUserInviteDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
+    const invite = await this.requireValidUserInvite(dto.token);
+
+    const existing = await this.users.findByEmail(invite.email);
     if (existing) {
+      await this.userInvites.delete(invite.id);
       throw new ConflictException({
         code: ApiErrorCode.EMAIL_TAKEN,
         message: 'An account with this email already exists',
@@ -61,13 +80,35 @@ export class AuthService {
     }
 
     const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
-    const user = await this.users.create({
-      name: dto.name,
-      email: dto.email,
+    const user = await this.users.createInvited({
+      name: invite.name,
+      email: invite.email,
       passwordHash,
     });
+    await this.userInvites.delete(invite.id);
+
     const tokens = await this.issueTokens(user.id, user.email, user.name);
     return { user: this.avatars.toUserDto(user), tokens };
+  }
+
+  private async requireValidUserInvite(token: string): Promise<UserInvite> {
+    const invite = await this.userInvites.findByTokenHash(this.hashToken(token));
+
+    if (!invite) {
+      throw new NotFoundException({
+        code: ApiErrorCode.INVITE_INVALID,
+        message: 'This invitation link is invalid.',
+      });
+    }
+
+    if (invite.expiresAt.getTime() < Date.now()) {
+      throw new BadRequestException({
+        code: ApiErrorCode.INVITE_EXPIRED,
+        message: 'This invitation has expired.',
+      });
+    }
+
+    return invite;
   }
 
   async login(dto: LoginDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
@@ -100,11 +141,10 @@ export class AuthService {
           avatarUrl: byEmail.avatarUrl ?? profile.picture,
         });
       } else {
-        user = await this.users.createGoogleUser({
-          name: profile.name,
-          email: profile.email,
-          googleId: profile.sub,
-          avatarUrl: profile.picture,
+        // Invite-only: Google sign-in cannot create new accounts.
+        throw new ForbiddenException({
+          code: ApiErrorCode.FORBIDDEN,
+          message: 'No account exists for this Google address. Ask an admin for an invite.',
         });
       }
     } else if (profile.picture && !user.avatarKey && user.avatarUrl !== profile.picture) {

@@ -1,13 +1,14 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import * as argon2 from 'argon2';
 
 import { AuthService } from '@/modules/client/auth/auth.service';
 import { AuthRepository } from '@/modules/client/auth/auth.repository';
 import { AvatarsService } from '@/modules/client/auth/avatars.service';
+import { UserInviteRepository } from '@/modules/client/auth/user-invite.repository';
 import { RedisService } from '@/integrations/redis/redis.service';
 
 function makeUser(overrides: Partial<{ id: string; email: string; name: string }> = {}) {
@@ -32,6 +33,11 @@ describe('AuthService', () => {
     findByEmail: ReturnType<typeof vi.fn>;
     findById: ReturnType<typeof vi.fn>;
     create: ReturnType<typeof vi.fn>;
+    createInvited: ReturnType<typeof vi.fn>;
+  };
+  let userInvites: {
+    findByTokenHash: ReturnType<typeof vi.fn>;
+    delete: ReturnType<typeof vi.fn>;
   };
   let jwt: { signAsync: ReturnType<typeof vi.fn>; verifyAsync: ReturnType<typeof vi.fn> };
   let redisStore: Map<string, string>;
@@ -50,6 +56,11 @@ describe('AuthService', () => {
       findByEmail: vi.fn(),
       findById: vi.fn(),
       create: vi.fn(),
+      createInvited: vi.fn(),
+    };
+    userInvites = {
+      findByTokenHash: vi.fn(),
+      delete: vi.fn(),
     };
     jwt = {
       signAsync: vi
@@ -115,38 +126,61 @@ describe('AuthService', () => {
         { provide: JwtService, useValue: jwt },
         { provide: ConfigService, useValue: config },
         { provide: RedisService, useValue: redis },
+        { provide: UserInviteRepository, useValue: userInvites },
       ],
     }).compile();
 
     service = moduleRef.get(AuthService);
   });
 
-  describe('register()', () => {
-    it('should hash the password and return a dto + tokens', async () => {
+  describe('acceptUserInvite()', () => {
+    function pendingInvite(overrides: Partial<{ expiresAt: Date }> = {}) {
+      return {
+        id: 'inv1',
+        email: 'ada@example.com',
+        name: 'Ada',
+        tokenHash: 'hash',
+        expiresAt: new Date(Date.now() + 60_000),
+        invitedById: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        ...overrides,
+      };
+    }
+
+    it('should create a verified account, consume the invite, and issue tokens', async () => {
+      userInvites.findByTokenHash.mockResolvedValue(pendingInvite());
       repo.findByEmail.mockResolvedValue(null);
-      repo.create.mockImplementation(
+      repo.createInvited.mockImplementation(
         async (data: { passwordHash: string; email: string; name: string }) =>
           makeUser({ email: data.email, name: data.name }),
       );
 
-      const result = await service.register({
-        name: 'Ada',
-        email: 'ada@example.com',
-        password: 'secretpass1',
-      });
+      const result = await service.acceptUserInvite({ token: 'raw', password: 'secretpass1' });
 
       expect(result.user.email).toBe('ada@example.com');
       expect(result.tokens.accessToken).toContain('signed.');
-      expect(result.tokens.refreshToken).toContain('signed.');
-      const created = repo.create.mock.calls[0]?.[0] as { passwordHash: string };
-      expect(created.passwordHash).not.toBe('secretpass1');
+      expect(userInvites.delete).toHaveBeenCalledWith('inv1');
+      const created = repo.createInvited.mock.calls[0]?.[0] as { passwordHash: string };
       expect(await argon2.verify(created.passwordHash, 'secretpass1')).toBe(true);
     });
 
-    it('should reject a duplicate email', async () => {
-      repo.findByEmail.mockResolvedValue(makeUser());
+    it('should reject an expired invite', async () => {
+      userInvites.findByTokenHash.mockResolvedValue(
+        pendingInvite({ expiresAt: new Date(Date.now() - 1000) }),
+      );
+
       await expect(
-        service.register({ name: 'Ada', email: 'ada@example.com', password: 'secretpass1' }),
+        service.acceptUserInvite({ token: 'raw', password: 'secretpass1' }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+    });
+
+    it('should reject when an account with the email already exists', async () => {
+      userInvites.findByTokenHash.mockResolvedValue(pendingInvite());
+      repo.findByEmail.mockResolvedValue(makeUser());
+
+      await expect(
+        service.acceptUserInvite({ token: 'raw', password: 'secretpass1' }),
       ).rejects.toBeInstanceOf(ConflictException);
     });
   });

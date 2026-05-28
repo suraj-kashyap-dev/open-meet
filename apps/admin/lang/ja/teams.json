@@ -1,0 +1,41 @@
+{
+  "eyebrow": "管理",
+  "title": "チーム",
+  "subtitle": "チームは誰が誰にメッセージを送れるかを決定します。ユーザーは共有チームの誰にでも DM を送れます。",
+  "empty": "まだチームがありません。",
+  "columns": {
+    "name": "名前",
+    "members": "メンバー"
+  },
+  "actions": {
+    "manage": "メンバーを管理",
+    "delete": "チームを削除"
+  },
+  "create": {
+    "button": "新しいチーム",
+    "title": "チームを作成",
+    "name": "チーム名",
+    "placeholder": "例: エンジニアリング",
+    "submit": "作成",
+    "success": "チームを作成しました",
+    "error": "チームを作成できませんでした"
+  },
+  "manage": {
+    "title": "メンバー",
+    "members": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}",
+    "add": "メンバーを追加",
+    "search": "ユーザーを検索",
+    "no-users": "ユーザーが見つかりません。",
+    "add-confirm": "追加",
+    "empty": "まだメンバーがいません。",
+    "remove": "メンバーを削除"
+  },
+  "channels": {
+    "title": "チャンネル",
+    "empty": "まだチャンネルがありません。",
+    "general": "一般",
+    "add": "チャンネルを追加",
+    "delete": "チャンネルを削除",
+    "name-placeholder": "新しいチャンネル名"
+  }
+}

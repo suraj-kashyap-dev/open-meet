@@ -7,6 +7,10 @@
     "sign-out": "退出登录"
   },
   "user-menu-label": "打开账户菜单",
+  "chat-link-label": "打开聊天",
+  "activity-link-label": "动态",
+  "teams-link-label": "团队",
+  "saved-link-label": "已保存",
   "command": {
     "placeholder": "输入命令或会议码…",
     "no-results": "无结果。",

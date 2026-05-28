@@ -1,21 +1,21 @@
 model Meeting {
-  id            String          @id @default(cuid())
-  code          String          @unique
-  title         String?
-  hostId        String
-  host          User            @relation("host", fields: [hostId], references: [id], onDelete: Cascade)
-  status        MeetingStatus   @default(WAITING)
-  settings      Json            @default("{}")
-  scheduledFor  DateTime?
-  recurrence    String?
-  durationMin   Int?
-  startedAt     DateTime?
-  endedAt       DateTime?
-  createdAt     DateTime        @default(now())
-  participants  Participant[]
-  messages      Message[]
-  recordings    Recording[]
-  invites       MeetingInvite[]
+  id           String          @id @default(cuid())
+  code         String          @unique
+  title        String?
+  hostId       String
+  host         User            @relation("host", fields: [hostId], references: [id], onDelete: Cascade)
+  status       MeetingStatus   @default(WAITING)
+  settings     Json            @default("{}")
+  scheduledFor DateTime?
+  recurrence   String?
+  durationMin  Int?
+  startedAt    DateTime?
+  endedAt      DateTime?
+  createdAt    DateTime        @default(now())
+  participants Participant[]
+  messages     Message[]
+  recordings   Recording[]
+  invites      MeetingInvite[]
 
   @@index([hostId])
   @@index([status])

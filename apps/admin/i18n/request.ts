@@ -12,6 +12,8 @@ const NAMESPACES = [
   'branding',
   'configuration',
   'users',
+  'teams',
+  'groups',
   'dashboard',
   'analytics',
   'meetings',

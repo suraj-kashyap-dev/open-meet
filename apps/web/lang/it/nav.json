@@ -7,6 +7,10 @@
     "sign-out": "Esci"
   },
   "user-menu-label": "Apri menu account",
+  "chat-link-label": "Apri chat",
+  "activity-link-label": "Attività",
+  "teams-link-label": "Team",
+  "saved-link-label": "Salvati",
   "command": {
     "placeholder": "Digita un comando o un codice riunione…",
     "no-results": "Nessun risultato.",

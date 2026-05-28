@@ -2,9 +2,11 @@ import {
   BarChart3,
   CalendarRange,
   LayoutDashboard,
+  MessagesSquare,
   Settings,
   ShieldCheck,
   Users,
+  UsersRound,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -36,6 +38,8 @@ export const nav: NavSection[] = [
     labelKey: 'sections.manage',
     items: [
       { labelKey: 'items.users', href: '/users', icon: Users },
+      { labelKey: 'items.teams', href: '/teams', icon: UsersRound },
+      { labelKey: 'items.groups', href: '/groups', icon: MessagesSquare },
       { labelKey: 'items.meetings', href: '/meetings', icon: CalendarRange },
     ],
   },

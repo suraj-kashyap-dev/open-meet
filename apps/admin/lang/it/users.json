@@ -11,6 +11,8 @@
     "joined": "Entrato",
     "hosted": "Ospitate",
     "attended": "Partecipate",
+    "chat": "Chat",
+    "chat-toggle": "Attiva/disattiva accesso alla chat",
     "actions": "Azioni",
     "open-actions": "Apri azioni",
     "edit": "Modifica",
@@ -76,5 +78,29 @@
     "submitting": "Eliminazione in corso…",
     "success": "{email} eliminato",
     "error": "Impossibile eliminare l'utente"
+  },
+  "invite": {
+    "button": "Invita utente",
+    "title": "Invita un utente",
+    "subtitle": "Riceveranno un'email per impostare una password e attivare il proprio account.",
+    "name": "Nome",
+    "email": "Email",
+    "submit": "Invia invito",
+    "success": "Invito inviato a {email}",
+    "error": "Impossibile inviare l'invito"
+  },
+  "pending": {
+    "title": "Inviti in sospeso",
+    "empty": "Nessun invito in sospeso.",
+    "loading-error": "Impossibile caricare gli inviti.",
+    "status-pending": "In sospeso",
+    "status-expired": "Scaduto",
+    "expires": "Scade {when}",
+    "resend-label": "Reinvia invito a {email}",
+    "revoke-label": "Revoca invito per {email}",
+    "resend-success": "Invito reinviato a {email}",
+    "resend-error": "Impossibile reinviare l'invito",
+    "revoke-success": "Invito per {email} revocato",
+    "revoke-error": "Impossibile revocare l'invito"
   }
 }

@@ -7,6 +7,10 @@
     "sign-out": "Çıkış yap"
   },
   "user-menu-label": "Hesap menüsünü aç",
+  "chat-link-label": "Sohbeti aç",
+  "activity-link-label": "Etkinlik",
+  "teams-link-label": "Takımlar",
+  "saved-link-label": "Kaydedilenler",
   "command": {
     "placeholder": "Komut veya toplantı kodu yazın…",
     "no-results": "Sonuç bulunamadı.",

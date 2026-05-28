@@ -1,0 +1,36 @@
+{
+  "eyebrow": "管理",
+  "title": "群组",
+  "subtitle": "群组会话由管理员创建和管理。",
+  "empty": "暂无群组。",
+  "columns": {
+    "name": "名称",
+    "members": "成员"
+  },
+  "actions": {
+    "manage": "管理成员",
+    "delete": "删除群组"
+  },
+  "create": {
+    "button": "新建群组",
+    "title": "创建群组",
+    "name": "群组名称",
+    "placeholder": "例如：产品发布",
+    "choose-members": "选择成员",
+    "choose-confirm": "选择",
+    "selected": "{count, plural, one {已选择 # 位成员} other {已选择 # 位成员}}",
+    "submit": "创建",
+    "success": "群组已创建",
+    "error": "无法创建群组"
+  },
+  "manage": {
+    "title": "成员",
+    "members": "{count, plural, one {# 位成员} other {# 位成员}}",
+    "add": "添加成员",
+    "search": "搜索用户",
+    "no-users": "未找到用户。",
+    "add-confirm": "添加",
+    "empty": "暂无成员。",
+    "remove": "移除成员"
+  }
+}

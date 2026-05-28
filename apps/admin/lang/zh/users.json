@@ -11,6 +11,8 @@
     "joined": "加入时间",
     "hosted": "主持次数",
     "attended": "参与次数",
+    "chat": "聊天",
+    "chat-toggle": "切换聊天权限",
     "actions": "操作",
     "open-actions": "打开操作",
     "edit": "编辑",
@@ -76,5 +78,29 @@
     "submitting": "正在删除…",
     "success": "已删除 {email}",
     "error": "无法删除用户"
+  },
+  "invite": {
+    "button": "邀请用户",
+    "title": "邀请用户",
+    "subtitle": "他们将收到一封电子邮件，用于设置密码并激活账户。",
+    "name": "姓名",
+    "email": "电子邮件",
+    "submit": "发送邀请",
+    "success": "邀请已发送至 {email}",
+    "error": "无法发送邀请"
+  },
+  "pending": {
+    "title": "待处理的邀请",
+    "empty": "没有待处理的邀请。",
+    "loading-error": "无法加载邀请。",
+    "status-pending": "待处理",
+    "status-expired": "已过期",
+    "expires": "到期时间 {when}",
+    "resend-label": "重新向 {email} 发送邀请",
+    "revoke-label": "撤销 {email} 的邀请",
+    "resend-success": "邀请已重新发送至 {email}",
+    "resend-error": "无法重新发送邀请",
+    "revoke-success": "已撤销 {email} 的邀请",
+    "revoke-error": "无法撤销邀请"
   }
 }

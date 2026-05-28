@@ -11,6 +11,8 @@
     "joined": "Bergabung",
     "hosted": "Di-host",
     "attended": "Dihadiri",
+    "chat": "Obrolan",
+    "chat-toggle": "Alihkan akses obrolan",
     "actions": "Tindakan",
     "open-actions": "Buka tindakan",
     "edit": "Edit",
@@ -76,5 +78,29 @@
     "submitting": "Menghapus…",
     "success": "{email} dihapus",
     "error": "Tidak dapat menghapus pengguna"
+  },
+  "invite": {
+    "button": "Undang pengguna",
+    "title": "Undang seorang pengguna",
+    "subtitle": "Mereka akan menerima email untuk mengatur kata sandi dan mengaktifkan akun mereka.",
+    "name": "Nama",
+    "email": "Email",
+    "submit": "Kirim undangan",
+    "success": "Undangan dikirim ke {email}",
+    "error": "Tidak dapat mengirim undangan"
+  },
+  "pending": {
+    "title": "Undangan tertunda",
+    "empty": "Tidak ada undangan tertunda.",
+    "loading-error": "Tidak dapat memuat undangan.",
+    "status-pending": "Tertunda",
+    "status-expired": "Kedaluwarsa",
+    "expires": "Kedaluwarsa {when}",
+    "resend-label": "Kirim ulang undangan ke {email}",
+    "revoke-label": "Cabut undangan untuk {email}",
+    "resend-success": "Undangan dikirim ulang ke {email}",
+    "resend-error": "Tidak dapat mengirim ulang undangan",
+    "revoke-success": "Undangan untuk {email} dicabut",
+    "revoke-error": "Tidak dapat mencabut undangan"
   }
 }

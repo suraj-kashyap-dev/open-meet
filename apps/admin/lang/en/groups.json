@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Manage",
+  "title": "Groups",
+  "subtitle": "Group conversations are created and managed by admins.",
+  "empty": "No groups yet.",
+  "columns": {
+    "name": "Name",
+    "members": "Members"
+  },
+  "actions": {
+    "manage": "Manage members",
+    "delete": "Delete group"
+  },
+  "create": {
+    "button": "New group",
+    "title": "Create group",
+    "name": "Group name",
+    "placeholder": "e.g. Product launch",
+    "choose-members": "Choose members",
+    "choose-confirm": "Select",
+    "selected": "{count, plural, one {# member selected} other {# members selected}}",
+    "submit": "Create",
+    "success": "Group created",
+    "error": "Could not create group"
+  },
+  "manage": {
+    "title": "Members",
+    "members": "{count, plural, one {# member} other {# members}}",
+    "add": "Add members",
+    "search": "Search users",
+    "no-users": "No users found.",
+    "add-confirm": "Add",
+    "empty": "No members yet.",
+    "remove": "Remove member"
+  }
+}

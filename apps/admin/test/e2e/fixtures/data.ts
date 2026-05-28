@@ -1,14 +1,20 @@
 import type {
   AdminAccountListResponseDto,
   AdminBrandingDto,
+  AdminChannelListResponseDto,
   AdminDeepAnalyticsDto,
   AdminDto,
+  AdminGroupDetailDto,
+  AdminGroupListResponseDto,
   AdminInviteListResponseDto,
   AdminInviteLookupDto,
   AdminLoginResponseDto,
   AdminMeetingListResponseDto,
   AdminStatsOverviewDto,
+  AdminTeamDetailDto,
+  AdminTeamListResponseDto,
   AdminUserListResponseDto,
+  UserInviteListResponseDto,
   WorkspaceConfigDto,
 } from '@open-meet/types';
 
@@ -73,6 +79,7 @@ export const usersList: AdminUserListResponseDto = {
       timezone: 'UTC',
       language: 'en',
       bio: null,
+      chatDisabled: false,
       createdAt: '2026-02-10T10:00:00.000Z',
       meetingsHosted: 12,
       meetingsAttended: 30,
@@ -85,6 +92,7 @@ export const usersList: AdminUserListResponseDto = {
       timezone: 'Europe/London',
       language: 'en',
       bio: 'Codebreaker',
+      chatDisabled: false,
       createdAt: '2026-03-01T11:30:00.000Z',
       meetingsHosted: 4,
       meetingsAttended: 9,
@@ -170,4 +178,87 @@ export const inviteLookup: AdminInviteLookupDto = {
   name: 'New Admin',
   role: 'ADMIN',
   expiresAt: '2026-06-01T00:00:00.000Z',
+};
+
+export const teamsList: AdminTeamListResponseDto = {
+  items: [
+    { id: 't-1', name: 'Engineering', memberCount: 2, createdAt: '2026-02-01T09:00:00.000Z' },
+    { id: 't-2', name: 'Marketing', memberCount: 1, createdAt: '2026-02-05T09:00:00.000Z' },
+  ],
+};
+
+export const teamDetail: AdminTeamDetailDto = {
+  id: 't-1',
+  name: 'Engineering',
+  memberCount: 2,
+  createdAt: '2026-02-01T09:00:00.000Z',
+  members: [
+    {
+      userId: 'u-1',
+      name: 'Ada Lovelace',
+      email: 'ada@example.com',
+      avatar: null,
+      joinedAt: '2026-02-01T09:05:00.000Z',
+    },
+    {
+      userId: 'u-2',
+      name: 'Alan Turing',
+      email: 'alan@example.com',
+      avatar: null,
+      joinedAt: '2026-02-02T09:05:00.000Z',
+    },
+  ],
+};
+
+export const teamChannels: AdminChannelListResponseDto = {
+  items: [
+    {
+      id: 'c-general',
+      name: 'general',
+      description: null,
+      isGeneral: true,
+      memberCount: 2,
+      createdAt: '2026-02-01T09:00:00.000Z',
+    },
+    {
+      id: 'c-releases',
+      name: 'releases',
+      description: 'Ship notes',
+      isGeneral: false,
+      memberCount: 2,
+      createdAt: '2026-02-03T09:00:00.000Z',
+    },
+  ],
+};
+
+export const groupsList: AdminGroupListResponseDto = {
+  items: [
+    { id: 'g-1', title: 'Product launch', memberCount: 2, createdAt: '2026-02-10T09:00:00.000Z' },
+    { id: 'g-2', title: 'Design crit', memberCount: 1, createdAt: '2026-02-12T09:00:00.000Z' },
+  ],
+};
+
+export const groupDetail: AdminGroupDetailDto = {
+  id: 'g-1',
+  title: 'Product launch',
+  memberCount: 2,
+  createdAt: '2026-02-10T09:00:00.000Z',
+  members: [
+    { userId: 'u-1', name: 'Ada Lovelace', email: 'ada@example.com', avatar: null },
+    { userId: 'u-2', name: 'Alan Turing', email: 'alan@example.com', avatar: null },
+  ],
+};
+
+export const userInvites: UserInviteListResponseDto = {
+  items: [
+    {
+      id: 'ui-1',
+      email: 'newbie@example.com',
+      name: 'Nina Newbie',
+      status: 'PENDING',
+      invitedByName: 'Root Admin',
+      expiresAt: '2026-06-10T00:00:00.000Z',
+      createdAt: '2026-05-20T09:00:00.000Z',
+    },
+  ],
 };

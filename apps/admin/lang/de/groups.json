@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Verwalten",
+  "title": "Gruppen",
+  "subtitle": "Gruppenunterhaltungen werden von Administratoren erstellt und verwaltet.",
+  "empty": "Noch keine Gruppen.",
+  "columns": {
+    "name": "Name",
+    "members": "Mitglieder"
+  },
+  "actions": {
+    "manage": "Mitglieder verwalten",
+    "delete": "Gruppe löschen"
+  },
+  "create": {
+    "button": "Neue Gruppe",
+    "title": "Gruppe erstellen",
+    "name": "Gruppenname",
+    "placeholder": "z. B. Produkteinführung",
+    "choose-members": "Mitglieder auswählen",
+    "choose-confirm": "Auswählen",
+    "selected": "{count, plural, one {# Mitglied ausgewählt} other {# Mitglieder ausgewählt}}",
+    "submit": "Erstellen",
+    "success": "Gruppe erstellt",
+    "error": "Gruppe konnte nicht erstellt werden"
+  },
+  "manage": {
+    "title": "Mitglieder",
+    "members": "{count, plural, one {# Mitglied} other {# Mitglieder}}",
+    "add": "Mitglieder hinzufügen",
+    "search": "Benutzer suchen",
+    "no-users": "Keine Benutzer gefunden.",
+    "add-confirm": "Hinzufügen",
+    "empty": "Noch keine Mitglieder.",
+    "remove": "Mitglied entfernen"
+  }
+}

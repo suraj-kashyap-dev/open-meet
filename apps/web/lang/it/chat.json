@@ -1,0 +1,139 @@
+{
+  "list": {
+    "title": "Messaggi",
+    "new": "Nuovo messaggio",
+    "search": "Cerca conversazioni",
+    "loading": "Caricamento…",
+    "empty": "Ancora nessuna conversazione.",
+    "untitled": "Conversazione",
+    "attachment": "Allegato",
+    "no-messages": "Ancora nessun messaggio",
+    "actions": "Azioni conversazione",
+    "pin-chat": "Fissa in alto",
+    "unpin-chat": "Rimuovi dai fissati",
+    "mute": "Silenzia",
+    "unmute": "Riattiva audio",
+    "mark-unread": "Segna come non letto",
+    "hide": "Nascondi"
+  },
+  "view": {
+    "empty": "Seleziona una conversazione per iniziare a chattare.",
+    "no-messages": "Ancora nessun messaggio. Saluta!",
+    "loading": "Caricamento conversazione…",
+    "not-found": "Conversazione non trovata.",
+    "back": "Torna alle conversazioni",
+    "jump-to-latest": "Vai all'ultimo",
+    "peer-disabled": "La chat è disabilitata per questo utente.",
+    "you-disabled": "Il tuo accesso alla chat è stato disabilitato."
+  },
+  "header": {
+    "members": "{count, plural, one {# membro} other {# membri}}"
+  },
+  "presence": {
+    "online": "Online",
+    "offline": "Offline",
+    "last-seen": "Ultimo accesso {time}",
+    "set-status": "Imposta il tuo stato",
+    "available": "Disponibile",
+    "busy": "Occupato",
+    "dnd": "Non disturbare",
+    "brb": "Torno subito",
+    "away": "Assente"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "Cerca GIF",
+    "empty": "Nessuna GIF trovata."
+  },
+  "bubble": {
+    "you": "Tu",
+    "unknown-user": "Sconosciuto",
+    "deleted": "Questo messaggio è stato eliminato",
+    "edited": "(modificato)",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "reply": "Rispondi",
+    "more": "Altre azioni",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "pinned": "Fissato",
+    "pin": "Fissa",
+    "unpin": "Rimuovi dai fissati",
+    "save-message": "Salva",
+    "unsave-message": "Rimuovi dai salvati",
+    "forward": "Inoltra",
+    "copy-link": "Copia link",
+    "link-copied": "Link copiato"
+  },
+  "priority": {
+    "normal": "Standard",
+    "important": "Importante",
+    "urgent": "Urgente",
+    "label": "Priorità"
+  },
+  "forward": {
+    "title": "Inoltra a…",
+    "success": "Messaggio inoltrato",
+    "error": "Impossibile inoltrare il messaggio"
+  },
+  "receipts": {
+    "seen": "Visto",
+    "seen-by": "Visto da {count}"
+  },
+  "typing": {
+    "one": "{name} sta scrivendo…",
+    "many": "{count} persone stanno scrivendo…"
+  },
+  "composer": {
+    "placeholder": "Scrivi un messaggio…",
+    "send": "Invia messaggio",
+    "attach-file": "Allega file",
+    "take-photo": "Scatta una foto",
+    "cancel-reply": "Annulla risposta",
+    "uploading": "Caricamento… {percent}%",
+    "failed": "Non riuscito",
+    "remove-attachment": "Rimuovi allegato",
+    "max-attachments": "Puoi allegare fino a {max} file.",
+    "wait-for-uploads": "Attendi il completamento dei caricamenti.",
+    "upload-failed": "Caricamento non riuscito",
+    "poll-failed": "Impossibile creare il sondaggio",
+    "disabled": "Non puoi inviare messaggi qui."
+  },
+  "poll": {
+    "create": "Crea sondaggio",
+    "question": "Domanda",
+    "question-placeholder": "Chiedi qualcosa…",
+    "options": "Opzioni",
+    "option-placeholder": "Opzione {index}",
+    "add-option": "Aggiungi opzione",
+    "remove-option": "Rimuovi opzione",
+    "allow-multiple": "Consenti più risposte",
+    "cancel": "Annulla",
+    "create-submit": "Crea",
+    "votes": "{count, plural, one {# voto} other {# voti}}",
+    "closed": "Chiuso"
+  },
+  "new-dm": {
+    "title": "Nuova conversazione",
+    "search": "Cerca compagni di squadra",
+    "no-teammates": "Nessun compagno di squadra trovato.",
+    "disabled": "Non disponibile"
+  },
+  "teams": {
+    "title": "Team",
+    "empty": "Non sei ancora membro di nessun team.",
+    "no-channels": "Ancora nessun canale."
+  },
+  "activity": {
+    "title": "Attività",
+    "subtitle": "Messaggi che ti @menzionano.",
+    "empty": "Ancora nessuna menzione."
+  },
+  "saved": {
+    "title": "Salvati",
+    "empty": "Non hai ancora salvato alcun messaggio."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

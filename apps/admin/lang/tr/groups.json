@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Yönet",
+  "title": "Gruplar",
+  "subtitle": "Grup sohbetleri yöneticiler tarafından oluşturulur ve yönetilir.",
+  "empty": "Henüz grup yok.",
+  "columns": {
+    "name": "Ad",
+    "members": "Üyeler"
+  },
+  "actions": {
+    "manage": "Üyeleri yönet",
+    "delete": "Grubu sil"
+  },
+  "create": {
+    "button": "Yeni grup",
+    "title": "Grup oluştur",
+    "name": "Grup adı",
+    "placeholder": "örn. Ürün lansmanı",
+    "choose-members": "Üye seç",
+    "choose-confirm": "Seç",
+    "selected": "{count, plural, one {# üye seçildi} other {# üye seçildi}}",
+    "submit": "Oluştur",
+    "success": "Grup oluşturuldu",
+    "error": "Grup oluşturulamadı"
+  },
+  "manage": {
+    "title": "Üyeler",
+    "members": "{count, plural, one {# üye} other {# üye}}",
+    "add": "Üye ekle",
+    "search": "Kullanıcı ara",
+    "no-users": "Kullanıcı bulunamadı.",
+    "add-confirm": "Ekle",
+    "empty": "Henüz üye yok.",
+    "remove": "Üyeyi çıkar"
+  }
+}

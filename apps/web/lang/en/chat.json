@@ -1,0 +1,139 @@
+{
+  "list": {
+    "title": "Messages",
+    "new": "New message",
+    "search": "Search conversations",
+    "loading": "Loading…",
+    "empty": "No conversations yet.",
+    "untitled": "Conversation",
+    "attachment": "Attachment",
+    "no-messages": "No messages yet",
+    "actions": "Conversation actions",
+    "pin-chat": "Pin to top",
+    "unpin-chat": "Unpin",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "mark-unread": "Mark as unread",
+    "hide": "Hide"
+  },
+  "view": {
+    "empty": "Select a conversation to start chatting.",
+    "no-messages": "No messages yet. Say hello!",
+    "loading": "Loading conversation…",
+    "not-found": "Conversation not found.",
+    "back": "Back to conversations",
+    "jump-to-latest": "Jump to latest",
+    "peer-disabled": "Chat is disabled for this user.",
+    "you-disabled": "Your chat access has been disabled."
+  },
+  "header": {
+    "members": "{count, plural, one {# member} other {# members}}"
+  },
+  "presence": {
+    "online": "Online",
+    "offline": "Offline",
+    "last-seen": "Last seen {time}",
+    "set-status": "Set your status",
+    "available": "Available",
+    "busy": "Busy",
+    "dnd": "Do not disturb",
+    "brb": "Be right back",
+    "away": "Away"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "Search GIFs",
+    "empty": "No GIFs found."
+  },
+  "bubble": {
+    "you": "You",
+    "unknown-user": "Unknown",
+    "deleted": "This message was deleted",
+    "edited": "(edited)",
+    "edit": "Edit",
+    "delete": "Delete",
+    "reply": "Reply",
+    "more": "More actions",
+    "save": "Save",
+    "cancel": "Cancel",
+    "pinned": "Pinned",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "save-message": "Save",
+    "unsave-message": "Remove from saved",
+    "forward": "Forward",
+    "copy-link": "Copy link",
+    "link-copied": "Link copied"
+  },
+  "priority": {
+    "normal": "Standard",
+    "important": "Important",
+    "urgent": "Urgent",
+    "label": "Priority"
+  },
+  "forward": {
+    "title": "Forward to…",
+    "success": "Message forwarded",
+    "error": "Could not forward the message"
+  },
+  "receipts": {
+    "seen": "Seen",
+    "seen-by": "Seen by {count}"
+  },
+  "typing": {
+    "one": "{name} is typing…",
+    "many": "{count} people are typing…"
+  },
+  "composer": {
+    "placeholder": "Write a message…",
+    "send": "Send message",
+    "attach-file": "Attach file",
+    "take-photo": "Take a photo",
+    "cancel-reply": "Cancel reply",
+    "uploading": "Uploading… {percent}%",
+    "failed": "Failed",
+    "remove-attachment": "Remove attachment",
+    "max-attachments": "You can attach up to {max} files.",
+    "wait-for-uploads": "Wait for uploads to finish.",
+    "upload-failed": "Upload failed",
+    "poll-failed": "Could not create the poll",
+    "disabled": "You can't send messages here."
+  },
+  "poll": {
+    "create": "Create poll",
+    "question": "Question",
+    "question-placeholder": "Ask something…",
+    "options": "Options",
+    "option-placeholder": "Option {index}",
+    "add-option": "Add option",
+    "remove-option": "Remove option",
+    "allow-multiple": "Allow multiple answers",
+    "cancel": "Cancel",
+    "create-submit": "Create",
+    "votes": "{count, plural, one {# vote} other {# votes}}",
+    "closed": "Closed"
+  },
+  "new-dm": {
+    "title": "New conversation",
+    "search": "Search teammates",
+    "no-teammates": "No teammates found.",
+    "disabled": "Unavailable"
+  },
+  "teams": {
+    "title": "Teams",
+    "empty": "You're not a member of any team yet.",
+    "no-channels": "No channels yet."
+  },
+  "activity": {
+    "title": "Activity",
+    "subtitle": "Messages that @mention you.",
+    "empty": "No mentions yet."
+  },
+  "saved": {
+    "title": "Saved",
+    "empty": "You haven't saved any messages yet."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

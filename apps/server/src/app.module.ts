@@ -17,6 +17,7 @@ import { MeetingsModule } from './modules/client/meetings/meetings.module';
 import { LiveKitModule } from './integrations/livekit/livekit.module';
 import { MailModule } from './integrations/mail/mail.module';
 import { ChatModule } from './modules/client/chat/chat.module';
+import { MessagingModule } from './modules/client/messaging/messaging.module';
 import { RecordingModule } from './modules/client/recording/recording.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AppConfigModule } from './modules/config/config.module';
@@ -70,6 +71,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     MeetingsModule,
     LiveKitModule,
     ChatModule,
+    MessagingModule,
     RecordingModule,
     AppConfigModule,
     AdminModule,

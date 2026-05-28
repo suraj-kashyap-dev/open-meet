@@ -1,0 +1,41 @@
+{
+  "eyebrow": "Yönet",
+  "title": "Takımlar",
+  "subtitle": "Takımlar kimin kime mesaj atabileceğini belirler — kullanıcılar ortak bir takımdaki herkese DM gönderebilir.",
+  "empty": "Henüz takım yok.",
+  "columns": {
+    "name": "Ad",
+    "members": "Üyeler"
+  },
+  "actions": {
+    "manage": "Üyeleri yönet",
+    "delete": "Takımı sil"
+  },
+  "create": {
+    "button": "Yeni takım",
+    "title": "Takım oluştur",
+    "name": "Takım adı",
+    "placeholder": "örn. Mühendislik",
+    "submit": "Oluştur",
+    "success": "Takım oluşturuldu",
+    "error": "Takım oluşturulamadı"
+  },
+  "manage": {
+    "title": "Üyeler",
+    "members": "{count, plural, one {# üye} other {# üye}}",
+    "add": "Üye ekle",
+    "search": "Kullanıcı ara",
+    "no-users": "Kullanıcı bulunamadı.",
+    "add-confirm": "Ekle",
+    "empty": "Henüz üye yok.",
+    "remove": "Üyeyi çıkar"
+  },
+  "channels": {
+    "title": "Kanallar",
+    "empty": "Henüz kanal yok.",
+    "general": "Genel",
+    "add": "Kanal ekle",
+    "delete": "Kanalı sil",
+    "name-placeholder": "Yeni kanal adı"
+  }
+}

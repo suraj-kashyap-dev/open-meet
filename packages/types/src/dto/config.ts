@@ -5,6 +5,8 @@
 export interface PublicConfigDto {
   appName: string;
   logoUrl: string | null;
+  /** Whether the GIF picker is available (Tenor configured on the server). */
+  gifsEnabled: boolean;
 }
 
 /** Branding as seen by the admin console (`GET /api/admin/branding`). */

@@ -1,11 +1,12 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { ChevronDown, LogOut, Settings, User } from 'lucide-react';
+import { AtSign, Bookmark, ChevronDown, LogOut, MessageSquare, Settings, User, Users } from 'lucide-react';
 
 import { Link } from '@/i18n/navigation';
 import { BrandLockup } from '@/components/web/branding/brand-lockup';
 import { useBranding } from '@/components/web/branding/branding-provider';
+import { ChatNavBadge } from '@/features/web/chat/components/chat-nav-badge';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import {
@@ -43,6 +44,38 @@ export function AppHeader() {
         </Link>
 
         <div className="flex items-center gap-2">
+          {user ? (
+            <nav className="flex items-center gap-1">
+              <Button asChild variant="ghost" size="icon" aria-label={t('activity-link-label')}>
+                <Link href="/activity">
+                  <AtSign className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" size="icon" aria-label={t('teams-link-label')}>
+                <Link href="/teams">
+                  <Users className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild variant="ghost" size="icon" aria-label={t('saved-link-label')}>
+                <Link href="/saved">
+                  <Bookmark className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                aria-label={t('chat-link-label')}
+                className="relative"
+              >
+                <Link href="/chat">
+                  <MessageSquare className="h-4 w-4" />
+                  <ChatNavBadge />
+                </Link>
+              </Button>
+            </nav>
+          ) : null}
+
           <ThemeToggle />
 
           {user ? (

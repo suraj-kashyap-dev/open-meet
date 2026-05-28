@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "Dashboard",
     "users": "Users",
+    "teams": "Teams",
+    "groups": "Groups",
     "meetings": "Meetings",
     "analytics": "Analytics",
     "settings": "Settings",

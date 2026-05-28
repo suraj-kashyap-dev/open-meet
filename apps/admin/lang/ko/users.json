@@ -11,6 +11,8 @@
     "joined": "가입일",
     "hosted": "호스팅",
     "attended": "참여",
+    "chat": "채팅",
+    "chat-toggle": "채팅 액세스 전환",
     "actions": "작업",
     "open-actions": "작업 열기",
     "edit": "편집",
@@ -76,5 +78,29 @@
     "submitting": "삭제 중…",
     "success": "{email} 삭제 완료",
     "error": "사용자를 삭제할 수 없습니다"
+  },
+  "invite": {
+    "button": "사용자 초대",
+    "title": "사용자 초대하기",
+    "subtitle": "비밀번호를 설정하고 계정을 활성화할 수 있는 이메일을 받게 됩니다.",
+    "name": "이름",
+    "email": "이메일",
+    "submit": "초대 보내기",
+    "success": "{email}에게 초대를 보냈습니다",
+    "error": "초대를 보낼 수 없습니다"
+  },
+  "pending": {
+    "title": "대기 중인 초대",
+    "empty": "대기 중인 초대가 없습니다.",
+    "loading-error": "초대를 불러올 수 없습니다.",
+    "status-pending": "대기 중",
+    "status-expired": "만료됨",
+    "expires": "{when}에 만료",
+    "resend-label": "{email}에게 초대 재전송",
+    "revoke-label": "{email}의 초대 취소",
+    "resend-success": "{email}에게 초대를 재전송했습니다",
+    "resend-error": "초대를 재전송할 수 없습니다",
+    "revoke-success": "{email}의 초대가 취소되었습니다",
+    "revoke-error": "초대를 취소할 수 없습니다"
   }
 }

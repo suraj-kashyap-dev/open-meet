@@ -12,6 +12,8 @@
   "items": {
     "dashboard": "Tableau de bord",
     "users": "Utilisateurs",
+    "teams": "Équipes",
+    "groups": "Groupes",
     "meetings": "Réunions",
     "analytics": "Analytique",
     "settings": "Paramètres",
