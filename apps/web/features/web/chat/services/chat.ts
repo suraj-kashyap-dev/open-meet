@@ -41,10 +41,9 @@ export const chatApi = {
     api.get<ConversationDto>(`/messaging/conversations/${id}`, { signal }),
 
   messages: (id: string, params: { cursor?: string; limit?: number }, signal?: AbortSignal) =>
-    api.get<ChatMessagePageDto>(
-      `/messaging/conversations/${id}/messages${query(params)}`,
-      { signal },
-    ),
+    api.get<ChatMessagePageDto>(`/messaging/conversations/${id}/messages${query(params)}`, {
+      signal,
+    }),
 
   send: (id: string, body: SendChatMessageDto) =>
     api.post<ChatMessageDto>(`/messaging/conversations/${id}/messages`, body),
@@ -78,8 +77,7 @@ export const chatApi = {
   forward: (messageId: string, targetConversationId: string) =>
     api.post<ChatMessageDto>(`/messaging/messages/${messageId}/forward`, { targetConversationId }),
 
-  pin: (messageId: string) =>
-    api.post<{ pinned: true }>(`/messaging/messages/${messageId}/pin`),
+  pin: (messageId: string) => api.post<{ pinned: true }>(`/messaging/messages/${messageId}/pin`),
 
   unpin: (messageId: string) =>
     api.delete<{ pinned: false }>(`/messaging/messages/${messageId}/pin`),
@@ -92,14 +90,12 @@ export const chatApi = {
   unsave: (messageId: string) =>
     api.delete<{ saved: false }>(`/messaging/messages/${messageId}/save`),
 
-  listSaved: (signal?: AbortSignal) =>
-    api.get<SavedMessageListDto>('/messaging/saved', { signal }),
+  listSaved: (signal?: AbortSignal) => api.get<SavedMessageListDto>('/messaging/saved', { signal }),
 
   teammates: (search: string | undefined, signal?: AbortSignal) =>
     api.get<TeammateListDto>(`/messaging/teammates${query({ search })}`, { signal }),
 
-  unread: (signal?: AbortSignal) =>
-    api.get<UnreadSummaryDto>('/messaging/unread', { signal }),
+  unread: (signal?: AbortSignal) => api.get<UnreadSummaryDto>('/messaging/unread', { signal }),
 
   setState: (conversationId: string, body: ConversationStateDto) =>
     api.patch<{ ok: true }>(`/messaging/conversations/${conversationId}/state`, body),
@@ -110,11 +106,9 @@ export const chatApi = {
   gifs: (q: string, signal?: AbortSignal) =>
     api.get<GifSearchResultDto>(`/messaging/gifs${query({ q })}`, { signal }),
 
-  myTeams: (signal?: AbortSignal) =>
-    api.get<MyTeamsResponseDto>('/messaging/teams', { signal }),
+  myTeams: (signal?: AbortSignal) => api.get<MyTeamsResponseDto>('/messaging/teams', { signal }),
 
-  activity: (signal?: AbortSignal) =>
-    api.get<ActivityFeedDto>('/messaging/activity', { signal }),
+  activity: (signal?: AbortSignal) => api.get<ActivityFeedDto>('/messaging/activity', { signal }),
 
   thread: (rootId: string, signal?: AbortSignal) =>
     api.get<ThreadDto>(`/messaging/threads/${rootId}`, { signal }),

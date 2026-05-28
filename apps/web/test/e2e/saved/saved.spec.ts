@@ -9,7 +9,9 @@ test.describe('Web saved page', () => {
     await page.goto('/en/saved');
 
     await expect(page.getByRole('heading', { name: 'Saved' })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Remember to send the quarterly report/ })).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /Remember to send the quarterly report/ }),
+    ).toBeVisible();
   });
 
   test('should show the empty state when nothing is saved', async ({ page }) => {

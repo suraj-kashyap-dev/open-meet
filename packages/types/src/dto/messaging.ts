@@ -153,9 +153,9 @@ export interface ConversationDto {
   lastMessage: ChatMessageDto | null;
   lastMessageAt: string | null;
   unreadCount: number;
-  /** The requesting viewer's per-conversation flags. */
   muted: boolean;
   pinned: boolean;
+  hidden: boolean;
   createdAt: string;
 }
 

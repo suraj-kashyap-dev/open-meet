@@ -11,14 +11,24 @@ import { type MessagingSerializer } from '@/modules/client/messaging/messaging.s
 import { type ChatBus, conversationRoom } from '@/modules/client/messaging/chat-bus.service';
 
 describe('PinsService', () => {
-  let pins: { pin: ReturnType<typeof vi.fn>; unpin: ReturnType<typeof vi.fn>; listPinned: ReturnType<typeof vi.fn> };
+  let pins: {
+    pin: ReturnType<typeof vi.fn>;
+    unpin: ReturnType<typeof vi.fn>;
+    listPinned: ReturnType<typeof vi.fn>;
+  };
   let messages: { findMeta: ReturnType<typeof vi.fn> };
   let permissions: { assertConversationMember: ReturnType<typeof vi.fn> };
   let serializer: { message: ReturnType<typeof vi.fn> };
   let bus: { emit: ReturnType<typeof vi.fn> };
   let service: PinsService;
 
-  const meta = { id: 'm1', conversationId: 'c1', senderId: 'u2', deletedAt: null, createdAt: new Date() };
+  const meta = {
+    id: 'm1',
+    conversationId: 'c1',
+    senderId: 'u2',
+    deletedAt: null,
+    createdAt: new Date(),
+  };
 
   beforeEach(() => {
     pins = { pin: vi.fn(), unpin: vi.fn(), listPinned: vi.fn() };

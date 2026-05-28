@@ -1,7 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
-import { ApiErrorCode, ChatServerEvent, type ConversationDto, type ConversationListDto } from '@open-meet/types';
+import {
+  ApiErrorCode,
+  ChatServerEvent,
+  type ConversationDto,
+  type ConversationListDto,
+} from '@open-meet/types';
 
 import { ChatBus, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
@@ -28,11 +33,12 @@ export class ConversationsService {
     private readonly bus: ChatBus,
   ) {}
 
-  async list(userId: string): Promise<ConversationListDto> {
+  async list(userId: string, opts: { includeHidden?: boolean } = {}): Promise<ConversationListDto> {
     const all = await this.repo.listForUser(userId);
-    // Hide conversations the viewer has hidden; pinned ones sort to the top.
+    // Hide conversations the viewer has hidden unless the caller explicitly
+    // asks for them (the "Show hidden" filter); pinned ones sort to the top.
     const rows = all
-      .filter((c) => !c.members.find((m) => m.userId === userId)?.hidden)
+      .filter((c) => opts.includeHidden || !c.members.find((m) => m.userId === userId)?.hidden)
       .sort((a, b) => {
         const ap = a.members.find((m) => m.userId === userId)?.pinned ? 1 : 0;
         const bp = b.members.find((m) => m.userId === userId)?.pinned ? 1 : 0;

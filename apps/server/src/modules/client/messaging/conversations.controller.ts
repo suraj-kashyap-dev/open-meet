@@ -12,6 +12,7 @@ import {
   ConversationStateBodyDto,
   CreatePollBodyDto,
   GifsQueryDto,
+  ListConversationsQueryDto,
   MarkReadBodyDto,
   MessagesHistoryQueryDto,
   OpenDirectBodyDto,
@@ -57,8 +58,8 @@ export class ConversationsController {
   }
 
   @Get('conversations')
-  list(@CurrentUser() user: RequestUser) {
-    return this.conversations.list(user.id);
+  list(@CurrentUser() user: RequestUser, @Query() query: ListConversationsQueryDto) {
+    return this.conversations.list(user.id, { includeHidden: query.includeHidden });
   }
 
   @Post('conversations/direct')
@@ -139,11 +140,7 @@ export class ConversationsController {
   }
 
   @Post('conversations/:id/read')
-  read(
-    @CurrentUser() user: RequestUser,
-    @Param('id') id: string,
-    @Body() body: MarkReadBodyDto,
-  ) {
+  read(@CurrentUser() user: RequestUser, @Param('id') id: string, @Body() body: MarkReadBodyDto) {
     return this.readState.markRead(id, user.id, body.messageId);
   }
 

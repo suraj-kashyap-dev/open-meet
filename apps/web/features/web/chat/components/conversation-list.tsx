@@ -2,7 +2,7 @@
 
 import { ListFilter, Search, SquarePen, Video } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@open-meet/ui/button';
@@ -16,6 +16,7 @@ import { ApiClientError } from '@/lib/api/client';
 
 import { conversationDisplay } from '../lib/conversation-display';
 import { useConversations } from '../hooks/use-chat';
+import { useChatStore } from '../stores';
 import { ConversationListItem } from './conversation-list-item';
 
 export function ConversationList() {
@@ -26,8 +27,26 @@ export function ConversationList() {
   const pathname = usePathname();
   const nav = useNavigateTransition();
   const createMeeting = useCreateMeeting();
+  const setPresence = useChatStore((s) => s.setPresence);
   const [filter, setFilter] = useState('');
   const [showFilter, setShowFilter] = useState(false);
+
+  // Seed the presence store from each conversation's members so other users'
+  // status dots show their REAL current state on first load — without this,
+  // dots stay OFFLINE until a live socket event fires for that user.
+  useEffect(() => {
+    if (!data?.items) return;
+    for (const conv of data.items) {
+      for (const member of conv.members) {
+        setPresence(member.userId, {
+          online: member.online,
+          status: member.status ?? (member.online ? 'AVAILABLE' : 'OFFLINE'),
+          customText: member.customText ?? null,
+          lastSeen: null,
+        });
+      }
+    }
+  }, [data, setPresence]);
 
   const activeId = pathname.startsWith('/chat/') ? pathname.slice('/chat/'.length) : null;
 
@@ -36,7 +55,9 @@ export function ConversationList() {
       const meeting = await createMeeting.mutateAsync({});
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
-      toast.error(err instanceof ApiClientError ? err.message : tNav('command.create-meeting-error'));
+      toast.error(
+        err instanceof ApiClientError ? err.message : tNav('command.create-meeting-error'),
+      );
     }
   };
 

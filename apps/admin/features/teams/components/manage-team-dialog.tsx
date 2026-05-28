@@ -106,7 +106,11 @@ export function ManageTeamDialog({
             searchPlaceholder={t('manage.search')}
             emptyLabel={t('manage.no-users')}
           />
-          <Button className="w-full gap-1.5" disabled={toAdd.length === 0 || add.isPending} onClick={addMembers}>
+          <Button
+            className="w-full gap-1.5"
+            disabled={toAdd.length === 0 || add.isPending}
+            onClick={addMembers}
+          >
             <UserPlus className="h-4 w-4" />
             {t('manage.add-confirm')}
             {toAdd.length > 0 ? ` (${toAdd.length})` : ''}

@@ -10,7 +10,11 @@ import {
 
 import { StorageService } from '../../../storage/storage.service';
 
-import { AdminTeamsRepository, type TeamMemberWithUser, type TeamWithCount } from './teams.repository';
+import {
+  AdminTeamsRepository,
+  type TeamMemberWithUser,
+  type TeamWithCount,
+} from './teams.repository';
 
 @Injectable()
 export class AdminTeamsService {

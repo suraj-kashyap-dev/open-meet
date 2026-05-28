@@ -37,12 +37,7 @@ import { TeammatesService } from './teammates.service';
 
 @Module({
   imports: [UploadsModule, JwtModule.register({})],
-  controllers: [
-    ConversationsController,
-    MessagesController,
-    PollsController,
-    TeammatesController,
-  ],
+  controllers: [ConversationsController, MessagesController, PollsController, TeammatesController],
   providers: [
     ConversationGateway,
     WsJwtGuard,

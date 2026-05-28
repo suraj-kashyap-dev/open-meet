@@ -7,7 +7,9 @@ import { PrismaService } from '../../../database/prisma.service';
 export class ChatPermissionsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  findUserBasics(userId: string): Promise<{ id: string; name: string; chatDisabled: boolean } | null> {
+  findUserBasics(
+    userId: string,
+  ): Promise<{ id: string; name: string; chatDisabled: boolean } | null> {
     return this.prisma.user.findUnique({
       where: { id: userId },
       select: { id: true, name: true, chatDisabled: true },

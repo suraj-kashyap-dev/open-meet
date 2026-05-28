@@ -9,7 +9,10 @@ import type { ChatMessageDto, ChatMessagePageDto } from '@open-meet/types';
  */
 export type MessagesData = InfiniteData<ChatMessagePageDto, string | undefined>;
 
-const emptyData: MessagesData = { pages: [{ items: [], nextCursor: null }], pageParams: [undefined] };
+const emptyData: MessagesData = {
+  pages: [{ items: [], nextCursor: null }],
+  pageParams: [undefined],
+};
 
 /** Flatten to a single ascending (oldest → newest) list for rendering. */
 export function flattenMessages(data: MessagesData | undefined): ChatMessageDto[] {
@@ -38,7 +41,9 @@ export function upsertMessage(
     ...page,
     items: page.items.map((m) => {
       const sameNonce =
-        Boolean(message.clientNonce) && Boolean(m.clientNonce) && m.clientNonce === message.clientNonce;
+        Boolean(message.clientNonce) &&
+        Boolean(m.clientNonce) &&
+        m.clientNonce === message.clientNonce;
 
       if (sameNonce || m.id === message.id) {
         replaced = true;

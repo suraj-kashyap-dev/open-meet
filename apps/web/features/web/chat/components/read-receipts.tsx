@@ -33,9 +33,7 @@ export function ReadReceipts({
 
   return (
     <span className="px-1 text-[10px] text-muted-foreground">
-      {readers.length === 1
-        ? t('receipts.seen')
-        : t('receipts.seen-by', { count: readers.length })}
+      {readers.length === 1 ? t('receipts.seen') : t('receipts.seen-by', { count: readers.length })}
     </span>
   );
 }

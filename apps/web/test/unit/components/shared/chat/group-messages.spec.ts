@@ -36,40 +36,28 @@ describe('buildMessageRows()', () => {
   });
 
   it('should group consecutive messages from the same sender within the window', () => {
-    const rows = buildMessageRows(
-      [msg('m1', 'u2', BASE), msg('m2', 'u2', plusSeconds(30))],
-      'u1',
-    );
+    const rows = buildMessageRows([msg('m1', 'u2', BASE), msg('m2', 'u2', plusSeconds(30))], 'u1');
 
     expect(rows[0]).toMatchObject({ isGroupHead: true, isGroupTail: false });
     expect(rows[1]).toMatchObject({ isGroupHead: false, isGroupTail: true });
   });
 
   it('should split same-sender messages that are more than the window apart', () => {
-    const rows = buildMessageRows(
-      [msg('m1', 'u2', BASE), msg('m2', 'u2', plusSeconds(180))],
-      'u1',
-    );
+    const rows = buildMessageRows([msg('m1', 'u2', BASE), msg('m2', 'u2', plusSeconds(180))], 'u1');
 
     expect(rows[0]).toMatchObject({ isGroupHead: true, isGroupTail: true });
     expect(rows[1]).toMatchObject({ isGroupHead: true, isGroupTail: true });
   });
 
   it('should never group messages from different senders', () => {
-    const rows = buildMessageRows(
-      [msg('m1', 'u2', BASE), msg('m2', 'u3', plusSeconds(10))],
-      'u1',
-    );
+    const rows = buildMessageRows([msg('m1', 'u2', BASE), msg('m2', 'u3', plusSeconds(10))], 'u1');
 
     expect(rows[0]).toMatchObject({ isGroupHead: true, isGroupTail: true });
     expect(rows[1]).toMatchObject({ isGroupHead: true, isGroupTail: true });
   });
 
   it('should keep messages with a deleted (null) sender as standalone rows', () => {
-    const rows = buildMessageRows(
-      [msg('m1', null, BASE), msg('m2', null, plusSeconds(10))],
-      'u1',
-    );
+    const rows = buildMessageRows([msg('m1', null, BASE), msg('m2', null, plusSeconds(10))], 'u1');
 
     expect(rows[0]).toMatchObject({ isMe: false, isGroupHead: true, isGroupTail: true });
     expect(rows[1]).toMatchObject({ isMe: false, isGroupHead: true, isGroupTail: true });

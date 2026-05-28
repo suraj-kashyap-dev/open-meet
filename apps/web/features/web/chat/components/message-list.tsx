@@ -138,7 +138,11 @@ export function MessageList({
 
   return (
     <div className="relative flex-1 overflow-hidden">
-      <div ref={scrollRef} onScroll={onScroll} className="absolute inset-0 overflow-y-auto px-3 py-4">
+      <div
+        ref={scrollRef}
+        onScroll={onScroll}
+        className="absolute inset-0 overflow-y-auto px-3 py-4"
+      >
         {query.isFetchingNextPage ? (
           <div className="flex justify-center py-2">
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />

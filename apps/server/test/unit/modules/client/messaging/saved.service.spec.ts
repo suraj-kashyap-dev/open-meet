@@ -8,13 +8,23 @@ import { type ChatPermissionsService } from '@/modules/client/messaging/chat-per
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
 
 describe('SavedService', () => {
-  let saved: { save: ReturnType<typeof vi.fn>; unsave: ReturnType<typeof vi.fn>; listSaved: ReturnType<typeof vi.fn> };
+  let saved: {
+    save: ReturnType<typeof vi.fn>;
+    unsave: ReturnType<typeof vi.fn>;
+    listSaved: ReturnType<typeof vi.fn>;
+  };
   let messages: { findMeta: ReturnType<typeof vi.fn> };
   let permissions: { assertConversationMember: ReturnType<typeof vi.fn> };
   let serializer: { message: ReturnType<typeof vi.fn> };
   let service: SavedService;
 
-  const meta = { id: 'm1', conversationId: 'c1', senderId: 'u2', deletedAt: null, createdAt: new Date() };
+  const meta = {
+    id: 'm1',
+    conversationId: 'c1',
+    senderId: 'u2',
+    deletedAt: null,
+    createdAt: new Date(),
+  };
 
   beforeEach(() => {
     saved = { save: vi.fn(), unsave: vi.fn(), listSaved: vi.fn() };
@@ -55,14 +65,18 @@ describe('SavedService', () => {
   describe('list()', () => {
     it('should serialize saved messages (saved=true) with their conversation title', async () => {
       saved.listSaved.mockResolvedValue([
-        { message: { id: 'm1', conversationId: 'c1', conversation: { id: 'c1', title: 'Team A' } } },
+        {
+          message: { id: 'm1', conversationId: 'c1', conversation: { id: 'c1', title: 'Team A' } },
+        },
       ]);
       serializer.message.mockReturnValue({ id: 'm1', saved: true });
 
       const result = await service.list('u1');
 
       expect(result).toEqual({
-        items: [{ message: { id: 'm1', saved: true }, conversationId: 'c1', conversationTitle: 'Team A' }],
+        items: [
+          { message: { id: 'm1', saved: true }, conversationId: 'c1', conversationTitle: 'Team A' },
+        ],
       });
     });
   });

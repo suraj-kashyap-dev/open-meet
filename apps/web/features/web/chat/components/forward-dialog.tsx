@@ -73,7 +73,10 @@ export function ForwardDialog({
                       <Users className="h-4 w-4" />
                     </span>
                   ) : (
-                    <UserAvatar user={{ name: display.title || '?', avatar: display.avatar }} size="sm" />
+                    <UserAvatar
+                      user={{ name: display.title || '?', avatar: display.avatar }}
+                      size="sm"
+                    />
                   )}
                   <span className="truncate text-sm font-medium">
                     {display.title || t('list.untitled')}

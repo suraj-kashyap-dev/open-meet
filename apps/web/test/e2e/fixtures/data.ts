@@ -286,8 +286,22 @@ export const myTeams: MyTeamsResponseDto = {
       teamId: 'team-eng',
       teamName: 'Engineering',
       channels: [
-        { ...dmConversation, id: 'channel-general', type: 'CHANNEL', title: 'general', teamId: 'team-eng', unreadCount: 0 },
-        { ...dmConversation, id: 'channel-random', type: 'CHANNEL', title: 'random', teamId: 'team-eng', unreadCount: 3 },
+        {
+          ...dmConversation,
+          id: 'channel-general',
+          type: 'CHANNEL',
+          title: 'general',
+          teamId: 'team-eng',
+          unreadCount: 0,
+        },
+        {
+          ...dmConversation,
+          id: 'channel-random',
+          type: 'CHANNEL',
+          title: 'random',
+          teamId: 'team-eng',
+          unreadCount: 3,
+        },
       ],
     },
     {

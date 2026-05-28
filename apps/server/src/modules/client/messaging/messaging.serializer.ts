@@ -171,6 +171,7 @@ export class MessagingSerializer {
       unreadCount: opts.unreadCount,
       muted: mine?.muted ?? false,
       pinned: mine?.pinned ?? false,
+      hidden: mine?.hidden ?? false,
       createdAt: c.createdAt.toISOString(),
     };
   }

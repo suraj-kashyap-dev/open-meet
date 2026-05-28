@@ -3,7 +3,9 @@ import { ConversationType, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
-const channelInclude = { _count: { select: { members: true } } } satisfies Prisma.ConversationInclude;
+const channelInclude = {
+  _count: { select: { members: true } },
+} satisfies Prisma.ConversationInclude;
 
 export type ChannelRow = Prisma.ConversationGetPayload<{ include: typeof channelInclude }>;
 

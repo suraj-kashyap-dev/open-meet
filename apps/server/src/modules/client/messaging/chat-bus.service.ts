@@ -35,5 +35,6 @@ export class ChatBus {
   }
 }
 
-export const conversationRoom = (conversationId: string): string => `conversation:${conversationId}`;
+export const conversationRoom = (conversationId: string): string =>
+  `conversation:${conversationId}`;
 export const userRoom = (userId: string): string => `user:${userId}`;

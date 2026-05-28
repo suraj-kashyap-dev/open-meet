@@ -2,7 +2,6 @@
 
 import {
   ArrowRight,
-  Calendar,
   CalendarClock,
   Check,
   Crown,
@@ -17,13 +16,11 @@ import {
   Plus,
   Share2,
   ShieldCheck,
-  Sparkles,
   Users,
   Video,
 } from 'lucide-react';
-import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'sonner';
 
 import { MeetingStatus, type MeetingHistoryItemDto } from '@open-meet/types';
@@ -41,7 +38,6 @@ import {
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
 import { ShimmerButton } from '@open-meet/ui/shimmer-button';
-import { Spotlight } from '@open-meet/ui/spotlight';
 import { Link } from '@/i18n/navigation';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { ScheduleMeetingDialog } from '@/features/web/home/components/schedule-meeting-dialog';
@@ -52,15 +48,6 @@ import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 import type { UpcomingMeetingDto } from '@open-meet/types';
 import { cn } from '@open-meet/ui/cn';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: 'easeOut', delay: i * 0.06 },
-  }),
-};
 
 export function Dashboard() {
   const t = useTranslations('home');
@@ -102,81 +89,44 @@ export function Dashboard() {
     nav.push(`/${trimmed}/lobby`);
   };
 
-  const firstName = user?.name?.split(' ')[0] ?? t('greeting.fallback-name');
+  void user;
   const recent = history.data?.items ?? [];
   const totalMeetings = history.data?.total ?? 0;
 
   return (
-    <main className="relative isolate overflow-hidden pb-24 pt-10 sm:pt-14">
-      <div className="grid-backdrop pointer-events-none absolute inset-0 -z-10" aria-hidden />
-
-      <div className="spotlight pointer-events-none absolute inset-0 -z-10" aria-hidden />
-
-      <Spotlight />
-
-      <div className="mx-auto w-full max-w-[96rem] space-y-8 px-4 sm:px-6 lg:px-10">
-        <motion.header
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          className="flex flex-col gap-2"
-        >
-          <DateBadge />
-
-          <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            {greetingLabel(t)}, <span className="gradient-text">{firstName}</span>
-          </h1>
-
-          <p className="max-w-2xl text-balance text-sm text-muted-foreground">
-            {t.rich('greeting.intro', {
-              kbd: (chunks) => <KbdShortcut>{chunks}</KbdShortcut>,
-            })}
-          </p>
-        </motion.header>
-
-        <motion.div initial="hidden" animate="visible" custom={1} variants={fadeUp}>
-          <ActionCard
-            code={code}
-            onCodeChange={setCode}
-            onCreate={onCreate}
-            onSchedule={() => setScheduleOpen(true)}
-            onJoin={onJoin}
-            isCreating={intent === 'create' && (createMeeting.isPending || nav.isNavigating)}
-            isJoining={intent === 'join' && nav.isNavigating}
-          />
-        </motion.div>
-
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            custom={2}
-            variants={fadeUp}
-            className="space-y-6 lg:col-span-7"
-          >
-            <UpcomingMeetings
-              items={upcoming.data ?? []}
-              isLoading={upcoming.isLoading}
-              onSchedule={() => setScheduleOpen(true)}
-            />
-
-            <RecentMeetings items={recent} total={totalMeetings} isLoading={history.isLoading} />
-          </motion.div>
-
-          <motion.aside
-            initial="hidden"
-            animate="visible"
-            custom={3}
-            variants={fadeUp}
-            className="lg:col-span-5"
-          >
-            <TipsCard />
-          </motion.aside>
+    <div className="min-h-full bg-card">
+      <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-card/95 px-6 py-4 backdrop-blur">
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-accent/20">
+          <Video className="h-4 w-4" />
+        </span>
+        <div className="min-w-0">
+          <h1 className="text-lg font-semibold tracking-tight">{t('page.title')}</h1>
+          <p className="truncate text-xs text-muted-foreground">{t('page.subtitle')}</p>
         </div>
+      </header>
+
+      <div className="mx-auto w-full max-w-5xl space-y-6 px-6 py-6">
+        <ActionCard
+          code={code}
+          onCodeChange={setCode}
+          onCreate={onCreate}
+          onSchedule={() => setScheduleOpen(true)}
+          onJoin={onJoin}
+          isCreating={intent === 'create' && (createMeeting.isPending || nav.isNavigating)}
+          isJoining={intent === 'join' && nav.isNavigating}
+        />
+
+        <UpcomingMeetings
+          items={upcoming.data ?? []}
+          isLoading={upcoming.isLoading}
+          onSchedule={() => setScheduleOpen(true)}
+        />
+
+        <RecentMeetings items={recent} total={totalMeetings} isLoading={history.isLoading} />
       </div>
 
       <ScheduleMeetingDialog open={scheduleOpen} onOpenChange={setScheduleOpen} />
-    </main>
+    </div>
   );
 }
 
@@ -954,153 +904,7 @@ function EmptyRecent() {
   );
 }
 
-function DateBadge() {
-  const [now, setNow] = useState<Date | null>(null);
-
-  useEffect(() => {
-    setNow(new Date());
-
-    const id = window.setInterval(() => {
-      setNow(new Date());
-    }, 60_000);
-
-    return () => {
-      window.clearInterval(id);
-    };
-  }, []);
-
-  if (!now) {
-    return <span className="h-5 w-40" aria-hidden />;
-  }
-
-  const dayName = now.toLocaleDateString('en-US', { weekday: 'long' });
-  const monthDay = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-  const time = now.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-  });
-
-  return (
-    <span className="inline-flex items-center gap-2 text-xs text-muted-foreground">
-      <Calendar className="h-3.5 w-3.5" />
-
-      <span>
-        {dayName}, {monthDay}
-      </span>
-
-      <span className="mx-1 h-3 w-px bg-border" aria-hidden />
-
-      <span className="font-mono">{time}</span>
-    </span>
-  );
-}
-
-const TIPS: {
-  icon: React.ReactNode;
-  titleKey: string;
-  bodyKey: string;
-  accent: string;
-}[] = [
-  {
-    icon: <Sparkles className="h-3.5 w-3.5" />,
-    titleKey: 'tips.react-title',
-    bodyKey: 'tips.react-body',
-    accent: 'text-warning bg-warning/10 ring-warning/20',
-  },
-  {
-    icon: <Users className="h-3.5 w-3.5" />,
-    titleKey: 'tips.raise-hand-title',
-    bodyKey: 'tips.raise-hand-body',
-    accent: 'text-accent bg-accent/10 ring-accent/20',
-  },
-  {
-    icon: <History className="h-3.5 w-3.5" />,
-    titleKey: 'tips.chat-title',
-    bodyKey: 'tips.chat-body',
-    accent: 'text-success bg-success/10 ring-success/20',
-  },
-];
-
-function TipsCard() {
-  const t = useTranslations('home');
-
-  return (
-    <Card className="relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur">
-      <CardContent className="relative flex h-full flex-col gap-6 p-6">
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20">
-            <Sparkles className="h-4 w-4" />
-          </span>
-
-          <div className="flex flex-col leading-tight">
-            <h3 className="text-base font-semibold tracking-tight">{t('tips.title')}</h3>
-
-            <p className="text-xs text-muted-foreground">{t('tips.subtitle')}</p>
-          </div>
-        </div>
-
-        <ul className="flex flex-1 flex-col">
-          {TIPS.map((tip, i) => (
-            <li
-              key={tip.titleKey}
-              className={cn(
-                'group/tip flex flex-1 items-center gap-3.5 py-3.5',
-                i > 0 && 'border-t border-border/50',
-              )}
-            >
-              <span
-                className={cn(
-                  'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-1 transition-transform group-hover/tip:scale-105',
-                  tip.accent,
-                )}
-              >
-                {tip.icon}
-              </span>
-
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold leading-tight tracking-tight text-foreground">
-                  {t(tip.titleKey)}
-                </p>
-
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                  {t(tip.bodyKey)}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
-  );
-}
-
-function KbdShortcut({ children }: { children: React.ReactNode }) {
-  return (
-    <kbd className="mx-0.5 inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-border bg-muted px-2 align-middle text-xs font-semibold leading-none text-foreground shadow-[0_1px_0_0_var(--color-border)]">
-      {children}
-    </kbd>
-  );
-}
-
 type Translator = (key: string, values?: Record<string, number | string>) => string;
-
-function greetingLabel(t: Translator): string {
-  const hour = new Date().getHours();
-
-  if (hour < 5) {
-    return t('greeting.up-late');
-  }
-
-  if (hour < 12) {
-    return t('greeting.good-morning');
-  }
-
-  if (hour < 18) {
-    return t('greeting.good-afternoon');
-  }
-
-  return t('greeting.good-evening');
-}
 
 function formatShortDate(iso: string | null): string {
   if (!iso) {

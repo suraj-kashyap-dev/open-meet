@@ -97,7 +97,9 @@ export function MessageBubble({
 
   const copyLink = () => {
     if (typeof window !== 'undefined' && navigator.clipboard) {
-      void navigator.clipboard.writeText(`${window.location.origin}/chat/${message.conversationId}`);
+      void navigator.clipboard.writeText(
+        `${window.location.origin}/chat/${message.conversationId}`,
+      );
       toast.success(t('bubble.link-copied'));
     }
   };
@@ -136,7 +138,9 @@ export function MessageBubble({
         ) : null}
 
         {!deleted && (message.pinned || message.priority !== 'NORMAL') ? (
-          <div className={cn('flex items-center gap-2 px-1', isMe ? 'flex-row-reverse' : 'flex-row')}>
+          <div
+            className={cn('flex items-center gap-2 px-1', isMe ? 'flex-row-reverse' : 'flex-row')}
+          >
             {message.pinned ? (
               <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                 <Pin className="h-3 w-3" />

@@ -90,7 +90,12 @@ export function AcceptInviteForm() {
       <form onSubmit={onSubmit} className="space-y-5" noValidate>
         <div className="space-y-1.5">
           <Label htmlFor="password">{t('accept-invite.password')}</Label>
-          <Input id="password" type="password" autoComplete="new-password" {...register('password')} />
+          <Input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            {...register('password')}
+          />
           {errors.password ? (
             <p className="text-xs text-destructive">{errors.password.message}</p>
           ) : (
@@ -100,14 +105,23 @@ export function AcceptInviteForm() {
 
         <div className="space-y-1.5">
           <Label htmlFor="confirm">{t('accept-invite.confirm')}</Label>
-          <Input id="confirm" type="password" autoComplete="new-password" {...register('confirm')} />
+          <Input
+            id="confirm"
+            type="password"
+            autoComplete="new-password"
+            {...register('confirm')}
+          />
           {errors.confirm ? (
             <p className="text-xs text-destructive">{errors.confirm.message}</p>
           ) : null}
         </div>
 
         <Button type="submit" size="lg" className="w-full" disabled={pending}>
-          {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
+          {pending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <UserPlus className="h-4 w-4" />
+          )}
           {pending ? t('accept-invite.submitting') : t('accept-invite.submit')}
         </Button>
       </form>

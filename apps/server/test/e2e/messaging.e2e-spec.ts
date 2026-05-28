@@ -212,9 +212,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
       await sendMessage(alice.cookie, conversationId, 'first message');
 
-      const res = await http(app)
-        .get('/api/messaging/conversations')
-        .set('Cookie', bob.cookie);
+      const res = await http(app).get('/api/messaging/conversations').set('Cookie', bob.cookie);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
@@ -232,9 +230,7 @@ describe('Messaging / persistent chat (e2e)', () => {
 
   describe('GET /api/messaging/teammates', () => {
     it('should return shared-team members and exclude users with no shared team', async () => {
-      const res = await http(app)
-        .get('/api/messaging/teammates')
-        .set('Cookie', alice.cookie);
+      const res = await http(app).get('/api/messaging/teammates').set('Cookie', alice.cookie);
 
       expect(res.status).toBe(200);
       const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
@@ -264,11 +260,13 @@ describe('Messaging / persistent chat (e2e)', () => {
 
       expect(reacted.status).toBe(201);
       expect(reacted.body.success).toBe(true);
-      const summary = (reacted.body.data.reactions as {
-        emoji: string;
-        count: number;
-        userIds: string[];
-      }[]).find((r) => r.emoji === '👍');
+      const summary = (
+        reacted.body.data.reactions as {
+          emoji: string;
+          count: number;
+          userIds: string[];
+        }[]
+      ).find((r) => r.emoji === '👍');
       expect(summary).toBeDefined();
       expect(summary!.count).toBe(1);
       expect(summary!.userIds).toContain(bob.id);

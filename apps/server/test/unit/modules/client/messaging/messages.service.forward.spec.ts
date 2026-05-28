@@ -22,7 +22,13 @@ describe('MessagesService.forward()', () => {
   let bus: { emit: ReturnType<typeof vi.fn> };
   let service: MessagesService;
 
-  const source = { id: 'm1', conversationId: 'c1', content: 'hello there', deletedAt: null, createdAt: new Date() };
+  const source = {
+    id: 'm1',
+    conversationId: 'c1',
+    content: 'hello there',
+    deletedAt: null,
+    createdAt: new Date(),
+  };
   const created = { id: 'm2', conversationId: 'c2', createdAt: new Date() };
 
   beforeEach(() => {

@@ -21,7 +21,9 @@ export class ChannelsRepository {
       orderBy: { team: { name: 'asc' } },
       include: {
         team: {
-          include: { channels: { include: conversationListInclude, orderBy: { createdAt: 'asc' } } },
+          include: {
+            channels: { include: conversationListInclude, orderBy: { createdAt: 'asc' } },
+          },
         },
       },
     });

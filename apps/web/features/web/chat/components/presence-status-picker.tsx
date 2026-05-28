@@ -17,20 +17,13 @@ import type { PresenceStatus, UserPresenceDto } from '@open-meet/types';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 
 import { presenceMeKey, usePresenceMe } from '../hooks/use-chat';
+import { SELF_STATUS_OPTIONS, STATUS_COLOR } from '../lib/presence-color';
 import { useChatStore } from '../stores';
 import { useChatSocketContext } from './chat-socket-provider';
 
-const STATUS_COLOR: Record<PresenceStatus, string> = {
-  AVAILABLE: 'bg-emerald-500',
-  BUSY: 'bg-rose-500',
-  DND: 'bg-rose-600',
-  BRB: 'bg-amber-500',
-  AWAY: 'bg-amber-400',
-  OFFLINE: 'bg-muted-foreground/40',
-};
-
-const OPTIONS: PresenceStatus[] = ['AVAILABLE', 'BUSY', 'DND', 'BRB', 'AWAY', 'OFFLINE'];
-
+/** Active-status picker in the top bar. Shows the user's current status as a
+ * colored dot + label and lets them switch among the 4 self-settable options
+ * (Available / Busy / Away / Offline). BRB and DND are excluded per UX. */
 export function PresenceStatusPicker() {
   const t = useTranslations('chat');
   const qc = useQueryClient();
@@ -39,7 +32,7 @@ export function PresenceStatusPicker() {
   const { setPresence } = useChatSocketContext();
   const storeSetPresence = useChatStore((s) => s.setPresence);
 
-  const current = me.data?.status ?? 'AVAILABLE';
+  const current: PresenceStatus = me.data?.status ?? 'AVAILABLE';
 
   const label = (status: PresenceStatus) =>
     t(`presence.${status.toLowerCase()}` as `presence.${Lowercase<PresenceStatus>}`);
@@ -71,14 +64,14 @@ export function PresenceStatusPicker() {
     <DropdownMenu>
       <DropdownMenuTrigger
         aria-label={t('presence.set-status')}
-        className="flex items-center gap-1.5 rounded-md px-1.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
       >
         <span className={cn('h-2.5 w-2.5 rounded-full', STATUS_COLOR[current])} />
         <span className="hidden sm:inline">{label(current)}</span>
         <ChevronDown className="h-3 w-3" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {OPTIONS.map((status) => (
+        {SELF_STATUS_OPTIONS.map((status) => (
           <DropdownMenuItem key={status} onSelect={() => choose(status)}>
             <span className={cn('me-2 h-2.5 w-2.5 rounded-full', STATUS_COLOR[status])} />
             {label(status)}

@@ -20,7 +20,8 @@ export const adminTeamsApi = {
 
   create: (body: AdminCreateTeamDto) => api.post<AdminTeamDto>('/admin/teams', body),
 
-  update: (id: string, body: AdminUpdateTeamDto) => api.patch<AdminTeamDto>(`/admin/teams/${id}`, body),
+  update: (id: string, body: AdminUpdateTeamDto) =>
+    api.patch<AdminTeamDto>(`/admin/teams/${id}`, body),
 
   remove: (id: string) => api.delete<{ deleted: true }>(`/admin/teams/${id}`),
 

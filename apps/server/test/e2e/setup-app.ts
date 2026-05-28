@@ -112,9 +112,10 @@ export async function registerUser(
 
   return {
     res,
-    user:
-      (res.body?.data?.user as { id: string; email: string } | undefined) ??
-      { id: created.id, email: created.email },
+    user: (res.body?.data?.user as { id: string; email: string } | undefined) ?? {
+      id: created.id,
+      email: created.email,
+    },
     cookie: cookieHeader(res.headers['set-cookie']),
   };
 }

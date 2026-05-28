@@ -1,7 +1,8 @@
 'use client';
 
-import { BellOff, EyeOff, MailMinus, MoreHorizontal, Pin, PinOff, Users } from 'lucide-react';
+import { BellOff, Eye, EyeOff, MailMinus, MoreHorizontal, Pin, PinOff, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
 
 import { cn } from '@open-meet/ui/cn';
 import {
@@ -46,6 +47,20 @@ export function ConversationListItem({
   const setState = (next: Parameters<typeof state.mutate>[0]['state']) =>
     state.mutate({ conversationId: conversation.id, state: next });
 
+  const hide = () => {
+    setState({ hidden: true });
+    toast(t('list.hide-confirmed'), {
+      action: {
+        label: t('list.hide-undo'),
+        onClick: () => setState({ hidden: false }),
+      },
+    });
+  };
+
+  // Cast keeps us decoupled from the @open-meet/types build cadence; the field
+  // is present in source (ConversationDto.hidden: boolean) once rebuilt.
+  const isHidden = (conversation as ConversationDto & { hidden?: boolean }).hidden ?? false;
+
   return (
     <div
       className={cn(
@@ -53,7 +68,10 @@ export function ConversationListItem({
         active ? 'bg-muted' : 'hover:bg-muted/60',
       )}
     >
-      <Link href={`/chat/${conversation.id}`} className="flex min-w-0 flex-1 items-center gap-3 px-2 py-2">
+      <Link
+        href={`/chat/${conversation.id}`}
+        className="flex min-w-0 flex-1 items-center gap-3 px-2 py-2"
+      >
         <div className="relative shrink-0">
           {display.isGroup ? (
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
@@ -70,7 +88,9 @@ export function ConversationListItem({
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
             <span className="flex min-w-0 items-center gap-1 truncate text-sm font-medium">
-              {conversation.pinned ? <Pin className="h-3 w-3 shrink-0 text-muted-foreground" /> : null}
+              {conversation.pinned ? (
+                <Pin className="h-3 w-3 shrink-0 text-muted-foreground" />
+              ) : null}
               <span className="truncate">{display.title || t('list.untitled')}</span>
               {conversation.muted ? (
                 <BellOff className="h-3 w-3 shrink-0 text-muted-foreground" />
@@ -117,10 +137,17 @@ export function ConversationListItem({
             <MailMinus className="me-2 h-4 w-4" />
             {t('list.mark-unread')}
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setState({ hidden: true })}>
-            <EyeOff className="me-2 h-4 w-4" />
-            {t('list.hide')}
-          </DropdownMenuItem>
+          {isHidden ? (
+            <DropdownMenuItem onSelect={() => setState({ hidden: false })}>
+              <Eye className="me-2 h-4 w-4" />
+              {t('list.unhide')}
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem onSelect={hide}>
+              <EyeOff className="me-2 h-4 w-4" />
+              {t('list.hide')}
+            </DropdownMenuItem>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

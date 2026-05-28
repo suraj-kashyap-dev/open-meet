@@ -34,7 +34,11 @@ export class ChannelsService {
         channels: await Promise.all(
           t.channels.map(async (c) => {
             const mine = c.members.find((m) => m.userId === userId);
-            const unread = await this.conversations.unreadCount(c.id, userId, mine?.lastReadAt ?? null);
+            const unread = await this.conversations.unreadCount(
+              c.id,
+              userId,
+              mine?.lastReadAt ?? null,
+            );
             return this.serializer.conversation(c, {
               viewerId: userId,
               presence,

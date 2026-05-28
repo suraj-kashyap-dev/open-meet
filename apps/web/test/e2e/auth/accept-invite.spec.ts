@@ -43,9 +43,7 @@ test.describe('Web accept-invite page', () => {
     await mockWebApi(page, { me: null, invite: null });
     await page.goto(`/en/accept-invite?token=${INVITE_TOKEN}`);
 
-    await expect(
-      page.getByText('This invitation link is invalid or has expired.'),
-    ).toBeVisible();
+    await expect(page.getByText('This invitation link is invalid or has expired.')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Back to sign in' })).toBeVisible();
   });
 });

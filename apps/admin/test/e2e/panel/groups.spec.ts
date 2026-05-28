@@ -63,9 +63,7 @@ test.describe('Admin groups page', () => {
     await dialog.getByRole('button', { name: /Ada Lovelace/ }).click();
 
     const [request] = await Promise.all([
-      page.waitForRequest(
-        (req) => req.url().endsWith('/admin/groups') && req.method() === 'POST',
-      ),
+      page.waitForRequest((req) => req.url().endsWith('/admin/groups') && req.method() === 'POST'),
       dialog.getByRole('button', { name: 'Create' }).click(),
     ]);
 

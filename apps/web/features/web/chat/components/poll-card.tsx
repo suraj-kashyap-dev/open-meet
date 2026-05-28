@@ -47,7 +47,8 @@ export function PollCard({
 
       <ul className="space-y-1.5">
         {poll.options.map((option) => {
-          const pct = poll.totalVotes > 0 ? Math.round((option.voteCount / poll.totalVotes) * 100) : 0;
+          const pct =
+            poll.totalVotes > 0 ? Math.round((option.voteCount / poll.totalVotes) * 100) : 0;
 
           return (
             <li key={option.id}>
@@ -74,7 +75,9 @@ export function PollCard({
                     {option.votedByMe ? <Check className="h-3.5 w-3.5" /> : null}
                     {option.text}
                   </span>
-                  {showResults ? <span className="text-xs text-muted-foreground">{pct}%</span> : null}
+                  {showResults ? (
+                    <span className="text-xs text-muted-foreground">{pct}%</span>
+                  ) : null}
                 </span>
               </button>
             </li>

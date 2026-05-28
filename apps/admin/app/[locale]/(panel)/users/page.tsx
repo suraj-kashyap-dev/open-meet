@@ -126,7 +126,9 @@ export default function AdminUsersPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
           <div className="flex items-center gap-3">
-            <span className="text-sm text-muted-foreground">{t('total-count', { count: total })}</span>
+            <span className="text-sm text-muted-foreground">
+              {t('total-count', { count: total })}
+            </span>
             <Button onClick={() => setInviteOpen(true)} className="gap-2">
               <UserPlus className="h-4 w-4" />
               {t('invite.button')}

@@ -26,9 +26,7 @@ describe('MessageContent', () => {
   });
 
   it('should render an external markdown link as a new-tab anchor', () => {
-    const { container } = render(
-      <MessageContent content="see [docs](https://example.com)" />,
-    );
+    const { container } = render(<MessageContent content="see [docs](https://example.com)" />);
     const link = container.querySelector('a[href="https://example.com"]');
     expect(link).not.toBeNull();
     expect(link?.getAttribute('target')).toBe('_blank');

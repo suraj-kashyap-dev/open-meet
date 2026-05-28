@@ -12,10 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import type {
-  AdminGroupDetailDto,
-  AdminGroupListResponseDto,
-} from '@open-meet/types';
+import type { AdminGroupDetailDto, AdminGroupListResponseDto } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
 

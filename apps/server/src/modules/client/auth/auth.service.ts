@@ -67,7 +67,9 @@ export class AuthService {
   }
 
   /** Claim an invite: create the verified account, consume the invite, sign in. */
-  async acceptUserInvite(dto: AcceptUserInviteDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
+  async acceptUserInvite(
+    dto: AcceptUserInviteDto,
+  ): Promise<{ user: UserDto; tokens: IssuedTokens }> {
     const invite = await this.requireValidUserInvite(dto.token);
 
     const existing = await this.users.findByEmail(invite.email);

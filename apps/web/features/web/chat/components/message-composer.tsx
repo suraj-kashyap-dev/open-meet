@@ -1,6 +1,6 @@
 'use client';
 
-import { AlertTriangle, BarChart3, Camera, Loader2, Paperclip, Send } from 'lucide-react';
+import { AlertTriangle, Camera, Loader2, Paperclip, Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
@@ -29,10 +29,9 @@ import { useBranding } from '@/components/web/branding/branding-provider';
 
 import { useChatSocketContext } from './chat-socket-provider';
 import { GifPicker } from './gif-picker';
-import { PollComposer } from './poll-composer';
 import { ReactionPicker } from './reaction-picker';
 import { ReplyPreview } from './reply-preview';
-import { useCreatePoll, useSendMessage } from '../hooks/use-chat';
+import { useSendMessage } from '../hooks/use-chat';
 
 const MAX_ATTACHMENTS = 5;
 const TYPING_TIMEOUT = 2500;
@@ -64,7 +63,6 @@ export function MessageComposer({
 }) {
   const t = useTranslations('chat');
   const send = useSendMessage(conversationId);
-  const createPoll = useCreatePoll(conversationId);
   const { startTyping, stopTyping } = useChatSocketContext();
   const { gifsEnabled } = useBranding();
 
@@ -77,7 +75,6 @@ export function MessageComposer({
 
   const [text, setText] = useState('');
   const [priority, setPriority] = useState<ChatMessagePriority>('NORMAL');
-  const [pollOpen, setPollOpen] = useState(false);
   const [mention, setMention] = useState<MentionState | null>(null);
   const textareaRef = useAutoResizeTextarea(text);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -270,17 +267,6 @@ export function MessageComposer({
           <Paperclip className="h-4 w-4" />
         </Button>
 
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => setPollOpen(true)}
-          aria-label={t('poll.create')}
-          className="hidden sm:inline-flex"
-        >
-          <BarChart3 className="h-4 w-4" />
-        </Button>
-
         {gifsEnabled ? <GifPicker onPick={sendGif} /> : null}
 
         <DropdownMenu>
@@ -345,9 +331,15 @@ export function MessageComposer({
           <textarea
             ref={textareaRef}
             value={text}
-            onChange={(e) => onType(e.target.value, e.target.selectionStart ?? e.target.value.length)}
+            onChange={(e) =>
+              onType(e.target.value, e.target.selectionStart ?? e.target.value.length)
+            }
             onKeyDown={(e) => {
-              if (mention && mentionCandidates.length > 0 && (e.key === 'Enter' || e.key === 'Tab')) {
+              if (
+                mention &&
+                mentionCandidates.length > 0 &&
+                (e.key === 'Enter' || e.key === 'Tab')
+              ) {
                 e.preventDefault();
                 insertMention(mentionCandidates[0]!);
                 return;
@@ -371,7 +363,10 @@ export function MessageComposer({
             )}
           />
           <div className="absolute bottom-1.5 end-1.5">
-            <ReactionPicker align="end" onPick={(emoji) => onType(text + emoji, text.length + emoji.length)} />
+            <ReactionPicker
+              align="end"
+              onPick={(emoji) => onType(text + emoji, text.length + emoji.length)}
+            />
           </div>
         </div>
 
@@ -388,22 +383,6 @@ export function MessageComposer({
           )}
         </Button>
       </form>
-
-      <PollComposer
-        open={pollOpen}
-        onOpenChange={setPollOpen}
-        pending={createPoll.isPending}
-        onCreate={(poll) => {
-          createPoll.mutate(poll, {
-            onSuccess: () => {
-              setPollOpen(false);
-              onSent();
-            },
-            onError: (err) =>
-              toast.error(err instanceof ApiClientError ? err.message : t('composer.poll-failed')),
-          });
-        }}
-      />
     </div>
   );
 }

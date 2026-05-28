@@ -8,7 +8,9 @@ const memberInclude = {
 } satisfies Prisma.TeamMemberInclude;
 
 export type TeamMemberWithUser = Prisma.TeamMemberGetPayload<{ include: typeof memberInclude }>;
-export type TeamWithCount = Prisma.TeamGetPayload<{ include: { _count: { select: { members: true } } } }>;
+export type TeamWithCount = Prisma.TeamGetPayload<{
+  include: { _count: { select: { members: true } } };
+}>;
 
 @Injectable()
 export class AdminTeamsRepository {

@@ -68,7 +68,12 @@ export function InviteUserDialog({
         <div className="space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="invite-name">{t('invite.name')}</Label>
-            <Input id="invite-name" value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+            <Input
+              id="invite-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoFocus
+            />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="invite-email">{t('invite.email')}</Label>

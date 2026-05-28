@@ -40,9 +40,7 @@ test.describe('Admin teams page', () => {
     await dialog.getByLabel('Team name').fill('Support');
 
     const [request] = await Promise.all([
-      page.waitForRequest(
-        (req) => req.url().endsWith('/admin/teams') && req.method() === 'POST',
-      ),
+      page.waitForRequest((req) => req.url().endsWith('/admin/teams') && req.method() === 'POST'),
       dialog.getByRole('button', { name: 'Create' }).click(),
     ]);
 

@@ -2,7 +2,11 @@
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { AdminCreateUserInviteDto, AdminUpdateUserDto, AdminUserListQuery } from '@open-meet/types';
+import type {
+  AdminCreateUserInviteDto,
+  AdminUpdateUserDto,
+  AdminUserListQuery,
+} from '@open-meet/types';
 
 import { adminUsersApi } from '@/features/users/services/users';
 

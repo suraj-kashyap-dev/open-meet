@@ -41,11 +41,7 @@ export class MessagesController {
   }
 
   @Post(':id/reactions')
-  react(
-    @CurrentUser() user: RequestUser,
-    @Param('id') id: string,
-    @Body() body: ReactionBodyDto,
-  ) {
+  react(@CurrentUser() user: RequestUser, @Param('id') id: string, @Body() body: ReactionBodyDto) {
     return this.reactions.add(id, user.id, body.emoji);
   }
 

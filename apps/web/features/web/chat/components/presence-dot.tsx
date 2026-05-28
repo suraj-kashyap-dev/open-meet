@@ -4,16 +4,8 @@ import type { PresenceStatus } from '@open-meet/types';
 
 import { cn } from '@open-meet/ui/cn';
 
+import { STATUS_COLOR } from '../lib/presence-color';
 import { useChatStore } from '../stores';
-
-const STATUS_COLOR: Record<PresenceStatus, string> = {
-  AVAILABLE: 'bg-emerald-500',
-  BUSY: 'bg-rose-500',
-  DND: 'bg-rose-600',
-  BRB: 'bg-amber-500',
-  AWAY: 'bg-amber-400',
-  OFFLINE: 'bg-muted-foreground/40',
-};
 
 export function PresenceDot({ userId, className }: { userId: string; className?: string }) {
   const entry = useChatStore((s) => s.presenceByUser[userId]);

@@ -18,7 +18,11 @@
     "mute": "Mute",
     "unmute": "Unmute",
     "mark-unread": "Mark as unread",
-    "hide": "Hide"
+    "hide": "Hide",
+    "unhide": "Unhide",
+    "show-hidden": "Show hidden chats",
+    "hide-confirmed": "Chat hidden",
+    "hide-undo": "Undo"
   },
   "view": {
     "empty": "Select a conversation to start chatting.",
@@ -31,7 +35,12 @@
     "you-disabled": "Your chat access has been disabled."
   },
   "header": {
-    "members": "{count, plural, one {# member} other {# members}}"
+    "members": "{count, plural, one {# member} other {# members}}",
+    "actions": "Conversation actions",
+    "clear": "Clear chat",
+    "delete": "Delete chat",
+    "clear-confirmed": "Messages cleared from your view",
+    "delete-confirmed": "Chat deleted"
   },
   "presence": {
     "online": "Online",
@@ -136,17 +145,25 @@
   },
   "teams": {
     "title": "Teams",
+    "subtitle": "Your teams and channels.",
     "empty": "You're not a member of any team yet.",
+    "empty-title": "No teams yet",
+    "empty-subtitle": "An admin will add you to a team to start collaborating.",
     "no-channels": "No channels yet."
   },
   "activity": {
     "title": "Activity",
     "subtitle": "Messages that @mention you.",
-    "empty": "No mentions yet."
+    "empty": "No mentions yet.",
+    "empty-title": "No mentions yet",
+    "empty-subtitle": "When someone @mentions you, it'll show up here."
   },
   "saved": {
     "title": "Saved",
-    "empty": "You haven't saved any messages yet."
+    "subtitle": "Messages you've saved for later.",
+    "empty": "You haven't saved any messages yet.",
+    "empty-title": "No saved messages",
+    "empty-subtitle": "Save a message from the chat to find it here."
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

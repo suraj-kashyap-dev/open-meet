@@ -238,7 +238,17 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       socket.off(ChatServerEvent.POLL_UPDATE, onPollUpdate);
       socket.off(ChatServerEvent.PIN_UPDATE, onPinUpdate);
     };
-  }, [socket, qc, user?.id, setPresence, setTyping, clearTyping, setConnection, bumpUnread, clearUnread]);
+  }, [
+    socket,
+    qc,
+    user?.id,
+    setPresence,
+    setTyping,
+    clearTyping,
+    setConnection,
+    bumpUnread,
+    clearUnread,
+  ]);
 
   const value = useMemo<ChatSocketContextValue>(
     () => ({

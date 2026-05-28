@@ -33,7 +33,11 @@ export class PollsService {
     private readonly bus: ChatBus,
   ) {}
 
-  async create(conversationId: string, userId: string, dto: CreatePollDto): Promise<ChatMessageDto> {
+  async create(
+    conversationId: string,
+    userId: string,
+    dto: CreatePollDto,
+  ): Promise<ChatMessageDto> {
     await this.permissions.assertCanPost(conversationId, userId);
 
     const question = dto.question.trim();

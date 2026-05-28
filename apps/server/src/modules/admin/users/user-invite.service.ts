@@ -42,7 +42,10 @@ export class AdminUserInviteService {
     return { items: rows.map((i) => this.toDto(i)) };
   }
 
-  async create(actingAdminId: string, input: { email: string; name: string }): Promise<UserInviteDto> {
+  async create(
+    actingAdminId: string,
+    input: { email: string; name: string },
+  ): Promise<UserInviteDto> {
     const email = input.email.trim().toLowerCase();
     const name = input.name.trim();
 

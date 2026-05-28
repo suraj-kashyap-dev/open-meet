@@ -72,7 +72,9 @@ export function PendingUserInvites() {
   }
 
   if (invites.length === 0) {
-    return <p className="px-2 py-4 text-center text-sm text-muted-foreground">{t('pending.empty')}</p>;
+    return (
+      <p className="px-2 py-4 text-center text-sm text-muted-foreground">{t('pending.empty')}</p>
+    );
   }
 
   return (
