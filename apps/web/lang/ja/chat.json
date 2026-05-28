@@ -1,7 +1,11 @@
 {
   "list": {
-    "title": "メッセージ",
+    "title": "チャット",
     "new": "新しいメッセージ",
+    "recent": "最近",
+    "filter": "フィルター",
+    "start-meeting": "会議を開始",
+    "compose": "新しいチャット",
     "search": "会話を検索",
     "loading": "読み込み中…",
     "empty": "まだ会話がありません。",
@@ -97,6 +101,7 @@
     "wait-for-uploads": "アップロードが完了するまでお待ちください。",
     "upload-failed": "アップロードに失敗しました",
     "poll-failed": "アンケートを作成できませんでした",
+    "send-failed": "メッセージを送信できませんでした",
     "disabled": "ここではメッセージを送信できません。"
   },
   "poll": {
@@ -118,6 +123,16 @@
     "search": "チームメイトを検索",
     "no-teammates": "チームメイトが見つかりません。",
     "disabled": "利用不可"
+  },
+  "new-chat": {
+    "title": "新しいチャット",
+    "to-label": "宛先:",
+    "to-placeholder": "名前またはメールアドレスを入力",
+    "no-teammates": "メンバーが見つかりません。",
+    "disabled": "利用不可",
+    "empty-title": "新しい会話を開始します",
+    "empty-subtitle": "下に最初のメッセージを入力してください。",
+    "send-placeholder": "最初のメッセージを入力…"
   },
   "teams": {
     "title": "チーム",

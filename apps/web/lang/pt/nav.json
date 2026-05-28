@@ -11,6 +11,16 @@
   "activity-link-label": "Atividade",
   "teams-link-label": "Equipes",
   "saved-link-label": "Salvos",
+  "search-placeholder": "Pesquisar",
+  "rail": {
+    "label": "Principal",
+    "chat": "Chat",
+    "meet": "Reunião",
+    "teams": "Equipes",
+    "activity": "Atividade",
+    "saved": "Salvos",
+    "history": "Histórico"
+  },
   "command": {
     "placeholder": "Digite um comando ou código de reunião…",
     "no-results": "Nenhum resultado.",

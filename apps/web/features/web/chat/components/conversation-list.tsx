@@ -1,30 +1,44 @@
 'use client';
 
-import { Plus, Search } from 'lucide-react';
+import { ListFilter, Search, SquarePen, Video } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
-import { usePathname } from '@/i18n/navigation';
+import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
+import { useNavigateTransition } from '@/hooks/use-navigate-transition';
+import { Link, usePathname } from '@/i18n/navigation';
+import { ApiClientError } from '@/lib/api/client';
 
 import { conversationDisplay } from '../lib/conversation-display';
 import { useConversations } from '../hooks/use-chat';
 import { ConversationListItem } from './conversation-list-item';
-import { NewDmDialog } from './new-dm-dialog';
-import { PresenceStatusPicker } from './presence-status-picker';
 
 export function ConversationList() {
   const t = useTranslations('chat');
+  const tNav = useTranslations('nav');
   const { data: user } = useCurrentUser();
   const { data, isLoading } = useConversations();
   const pathname = usePathname();
+  const nav = useNavigateTransition();
+  const createMeeting = useCreateMeeting();
   const [filter, setFilter] = useState('');
-  const [newOpen, setNewOpen] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   const activeId = pathname.startsWith('/chat/') ? pathname.slice('/chat/'.length) : null;
+
+  const startMeeting = async () => {
+    try {
+      const meeting = await createMeeting.mutateAsync({});
+      nav.push(`/${meeting.code}/lobby`);
+    } catch (err) {
+      toast.error(err instanceof ApiClientError ? err.message : tNav('command.create-meeting-error'));
+    }
+  };
 
   const items = (data?.items ?? []).filter((c) => {
     if (!filter.trim()) {
@@ -35,32 +49,51 @@ export function ConversationList() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between gap-2 border-b border-border px-4 py-3">
-        <h1 className="text-sm font-semibold tracking-tight">{t('list.title')}</h1>
-        <div className="flex items-center gap-1">
-          <PresenceStatusPicker />
+      <header className="flex items-center justify-between gap-2 px-4 py-3">
+        <h1 className="text-lg font-semibold tracking-tight">{t('list.title')}</h1>
+        <div className="flex items-center gap-0.5">
           <Button
             size="icon"
             variant="ghost"
-            onClick={() => setNewOpen(true)}
-            aria-label={t('list.new')}
+            onClick={() => setShowFilter((v) => !v)}
+            aria-label={t('list.filter')}
+            aria-pressed={showFilter}
           >
-            <Plus className="h-4 w-4" />
+            <ListFilter className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={startMeeting}
+            disabled={createMeeting.isPending}
+            aria-label={t('list.start-meeting')}
+          >
+            <Video className="h-4 w-4" />
+          </Button>
+          <Button asChild size="icon" variant="ghost" aria-label={t('list.compose')}>
+            <Link href="/chat/new">
+              <SquarePen className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </header>
 
-      <div className="px-3 py-2">
-        <div className="relative">
-          <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            placeholder={t('list.search')}
-            className="ps-9"
-          />
+      {showFilter ? (
+        <div className="px-3 pb-2">
+          <div className="relative">
+            <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder={t('list.search')}
+              className="ps-9"
+              autoFocus
+            />
+          </div>
         </div>
-      </div>
+      ) : null}
+
+      <p className="px-4 pb-1 pt-1 text-xs font-medium text-muted-foreground">{t('list.recent')}</p>
 
       <div className="flex-1 overflow-y-auto px-2 pb-2">
         {isLoading ? (
@@ -78,8 +111,6 @@ export function ConversationList() {
           ))
         )}
       </div>
-
-      <NewDmDialog open={newOpen} onOpenChange={setNewOpen} />
     </div>
   );
 }

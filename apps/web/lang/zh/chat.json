@@ -1,7 +1,11 @@
 {
   "list": {
-    "title": "消息",
+    "title": "聊天",
     "new": "新消息",
+    "recent": "最近",
+    "filter": "筛选",
+    "start-meeting": "发起会议",
+    "compose": "新聊天",
     "search": "搜索会话",
     "loading": "加载中…",
     "empty": "暂无会话。",
@@ -97,6 +101,7 @@
     "wait-for-uploads": "请等待上传完成。",
     "upload-failed": "上传失败",
     "poll-failed": "无法创建投票",
+    "send-failed": "无法发送消息",
     "disabled": "您无法在此处发送消息。"
   },
   "poll": {
@@ -118,6 +123,16 @@
     "search": "搜索队友",
     "no-teammates": "未找到队友。",
     "disabled": "不可用"
+  },
+  "new-chat": {
+    "title": "新聊天",
+    "to-label": "收件人：",
+    "to-placeholder": "输入姓名或邮箱",
+    "no-teammates": "未找到队友。",
+    "disabled": "不可用",
+    "empty-title": "您正在开始新的对话",
+    "empty-subtitle": "在下方输入您的第一条消息。",
+    "send-placeholder": "输入您的第一条消息…"
   },
   "teams": {
     "title": "团队",

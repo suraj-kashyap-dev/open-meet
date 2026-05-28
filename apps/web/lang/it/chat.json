@@ -1,7 +1,11 @@
 {
   "list": {
-    "title": "Messaggi",
+    "title": "Chat",
     "new": "Nuovo messaggio",
+    "recent": "Recenti",
+    "filter": "Filtra",
+    "start-meeting": "Avvia una riunione",
+    "compose": "Nuova chat",
     "search": "Cerca conversazioni",
     "loading": "Caricamento…",
     "empty": "Ancora nessuna conversazione.",
@@ -97,6 +101,7 @@
     "wait-for-uploads": "Attendi il completamento dei caricamenti.",
     "upload-failed": "Caricamento non riuscito",
     "poll-failed": "Impossibile creare il sondaggio",
+    "send-failed": "Impossibile inviare il messaggio",
     "disabled": "Non puoi inviare messaggi qui."
   },
   "poll": {
@@ -118,6 +123,16 @@
     "search": "Cerca compagni di squadra",
     "no-teammates": "Nessun compagno di squadra trovato.",
     "disabled": "Non disponibile"
+  },
+  "new-chat": {
+    "title": "Nuova chat",
+    "to-label": "A:",
+    "to-placeholder": "Inserisci nome o email",
+    "no-teammates": "Nessun collega trovato.",
+    "disabled": "Non disponibile",
+    "empty-title": "Stai iniziando una nuova conversazione",
+    "empty-subtitle": "Scrivi il tuo primo messaggio qui sotto.",
+    "send-placeholder": "Scrivi il tuo primo messaggio…"
   },
   "teams": {
     "title": "Team",

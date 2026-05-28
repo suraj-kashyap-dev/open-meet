@@ -19,7 +19,7 @@ import { WaitingRoom } from './waiting-room';
 type GuestStage = 'lookup' | 'knocking' | 'admitted';
 
 const Spinner = () => (
-  <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+  <main className="flex h-screen items-center justify-center">
     <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
   </main>
 );
@@ -142,12 +142,12 @@ export function MeetingClient({ code }: { code: string }) {
   }
 
   if (hasActiveSession) {
-    return <div className="h-[calc(100vh-3.5rem)]" aria-hidden />;
+    return <div className="h-screen" aria-hidden />;
   }
 
   if (error) {
     return (
-      <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+      <main className="flex h-screen items-center justify-center">
         <p className="text-destructive">{error}</p>
       </main>
     );

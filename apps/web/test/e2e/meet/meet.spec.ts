@@ -3,10 +3,10 @@ import { expect, test } from '@playwright/test';
 import { mockWebApi } from '../fixtures/api';
 import { emptyHistory } from '../fixtures/data';
 
-test.describe('Web home dashboard', () => {
+test.describe('Web meet page', () => {
   test('should render the start + join actions', async ({ page }) => {
     await mockWebApi(page, { history: emptyHistory });
-    await page.goto('/en');
+    await page.goto('/en/meet');
 
     await expect(
       page.getByRole('heading', { name: 'Start a new meeting', exact: true }),
@@ -20,7 +20,7 @@ test.describe('Web home dashboard', () => {
 
   test('should show the empty recent-meetings state', async ({ page }) => {
     await mockWebApi(page, { history: emptyHistory });
-    await page.goto('/en');
+    await page.goto('/en/meet');
 
     await expect(page.getByText('No meetings yet')).toBeVisible();
   });

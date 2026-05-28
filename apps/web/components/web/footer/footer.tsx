@@ -103,7 +103,7 @@ export async function Footer() {
             title={t('product.title')}
             icon={LayoutGrid}
           >
-            <FooterLink href="/">{t('product.dashboard')}</FooterLink>
+            <FooterLink href="/meet">{t('product.dashboard')}</FooterLink>
             <FooterLink href="/history">{t('product.history')}</FooterLink>
           </FooterCol>
 

@@ -83,7 +83,7 @@ export function LobbyClient({ code }: { code: string }) {
 
   if (isLoading) {
     return (
-      <div className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
       </div>
     );
@@ -97,7 +97,7 @@ export function LobbyClient({ code }: { code: string }) {
   const isHost = Boolean(user && user.id === meeting.hostId);
 
   return (
-    <div className="relative isolate min-h-[calc(100vh-3.5rem)] overflow-hidden">
+    <div className="relative isolate min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight opacity-70" />
       <div className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-50" />
 

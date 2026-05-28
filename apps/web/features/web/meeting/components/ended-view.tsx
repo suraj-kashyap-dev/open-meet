@@ -54,7 +54,7 @@ export function EndedView({ code }: { code: string }) {
   const dashOffset = RING_CIRCUMFERENCE * (1 - progress);
 
   return (
-    <main className="relative isolate flex min-h-[calc(100vh-3.5rem)] w-full items-center justify-center overflow-hidden px-4 py-12">
+    <main className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-12">
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight opacity-70" />
       <div className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-40" />
 

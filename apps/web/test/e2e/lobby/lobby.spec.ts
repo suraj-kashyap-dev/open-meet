@@ -12,5 +12,8 @@ test.describe('Web lobby page', () => {
     await expect(page.getByText('Check your audio & video')).toBeVisible();
     await expect(page.getByText(MEETING_CODE).first()).toBeVisible();
     await expect(page.getByRole('button', { name: 'Join now' }).first()).toBeVisible();
+
+    // The lobby is full-screen: the app shell (icon rail) must not render.
+    await expect(page.getByTestId('app-rail')).toHaveCount(0);
   });
 });

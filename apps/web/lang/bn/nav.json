@@ -11,6 +11,16 @@
   "activity-link-label": "কার্যকলাপ",
   "teams-link-label": "টিম",
   "saved-link-label": "সংরক্ষিত",
+  "search-placeholder": "অনুসন্ধান",
+  "rail": {
+    "label": "প্রাথমিক",
+    "chat": "চ্যাট",
+    "meet": "মিট",
+    "teams": "টিম",
+    "activity": "কার্যকলাপ",
+    "saved": "সংরক্ষিত",
+    "history": "ইতিহাস"
+  },
   "command": {
     "placeholder": "একটি কমান্ড বা মিটিং কোড টাইপ করুন…",
     "no-results": "কোনো ফলাফল নেই।",

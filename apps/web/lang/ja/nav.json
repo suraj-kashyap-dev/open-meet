@@ -11,6 +11,16 @@
   "activity-link-label": "アクティビティ",
   "teams-link-label": "チーム",
   "saved-link-label": "保存済み",
+  "search-placeholder": "検索",
+  "rail": {
+    "label": "メイン",
+    "chat": "チャット",
+    "meet": "ミート",
+    "teams": "チーム",
+    "activity": "アクティビティ",
+    "saved": "保存済み",
+    "history": "履歴"
+  },
   "command": {
     "placeholder": "コマンドまたはミーティングコードを入力…",
     "no-results": "結果がありません。",

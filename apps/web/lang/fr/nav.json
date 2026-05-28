@@ -11,6 +11,16 @@
   "activity-link-label": "Activité",
   "teams-link-label": "Équipes",
   "saved-link-label": "Enregistrés",
+  "search-placeholder": "Rechercher",
+  "rail": {
+    "label": "Principal",
+    "chat": "Discussion",
+    "meet": "Réunion",
+    "teams": "Équipes",
+    "activity": "Activité",
+    "saved": "Enregistrés",
+    "history": "Historique"
+  },
   "command": {
     "placeholder": "Tapez une commande ou un code de réunion…",
     "no-results": "Aucun résultat.",

@@ -11,6 +11,16 @@
   "activity-link-label": "Etkinlik",
   "teams-link-label": "Takımlar",
   "saved-link-label": "Kaydedilenler",
+  "search-placeholder": "Ara",
+  "rail": {
+    "label": "Birincil",
+    "chat": "Sohbet",
+    "meet": "Toplantı",
+    "teams": "Takımlar",
+    "activity": "Etkinlik",
+    "saved": "Kaydedilenler",
+    "history": "Geçmiş"
+  },
   "command": {
     "placeholder": "Komut veya toplantı kodu yazın…",
     "no-results": "Sonuç bulunamadı.",

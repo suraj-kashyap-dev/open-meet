@@ -11,6 +11,16 @@
   "activity-link-label": "गतिविधि",
   "teams-link-label": "टीमें",
   "saved-link-label": "सहेजे गए",
+  "search-placeholder": "खोजें",
+  "rail": {
+    "label": "प्राथमिक",
+    "chat": "चैट",
+    "meet": "मीट",
+    "teams": "टीमें",
+    "activity": "गतिविधि",
+    "saved": "सहेजे गए",
+    "history": "इतिहास"
+  },
   "command": {
     "placeholder": "कोई कमांड या मीटिंग कोड टाइप करें…",
     "no-results": "कोई परिणाम नहीं मिला।",

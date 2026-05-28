@@ -11,6 +11,16 @@
   "activity-link-label": "Активность",
   "teams-link-label": "Команды",
   "saved-link-label": "Сохранённые",
+  "search-placeholder": "Поиск",
+  "rail": {
+    "label": "Основное",
+    "chat": "Чат",
+    "meet": "Встреча",
+    "teams": "Команды",
+    "activity": "Активность",
+    "saved": "Сохранённые",
+    "history": "История"
+  },
   "command": {
     "placeholder": "Введите команду или код встречи…",
     "no-results": "Нет результатов.",

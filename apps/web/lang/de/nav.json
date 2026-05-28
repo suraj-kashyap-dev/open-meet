@@ -11,6 +11,16 @@
   "activity-link-label": "Aktivität",
   "teams-link-label": "Teams",
   "saved-link-label": "Gespeichert",
+  "search-placeholder": "Suchen",
+  "rail": {
+    "label": "Primär",
+    "chat": "Chat",
+    "meet": "Meet",
+    "teams": "Teams",
+    "activity": "Aktivität",
+    "saved": "Gespeichert",
+    "history": "Verlauf"
+  },
   "command": {
     "placeholder": "Befehl oder Besprechungscode eingeben…",
     "no-results": "Keine Ergebnisse.",

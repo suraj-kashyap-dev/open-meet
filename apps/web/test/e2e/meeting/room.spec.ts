@@ -12,12 +12,16 @@ test.describe('Web meeting room', () => {
     await expect(page.getByText('Connecting…')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Cancel' })).toBeVisible();
     await expect(page.getByText(MEETING_CODE).first()).toBeVisible();
+
+    // The meeting room is full-screen: the app shell (icon rail + top-bar search) must not render.
+    await expect(page.getByTestId('app-rail')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Search' })).toHaveCount(0);
   });
 
-  test('should redirect to home for an unknown meeting code', async ({ page }) => {
+  test('should redirect to the chat home for an unknown meeting code', async ({ page }) => {
     await mockWebApi(page, { meeting: { errorStatus: 404, code: 'MEETING_NOT_FOUND' } });
     await page.goto(`/en/${MEETING_CODE}`);
 
-    await expect(page).toHaveURL(/\/en$/);
+    await expect(page).toHaveURL(/\/en\/chat$/);
   });
 });

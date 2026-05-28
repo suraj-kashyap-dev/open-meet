@@ -1,7 +1,11 @@
 {
   "list": {
-    "title": "Mesajlar",
+    "title": "Sohbet",
     "new": "Yeni mesaj",
+    "recent": "Son",
+    "filter": "Filtrele",
+    "start-meeting": "Toplantı başlat",
+    "compose": "Yeni sohbet",
     "search": "Sohbetlerde ara",
     "loading": "Yükleniyor…",
     "empty": "Henüz sohbet yok.",
@@ -97,6 +101,7 @@
     "wait-for-uploads": "Yüklemelerin bitmesini bekleyin.",
     "upload-failed": "Yükleme başarısız",
     "poll-failed": "Anket oluşturulamadı",
+    "send-failed": "Mesaj gönderilemedi",
     "disabled": "Burada mesaj gönderemezsiniz."
   },
   "poll": {
@@ -118,6 +123,16 @@
     "search": "Takım arkadaşı ara",
     "no-teammates": "Takım arkadaşı bulunamadı.",
     "disabled": "Kullanılamıyor"
+  },
+  "new-chat": {
+    "title": "Yeni sohbet",
+    "to-label": "Kime:",
+    "to-placeholder": "Ad veya e-posta girin",
+    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "disabled": "Kullanılamıyor",
+    "empty-title": "Yeni bir görüşme başlatıyorsunuz",
+    "empty-subtitle": "İlk mesajınızı aşağıya yazın.",
+    "send-placeholder": "İlk mesajınızı yazın…"
   },
   "teams": {
     "title": "Takımlar",

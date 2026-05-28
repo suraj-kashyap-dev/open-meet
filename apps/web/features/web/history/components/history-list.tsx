@@ -391,7 +391,7 @@ function EmptyState() {
         <p className="text-sm text-muted-foreground">{t('empty.description')}</p>
       </div>
       <Button asChild className="mt-2">
-        <Link href="/">{t('empty.cta')}</Link>
+        <Link href="/meet">{t('empty.cta')}</Link>
       </Button>
     </div>
   );

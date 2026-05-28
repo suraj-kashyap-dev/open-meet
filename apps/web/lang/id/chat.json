@@ -1,7 +1,11 @@
 {
   "list": {
-    "title": "Pesan",
+    "title": "Obrolan",
     "new": "Pesan baru",
+    "recent": "Terbaru",
+    "filter": "Filter",
+    "start-meeting": "Mulai rapat",
+    "compose": "Obrolan baru",
     "search": "Cari percakapan",
     "loading": "Memuat…",
     "empty": "Belum ada percakapan.",
@@ -97,6 +101,7 @@
     "wait-for-uploads": "Tunggu unggahan selesai.",
     "upload-failed": "Unggahan gagal",
     "poll-failed": "Tidak dapat membuat jajak pendapat",
+    "send-failed": "Tidak dapat mengirim pesan",
     "disabled": "Anda tidak dapat mengirim pesan di sini."
   },
   "poll": {
@@ -118,6 +123,16 @@
     "search": "Cari rekan tim",
     "no-teammates": "Tidak ada rekan tim yang ditemukan.",
     "disabled": "Tidak tersedia"
+  },
+  "new-chat": {
+    "title": "Obrolan baru",
+    "to-label": "Kepada:",
+    "to-placeholder": "Masukkan nama atau email",
+    "no-teammates": "Tidak ada rekan ditemukan.",
+    "disabled": "Tidak tersedia",
+    "empty-title": "Anda memulai percakapan baru",
+    "empty-subtitle": "Ketik pesan pertama Anda di bawah.",
+    "send-placeholder": "Ketik pesan pertama Anda…"
   },
   "teams": {
     "title": "Tim",

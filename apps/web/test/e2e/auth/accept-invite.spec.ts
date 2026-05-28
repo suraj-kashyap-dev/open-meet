@@ -27,7 +27,7 @@ test.describe('Web accept-invite page', () => {
     await expect(page).toHaveURL(/\/en\/accept-invite/);
   });
 
-  test('should accept the invite and land on the home dashboard', async ({ page }) => {
+  test('should accept the invite and land on chat (the chat-first home)', async ({ page }) => {
     await mockWebApi(page, { me: null });
     await page.goto(`/en/accept-invite?token=${INVITE_TOKEN}`);
 
@@ -35,10 +35,8 @@ test.describe('Web accept-invite page', () => {
     await page.getByLabel('Confirm password').fill('supersecret');
     await page.getByRole('button', { name: 'Create account' }).click();
 
-    await expect(page).toHaveURL(/\/en$/);
-    await expect(
-      page.getByRole('heading', { name: 'Start a new meeting', exact: true }),
-    ).toBeVisible();
+    await expect(page).toHaveURL(/\/en\/chat$/);
+    await expect(page.getByRole('heading', { name: 'Chat' })).toBeVisible();
   });
 
   test('should show an error for an invalid or expired invite link', async ({ page }) => {

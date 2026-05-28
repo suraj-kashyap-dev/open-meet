@@ -9,8 +9,11 @@ test.describe('Web chat list page', () => {
     await page.goto('/en/chat');
 
     // List rail header + the routed empty pane.
-    await expect(page.getByRole('heading', { name: 'Messages' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Chat' })).toBeVisible();
     await expect(page.getByText('Select a conversation to start chatting.')).toBeVisible();
+
+    // The "Recent" section heading from the Teams-style list pane.
+    await expect(page.getByText('Recent', { exact: true })).toBeVisible();
 
     // The seeded DM with Grace Hopper renders with its last message preview.
     const dm = page.getByRole('link', { name: /Grace Hopper/ });
@@ -22,7 +25,7 @@ test.describe('Web chat list page', () => {
     await mockWebApi(page, { conversations: emptyConversationList });
     await page.goto('/en/chat');
 
-    await expect(page.getByRole('heading', { name: 'Messages' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Chat' })).toBeVisible();
     await expect(page.getByText('No conversations yet.')).toBeVisible();
   });
 

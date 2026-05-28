@@ -510,7 +510,7 @@ export function HistoryDetail({ code }: { code: string }) {
 
   if (meetingLoading || !meeting) {
     return (
-      <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+      <main className="flex h-full items-center justify-center">
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
       </main>
     );

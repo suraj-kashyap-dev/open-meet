@@ -20,10 +20,13 @@ import { useCurrentUser, useLogout } from '@/features/web/auth/hooks/use-auth';
 import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
+import { useCommandPalette } from './command-palette-store';
 
 export function CommandPalette() {
   const t = useTranslations('nav');
-  const [open, setOpen] = useState(false);
+  const open = useCommandPalette((s) => s.open);
+  const setOpen = useCommandPalette((s) => s.setOpen);
+  const toggle = useCommandPalette((s) => s.toggle);
   const [code, setCode] = useState('');
   const nav = useNavigateTransition();
   const { data: user } = useCurrentUser();
@@ -51,7 +54,7 @@ export function CommandPalette() {
 
       e.preventDefault();
       e.stopPropagation();
-      setOpen((v) => !v);
+      toggle();
     };
 
     window.addEventListener('keydown', onKey, { capture: true });
@@ -59,7 +62,7 @@ export function CommandPalette() {
     return () => {
       window.removeEventListener('keydown', onKey, { capture: true });
     };
-  }, []);
+  }, [toggle]);
 
   const runAction = (fn: () => void | Promise<void>) => {
     setOpen(false);
@@ -139,7 +142,7 @@ export function CommandPalette() {
           <>
             <CommandSeparator />
             <CommandGroup heading={user.name}>
-              <CommandItem onSelect={() => runAction(() => nav.push('/'))}>
+              <CommandItem onSelect={() => runAction(() => nav.push('/chat'))}>
                 <User className="h-4 w-4" />
                 {t('command.home')}
               </CommandItem>

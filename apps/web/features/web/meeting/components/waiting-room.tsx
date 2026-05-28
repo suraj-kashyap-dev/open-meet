@@ -137,7 +137,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
         : t('waiting.status-waiting');
 
   return (
-    <main className="relative isolate flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4">
+    <main className="relative isolate flex min-h-screen items-center justify-center px-4">
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight opacity-70" />
       <div className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-50" />
 

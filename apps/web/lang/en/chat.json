@@ -1,7 +1,11 @@
 {
   "list": {
-    "title": "Messages",
+    "title": "Chat",
     "new": "New message",
+    "recent": "Recent",
+    "filter": "Filter",
+    "start-meeting": "Start a meeting",
+    "compose": "New chat",
     "search": "Search conversations",
     "loading": "Loading…",
     "empty": "No conversations yet.",
@@ -97,6 +101,7 @@
     "wait-for-uploads": "Wait for uploads to finish.",
     "upload-failed": "Upload failed",
     "poll-failed": "Could not create the poll",
+    "send-failed": "Could not send message",
     "disabled": "You can't send messages here."
   },
   "poll": {
@@ -118,6 +123,16 @@
     "search": "Search teammates",
     "no-teammates": "No teammates found.",
     "disabled": "Unavailable"
+  },
+  "new-chat": {
+    "title": "New chat",
+    "to-label": "To:",
+    "to-placeholder": "Enter name or email",
+    "no-teammates": "No teammates found.",
+    "disabled": "Unavailable",
+    "empty-title": "You're starting a new conversation",
+    "empty-subtitle": "Type your first message below.",
+    "send-placeholder": "Type your first message…"
   },
   "teams": {
     "title": "Teams",
