@@ -49,20 +49,39 @@ export function ConversationList() {
     }
 
     const tracked = useChatStore.getState().presenceByUser;
+    const seeded = new Map<
+      string,
+      {
+        online: boolean;
+        status: NonNullable<(typeof data.items)[number]['members'][number]['status']>;
+        customText: string | null;
+        lastSeen: string | null;
+      }
+    >();
 
     for (const conv of data.items) {
       for (const member of conv.members) {
-        if (member.userId in tracked) {
-          continue;
-        }
-        
-        setPresence(member.userId, {
+        seeded.set(member.userId, {
           online: member.online,
           status: member.status ?? (member.online ? 'AVAILABLE' : 'OFFLINE'),
           customText: member.customText ?? null,
-          lastSeen: null,
+          lastSeen: member.lastSeen ?? null,
         });
       }
+    }
+
+    for (const [userId, entry] of seeded) {
+      const prev = tracked[userId];
+      if (
+        prev?.online === entry.online &&
+        prev.status === entry.status &&
+        prev.customText === entry.customText &&
+        prev.lastSeen === entry.lastSeen
+      ) {
+        continue;
+      }
+
+      setPresence(userId, entry);
     }
   }, [data, setPresence]);
 

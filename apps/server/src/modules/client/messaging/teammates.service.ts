@@ -18,8 +18,8 @@ export class TeammatesService {
   async search(userId: string, query?: string): Promise<TeammateListDto> {
     const rows = await this.repo.search(userId, query);
     const ids = rows.map((r) => r.id);
-    const [online, directIds] = await Promise.all([
-      this.presence.areOnline(ids),
+    const [presence, directIds] = await Promise.all([
+      this.presence.snapshot(ids),
       this.repo.directConversationIds(userId, ids),
     ]);
 
@@ -31,7 +31,9 @@ export class TeammatesService {
         avatar: r.avatarKey ? this.storage.publicUrl(r.avatarKey) : null,
         chatDisabled: r.chatDisabled,
         allowDirectMessages: r.allowDirectMessages,
-        online: online.has(r.id),
+        online: presence.get(r.id)?.online ?? false,
+        status: presence.get(r.id)?.status ?? null,
+        lastSeen: presence.get(r.id)?.lastSeen ?? null,
         conversationId: directIds.get(r.id) ?? null,
       })),
     };

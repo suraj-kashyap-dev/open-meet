@@ -149,6 +149,7 @@ export class MessagingSerializer {
         online: snap?.online ?? false,
         status: (snap?.status as PresenceStatus | undefined) ?? null,
         customText: snap?.customText ?? null,
+        lastSeen: snap?.lastSeen ?? null,
         chatDisabled: member.user.chatDisabled,
       };
     });

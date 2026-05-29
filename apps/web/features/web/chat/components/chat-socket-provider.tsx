@@ -23,7 +23,7 @@ import {
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 
 import { chatApi } from '../services/chat';
-import { chatKeys } from '../hooks/use-chat';
+import { chatKeys, presenceMeKey } from '../hooks/use-chat';
 import { useChatSocket, type ChatSocket } from '../hooks/use-chat-socket';
 import { patchMessage, upsertMessage, type MessagesData } from '../lib/message-cache';
 import { useChatStore } from '../stores';
@@ -56,7 +56,6 @@ export function useChatSocketContext(): ChatSocketContextValue {
   return ctx;
 }
 
-/** Moves a conversation to the top of the list, refreshing its preview + unread. */
 function applyIncoming(
   list: ConversationListDto | undefined,
   message: ChatMessageDto,
@@ -73,6 +72,7 @@ function applyIncoming(
   }
 
   const current = list.items[index]!;
+  
   const updated: ConversationDto = {
     ...current,
     lastMessage: message,
@@ -96,7 +96,6 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
   const clearUnread = useChatStore((s) => s.clearUnread);
   const setUnreadSummary = useChatStore((s) => s.setUnreadSummary);
 
-  // Seed the unread badge from the server snapshot.
   const unread = useQuery({
     queryKey: ['chat', 'unread'],
     queryFn: ({ signal }) => chatApi.unread(signal),
@@ -112,12 +111,14 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!socket) {
+      setConnection('offline');
       return;
     }
 
     const onConnect = () => {
       setConnection('connected');
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+      void qc.invalidateQueries({ queryKey: presenceMeKey });
     };
 
     const onDisconnect = () => setConnection('reconnecting');
@@ -188,8 +189,19 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       );
     };
 
-    const onPresence = ({ userId, online, status, customText, lastSeen }: ChatPresencePayload) =>
+    const onPresence = ({ userId, online, status, customText, lastSeen }: ChatPresencePayload) => {
       setPresence(userId, { online, status, customText, lastSeen });
+
+      if (userId === user?.id) {
+        qc.setQueryData(presenceMeKey, {
+          userId,
+          online,
+          status,
+          customText,
+          lastSeen,
+        });
+      }
+    };
 
     const onConversationNew = (conversation: ConversationDto) => {
       socket.emit(ChatClientEvent.CONVERSATION_JOIN, { conversationId: conversation.id });
@@ -248,6 +260,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
     setConnection,
     bumpUnread,
     clearUnread,
+    setUnreadSummary,
   ]);
 
   const value = useMemo<ChatSocketContextValue>(

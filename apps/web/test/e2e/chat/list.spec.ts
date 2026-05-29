@@ -34,5 +34,14 @@ test.describe('Web chat list page', () => {
     await page.goto('/en/chat');
 
     await expect(page.getByRole('button', { name: 'Set your status' })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Set your status' }).click();
+
+    await expect(page.getByRole('menuitem', { name: 'Available' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Busy' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Do not disturb' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Be right back' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Away' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Offline' })).toBeVisible();
   });
 });

@@ -51,7 +51,7 @@ export const useChatStore = create<ChatStoreState>((set) => ({
   unreadByConversation: {},
   presenceByUser: {},
   typingByConversation: {},
-  connection: 'connected',
+  connection: 'offline',
 
   setActiveConversation: (id) => set({ activeConversationId: id, infoOpen: false }),
 
@@ -138,6 +138,6 @@ export const useChatStore = create<ChatStoreState>((set) => ({
       unreadByConversation: {},
       presenceByUser: {},
       typingByConversation: {},
-      connection: 'connected',
+      connection: 'offline',
     }),
 }));

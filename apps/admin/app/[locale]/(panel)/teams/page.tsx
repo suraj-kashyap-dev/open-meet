@@ -1,16 +1,15 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { Plus, Settings2, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import type { AdminTeamDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
 import { DataTable } from '@open-meet/ui/data-table';
 
-import { CreateTeamDialog } from '@/features/teams/components/create-team-dialog';
 import { useAdminTeams, useDeleteTeam } from '@/features/teams/hooks/use-admin-teams';
 import { Link, useRouter } from '@/i18n/navigation';
 
@@ -21,7 +20,6 @@ export default function AdminTeamsPage() {
   const router = useRouter();
   const { data, isLoading } = useAdminTeams();
   const del = useDeleteTeam();
-  const [createOpen, setCreateOpen] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -51,7 +49,7 @@ export default function AdminTeamsPage() {
               aria-label={t('actions.manage')}
               onClick={() => router.push(`/teams/${row.original.id}`)}
             >
-              <Settings2 className="h-4 w-4" />
+              <Pencil className="h-4 w-4" />
             </Button>
             <Button
               variant="ghost"
@@ -78,7 +76,7 @@ export default function AdminTeamsPage() {
         </p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
-          <Button onClick={() => setCreateOpen(true)} className="gap-2">
+          <Button onClick={() => router.push('/teams/new')} className="gap-2">
             <Plus className="h-4 w-4" />
             {t('create.button')}
           </Button>
@@ -94,8 +92,6 @@ export default function AdminTeamsPage() {
           emptyMessage={t('empty')}
         />
       </section>
-
-      <CreateTeamDialog open={createOpen} onOpenChange={setCreateOpen} />
     </main>
   );
 }

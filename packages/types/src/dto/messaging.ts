@@ -74,6 +74,7 @@ export interface ConversationMemberDto {
   online: boolean;
   status: PresenceStatus | null;
   customText: string | null;
+  lastSeen: string | null;
   chatDisabled: boolean;
 }
 
@@ -250,6 +251,8 @@ export interface TeammateDto {
   chatDisabled: boolean;
   allowDirectMessages: boolean;
   online: boolean;
+  status: PresenceStatus | null;
+  lastSeen: string | null;
   /** An existing DM with this teammate, if one exists. */
   conversationId: string | null;
 }

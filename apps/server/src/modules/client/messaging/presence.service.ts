@@ -5,7 +5,7 @@ import { ChatServerEvent } from '@open-meet/types';
 
 import { RedisService } from '../../../integrations/redis/redis.service';
 
-import { ChatBus, conversationRoom } from './chat-bus.service';
+import { ChatBus, conversationRoom, userRoom } from './chat-bus.service';
 import { ConversationsRepository } from './conversations.repository';
 import { PresenceRepository } from './presence.repository';
 
@@ -46,9 +46,7 @@ export class PresenceService {
   }
 
   async forceOffline(userId: string): Promise<void> {
-    const lastSeen = new Date().toISOString();
-    await this.redis.client.hdel(ONLINE_KEY, userId);
-    await this.redis.client.hset(LAST_SEEN_KEY, userId, lastSeen);
+    const lastSeen = await this.markOffline(userId);
 
     const conversationIds = await this.conversations.conversationIdsForUser(userId);
     const payload = {
@@ -63,28 +61,13 @@ export class PresenceService {
     }
   }
 
-  async isOnline(userId: string): Promise<boolean> {
-    const value = await this.redis.client.hget(ONLINE_KEY, userId);
-    return value !== null && Number(value) > 0;
+  async disconnectSockets(userId: string): Promise<number> {
+    return this.bus.disconnectRoom(userRoom(userId));
   }
 
-  async areOnline(userIds: string[]): Promise<Set<string>> {
-    if (userIds.length === 0) {
-      return new Set();
-    }
-
-    const values = await this.redis.client.hmget(ONLINE_KEY, ...userIds);
-    const online = new Set<string>();
-
-    userIds.forEach((id, i) => {
-      const v = values[i];
-      
-      if (v !== null && v !== undefined && Number(v) > 0) {
-        online.add(id);
-      }
-    });
-
-    return online;
+  async isOnline(userId: string): Promise<boolean> {
+    const online = await this.areOnline([userId]);
+    return online.has(userId);
   }
 
   async lastSeen(userId: string): Promise<string | null> {
@@ -95,9 +78,13 @@ export class PresenceService {
     return this.repo.upsert(userId, status, customText);
   }
 
+  async resetStatus(userId: string): Promise<void> {
+    await this.repo.upsert(userId, PresenceStatus.AVAILABLE, null);
+  }
+
   async forUser(userId: string): Promise<PresenceSnapshot> {
     const [snap] = await this.snapshotList([userId]);
-    
+
     return (
       snap ?? { online: false, status: PresenceStatus.OFFLINE, customText: null, lastSeen: null }
     );
@@ -106,6 +93,13 @@ export class PresenceService {
   async snapshot(userIds: string[]): Promise<Map<string, PresenceSnapshot>> {
     const list = await this.snapshotList(userIds);
     return new Map(userIds.map((id, i) => [id, list[i]!]));
+  }
+
+  private async markOffline(userId: string): Promise<string> {
+    const lastSeen = new Date().toISOString();
+    await this.redis.client.hdel(ONLINE_KEY, userId);
+    await this.redis.client.hset(LAST_SEEN_KEY, userId, lastSeen);
+    return lastSeen;
   }
 
   private async snapshotList(userIds: string[]): Promise<PresenceSnapshot[]> {
@@ -125,7 +119,7 @@ export class PresenceService {
       const isOnline = online.has(id);
       const chosen = byUser.get(id);
       const status =
-        ! isOnline || chosen?.status === PresenceStatus.OFFLINE
+        !isOnline || chosen?.status === PresenceStatus.OFFLINE
           ? PresenceStatus.OFFLINE
           : (chosen?.status ?? PresenceStatus.AVAILABLE);
 
@@ -136,5 +130,51 @@ export class PresenceService {
         lastSeen: lastSeenValues[i] ?? null,
       };
     });
+  }
+
+  async areOnline(userIds: string[]): Promise<Set<string>> {
+    if (userIds.length === 0) {
+      return new Set();
+    }
+
+    const values = await this.redis.client.hmget(ONLINE_KEY, ...userIds);
+    const online = new Set<string>();
+    const candidates: string[] = [];
+
+    userIds.forEach((id, i) => {
+      const value = values[i];
+
+      if (value !== null && value !== undefined && Number(value) > 0) {
+        candidates.push(id);
+      }
+    });
+
+    if (candidates.length === 0) {
+      return online;
+    }
+
+    const socketChecks = await Promise.all(
+      candidates.map(async (id) => ({
+        id,
+        hasSockets: await this.bus.roomHasSockets(userRoom(id)),
+      })),
+    );
+
+    const staleUserIds: string[] = [];
+
+    for (const { id, hasSockets } of socketChecks) {
+      if (hasSockets === false) {
+        staleUserIds.push(id);
+        continue;
+      }
+
+      online.add(id);
+    }
+
+    if (staleUserIds.length > 0) {
+      await Promise.all(staleUserIds.map((id) => this.forceOffline(id)));
+    }
+
+    return online;
   }
 }

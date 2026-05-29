@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import type { UserDto } from '@open-meet/types';
 
 import { authApi } from '@/features/web/auth/services/auth';
+import { useChatStore } from '@/features/web/chat/stores';
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
@@ -199,6 +200,7 @@ export function useChangePassword() {
     onSuccess: () => {
       writeCachedUser(null);
       qc.setQueryData(ME_KEY, null);
+      useChatStore.getState().reset();
       qc.clear();
       router.replace({ pathname: '/login', query: { password: 'changed' } });
     },
@@ -215,6 +217,7 @@ export function useLogout() {
     onSettled: () => {
       writeCachedUser(null);
       qc.setQueryData(ME_KEY, null);
+      useChatStore.getState().reset();
       qc.clear();
       router.replace('/login');
     },

@@ -33,6 +33,25 @@ export class ChatBus {
 
     this.server.to(rooms).emit(event, payload);
   }
+
+  async roomHasSockets(room: string): Promise<boolean | null> {
+    if (!this.server) {
+      return null;
+    }
+
+    const sockets = await this.server.in(room).fetchSockets();
+    return sockets.length > 0;
+  }
+
+  async disconnectRoom(room: string): Promise<number> {
+    if (!this.server) {
+      return 0;
+    }
+
+    const sockets = await this.server.in(room).fetchSockets();
+    await Promise.all(sockets.map((socket) => socket.disconnect(true)));
+    return sockets.length;
+  }
 }
 
 export const conversationRoom = (conversationId: string): string =>

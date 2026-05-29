@@ -100,6 +100,7 @@ export class AuthService {
     });
     await this.userInvites.delete(invite.id);
 
+    await this.presence.resetStatus(user.id);
     const tokens = await this.issueTokens(user.id, user.email, user.name);
     return { user: this.avatars.toUserDto(user), tokens };
   }
@@ -133,6 +134,7 @@ export class AuthService {
     const valid = await argon2.verify(user.passwordHash, dto.password);
     if (!valid) throw this.invalidCredentials();
 
+    await this.presence.resetStatus(user.id);
     const tokens = await this.issueTokens(user.id, user.email, user.name);
     return { user: this.avatars.toUserDto(user), tokens };
   }
@@ -164,6 +166,7 @@ export class AuthService {
       user = await this.users.update(user.id, { avatarUrl: profile.picture });
     }
 
+    await this.presence.resetStatus(user.id);
     const tokens = await this.issueTokens(user.id, user.email, user.name);
     return { user: this.avatars.toUserDto(user), tokens };
   }
@@ -229,7 +232,16 @@ export class AuthService {
     // waiting for socket.io's idle timeout. Best-effort — never fail logout.
     if (presenceTarget) {
       try {
-        await this.presence.forceOffline(presenceTarget);
+        const disconnectedSockets = await this.presence.disconnectSockets(presenceTarget);
+        if (disconnectedSockets === 0) {
+          await this.presence.forceOffline(presenceTarget);
+        }
+      } catch {
+        // Silent
+      }
+
+      try {
+        await this.presence.resetStatus(presenceTarget);
       } catch {
         // Silent
       }

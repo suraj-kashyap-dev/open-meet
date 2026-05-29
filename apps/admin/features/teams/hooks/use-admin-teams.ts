@@ -75,6 +75,32 @@ export function useRemoveTeamMember() {
   });
 }
 
+export function useSyncTeamMembers() {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (input: { id: string; currentUserIds: string[]; nextUserIds: string[] }) => {
+      const nextUserIds = [...new Set(input.nextUserIds)];
+      const nextUserSet = new Set(nextUserIds);
+      const currentUserSet = new Set(input.currentUserIds);
+
+      const toAdd = nextUserIds.filter((userId) => !currentUserSet.has(userId));
+      const toRemove = input.currentUserIds.filter((userId) => !nextUserSet.has(userId));
+
+      if (toAdd.length > 0) {
+        await adminTeamsApi.addMembers(input.id, { userIds: toAdd });
+      }
+
+      await Promise.all(toRemove.map((userId) => adminTeamsApi.removeMember(input.id, userId)));
+    },
+    onSuccess: (_res, { id }) =>
+      Promise.all([
+        qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
+        qc.invalidateQueries({ queryKey: [CHANNELS_KEY, id] }),
+      ]),
+  });
+}
+
 const CHANNELS_KEY = 'admin-team-channels' as const;
 
 export function useTeamChannels(teamId: string | null) {

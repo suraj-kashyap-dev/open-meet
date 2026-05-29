@@ -1,16 +1,15 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { Plus, Settings2, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import type { AdminGroupDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
 import { DataTable } from '@open-meet/ui/data-table';
 
-import { CreateGroupDialog } from '@/features/groups/components/create-group-dialog';
 import { useAdminGroups, useDeleteGroup } from '@/features/groups/hooks/use-admin-groups';
 import { Link, useRouter } from '@/i18n/navigation';
 
@@ -21,7 +20,6 @@ export default function AdminGroupsPage() {
   const router = useRouter();
   const { data, isLoading } = useAdminGroups();
   const del = useDeleteGroup();
-  const [createOpen, setCreateOpen] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -51,7 +49,7 @@ export default function AdminGroupsPage() {
               aria-label={t('actions.manage')}
               onClick={() => router.push(`/groups/${row.original.id}`)}
             >
-              <Settings2 className="h-4 w-4" />
+              <Pencil className="h-4 w-4" />
             </Button>
             <Button
               variant="ghost"
@@ -78,7 +76,7 @@ export default function AdminGroupsPage() {
         </p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
-          <Button onClick={() => setCreateOpen(true)} className="gap-2">
+          <Button onClick={() => router.push('/groups/new')} className="gap-2">
             <Plus className="h-4 w-4" />
             {t('create.button')}
           </Button>
@@ -94,8 +92,6 @@ export default function AdminGroupsPage() {
           emptyMessage={t('empty')}
         />
       </section>
-
-      <CreateGroupDialog open={createOpen} onOpenChange={setCreateOpen} />
     </main>
   );
 }

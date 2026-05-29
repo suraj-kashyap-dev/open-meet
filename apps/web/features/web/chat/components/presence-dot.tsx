@@ -5,11 +5,12 @@ import type { PresenceStatus } from '@open-meet/types';
 import { cn } from '@open-meet/ui/cn';
 
 import { STATUS_COLOR } from '../lib/presence-color';
+import { effectivePresenceStatus } from '../lib/presence';
 import { useChatStore } from '../stores';
 
 export function PresenceDot({ userId, className }: { userId: string; className?: string }) {
   const entry = useChatStore((s) => s.presenceByUser[userId]);
-  const status: PresenceStatus = entry?.online ? (entry.status ?? 'AVAILABLE') : 'OFFLINE';
+  const status: PresenceStatus = effectivePresenceStatus(entry);
 
   return (
     <span

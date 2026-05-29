@@ -8,6 +8,7 @@ import { Button } from '@open-meet/ui/button';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 
 import { usePublicUser } from '../hooks/use-chat';
+import { formatPresenceLabel } from '../lib/presence';
 import { useChatStore } from '../stores';
 import { PresenceDot } from './presence-dot';
 
@@ -37,11 +38,7 @@ export function PeerProfilePanel({
 
   const joined = formatJoinedDate(data?.joinedAt ?? null, locale);
 
-  const presenceLabel = presence?.online
-    ? t('presence.online')
-    : presence?.lastSeen
-      ? t('presence.last-seen-short')
-      : t('presence.offline');
+  const presenceLabel = formatPresenceLabel(presence, t, { shortLastSeen: true });
 
   return (
     <div className="flex h-full flex-col bg-background">

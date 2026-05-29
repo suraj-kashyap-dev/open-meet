@@ -66,3 +66,25 @@ export function useRemoveGroupMember() {
     onSuccess: () => void qc.invalidateQueries({ queryKey: [GROUPS_KEY] }),
   });
 }
+
+export function useSyncGroupMembers() {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (input: { id: string; currentUserIds: string[]; nextUserIds: string[] }) => {
+      const nextUserIds = [...new Set(input.nextUserIds)];
+      const nextUserSet = new Set(nextUserIds);
+      const currentUserSet = new Set(input.currentUserIds);
+
+      const toAdd = nextUserIds.filter((userId) => !currentUserSet.has(userId));
+      const toRemove = input.currentUserIds.filter((userId) => !nextUserSet.has(userId));
+
+      if (toAdd.length > 0) {
+        await adminGroupsApi.addMembers(input.id, { userIds: toAdd });
+      }
+
+      await Promise.all(toRemove.map((userId) => adminGroupsApi.removeMember(input.id, userId)));
+    },
+    onSuccess: () => void qc.invalidateQueries({ queryKey: [GROUPS_KEY] }),
+  });
+}

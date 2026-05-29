@@ -50,6 +50,11 @@ describe('AuthService', () => {
       scanStream: (opts: { match: string }) => AsyncIterable<string[]>;
     };
   };
+  let presence: {
+    forceOffline: ReturnType<typeof vi.fn>;
+    resetStatus: ReturnType<typeof vi.fn>;
+    disconnectSockets: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(async () => {
     redisStore = new Map();
@@ -96,6 +101,11 @@ describe('AuthService', () => {
         return val;
       },
     };
+    presence = {
+      forceOffline: vi.fn(),
+      resetStatus: vi.fn(),
+      disconnectSockets: vi.fn().mockResolvedValue(0),
+    };
 
     const avatars = {
       toUserDto: (u: {
@@ -128,7 +138,7 @@ describe('AuthService', () => {
         { provide: ConfigService, useValue: config },
         { provide: RedisService, useValue: redis },
         { provide: UserInviteRepository, useValue: userInvites },
-        { provide: PresenceService, useValue: { forceOffline: vi.fn() } },
+        { provide: PresenceService, useValue: presence },
       ],
     }).compile();
 
@@ -163,6 +173,7 @@ describe('AuthService', () => {
       expect(result.user.email).toBe('ada@example.com');
       expect(result.tokens.accessToken).toContain('signed.');
       expect(userInvites.delete).toHaveBeenCalledWith('inv1');
+      expect(presence.resetStatus).toHaveBeenCalledWith('u1');
       const created = repo.createInvited.mock.calls[0]?.[0] as { passwordHash: string };
       expect(await argon2.verify(created.passwordHash, 'secretpass1')).toBe(true);
     });
@@ -199,6 +210,7 @@ describe('AuthService', () => {
 
       const result = await service.login({ email: 'ada@example.com', password: 'secretpass1' });
       expect(result.user.id).toBe('u1');
+      expect(presence.resetStatus).toHaveBeenCalledWith('u1');
     });
 
     it('should reject a wrong password', async () => {
@@ -221,6 +233,29 @@ describe('AuthService', () => {
     it('should reject an unknown or revoked refresh token', async () => {
       jwt.verifyAsync.mockResolvedValue({ sub: 'u1', jti: 'jti1' });
       await expect(service.refresh('rt')).rejects.toBeInstanceOf(UnauthorizedException);
+    });
+  });
+
+  describe('logout()', () => {
+    it('should disconnect chat sockets, mark the user offline, and reset status', async () => {
+      jwt.verifyAsync.mockResolvedValue({ sub: 'u1', jti: 'jti1' });
+      redisStore.set('refresh:u1:jti1', 'hashed');
+
+      await service.logout('refresh-token', 'u1');
+
+      expect(presence.disconnectSockets).toHaveBeenCalledWith('u1');
+      expect(presence.forceOffline).toHaveBeenCalledWith('u1');
+      expect(presence.resetStatus).toHaveBeenCalledWith('u1');
+    });
+
+    it('should rely on socket disconnect when live chat sockets exist', async () => {
+      presence.disconnectSockets.mockResolvedValue(2);
+
+      await service.logout(undefined, 'u1');
+
+      expect(presence.disconnectSockets).toHaveBeenCalledWith('u1');
+      expect(presence.forceOffline).not.toHaveBeenCalled();
+      expect(presence.resetStatus).toHaveBeenCalledWith('u1');
     });
   });
 });

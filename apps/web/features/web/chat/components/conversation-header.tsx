@@ -23,6 +23,7 @@ import { ApiClientError } from '@/lib/api/client';
 
 import { chatKeys, useConversationState, useCreatePoll } from '../hooks/use-chat';
 import { conversationDisplay } from '../lib/conversation-display';
+import { formatPresenceLabel } from '../lib/presence';
 import { useChatStore } from '../stores';
 import { PollComposer } from './poll-composer';
 import { PresenceDot } from './presence-dot';
@@ -55,11 +56,9 @@ export function ConversationHeader({
 
   const subtitle = display.isGroup
     ? t('header.members', { count: conversation.members.length })
-    : presence?.online
-      ? t('presence.online')
-      : presence?.lastSeen
-        ? t('presence.last-seen', { time: formatTime(presence.lastSeen) })
-        : t('presence.offline');
+    : formatPresenceLabel(presence, t, {
+        formattedLastSeen: presence?.lastSeen ? formatTime(presence.lastSeen) : undefined,
+      });
 
   const clearChat = () => {
     qc.setQueryData<MessagesCache>(chatKeys.messages(conversation.id), () => ({

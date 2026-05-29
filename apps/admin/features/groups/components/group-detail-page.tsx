@@ -1,8 +1,8 @@
 'use client';
 
-import { ArrowLeft, Loader2, Trash2, UserPlus, X } from 'lucide-react';
+import { ArrowLeft, Loader2, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@open-meet/ui/button';
@@ -15,14 +15,12 @@ import {
 } from '@open-meet/ui/card';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
-import { UserAvatar } from '@open-meet/ui/user-avatar';
 
-import { MemberPicker } from '@/components/shared/member-picker';
+import { MemberMultiSelect } from '@/components/shared/member-multi-select';
 import {
-  useAddGroupMembers,
   useAdminGroup,
   useDeleteGroup,
-  useRemoveGroupMember,
+  useSyncGroupMembers,
   useUpdateGroup,
 } from '@/features/groups/hooks/use-admin-groups';
 import { Link, useRouter } from '@/i18n/navigation';
@@ -59,59 +57,53 @@ export function GroupDetailPage({ groupId }: { groupId: string }) {
 
   const groupQuery = useAdminGroup(groupId);
   const update = useUpdateGroup();
-  const addMembers = useAddGroupMembers();
-  const removeMember = useRemoveGroupMember();
+  const syncMembers = useSyncGroupMembers();
   const del = useDeleteGroup();
 
   const [title, setTitle] = useState('');
-  const [toAdd, setToAdd] = useState<string[]>([]);
+  const [memberIds, setMemberIds] = useState<string[]>([]);
+  const initializedGroupId = useRef<string | null>(null);
 
   const group = groupQuery.data;
   const members = group?.members ?? [];
 
   useEffect(() => {
-    if (group) {
-      setTitle(group.title);
+    if (!group || initializedGroupId.current === group.id) {
+      return;
     }
+
+    initializedGroupId.current = group.id;
+    setTitle(group.title);
+    setMemberIds(group.members.map((member) => member.userId));
   }, [group]);
 
   const isLoading = groupQuery.isLoading;
   const isMissing = !isLoading && (!group || groupQuery.isError);
   const titleDirty = group ? title.trim() !== group.title : false;
+  const memberDirty = group
+    ? group.members.map((member) => member.userId).sort().join('|') !== [...memberIds].sort().join('|')
+    : false;
+  const isSaving = update.isPending || syncMembers.isPending;
 
-  const onRename = async () => {
-    if (!group || !title.trim() || !titleDirty) {
+  const onSave = async () => {
+    if (!group || !title.trim() || (!titleDirty && !memberDirty)) {
       return;
     }
 
     try {
-      await update.mutateAsync({ id: group.id, body: { title: title.trim() } });
+      if (titleDirty) {
+        await update.mutateAsync({ id: group.id, body: { title: title.trim() } });
+      }
+
+      if (memberDirty) {
+        await syncMembers.mutateAsync({
+          id: group.id,
+          currentUserIds: group.members.map((member) => member.userId),
+          nextUserIds: memberIds,
+        });
+      }
+
       toast.success(t('detail.rename-success'));
-    } catch (err) {
-      toast.error(messageFromError(err, t('detail.request-error')));
-    }
-  };
-
-  const onAddMembers = async () => {
-    if (!group || toAdd.length === 0) {
-      return;
-    }
-
-    try {
-      await addMembers.mutateAsync({ id: group.id, userIds: toAdd });
-      setToAdd([]);
-    } catch (err) {
-      toast.error(messageFromError(err, t('detail.request-error')));
-    }
-  };
-
-  const onRemoveMember = async (userId: string) => {
-    if (!group) {
-      return;
-    }
-
-    try {
-      await removeMember.mutateAsync({ id: group.id, userId });
     } catch (err) {
       toast.error(messageFromError(err, t('detail.request-error')));
     }
@@ -164,12 +156,12 @@ export function GroupDetailPage({ groupId }: { groupId: string }) {
                 {t('actions.delete')}
               </Button>
               <Button
-                onClick={() => void onRename()}
-                disabled={!title.trim() || !titleDirty || update.isPending}
+                onClick={() => void onSave()}
+                disabled={!title.trim() || (!titleDirty && !memberDirty) || isSaving}
                 className="gap-2"
               >
-                {update.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                {update.isPending ? t('detail.rename-submitting') : t('detail.rename-submit')}
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {isSaving ? t('detail.rename-submitting') : t('detail.rename-submit')}
               </Button>
             </div>
           ) : null}
@@ -199,68 +191,25 @@ export function GroupDetailPage({ groupId }: { groupId: string }) {
               <div className="flex items-center justify-between gap-3">
                 <div className="space-y-1">
                   <CardTitle>{t('manage.title')}</CardTitle>
-                  <CardDescription>{t('manage.members', { count: members.length })}</CardDescription>
+                  <CardDescription>{t('manage.members', { count: memberIds.length })}</CardDescription>
                 </div>
-                <CountBadge count={members.length} />
+                <CountBadge count={memberIds.length} />
               </div>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-3 border-b border-border pb-6">
-                <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                  {t('manage.add')}
-                </p>
-                <MemberPicker
-                  selected={toAdd}
-                  onSelectedChange={setToAdd}
-                  excludeIds={members.map((member) => member.userId)}
-                  searchPlaceholder={t('manage.search')}
-                  emptyLabel={t('manage.no-users')}
-                />
-                <Button
-                  onClick={() => void onAddMembers()}
-                  disabled={toAdd.length === 0 || addMembers.isPending}
-                  className="w-full gap-2 sm:w-auto"
-                >
-                  {addMembers.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <UserPlus className="h-4 w-4" />
-                  )}
-                  {t('manage.add-confirm')}
-                  {toAdd.length > 0 ? ` (${toAdd.length})` : ''}
-                </Button>
-              </div>
-
-              {members.length === 0 ? (
-                <div className="py-10 text-center text-sm text-muted-foreground">
-                  {t('manage.empty')}
-                </div>
-              ) : (
-                <ul className="divide-y divide-border">
-                  {members.map((member) => (
-                    <li
-                      key={member.userId}
-                      className="flex items-center gap-3 py-3 transition-colors hover:bg-muted/30"
-                    >
-                      <UserAvatar user={member} size="sm" />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium">{member.name}</p>
-                        <p className="truncate text-xs text-muted-foreground">{member.email}</p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-destructive hover:bg-destructive/10"
-                        aria-label={t('manage.remove')}
-                        disabled={removeMember.isPending}
-                        onClick={() => void onRemoveMember(member.userId)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+            <CardContent>
+              <MemberMultiSelect
+                selectedIds={memberIds}
+                onSelectedIdsChange={setMemberIds}
+                initialSelectedUsers={members.map((member) => ({
+                  id: member.userId,
+                  name: member.name,
+                  email: member.email,
+                  avatar: member.avatar,
+                }))}
+                searchPlaceholder={t('manage.search')}
+                emptyLabel={t('manage.no-users')}
+                removeLabel={t('manage.remove')}
+              />
             </CardContent>
           </Card>
 
