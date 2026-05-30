@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, Camera, Loader2, Pencil, Trash2 } from 'lucide-react';
+import { Camera, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -323,18 +323,15 @@ export function UserDetailPage({ userId }: { userId: string }) {
               onClick={() => void onSubmit()}
               disabled={pending || (!isDirty && !avatarDirty)}
               variant="accent"
-              className="gap-2"
+              className="min-w-32 gap-2"
             >
               {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {pending ? t('submitting') : t('submit')}
             </Button>
           ) : null}
 
-          <Button variant="ghost" size="sm" asChild className="w-fit gap-2 px-0 hover:bg-transparent">
-            <Link href="/users">
-              <ArrowLeft className="h-4 w-4" />
-              {tDetail('back')}
-            </Link>
+          <Button variant="outline" asChild>
+            <Link href="/users">{common('back')}</Link>
           </Button>
         </div>
       </header>

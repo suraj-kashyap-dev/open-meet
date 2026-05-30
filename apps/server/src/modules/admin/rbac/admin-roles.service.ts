@@ -15,7 +15,6 @@ import {
   type RoleDto,
   type RoleListResponseDto,
   expandToLeaves,
-  unknownKeys,
 } from '@open-meet/types';
 
 import { AdminPermissionResolver } from './admin-permission-resolver.service';
@@ -132,18 +131,14 @@ export class AdminRolesService {
     this.resolver.invalidate(id);
   }
 
-  /** Validate keys against the catalog and expand parents into leaves. */
+  /**
+   * Expand parents into leaves and PRUNE anything that is not a current catalog
+   * key. Keys removed from the catalog after a role was saved (e.g. the retired
+   * `teams.channels.*`) are dropped silently instead of rejected, so legacy roles
+   * stay editable and self-heal on the next save. The picker can only emit catalog
+   * keys, so this never silently discards a deliberate selection.
+   */
   private normalizePermissions(selected: readonly string[]): string[] {
-    const unknown = unknownKeys(selected, PERMISSION_TREE_ADMIN);
-    if (unknown.length > 0) {
-      throw new BadRequestException({
-        code: ApiErrorCode.ROLE_PERMISSION_INVALID,
-        message:
-          I18nContext.current()?.t('errors.role-permission-invalid') ??
-          'One or more permission keys are not valid',
-        details: { unknown },
-      });
-    }
     return expandToLeaves(selected, PERMISSION_TREE_ADMIN);
   }
 

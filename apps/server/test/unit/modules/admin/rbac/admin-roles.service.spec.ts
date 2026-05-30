@@ -1,12 +1,5 @@
-import {
-  BadRequestException,
-  ConflictException,
-  ForbiddenException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-
-import { ApiErrorCode } from '@open-meet/types';
 
 import { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
 import { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
@@ -79,13 +72,21 @@ describe('AdminRolesService', () => {
       await expect(service.create({ name: 'Analyst' })).rejects.toBeInstanceOf(ConflictException);
     });
 
-    it('should reject unknown permission keys with ROLE_PERMISSION_INVALID', async () => {
+    it('should prune unknown permission keys instead of rejecting, keeping valid ones', async () => {
       repo.findByName.mockResolvedValueOnce(null);
-      const promise = service.create({ name: 'Bad', permissions: ['mystery.key'] });
-      await expect(promise).rejects.toBeInstanceOf(BadRequestException);
-      await promise.catch((e: { response?: { code?: string } }) => {
-        expect(e.response?.code).toBe(ApiErrorCode.ROLE_PERMISSION_INVALID);
+      repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
+        Promise.resolve(makeRole(data)),
+      );
+      // 'teams.channels.create' was removed from the catalog; a legacy role carrying
+      // it must still save (the stale key is dropped, the valid one kept).
+      const created = await service.create({
+        name: 'Legacy',
+        permissions: ['users.view', 'teams.channels.create', 'mystery.key'],
       });
+      expect(repo.create).toHaveBeenCalledWith(
+        expect.objectContaining({ permissions: ['users.view'] }),
+      );
+      expect(created.permissions).toEqual(['users.view']);
     });
 
     it('should store an empty list when permissionType is ALL', async () => {

@@ -15,7 +15,6 @@ import {
   type RoleDto,
   type RoleListResponseDto,
   expandToLeaves,
-  unknownKeys,
 } from '@open-meet/types';
 
 import { UserPermissionResolver } from '../../client/rbac/user-permission-resolver.service';
@@ -111,17 +110,12 @@ export class AdminUserRolesService {
     this.resolver.invalidate(id);
   }
 
+  /**
+   * Expand parents into leaves and PRUNE anything that is not a current catalog
+   * key (e.g. the retired `teams.channels.*`), so legacy roles stay editable and
+   * self-heal on save rather than being rejected.
+   */
   private normalizePermissions(selected: readonly string[]): string[] {
-    const unknown = unknownKeys(selected, PERMISSION_TREE_USER);
-    if (unknown.length > 0) {
-      throw new BadRequestException({
-        code: ApiErrorCode.ROLE_PERMISSION_INVALID,
-        message:
-          I18nContext.current()?.t('errors.role-permission-invalid') ??
-          'One or more permission keys are not valid',
-        details: { unknown },
-      });
-    }
     return expandToLeaves(selected, PERMISSION_TREE_USER);
   }
 

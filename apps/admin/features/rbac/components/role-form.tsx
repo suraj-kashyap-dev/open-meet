@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 import type { CreateRoleDto, RoleDto, UpdateRoleDto } from '@open-meet/types';
 import { PermissionType } from '@open-meet/types';
-import { Button } from '@open-meet/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@open-meet/ui/card';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
@@ -23,15 +22,13 @@ import { PermissionTreePicker } from '@/features/rbac/components/permission-tree
 import { usePermissionCatalog } from '@/features/rbac/hooks/use-admin-roles';
 
 interface Props {
+  id: string;
   initial?: RoleDto;
-  /** Existing system roles render a read-only banner — name + type are immutable. */
   systemLocked?: boolean;
-  submitLabel: string;
   onSubmit: (input: CreateRoleDto | UpdateRoleDto) => Promise<void> | void;
-  isSubmitting?: boolean;
 }
 
-export function RoleForm({ initial, systemLocked = false, submitLabel, onSubmit, isSubmitting = false }: Props) {
+export function RoleForm({ id, initial, systemLocked = false, onSubmit }: Props) {
   const t = useTranslations('rbac');
   const catalog = usePermissionCatalog();
   const [name, setName] = useState(initial?.name ?? '');
@@ -43,7 +40,6 @@ export function RoleForm({ initial, systemLocked = false, submitLabel, onSubmit,
 
   const treeReady = catalog.data?.tree ?? [];
   const isAll = permissionType === PermissionType.ALL;
-  const canSubmit = name.trim().length > 0 && !isSubmitting;
 
   const handleSubmit = () => {
     void onSubmit({
@@ -55,7 +51,14 @@ export function RoleForm({ initial, systemLocked = false, submitLabel, onSubmit,
   };
 
   return (
-    <div className="space-y-6">
+    <form
+      id={id}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+      className="space-y-6"
+    >
       {systemLocked ? (
         <div className="rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-sm text-warning">
           {t('edit.system-locked')}
@@ -127,6 +130,7 @@ export function RoleForm({ initial, systemLocked = false, submitLabel, onSubmit,
                   placeholder={t('create.name-placeholder')}
                   maxLength={60}
                   disabled={systemLocked}
+                  required
                   autoFocus
                 />
               </div>
@@ -145,13 +149,6 @@ export function RoleForm({ initial, systemLocked = false, submitLabel, onSubmit,
           </Card>
         </div>
       </div>
-
-      <div className="flex justify-end">
-        <Button onClick={handleSubmit} disabled={!canSubmit} className="gap-2">
-          {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-          {submitLabel}
-        </Button>
-      </div>
-    </div>
+    </form>
   );
 }

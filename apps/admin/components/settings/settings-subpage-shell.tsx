@@ -1,6 +1,5 @@
 'use client';
 
-import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { Button } from '@open-meet/ui/button';
@@ -10,6 +9,8 @@ interface Props {
   eyebrowKey?: string;
   titleKey: string;
   description?: string;
+  /** Header actions rendered top-right, before the Back button (e.g. a Save button). */
+  actions?: ReactNode;
   children: ReactNode;
 }
 
@@ -17,9 +18,11 @@ export function SettingsSubpageShell({
   eyebrowKey = 'eyebrow',
   titleKey,
   description,
+  actions,
   children,
 }: Props) {
   const t = useTranslations('configuration');
+  const tCommon = useTranslations('common');
 
   return (
     <main className="w-full space-y-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
@@ -29,22 +32,15 @@ export function SettingsSubpageShell({
             {t(eyebrowKey)}
           </p>
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t(titleKey)}</h1>
-          {description ? (
-            <p className="text-sm text-muted-foreground">{description}</p>
-          ) : null}
+          {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
         </header>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          asChild
-          className="w-fit gap-2 px-0 hover:bg-transparent"
-        >
-          <Link href="/settings">
-            <ArrowLeft className="h-4 w-4" />
-            {t('eyebrow')}
-          </Link>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          {actions}
+          <Button variant="outline" asChild>
+            <Link href="/settings">{tCommon('back')}</Link>
+          </Button>
+        </div>
       </div>
 
       {children}

@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
@@ -14,6 +14,7 @@ import { ApiClientError } from '@/lib/api/client';
 
 export function CreateUserRolePage() {
   const t = useTranslations('rbac');
+  const tCommon = useTranslations('common');
   const router = useRouter();
   const create = useCreateAdminUserRole();
 
@@ -26,17 +27,25 @@ export function CreateUserRolePage() {
           </p>
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('create.title')}</h1>
         </header>
-        <Button variant="ghost" size="sm" asChild className="w-fit gap-2 px-0 hover:bg-transparent">
-          <Link href="/user-roles">
-            <ArrowLeft className="h-4 w-4" />
-            {t('title.user-roles')}
-          </Link>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            type="submit"
+            form="user-role-form"
+            variant="accent"
+            disabled={create.isPending}
+            className="min-w-32 gap-2"
+          >
+            {create.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+            {t('create.submit')}
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/user-roles">{tCommon('back')}</Link>
+          </Button>
+        </div>
       </div>
 
       <UserRoleForm
-        submitLabel={t('create.submit')}
-        isSubmitting={create.isPending}
+        id="user-role-form"
         onSubmit={async (input) => {
           try {
             const role = await create.mutateAsync(input as CreateRoleDto);

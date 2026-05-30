@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
@@ -17,6 +17,7 @@ interface Props {
 
 export function UserRoleDetailPage({ roleId }: Props) {
   const t = useTranslations('rbac');
+  const tCommon = useTranslations('common');
   const { data: role, isLoading } = useAdminUserRole(roleId);
   const update = useUpdateAdminUserRole();
 
@@ -31,12 +32,23 @@ export function UserRoleDetailPage({ roleId }: Props) {
             {role?.name ?? t('edit.title')}
           </h1>
         </header>
-        <Button variant="ghost" size="sm" asChild className="w-fit gap-2 px-0 hover:bg-transparent">
-          <Link href="/user-roles">
-            <ArrowLeft className="h-4 w-4" />
-            {t('title.user-roles')}
-          </Link>
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          {role ? (
+            <Button
+              type="submit"
+              form="user-role-form"
+              variant="accent"
+              disabled={update.isPending}
+              className="min-w-32 gap-2"
+            >
+              {update.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+              {t('edit.submit')}
+            </Button>
+          ) : null}
+          <Button variant="outline" asChild>
+            <Link href="/user-roles">{tCommon('back')}</Link>
+          </Button>
+        </div>
       </div>
 
       {isLoading || !role ? (
@@ -46,10 +58,9 @@ export function UserRoleDetailPage({ roleId }: Props) {
         </div>
       ) : (
         <UserRoleForm
+          id="user-role-form"
           initial={role}
           systemLocked={role.isSystem}
-          submitLabel={t('edit.submit')}
-          isSubmitting={update.isPending}
           onSubmit={async (input) => {
             try {
               await update.mutateAsync({ id: role.id, body: input });

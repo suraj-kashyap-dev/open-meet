@@ -15,6 +15,7 @@ import { Label } from '@open-meet/ui/label';
 import { Switch } from '@open-meet/ui/switch';
 
 import { AccentPicker } from '@/components/branding/accent-picker';
+import { SettingsSubpageShell } from '@/components/settings/settings-subpage-shell';
 import {
   useAdminBranding,
   useRemoveBrandingLogo,
@@ -27,6 +28,7 @@ import { ApiClientError } from '@/lib/api/client';
 
 const LOGO_MIMES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
 const LOGO_MAX_BYTES = 2 * 1024 * 1024;
+const NAME_FORM_ID = 'branding-name-form';
 
 export function BrandingForm() {
   const t = useTranslations('branding');
@@ -128,16 +130,29 @@ export function BrandingForm() {
   const accentColor = data?.accentColor ?? 'indigo';
   const userCanCreateGroups = data?.userCanCreateGroups ?? false;
 
+  const saveAction = (
+    <Button
+      type="submit"
+      form={NAME_FORM_ID}
+      variant="accent"
+      disabled={updateName.isPending || isLoading}
+      className="min-w-32 gap-2"
+    >
+      {updateName.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+      {updateName.isPending ? t('form.saving') : t('form.save')}
+    </Button>
+  );
+
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('name.title')}</CardTitle>
-          <CardDescription>{t('name.description')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div className="space-y-1.5">
+    <SettingsSubpageShell titleKey="hub.cards.branding.title" actions={saveAction}>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('name.title')}</CardTitle>
+            <CardDescription>{t('name.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form id={NAME_FORM_ID} onSubmit={onSubmit} className="space-y-1.5">
               <Label htmlFor="appName">{t('name.label')}</Label>
               <Input
                 id="appName"
@@ -149,125 +164,114 @@ export function BrandingForm() {
               {form.formState.errors.appName ? (
                 <p className="text-xs text-destructive">{form.formState.errors.appName.message}</p>
               ) : null}
-            </div>
+            </form>
+          </CardContent>
+        </Card>
 
-            <Button type="submit" disabled={updateName.isPending || isLoading} className="gap-2">
-              {updateName.isPending ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  {t('form.saving')}
-                </>
-              ) : (
-                t('form.save')
-              )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('logo.title')}</CardTitle>
-          <CardDescription>{t('logo.description')}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted">
-              {logoUrl ? (
-                <img
-                  src={logoUrl}
-                  alt={t('logo.alt')}
-                  className="h-full w-full object-contain p-1.5"
-                />
-              ) : (
-                <ImageIcon className="h-6 w-6 text-muted-foreground" />
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => fileRef.current?.click()}
-                disabled={uploadLogo.isPending}
-                className="gap-2"
-              >
-                {uploadLogo.isPending ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {t('form.uploading')}
-                  </>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('logo.title')}</CardTitle>
+            <CardDescription>{t('logo.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-border bg-muted">
+                {logoUrl ? (
+                  <img
+                    src={logoUrl}
+                    alt={t('logo.alt')}
+                    className="h-full w-full object-contain p-1.5"
+                  />
                 ) : (
-                  <>
-                    <Upload className="h-4 w-4" />
-                    {logoUrl ? t('logo.replace') : t('logo.upload')}
-                  </>
+                  <ImageIcon className="h-6 w-6 text-muted-foreground" />
                 )}
-              </Button>
+              </div>
 
-              {logoUrl ? (
+              <div className="flex flex-wrap gap-2">
                 <Button
                   type="button"
-                  variant="ghost"
-                  onClick={onRemoveLogo}
-                  disabled={removeLogo.isPending}
-                  className="gap-2 text-destructive hover:text-destructive"
+                  variant="outline"
+                  onClick={() => fileRef.current?.click()}
+                  disabled={uploadLogo.isPending}
+                  className="gap-2"
                 >
-                  <Trash2 className="h-4 w-4" />
-                  {t('logo.remove')}
+                  {uploadLogo.isPending ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      {t('form.uploading')}
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-4 w-4" />
+                      {logoUrl ? t('logo.replace') : t('logo.upload')}
+                    </>
+                  )}
                 </Button>
-              ) : null}
+
+                {logoUrl ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    onClick={onRemoveLogo}
+                    disabled={removeLogo.isPending}
+                    className="gap-2 text-destructive hover:text-destructive"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    {t('logo.remove')}
+                  </Button>
+                ) : null}
+              </div>
+
+              <input
+                ref={fileRef}
+                type="file"
+                accept={LOGO_MIMES.join(',')}
+                className="hidden"
+                onChange={onLogoChange}
+              />
             </div>
 
-            <input
-              ref={fileRef}
-              type="file"
-              accept={LOGO_MIMES.join(',')}
-              className="hidden"
-              onChange={onLogoChange}
+            <p className="text-xs text-muted-foreground">{t('logo.hint')}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('accent.title')}</CardTitle>
+            <CardDescription>{t('accent.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <AccentPicker
+              value={accentColor}
+              onChange={onAccentChange}
+              disabled={isLoading || updateBranding.isPending}
             />
-          </div>
+          </CardContent>
+        </Card>
 
-          <p className="text-xs text-muted-foreground">{t('logo.hint')}</p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('accent.title')}</CardTitle>
-          <CardDescription>{t('accent.description')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <AccentPicker
-            value={accentColor}
-            onChange={onAccentChange}
-            disabled={isLoading || updateBranding.isPending}
-          />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('groups.title')}</CardTitle>
-          <CardDescription>{t('groups.description')}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between gap-4">
-            <div className="space-y-0.5">
-              <Label htmlFor="userCanCreateGroups" className="cursor-pointer">
-                {t('groups.label')}
-              </Label>
-              <p className="text-xs text-muted-foreground">{t('groups.hint')}</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('groups.title')}</CardTitle>
+            <CardDescription>{t('groups.description')}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between gap-4">
+              <div className="space-y-0.5">
+                <Label htmlFor="userCanCreateGroups" className="cursor-pointer">
+                  {t('groups.label')}
+                </Label>
+                <p className="text-xs text-muted-foreground">{t('groups.hint')}</p>
+              </div>
+              <Switch
+                id="userCanCreateGroups"
+                checked={userCanCreateGroups}
+                onCheckedChange={onGroupsToggle}
+                disabled={isLoading || groupsToggleBusy}
+              />
             </div>
-            <Switch
-              id="userCanCreateGroups"
-              checked={userCanCreateGroups}
-              onCheckedChange={onGroupsToggle}
-              disabled={isLoading || groupsToggleBusy}
-            />
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+    </SettingsSubpageShell>
   );
 }
