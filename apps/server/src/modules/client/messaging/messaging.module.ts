@@ -5,8 +5,6 @@ import { UploadsModule } from '../../uploads/uploads.module';
 import { WsJwtGuard } from '../chat/ws-jwt.guard';
 
 import { ActivityService } from './activity.service';
-import { ChannelsRepository } from './channels.repository';
-import { ChannelsService } from './channels.service';
 import { ChatBus } from './chat-bus.service';
 import { ChatPermissionsRepository } from './chat-permissions.repository';
 import { ChatPermissionsService } from './chat-permissions.service';
@@ -70,8 +68,6 @@ import { TeammatesService } from './teammates.service';
     PinsService,
     SavedRepository,
     SavedService,
-    ChannelsRepository,
-    ChannelsService,
     ActivityService,
     TeammatesRepository,
     TeammatesService,

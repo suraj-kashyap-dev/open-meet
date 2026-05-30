@@ -58,19 +58,20 @@ describe('AdminRolesService', () => {
       repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
         Promise.resolve(makeRole({ permissions: data.permissions })),
       );
-      const dto = { name: 'Mods', permissions: ['teams.channels'] };
+      const dto = { name: 'Mods', permissions: ['teams'] };
       const created = await service.create(dto);
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({
           permissions: [
-            'teams.channels.create',
-            'teams.channels.delete',
-            'teams.channels.update',
-            'teams.channels.view',
+            'teams.create',
+            'teams.delete',
+            'teams.manage-members',
+            'teams.update',
+            'teams.view',
           ],
         }),
       );
-      expect(created.permissions).toContain('teams.channels.create');
+      expect(created.permissions).toContain('teams.create');
     });
 
     it('should reject duplicate names', async () => {
@@ -109,13 +110,15 @@ describe('AdminRolesService', () => {
       ).rejects.toBeInstanceOf(ForbiddenException);
     });
 
-    it('should allow editing the Member system role permissions but reject name changes', async () => {
+    it('should fully edit the Member role since it is no longer a system role', async () => {
       repo.findWithMemberCount.mockResolvedValueOnce(
-        makeRole({ id: 'role_sys_member', isSystem: true, permissionType: 'CUSTOM' }),
+        makeRole({ id: 'role_sys_member', isSystem: false, permissionType: 'CUSTOM' }),
       );
+      repo.findByName.mockResolvedValueOnce(null);
+      repo.update.mockResolvedValueOnce(makeRole({ id: 'role_sys_member', name: 'Renamed' }));
       await expect(
         service.update('role_sys_member', { name: 'Renamed' }, null),
-      ).rejects.toBeInstanceOf(ForbiddenException);
+      ).resolves.toMatchObject({ name: 'Renamed' });
     });
 
     it('should bump the resolver cache after a successful update', async () => {

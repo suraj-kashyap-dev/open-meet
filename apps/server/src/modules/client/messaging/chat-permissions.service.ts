@@ -55,10 +55,10 @@ export class ChatPermissionsService {
       });
     }
 
-    if (!(await this.repo.shareTeam(actorId, targetId))) {
+    if (!(await this.repo.haveSharedSurface(actorId, targetId))) {
       throw new ForbiddenException({
         code: ApiErrorCode.NOT_TEAMMATES,
-        message: 'You can only message people on a shared team.',
+        message: 'You can only message people you share a team or group with.',
       });
     }
   }

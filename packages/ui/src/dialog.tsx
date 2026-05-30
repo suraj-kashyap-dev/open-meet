@@ -75,6 +75,7 @@ export const DialogOverlay = forwardRef<
     {...props}
   />
 ));
+
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 export const DialogContent = forwardRef<
@@ -83,19 +84,40 @@ export const DialogContent = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
+    {/*
+      The Content is the full-screen scroll container (Radix only allows scrolling
+      WITHIN Content, since it wraps Content in RemoveScroll). The window sits in
+      normal flow inside it, so the WHOLE modal scrolls as one — Filament-style —
+      instead of a center-pinned box with an inner scroll region.
+    */}
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed left-1/2 top-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto border border-border bg-card p-4 shadow-lg rounded-lg data-[state=open]:animate-content-show data-[state=closed]:animate-content-hide sm:p-6',
-        className,
+        'fixed inset-0 z-50 overflow-y-auto focus:outline-none',
+        'data-[state=open]:animate-content-show data-[state=closed]:animate-content-hide',
       )}
       {...props}
     >
-      {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
+      {/* Transparent full-screen backdrop: clicking outside the window closes it. */}
+      <DialogPrimitive.Close
+        aria-hidden="true"
+        tabIndex={-1}
+        className="fixed inset-0 cursor-default focus:outline-none"
+      />
+      <div className="pointer-events-none relative flex min-h-full items-center justify-center p-4 sm:p-6">
+        <div
+          className={cn(
+            'pointer-events-auto relative grid w-full max-w-lg gap-4 rounded-lg border border-border bg-card p-4 shadow-lg sm:p-6',
+            className,
+          )}
+        >
+          {children}
+          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        </div>
+      </div>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));

@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Grup silinsin mi?",
+    "description": "{name} silinecek ve her üyeden anında kaldırılacak. Bu işlem geri alınamaz.",
+    "cancel": "İptal",
+    "confirm": "Grubu sil",
+    "deleting": "Siliniyor…"
   }
 }

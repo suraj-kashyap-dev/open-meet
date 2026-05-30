@@ -9,14 +9,13 @@ export interface ParsedMention {
 // `@` and whose href is a bare userId: `[@Display Name](userId)`. The leading `@`
 // in the label distinguishes mentions from ordinary `[text](url)` links.
 const USER_MENTION = /\[@[^\]]+\]\(([a-zA-Z0-9_-]+)\)/g;
-// `@everyone` / `@channel` only when preceded by start/whitespace (so emails don't match).
+// `@everyone` only when preceded by start/whitespace (so emails don't match).
 const EVERYONE = /(^|\s)@everyone\b/i;
-const CHANNEL = /(^|\s)@channel\b/i;
 
 /**
  * Extracts the distinct mentions from a message body. User mentions are
- * de-duplicated and returned in first-seen order; `@everyone`/`@channel` append
- * a whole-room mention.
+ * de-duplicated and returned in first-seen order; `@everyone` appends a
+ * whole-room mention.
  */
 export function parseMentions(content: string): ParsedMention[] {
   const mentions: ParsedMention[] = [];
@@ -32,8 +31,6 @@ export function parseMentions(content: string): ParsedMention[] {
 
   if (EVERYONE.test(content)) {
     mentions.push({ kind: MentionKind.EVERYONE, userId: null });
-  } else if (CHANNEL.test(content)) {
-    mentions.push({ kind: MentionKind.CHANNEL, userId: null });
   }
 
   return mentions;

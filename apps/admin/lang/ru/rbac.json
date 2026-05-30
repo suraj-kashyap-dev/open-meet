@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "Разрешения",
+    "selected-count": "Выбрано {count} из {total}",
+    "select-all": "Выбрать все",
+    "clear": "Очистить",
+    "expand-all": "Развернуть все",
+    "collapse-all": "Свернуть все",
     "users": {
       "_self": "Пользователи",
       "view": "Просмотр пользователей",

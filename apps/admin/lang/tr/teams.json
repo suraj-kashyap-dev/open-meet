@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "Takım silinsin mi?",
+    "description": "{name} silinecek ve her üye anında erişimini kaybedecek. Bu geri alınamaz.",
+    "cancel": "İptal",
+    "confirm": "Takımı sil",
+    "deleting": "Siliniyor…"
   }
 }

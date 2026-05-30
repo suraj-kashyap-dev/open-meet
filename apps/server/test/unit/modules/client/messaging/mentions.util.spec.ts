@@ -39,11 +39,8 @@ describe('parseMentions()', () => {
     });
   });
 
-  it('should detect @channel', () => {
-    expect(parseMentions('@channel standup in 5')).toContainEqual({
-      kind: MentionKind.CHANNEL,
-      userId: null,
-    });
+  it('should not treat @channel as a mention', () => {
+    expect(parseMentions('@channel standup in 5')).toEqual([]);
   });
 
   it('should not treat an email-like @ as a mention', () => {

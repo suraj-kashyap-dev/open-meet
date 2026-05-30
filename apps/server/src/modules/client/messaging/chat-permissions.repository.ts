@@ -46,7 +46,7 @@ export class ChatPermissionsRepository {
     return count > 0;
   }
 
-  /** Whether two users share a conversation (DM, group, or channel). */
+  /** Whether two users share a conversation (DM or group). */
   async shareConversation(userAId: string, userBId: string): Promise<boolean> {
     const count = await this.prisma.conversationMember.count({
       where: {

@@ -25,6 +25,36 @@
     "next": "次へ",
     "page-of": "{pageCount} ページ中 {page} ページ目"
   },
+  "create-dialog": {
+    "button": "新しいユーザー",
+    "title": "ユーザーを作成",
+    "subtitle": "設定したパスワードで有効なアカウントを作成します。ユーザーはすぐにサインインできます。",
+    "name": "名前",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "password-helper": "8 文字以上。ユーザーには安全な方法で共有してください。",
+    "cancel": "キャンセル",
+    "submit": "ユーザーを作成",
+    "submitting": "作成中…",
+    "success": "{email} を作成しました",
+    "error": "ユーザーを作成できませんでした",
+    "validation": {
+      "name-required": "名前は必須です",
+      "invalid-email": "有効なメールアドレスを入力してください",
+      "password-too-short": "8 文字以上",
+      "password-too-long": "長すぎます"
+    }
+  },
+  "detail": {
+    "eyebrow": "ユーザーを編集",
+    "back": "ユーザー一覧に戻る",
+    "subtitle": "プロフィール、ローカライズ、自己紹介の更新、またはパスワードのリセット。",
+    "not-found-title": "ユーザーが見つかりません",
+    "not-found-description": "このユーザーは削除された可能性があります。",
+    "danger-title": "危険な操作",
+    "danger-description": "このユーザーと、そのユーザーが作成したすべてのものを完全に削除します。この操作は元に戻せません。",
+    "delete": "ユーザーを削除"
+  },
   "edit-dialog": {
     "title": "ユーザーを編集",
     "description": "プロフィール、ローカライズ、自己紹介の更新、またはパスワードのリセット。",

@@ -88,4 +88,31 @@ export class AdminRoleRepository {
       },
     });
   }
+
+  /**
+   * Seeds a built-in default role that is NOT a system role — it backs a fallback
+   * (e.g. the role assigned to admins invited without an explicit role) but stays
+   * fully editable and deletable. Created only if missing; on existing rows we just
+   * ensure `isSystem` is false so operator edits to name/description/permissions survive.
+   */
+  async ensureDefault(input: {
+    id: string;
+    name: string;
+    description: string;
+    permissionType: 'ALL' | 'CUSTOM';
+    defaultPermissions: readonly string[];
+  }): Promise<AdminRoleRecord> {
+    return this.prisma.adminRoleRecord.upsert({
+      where: { id: input.id },
+      create: {
+        id: input.id,
+        name: input.name,
+        description: input.description,
+        permissionType: input.permissionType,
+        permissions: [...input.defaultPermissions],
+        isSystem: false,
+      },
+      update: { isSystem: false },
+    });
+  }
 }

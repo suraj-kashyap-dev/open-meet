@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "Hapus tim?",
+    "description": "{name} akan dihapus dan setiap anggota akan kehilangan akses seketika. Ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "confirm": "Hapus tim",
+    "deleting": "Menghapus…"
   }
 }

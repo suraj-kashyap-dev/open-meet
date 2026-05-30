@@ -25,6 +25,36 @@
     "next": "Successivo",
     "page-of": "Pagina {page} di {pageCount}"
   },
+  "create-dialog": {
+    "button": "Nuovo utente",
+    "title": "Crea un utente",
+    "subtitle": "Crea un account attivo con una password impostata da te. L'utente può accedere subito.",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Password",
+    "password-helper": "Almeno 8 caratteri. Condividila in modo sicuro con l'utente.",
+    "cancel": "Annulla",
+    "submit": "Crea utente",
+    "submitting": "Creazione…",
+    "success": "{email} creato",
+    "error": "Impossibile creare l'utente",
+    "validation": {
+      "name-required": "Il nome è obbligatorio",
+      "invalid-email": "Inserisci un'email valida",
+      "password-too-short": "Almeno 8 caratteri",
+      "password-too-long": "Troppo lunga"
+    }
+  },
+  "detail": {
+    "eyebrow": "Modifica utente",
+    "back": "Torna agli utenti",
+    "subtitle": "Aggiorna profilo, localizzazione, biografia o reimposta la password.",
+    "not-found-title": "Utente non trovato",
+    "not-found-description": "Questo utente potrebbe essere stato eliminato.",
+    "danger-title": "Zona pericolosa",
+    "danger-description": "Elimina definitivamente questo utente e tutto ciò che ha creato. Questa azione non può essere annullata.",
+    "delete": "Elimina utente"
+  },
   "edit-dialog": {
     "title": "Modifica utente",
     "description": "Aggiorna profilo, localizzazione, biografia o reimposta la password.",

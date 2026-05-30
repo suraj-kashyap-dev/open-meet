@@ -25,6 +25,36 @@
     "next": "下一页",
     "page-of": "第 {page} 页，共 {pageCount} 页"
   },
+  "create-dialog": {
+    "button": "新建用户",
+    "title": "创建用户",
+    "subtitle": "使用您设置的密码创建一个已激活的账户。用户可以立即登录。",
+    "name": "姓名",
+    "email": "电子邮件",
+    "password": "密码",
+    "password-helper": "至少 8 个字符。请通过安全方式分享给用户。",
+    "cancel": "取消",
+    "submit": "创建用户",
+    "submitting": "正在创建…",
+    "success": "已创建 {email}",
+    "error": "无法创建用户",
+    "validation": {
+      "name-required": "姓名为必填项",
+      "invalid-email": "请输入有效的电子邮件",
+      "password-too-short": "至少 8 个字符",
+      "password-too-long": "过长"
+    }
+  },
+  "detail": {
+    "eyebrow": "编辑用户",
+    "back": "返回用户列表",
+    "subtitle": "更新个人资料、本地化设置、简介或重置密码。",
+    "not-found-title": "未找到用户",
+    "not-found-description": "该用户可能已被删除。",
+    "danger-title": "危险操作",
+    "danger-description": "永久删除该用户及其创建的所有内容。此操作无法撤销。",
+    "delete": "删除用户"
+  },
   "edit-dialog": {
     "title": "编辑用户",
     "description": "更新个人资料、本地化设置、简介或重置密码。",

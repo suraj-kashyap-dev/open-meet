@@ -47,7 +47,7 @@ test.describe('Admin teams page', () => {
     expect(request.postDataJSON()).toMatchObject({ name: 'Support' });
   });
 
-  test('should open the separate edit page for a team', async ({ page }) => {
+  test('should open the edit dialog for a team', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en/teams');
 
@@ -56,66 +56,31 @@ test.describe('Admin teams page', () => {
       .getByRole('button', { name: 'Manage members' })
       .click();
 
-    await expect(page).toHaveURL(/\/en\/teams\/t-1$/);
-    await expect(page.getByRole('heading', { name: 'Engineering', exact: true })).toBeVisible();
-
-    // Members loaded from the mocked GET /admin/teams/:id
-    await expect(page.getByText('Ada Lovelace')).toBeVisible();
-    await expect(page.getByText('alan@example.com')).toBeVisible();
-
-    // Channels section: list from mocked GET /admin/teams/:id/channels
-    await expect(page.getByText('Channels')).toBeVisible();
-    await expect(page.getByText('general', { exact: true })).toBeVisible();
-    await expect(page.getByText('releases', { exact: true })).toBeVisible();
-
-    // The general channel is non-deletable; the custom one exposes a delete control.
-    await expect(page.getByRole('button', { name: 'Delete channel' })).toBeVisible();
-
-    // Add-channel input is present.
-    await expect(page.getByPlaceholder('New channel name')).toBeVisible();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByRole('heading', { name: 'Engineering' })).toBeVisible();
+    // Name prefilled from the mocked GET /admin/teams/:id
+    await expect(dialog.getByLabel('Team name')).toHaveValue('Engineering');
   });
 
-  test('should create a channel via the channels endpoint', async ({ page }) => {
+  test('should ask for confirmation before deleting a team', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en/teams');
 
     await page
       .getByRole('row', { name: /Engineering/ })
-      .getByRole('button', { name: 'Manage members' })
+      .getByRole('button', { name: 'Delete team' })
       .click();
 
-    await expect(page).toHaveURL(/\/en\/teams\/t-1$/);
-    await page.getByPlaceholder('New channel name').fill('incidents');
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Delete team?')).toBeVisible();
 
     const [request] = await Promise.all([
       page.waitForRequest(
-        (req) => /\/admin\/teams\/[^/]+\/channels$/.test(req.url()) && req.method() === 'POST',
+        (req) => /\/admin\/teams\/t-1$/.test(req.url()) && req.method() === 'DELETE',
       ),
-      page.getByRole('button', { name: 'Add channel' }).click(),
+      dialog.getByRole('button', { name: 'Delete team' }).click(),
     ]);
 
-    expect(request.postDataJSON()).toMatchObject({ name: 'incidents' });
-  });
-
-  test('should delete a channel via the channels endpoint', async ({ page }) => {
-    await mockAdminApi(page);
-    await page.goto('/en/teams');
-
-    await page
-      .getByRole('row', { name: /Engineering/ })
-      .getByRole('button', { name: 'Manage members' })
-      .click();
-
-    await expect(page).toHaveURL(/\/en\/teams\/t-1$/);
-
-    const [request] = await Promise.all([
-      page.waitForRequest(
-        (req) =>
-          /\/admin\/teams\/[^/]+\/channels\/[^/]+$/.test(req.url()) && req.method() === 'DELETE',
-      ),
-      page.getByRole('button', { name: 'Delete channel' }).click(),
-    ]);
-
-    expect(request.url()).toContain('/admin/teams/t-1/channels/c-releases');
+    expect(request.url()).toContain('/admin/teams/t-1');
   });
 });

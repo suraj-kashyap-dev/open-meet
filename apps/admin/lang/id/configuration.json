@@ -7,6 +7,49 @@
     "title": "Konfigurasi sedang dalam proses",
     "description": "Default ruang kerja, merek, dan kebijakan rapat akan segera hadir di sini."
   },
+  "hub": {
+    "empty": "Anda belum memiliki akses ke pengaturan apa pun.",
+    "sections": {
+      "access": {
+        "title": "Akses",
+        "description": "Kelola siapa yang dapat masuk ke konsol dan apa saja yang dapat mereka lakukan."
+      },
+      "users": {
+        "title": "Pengguna",
+        "description": "Kelola pengguna akhir aplikasi dan peran yang ditetapkan untuk mereka."
+      },
+      "workspace": {
+        "title": "Ruang kerja",
+        "description": "Berikan identitas merek pada konsol dan konfigurasikan default ruang kerja."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Administrator",
+        "description": "Tambahkan, edit, atau hapus akun admin yang dapat masuk ke konsol."
+      },
+      "roles": {
+        "title": "Peran admin",
+        "description": "Tentukan izin yang diberikan oleh setiap peran admin."
+      },
+      "users": {
+        "title": "Pengguna",
+        "description": "Kelola akun pengguna akhir, undang pengguna baru, dan alihkan akses mereka."
+      },
+      "user-roles": {
+        "title": "Peran pengguna",
+        "description": "Tentukan izin yang diberikan oleh setiap peran pengguna di dalam aplikasi."
+      },
+      "branding": {
+        "title": "Branding",
+        "description": "Sesuaikan nama aplikasi, logo, dan warna aksen."
+      },
+      "configuration": {
+        "title": "Konfigurasi",
+        "description": "Default ruang kerja, kebijakan rapat, dan sakelar fitur."
+      }
+    }
+  },
   "form": {
     "title": "Default ruang kerja",
     "subtitle": "Default yang diterapkan ke rapat baru di seluruh ruang kerja.",

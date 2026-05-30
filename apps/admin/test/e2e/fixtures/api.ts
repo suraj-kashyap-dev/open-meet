@@ -25,7 +25,6 @@ export interface AdminApiMockOptions {
   inviteLookup?: typeof fixtures.inviteLookup | { errorStatus: number };
   teams?: typeof fixtures.teamsList;
   teamDetail?: typeof fixtures.teamDetail;
-  teamChannels?: typeof fixtures.teamChannels;
   groups?: typeof fixtures.groupsList;
   groupDetail?: typeof fixtures.groupDetail;
   userInvites?: typeof fixtures.userInvites;
@@ -48,7 +47,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
   const inviteLookup = options.inviteLookup ?? fixtures.inviteLookup;
   const teams = options.teams ?? fixtures.teamsList;
   const teamDetail = options.teamDetail ?? fixtures.teamDetail;
-  const teamChannels = options.teamChannels ?? fixtures.teamChannels;
   const groups = options.groups ?? fixtures.groupsList;
   const groupDetail = options.groupDetail ?? fixtures.groupDetail;
   const userInvites = options.userInvites ?? fixtures.userInvites;
@@ -148,10 +146,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
       }
 
-      // Team channels: /admin/teams/:id/channels
-      if (/^\/admin\/teams\/[^/]+\/channels$/.test(path)) {
-        return json(200, ok(teamChannels));
-      }
 
       // Team detail (members): /admin/teams/:id
       if (/^\/admin\/teams\/[^/]+$/.test(path)) {
@@ -161,6 +155,15 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       // Group detail (members): /admin/groups/:id
       if (/^\/admin\/groups\/[^/]+$/.test(path)) {
         return json(200, ok(groupDetail));
+      }
+
+      // User detail: /admin/users/:id (invites handled above)
+      const userMatch = /^\/admin\/users\/([^/]+)$/.exec(path);
+      if (userMatch) {
+        const found = users.items.find((u) => u.id === userMatch[1]) ?? users.items[0];
+        return found
+          ? json(200, ok(found))
+          : json(404, err('NOT_FOUND', 'User not found', 404));
       }
     }
 
@@ -173,6 +176,9 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       }
       if (path === '/admin/users/invite') {
         return json(200, ok(fixtures.userInvites.items[0]));
+      }
+      if (path === '/admin/users') {
+        return json(200, ok(users.items[0]));
       }
     }
 

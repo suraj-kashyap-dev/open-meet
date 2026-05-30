@@ -54,6 +54,77 @@ test.describe('Admin users page', () => {
     });
   });
 
+  test('should open the create form when New user is clicked', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    await page.getByRole('button', { name: 'New user' }).click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Create a user')).toBeVisible();
+    await expect(dialog.getByLabel('Name')).toBeVisible();
+    await expect(dialog.getByLabel('Email')).toBeVisible();
+    await expect(dialog.getByLabel('Password')).toBeVisible();
+  });
+
+  test('should submit a new user to the create endpoint', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    await page.getByRole('button', { name: 'New user' }).click();
+
+    const dialog = page.getByRole('dialog');
+    await dialog.getByLabel('Name').fill('Grace Hopper');
+    await dialog.getByLabel('Email').fill('grace@example.com');
+    await dialog.getByLabel('Password').fill('supersecret');
+
+    const [request] = await Promise.all([
+      page.waitForRequest(
+        (req) =>
+          req.url().endsWith('/admin/users') && req.method() === 'POST',
+      ),
+      dialog.getByRole('button', { name: 'Create user' }).click(),
+    ]);
+
+    expect(request.postDataJSON()).toMatchObject({
+      name: 'Grace Hopper',
+      email: 'grace@example.com',
+      password: 'supersecret',
+    });
+  });
+
+  test('should navigate to the edit page when Edit is clicked', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users');
+
+    await page
+      .getByRole('row', { name: /Ada Lovelace/ })
+      .getByRole('link', { name: 'Edit' })
+      .click();
+
+    await expect(page).toHaveURL(/\/en\/users\/u-1$/);
+    await expect(page.getByRole('heading', { name: 'Ada Lovelace' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Save changes' })).toBeVisible();
+  });
+
+  test('should save profile changes from the edit page via PATCH', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/users/u-1');
+
+    const name = page.getByLabel('Name');
+    await expect(name).toHaveValue('Ada Lovelace');
+    await name.fill('Ada L.');
+
+    const [request] = await Promise.all([
+      page.waitForRequest(
+        (req) => req.url().includes('/admin/users/u-1') && req.method() === 'PATCH',
+      ),
+      page.getByRole('button', { name: 'Save changes' }).click(),
+    ]);
+
+    expect(request.postDataJSON()).toMatchObject({ name: 'Ada L.' });
+  });
+
   test('should list pending invitations', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en/users');

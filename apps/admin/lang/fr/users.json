@@ -25,6 +25,36 @@
     "next": "Suivant",
     "page-of": "Page {page} sur {pageCount}"
   },
+  "create-dialog": {
+    "button": "Nouvel utilisateur",
+    "title": "Créer un utilisateur",
+    "subtitle": "Créez un compte actif avec un mot de passe que vous définissez. L'utilisateur peut se connecter immédiatement.",
+    "name": "Nom",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "password-helper": "Au moins 8 caractères. Communiquez-le à l'utilisateur de manière sécurisée.",
+    "cancel": "Annuler",
+    "submit": "Créer l'utilisateur",
+    "submitting": "Création…",
+    "success": "{email} créé",
+    "error": "Impossible de créer l'utilisateur",
+    "validation": {
+      "name-required": "Le nom est requis",
+      "invalid-email": "Saisissez un e-mail valide",
+      "password-too-short": "Au moins 8 caractères",
+      "password-too-long": "Trop long"
+    }
+  },
+  "detail": {
+    "eyebrow": "Modifier l'utilisateur",
+    "back": "Retour aux utilisateurs",
+    "subtitle": "Mettez à jour le profil, la localisation, la biographie ou réinitialisez le mot de passe.",
+    "not-found-title": "Utilisateur introuvable",
+    "not-found-description": "Cet utilisateur a peut-être été supprimé.",
+    "danger-title": "Zone de danger",
+    "danger-description": "Supprimez définitivement cet utilisateur et tout ce qu'il a créé. Cette action est irréversible.",
+    "delete": "Supprimer l'utilisateur"
+  },
   "edit-dialog": {
     "title": "Modifier l'utilisateur",
     "description": "Mettez à jour le profil, la localisation, la biographie ou réinitialisez le mot de passe.",

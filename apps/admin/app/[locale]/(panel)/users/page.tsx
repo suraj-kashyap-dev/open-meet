@@ -1,21 +1,22 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { ChevronLeft, ChevronRight, Pencil, Search, Trash2, UserPlus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Mail, Pencil, Search, Trash2, UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 import type { AdminUserDto } from '@open-meet/types';
 
 import { DataTable } from '@open-meet/ui/data-table';
+import { CreateUserDialog } from '@/features/users/components/create-user-dialog';
 import { DeleteUserDialog } from '@/features/users/components/delete-user-dialog';
-import { EditUserDialog } from '@/features/users/components/edit-user-dialog';
 import { InviteUserDialog } from '@/features/users/components/invite-user-dialog';
 import { PendingUserInvites } from '@/features/users/components/pending-user-invites';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
 import { Switch } from '@open-meet/ui/switch';
+import { Link } from '@/i18n/navigation';
 import { useAdminUsers, useUpdateAdminUser } from '@/features/users/hooks/use-admin-users';
 
 const PAGE_SIZE = 20;
@@ -34,9 +35,9 @@ export default function AdminUsersPage() {
   const t = useTranslations('users');
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  const [editing, setEditing] = useState<AdminUserDto | null>(null);
   const [deleting, setDeleting] = useState<AdminUserDto | null>(null);
   const [inviteOpen, setInviteOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
 
   const query = { page, pageSize: PAGE_SIZE, search: search.trim() || undefined };
   const { data, isLoading, isFetching } = useAdminUsers(query);
@@ -86,14 +87,11 @@ export default function AdminUsersPage() {
         header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
           <div className="flex items-center justify-end gap-1">
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => setEditing(row.original)}
-              aria-label={t('table.edit')}
-            >
-              <Pencil className="h-4 w-4" />
-              <span className="hidden sm:inline">{t('table.edit')}</span>
+            <Button size="sm" variant="ghost" asChild aria-label={t('table.edit')}>
+              <Link href={`/users/${row.original.id}`}>
+                <Pencil className="h-4 w-4" />
+                <span className="hidden sm:inline">{t('table.edit')}</span>
+              </Link>
             </Button>
             <Button
               size="sm"
@@ -129,9 +127,13 @@ export default function AdminUsersPage() {
             <span className="text-sm text-muted-foreground">
               {t('total-count', { count: total })}
             </span>
-            <Button onClick={() => setInviteOpen(true)} className="gap-2">
-              <UserPlus className="h-4 w-4" />
+            <Button variant="outline" onClick={() => setInviteOpen(true)} className="gap-2">
+              <Mail className="h-4 w-4" />
               {t('invite.button')}
+            </Button>
+            <Button onClick={() => setCreateOpen(true)} className="gap-2">
+              <UserPlus className="h-4 w-4" />
+              {t('create-dialog.button')}
             </Button>
           </div>
         </div>
@@ -197,9 +199,9 @@ export default function AdminUsersPage() {
         <PendingUserInvites />
       </section>
 
-      <EditUserDialog user={editing} onClose={() => setEditing(null)} />
       <DeleteUserDialog user={deleting} onClose={() => setDeleting(null)} />
       <InviteUserDialog open={inviteOpen} onOpenChange={setInviteOpen} />
+      <CreateUserDialog open={createOpen} onOpenChange={setCreateOpen} />
     </main>
   );
 }

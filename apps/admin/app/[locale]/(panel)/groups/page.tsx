@@ -3,35 +3,64 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 import type { AdminGroupDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
 import { DataTable } from '@open-meet/ui/data-table';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@open-meet/ui/dialog';
 
+import { CreateGroupDialog } from '@/features/groups/components/create-group-dialog';
+import { EditGroupDialog } from '@/features/groups/components/edit-group-dialog';
 import { useAdminGroups, useDeleteGroup } from '@/features/groups/hooks/use-admin-groups';
-import { Link, useRouter } from '@/i18n/navigation';
+import { ApiClientError } from '@/lib/api/client';
 
 const column = createColumnHelper<AdminGroupDto>();
 
 export default function AdminGroupsPage() {
   const t = useTranslations('groups');
-  const router = useRouter();
   const { data, isLoading } = useAdminGroups();
   const del = useDeleteGroup();
+
+  const [createOpen, setCreateOpen] = useState(false);
+  const [editing, setEditing] = useState<AdminGroupDto | null>(null);
+  const [deleting, setDeleting] = useState<AdminGroupDto | null>(null);
+
+  const onConfirmDelete = async () => {
+    if (!deleting) {
+      return;
+    }
+
+    try {
+      await del.mutateAsync(deleting.id);
+      toast.success(t('detail.delete-success'));
+      setDeleting(null);
+    } catch (err) {
+      toast.error(err instanceof ApiClientError ? err.message : t('detail.delete-error'));
+    }
+  };
 
   const columns = useMemo(
     () => [
       column.accessor('title', {
         header: t('columns.name'),
         cell: ({ row }) => (
-          <Link
-            href={`/groups/${row.original.id}`}
+          <button
+            type="button"
+            onClick={() => setEditing(row.original)}
             className="font-medium text-foreground transition-colors hover:text-foreground/70"
           >
             {row.original.title}
-          </Link>
+          </button>
         ),
       }),
       column.accessor('memberCount', {
@@ -40,32 +69,33 @@ export default function AdminGroupsPage() {
       }),
       column.display({
         id: 'actions',
-        header: '',
+        header: () => <span className="sr-only">{t('actions.manage')}</span>,
         cell: ({ row }) => (
-          <div className="flex justify-end gap-1">
+          <div className="flex items-center justify-end gap-1">
             <Button
+              size="sm"
               variant="ghost"
-              size="icon"
               aria-label={t('actions.manage')}
-              onClick={() => router.push(`/groups/${row.original.id}`)}
+              onClick={() => setEditing(row.original)}
             >
               <Pencil className="h-4 w-4" />
+              <span className="hidden sm:inline">{t('actions.manage')}</span>
             </Button>
             <Button
+              size="sm"
               variant="ghost"
-              size="icon"
-              className="text-destructive hover:bg-destructive/10"
+              className="text-destructive hover:text-destructive"
               aria-label={t('actions.delete')}
-              disabled={del.isPending}
-              onClick={() => del.mutate(row.original.id)}
+              onClick={() => setDeleting(row.original)}
             >
               <Trash2 className="h-4 w-4" />
+              <span className="hidden sm:inline">{t('actions.delete')}</span>
             </Button>
           </div>
         ),
       }),
     ],
-    [t, del, router],
+    [t],
   );
 
   return (
@@ -76,7 +106,7 @@ export default function AdminGroupsPage() {
         </p>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
-          <Button onClick={() => router.push('/groups/new')} className="gap-2">
+          <Button onClick={() => setCreateOpen(true)} className="gap-2">
             <Plus className="h-4 w-4" />
             {t('create.button')}
           </Button>
@@ -92,6 +122,29 @@ export default function AdminGroupsPage() {
           emptyMessage={t('empty')}
         />
       </section>
+
+      <CreateGroupDialog open={createOpen} onOpenChange={setCreateOpen} />
+      <EditGroupDialog group={editing} onClose={() => setEditing(null)} />
+
+      <Dialog open={Boolean(deleting)} onOpenChange={(o) => (!o && !del.isPending ? setDeleting(null) : undefined)}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>{t('delete-dialog.title')}</DialogTitle>
+            <DialogDescription>
+              {t('delete-dialog.description', { name: deleting?.title ?? '' })}
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleting(null)} disabled={del.isPending}>
+              {t('delete-dialog.cancel')}
+            </Button>
+            <Button variant="destructive" onClick={() => void onConfirmDelete()} disabled={del.isPending}>
+              {del.isPending ? t('delete-dialog.deleting') : t('delete-dialog.confirm')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

@@ -19,19 +19,19 @@ export function CreateUserRolePage() {
 
   return (
     <main className="w-full space-y-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-      <div className="space-y-4">
-        <Button variant="ghost" size="sm" asChild className="w-fit gap-2 px-0 hover:bg-transparent">
-          <Link href="/user-roles">
-            <ArrowLeft className="h-4 w-4" />
-            {t('title.user-roles')}
-          </Link>
-        </Button>
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <header className="space-y-1">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
             {t('eyebrow')}
           </p>
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('create.title')}</h1>
         </header>
+        <Button variant="ghost" size="sm" asChild className="w-fit gap-2 px-0 hover:bg-transparent">
+          <Link href="/user-roles">
+            <ArrowLeft className="h-4 w-4" />
+            {t('title.user-roles')}
+          </Link>
+        </Button>
       </div>
 
       <UserRoleForm

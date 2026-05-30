@@ -61,9 +61,15 @@
   },
   "permissions": {
     "tree-heading": "Permissions",
+    "selected-count": "{count} of {total} selected",
+    "select-all": "Select all",
+    "clear": "Clear",
+    "expand-all": "Expand all",
+    "collapse-all": "Collapse all",
     "users": {
       "_self": "Users",
       "view": "View users",
+      "create": "Create users directly",
       "invite": "Invite users",
       "update": "Edit users",
       "delete": "Delete users",

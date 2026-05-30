@@ -20,7 +20,6 @@ import {
 
 import { AdminPermissionResolver } from './admin-permission-resolver.service';
 import { AdminRoleRepository } from './admin-role.repository';
-import { SYSTEM_ADMIN_ROLE_ID } from './admin-rbac-seed.service';
 import type { CreateRoleBodyDto, UpdateRoleBodyDto } from './dto/role.dto';
 
 const SELF_LOCKOUT_GUARDED_KEYS = ['roles.view', 'roles.update', 'admin-accounts.update'] as const;
@@ -74,14 +73,8 @@ export class AdminRolesService {
   ): Promise<RoleDto> {
     const existing = await this.roles.findWithMemberCount(id);
     if (!existing) throw this.notFound();
-    if (existing.isSystem) {
-      // System role rules:
-      //   - Administrator is fully immutable.
-      //   - Member may have its `permissions` and `description` tweaked, but not its
-      //     name or permissionType.
-      if (id === SYSTEM_ADMIN_ROLE_ID) throw this.systemLocked();
-      if (dto.name !== undefined || dto.permissionType !== undefined) throw this.systemLocked();
-    }
+    // Administrator is the only system admin role and is fully immutable.
+    if (existing.isSystem) throw this.systemLocked();
 
     const data: Parameters<AdminRoleRepository['update']>[1] = {};
     if (dto.name !== undefined) {

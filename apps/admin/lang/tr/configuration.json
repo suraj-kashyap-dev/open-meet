@@ -7,6 +7,49 @@
     "title": "Yapılandırma geliyor",
     "description": "Çalışma alanı varsayılanları, marka ve toplantı politikaları yakında burada olacak."
   },
+  "hub": {
+    "empty": "Henüz herhangi bir ayara erişiminiz yok.",
+    "sections": {
+      "access": {
+        "title": "Erişim",
+        "description": "Konsola kimlerin oturum açabileceğini ve neler yapabileceğini yönetin."
+      },
+      "users": {
+        "title": "Kullanıcılar",
+        "description": "Uygulamanın son kullanıcılarını ve onlara atanan rolleri yönetin."
+      },
+      "workspace": {
+        "title": "Çalışma alanı",
+        "description": "Konsolun markasını oluşturun ve çalışma alanı varsayılanlarını yapılandırın."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Yöneticiler",
+        "description": "Konsola oturum açabilen yönetici hesaplarını ekleyin, düzenleyin veya kaldırın."
+      },
+      "roles": {
+        "title": "Yönetici rolleri",
+        "description": "Her yönetici rolünün verdiği izinleri tanımlayın."
+      },
+      "users": {
+        "title": "Kullanıcılar",
+        "description": "Son kullanıcı hesaplarını yönetin, yeni kullanıcılar davet edin ve erişimlerini değiştirin."
+      },
+      "user-roles": {
+        "title": "Kullanıcı rolleri",
+        "description": "Uygulama içinde her kullanıcı rolünün verdiği izinleri tanımlayın."
+      },
+      "branding": {
+        "title": "Marka",
+        "description": "Uygulama adını, logoyu ve vurgu rengini özelleştirin."
+      },
+      "configuration": {
+        "title": "Yapılandırma",
+        "description": "Çalışma alanı varsayılanları, toplantı politikaları ve özellik anahtarları."
+      }
+    }
+  },
   "form": {
     "title": "Çalışma alanı varsayılanları",
     "subtitle": "Çalışma alanı genelinde yeni toplantılara uygulanan varsayılanlar.",

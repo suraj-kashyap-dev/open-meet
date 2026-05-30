@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { type Prisma, type User } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
+import { SYSTEM_USER_MEMBER_ROLE_ID } from '../../client/rbac/user-rbac-seed.service';
 
 export type UserWithCounts = User & {
   _count: {
@@ -45,6 +46,23 @@ export class AdminUsersRepository {
 
   count(search?: string): Promise<number> {
     return this.prisma.user.count({ where: this.whereFromSearch(search) });
+  }
+
+  emailTaken(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+  }
+
+  create(data: { name: string; email: string; passwordHash: string }): Promise<UserWithCounts> {
+    return this.prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email.toLowerCase(),
+        passwordHash: data.passwordHash,
+        emailVerifiedAt: new Date(),
+        roleRecordId: SYSTEM_USER_MEMBER_ROLE_ID,
+      },
+      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+    });
   }
 
   findById(id: string): Promise<UserWithCounts | null> {

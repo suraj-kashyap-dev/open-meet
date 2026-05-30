@@ -1,6 +1,6 @@
 'use client';
 
-import { AtSign, Bookmark, MessageSquare, Search, Users, Video } from 'lucide-react';
+import { AtSign, Bookmark, MessageSquare, Search, Video } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 

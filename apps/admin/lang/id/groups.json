@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Hapus grup?",
+    "description": "{name} akan dihapus dan dihilangkan untuk setiap anggota dengan segera. Ini tidak dapat dibatalkan.",
+    "cancel": "Batal",
+    "confirm": "Hapus grup",
+    "deleting": "Menghapus…"
   }
 }

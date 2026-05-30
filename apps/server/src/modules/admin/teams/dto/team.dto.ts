@@ -30,28 +30,3 @@ export class AddTeamMembersBodyDto {
   @IsString({ each: true })
   userIds!: string[];
 }
-
-export class CreateChannelBodyDto {
-  @IsString()
-  @MinLength(1)
-  @MaxLength(120)
-  name!: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(500)
-  description?: string | null;
-}
-
-export class UpdateChannelBodyDto {
-  @IsOptional()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(120)
-  name?: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(500)
-  description?: string | null;
-}

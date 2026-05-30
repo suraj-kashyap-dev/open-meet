@@ -4,6 +4,7 @@ import { flattenLeaves } from './shared';
 export const PERMISSION_TREE_ADMIN = {
   users: {
     view: null,
+    create: null,
     invite: null,
     update: null,
     delete: null,
@@ -22,12 +23,6 @@ export const PERMISSION_TREE_ADMIN = {
     update: null,
     delete: null,
     'manage-members': null,
-    channels: {
-      view: null,
-      create: null,
-      update: null,
-      delete: null,
-    },
   },
   groups: {
     view: null,

@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "删除群组？",
+    "description": "{name} 将被删除并立即从每位成员处移除。此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "删除群组",
+    "deleting": "正在删除…"
   }
 }

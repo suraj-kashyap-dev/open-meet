@@ -25,6 +25,36 @@
     "next": "Berikutnya",
     "page-of": "Halaman {page} dari {pageCount}"
   },
+  "create-dialog": {
+    "button": "Pengguna baru",
+    "title": "Buat pengguna",
+    "subtitle": "Buat akun aktif dengan kata sandi yang Anda tetapkan. Pengguna dapat langsung masuk.",
+    "name": "Nama",
+    "email": "Email",
+    "password": "Kata sandi",
+    "password-helper": "Minimal 8 karakter. Bagikan dengan aman kepada pengguna.",
+    "cancel": "Batal",
+    "submit": "Buat pengguna",
+    "submitting": "Membuat…",
+    "success": "{email} dibuat",
+    "error": "Tidak dapat membuat pengguna",
+    "validation": {
+      "name-required": "Nama diperlukan",
+      "invalid-email": "Masukkan email yang valid",
+      "password-too-short": "Minimal 8 karakter",
+      "password-too-long": "Terlalu panjang"
+    }
+  },
+  "detail": {
+    "eyebrow": "Edit pengguna",
+    "back": "Kembali ke pengguna",
+    "subtitle": "Perbarui profil, lokalisasi, bio, atau atur ulang kata sandi.",
+    "not-found-title": "Pengguna tidak ditemukan",
+    "not-found-description": "Pengguna ini mungkin telah dihapus.",
+    "danger-title": "Zona berbahaya",
+    "danger-description": "Hapus pengguna ini secara permanen beserta semua yang mereka buat. Ini tidak dapat dibatalkan.",
+    "delete": "Hapus pengguna"
+  },
   "edit-dialog": {
     "title": "Edit pengguna",
     "description": "Perbarui profil, lokalisasi, bio, atau atur ulang kata sandi.",

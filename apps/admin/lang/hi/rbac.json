@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "अनुमतियाँ",
+    "selected-count": "{total} में से {count} चयनित",
+    "select-all": "सभी चुनें",
+    "clear": "साफ़ करें",
+    "expand-all": "सभी विस्तृत करें",
+    "collapse-all": "सभी संक्षिप्त करें",
     "users": {
       "_self": "उपयोगकर्ता",
       "view": "उपयोगकर्ता देखें",

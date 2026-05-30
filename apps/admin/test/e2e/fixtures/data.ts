@@ -1,7 +1,6 @@
 import type {
   AdminAccountListResponseDto,
   AdminBrandingDto,
-  AdminChannelListResponseDto,
   AdminDeepAnalyticsDto,
   AdminDto,
   AdminGroupDetailDto,
@@ -48,7 +47,7 @@ export const currentAdmin: AdminDto = {
   id: 'admin-root',
   email: 'root@admin.test',
   name: 'Root Admin',
-  role: 'SUPERADMIN',
+  role: { id: 'role_sys_admin', name: 'Administrator', permissionType: 'ALL' },
   avatar: null,
   createdAt: '2026-01-02T09:00:00.000Z',
   lastLoginAt: '2026-05-20T08:30:00.000Z',
@@ -162,7 +161,7 @@ export const accounts: AdminAccountListResponseDto = {
       id: 'a-1',
       email: 'ada@example.com',
       name: 'Ada Lovelace',
-      role: 'SUPERADMIN',
+      role: { id: 'role_sys_admin', name: 'Administrator', permissionType: 'ALL' },
       avatar: null,
       createdAt: '2026-01-05T09:00:00.000Z',
       lastLoginAt: '2026-05-19T18:00:00.000Z',
@@ -171,7 +170,7 @@ export const accounts: AdminAccountListResponseDto = {
       id: 'a-2',
       email: 'bob@example.com',
       name: 'Bob Admin',
-      role: 'ADMIN',
+      role: { id: 'role_sys_member', name: 'Member', permissionType: 'CUSTOM' },
       avatar: null,
       createdAt: '2026-02-15T09:00:00.000Z',
       lastLoginAt: null,
@@ -197,7 +196,7 @@ export const configuration: WorkspaceConfigDto = {
 export const inviteLookup: AdminInviteLookupDto = {
   email: 'invitee@example.com',
   name: 'New Admin',
-  role: 'ADMIN',
+  role: { id: 'role_sys_member', name: 'Member', permissionType: 'CUSTOM' },
   expiresAt: '2026-06-01T00:00:00.000Z',
 };
 
@@ -227,27 +226,6 @@ export const teamDetail: AdminTeamDetailDto = {
       email: 'alan@example.com',
       avatar: null,
       joinedAt: '2026-02-02T09:05:00.000Z',
-    },
-  ],
-};
-
-export const teamChannels: AdminChannelListResponseDto = {
-  items: [
-    {
-      id: 'c-general',
-      name: 'general',
-      description: null,
-      isGeneral: true,
-      memberCount: 2,
-      createdAt: '2026-02-01T09:00:00.000Z',
-    },
-    {
-      id: 'c-releases',
-      name: 'releases',
-      description: 'Ship notes',
-      isGeneral: false,
-      memberCount: 2,
-      createdAt: '2026-02-03T09:00:00.000Z',
     },
   ],
 };

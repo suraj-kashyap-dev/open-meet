@@ -7,6 +7,49 @@
     "title": "Configuration is on the way",
     "description": "Workspace defaults, branding, and meeting policies will live here soon."
   },
+  "hub": {
+    "empty": "You don't have access to any settings yet.",
+    "sections": {
+      "access": {
+        "title": "Access",
+        "description": "Manage who can sign in to the console and what they can do."
+      },
+      "users": {
+        "title": "Users",
+        "description": "Manage end-users of the app and the roles assigned to them."
+      },
+      "workspace": {
+        "title": "Workspace",
+        "description": "Brand the console and configure workspace defaults."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Administrators",
+        "description": "Add, edit, or remove admin accounts who can sign in to the console."
+      },
+      "roles": {
+        "title": "Admin roles",
+        "description": "Define the permissions each admin role grants."
+      },
+      "users": {
+        "title": "Users",
+        "description": "Manage end-user accounts, invite new users, and toggle their access."
+      },
+      "user-roles": {
+        "title": "User roles",
+        "description": "Define the permissions each user role grants inside the app."
+      },
+      "branding": {
+        "title": "Branding",
+        "description": "Customise the app name, logo, and accent colour."
+      },
+      "configuration": {
+        "title": "Configuration",
+        "description": "Workspace defaults, meeting policies, and feature toggles."
+      }
+    }
+  },
   "form": {
     "title": "Workspace defaults",
     "subtitle": "Defaults applied to new meetings across the workspace.",
@@ -19,7 +62,7 @@
     "max-duration-label": "Maximum meeting duration (minutes)",
     "max-duration-placeholder": "No limit",
     "max-duration-help": "Leave empty for no limit. Between 5 and 1440 minutes.",
-    "duration-range": "Enter a number between 5 and 1440, or leave empty.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Save changes",
     "saving": "Saving…",
     "saved": "Configuration saved",

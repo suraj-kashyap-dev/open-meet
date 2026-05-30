@@ -54,11 +54,7 @@ export function useAddTeamMembers() {
   return useMutation({
     mutationFn: (input: { id: string; userIds: string[] }) =>
       adminTeamsApi.addMembers(input.id, { userIds: input.userIds }),
-    onSuccess: (_res, { id }) =>
-      Promise.all([
-        qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
-        qc.invalidateQueries({ queryKey: [CHANNELS_KEY, id] }),
-      ]),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
   });
 }
 
@@ -67,11 +63,7 @@ export function useRemoveTeamMember() {
   return useMutation({
     mutationFn: (input: { id: string; userId: string }) =>
       adminTeamsApi.removeMember(input.id, input.userId),
-    onSuccess: (_res, { id }) =>
-      Promise.all([
-        qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
-        qc.invalidateQueries({ queryKey: [CHANNELS_KEY, id] }),
-      ]),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
   });
 }
 
@@ -93,43 +85,6 @@ export function useSyncTeamMembers() {
 
       await Promise.all(toRemove.map((userId) => adminTeamsApi.removeMember(input.id, userId)));
     },
-    onSuccess: (_res, { id }) =>
-      Promise.all([
-        qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
-        qc.invalidateQueries({ queryKey: [CHANNELS_KEY, id] }),
-      ]),
-  });
-}
-
-const CHANNELS_KEY = 'admin-team-channels' as const;
-
-export function useTeamChannels(teamId: string | null) {
-  return useQuery({
-    queryKey: [CHANNELS_KEY, teamId],
-    queryFn: ({ signal }) => adminTeamsApi.listChannels(teamId as string, signal),
-    enabled: Boolean(teamId),
-  });
-}
-
-export function useCreateChannel() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (input: { teamId: string; name: string; description?: string }) =>
-      adminTeamsApi.createChannel(input.teamId, {
-        name: input.name,
-        description: input.description ?? null,
-      }),
-    onSuccess: (_res, { teamId }) =>
-      void qc.invalidateQueries({ queryKey: [CHANNELS_KEY, teamId] }),
-  });
-}
-
-export function useDeleteChannel() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: (input: { teamId: string; channelId: string }) =>
-      adminTeamsApi.deleteChannel(input.teamId, input.channelId),
-    onSuccess: (_res, { teamId }) =>
-      void qc.invalidateQueries({ queryKey: [CHANNELS_KEY, teamId] }),
+    onSuccess: () => void qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
   });
 }

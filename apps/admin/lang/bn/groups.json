@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "গ্রুপ মুছবেন?",
+    "description": "{name} মুছে ফেলা হবে এবং প্রতিটি সদস্যের জন্য সঙ্গে সঙ্গে সরিয়ে দেওয়া হবে। এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+    "cancel": "বাতিল",
+    "confirm": "গ্রুপ মুছুন",
+    "deleting": "মুছে ফেলা হচ্ছে…"
   }
 }

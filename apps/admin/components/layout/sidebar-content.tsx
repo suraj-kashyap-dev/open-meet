@@ -13,7 +13,7 @@ import { env } from '@/lib/env';
 import { useBranding } from '@/components/branding/provider';
 import { useCurrentAdminMe } from '@/features/auth/hooks/use-admin-auth';
 
-import { nav, isActive, type NavItem, type NavSection } from './nav-config';
+import { nav, isActive, isItemActive, type NavItem, type NavSection } from './nav-config';
 
 interface Props {
   onNavigate?: () => void;
@@ -84,7 +84,7 @@ export function SidebarContent({ onNavigate, collapsed = false }: Props) {
               <ul className="space-y-1">
                 {section.items.map((item) => {
                   const Icon = item.icon;
-                  const active = isActive(pathname, item.href);
+                  const active = isItemActive(pathname, item);
                   const hasChildren = Boolean(item.children?.length);
                   const label = t(item.labelKey);
 

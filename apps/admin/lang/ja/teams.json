@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "チームを削除しますか？",
+    "description": "{name} を削除すると、すべてのメンバーがただちにアクセスできなくなります。この操作は取り消せません。",
+    "cancel": "キャンセル",
+    "confirm": "チームを削除",
+    "deleting": "削除中…"
   }
 }

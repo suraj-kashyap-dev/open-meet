@@ -82,9 +82,7 @@ export class MessagingSerializer {
       reactions: this.reactions(m.reactions, viewerId),
       poll: m.poll ? this.poll(m.poll, viewerId) : null,
       mentionedUserIds: userMentions.map((mention) => mention.mentionedUserId as string),
-      mentionsEveryone: m.mentions.some(
-        (mention) => mention.kind === MentionKind.EVERYONE || mention.kind === MentionKind.CHANNEL,
-      ),
+      mentionsEveryone: m.mentions.some((mention) => mention.kind === MentionKind.EVERYONE),
       pinned: flags?.pinnedMessageIds?.has(m.id) ?? false,
       saved: flags?.savedMessageIds?.has(m.id) ?? false,
       editedAt: m.editedAt?.toISOString() ?? null,
@@ -161,7 +159,6 @@ export class MessagingSerializer {
       type: c.type as ConversationType,
       title: c.title,
       description: c.description,
-      teamId: c.teamId,
       members,
       lastMessage: opts.lastMessage ? this.message(opts.lastMessage, opts.viewerId) : null,
       lastMessageAt: c.lastMessageAt?.toISOString() ?? null,

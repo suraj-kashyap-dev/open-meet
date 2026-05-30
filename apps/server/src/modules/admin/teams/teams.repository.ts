@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConversationType, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
@@ -66,34 +66,5 @@ export class AdminTeamsRepository {
 
   async removeMember(teamId: string, userId: string): Promise<void> {
     await this.prisma.teamMember.deleteMany({ where: { teamId, userId } });
-  }
-
-  // --- Keep channel membership in lockstep with team membership ---
-
-  private async channelIds(teamId: string): Promise<string[]> {
-    const rows = await this.prisma.conversation.findMany({
-      where: { teamId, type: ConversationType.CHANNEL },
-      select: { id: true },
-    });
-    return rows.map((r) => r.id);
-  }
-
-  async addMembersToChannels(teamId: string, userIds: string[]): Promise<void> {
-    const ids = await this.channelIds(teamId);
-    if (ids.length === 0 || userIds.length === 0) return;
-
-    await this.prisma.conversationMember.createMany({
-      data: ids.flatMap((conversationId) => userIds.map((userId) => ({ conversationId, userId }))),
-      skipDuplicates: true,
-    });
-  }
-
-  async removeMemberFromChannels(teamId: string, userId: string): Promise<void> {
-    const ids = await this.channelIds(teamId);
-    if (ids.length === 0) return;
-
-    await this.prisma.conversationMember.deleteMany({
-      where: { conversationId: { in: ids }, userId },
-    });
   }
 }

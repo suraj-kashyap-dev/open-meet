@@ -25,6 +25,36 @@
     "next": "Próximo",
     "page-of": "Página {page} de {pageCount}"
   },
+  "create-dialog": {
+    "button": "Novo usuário",
+    "title": "Criar um usuário",
+    "subtitle": "Crie uma conta ativa com uma senha que você definir. O usuário pode entrar imediatamente.",
+    "name": "Nome",
+    "email": "E-mail",
+    "password": "Senha",
+    "password-helper": "Pelo menos 8 caracteres. Compartilhe com o usuário de forma segura.",
+    "cancel": "Cancelar",
+    "submit": "Criar usuário",
+    "submitting": "Criando…",
+    "success": "{email} criado",
+    "error": "Não foi possível criar o usuário",
+    "validation": {
+      "name-required": "O nome é obrigatório",
+      "invalid-email": "Insira um e-mail válido",
+      "password-too-short": "Pelo menos 8 caracteres",
+      "password-too-long": "Muito longo"
+    }
+  },
+  "detail": {
+    "eyebrow": "Editar usuário",
+    "back": "Voltar aos usuários",
+    "subtitle": "Atualize perfil, localização, bio ou redefina a senha.",
+    "not-found-title": "Usuário não encontrado",
+    "not-found-description": "Este usuário pode ter sido excluído.",
+    "danger-title": "Zona de perigo",
+    "danger-description": "Exclua permanentemente este usuário e tudo o que ele criou. Isso não pode ser desfeito.",
+    "delete": "Excluir usuário"
+  },
   "edit-dialog": {
     "title": "Editar usuário",
     "description": "Atualize perfil, localização, bio ou redefina a senha.",

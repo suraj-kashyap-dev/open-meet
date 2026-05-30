@@ -28,8 +28,6 @@ import { AdminUserInviteRepository } from './users/user-invite.repository';
 import { AdminTeamsController } from './teams/teams.controller';
 import { AdminTeamsService } from './teams/teams.service';
 import { AdminTeamsRepository } from './teams/teams.repository';
-import { AdminChannelsService } from './teams/channels.service';
-import { AdminChannelsRepository } from './teams/channels.repository';
 import { AdminGroupsController } from './groups/groups.controller';
 import { AdminGroupsService } from './groups/groups.service';
 import { AdminGroupsRepository } from './groups/groups.repository';
@@ -77,8 +75,6 @@ import { AdminRbacModule } from './rbac/rbac.module';
     AdminUserInviteRepository,
     AdminTeamsService,
     AdminTeamsRepository,
-    AdminChannelsService,
-    AdminChannelsRepository,
     AdminGroupsService,
     AdminGroupsRepository,
     AdminBootstrapService,

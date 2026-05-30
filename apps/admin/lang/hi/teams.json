@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "टीम हटाएं?",
+    "description": "{name} हटा दी जाएगी और हर सदस्य की पहुंच तुरंत समाप्त हो जाएगी। इसे पूर्ववत नहीं किया जा सकता।",
+    "cancel": "रद्द करें",
+    "confirm": "टीम हटाएं",
+    "deleting": "हटाया जा रहा है…"
   }
 }

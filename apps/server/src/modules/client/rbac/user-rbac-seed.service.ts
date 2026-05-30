@@ -26,7 +26,10 @@ export class UserRbacSeedService implements OnModuleInit {
       defaultPermissions: DEFAULT_USER_MEMBER_PERMISSIONS,
     });
 
-    await this.roles.upsertSystem({
+    // Restricted backs ephemeral guest users (see auth.repository.createGuest).
+    // It is seeded but NOT a system role, so operators can rename, re-scope, or
+    // delete it — Member is the only immutable system role.
+    await this.roles.ensureDefault({
       id: SYSTEM_USER_RESTRICTED_ROLE_ID,
       name: 'Restricted',
       description: 'No capabilities — assign to chat-disabled / banned users.',
@@ -34,6 +37,6 @@ export class UserRbacSeedService implements OnModuleInit {
       defaultPermissions: DEFAULT_USER_RESTRICTED_PERMISSIONS,
     });
 
-    this.logger.log('User RBAC system roles reconciled.');
+    this.logger.log('User RBAC roles reconciled.');
   }
 }

@@ -5,7 +5,6 @@
 enum ConversationType {
   DIRECT
   GROUP
-  CHANNEL
 }
 
 enum ConversationMemberRole {
@@ -36,19 +35,17 @@ enum ChatMessagePriority {
 
 enum MentionKind {
   USER
-  CHANNEL
   EVERYONE
 }
 
 // Admin-managed grouping that gates who may DM whom: a DIRECT conversation is
 // allowed only when both users share at least one team.
 model Team {
-  id        String         @id @default(cuid())
+  id        String       @id @default(cuid())
   name      String
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
   members   TeamMember[]
-  channels  Conversation[]
 }
 
 model TeamMember {
@@ -66,12 +63,9 @@ model TeamMember {
 model Conversation {
   id               String               @id @default(cuid())
   type             ConversationType
-  title            String? // null for DIRECT, set for GROUP/CHANNEL
-  description      String? // CHANNEL topic
-  isGeneral        Boolean              @default(false) // a team's default "General" channel
-  teamId           String? // set for CHANNEL conversations
-  team             Team?                @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  createdByAdminId String? // Admin who created a GROUP/CHANNEL; null for DIRECT
+  title            String? // null for DIRECT, set for GROUP
+  description      String? // GROUP description
+  createdByAdminId String? // Admin who created a GROUP; null for DIRECT
   createdByAdmin   Admin?               @relation(fields: [createdByAdminId], references: [id], onDelete: SetNull)
   directKey        String?              @unique // deterministic "minUserId:maxUserId" for DIRECT; null otherwise
   lastMessageAt    DateTime?
@@ -82,7 +76,6 @@ model Conversation {
   pinnedMessages   PinnedMessage[]
 
   @@index([type])
-  @@index([teamId])
 }
 
 model ConversationMember {

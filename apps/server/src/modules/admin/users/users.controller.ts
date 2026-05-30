@@ -32,6 +32,7 @@ import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
 import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 import { AdminListUsersQueryDto } from './dto/list-users-query.dto';
+import { AdminCreateUserBodyDto } from './dto/create-user.dto';
 import { CreateUserInviteBodyDto } from './dto/create-user-invite.dto';
 import { AdminUpdateUserBodyDto } from './dto/update-user.dto';
 import { AdminUserInviteService } from './user-invite.service';
@@ -59,6 +60,13 @@ export class AdminUsersController {
   @ApiOperation({ summary: 'List pending user invites' })
   listInvites(): Promise<UserInviteListResponseDto> {
     return this.userInvites.list();
+  }
+
+  @Post()
+  @RequirePermissions('users.create')
+  @ApiOperation({ summary: 'Create a new active user with an admin-set password' })
+  create(@Body() dto: AdminCreateUserBodyDto): Promise<AdminUserDto> {
+    return this.users.create(dto);
   }
 
   @Post('invite')

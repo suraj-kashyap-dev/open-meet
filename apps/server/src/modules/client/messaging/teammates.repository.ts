@@ -15,22 +15,37 @@ export interface TeammateRow {
 export class TeammatesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Users who share at least one team with `userId` (excluding the user). */
+  /** Users who share at least one team or group with `userId` (excluding the user). */
   search(userId: string, query?: string): Promise<TeammateRow[]> {
     const trimmed = query?.trim();
 
     return this.prisma.user.findMany({
       where: {
         id: { not: userId },
-        teamMemberships: { some: { team: { members: { some: { userId } } } } },
-        ...(trimmed
-          ? {
-              OR: [
-                { name: { contains: trimmed, mode: 'insensitive' } },
-                { email: { contains: trimmed, mode: 'insensitive' } },
-              ],
-            }
-          : {}),
+        // Connected via a shared team OR a shared group conversation. Combined with
+        // the optional name/email search via AND (two sibling `OR` keys aren't allowed).
+        AND: [
+          {
+            OR: [
+              { teamMemberships: { some: { team: { members: { some: { userId } } } } } },
+              {
+                conversationMemberships: {
+                  some: { conversation: { type: 'GROUP', members: { some: { userId } } } },
+                },
+              },
+            ],
+          },
+          ...(trimmed
+            ? [
+                {
+                  OR: [
+                    { name: { contains: trimmed, mode: 'insensitive' as const } },
+                    { email: { contains: trimmed, mode: 'insensitive' as const } },
+                  ],
+                },
+              ]
+            : []),
+        ],
       },
       select: {
         id: true,

@@ -40,8 +40,10 @@ test.describe('Admin groups page', () => {
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();
 
-    // The member picker is INLINE — selecting a member must NOT close the dialog
-    // (this guards the previously-fixed bug where picking stacked/closed the modal).
+    // Focusing the search box preloads the user list inline (no portalled popover).
+    await dialog.getByPlaceholder('Search users').click();
+
+    // Selecting a member must NOT close the dialog (guards the inline-picker bug).
     await dialog.getByRole('button', { name: /Ada Lovelace/ }).click();
 
     await expect(dialog).toBeVisible();
@@ -60,6 +62,7 @@ test.describe('Admin groups page', () => {
 
     const dialog = page.getByRole('dialog');
     await dialog.getByLabel('Group name').fill('Roadmap sync');
+    await dialog.getByPlaceholder('Search users').click();
     await dialog.getByRole('button', { name: /Ada Lovelace/ }).click();
 
     const [request] = await Promise.all([
@@ -72,7 +75,7 @@ test.describe('Admin groups page', () => {
     expect(body.memberIds).toContain('u-1');
   });
 
-  test('should open the separate edit page for a group', async ({ page }) => {
+  test('should open the edit dialog for a group', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en/groups');
 
@@ -81,9 +84,30 @@ test.describe('Admin groups page', () => {
       .getByRole('button', { name: 'Manage members' })
       .click();
 
-    await expect(page).toHaveURL(/\/en\/groups\/g-1$/);
-    await expect(page.getByRole('heading', { name: 'Product launch', exact: true })).toBeVisible();
-    await expect(page.getByText('Ada Lovelace')).toBeVisible();
-    await expect(page.getByText('alan@example.com')).toBeVisible();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByRole('heading', { name: 'Product launch' })).toBeVisible();
+    await expect(dialog.getByLabel('Group name')).toHaveValue('Product launch');
+  });
+
+  test('should ask for confirmation before deleting a group', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/groups');
+
+    await page
+      .getByRole('row', { name: /Product launch/ })
+      .getByRole('button', { name: 'Delete group' })
+      .click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Delete group?')).toBeVisible();
+
+    const [request] = await Promise.all([
+      page.waitForRequest(
+        (req) => /\/admin\/groups\/g-1$/.test(req.url()) && req.method() === 'DELETE',
+      ),
+      dialog.getByRole('button', { name: 'Delete group' }).click(),
+    ]);
+
+    expect(request.url()).toContain('/admin/groups/g-1');
   });
 });

@@ -13,8 +13,6 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type {
-  AdminChannelDto,
-  AdminChannelListResponseDto,
   AdminTeamDetailDto,
   AdminTeamDto,
   AdminTeamListResponseDto,
@@ -22,18 +20,13 @@ import type {
 
 import { Public } from '../../../common/decorators/public.decorator';
 
-import { CurrentAdmin } from '../auth/decorators/current-admin.decorator';
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
-import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
 import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 
-import { AdminChannelsService } from './channels.service';
 import {
   AddTeamMembersBodyDto,
-  CreateChannelBodyDto,
   CreateTeamBodyDto,
-  UpdateChannelBodyDto,
   UpdateTeamBodyDto,
 } from './dto/team.dto';
 import { AdminTeamsService } from './teams.service';
@@ -43,52 +36,13 @@ import { AdminTeamsService } from './teams.service';
 @UseGuards(AdminAuthGuard, AdminPermissionsGuard)
 @Public()
 export class AdminTeamsController {
-  constructor(
-    private readonly teams: AdminTeamsService,
-    private readonly channels: AdminChannelsService,
-  ) {}
+  constructor(private readonly teams: AdminTeamsService) {}
 
   @Get()
   @RequirePermissions('teams.view')
   @ApiOperation({ summary: 'List all teams' })
   list(): Promise<AdminTeamListResponseDto> {
     return this.teams.list();
-  }
-
-  @Get(':id/channels')
-  @RequirePermissions('teams.channels.view')
-  @ApiOperation({ summary: "List a team's channels" })
-  listChannels(@Param('id') id: string): Promise<AdminChannelListResponseDto> {
-    return this.channels.list(id);
-  }
-
-  @Post(':id/channels')
-  @RequirePermissions('teams.channels.create')
-  @ApiOperation({ summary: 'Create a channel in a team' })
-  createChannel(
-    @CurrentAdmin() admin: AdminRequestUser,
-    @Param('id') id: string,
-    @Body() dto: CreateChannelBodyDto,
-  ): Promise<AdminChannelDto> {
-    return this.channels.create(id, admin.id, dto);
-  }
-
-  @Patch(':id/channels/:channelId')
-  @RequirePermissions('teams.channels.update')
-  @ApiOperation({ summary: 'Rename or describe a channel' })
-  updateChannel(
-    @Param('channelId') channelId: string,
-    @Body() dto: UpdateChannelBodyDto,
-  ): Promise<AdminChannelDto> {
-    return this.channels.update(channelId, dto);
-  }
-
-  @Delete(':id/channels/:channelId')
-  @HttpCode(HttpStatus.OK)
-  @RequirePermissions('teams.channels.delete')
-  @ApiOperation({ summary: 'Delete a channel' })
-  deleteChannel(@Param('channelId') channelId: string): Promise<{ deleted: true }> {
-    return this.channels.remove(channelId);
   }
 
   @Post()

@@ -16,7 +16,7 @@ export class ConversationsRepository {
 
   listForUser(userId: string): Promise<ConversationListRow[]> {
     return this.prisma.conversation.findMany({
-      // DMs + group chats only; channels live under their team in /teams.
+      // DMs + group chats.
       where: {
         members: { some: { userId } },
         type: { in: [ConversationType.DIRECT, ConversationType.GROUP] },

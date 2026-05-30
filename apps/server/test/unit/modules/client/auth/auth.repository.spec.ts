@@ -45,19 +45,30 @@ describe('AuthRepository', () => {
   });
 
   describe('create()', () => {
-    it('should lowercase the email and forward the remaining fields', async () => {
+    it('should lowercase the email and assign the Member RBAC role', async () => {
       await repo.create({ name: 'A', email: 'A@B.com', passwordHash: 'h' });
       expect(user.create).toHaveBeenCalledWith({
-        data: { name: 'A', email: 'a@b.com', passwordHash: 'h' },
+        data: {
+          name: 'A',
+          email: 'a@b.com',
+          passwordHash: 'h',
+          roleRecordId: 'urole_sys_member',
+        },
       });
     });
   });
 
   describe('createGoogleUser()', () => {
-    it('should lowercase the email and forward the Google profile fields', async () => {
+    it('should lowercase the email and assign the Member RBAC role', async () => {
       await repo.createGoogleUser({ name: 'A', email: 'A@B.com', googleId: 'g1', avatarUrl: null });
       expect(user.create).toHaveBeenCalledWith({
-        data: { name: 'A', email: 'a@b.com', googleId: 'g1', avatarUrl: null },
+        data: {
+          name: 'A',
+          email: 'a@b.com',
+          googleId: 'g1',
+          avatarUrl: null,
+          roleRecordId: 'urole_sys_member',
+        },
       });
     });
   });

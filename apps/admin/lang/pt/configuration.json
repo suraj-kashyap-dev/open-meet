@@ -7,6 +7,49 @@
     "title": "A configuração está a caminho",
     "description": "Padrões do espaço de trabalho, identidade visual e políticas de reunião estarão aqui em breve."
   },
+  "hub": {
+    "empty": "Você ainda não tem acesso a nenhuma configuração.",
+    "sections": {
+      "access": {
+        "title": "Acesso",
+        "description": "Gerencie quem pode entrar no console e o que pode fazer."
+      },
+      "users": {
+        "title": "Usuários",
+        "description": "Gerencie os usuários finais do app e as funções atribuídas a eles."
+      },
+      "workspace": {
+        "title": "Espaço de trabalho",
+        "description": "Personalize a identidade do console e configure os padrões do espaço de trabalho."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Administradores",
+        "description": "Adicione, edite ou remova contas de administrador que podem entrar no console."
+      },
+      "roles": {
+        "title": "Funções de administrador",
+        "description": "Defina as permissões concedidas por cada função de administrador."
+      },
+      "users": {
+        "title": "Usuários",
+        "description": "Gerencie contas de usuários finais, convide novos usuários e alterne o acesso deles."
+      },
+      "user-roles": {
+        "title": "Funções de usuário",
+        "description": "Defina as permissões concedidas por cada função de usuário dentro do app."
+      },
+      "branding": {
+        "title": "Identidade visual",
+        "description": "Personalize o nome do app, o logotipo e a cor de destaque."
+      },
+      "configuration": {
+        "title": "Configuração",
+        "description": "Padrões do espaço de trabalho, políticas de reunião e alternâncias de recursos."
+      }
+    }
+  },
   "form": {
     "title": "Padrões do espaço de trabalho",
     "subtitle": "Padrões aplicados a novas reuniões em todo o espaço de trabalho.",

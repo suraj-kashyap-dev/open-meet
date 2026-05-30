@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "অনুমতিসমূহ",
+    "selected-count": "{total} এর মধ্যে {count}টি নির্বাচিত",
+    "select-all": "সব নির্বাচন করুন",
+    "clear": "সাফ করুন",
+    "expand-all": "সব প্রসারিত করুন",
+    "collapse-all": "সব সংকুচিত করুন",
     "users": {
       "_self": "ব্যবহারকারী",
       "view": "ব্যবহারকারী দেখুন",

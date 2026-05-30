@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "グループを削除しますか？",
+    "description": "{name} はすべてのメンバーから直ちに削除され、除外されます。この操作は元に戻せません。",
+    "cancel": "キャンセル",
+    "confirm": "グループを削除",
+    "deleting": "削除中…"
   }
 }

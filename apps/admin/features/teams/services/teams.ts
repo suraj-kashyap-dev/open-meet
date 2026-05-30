@@ -1,8 +1,5 @@
 import type {
   AdminAddTeamMembersDto,
-  AdminChannelDto,
-  AdminChannelListResponseDto,
-  AdminCreateChannelDto,
   AdminCreateTeamDto,
   AdminTeamDetailDto,
   AdminTeamDto,
@@ -30,13 +27,4 @@ export const adminTeamsApi = {
 
   removeMember: (id: string, userId: string) =>
     api.delete<{ removed: true }>(`/admin/teams/${id}/members/${userId}`),
-
-  listChannels: (id: string, signal?: AbortSignal) =>
-    api.get<AdminChannelListResponseDto>(`/admin/teams/${id}/channels`, { signal }),
-
-  createChannel: (id: string, body: AdminCreateChannelDto) =>
-    api.post<AdminChannelDto>(`/admin/teams/${id}/channels`, body),
-
-  deleteChannel: (id: string, channelId: string) =>
-    api.delete<{ deleted: true }>(`/admin/teams/${id}/channels/${channelId}`),
 };

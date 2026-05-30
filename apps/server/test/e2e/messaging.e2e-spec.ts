@@ -32,6 +32,19 @@ describe('Messaging / persistent chat (e2e)', () => {
     return team.id;
   }
 
+  // A shared GROUP conversation is also a DM-eligible "surface" (no team needed).
+  async function seedSharedGroup(userIds: string[]): Promise<string> {
+    const prisma = app.get(PrismaService);
+    const group = await prisma.conversation.create({
+      data: {
+        type: 'GROUP',
+        title: 'Project X',
+        members: { create: userIds.map((userId) => ({ userId })) },
+      },
+    });
+    return group.id;
+  }
+
   beforeEach(async () => {
     await resetDb(app);
 
@@ -108,12 +121,24 @@ describe('Messaging / persistent chat (e2e)', () => {
       expect(fromBob.body.data.id).toBe(fromAlice.body.data.id);
     });
 
-    it('should forbid a DM with NOT_TEAMMATES when the users share no team', async () => {
+    it('should forbid a DM with NOT_TEAMMATES when the users share no team or group', async () => {
       const res = await openDirect(alice.cookie, outsider.id);
 
       expect(res.status).toBe(403);
       expect(res.body.success).toBe(false);
       expect(res.body.error.code).toBe('NOT_TEAMMATES');
+    });
+
+    it('should allow a DM when the two share only a group (no shared team)', async () => {
+      await seedSharedGroup([alice.id, outsider.id]);
+
+      const res = await openDirect(alice.cookie, outsider.id);
+
+      expect(res.status).toBe(201);
+      expect(res.body.data.type).toBe('DIRECT');
+      const memberIds = (res.body.data.members as { userId: string }[]).map((m) => m.userId);
+      expect(memberIds).toContain(alice.id);
+      expect(memberIds).toContain(outsider.id);
     });
 
     it('should reject opening a DM with yourself with VALIDATION_FAILED', async () => {
@@ -237,6 +262,17 @@ describe('Messaging / persistent chat (e2e)', () => {
       expect(ids).toContain(bob.id);
       expect(ids).not.toContain(outsider.id);
       expect(ids).not.toContain(alice.id);
+    });
+
+    it('should include a group-mate who shares no team', async () => {
+      await seedSharedGroup([alice.id, outsider.id]);
+
+      const res = await http(app).get('/api/messaging/teammates').set('Cookie', alice.cookie);
+
+      expect(res.status).toBe(200);
+      const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
+      expect(ids).toContain(outsider.id);
+      expect(ids).toContain(bob.id);
     });
 
     it('should require authentication', async () => {

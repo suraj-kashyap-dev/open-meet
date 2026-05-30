@@ -25,6 +25,36 @@
     "next": "Weiter",
     "page-of": "Seite {page} von {pageCount}"
   },
+  "create-dialog": {
+    "button": "Neuer Benutzer",
+    "title": "Benutzer erstellen",
+    "subtitle": "Erstellen Sie ein aktives Konto mit einem von Ihnen festgelegten Passwort. Der Benutzer kann sich sofort anmelden.",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "password-helper": "Mindestens 8 Zeichen. Teilen Sie es sicher mit dem Benutzer.",
+    "cancel": "Abbrechen",
+    "submit": "Benutzer erstellen",
+    "submitting": "Wird erstellt…",
+    "success": "{email} erstellt",
+    "error": "Der Benutzer konnte nicht erstellt werden",
+    "validation": {
+      "name-required": "Name ist erforderlich",
+      "invalid-email": "Geben Sie eine gültige E-Mail-Adresse ein",
+      "password-too-short": "Mindestens 8 Zeichen",
+      "password-too-long": "Zu lang"
+    }
+  },
+  "detail": {
+    "eyebrow": "Benutzer bearbeiten",
+    "back": "Zurück zu den Benutzern",
+    "subtitle": "Profil, Lokalisierung, Biografie aktualisieren oder Passwort zurücksetzen.",
+    "not-found-title": "Benutzer nicht gefunden",
+    "not-found-description": "Dieser Benutzer wurde möglicherweise gelöscht.",
+    "danger-title": "Gefahrenzone",
+    "danger-description": "Diesen Benutzer und alles, was er erstellt hat, dauerhaft löschen. Dies kann nicht rückgängig gemacht werden.",
+    "delete": "Benutzer löschen"
+  },
   "edit-dialog": {
     "title": "Benutzer bearbeiten",
     "description": "Profil, Lokalisierung, Biografie aktualisieren oder Passwort zurücksetzen.",

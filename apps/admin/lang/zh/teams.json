@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "删除团队？",
+    "description": "{name} 将被删除，每位成员将立即失去访问权限。此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "删除团队",
+    "deleting": "正在删除…"
   }
 }

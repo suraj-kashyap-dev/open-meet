@@ -7,7 +7,7 @@ import { type ChatPermissionsRepository } from '@/modules/client/messaging/chat-
 describe('ChatPermissionsService', () => {
   let repo: {
     findUserBasics: ReturnType<typeof vi.fn>;
-    shareTeam: ReturnType<typeof vi.fn>;
+    haveSharedSurface: ReturnType<typeof vi.fn>;
     getMembership: ReturnType<typeof vi.fn>;
     getDirectPeer: ReturnType<typeof vi.fn>;
   };
@@ -23,7 +23,7 @@ describe('ChatPermissionsService', () => {
   beforeEach(() => {
     repo = {
       findUserBasics: vi.fn(),
-      shareTeam: vi.fn(),
+      haveSharedSurface: vi.fn(),
       getMembership: vi.fn(),
       getDirectPeer: vi.fn(),
     };
@@ -86,9 +86,9 @@ describe('ChatPermissionsService', () => {
       );
     });
 
-    it('should reject when the two users share no team', async () => {
+    it('should reject when the two users share no team or group', async () => {
       repo.findUserBasics.mockResolvedValueOnce(enabled('u1')).mockResolvedValueOnce(enabled('u2'));
-      repo.shareTeam.mockResolvedValue(false);
+      repo.haveSharedSurface.mockResolvedValue(false);
       await expect(service.assertCanDirectMessage('u1', 'u2')).rejects.toBeInstanceOf(
         ForbiddenException,
       );
@@ -96,7 +96,14 @@ describe('ChatPermissionsService', () => {
 
     it('should resolve when both are enabled and share a team', async () => {
       repo.findUserBasics.mockResolvedValueOnce(enabled('u1')).mockResolvedValueOnce(enabled('u2'));
-      repo.shareTeam.mockResolvedValue(true);
+      repo.haveSharedSurface.mockResolvedValue(true);
+      await expect(service.assertCanDirectMessage('u1', 'u2')).resolves.toBeUndefined();
+    });
+
+    it('should resolve when they share only a group (no shared team)', async () => {
+      repo.findUserBasics.mockResolvedValueOnce(enabled('u1')).mockResolvedValueOnce(enabled('u2'));
+      // haveSharedSurface = shareTeam || shareConversation; a shared GROUP makes it true.
+      repo.haveSharedSurface.mockResolvedValue(true);
       await expect(service.assertCanDirectMessage('u1', 'u2')).resolves.toBeUndefined();
     });
   });

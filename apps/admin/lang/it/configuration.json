@@ -7,6 +7,49 @@
     "title": "La configurazione è in arrivo",
     "description": "Le impostazioni predefinite del workspace, il branding e i criteri delle riunioni saranno disponibili qui a breve."
   },
+  "hub": {
+    "empty": "Non hai ancora accesso ad alcuna impostazione.",
+    "sections": {
+      "access": {
+        "title": "Accesso",
+        "description": "Gestisci chi può accedere alla console e cosa può fare."
+      },
+      "users": {
+        "title": "Utenti",
+        "description": "Gestisci gli utenti finali dell'app e i ruoli loro assegnati."
+      },
+      "workspace": {
+        "title": "Workspace",
+        "description": "Personalizza l'identità della console e configura le impostazioni predefinite del workspace."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Amministratori",
+        "description": "Aggiungi, modifica o rimuovi gli account amministratore che possono accedere alla console."
+      },
+      "roles": {
+        "title": "Ruoli amministratore",
+        "description": "Definisci le autorizzazioni concesse da ciascun ruolo amministratore."
+      },
+      "users": {
+        "title": "Utenti",
+        "description": "Gestisci gli account degli utenti finali, invita nuovi utenti e attiva o disattiva il loro accesso."
+      },
+      "user-roles": {
+        "title": "Ruoli utente",
+        "description": "Definisci le autorizzazioni concesse da ciascun ruolo utente all'interno dell'app."
+      },
+      "branding": {
+        "title": "Branding",
+        "description": "Personalizza il nome dell'app, il logo e il colore d'accento."
+      },
+      "configuration": {
+        "title": "Configurazione",
+        "description": "Impostazioni predefinite del workspace, criteri delle riunioni e interruttori delle funzionalità."
+      }
+    }
+  },
   "form": {
     "title": "Impostazioni predefinite del workspace",
     "subtitle": "Impostazioni predefinite applicate alle nuove riunioni in tutto il workspace.",

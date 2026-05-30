@@ -19,11 +19,6 @@ export const PERMISSION_TREE_USER = {
     update: null,
     delete: null,
     'manage-members': null,
-    channels: {
-      create: null,
-      update: null,
-      delete: null,
-    },
   },
   groups: {
     create: null,
@@ -61,9 +56,6 @@ export const DEFAULT_USER_MEMBER_PERMISSIONS: readonly UserPermissionKey[] = [
   'teams.update',
   'teams.delete',
   'teams.manage-members',
-  'teams.channels.create',
-  'teams.channels.update',
-  'teams.channels.delete',
   'groups.create',
   'groups.update',
   'groups.delete',

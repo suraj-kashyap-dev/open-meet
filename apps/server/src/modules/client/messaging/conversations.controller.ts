@@ -6,7 +6,6 @@ import { CurrentUser, type RequestUser } from '../../../common/decorators/curren
 import { RequireUserPermissions } from '../rbac/decorators/require-user-permissions.decorator';
 
 import { ActivityService } from './activity.service';
-import { ChannelsService } from './channels.service';
 import { ConversationStateService } from './conversation-state.service';
 import { ConversationsService } from './conversations.service';
 import {
@@ -38,23 +37,12 @@ export class ConversationsController {
     private readonly conversationState: ConversationStateService,
     private readonly presence: PresenceService,
     private readonly gifs: GifsService,
-    private readonly channels: ChannelsService,
     private readonly activity: ActivityService,
   ) {}
-
-  @Get('teams')
-  teams(@CurrentUser() user: RequestUser) {
-    return this.channels.listMyTeams(user.id);
-  }
 
   @Get('activity')
   activityFeed(@CurrentUser() user: RequestUser) {
     return this.activity.feed(user.id);
-  }
-
-  @Get('threads/:rootId')
-  thread(@CurrentUser() user: RequestUser, @Param('rootId') rootId: string) {
-    return this.channels.thread(rootId, user.id);
   }
 
   @Get('conversations')

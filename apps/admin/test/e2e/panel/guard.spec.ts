@@ -21,4 +21,19 @@ test.describe('Admin auth guard', () => {
       await expect(page).toHaveURL(/\/en\/login$/);
     });
   }
+
+  test('should redirect an authenticated admin away from the login page', async ({ page }) => {
+    await mockAdminApi(page);
+    await page.goto('/en/login');
+
+    await expect(page).toHaveURL(/\/en$/);
+  });
+
+  test('should keep an unauthenticated visitor on the login page', async ({ page }) => {
+    await mockAdminApi(page, { me: null });
+    await page.goto('/en/login');
+
+    await expect(page).toHaveURL(/\/en\/login$/);
+    await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
+  });
 });

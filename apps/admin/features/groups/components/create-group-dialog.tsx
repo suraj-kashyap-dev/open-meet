@@ -15,7 +15,7 @@ import {
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
 
-import { MemberPicker } from '@/components/shared/member-picker';
+import { MemberMultiSelect } from '@/components/shared/member-multi-select';
 import { useCreateGroup } from '@/features/groups/hooks/use-admin-groups';
 import { ApiClientError } from '@/lib/api/client';
 
@@ -81,11 +81,12 @@ export function CreateGroupDialog({
             {t('create.choose-members')}
             {memberIds.length > 0 ? ` (${memberIds.length})` : ''}
           </Label>
-          <MemberPicker
-            selected={memberIds}
-            onSelectedChange={setMemberIds}
+          <MemberMultiSelect
+            selectedIds={memberIds}
+            onSelectedIdsChange={setMemberIds}
             searchPlaceholder={t('manage.search')}
             emptyLabel={t('manage.no-users')}
+            removeLabel={t('manage.remove')}
           />
         </div>
 

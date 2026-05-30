@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "Permissões",
+    "selected-count": "{count} de {total} selecionados",
+    "select-all": "Selecionar tudo",
+    "clear": "Limpar",
+    "expand-all": "Expandir tudo",
+    "collapse-all": "Recolher tudo",
     "users": {
       "_self": "Usuários",
       "view": "Ver usuários",

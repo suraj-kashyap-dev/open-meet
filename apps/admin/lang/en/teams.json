@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "Delete team?",
+    "description": "{name} will be deleted and every member will lose access immediately. This cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Delete team",
+    "deleting": "Deleting…"
   }
 }

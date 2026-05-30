@@ -10,6 +10,13 @@ import { Button } from '@open-meet/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@open-meet/ui/card';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@open-meet/ui/select';
 import { Textarea } from '@open-meet/ui/textarea';
 
 import { PermissionTreePicker } from '@/features/rbac/components/permission-tree-picker';
@@ -61,92 +68,89 @@ export function UserRoleForm({
         </div>
       ) : null}
 
-      <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle>{t('create.title')}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-5">
-          <div className="space-y-1.5">
-            <Label htmlFor="role-name">{t('create.name-label')}</Label>
-            <Input
-              id="role-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t('create.name-placeholder')}
-              maxLength={60}
-              disabled={systemLocked}
-              autoFocus
-            />
-          </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="space-y-6 lg:col-span-2">
+          <Card className="rounded-xl">
+            <CardHeader>
+              <CardTitle>{t('create.type-label')}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-1.5">
+              <Select
+                value={permissionType}
+                disabled={systemLocked}
+                onValueChange={(v) => setPermissionType(v as PermissionType)}
+              >
+                <SelectTrigger id="role-type" aria-label={t('create.type-label')}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={PermissionType.CUSTOM}>{t('type.custom')}</SelectItem>
+                  <SelectItem value={PermissionType.ALL}>{t('type.all')}</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                {isAll ? t('create.type-all') : t('create.type-custom')}
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="role-description">{t('create.description-label')}</Label>
-            <Textarea
-              id="role-description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder={t('create.description-placeholder')}
-              maxLength={280}
-              rows={3}
-            />
-          </div>
-
-          <fieldset className="space-y-2">
-            <legend className="text-sm font-medium">{t('create.type-label')}</legend>
-            <div className="space-y-1.5">
-              <label className="flex items-start gap-2 rounded-md border border-border p-3 hover:bg-muted/40">
-                <input
-                  type="radio"
-                  className="mt-1"
-                  checked={permissionType === PermissionType.ALL}
-                  disabled={systemLocked}
-                  onChange={() => setPermissionType(PermissionType.ALL)}
-                />
-                <div>
-                  <p className="text-sm font-medium">{t('type.all')}</p>
-                  <p className="text-xs text-muted-foreground">{t('create.type-all')}</p>
+          <Card className="rounded-xl">
+            <CardHeader>
+              <CardTitle>{t('permissions.tree-heading')}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {catalog.isLoading ? (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Loading…
                 </div>
-              </label>
-              <label className="flex items-start gap-2 rounded-md border border-border p-3 hover:bg-muted/40">
-                <input
-                  type="radio"
-                  className="mt-1"
-                  checked={permissionType === PermissionType.CUSTOM}
-                  disabled={systemLocked}
-                  onChange={() => setPermissionType(PermissionType.CUSTOM)}
+              ) : isAll ? (
+                <p className="text-sm text-muted-foreground">{t('create.type-all')}</p>
+              ) : (
+                <PermissionTreePicker
+                  tree={treeReady}
+                  value={permissions}
+                  onChange={setPermissions}
+                  disabled={systemLocked && initial?.id === 'urole_sys_member'}
                 />
-                <div>
-                  <p className="text-sm font-medium">{t('type.custom')}</p>
-                  <p className="text-xs text-muted-foreground">{t('create.type-custom')}</p>
-                </div>
-              </label>
-            </div>
-          </fieldset>
-        </CardContent>
-      </Card>
+              )}
+            </CardContent>
+          </Card>
+        </div>
 
-      <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle>{t('permissions.tree-heading')}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {catalog.isLoading ? (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Loading…
-            </div>
-          ) : isAll ? (
-            <p className="text-sm text-muted-foreground">{t('create.type-all')}</p>
-          ) : (
-            <PermissionTreePicker
-              tree={treeReady}
-              value={permissions}
-              onChange={setPermissions}
-              disabled={systemLocked && initial?.id === 'urole_sys_member'}
-            />
-          )}
-        </CardContent>
-      </Card>
+        <div className="lg:col-span-1">
+          <Card className="rounded-xl lg:sticky lg:top-6">
+            <CardHeader>
+              <CardTitle>{t('create.title')}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              <div className="space-y-1.5">
+                <Label htmlFor="role-name">{t('create.name-label')}</Label>
+                <Input
+                  id="role-name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={t('create.name-placeholder')}
+                  maxLength={60}
+                  disabled={systemLocked}
+                  autoFocus
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="role-description">{t('create.description-label')}</Label>
+                <Textarea
+                  id="role-description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder={t('create.description-placeholder')}
+                  maxLength={280}
+                  rows={4}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
 
       <div className="flex justify-end">
         <Button onClick={handleSubmit} disabled={!canSubmit} className="gap-2">

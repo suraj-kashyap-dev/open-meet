@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "الأذونات",
+    "selected-count": "تم تحديد {count} من {total}",
+    "select-all": "تحديد الكل",
+    "clear": "مسح",
+    "expand-all": "توسيع الكل",
+    "collapse-all": "طي الكل",
     "users": {
       "_self": "المستخدمون",
       "view": "عرض المستخدمين",

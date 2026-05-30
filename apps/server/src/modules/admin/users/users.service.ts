@@ -11,6 +11,7 @@ import { randomBytes } from 'node:crypto';
 import * as argon2 from 'argon2';
 
 import type {
+  AdminCreateUserDto,
   AdminUserDto,
   AdminUserListQuery,
   AdminUserListResponseDto,
@@ -58,6 +59,32 @@ export class AdminUsersService {
       page,
       pageSize,
     };
+  }
+
+  async create(dto: AdminCreateUserDto): Promise<AdminUserDto> {
+    const email = dto.email.trim().toLowerCase();
+    const name = dto.name.trim();
+
+    if (!name) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Name is required',
+      });
+    }
+
+    const clash = await this.users.emailTaken(email);
+
+    if (clash) {
+      throw new ConflictException({
+        code: ApiErrorCode.EMAIL_TAKEN,
+        message: 'An account with this email already exists',
+      });
+    }
+
+    const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
+    const created = await this.users.create({ name, email, passwordHash });
+
+    return this.toDto(created);
   }
 
   async getById(id: string): Promise<AdminUserDto> {

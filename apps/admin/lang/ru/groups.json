@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Удалить группу?",
+    "description": "{name} будет удалена и сразу убрана у каждого участника. Это действие нельзя отменить.",
+    "cancel": "Отмена",
+    "confirm": "Удалить группу",
+    "deleting": "Удаление…"
   }
 }

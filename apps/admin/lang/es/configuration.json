@@ -7,6 +7,49 @@
     "title": "La configuración está en camino",
     "description": "Los valores predeterminados del espacio de trabajo, la marca y las políticas de reuniones estarán disponibles aquí pronto."
   },
+  "hub": {
+    "empty": "Aún no tienes acceso a ningún ajuste.",
+    "sections": {
+      "access": {
+        "title": "Acceso",
+        "description": "Administra quién puede iniciar sesión en la consola y qué puede hacer."
+      },
+      "users": {
+        "title": "Usuarios",
+        "description": "Administra los usuarios finales de la app y los roles asignados a ellos."
+      },
+      "workspace": {
+        "title": "Espacio de trabajo",
+        "description": "Personaliza la marca de la consola y configura los valores predeterminados del espacio de trabajo."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Administradores",
+        "description": "Agrega, edita o elimina cuentas de administrador que pueden iniciar sesión en la consola."
+      },
+      "roles": {
+        "title": "Roles de administrador",
+        "description": "Define los permisos que otorga cada rol de administrador."
+      },
+      "users": {
+        "title": "Usuarios",
+        "description": "Administra las cuentas de usuarios finales, invita a nuevos usuarios y alterna su acceso."
+      },
+      "user-roles": {
+        "title": "Roles de usuario",
+        "description": "Define los permisos que otorga cada rol de usuario dentro de la app."
+      },
+      "branding": {
+        "title": "Marca",
+        "description": "Personaliza el nombre de la app, el logotipo y el color de acento."
+      },
+      "configuration": {
+        "title": "Configuración",
+        "description": "Valores predeterminados del espacio de trabajo, políticas de reuniones y conmutadores de funciones."
+      }
+    }
+  },
   "form": {
     "title": "Valores predeterminados del espacio de trabajo",
     "subtitle": "Valores predeterminados aplicados a las nuevas reuniones en todo el espacio de trabajo.",

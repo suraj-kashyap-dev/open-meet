@@ -25,6 +25,36 @@
     "next": "Sonraki",
     "page-of": "{pageCount} sayfadan {page}. sayfa"
   },
+  "create-dialog": {
+    "button": "Yeni kullanıcı",
+    "title": "Kullanıcı oluştur",
+    "subtitle": "Belirlediğiniz bir şifreyle etkin bir hesap oluşturun. Kullanıcı hemen oturum açabilir.",
+    "name": "Ad",
+    "email": "E-posta",
+    "password": "Şifre",
+    "password-helper": "En az 8 karakter. Kullanıcıyla güvenli bir şekilde paylaşın.",
+    "cancel": "İptal",
+    "submit": "Kullanıcı oluştur",
+    "submitting": "Oluşturuluyor…",
+    "success": "{email} oluşturuldu",
+    "error": "Kullanıcı oluşturulamadı",
+    "validation": {
+      "name-required": "Ad gereklidir",
+      "invalid-email": "Geçerli bir e-posta girin",
+      "password-too-short": "En az 8 karakter",
+      "password-too-long": "Çok uzun"
+    }
+  },
+  "detail": {
+    "eyebrow": "Kullanıcıyı düzenle",
+    "back": "Kullanıcılara dön",
+    "subtitle": "Profili, yerelleştirmeyi, biyografiyi güncelleyin veya şifreyi sıfırlayın.",
+    "not-found-title": "Kullanıcı bulunamadı",
+    "not-found-description": "Bu kullanıcı silinmiş olabilir.",
+    "danger-title": "Tehlikeli bölge",
+    "danger-description": "Bu kullanıcıyı ve oluşturduğu her şeyi kalıcı olarak silin. Bu işlem geri alınamaz.",
+    "delete": "Kullanıcıyı sil"
+  },
   "edit-dialog": {
     "title": "Kullanıcıyı düzenle",
     "description": "Profili, yerelleştirmeyi, biyografiyi güncelleyin veya şifreyi sıfırlayın.",

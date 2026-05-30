@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Gruppe löschen?",
+    "description": "{name} wird sofort gelöscht und für jedes Mitglied entfernt. Dies kann nicht rückgängig gemacht werden.",
+    "cancel": "Abbrechen",
+    "confirm": "Gruppe löschen",
+    "deleting": "Wird gelöscht…"
   }
 }

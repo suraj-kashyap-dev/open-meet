@@ -43,5 +43,12 @@
     "delete-description": "Deleting this group removes the conversation for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "그룹을 삭제하시겠습니까?",
+    "description": "{name}이(가) 삭제되고 모든 멤버에게서 즉시 제거됩니다. 이 작업은 취소할 수 없습니다.",
+    "cancel": "취소",
+    "confirm": "그룹 삭제",
+    "deleting": "삭제 중…"
   }
 }

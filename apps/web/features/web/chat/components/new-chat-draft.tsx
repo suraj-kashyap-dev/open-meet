@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { MessagesSquare, Search, Send, X } from 'lucide-react';
+import { ArrowLeft, MessagesSquare, Search, Send, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -65,7 +65,15 @@ export function NewChatDraft() {
 
   return (
     <div className="flex h-full flex-col bg-card">
-      <header className="border-b border-border px-4 py-3">
+      <header className="flex items-center gap-2 border-b border-border px-4 py-3">
+        <button
+          type="button"
+          onClick={() => router.push('/chat')}
+          aria-label={t('view.back')}
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground rtl:rotate-180"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </button>
         <p className="text-sm font-semibold">{t('new-chat.title')}</p>
       </header>
 

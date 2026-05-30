@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "Izin",
+    "selected-count": "{count} dari {total} dipilih",
+    "select-all": "Pilih semua",
+    "clear": "Hapus",
+    "expand-all": "Perluas semua",
+    "collapse-all": "Ciutkan semua",
     "users": {
       "_self": "Pengguna",
       "view": "Lihat pengguna",

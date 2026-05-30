@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "İzinler",
+    "selected-count": "{total} öğeden {count} tanesi seçildi",
+    "select-all": "Tümünü seç",
+    "clear": "Temizle",
+    "expand-all": "Tümünü genişlet",
+    "collapse-all": "Tümünü daralt",
     "users": {
       "_self": "Kullanıcılar",
       "view": "Kullanıcıları görüntüle",

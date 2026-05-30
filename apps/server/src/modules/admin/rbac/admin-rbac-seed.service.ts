@@ -22,7 +22,10 @@ export class AdminRbacSeedService implements OnModuleInit {
       defaultPermissions: [],
     });
 
-    await this.roles.upsertSystem({
+    // Member is the fallback role for admins invited without an explicit role.
+    // It is seeded but NOT a system role, so operators can rename, re-scope, or
+    // delete it — Administrator is the only immutable system role.
+    await this.roles.ensureDefault({
       id: SYSTEM_MEMBER_ROLE_ID,
       name: 'Member',
       description: 'Read-only baseline. Extend via custom roles.',
@@ -30,6 +33,6 @@ export class AdminRbacSeedService implements OnModuleInit {
       defaultPermissions: DEFAULT_ADMIN_MEMBER_PERMISSIONS,
     });
 
-    this.logger.log('Admin RBAC system roles reconciled.');
+    this.logger.log('Admin RBAC roles reconciled.');
   }
 }

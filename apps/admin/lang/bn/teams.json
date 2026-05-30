@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "টিম মুছবেন?",
+    "description": "{name} মুছে ফেলা হবে এবং প্রতিটি সদস্য সঙ্গে সঙ্গে অ্যাক্সেস হারাবে। এটি আর ফেরানো যাবে না।",
+    "cancel": "বাতিল",
+    "confirm": "টিম মুছুন",
+    "deleting": "মুছে ফেলা হচ্ছে…"
   }
 }

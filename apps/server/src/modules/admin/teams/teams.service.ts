@@ -71,14 +71,12 @@ export class AdminTeamsService {
     await this.require(id);
     const unique = [...new Set(userIds)];
     await this.teams.addMembers(id, unique);
-    await this.teams.addMembersToChannels(id, unique);
     return this.detail(id);
   }
 
   async removeMember(id: string, userId: string): Promise<{ removed: true }> {
     await this.require(id);
     await this.teams.removeMember(id, userId);
-    await this.teams.removeMemberFromChannels(id, userId);
     return { removed: true };
   }
 

@@ -3,6 +3,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type {
+  AdminCreateUserDto,
   AdminCreateUserInviteDto,
   AdminUpdateUserDto,
   AdminUserListQuery,
@@ -13,13 +14,32 @@ import { adminUsersApi } from '@/features/users/services/users';
 const ADMIN_USERS_KEY = 'admin-users' as const;
 const USER_INVITES_KEY = 'admin-user-invites' as const;
 
-export function useAdminUsers(query: AdminUserListQuery) {
+export function useAdminUsers(query: AdminUserListQuery, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: [ADMIN_USERS_KEY, query],
     queryFn: ({ signal }) => adminUsersApi.list(query, signal),
     placeholderData: keepPreviousData,
     staleTime: 10_000,
     refetchOnWindowFocus: true,
+    enabled: options?.enabled ?? true,
+  });
+}
+
+export function useAdminUser(id: string) {
+  return useQuery({
+    queryKey: [ADMIN_USERS_KEY, 'detail', id],
+    queryFn: ({ signal }) => adminUsersApi.get(id, signal),
+    staleTime: 10_000,
+  });
+}
+
+export function useCreateAdminUser() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (body: AdminCreateUserDto) => adminUsersApi.create(body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+    },
   });
 }
 

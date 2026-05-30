@@ -48,5 +48,12 @@
     "delete-description": "Removing this team also removes access to its channels for every member.",
     "delete-success": "Team deleted",
     "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "Удалить команду?",
+    "description": "{name} будет удалена, и все участники сразу потеряют доступ. Это действие нельзя отменить.",
+    "cancel": "Отмена",
+    "confirm": "Удалить команду",
+    "deleting": "Удаление…"
   }
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { SettingsSubpageShell } from '@/components/settings/settings-subpage-shell';
 import { BrandingForm } from '@/features/branding/components/branding-form';
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function BrandingSettingsPage() {
-  return <BrandingForm />;
+  return (
+    <SettingsSubpageShell titleKey="hub.cards.branding.title">
+      <BrandingForm />
+    </SettingsSubpageShell>
+  );
 }

@@ -1,4 +1,5 @@
 import type {
+  AdminCreateUserDto,
   AdminCreateUserInviteDto,
   AdminUpdateUserDto,
   AdminUserDto,
@@ -91,6 +92,8 @@ export const adminUsersApi = {
 
   get: (id: string, signal?: AbortSignal) =>
     api.get<AdminUserDto>(`/admin/users/${id}`, { signal }),
+
+  create: (body: AdminCreateUserDto) => api.post<AdminUserDto>('/admin/users', body),
 
   update: (id: string, body: AdminUpdateUserDto) =>
     api.patch<AdminUserDto>(`/admin/users/${id}`, body),

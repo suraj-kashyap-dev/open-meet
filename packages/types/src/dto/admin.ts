@@ -123,6 +123,13 @@ export interface AdminUpdateUserDto {
   chatDisabled?: boolean;
 }
 
+/** Payload to directly create an active user with a password (admin-set). */
+export interface AdminCreateUserDto {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export interface AdminMeetingDto {
   id: string;
   code: string;

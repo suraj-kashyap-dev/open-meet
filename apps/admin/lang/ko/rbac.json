@@ -60,6 +60,11 @@
   },
   "permissions": {
     "tree-heading": "권한",
+    "selected-count": "{total}개 중 {count}개 선택됨",
+    "select-all": "모두 선택",
+    "clear": "지우기",
+    "expand-all": "모두 펼치기",
+    "collapse-all": "모두 접기",
     "users": {
       "_self": "사용자",
       "view": "사용자 보기",
