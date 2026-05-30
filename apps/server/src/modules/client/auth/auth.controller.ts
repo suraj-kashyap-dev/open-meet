@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   Logger,
+  Param,
   Patch,
   Post,
   Query,
@@ -20,17 +21,24 @@ import { Throttle } from '@nestjs/throttler';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import type { ApiEnv } from '@open-meet/config';
-import { ApiErrorCode, AuthResponseDto, GoogleAuthStatusDto, UserDto } from '@open-meet/types';
+import {
+  ApiErrorCode,
+  AuthResponseDto,
+  GoogleAuthStatusDto,
+  UserDto,
+  type UserInviteLookupDto,
+  type UserMeResponseDto,
+} from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AuthService, type IssuedTokens } from './auth.service';
 import { AvatarsService } from './avatars.service';
+import { AcceptUserInviteDto } from './dto/accept-user-invite.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { GoogleOAuthService } from './google-oauth.service';
 import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
 const ACCESS_COOKIE = 'access_token';
@@ -58,14 +66,22 @@ export class AuthController {
   ) {}
 
   @Public()
+  @Get('invite/:token')
+  @ApiOperation({ summary: 'Look up a pending user invite by its token' })
+  lookupInvite(@Param('token') token: string): Promise<UserInviteLookupDto> {
+    return this.auth.lookupUserInvite(token);
+  }
+
+  @Public()
   @Throttle(AUTH_THROTTLE)
-  @Post('register')
-  @ApiOperation({ summary: 'Create a new account' })
-  async register(
-    @Body() dto: RegisterDto,
+  @HttpCode(HttpStatus.OK)
+  @Post('invite/accept')
+  @ApiOperation({ summary: 'Accept an invite: set a password and sign in' })
+  async acceptInvite(
+    @Body() dto: AcceptUserInviteDto,
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<AuthResponseDto> {
-    const { user, tokens } = await this.auth.register(dto);
+    const { user, tokens } = await this.auth.acceptUserInvite(dto);
     this.setAuthCookies(res, tokens);
     return { user };
   }
@@ -178,18 +194,19 @@ export class AuthController {
   @Post('logout')
   @ApiOperation({ summary: 'Invalidate refresh token and clear cookies' })
   async logout(
+    @CurrentUser() user: RequestUser,
     @Req() req: FastifyRequest,
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<{ loggedOut: true }> {
-    await this.auth.logout(req.cookies?.[REFRESH_COOKIE]);
+    await this.auth.logout(req.cookies?.[REFRESH_COOKIE], user.id);
     this.clearAuthCookies(res);
     return { loggedOut: true };
   }
 
   @Get('me')
-  @ApiOperation({ summary: 'Return the currently authenticated user' })
-  async me(@CurrentUser() user: RequestUser): Promise<UserDto> {
-    return this.auth.getUserDtoById(user.id);
+  @ApiOperation({ summary: 'Return the currently authenticated user + RBAC context' })
+  async me(@CurrentUser() user: RequestUser): Promise<UserMeResponseDto> {
+    return this.auth.getMe(user.id);
   }
 
   @Patch('me')

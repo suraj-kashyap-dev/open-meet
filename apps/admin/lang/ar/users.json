@@ -11,6 +11,8 @@
     "joined": "تاريخ الانضمام",
     "hosted": "استضاف",
     "attended": "حضر",
+    "chat": "الدردشة",
+    "chat-toggle": "تبديل الوصول إلى الدردشة",
     "actions": "إجراءات",
     "open-actions": "فتح الإجراءات",
     "edit": "تعديل",
@@ -22,6 +24,36 @@
     "previous": "السابق",
     "next": "التالي",
     "page-of": "صفحة {page} من {pageCount}"
+  },
+  "create-dialog": {
+    "button": "مستخدم جديد",
+    "title": "إنشاء مستخدم",
+    "subtitle": "أنشئ حساباً نشطاً بكلمة مرور تحددها. يمكن للمستخدم تسجيل الدخول فوراً.",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "password-helper": "8 أحرف على الأقل. شاركها مع المستخدم بطريقة آمنة.",
+    "cancel": "إلغاء",
+    "submit": "إنشاء المستخدم",
+    "submitting": "جارٍ الإنشاء…",
+    "success": "تم إنشاء {email}",
+    "error": "تعذّر إنشاء المستخدم",
+    "validation": {
+      "name-required": "الاسم مطلوب",
+      "invalid-email": "أدخل بريداً إلكترونياً صالحاً",
+      "password-too-short": "8 أحرف على الأقل",
+      "password-too-long": "طويلة جداً"
+    }
+  },
+  "detail": {
+    "eyebrow": "تعديل المستخدم",
+    "back": "العودة إلى المستخدمين",
+    "subtitle": "حدّث الملف الشخصي أو الإعدادات الإقليمية أو النبذة، أو أعد تعيين كلمة المرور.",
+    "not-found-title": "المستخدم غير موجود",
+    "not-found-description": "ربما تم حذف هذا المستخدم.",
+    "danger-title": "منطقة الخطر",
+    "danger-description": "احذف هذا المستخدم وكل ما أنشأه نهائياً. لا يمكن التراجع عن هذا الإجراء.",
+    "delete": "حذف المستخدم"
   },
   "edit-dialog": {
     "title": "تعديل المستخدم",
@@ -36,6 +68,7 @@
     "timezone-placeholder": "اختر منطقة زمنية",
     "language": "اللغة",
     "language-placeholder": "اختر لغة",
+    "can-create-groups": "يمكنه إنشاء مجموعات",
     "bio": "النبذة",
     "bio-counter": "{count}/500",
     "bio-placeholder": "اختياري",
@@ -76,5 +109,29 @@
     "submitting": "جارٍ الحذف…",
     "success": "تم حذف {email}",
     "error": "تعذّر حذف المستخدم"
+  },
+  "invite": {
+    "button": "دعوة مستخدم",
+    "title": "دعوة مستخدم",
+    "subtitle": "سيتلقون رسالة بريد إلكتروني لتعيين كلمة مرور وتفعيل حسابهم.",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "submit": "إرسال الدعوة",
+    "success": "تم إرسال الدعوة إلى {email}",
+    "error": "تعذّر إرسال الدعوة"
+  },
+  "pending": {
+    "title": "الدعوات المعلّقة",
+    "empty": "لا توجد دعوات معلّقة.",
+    "loading-error": "تعذّر تحميل الدعوات.",
+    "status-pending": "معلّقة",
+    "status-expired": "منتهية الصلاحية",
+    "expires": "تنتهي الصلاحية {when}",
+    "resend-label": "إعادة إرسال الدعوة إلى {email}",
+    "revoke-label": "إلغاء الدعوة لـ {email}",
+    "resend-success": "أُعيد إرسال الدعوة إلى {email}",
+    "resend-error": "تعذّر إعادة إرسال الدعوة",
+    "revoke-success": "تم إلغاء الدعوة لـ {email}",
+    "revoke-error": "تعذّر إلغاء الدعوة"
   }
 }

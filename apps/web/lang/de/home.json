@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "Meet",
+    "subtitle": "Starten Sie ein Sofortmeeting oder treten Sie mit einem Code bei."
+  },
   "greeting": {
     "up-late": "Noch spät wach",
     "good-morning": "Guten Morgen",

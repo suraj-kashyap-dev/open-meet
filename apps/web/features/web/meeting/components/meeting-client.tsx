@@ -1,13 +1,19 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 import type { MeetingDto } from '@open-meet/types';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { consumeJoinPreferences } from '@/features/web/lobby/lib/join-preferences';
+import {
+  clearGuestSession,
+  getGuestSession,
+  viewerFromGuest,
+  viewerFromUser,
+} from '@/features/web/meeting/lib/guest-session';
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 import { livekitApi } from '@/features/web/meeting/services/livekit';
@@ -19,7 +25,7 @@ import { WaitingRoom } from './waiting-room';
 type GuestStage = 'lookup' | 'knocking' | 'admitted';
 
 const Spinner = () => (
-  <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+  <main className="flex h-screen items-center justify-center">
     <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
   </main>
 );
@@ -28,6 +34,11 @@ export function MeetingClient({ code }: { code: string }) {
   const t = useTranslations('meeting');
   const router = useRouter();
   const { data: user, isLoading: userLoading } = useCurrentUser();
+  const guestSession = useMemo(() => getGuestSession(code), [code]);
+  const viewer = useMemo(
+    () => (user ? viewerFromUser(user) : guestSession ? viewerFromGuest(guestSession) : null),
+    [guestSession, user],
+  );
 
   const session = useActiveMeeting((s) => s.session);
   const ended = useActiveMeeting((s) => s.ended);
@@ -59,9 +70,13 @@ export function MeetingClient({ code }: { code: string }) {
   }, [code]);
 
   const proceedToRoom = useCallback(async () => {
+    if (!viewer) {
+      return;
+    }
+
     try {
-      const joined = await meetingsApi.join(code);
-      const lkToken = await livekitApi.token({ meetingCode: code });
+      const joined = await meetingsApi.join(code, guestSession?.token);
+      const lkToken = await livekitApi.token({ meetingCode: code }, guestSession?.token);
 
       startSession({
         code,
@@ -70,18 +85,32 @@ export function MeetingClient({ code }: { code: string }) {
         meeting: joined.meeting,
         audio: joinPrefs?.micEnabled ?? true,
         video: joinPrefs?.cameraEnabled ?? true,
+        viewer,
+        authToken: guestSession?.token ?? null,
       });
     } catch (err) {
+      if (err instanceof ApiClientError && err.statusCode === 401 && guestSession) {
+        clearGuestSession(code);
+        router.replace(`/${code}/lobby`);
+        return;
+      }
+
       const message = err instanceof ApiClientError ? err.message : t('toast.join-meeting-error');
       setError(message);
       toast.error(message);
     }
-  }, [code, t, startSession, joinPrefs]);
+  }, [code, guestSession, joinPrefs, router, startSession, t, viewer]);
+
+  useEffect(() => {
+    if (!userLoading && !viewer && !hasActiveSession && !isEnded) {
+      router.replace(`/${code}/lobby`);
+    }
+  }, [code, hasActiveSession, isEnded, router, userLoading, viewer]);
 
   // Pre-join lookup. Skipped when a session for this code already exists (we
   // returned from the mini-player) or it just ended.
   useEffect(() => {
-    if (!user || userLoading || hasActiveSession || isEnded) {
+    if (!viewer || userLoading || hasActiveSession || isEnded) {
       return;
     }
 
@@ -97,7 +126,7 @@ export function MeetingClient({ code }: { code: string }) {
 
         setMeeting(m);
 
-        if (user!.id !== m.hostId) {
+        if (viewer.id !== m.hostId) {
           setGuestStage('knocking');
         }
       } catch (err) {
@@ -120,17 +149,17 @@ export function MeetingClient({ code }: { code: string }) {
     return () => {
       cancelled = true;
     };
-  }, [code, router, user, userLoading, t, hasActiveSession, isEnded]);
+  }, [code, router, t, userLoading, viewer, hasActiveSession, isEnded]);
 
   useEffect(() => {
-    if (hasActiveSession || isEnded || !meeting || !user || error) {
+    if (hasActiveSession || isEnded || !meeting || !viewer || error) {
       return;
     }
 
-    if (user.id === meeting.hostId) {
+    if (viewer.id === meeting.hostId) {
       void proceedToRoom();
     }
-  }, [meeting, user, error, proceedToRoom, hasActiveSession, isEnded]);
+  }, [meeting, viewer, error, proceedToRoom, hasActiveSession, isEnded]);
 
   const onGuestAdmitted = useCallback(() => {
     setGuestStage('admitted');
@@ -142,25 +171,32 @@ export function MeetingClient({ code }: { code: string }) {
   }
 
   if (hasActiveSession) {
-    return <div className="h-[calc(100vh-3.5rem)]" aria-hidden />;
+    return <div className="h-screen" aria-hidden />;
   }
 
   if (error) {
     return (
-      <main className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+      <main className="flex h-screen items-center justify-center">
         <p className="text-destructive">{error}</p>
       </main>
     );
   }
 
-  if (!meeting || !user) {
+  if (!meeting || !viewer) {
     return <Spinner />;
   }
 
-  const isHost = user.id === meeting.hostId;
+  const isHost = viewer.id === meeting.hostId;
 
   if (!isHost && guestStage !== 'admitted') {
-    return <WaitingRoom code={code} displayName={user.name} onAdmitted={onGuestAdmitted} />;
+    return (
+      <WaitingRoom
+        code={code}
+        displayName={viewer.name}
+        authToken={guestSession?.token}
+        onAdmitted={onGuestAdmitted}
+      />
+    );
   }
 
   return <Spinner />;

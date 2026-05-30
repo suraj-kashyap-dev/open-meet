@@ -11,6 +11,8 @@
     "joined": "Entrato",
     "hosted": "Ospitate",
     "attended": "Partecipate",
+    "chat": "Chat",
+    "chat-toggle": "Attiva/disattiva accesso alla chat",
     "actions": "Azioni",
     "open-actions": "Apri azioni",
     "edit": "Modifica",
@@ -22,6 +24,36 @@
     "previous": "Precedente",
     "next": "Successivo",
     "page-of": "Pagina {page} di {pageCount}"
+  },
+  "create-dialog": {
+    "button": "Nuovo utente",
+    "title": "Crea un utente",
+    "subtitle": "Crea un account attivo con una password impostata da te. L'utente può accedere subito.",
+    "name": "Nome",
+    "email": "Email",
+    "password": "Password",
+    "password-helper": "Almeno 8 caratteri. Condividila in modo sicuro con l'utente.",
+    "cancel": "Annulla",
+    "submit": "Crea utente",
+    "submitting": "Creazione…",
+    "success": "{email} creato",
+    "error": "Impossibile creare l'utente",
+    "validation": {
+      "name-required": "Il nome è obbligatorio",
+      "invalid-email": "Inserisci un'email valida",
+      "password-too-short": "Almeno 8 caratteri",
+      "password-too-long": "Troppo lunga"
+    }
+  },
+  "detail": {
+    "eyebrow": "Modifica utente",
+    "back": "Torna agli utenti",
+    "subtitle": "Aggiorna profilo, localizzazione, biografia o reimposta la password.",
+    "not-found-title": "Utente non trovato",
+    "not-found-description": "Questo utente potrebbe essere stato eliminato.",
+    "danger-title": "Zona pericolosa",
+    "danger-description": "Elimina definitivamente questo utente e tutto ciò che ha creato. Questa azione non può essere annullata.",
+    "delete": "Elimina utente"
   },
   "edit-dialog": {
     "title": "Modifica utente",
@@ -36,6 +68,7 @@
     "timezone-placeholder": "Scegli un fuso orario",
     "language": "Lingua",
     "language-placeholder": "Scegli una lingua",
+    "can-create-groups": "Può creare gruppi",
     "bio": "Biografia",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Facoltativo",
@@ -76,5 +109,29 @@
     "submitting": "Eliminazione in corso…",
     "success": "{email} eliminato",
     "error": "Impossibile eliminare l'utente"
+  },
+  "invite": {
+    "button": "Invita utente",
+    "title": "Invita un utente",
+    "subtitle": "Riceveranno un'email per impostare una password e attivare il proprio account.",
+    "name": "Nome",
+    "email": "Email",
+    "submit": "Invia invito",
+    "success": "Invito inviato a {email}",
+    "error": "Impossibile inviare l'invito"
+  },
+  "pending": {
+    "title": "Inviti in sospeso",
+    "empty": "Nessun invito in sospeso.",
+    "loading-error": "Impossibile caricare gli inviti.",
+    "status-pending": "In sospeso",
+    "status-expired": "Scaduto",
+    "expires": "Scade {when}",
+    "resend-label": "Reinvia invito a {email}",
+    "revoke-label": "Revoca invito per {email}",
+    "resend-success": "Invito reinviato a {email}",
+    "resend-error": "Impossibile reinviare l'invito",
+    "revoke-success": "Invito per {email} revocato",
+    "revoke-error": "Impossibile revocare l'invito"
   }
 }

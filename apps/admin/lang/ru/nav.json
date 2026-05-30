@@ -6,16 +6,18 @@
   "sections": {
     "overview": "Обзор",
     "manage": "Управление",
-    "insights": "Аналитика",
     "system": "Система"
   },
   "items": {
     "dashboard": "Панель управления",
     "users": "Пользователи",
+    "teams": "Команды",
+    "groups": "Группы",
     "meetings": "Встречи",
-    "analytics": "Аналитика",
     "settings": "Настройки",
     "administrators": "Администраторы",
+    "roles": "Роли администраторов",
+    "user-roles": "Роли пользователей",
     "branding": "Брендинг",
     "configuration": "Конфигурация",
     "more": "Ещё"

@@ -48,7 +48,13 @@ describe('WsJwtGuard', () => {
         handshake: { auth: { token: 'tok' }, headers: {} },
       };
       await expect(guard.canActivate(contextWith(socket as never))).resolves.toBe(true);
-      expect(socket.data.user).toEqual({ id: 'u1', email: 'a@x.com', name: 'Alice' });
+      expect(socket.data.user).toEqual({
+        id: 'u1',
+        email: 'a@x.com',
+        name: 'Alice',
+        isGuest: false,
+        guestMeetingCode: null,
+      });
     });
 
     it('should reject when verification fails', async () => {

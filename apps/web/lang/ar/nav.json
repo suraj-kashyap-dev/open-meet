@@ -7,6 +7,20 @@
     "sign-out": "تسجيل الخروج"
   },
   "user-menu-label": "فتح قائمة الحساب",
+  "chat-link-label": "فتح الدردشة",
+  "activity-link-label": "النشاط",
+  "teams-link-label": "الفِرَق",
+  "saved-link-label": "المحفوظات",
+  "search-placeholder": "بحث",
+  "rail": {
+    "label": "أساسي",
+    "chat": "الدردشة",
+    "meet": "اجتماع",
+    "teams": "الفِرَق",
+    "activity": "النشاط",
+    "saved": "المحفوظات",
+    "history": "السجل"
+  },
   "command": {
     "placeholder": "اكتب أمرًا أو رمز اجتماع…",
     "no-results": "لا توجد نتائج.",

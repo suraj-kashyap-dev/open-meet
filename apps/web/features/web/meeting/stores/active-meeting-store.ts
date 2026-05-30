@@ -4,6 +4,13 @@ import { create } from 'zustand';
 
 import type { MeetingDto } from '@open-meet/types';
 
+export interface MeetingViewer {
+  id: string;
+  name: string;
+  avatar: string | null;
+  isGuest: boolean;
+}
+
 export interface ActiveMeetingSession {
   code: string;
   token: string;
@@ -11,6 +18,8 @@ export interface ActiveMeetingSession {
   meeting: MeetingDto;
   audio: boolean;
   video: boolean;
+  viewer: MeetingViewer;
+  authToken: string | null;
 }
 
 export interface MiniPosition {

@@ -124,6 +124,24 @@ export class UploadsService {
     }
   }
 
+  async claimForChat(
+    attachmentIds: string[],
+    uploaderId: string,
+    chatMessageId: string,
+  ): Promise<void> {
+    if (attachmentIds.length === 0) {
+      return;
+    }
+
+    const linked = await this.uploads.claimForChat(attachmentIds, uploaderId, chatMessageId);
+
+    if (linked < attachmentIds.length) {
+      this.logger.warn(
+        `Chat message ${chatMessageId}: only ${linked}/${attachmentIds.length} attachments were claimable for user ${uploaderId}`,
+      );
+    }
+  }
+
   toDto(a: Attachment): AttachmentDto {
     return {
       id: a.id,

@@ -5,7 +5,6 @@ import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fa
 import { Test } from '@nestjs/testing';
 import fastifyCookie from '@fastify/cookie';
 import fastifyMultipart from '@fastify/multipart';
-import { AdminRole } from '@prisma/client';
 import * as argon2 from 'argon2';
 import request from 'supertest';
 
@@ -66,7 +65,7 @@ export function http(app: NestFastifyApplication) {
 export async function resetDb(app: NestFastifyApplication): Promise<void> {
   const prisma = app.get(PrismaService);
   await prisma.$executeRawUnsafe(
-    'TRUNCATE TABLE "Attachment","Message","Participant","MeetingInvite","Recording","UserSettings","Meeting","User","AdminInvite","Admin","WorkspaceSettings" RESTART IDENTITY CASCADE',
+    'TRUNCATE TABLE "Attachment","Message","Participant","MeetingInvite","Recording","PollVote","PollOption","Poll","MessageReaction","MessageMention","PinnedMessage","SavedMessage","ChatMessage","ConversationMember","Conversation","TeamMember","Team","UserPresence","UserInvite","UserSettings","Meeting","User","AdminInvite","Admin","WorkspaceSettings" RESTART IDENTITY CASCADE',
   );
 }
 
@@ -85,6 +84,8 @@ interface Creds {
 // don't leak an un-nameable @types/superagent path (TS2883).
 type SupertestResponse = Awaited<ReturnType<ReturnType<typeof request>['post']>>;
 
+// Public signup is invite-only, so e2e seeds a verified user directly and logs
+// in to obtain session cookies (same return shape the suites already rely on).
 export async function registerUser(
   app: NestFastifyApplication,
   creds: Creds,
@@ -93,19 +94,35 @@ export async function registerUser(
   user: { id: string; email: string } | undefined;
   cookie: string;
 }> {
+  const prisma = app.get(PrismaService);
+  const passwordHash = await argon2.hash(creds.password, { type: argon2.argon2id });
+  const created = await prisma.user.create({
+    data: {
+      name: creds.name ?? 'Test User',
+      email: creds.email.toLowerCase(),
+      passwordHash,
+      emailVerifiedAt: new Date(),
+    },
+  });
+
   const res = await http(app)
-    .post('/api/auth/register')
-    .send({ name: creds.name ?? 'Test User', email: creds.email, password: creds.password });
+    .post('/api/auth/login')
+    .send({ email: creds.email, password: creds.password });
+
   return {
     res,
-    user: res.body?.data?.user as { id: string; email: string } | undefined,
+    user: (res.body?.data?.user as { id: string; email: string } | undefined) ?? {
+      id: created.id,
+      email: created.email,
+    },
     cookie: cookieHeader(res.headers['set-cookie']),
   };
 }
 
+/** Seed an admin with an RBAC role. Defaults to the Administrator role (ALL bypass). */
 export async function seedAdmin(
   app: NestFastifyApplication,
-  creds: Creds & { role?: AdminRole },
+  creds: Creds & { roleRecordId?: string },
 ): Promise<void> {
   const prisma = app.get(PrismaService);
   const passwordHash = await argon2.hash(creds.password, { type: argon2.argon2id });
@@ -114,7 +131,7 @@ export async function seedAdmin(
       email: creds.email.toLowerCase(),
       name: creds.name ?? 'Admin',
       passwordHash,
-      role: creds.role ?? AdminRole.SUPERADMIN,
+      roleRecordId: creds.roleRecordId ?? 'role_sys_admin',
     },
   });
 }

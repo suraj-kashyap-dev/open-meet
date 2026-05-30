@@ -10,7 +10,7 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { type Admin, type AdminInvite, AdminRole } from '@prisma/client';
+import type { Admin, AdminInvite, AdminRoleRecord } from '@prisma/client';
 import * as argon2 from 'argon2';
 
 import { I18nContext, I18nService } from 'nestjs-i18n';
@@ -35,11 +35,15 @@ import { MailService } from '../../../integrations/mail/mail.service';
 import { StorageService } from '../../../storage/storage.service';
 
 import { AdminRepository } from '../admin.repository';
-import { AdminInviteRepository } from './admin-invite.repository';
+import { AdminPermissionResolver } from '../rbac/admin-permission-resolver.service';
+import { AdminRoleRepository } from '../rbac/admin-role.repository';
+import {
+  SYSTEM_ADMIN_ROLE_ID,
+  SYSTEM_MEMBER_ROLE_ID,
+} from '../rbac/admin-rbac-seed.service';
+import { AdminInviteRepository, type AdminInviteWithInviter } from './admin-invite.repository';
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
-
-type InviteWithOptionalInviter = AdminInvite & { invitedBy?: { name: string } | null };
 
 @Injectable()
 export class AdminAccountsService {
@@ -52,6 +56,8 @@ export class AdminAccountsService {
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly i18n: I18nService,
     private readonly storage: StorageService,
+    private readonly roles: AdminRoleRepository,
+    private readonly resolver: AdminPermissionResolver,
   ) {}
 
   /** Locale resolved for the current request, falling back to English. */
@@ -66,7 +72,12 @@ export class AdminAccountsService {
 
   async list(): Promise<AdminAccountListResponseDto> {
     const rows = await this.admins.list();
-    return { items: rows.map((a) => this.toDto(a)) };
+    const roleIds = Array.from(new Set(rows.map((r) => r.roleRecordId).filter((id): id is string => Boolean(id))));
+    const roles = await Promise.all(roleIds.map((id) => this.roles.findById(id)));
+    const byId = new Map(roles.filter((r): r is AdminRoleRecord => Boolean(r)).map((r) => [r.id, r]));
+    return {
+      items: rows.map((a) => this.toDto(a, a.roleRecordId ? byId.get(a.roleRecordId) ?? null : null)),
+    };
   }
 
   async listInvites(): Promise<AdminInviteListResponseDto> {
@@ -94,18 +105,20 @@ export class AdminAccountsService {
       });
     }
 
+    const roleId = await this.resolveRoleIdOrDefault(dto.roleId);
     const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
     const created = await this.admins.create({
       email,
       name,
       passwordHash,
-      role: dto.role ?? AdminRole.ADMIN,
+      roleRecordId: roleId,
     });
 
     // The account now exists, so any outstanding invite for this email is moot.
     await this.invites.deleteByEmail(email);
 
-    return this.toDto(created);
+    const role = await this.roles.findById(roleId);
+    return this.toDto(created, role);
   }
 
   async createInvite(actingAdminId: string, dto: AdminCreateInviteDto): Promise<AdminInviteDto> {
@@ -128,13 +141,14 @@ export class AdminAccountsService {
       });
     }
 
+    const roleId = await this.resolveRoleIdOrDefault(dto.roleId);
     const { token, tokenHash } = this.generateToken();
     const expiresAt = new Date(Date.now() + INVITE_TTL_MS);
 
     const invite = await this.invites.upsertByEmail({
       email,
       name,
-      role: dto.role ?? AdminRole.ADMIN,
+      roleRecordId: roleId,
       tokenHash,
       invitedById: actingAdminId,
       expiresAt,
@@ -142,7 +156,8 @@ export class AdminAccountsService {
 
     await this.sendInviteEmail({ email, name, token, expiresAt });
 
-    return this.toInviteDto(invite);
+    const role = await this.roles.findById(roleId);
+    return this.toInviteDto({ ...invite, invitedBy: null, roleRecord: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null });
   }
 
   async resendInvite(id: string): Promise<AdminInviteDto> {
@@ -161,7 +176,12 @@ export class AdminAccountsService {
 
     await this.sendInviteEmail({ email: updated.email, name: updated.name, token, expiresAt });
 
-    return this.toInviteDto(updated);
+    const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+    return this.toInviteDto({
+      ...updated,
+      invitedBy: null,
+      roleRecord: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
+    });
   }
 
   async revokeInvite(id: string): Promise<{ deleted: true }> {
@@ -180,11 +200,12 @@ export class AdminAccountsService {
 
   async lookupInvite(token: string): Promise<AdminInviteLookupDto> {
     const invite = await this.requireValidInvite(token);
+    const role = invite.roleRecordId ? await this.roles.findById(invite.roleRecordId) : null;
 
     return {
       email: invite.email,
       name: invite.name,
-      role: invite.role,
+      role: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
       expiresAt: invite.expiresAt.toISOString(),
     };
   }
@@ -205,16 +226,18 @@ export class AdminAccountsService {
     }
 
     const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
+    const roleId = invite.roleRecordId ?? SYSTEM_MEMBER_ROLE_ID;
     const created = await this.admins.create({
       email: invite.email,
       name: invite.name,
       passwordHash,
-      role: invite.role,
+      roleRecordId: roleId,
     });
 
     await this.invites.delete(invite.id);
 
-    return this.toDto(created);
+    const role = await this.roles.findById(roleId);
+    return this.toDto(created, role);
   }
 
   async update(id: string, dto: AdminUpdateAccountDto): Promise<AdminAccountDto> {
@@ -227,7 +250,7 @@ export class AdminAccountsService {
       });
     }
 
-    const data: { name?: string; role?: AdminRole } = {};
+    const data: { name?: string } = {};
 
     if (dto.name !== undefined) {
       const name = dto.name.trim();
@@ -242,10 +265,15 @@ export class AdminAccountsService {
       data.name = name;
     }
 
-    if (dto.role !== undefined && dto.role !== target.role) {
-      if (target.role === AdminRole.SUPERADMIN && dto.role !== AdminRole.SUPERADMIN) {
-        const remaining = await this.admins.countByRole(AdminRole.SUPERADMIN);
+    let updated: Admin = target;
+    if (Object.keys(data).length > 0) {
+      updated = await this.admins.update(id, data);
+    }
 
+    if (dto.roleId !== undefined && dto.roleId !== target.roleRecordId) {
+      // Block demoting the last Administrator-role admin.
+      if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID && dto.roleId !== SYSTEM_ADMIN_ROLE_ID) {
+        const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
         if (remaining <= 1) {
           throw new ForbiddenException({
             code: ApiErrorCode.FORBIDDEN,
@@ -253,16 +281,11 @@ export class AdminAccountsService {
           });
         }
       }
-
-      data.role = dto.role;
+      updated = await this.assignRoleInternal(id, dto.roleId);
     }
 
-    if (Object.keys(data).length === 0) {
-      return this.toDto(target);
-    }
-
-    const updated = await this.admins.update(id, data);
-    return this.toDto(updated);
+    const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+    return this.toDto(updated, role);
   }
 
   async delete(actingAdminId: string, targetId: string): Promise<{ deleted: true }> {
@@ -282,8 +305,8 @@ export class AdminAccountsService {
       });
     }
 
-    if (target.role === AdminRole.SUPERADMIN) {
-      const remaining = await this.admins.countByRole(AdminRole.SUPERADMIN);
+    if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID) {
+      const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
 
       if (remaining <= 1) {
         throw new ForbiddenException({
@@ -295,6 +318,61 @@ export class AdminAccountsService {
 
     await this.admins.delete(targetId);
     return { deleted: true };
+  }
+
+  /**
+   * Assign an RBAC role to an admin. After this call, the affected admin must re-login
+   * for their JWT to carry the new roleId — current sessions still use the old roleId
+   * until token expiry. The acting admin is unaffected.
+   */
+  async assignRole(targetId: string, roleId: string): Promise<AdminAccountDto> {
+    const target = await this.admins.findById(targetId);
+    if (!target) {
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: this.t('errors.admin-not-found'),
+      });
+    }
+
+    // Block demoting the last Administrator-role admin.
+    if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID && roleId !== SYSTEM_ADMIN_ROLE_ID) {
+      const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
+      if (remaining <= 1) {
+        throw new ForbiddenException({
+          code: ApiErrorCode.FORBIDDEN,
+          message: this.t('errors.cannot-demote-last-superadmin'),
+        });
+      }
+    }
+
+    const updated = await this.assignRoleInternal(targetId, roleId);
+    const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+    return this.toDto(updated, role);
+  }
+
+  private async assignRoleInternal(adminId: string, roleId: string): Promise<Admin> {
+    const role = await this.roles.findById(roleId);
+    if (!role) {
+      throw new NotFoundException({
+        code: ApiErrorCode.ROLE_NOT_FOUND,
+        message: this.t('errors.role-not-found'),
+      });
+    }
+    const updated = await this.admins.updateRoleRecord(adminId, roleId);
+    this.resolver.invalidate(roleId);
+    return updated;
+  }
+
+  private async resolveRoleIdOrDefault(roleId: string | undefined): Promise<string> {
+    if (!roleId) return SYSTEM_MEMBER_ROLE_ID;
+    const role = await this.roles.findById(roleId);
+    if (!role) {
+      throw new NotFoundException({
+        code: ApiErrorCode.ROLE_NOT_FOUND,
+        message: this.t('errors.role-not-found'),
+      });
+    }
+    return role.id;
   }
 
   private async requireValidInvite(token: string): Promise<AdminInvite> {
@@ -378,14 +456,14 @@ export class AdminAccountsService {
     });
   }
 
-  private toInviteDto(invite: InviteWithOptionalInviter): AdminInviteDto {
+  private toInviteDto(invite: AdminInviteWithInviter): AdminInviteDto {
     const expired = invite.expiresAt.getTime() < Date.now();
 
     return {
       id: invite.id,
       email: invite.email,
       name: invite.name,
-      role: invite.role,
+      role: invite.roleRecord ?? null,
       status: expired ? AdminInviteStatus.EXPIRED : AdminInviteStatus.PENDING,
       invitedByName: invite.invitedBy?.name ?? null,
       expiresAt: invite.expiresAt.toISOString(),
@@ -393,12 +471,14 @@ export class AdminAccountsService {
     };
   }
 
-  private toDto(admin: Admin): AdminAccountDto {
+  private toDto(admin: Admin, role: AdminRoleRecord | null): AdminAccountDto {
     return {
       id: admin.id,
       email: admin.email,
       name: admin.name,
-      role: admin.role,
+      role: role
+        ? { id: role.id, name: role.name, permissionType: role.permissionType }
+        : null,
       avatar: admin.avatarKey ? this.storage.publicUrl(admin.avatarKey) : null,
       createdAt: admin.createdAt.toISOString(),
       lastLoginAt: admin.lastLoginAt?.toISOString() ?? null,

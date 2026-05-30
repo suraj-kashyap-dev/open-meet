@@ -1,0 +1,59 @@
+{
+  "eyebrow": "Gestisci",
+  "title": "Team",
+  "subtitle": "I team decidono chi può inviare messaggi a chi: gli utenti possono inviare DM a chiunque in un team condiviso.",
+  "empty": "Ancora nessun team.",
+  "columns": {
+    "name": "Nome",
+    "members": "Membri"
+  },
+  "actions": {
+    "manage": "Gestisci membri",
+    "delete": "Elimina team"
+  },
+  "create": {
+    "button": "Nuovo team",
+    "title": "Crea team",
+    "name": "Nome del team",
+    "placeholder": "es. Ingegneria",
+    "submit": "Crea",
+    "success": "Team creato",
+    "error": "Impossibile creare il team"
+  },
+  "manage": {
+    "title": "Membri",
+    "members": "{count, plural, one {# membro} other {# membri}}",
+    "add": "Aggiungi membri",
+    "search": "Cerca utenti",
+    "no-users": "Nessun utente trovato.",
+    "add-confirm": "Aggiungi",
+    "empty": "Ancora nessun membro.",
+    "remove": "Rimuovi membro"
+  },
+  "channels": {
+    "title": "Canali",
+    "empty": "Ancora nessun canale.",
+    "general": "Generale",
+    "add": "Aggiungi canale",
+    "delete": "Elimina canale",
+    "name-placeholder": "Nome del nuovo canale"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Team updated",
+    "request-error": "Could not update this team",
+    "empty-title": "Team not found",
+    "empty-description": "This team may have been removed or you may not have access to it.",
+    "delete-description": "Removing this team also removes access to its channels for every member.",
+    "delete-success": "Team deleted",
+    "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "Eliminare il team?",
+    "description": "{name} verrà eliminato e ogni membro perderà subito l'accesso. Questa operazione non può essere annullata.",
+    "cancel": "Annulla",
+    "confirm": "Elimina team",
+    "deleting": "Eliminazione…"
+  }
+}

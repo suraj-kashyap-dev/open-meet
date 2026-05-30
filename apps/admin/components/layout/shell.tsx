@@ -47,12 +47,10 @@ export function Shell({
             : 'transition-[padding] duration-200 ease-out lg:ps-16'
         }
       >
-        <div className="hidden lg:block">
-          <Topbar
-            desktopSidebarOpen={desktopSidebarOpen}
-            onToggleDesktopSidebar={toggleDesktopSidebar}
-          />
-        </div>
+        <Topbar
+          desktopSidebarOpen={desktopSidebarOpen}
+          onToggleDesktopSidebar={toggleDesktopSidebar}
+        />
 
         <MobileHeader />
 

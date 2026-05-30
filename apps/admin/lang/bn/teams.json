@@ -1,0 +1,59 @@
+{
+  "eyebrow": "ম্যানেজ",
+  "title": "টিম",
+  "subtitle": "টিম নির্ধারণ করে কে কাকে বার্তা পাঠাতে পারবে — ব্যবহারকারীরা একটি যৌথ টিমের যে কাউকে DM করতে পারে।",
+  "empty": "এখনো কোনো টিম নেই।",
+  "columns": {
+    "name": "নাম",
+    "members": "সদস্য"
+  },
+  "actions": {
+    "manage": "সদস্য পরিচালনা করুন",
+    "delete": "টিম মুছুন"
+  },
+  "create": {
+    "button": "নতুন টিম",
+    "title": "টিম তৈরি করুন",
+    "name": "টিমের নাম",
+    "placeholder": "যেমন ইঞ্জিনিয়ারিং",
+    "submit": "তৈরি করুন",
+    "success": "টিম তৈরি হয়েছে",
+    "error": "টিম তৈরি করা যায়নি"
+  },
+  "manage": {
+    "title": "সদস্য",
+    "members": "{count, plural, one {# সদস্য} other {# সদস্য}}",
+    "add": "সদস্য যোগ করুন",
+    "search": "ব্যবহারকারী অনুসন্ধান করুন",
+    "no-users": "কোনো ব্যবহারকারী পাওয়া যায়নি।",
+    "add-confirm": "যোগ করুন",
+    "empty": "এখনো কোনো সদস্য নেই।",
+    "remove": "সদস্য সরান"
+  },
+  "channels": {
+    "title": "চ্যানেল",
+    "empty": "এখনো কোনো চ্যানেল নেই।",
+    "general": "সাধারণ",
+    "add": "চ্যানেল যোগ করুন",
+    "delete": "চ্যানেল মুছুন",
+    "name-placeholder": "নতুন চ্যানেলের নাম"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Team updated",
+    "request-error": "Could not update this team",
+    "empty-title": "Team not found",
+    "empty-description": "This team may have been removed or you may not have access to it.",
+    "delete-description": "Removing this team also removes access to its channels for every member.",
+    "delete-success": "Team deleted",
+    "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "টিম মুছবেন?",
+    "description": "{name} মুছে ফেলা হবে এবং প্রতিটি সদস্য সঙ্গে সঙ্গে অ্যাক্সেস হারাবে। এটি আর ফেরানো যাবে না।",
+    "cancel": "বাতিল",
+    "confirm": "টিম মুছুন",
+    "deleting": "মুছে ফেলা হচ্ছে…"
+  }
+}

@@ -29,7 +29,7 @@ export function useHistoryList(page: number, pageSize = 20) {
 export function useHistoryMeeting(code: string | undefined) {
   return useQuery<MeetingDto>({
     queryKey: [HISTORY_MEETING_KEY, code],
-    queryFn: ({ signal }) => meetingsApi.get(code as string, signal),
+    queryFn: ({ signal }) => meetingsApi.get(code as string, { signal }),
     enabled: Boolean(code),
     staleTime: 60_000,
   });

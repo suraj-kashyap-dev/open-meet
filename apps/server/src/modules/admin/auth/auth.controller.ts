@@ -16,7 +16,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import type { AdminDto, AdminLoginResponseDto } from '@open-meet/types';
+import type { AdminDto, AdminLoginResponseDto, AdminMeResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
@@ -74,9 +74,9 @@ export class AdminAuthController {
   @Public()
   @UseGuards(AdminAuthGuard)
   @Get('me')
-  @ApiOperation({ summary: 'Return the currently authenticated admin' })
-  me(@CurrentAdmin() admin: AdminRequestUser): Promise<AdminDto> {
-    return this.auth.getAdminDtoById(admin.id);
+  @ApiOperation({ summary: 'Return the currently authenticated admin + RBAC context' })
+  me(@CurrentAdmin() admin: AdminRequestUser): Promise<AdminMeResponseDto> {
+    return this.auth.getMe(admin.id);
   }
 
   @Public()

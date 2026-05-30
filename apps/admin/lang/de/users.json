@@ -11,6 +11,8 @@
     "joined": "Beigetreten",
     "hosted": "Gehostet",
     "attended": "Teilgenommen",
+    "chat": "Chat",
+    "chat-toggle": "Chat-Zugang umschalten",
     "actions": "Aktionen",
     "open-actions": "Aktionen öffnen",
     "edit": "Bearbeiten",
@@ -22,6 +24,36 @@
     "previous": "Zurück",
     "next": "Weiter",
     "page-of": "Seite {page} von {pageCount}"
+  },
+  "create-dialog": {
+    "button": "Neuer Benutzer",
+    "title": "Benutzer erstellen",
+    "subtitle": "Erstellen Sie ein aktives Konto mit einem von Ihnen festgelegten Passwort. Der Benutzer kann sich sofort anmelden.",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "password-helper": "Mindestens 8 Zeichen. Teilen Sie es sicher mit dem Benutzer.",
+    "cancel": "Abbrechen",
+    "submit": "Benutzer erstellen",
+    "submitting": "Wird erstellt…",
+    "success": "{email} erstellt",
+    "error": "Der Benutzer konnte nicht erstellt werden",
+    "validation": {
+      "name-required": "Name ist erforderlich",
+      "invalid-email": "Geben Sie eine gültige E-Mail-Adresse ein",
+      "password-too-short": "Mindestens 8 Zeichen",
+      "password-too-long": "Zu lang"
+    }
+  },
+  "detail": {
+    "eyebrow": "Benutzer bearbeiten",
+    "back": "Zurück zu den Benutzern",
+    "subtitle": "Profil, Lokalisierung, Biografie aktualisieren oder Passwort zurücksetzen.",
+    "not-found-title": "Benutzer nicht gefunden",
+    "not-found-description": "Dieser Benutzer wurde möglicherweise gelöscht.",
+    "danger-title": "Gefahrenzone",
+    "danger-description": "Diesen Benutzer und alles, was er erstellt hat, dauerhaft löschen. Dies kann nicht rückgängig gemacht werden.",
+    "delete": "Benutzer löschen"
   },
   "edit-dialog": {
     "title": "Benutzer bearbeiten",
@@ -36,6 +68,7 @@
     "timezone-placeholder": "Zeitzone auswählen",
     "language": "Sprache",
     "language-placeholder": "Sprache auswählen",
+    "can-create-groups": "Kann Gruppen erstellen",
     "bio": "Biografie",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Optional",
@@ -76,5 +109,29 @@
     "submitting": "Wird gelöscht…",
     "success": "{email} gelöscht",
     "error": "Benutzer konnte nicht gelöscht werden"
+  },
+  "invite": {
+    "button": "Benutzer einladen",
+    "title": "Einen Benutzer einladen",
+    "subtitle": "Sie erhalten eine E-Mail, um ein Passwort festzulegen und ihr Konto zu aktivieren.",
+    "name": "Name",
+    "email": "E-Mail",
+    "submit": "Einladung senden",
+    "success": "Einladung an {email} gesendet",
+    "error": "Einladung konnte nicht gesendet werden"
+  },
+  "pending": {
+    "title": "Ausstehende Einladungen",
+    "empty": "Keine ausstehenden Einladungen.",
+    "loading-error": "Einladungen konnten nicht geladen werden.",
+    "status-pending": "Ausstehend",
+    "status-expired": "Abgelaufen",
+    "expires": "Läuft ab {when}",
+    "resend-label": "Einladung an {email} erneut senden",
+    "revoke-label": "Einladung für {email} widerrufen",
+    "resend-success": "Einladung erneut an {email} gesendet",
+    "resend-error": "Einladung konnte nicht erneut gesendet werden",
+    "revoke-success": "Einladung für {email} widerrufen",
+    "revoke-error": "Einladung konnte nicht widerrufen werden"
   }
 }

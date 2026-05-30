@@ -10,7 +10,11 @@
     "active-now": "Şu an aktif",
     "active-now-hint": "Durumu ACTIVE olan odalar",
     "messages-24h": "24s Mesajlar",
-    "messages-24h-hint": "Son 24 saatteki sohbet mesajları"
+    "messages-24h-hint": "Son 24 saatteki sohbet mesajları",
+    "groups": "Gruplar",
+    "groups-hint": "Oluşturulan grup sohbetleri",
+    "teams": "Takımlar",
+    "teams-hint": "Çalışma alanındaki takımlar"
   },
   "trends": {
     "signups": "Yeni kayıtlar",

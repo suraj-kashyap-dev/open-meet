@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "Sohbet",
+    "subtitle": "Doğrudan mesajlarınız ve grup sohbetleri.",
+    "new": "Yeni mesaj",
+    "recent": "Son",
+    "filter": "Filtrele",
+    "start-meeting": "Toplantı başlat",
+    "compose": "Yeni sohbet",
+    "search": "Sohbetlerde ara",
+    "loading": "Yükleniyor…",
+    "empty": "Henüz sohbet yok.",
+    "untitled": "Sohbet",
+    "attachment": "Ek",
+    "no-messages": "Henüz mesaj yok",
+    "actions": "Sohbet işlemleri",
+    "pin-chat": "Üste sabitle",
+    "unpin-chat": "Sabitlemeyi kaldır",
+    "mute": "Sessize al",
+    "unmute": "Sesi aç",
+    "mark-unread": "Okunmadı olarak işaretle",
+    "hide": "Gizle",
+    "unhide": "Göster",
+    "show-hidden": "Gizli sohbetleri göster",
+    "hide-confirmed": "Sohbet gizlendi",
+    "hide-undo": "Geri al"
+  },
+  "view": {
+    "empty": "Sohbete başlamak için bir konuşma seçin.",
+    "no-messages": "Henüz mesaj yok. Merhaba deyin!",
+    "loading": "Sohbet yükleniyor…",
+    "not-found": "Sohbet bulunamadı.",
+    "back": "Sohbetlere dön",
+    "jump-to-latest": "En sona git",
+    "peer-disabled": "Bu kullanıcı için sohbet devre dışı.",
+    "you-disabled": "Sohbet erişiminiz devre dışı bırakıldı.",
+    "no-send-permission": "Mesaj gönderme izniniz yok."
+  },
+  "header": {
+    "members": "{count, plural, one {# üye} other {# üye}}",
+    "actions": "Konuşma işlemleri",
+    "clear": "Sohbeti temizle",
+    "delete": "Sohbeti sil",
+    "clear-confirmed": "Mesajlar görünümünüzden temizlendi",
+    "delete-confirmed": "Sohbet silindi"
+  },
+  "presence": {
+    "online": "Çevrimiçi",
+    "offline": "Çevrimdışı",
+    "last-seen": "Son görülme {time}",
+    "set-status": "Durumunuzu ayarlayın",
+    "available": "Müsait",
+    "busy": "Meşgul",
+    "dnd": "Rahatsız etmeyin",
+    "brb": "Hemen dönerim",
+    "away": "Uzakta"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "GIF ara",
+    "empty": "GIF bulunamadı."
+  },
+  "bubble": {
+    "you": "Siz",
+    "unknown-user": "Bilinmiyor",
+    "deleted": "Bu mesaj silindi",
+    "edited": "(düzenlendi)",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "reply": "Yanıtla",
+    "more": "Diğer işlemler",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "pinned": "Sabitlendi",
+    "pin": "Sabitle",
+    "unpin": "Sabitlemeyi kaldır",
+    "save-message": "Kaydet",
+    "unsave-message": "Kaydedilenlerden kaldır",
+    "forward": "İlet",
+    "copy-link": "Bağlantıyı kopyala",
+    "link-copied": "Bağlantı kopyalandı"
+  },
+  "priority": {
+    "normal": "Standart",
+    "important": "Önemli",
+    "urgent": "Acil",
+    "label": "Öncelik"
+  },
+  "forward": {
+    "title": "Şuraya ilet…",
+    "success": "Mesaj iletildi",
+    "error": "Mesaj iletilemedi"
+  },
+  "receipts": {
+    "seen": "Görüldü",
+    "seen-by": "{count} kişi tarafından görüldü"
+  },
+  "typing": {
+    "one": "{name} yazıyor…",
+    "many": "{count} kişi yazıyor…"
+  },
+  "composer": {
+    "placeholder": "Bir mesaj yazın…",
+    "send": "Mesaj gönder",
+    "attach-file": "Dosya ekle",
+    "take-photo": "Fotoğraf çek",
+    "cancel-reply": "Yanıtı iptal et",
+    "uploading": "Yükleniyor… {percent}%",
+    "failed": "Başarısız",
+    "remove-attachment": "Eki kaldır",
+    "max-attachments": "En fazla {max} dosya ekleyebilirsiniz.",
+    "wait-for-uploads": "Yüklemelerin bitmesini bekleyin.",
+    "upload-failed": "Yükleme başarısız",
+    "poll-failed": "Anket oluşturulamadı",
+    "send-failed": "Mesaj gönderilemedi",
+    "disabled": "Burada mesaj gönderemezsiniz."
+  },
+  "poll": {
+    "create": "Anket oluştur",
+    "question": "Soru",
+    "question-placeholder": "Bir şey sorun…",
+    "options": "Seçenekler",
+    "option-placeholder": "Seçenek {index}",
+    "add-option": "Seçenek ekle",
+    "remove-option": "Seçeneği kaldır",
+    "allow-multiple": "Birden fazla yanıta izin ver",
+    "cancel": "İptal",
+    "create-submit": "Oluştur",
+    "votes": "{count, plural, one {# oy} other {# oy}}",
+    "closed": "Kapatıldı"
+  },
+  "group": {
+    "compose-chat": "Yeni sohbet",
+    "compose-group": "Yeni grup",
+    "create-title": "Yeni grup",
+    "create-subtitle": "Bir isim seçin ve birkaç kişiyi davet edin.",
+    "name-label": "Grup adı",
+    "name-placeholder": "örn. Q4 lansman ekibi",
+    "description-label": "Açıklama (opsiyonel)",
+    "description-placeholder": "Bu grup ne hakkında?",
+    "members-label": "Üyeler",
+    "members-placeholder": "Takım arkadaşı ara…",
+    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "create-submit": "Grup oluştur",
+    "create-failed": "Grup oluşturulamadı",
+    "cancel": "İptal",
+    "admin-badge": "Yönetici",
+    "you-badge": "Sen",
+    "promote": "Yönetici yap",
+    "demote": "Yöneticiyi kaldır",
+    "remove-member": "Gruptan çıkar",
+    "leave": "Gruptan ayrıl",
+    "leave-confirm": "Bu gruptan ayrılınsın mı?",
+    "last-admin-warning": "Tek yöneticisiniz. Önce birini yönetici yapın.",
+    "delete": "Grubu sil",
+    "delete-confirm": "Bu grup silinsin mi? Geri alınamaz.",
+    "groups-disabled": "Grup oluşturma şu anda yönetici tarafından devre dışı."
+  },
+  "new-dm": {
+    "title": "Yeni sohbet",
+    "search": "Takım arkadaşı ara",
+    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "disabled": "Kullanılamıyor"
+  },
+  "new-chat": {
+    "title": "Yeni sohbet",
+    "to-label": "Kime:",
+    "to-placeholder": "Ad veya e-posta girin",
+    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "disabled": "Kullanılamıyor",
+    "empty-title": "Yeni bir görüşme başlatıyorsunuz",
+    "empty-subtitle": "İlk mesajınızı aşağıya yazın.",
+    "send-placeholder": "İlk mesajınızı yazın…"
+  },
+  "teams": {
+    "title": "Takımlar",
+    "subtitle": "Takımlarınız ve kanallarınız.",
+    "empty": "Henüz hiçbir takımın üyesi değilsiniz.",
+    "empty-title": "Henüz takım yok",
+    "empty-subtitle": "Bir yönetici işbirliğine başlamanız için sizi bir takıma ekleyecek.",
+    "no-channels": "Henüz kanal yok."
+  },
+  "activity": {
+    "title": "Etkinlik",
+    "subtitle": "Sizi @bahseden mesajlar.",
+    "empty": "Henüz bahsetme yok.",
+    "empty-title": "Henüz bahsetme yok",
+    "empty-subtitle": "Birisi sizi @ile bahsettiğinde burada görünecek."
+  },
+  "saved": {
+    "title": "Kaydedilenler",
+    "subtitle": "Sonra için kaydettiğiniz mesajlar.",
+    "empty": "Henüz hiçbir mesaj kaydetmediniz.",
+    "empty-title": "Kaydedilmiş mesaj yok",
+    "empty-subtitle": "Burada bulmak için sohbetten bir mesaj kaydedin."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

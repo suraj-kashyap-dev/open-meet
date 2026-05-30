@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "चैट",
+    "subtitle": "आपके सीधे संदेश और समूह चैट।",
+    "new": "नया संदेश",
+    "recent": "हाल के",
+    "filter": "फ़िल्टर",
+    "start-meeting": "मीटिंग शुरू करें",
+    "compose": "नई चैट",
+    "search": "बातचीत खोजें",
+    "loading": "लोड हो रहा है…",
+    "empty": "अभी तक कोई बातचीत नहीं।",
+    "untitled": "बातचीत",
+    "attachment": "अटैचमेंट",
+    "no-messages": "अभी तक कोई संदेश नहीं",
+    "actions": "बातचीत क्रियाएँ",
+    "pin-chat": "शीर्ष पर पिन करें",
+    "unpin-chat": "अनपिन करें",
+    "mute": "म्यूट करें",
+    "unmute": "अनम्यूट करें",
+    "mark-unread": "अपठित के रूप में चिह्नित करें",
+    "hide": "छिपाएँ",
+    "unhide": "दिखाएँ",
+    "show-hidden": "छिपी हुई चैट दिखाएँ",
+    "hide-confirmed": "चैट छुपी",
+    "hide-undo": "पूर्ववत्"
+  },
+  "view": {
+    "empty": "चैट शुरू करने के लिए कोई बातचीत चुनें।",
+    "no-messages": "अभी तक कोई संदेश नहीं। नमस्ते कहें!",
+    "loading": "बातचीत लोड हो रही है…",
+    "not-found": "बातचीत नहीं मिली।",
+    "back": "बातचीत पर वापस जाएं",
+    "jump-to-latest": "नवीनतम पर जाएं",
+    "peer-disabled": "इस उपयोगकर्ता के लिए चैट अक्षम है।",
+    "you-disabled": "आपकी चैट पहुंच अक्षम कर दी गई है।",
+    "no-send-permission": "आपको संदेश भेजने की अनुमति नहीं है।"
+  },
+  "header": {
+    "members": "{count, plural, one {# सदस्य} other {# सदस्य}}",
+    "actions": "बातचीत क्रियाएँ",
+    "clear": "चैट साफ़ करें",
+    "delete": "चैट हटाएँ",
+    "clear-confirmed": "आपके दृश्य से संदेश साफ़ हो गए",
+    "delete-confirmed": "चैट हटाई गई"
+  },
+  "presence": {
+    "online": "ऑनलाइन",
+    "offline": "ऑफ़लाइन",
+    "last-seen": "अंतिम बार देखा गया {time}",
+    "set-status": "अपनी स्थिति सेट करें",
+    "available": "उपलब्ध",
+    "busy": "व्यस्त",
+    "dnd": "परेशान न करें",
+    "brb": "अभी लौटता हूँ",
+    "away": "दूर"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "GIF खोजें",
+    "empty": "कोई GIF नहीं मिला।"
+  },
+  "bubble": {
+    "you": "आप",
+    "unknown-user": "अज्ञात",
+    "deleted": "यह संदेश हटा दिया गया था",
+    "edited": "(संपादित)",
+    "edit": "संपादित करें",
+    "delete": "हटाएं",
+    "reply": "उत्तर दें",
+    "more": "अधिक कार्रवाई",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "pinned": "पिन किया गया",
+    "pin": "पिन करें",
+    "unpin": "अनपिन करें",
+    "save-message": "सहेजें",
+    "unsave-message": "सहेजे गए से हटाएं",
+    "forward": "अग्रेषित करें",
+    "copy-link": "लिंक कॉपी करें",
+    "link-copied": "लिंक कॉपी किया गया"
+  },
+  "priority": {
+    "normal": "मानक",
+    "important": "महत्वपूर्ण",
+    "urgent": "अत्यावश्यक",
+    "label": "प्राथमिकता"
+  },
+  "forward": {
+    "title": "अग्रेषित करें…",
+    "success": "संदेश अग्रेषित किया गया",
+    "error": "संदेश अग्रेषित नहीं किया जा सका"
+  },
+  "receipts": {
+    "seen": "देखा गया",
+    "seen-by": "{count} द्वारा देखा गया"
+  },
+  "typing": {
+    "one": "{name} टाइप कर रहे हैं…",
+    "many": "{count} लोग टाइप कर रहे हैं…"
+  },
+  "composer": {
+    "placeholder": "एक संदेश लिखें…",
+    "send": "संदेश भेजें",
+    "attach-file": "फ़ाइल अटैच करें",
+    "take-photo": "फ़ोटो लें",
+    "cancel-reply": "उत्तर रद्द करें",
+    "uploading": "अपलोड हो रहा है… {percent}%",
+    "failed": "विफल",
+    "remove-attachment": "अटैचमेंट हटाएं",
+    "max-attachments": "आप अधिकतम {max} फ़ाइलें अटैच कर सकते हैं।",
+    "wait-for-uploads": "अपलोड पूरा होने की प्रतीक्षा करें।",
+    "upload-failed": "अपलोड विफल",
+    "poll-failed": "पोल नहीं बनाया जा सका",
+    "send-failed": "संदेश नहीं भेजा जा सका",
+    "disabled": "आप यहां संदेश नहीं भेज सकते।"
+  },
+  "poll": {
+    "create": "पोल बनाएं",
+    "question": "प्रश्न",
+    "question-placeholder": "कुछ पूछें…",
+    "options": "विकल्प",
+    "option-placeholder": "विकल्प {index}",
+    "add-option": "विकल्प जोड़ें",
+    "remove-option": "विकल्प हटाएं",
+    "allow-multiple": "एकाधिक उत्तर की अनुमति दें",
+    "cancel": "रद्द करें",
+    "create-submit": "बनाएं",
+    "votes": "{count, plural, one {# वोट} other {# वोट}}",
+    "closed": "बंद"
+  },
+  "group": {
+    "compose-chat": "नई चैट",
+    "compose-group": "नया समूह",
+    "create-title": "नया समूह",
+    "create-subtitle": "नाम चुनें और कुछ लोगों को आमंत्रित करें।",
+    "name-label": "समूह का नाम",
+    "name-placeholder": "जैसे: Q4 लॉन्च टीम",
+    "description-label": "विवरण (वैकल्पिक)",
+    "description-placeholder": "यह समूह किस बारे में है?",
+    "members-label": "सदस्य",
+    "members-placeholder": "साथी खोजें…",
+    "no-teammates": "कोई साथी नहीं मिला।",
+    "create-submit": "समूह बनाएं",
+    "create-failed": "समूह नहीं बना सका",
+    "cancel": "रद्द करें",
+    "admin-badge": "एडमिन",
+    "you-badge": "आप",
+    "promote": "एडमिन बनाएं",
+    "demote": "एडमिन हटाएं",
+    "remove-member": "समूह से हटाएं",
+    "leave": "समूह छोड़ें",
+    "leave-confirm": "इस समूह को छोड़ें?",
+    "last-admin-warning": "आप एकमात्र एडमिन हैं। पहले किसी को प्रमोट करें।",
+    "delete": "समूह हटाएं",
+    "delete-confirm": "इस समूह को हटाएं? इसे पूर्ववत नहीं किया जा सकता।",
+    "groups-disabled": "समूह निर्माण वर्तमान में एडमिन द्वारा अक्षम है।"
+  },
+  "new-dm": {
+    "title": "नई बातचीत",
+    "search": "टीम के साथियों को खोजें",
+    "no-teammates": "कोई टीम साथी नहीं मिला।",
+    "disabled": "अनुपलब्ध"
+  },
+  "new-chat": {
+    "title": "नई चैट",
+    "to-label": "को:",
+    "to-placeholder": "नाम या ईमेल दर्ज करें",
+    "no-teammates": "कोई साथी नहीं मिला।",
+    "disabled": "अनुपलब्ध",
+    "empty-title": "आप एक नई बातचीत शुरू कर रहे हैं",
+    "empty-subtitle": "नीचे अपना पहला संदेश लिखें।",
+    "send-placeholder": "अपना पहला संदेश लिखें…"
+  },
+  "teams": {
+    "title": "टीमें",
+    "subtitle": "आपकी टीम और चैनल।",
+    "empty": "आप अभी तक किसी टीम के सदस्य नहीं हैं।",
+    "empty-title": "अभी कोई टीम नहीं",
+    "empty-subtitle": "सहयोग शुरू करने के लिए एक एडमिन आपको टीम में जोड़ेगा।",
+    "no-channels": "अभी तक कोई चैनल नहीं।"
+  },
+  "activity": {
+    "title": "गतिविधि",
+    "subtitle": "वे संदेश जो आपको @उल्लेख करते हैं।",
+    "empty": "अभी तक कोई उल्लेख नहीं।",
+    "empty-title": "अभी कोई उल्लेख नहीं",
+    "empty-subtitle": "जब कोई आपका @उल्लेख करेगा, यह यहाँ दिखेगा।"
+  },
+  "saved": {
+    "title": "सहेजे गए",
+    "subtitle": "संदेश जिन्हें आपने बाद के लिए सहेजा है।",
+    "empty": "आपने अभी तक कोई संदेश सहेजा नहीं है।",
+    "empty-title": "कोई सहेजे गए संदेश नहीं",
+    "empty-subtitle": "चैट से एक संदेश सहेजें ताकि वह यहाँ मिले।"
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

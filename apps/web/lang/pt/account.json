@@ -47,6 +47,8 @@
     "eyebrow": "Conta",
     "title": "Configurações",
     "description": "Padrões para reuniões, o que os outros podem ver e seu idioma.",
+    "appearance-title": "Aparência",
+    "appearance-description": "Tema e cor de destaque para este dispositivo.",
     "localization-title": "Localização",
     "localization-description": "Usado para horários, datas de reuniões e o idioma da interface.",
     "defaults-title": "Padrões de reunião",
@@ -84,6 +86,29 @@
     "direct-messages-description": "Permitir que outros iniciem uma conversa individual com você fora das reuniões.",
     "usage-data-title": "Compartilhar dados de uso anônimos",
     "usage-data-description": "Nos ajuda a melhorar o Open Meet. Nenhum conteúdo de reunião é compartilhado."
+  },
+  "appearance": {
+    "theme-label": "Tema",
+    "theme-hint": "Alterne entre claro e escuro.",
+    "light": "Claro",
+    "dark": "Escuro",
+    "accent-label": "Destaque da marca",
+    "accent-hint": "Cor de botões, links e foco.",
+    "advanced": "Usar cor personalizada",
+    "hex-picker": "Seletor de cor",
+    "hex-input": "Valor hex",
+    "apply-hex": "Aplicar",
+    "reset": "Redefinir para o padrão do workspace",
+    "using-workspace": "Usando o padrão do workspace.",
+    "preset": {
+      "indigo": "Índigo",
+      "blue": "Azul",
+      "green": "Verde",
+      "purple": "Roxo",
+      "rose": "Rosa",
+      "amber": "Âmbar",
+      "teal": "Turquesa"
+    }
   },
   "actions": {
     "reset": "Redefinir",

@@ -7,6 +7,20 @@
     "sign-out": "Esci"
   },
   "user-menu-label": "Apri menu account",
+  "chat-link-label": "Apri chat",
+  "activity-link-label": "Attività",
+  "teams-link-label": "Team",
+  "saved-link-label": "Salvati",
+  "search-placeholder": "Cerca",
+  "rail": {
+    "label": "Principale",
+    "chat": "Chat",
+    "meet": "Riunione",
+    "teams": "Team",
+    "activity": "Attività",
+    "saved": "Salvati",
+    "history": "Cronologia"
+  },
   "command": {
     "placeholder": "Digita un comando o un codice riunione…",
     "no-results": "Nessun risultato.",

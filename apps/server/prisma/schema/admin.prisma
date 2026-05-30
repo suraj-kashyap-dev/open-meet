@@ -1,37 +1,38 @@
 model Admin {
-  id           String    @id @default(cuid())
-  email        String    @unique
+  id           String           @id @default(cuid())
+  email        String           @unique
   name         String
   passwordHash String
-  role         AdminRole @default(ADMIN)
+  roleRecordId String
+  roleRecord   AdminRoleRecord  @relation(fields: [roleRecordId], references: [id], onDelete: Restrict)
   avatarKey    String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
   lastLoginAt  DateTime?
 
-  invitesSent AdminInvite[]
+  invitesSent          AdminInvite[]
+  userInvitesSent      UserInvite[]
+  conversationsCreated Conversation[]
 
   @@index([email])
-}
-
-enum AdminRole {
-  SUPERADMIN
-  ADMIN
+  @@index([roleRecordId])
 }
 
 model AdminInvite {
-  id          String    @id @default(cuid())
-  email       String    @unique
-  name        String
-  role        AdminRole @default(ADMIN)
-  tokenHash   String    @unique
-  expiresAt   DateTime
-  invitedById String?
-  invitedBy   Admin?    @relation(fields: [invitedById], references: [id], onDelete: SetNull)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id           String           @id @default(cuid())
+  email        String           @unique
+  name         String
+  roleRecordId String?
+  roleRecord   AdminRoleRecord? @relation(fields: [roleRecordId], references: [id], onDelete: SetNull)
+  tokenHash    String           @unique
+  expiresAt    DateTime
+  invitedById  String?
+  invitedBy    Admin?           @relation(fields: [invitedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 
   @@index([email])
+  @@index([roleRecordId])
 }
 
 model WorkspaceSettings {
@@ -42,6 +43,9 @@ model WorkspaceSettings {
   allowGuestJoin      Boolean  @default(true)
   maxMeetingMinutes   Int?
   banner              String?
+  // Brand accent (CSS var driver). Either a preset slug ("indigo", "blue",
+  // "green", "purple", "rose", "amber", "teal") or a `#RRGGBB` hex.
+  accentColor         String   @default("indigo")
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }

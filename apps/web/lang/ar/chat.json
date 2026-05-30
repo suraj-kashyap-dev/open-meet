@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "الدردشة",
+    "subtitle": "محادثاتك المباشرة والمجموعات.",
+    "new": "رسالة جديدة",
+    "recent": "الأخيرة",
+    "filter": "تصفية",
+    "start-meeting": "بدء اجتماع",
+    "compose": "دردشة جديدة",
+    "search": "البحث في المحادثات",
+    "loading": "جارٍ التحميل…",
+    "empty": "لا توجد محادثات بعد.",
+    "untitled": "محادثة",
+    "attachment": "مرفق",
+    "no-messages": "لا توجد رسائل بعد",
+    "actions": "إجراءات المحادثة",
+    "pin-chat": "تثبيت في الأعلى",
+    "unpin-chat": "إلغاء التثبيت",
+    "mute": "كتم",
+    "unmute": "إلغاء الكتم",
+    "mark-unread": "وضع علامة كغير مقروء",
+    "hide": "إخفاء",
+    "unhide": "إظهار",
+    "show-hidden": "إظهار المحادثات المخفية",
+    "hide-confirmed": "تم إخفاء المحادثة",
+    "hide-undo": "تراجع"
+  },
+  "view": {
+    "empty": "اختر محادثة لبدء الدردشة.",
+    "no-messages": "لا توجد رسائل بعد. ألقِ التحية!",
+    "loading": "جارٍ تحميل المحادثة…",
+    "not-found": "لم يتم العثور على المحادثة.",
+    "back": "العودة إلى المحادثات",
+    "jump-to-latest": "الانتقال إلى الأحدث",
+    "peer-disabled": "الدردشة معطّلة لهذا المستخدم.",
+    "you-disabled": "تم تعطيل وصولك إلى الدردشة.",
+    "no-send-permission": "ليس لديك إذن لإرسال الرسائل."
+  },
+  "header": {
+    "members": "{count, plural, one {# عضو} other {# أعضاء}}",
+    "actions": "إجراءات المحادثة",
+    "clear": "مسح المحادثة",
+    "delete": "حذف المحادثة",
+    "clear-confirmed": "تم مسح الرسائل من عرضك",
+    "delete-confirmed": "تم حذف المحادثة"
+  },
+  "presence": {
+    "online": "متصل",
+    "offline": "غير متصل",
+    "last-seen": "آخر ظهور {time}",
+    "set-status": "تعيين حالتك",
+    "available": "متاح",
+    "busy": "مشغول",
+    "dnd": "عدم الإزعاج",
+    "brb": "سأعود حالًا",
+    "away": "بعيد"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "البحث عن صور GIF",
+    "empty": "لم يتم العثور على صور GIF."
+  },
+  "bubble": {
+    "you": "أنت",
+    "unknown-user": "غير معروف",
+    "deleted": "تم حذف هذه الرسالة",
+    "edited": "(معدّلة)",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "reply": "رد",
+    "more": "إجراءات إضافية",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "pinned": "مثبّت",
+    "pin": "تثبيت",
+    "unpin": "إلغاء التثبيت",
+    "save-message": "حفظ",
+    "unsave-message": "إزالة من المحفوظات",
+    "forward": "إعادة توجيه",
+    "copy-link": "نسخ الرابط",
+    "link-copied": "تم نسخ الرابط"
+  },
+  "priority": {
+    "normal": "عادي",
+    "important": "مهم",
+    "urgent": "عاجل",
+    "label": "الأولوية"
+  },
+  "forward": {
+    "title": "إعادة التوجيه إلى…",
+    "success": "تمت إعادة توجيه الرسالة",
+    "error": "تعذّرت إعادة توجيه الرسالة"
+  },
+  "receipts": {
+    "seen": "تمت المشاهدة",
+    "seen-by": "شوهد بواسطة {count}"
+  },
+  "typing": {
+    "one": "{name} يكتب…",
+    "many": "{count} أشخاص يكتبون…"
+  },
+  "composer": {
+    "placeholder": "اكتب رسالة…",
+    "send": "إرسال الرسالة",
+    "attach-file": "إرفاق ملف",
+    "take-photo": "التقاط صورة",
+    "cancel-reply": "إلغاء الرد",
+    "uploading": "جارٍ الرفع… {percent}%",
+    "failed": "فشل",
+    "remove-attachment": "إزالة المرفق",
+    "max-attachments": "يمكنك إرفاق ما يصل إلى {max} ملفات.",
+    "wait-for-uploads": "انتظر حتى تنتهي عمليات الرفع.",
+    "upload-failed": "فشل الرفع",
+    "poll-failed": "تعذّر إنشاء الاستطلاع",
+    "send-failed": "تعذّر إرسال الرسالة",
+    "disabled": "لا يمكنك إرسال رسائل هنا."
+  },
+  "poll": {
+    "create": "إنشاء استطلاع",
+    "question": "السؤال",
+    "question-placeholder": "اسأل شيئًا…",
+    "options": "الخيارات",
+    "option-placeholder": "الخيار {index}",
+    "add-option": "إضافة خيار",
+    "remove-option": "إزالة الخيار",
+    "allow-multiple": "السماح بإجابات متعددة",
+    "cancel": "إلغاء",
+    "create-submit": "إنشاء",
+    "votes": "{count, plural, one {# صوت} other {# أصوات}}",
+    "closed": "مغلق"
+  },
+  "group": {
+    "compose-chat": "دردشة جديدة",
+    "compose-group": "مجموعة جديدة",
+    "create-title": "مجموعة جديدة",
+    "create-subtitle": "اختر اسمًا وادعُ بعض الأشخاص. ستكون المسؤول.",
+    "name-label": "اسم المجموعة",
+    "name-placeholder": "مثلًا: فريق إطلاق Q4",
+    "description-label": "الوصف (اختياري)",
+    "description-placeholder": "ما الغرض من هذه المجموعة؟",
+    "members-label": "الأعضاء",
+    "members-placeholder": "ابحث عن زملاء…",
+    "no-teammates": "لم يتم العثور على زملاء.",
+    "create-submit": "إنشاء مجموعة",
+    "create-failed": "تعذر إنشاء المجموعة",
+    "cancel": "إلغاء",
+    "admin-badge": "مسؤول",
+    "you-badge": "أنت",
+    "promote": "تعيين كمسؤول",
+    "demote": "إزالة الصلاحيات",
+    "remove-member": "إزالة من المجموعة",
+    "leave": "مغادرة المجموعة",
+    "leave-confirm": "مغادرة هذه المجموعة؟",
+    "last-admin-warning": "أنت المسؤول الوحيد. عيّن شخصًا آخر أولًا.",
+    "delete": "حذف المجموعة",
+    "delete-confirm": "حذف هذه المجموعة؟ لا يمكن التراجع.",
+    "groups-disabled": "إنشاء المجموعات معطّل حاليًا من قِبل المسؤول."
+  },
+  "new-dm": {
+    "title": "محادثة جديدة",
+    "search": "البحث عن زملاء الفريق",
+    "no-teammates": "لم يتم العثور على زملاء فريق.",
+    "disabled": "غير متاح"
+  },
+  "new-chat": {
+    "title": "دردشة جديدة",
+    "to-label": "إلى:",
+    "to-placeholder": "أدخل الاسم أو البريد الإلكتروني",
+    "no-teammates": "لم يتم العثور على زملاء.",
+    "disabled": "غير متاح",
+    "empty-title": "أنت تبدأ محادثة جديدة",
+    "empty-subtitle": "اكتب رسالتك الأولى أدناه.",
+    "send-placeholder": "اكتب رسالتك الأولى…"
+  },
+  "teams": {
+    "title": "الفِرَق",
+    "subtitle": "فِرقك وقنواتك.",
+    "empty": "لست عضوًا في أي فريق بعد.",
+    "empty-title": "لا توجد فِرق بعد",
+    "empty-subtitle": "سيضيفك المسؤول إلى فريق لبدء التعاون.",
+    "no-channels": "لا توجد قنوات بعد."
+  },
+  "activity": {
+    "title": "النشاط",
+    "subtitle": "الرسائل التي تذكرك بإشارة @.",
+    "empty": "لا توجد إشارات بعد.",
+    "empty-title": "لا توجد إشارات بعد",
+    "empty-subtitle": "عندما يشير إليك أحدهم بالعلامة @، سيظهر هنا."
+  },
+  "saved": {
+    "title": "المحفوظات",
+    "subtitle": "الرسائل التي حفظتها للرجوع إليها لاحقًا.",
+    "empty": "لم تحفظ أي رسائل بعد.",
+    "empty-title": "لا توجد رسائل محفوظة",
+    "empty-subtitle": "احفظ رسالة من الدردشة لتجدها هنا."
+  },
+  "size-bytes": "{bytes} بايت",
+  "size-kb": "{kb} كيلوبايت",
+  "size-mb": "{mb} ميجابايت"
+}

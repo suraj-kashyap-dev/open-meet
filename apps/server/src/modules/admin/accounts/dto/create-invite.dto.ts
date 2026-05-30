@@ -1,5 +1,4 @@
-import { AdminRole } from '@prisma/client';
-import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateAdminInviteDto {
   @IsEmail()
@@ -11,7 +10,9 @@ export class CreateAdminInviteDto {
   @MaxLength(120)
   name!: string;
 
+  /** RBAC role id the invitee will receive when they accept. Defaults to Member. */
   @IsOptional()
-  @IsEnum(AdminRole)
-  role?: AdminRole;
+  @IsString()
+  @MinLength(1)
+  roleId?: string;
 }

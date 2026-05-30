@@ -62,7 +62,18 @@ export class LiveKitService {
     meetingCode: string;
     userId: string;
     name: string;
+    isGuest?: boolean;
+    guestMeetingCode?: string | null;
   }): Promise<LiveKitTokenResponseDto> {
+    if (input.isGuest && input.guestMeetingCode !== input.meetingCode) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.MEETING_FORBIDDEN,
+        message: 'Guest access is limited to the invited meeting.',
+      });
+    }
+
+    await this.meetings.assertWithinDurationLimit(input.meetingCode);
+
     const meeting = await this.meetings.findRawByCode(input.meetingCode);
     if (!meeting) {
       throw new NotFoundException({
@@ -158,7 +169,7 @@ export class LiveKitService {
       }
 
       if (meeting.status !== MeetingStatus.ENDED) {
-        await this.meetings.end(event.room.name, meeting.hostId);
+        await this.meetings.end(event.room.name, { id: meeting.hostId });
       }
 
       return;

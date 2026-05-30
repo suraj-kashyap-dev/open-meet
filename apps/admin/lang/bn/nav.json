@@ -6,16 +6,18 @@
   "sections": {
     "overview": "ওভারভিউ",
     "manage": "ম্যানেজ",
-    "insights": "ইনসাইটস",
     "system": "সিস্টেম"
   },
   "items": {
     "dashboard": "ড্যাশবোর্ড",
     "users": "ব্যবহারকারী",
+    "teams": "টিম",
+    "groups": "গ্রুপ",
     "meetings": "মিটিং",
-    "analytics": "অ্যানালিটিক্স",
     "settings": "সেটিংস",
     "administrators": "অ্যাডমিনিস্ট্রেটর",
+    "roles": "অ্যাডমিন রোল",
+    "user-roles": "ব্যবহারকারীর রোল",
     "branding": "ব্র্যান্ডিং",
     "configuration": "কনফিগারেশন",
     "more": "আরও"

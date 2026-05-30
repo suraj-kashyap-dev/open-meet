@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "Chat",
+    "subtitle": "Ihre Direktnachrichten und Gruppenchats.",
+    "new": "Neue Nachricht",
+    "recent": "Kürzlich",
+    "filter": "Filtern",
+    "start-meeting": "Besprechung starten",
+    "compose": "Neuer Chat",
+    "search": "Unterhaltungen durchsuchen",
+    "loading": "Wird geladen…",
+    "empty": "Noch keine Unterhaltungen.",
+    "untitled": "Unterhaltung",
+    "attachment": "Anhang",
+    "no-messages": "Noch keine Nachrichten",
+    "actions": "Unterhaltungsaktionen",
+    "pin-chat": "Oben anheften",
+    "unpin-chat": "Lösen",
+    "mute": "Stummschalten",
+    "unmute": "Stummschaltung aufheben",
+    "mark-unread": "Als ungelesen markieren",
+    "hide": "Ausblenden",
+    "unhide": "Einblenden",
+    "show-hidden": "Ausgeblendete Chats anzeigen",
+    "hide-confirmed": "Chat ausgeblendet",
+    "hide-undo": "Rückgängig"
+  },
+  "view": {
+    "empty": "Wählen Sie eine Unterhaltung aus, um zu chatten.",
+    "no-messages": "Noch keine Nachrichten. Sagen Sie Hallo!",
+    "loading": "Unterhaltung wird geladen…",
+    "not-found": "Unterhaltung nicht gefunden.",
+    "back": "Zurück zu den Unterhaltungen",
+    "jump-to-latest": "Zur neuesten springen",
+    "peer-disabled": "Der Chat ist für diesen Benutzer deaktiviert.",
+    "you-disabled": "Ihr Chat-Zugang wurde deaktiviert.",
+    "no-send-permission": "Sie haben keine Berechtigung, Nachrichten zu senden."
+  },
+  "header": {
+    "members": "{count, plural, one {# Mitglied} other {# Mitglieder}}",
+    "actions": "Unterhaltungsaktionen",
+    "clear": "Chat leeren",
+    "delete": "Chat löschen",
+    "clear-confirmed": "Nachrichten aus Ihrer Ansicht entfernt",
+    "delete-confirmed": "Chat gelöscht"
+  },
+  "presence": {
+    "online": "Online",
+    "offline": "Offline",
+    "last-seen": "Zuletzt gesehen {time}",
+    "set-status": "Status festlegen",
+    "available": "Verfügbar",
+    "busy": "Beschäftigt",
+    "dnd": "Nicht stören",
+    "brb": "Bin gleich zurück",
+    "away": "Abwesend"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "GIFs suchen",
+    "empty": "Keine GIFs gefunden."
+  },
+  "bubble": {
+    "you": "Sie",
+    "unknown-user": "Unbekannt",
+    "deleted": "Diese Nachricht wurde gelöscht",
+    "edited": "(bearbeitet)",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "reply": "Antworten",
+    "more": "Weitere Aktionen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "pinned": "Angeheftet",
+    "pin": "Anheften",
+    "unpin": "Lösen",
+    "save-message": "Speichern",
+    "unsave-message": "Aus Gespeichertem entfernen",
+    "forward": "Weiterleiten",
+    "copy-link": "Link kopieren",
+    "link-copied": "Link kopiert"
+  },
+  "priority": {
+    "normal": "Standard",
+    "important": "Wichtig",
+    "urgent": "Dringend",
+    "label": "Priorität"
+  },
+  "forward": {
+    "title": "Weiterleiten an…",
+    "success": "Nachricht weitergeleitet",
+    "error": "Nachricht konnte nicht weitergeleitet werden"
+  },
+  "receipts": {
+    "seen": "Gesehen",
+    "seen-by": "Gesehen von {count}"
+  },
+  "typing": {
+    "one": "{name} schreibt…",
+    "many": "{count} Personen schreiben…"
+  },
+  "composer": {
+    "placeholder": "Nachricht schreiben…",
+    "send": "Nachricht senden",
+    "attach-file": "Datei anhängen",
+    "take-photo": "Foto aufnehmen",
+    "cancel-reply": "Antwort abbrechen",
+    "uploading": "Wird hochgeladen… {percent}%",
+    "failed": "Fehlgeschlagen",
+    "remove-attachment": "Anhang entfernen",
+    "max-attachments": "Sie können bis zu {max} Dateien anhängen.",
+    "wait-for-uploads": "Warten Sie, bis die Uploads abgeschlossen sind.",
+    "upload-failed": "Upload fehlgeschlagen",
+    "poll-failed": "Umfrage konnte nicht erstellt werden",
+    "send-failed": "Nachricht konnte nicht gesendet werden",
+    "disabled": "Sie können hier keine Nachrichten senden."
+  },
+  "poll": {
+    "create": "Umfrage erstellen",
+    "question": "Frage",
+    "question-placeholder": "Fragen Sie etwas…",
+    "options": "Optionen",
+    "option-placeholder": "Option {index}",
+    "add-option": "Option hinzufügen",
+    "remove-option": "Option entfernen",
+    "allow-multiple": "Mehrere Antworten zulassen",
+    "cancel": "Abbrechen",
+    "create-submit": "Erstellen",
+    "votes": "{count, plural, one {# Stimme} other {# Stimmen}}",
+    "closed": "Geschlossen"
+  },
+  "group": {
+    "compose-chat": "Neuer Chat",
+    "compose-group": "Neue Gruppe",
+    "create-title": "Neue Gruppe",
+    "create-subtitle": "Wählen Sie einen Namen und laden Sie Mitglieder ein.",
+    "name-label": "Gruppenname",
+    "name-placeholder": "z. B. Q4-Launch-Team",
+    "description-label": "Beschreibung (optional)",
+    "description-placeholder": "Worum geht es in dieser Gruppe?",
+    "members-label": "Mitglieder",
+    "members-placeholder": "Teammitglieder suchen…",
+    "no-teammates": "Keine Teammitglieder gefunden.",
+    "create-submit": "Gruppe erstellen",
+    "create-failed": "Gruppe konnte nicht erstellt werden",
+    "cancel": "Abbrechen",
+    "admin-badge": "Admin",
+    "you-badge": "Sie",
+    "promote": "Zum Admin machen",
+    "demote": "Admin entfernen",
+    "remove-member": "Aus Gruppe entfernen",
+    "leave": "Gruppe verlassen",
+    "leave-confirm": "Diese Gruppe verlassen?",
+    "last-admin-warning": "Sie sind der einzige Admin. Befördern Sie zuerst jemanden.",
+    "delete": "Gruppe löschen",
+    "delete-confirm": "Diese Gruppe löschen? Dies kann nicht rückgängig gemacht werden.",
+    "groups-disabled": "Die Gruppenerstellung ist derzeit vom Admin deaktiviert."
+  },
+  "new-dm": {
+    "title": "Neue Unterhaltung",
+    "search": "Teammitglieder suchen",
+    "no-teammates": "Keine Teammitglieder gefunden.",
+    "disabled": "Nicht verfügbar"
+  },
+  "new-chat": {
+    "title": "Neuer Chat",
+    "to-label": "An:",
+    "to-placeholder": "Name oder E-Mail eingeben",
+    "no-teammates": "Keine Teammitglieder gefunden.",
+    "disabled": "Nicht verfügbar",
+    "empty-title": "Sie beginnen eine neue Unterhaltung",
+    "empty-subtitle": "Schreiben Sie unten Ihre erste Nachricht.",
+    "send-placeholder": "Erste Nachricht schreiben…"
+  },
+  "teams": {
+    "title": "Teams",
+    "subtitle": "Ihre Teams und Kanäle.",
+    "empty": "Sie sind noch in keinem Team Mitglied.",
+    "empty-title": "Noch keine Teams",
+    "empty-subtitle": "Ein Admin fügt Sie zu einem Team hinzu, um die Zusammenarbeit zu starten.",
+    "no-channels": "Noch keine Kanäle."
+  },
+  "activity": {
+    "title": "Aktivität",
+    "subtitle": "Nachrichten, die Sie mit @ erwähnen.",
+    "empty": "Noch keine Erwähnungen.",
+    "empty-title": "Noch keine Erwähnungen",
+    "empty-subtitle": "Wenn Sie jemand mit @ erwähnt, wird es hier angezeigt."
+  },
+  "saved": {
+    "title": "Gespeichert",
+    "subtitle": "Nachrichten, die Sie für später gespeichert haben.",
+    "empty": "Sie haben noch keine Nachrichten gespeichert.",
+    "empty-title": "Keine gespeicherten Nachrichten",
+    "empty-subtitle": "Speichern Sie eine Nachricht aus dem Chat, um sie hier zu finden."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

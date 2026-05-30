@@ -1,0 +1,148 @@
+{
+  "eyebrow": "Système",
+  "title": {
+    "admin-roles": "Rôles administrateurs",
+    "user-roles": "Rôles utilisateurs"
+  },
+  "subtitle": {
+    "admin-roles": "Contrôlez ce que chaque administrateur peut faire.",
+    "user-roles": "Contrôlez ce que chaque utilisateur peut faire dans l'application."
+  },
+  "table": {
+    "name": "Rôle",
+    "description": "Description",
+    "members": "Membres",
+    "type": "Type",
+    "actions": "Actions",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "system": "Système",
+    "empty": "Aucun rôle pour le moment."
+  },
+  "type": {
+    "all": "Accès complet",
+    "custom": "Personnalisé"
+  },
+  "create": {
+    "title": "Nouveau rôle",
+    "submit": "Créer le rôle",
+    "cancel": "Annuler",
+    "success": "Rôle créé.",
+    "error": "Impossible de créer le rôle.",
+    "name-label": "Nom",
+    "name-placeholder": "p. ex. Support",
+    "description-label": "Description",
+    "description-placeholder": "Que peut faire ce rôle ?",
+    "type-label": "Accès",
+    "type-all": "Accès complet — accorde toutes les autorisations actuelles et futures.",
+    "type-custom": "Personnalisé — choisissez exactement ce qu'il peut faire."
+  },
+  "edit": {
+    "title": "Modifier le rôle",
+    "submit": "Enregistrer les modifications",
+    "success": "Rôle mis à jour.",
+    "error": "Impossible d'enregistrer le rôle.",
+    "system-locked": "Les rôles système ne peuvent pas être renommés ni changer de type d'accès."
+  },
+  "delete": {
+    "title": "Supprimer le rôle",
+    "description": "Réaffectez {count, plural, =0 {aucun membre} one {# membre} other {# membres}} avant la suppression.",
+    "confirm": "Supprimer le rôle",
+    "cancel": "Annuler",
+    "success": "{name} supprimé.",
+    "error": "Impossible de supprimer le rôle.",
+    "system-locked": "Les rôles système ne peuvent pas être supprimés."
+  },
+  "assign": {
+    "title": "Attribuer le rôle",
+    "placeholder": "Choisir un rôle",
+    "success": "Rôle attribué."
+  },
+  "permissions": {
+    "tree-heading": "Autorisations",
+    "selected-count": "{count} sur {total} sélectionnés",
+    "select-all": "Tout sélectionner",
+    "clear": "Effacer",
+    "expand-all": "Tout développer",
+    "collapse-all": "Tout réduire",
+    "users": {
+      "_self": "Utilisateurs",
+      "view": "Voir les utilisateurs",
+      "invite": "Inviter des utilisateurs",
+      "update": "Modifier les utilisateurs",
+      "delete": "Supprimer des utilisateurs",
+      "manage-avatar": "Gérer les avatars",
+      "disable-chat": "Désactiver le chat d'un utilisateur"
+    },
+    "meetings": {
+      "_self": "Réunions",
+      "view": "Voir les réunions",
+      "force-end": "Forcer la fin des réunions",
+      "delete": "Supprimer des réunions",
+      "kick": "Expulser des participants"
+    },
+    "teams": {
+      "_self": "Équipes",
+      "view": "Voir les équipes",
+      "create": "Créer des équipes",
+      "update": "Mettre à jour les équipes",
+      "delete": "Supprimer des équipes",
+      "manage-members": "Gérer les membres de l'équipe",
+      "channels": {
+        "_self": "Canaux",
+        "view": "Voir les canaux",
+        "create": "Créer des canaux",
+        "update": "Mettre à jour les canaux",
+        "delete": "Supprimer des canaux"
+      }
+    },
+    "groups": {
+      "_self": "Groupes",
+      "view": "Voir les groupes",
+      "create": "Créer des groupes",
+      "update": "Mettre à jour les groupes",
+      "delete": "Supprimer des groupes",
+      "manage-members": "Gérer les membres du groupe"
+    },
+    "branding": {
+      "_self": "Image de marque",
+      "view": "Voir l'image de marque",
+      "update": "Mettre à jour l'image de marque",
+      "manage-logo": "Gérer le logo"
+    },
+    "configuration": {
+      "_self": "Configuration",
+      "view": "Voir la configuration",
+      "update": "Mettre à jour la configuration"
+    },
+    "analytics": {
+      "_self": "Analytique",
+      "view": "Voir l'analytique",
+      "view-deep": "Voir l'analytique avancée"
+    },
+    "admin-accounts": {
+      "_self": "Comptes administrateurs",
+      "view": "Voir les administrateurs",
+      "create": "Créer des administrateurs",
+      "update": "Modifier les administrateurs",
+      "delete": "Supprimer des administrateurs",
+      "invite": "Inviter des administrateurs"
+    },
+    "roles": {
+      "_self": "Rôles administrateurs",
+      "view": "Voir les rôles administrateurs",
+      "create": "Créer des rôles administrateurs",
+      "update": "Mettre à jour les rôles administrateurs",
+      "delete": "Supprimer des rôles administrateurs",
+      "assign": "Attribuer des rôles administrateurs"
+    },
+    "user-roles": {
+      "_self": "Rôles utilisateurs",
+      "view": "Voir les rôles utilisateurs",
+      "create": "Créer des rôles utilisateurs",
+      "update": "Mettre à jour les rôles utilisateurs",
+      "delete": "Supprimer des rôles utilisateurs",
+      "assign": "Attribuer des rôles utilisateurs"
+    }
+  }
+}

@@ -7,6 +7,49 @@
     "title": "配置功能即将上线",
     "description": "工作区默认值、品牌设置和会议策略将很快在此处提供。"
   },
+  "hub": {
+    "empty": "您还没有任何设置的访问权限。",
+    "sections": {
+      "access": {
+        "title": "访问",
+        "description": "管理可以登录控制台的人员及其权限范围。"
+      },
+      "users": {
+        "title": "用户",
+        "description": "管理应用的最终用户及其分配的角色。"
+      },
+      "workspace": {
+        "title": "工作区",
+        "description": "为控制台设置品牌，并配置工作区默认值。"
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "管理员",
+        "description": "添加、编辑或删除可以登录控制台的管理员帐户。"
+      },
+      "roles": {
+        "title": "管理员角色",
+        "description": "定义每个管理员角色授予的权限。"
+      },
+      "users": {
+        "title": "用户",
+        "description": "管理最终用户帐户、邀请新用户并切换其访问权限。"
+      },
+      "user-roles": {
+        "title": "用户角色",
+        "description": "定义应用内每个用户角色授予的权限。"
+      },
+      "branding": {
+        "title": "品牌",
+        "description": "自定义应用名称、徽标和强调色。"
+      },
+      "configuration": {
+        "title": "配置",
+        "description": "工作区默认值、会议策略和功能开关。"
+      }
+    }
+  },
   "form": {
     "title": "工作区默认设置",
     "subtitle": "应用于整个工作区中新会议的默认值。",

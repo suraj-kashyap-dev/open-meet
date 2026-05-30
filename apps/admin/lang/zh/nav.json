@@ -6,16 +6,18 @@
   "sections": {
     "overview": "概览",
     "manage": "管理",
-    "insights": "洞察",
     "system": "系统"
   },
   "items": {
     "dashboard": "仪表盘",
     "users": "用户",
+    "teams": "团队",
+    "groups": "群组",
     "meetings": "会议",
-    "analytics": "分析",
     "settings": "设置",
     "administrators": "管理员",
+    "roles": "管理员角色",
+    "user-roles": "用户角色",
     "branding": "品牌",
     "configuration": "配置",
     "more": "更多"

@@ -1,0 +1,148 @@
+{
+  "eyebrow": "Sistem",
+  "title": {
+    "admin-roles": "Peran admin",
+    "user-roles": "Peran pengguna"
+  },
+  "subtitle": {
+    "admin-roles": "Kendalikan apa yang dapat dilakukan setiap administrator.",
+    "user-roles": "Kendalikan apa yang dapat dilakukan setiap pengguna di aplikasi."
+  },
+  "table": {
+    "name": "Peran",
+    "description": "Deskripsi",
+    "members": "Anggota",
+    "type": "Tipe",
+    "actions": "Tindakan",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "system": "Sistem",
+    "empty": "Belum ada peran."
+  },
+  "type": {
+    "all": "Akses penuh",
+    "custom": "Kustom"
+  },
+  "create": {
+    "title": "Peran baru",
+    "submit": "Buat peran",
+    "cancel": "Batal",
+    "success": "Peran dibuat.",
+    "error": "Tidak dapat membuat peran.",
+    "name-label": "Nama",
+    "name-placeholder": "mis. Dukungan",
+    "description-label": "Deskripsi",
+    "description-placeholder": "Apa yang dapat dilakukan peran ini?",
+    "type-label": "Akses",
+    "type-all": "Akses penuh — memberikan semua izin saat ini dan di masa depan.",
+    "type-custom": "Kustom — pilih dengan tepat apa yang dapat mereka lakukan."
+  },
+  "edit": {
+    "title": "Edit peran",
+    "submit": "Simpan perubahan",
+    "success": "Peran diperbarui.",
+    "error": "Tidak dapat menyimpan peran.",
+    "system-locked": "Peran sistem tidak dapat diganti namanya atau diubah tipe aksesnya."
+  },
+  "delete": {
+    "title": "Hapus peran",
+    "description": "Tetapkan ulang {count, plural, =0 {tidak ada anggota} one {# anggota} other {# anggota}} sebelum dihapus.",
+    "confirm": "Hapus peran",
+    "cancel": "Batal",
+    "success": "{name} dihapus.",
+    "error": "Tidak dapat menghapus peran.",
+    "system-locked": "Peran sistem tidak dapat dihapus."
+  },
+  "assign": {
+    "title": "Tetapkan peran",
+    "placeholder": "Pilih peran",
+    "success": "Peran ditetapkan."
+  },
+  "permissions": {
+    "tree-heading": "Izin",
+    "selected-count": "{count} dari {total} dipilih",
+    "select-all": "Pilih semua",
+    "clear": "Hapus",
+    "expand-all": "Perluas semua",
+    "collapse-all": "Ciutkan semua",
+    "users": {
+      "_self": "Pengguna",
+      "view": "Lihat pengguna",
+      "invite": "Undang pengguna",
+      "update": "Edit pengguna",
+      "delete": "Hapus pengguna",
+      "manage-avatar": "Kelola avatar pengguna",
+      "disable-chat": "Nonaktifkan obrolan untuk pengguna"
+    },
+    "meetings": {
+      "_self": "Rapat",
+      "view": "Lihat rapat",
+      "force-end": "Akhiri paksa rapat",
+      "delete": "Hapus rapat",
+      "kick": "Keluarkan peserta"
+    },
+    "teams": {
+      "_self": "Tim",
+      "view": "Lihat tim",
+      "create": "Buat tim",
+      "update": "Perbarui tim",
+      "delete": "Hapus tim",
+      "manage-members": "Kelola anggota tim",
+      "channels": {
+        "_self": "Saluran",
+        "view": "Lihat saluran",
+        "create": "Buat saluran",
+        "update": "Perbarui saluran",
+        "delete": "Hapus saluran"
+      }
+    },
+    "groups": {
+      "_self": "Grup",
+      "view": "Lihat grup",
+      "create": "Buat grup",
+      "update": "Perbarui grup",
+      "delete": "Hapus grup",
+      "manage-members": "Kelola anggota grup"
+    },
+    "branding": {
+      "_self": "Merek",
+      "view": "Lihat merek",
+      "update": "Perbarui merek",
+      "manage-logo": "Kelola logo"
+    },
+    "configuration": {
+      "_self": "Konfigurasi",
+      "view": "Lihat konfigurasi",
+      "update": "Perbarui konfigurasi"
+    },
+    "analytics": {
+      "_self": "Analitik",
+      "view": "Lihat analitik",
+      "view-deep": "Lihat analitik mendalam"
+    },
+    "admin-accounts": {
+      "_self": "Akun admin",
+      "view": "Lihat admin",
+      "create": "Buat admin",
+      "update": "Edit admin",
+      "delete": "Hapus admin",
+      "invite": "Undang admin"
+    },
+    "roles": {
+      "_self": "Peran admin",
+      "view": "Lihat peran admin",
+      "create": "Buat peran admin",
+      "update": "Perbarui peran admin",
+      "delete": "Hapus peran admin",
+      "assign": "Tetapkan peran admin"
+    },
+    "user-roles": {
+      "_self": "Peran pengguna",
+      "view": "Lihat peran pengguna",
+      "create": "Buat peran pengguna",
+      "update": "Perbarui peran pengguna",
+      "delete": "Hapus peran pengguna",
+      "assign": "Tetapkan peran pengguna"
+    }
+  }
+}

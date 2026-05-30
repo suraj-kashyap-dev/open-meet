@@ -10,7 +10,11 @@
     "active-now": "अभी सक्रिय",
     "active-now-hint": "ACTIVE स्थिति वाले रूम",
     "messages-24h": "संदेश 24 घंटे",
-    "messages-24h-hint": "पिछले 24 घंटों में चैट संदेश"
+    "messages-24h-hint": "पिछले 24 घंटों में चैट संदेश",
+    "groups": "समूह",
+    "groups-hint": "बनाई गई समूह बातचीत",
+    "teams": "टीमें",
+    "teams-hint": "वर्कस्पेस में टीमें"
   },
   "trends": {
     "signups": "नए पंजीकरण",

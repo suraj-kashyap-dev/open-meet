@@ -1,0 +1,54 @@
+{
+  "eyebrow": "管理",
+  "title": "群组",
+  "subtitle": "群组会话由管理员创建和管理。",
+  "empty": "暂无群组。",
+  "columns": {
+    "name": "名称",
+    "members": "成员"
+  },
+  "actions": {
+    "manage": "管理成员",
+    "delete": "删除群组"
+  },
+  "create": {
+    "button": "新建群组",
+    "title": "创建群组",
+    "name": "群组名称",
+    "placeholder": "例如：产品发布",
+    "choose-members": "选择成员",
+    "choose-confirm": "选择",
+    "selected": "{count, plural, one {已选择 # 位成员} other {已选择 # 位成员}}",
+    "submit": "创建",
+    "success": "群组已创建",
+    "error": "无法创建群组"
+  },
+  "manage": {
+    "title": "成员",
+    "members": "{count, plural, one {# 位成员} other {# 位成员}}",
+    "add": "添加成员",
+    "search": "搜索用户",
+    "no-users": "未找到用户。",
+    "add-confirm": "添加",
+    "empty": "暂无成员。",
+    "remove": "移除成员"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Group updated",
+    "request-error": "Could not update this group",
+    "empty-title": "Group not found",
+    "empty-description": "This group may have been removed or you may not have access to it.",
+    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-success": "Group deleted",
+    "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "删除群组？",
+    "description": "{name} 将被删除并立即从每位成员处移除。此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "删除群组",
+    "deleting": "正在删除…"
+  }
+}

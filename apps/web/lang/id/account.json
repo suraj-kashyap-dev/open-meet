@@ -47,6 +47,8 @@
     "eyebrow": "Akun",
     "title": "Pengaturan",
     "description": "Default untuk rapat, apa yang dapat dilihat orang lain, dan bahasa Anda.",
+    "appearance-title": "Tampilan",
+    "appearance-description": "Tema dan aksen merek untuk perangkat ini.",
     "localization-title": "Lokalisasi",
     "localization-description": "Digunakan untuk waktu rapat, tanggal, dan bahasa antarmuka.",
     "defaults-title": "Default rapat",
@@ -84,6 +86,29 @@
     "direct-messages-description": "Biarkan orang lain memulai obrolan 1-1 dengan Anda di luar rapat.",
     "usage-data-title": "Bagikan data penggunaan anonim",
     "usage-data-description": "Membantu kami meningkatkan Open Meet. Konten rapat tidak pernah dibagikan."
+  },
+  "appearance": {
+    "theme-label": "Tema",
+    "theme-hint": "Beralih antara terang dan gelap.",
+    "light": "Terang",
+    "dark": "Gelap",
+    "accent-label": "Aksen merek",
+    "accent-hint": "Warna untuk tombol, tautan, dan fokus.",
+    "advanced": "Gunakan warna khusus",
+    "hex-picker": "Pemilih warna",
+    "hex-input": "Nilai hex",
+    "apply-hex": "Terapkan",
+    "reset": "Reset ke default ruang kerja",
+    "using-workspace": "Menggunakan default ruang kerja.",
+    "preset": {
+      "indigo": "Nila",
+      "blue": "Biru",
+      "green": "Hijau",
+      "purple": "Ungu",
+      "rose": "Mawar",
+      "amber": "Amber",
+      "teal": "Teal"
+    }
   },
   "actions": {
     "reset": "Atur ulang",

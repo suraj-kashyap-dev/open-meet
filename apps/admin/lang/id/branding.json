@@ -17,6 +17,29 @@
     "remove": "Hapus",
     "hint": "Disarankan: gambar persegi, minimal 64×64px, hingga 2MB."
   },
+  "accent": {
+    "title": "Aksen merek",
+    "description": "Warna untuk tombol, tautan, dan cincin fokus di seluruh aplikasi.",
+    "advanced": "Gunakan warna khusus",
+    "hex-picker": "Pemilih warna",
+    "hex-input": "Nilai hex",
+    "apply-hex": "Terapkan",
+    "preset": {
+      "indigo": "Nila",
+      "blue": "Biru",
+      "green": "Hijau",
+      "purple": "Ungu",
+      "rose": "Mawar",
+      "amber": "Amber",
+      "teal": "Teal"
+    }
+  },
+  "groups": {
+    "title": "Grup buatan pengguna",
+    "description": "Biarkan rekan memulai obrolan grup mereka sendiri dari daftar percakapan.",
+    "label": "Izinkan pengguna membuat grup",
+    "hint": "Saat nonaktif, hanya admin yang dapat membuat grup."
+  },
   "form": {
     "name-required": "Masukkan nama aplikasi.",
     "name-too-long": "Nama harus 60 karakter atau kurang.",
@@ -25,6 +48,8 @@
     "logo-removed": "Logo dihapus",
     "logo-invalid-type": "Logo harus berupa gambar PNG, JPEG, WebP, atau GIF.",
     "logo-too-large": "Logo harus 2MB atau lebih kecil.",
+    "accent-saved": "Warna aksen diperbarui",
+    "groups-saved": "Pengaturan grup diperbarui",
     "save": "Simpan",
     "saving": "Menyimpan…",
     "uploading": "Mengunggah…",

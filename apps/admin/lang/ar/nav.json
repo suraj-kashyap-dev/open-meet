@@ -6,16 +6,18 @@
   "sections": {
     "overview": "نظرة عامة",
     "manage": "الإدارة",
-    "insights": "الإحصاءات",
     "system": "النظام"
   },
   "items": {
     "dashboard": "لوحة التحكم",
     "users": "المستخدمون",
+    "teams": "الفِرَق",
+    "groups": "المجموعات",
     "meetings": "الاجتماعات",
-    "analytics": "التحليلات",
     "settings": "الإعدادات",
     "administrators": "المسؤولون",
+    "roles": "أدوار المسؤولين",
+    "user-roles": "أدوار المستخدمين",
     "branding": "العلامة التجارية",
     "configuration": "الإعدادات العامة",
     "more": "المزيد"

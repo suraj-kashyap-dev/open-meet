@@ -1,17 +1,20 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { CalendarRange, MessageSquare, Radio, Users } from 'lucide-react';
+import { CalendarRange, MessageSquare, MessagesSquare, Radio, Users, UsersRound } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { DeepAnalytics } from '@/features/dashboard/components/deep-analytics';
 import { RecentMeetingsTable } from '@/features/dashboard/components/recent-meetings-table';
 import { StatCard } from '@/features/dashboard/components/stat-card';
 import { TrendCard } from '@/features/dashboard/components/trend-card';
 import { UpcomingMeetingsTable } from '@/features/dashboard/components/upcoming-meetings-table';
 import { adminAnalyticsApi } from '@/features/analytics/services/analytics';
+import { useCan } from '@/features/auth/hooks/use-admin-auth';
 
 export default function AdminOverviewPage() {
   const t = useTranslations('dashboard');
+  const canViewDeep = useCan('analytics.view-deep');
   const { data, isLoading, error } = useQuery({
     queryKey: ['admin', 'overview'],
     queryFn: ({ signal }) => adminAnalyticsApi.overview(signal),
@@ -43,7 +46,7 @@ export default function AdminOverviewPage() {
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
       </header>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
           label={t('stats.users')}
           value={data.totals.users.toLocaleString()}
@@ -68,6 +71,18 @@ export default function AdminOverviewPage() {
           icon={MessageSquare}
           hint={t('stats.messages-24h-hint')}
         />
+        <StatCard
+          label={t('stats.groups')}
+          value={data.totals.groups.toLocaleString()}
+          icon={MessagesSquare}
+          hint={t('stats.groups-hint')}
+        />
+        <StatCard
+          label={t('stats.teams')}
+          value={data.totals.teams.toLocaleString()}
+          icon={UsersRound}
+          hint={t('stats.teams-hint')}
+        />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
@@ -78,6 +93,8 @@ export default function AdminOverviewPage() {
       <UpcomingMeetingsTable meetings={data.upcomingMeetings} />
 
       <RecentMeetingsTable meetings={data.recentMeetings} />
+
+      {canViewDeep ? <DeepAnalytics /> : null}
     </main>
   );
 }

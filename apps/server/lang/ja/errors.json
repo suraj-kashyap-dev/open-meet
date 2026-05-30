@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "最後のスーパー管理者を降格させることはできません",
   "cannot-delete-self": "自分の管理者アカウントを削除することはできません",
   "cannot-delete-last-superadmin": "最後のスーパー管理者を削除することはできません",
-  "superadmin-required": "このアクションにはスーパー管理者権限が必要です"
+  "permission-required": "この操作を実行する権限がありません",
+  "role-not-found": "ロールが見つかりません",
+  "role-name-taken": "その名前のロールはすでに存在します",
+  "role-is-system": "システムロールは変更または削除できません",
+  "role-has-members": "削除する前に、このロールのすべての管理者を再割り当てしてください",
+  "role-permission-invalid": "1つ以上の権限キーが無効です"
 }

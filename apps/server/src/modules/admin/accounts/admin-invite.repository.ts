@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import type { AdminInvite, AdminRole } from '@prisma/client';
+import type { AdminInvite } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
-export type AdminInviteWithInviter = AdminInvite & { invitedBy: { name: string } | null };
+export type AdminInviteWithInviter = AdminInvite & {
+  invitedBy: { name: string } | null;
+  roleRecord: { id: string; name: string; permissionType: 'ALL' | 'CUSTOM' } | null;
+};
 
 @Injectable()
 export class AdminInviteRepository {
@@ -16,16 +19,16 @@ export class AdminInviteRepository {
   upsertByEmail(data: {
     email: string;
     name: string;
-    role: AdminRole;
+    roleRecordId: string | null;
     tokenHash: string;
     invitedById: string | null;
     expiresAt: Date;
   }): Promise<AdminInvite> {
-    const { email, name, role, tokenHash, invitedById, expiresAt } = data;
+    const { email, name, roleRecordId, tokenHash, invitedById, expiresAt } = data;
     return this.prisma.adminInvite.upsert({
       where: { email },
-      create: { email, name, role, tokenHash, invitedById, expiresAt },
-      update: { name, role, tokenHash, invitedById, expiresAt },
+      create: { email, name, roleRecordId, tokenHash, invitedById, expiresAt },
+      update: { name, roleRecordId, tokenHash, invitedById, expiresAt },
     });
   }
 
@@ -40,7 +43,10 @@ export class AdminInviteRepository {
   listPending(): Promise<AdminInviteWithInviter[]> {
     return this.prisma.adminInvite.findMany({
       orderBy: { createdAt: 'desc' },
-      include: { invitedBy: { select: { name: true } } },
+      include: {
+        invitedBy: { select: { name: true } },
+        roleRecord: { select: { id: true, name: true, permissionType: true } },
+      },
     });
   }
 

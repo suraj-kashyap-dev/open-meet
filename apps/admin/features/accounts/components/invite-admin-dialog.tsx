@@ -7,8 +7,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { AdminRole } from '@open-meet/types';
-
 import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
@@ -28,12 +26,15 @@ import {
   SelectValue,
 } from '@open-meet/ui/select';
 import { useCreateAdminInvite } from '@/features/accounts/hooks/use-admin-accounts';
+import { useAdminRoles } from '@/features/rbac/hooks/use-admin-roles';
 import { ApiClientError } from '@/lib/api/client';
+
+const DEFAULT_ROLE_ID = 'role_sys_member';
 
 interface FormValues {
   email: string;
   name: string;
-  role: AdminRole;
+  roleId: string;
 }
 
 interface Props {
@@ -44,20 +45,22 @@ interface Props {
 export function InviteAdminDialog({ open, onClose }: Props) {
   const t = useTranslations('accounts');
   const invite = useCreateAdminInvite();
+  const rolesQuery = useAdminRoles();
+  const roles = rolesQuery.data?.items ?? [];
 
   const schema = useMemo(
     () =>
       z.object({
         email: z.string().email(t('invite-dialog.validation.invalid-email')),
         name: z.string().min(1, t('invite-dialog.validation.name-required')).max(120),
-        role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
+        roleId: z.string().min(1),
       }),
     [t],
   );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { email: '', name: '', role: AdminRole.ADMIN },
+    defaultValues: { email: '', name: '', roleId: DEFAULT_ROLE_ID },
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
@@ -105,17 +108,18 @@ export function InviteAdminDialog({ open, onClose }: Props) {
           <div className="space-y-1.5">
             <Label htmlFor="invite-role">{t('invite-dialog.role')}</Label>
             <Select
-              value={form.watch('role')}
-              onValueChange={(v) => form.setValue('role', v as AdminRole)}
+              value={form.watch('roleId')}
+              onValueChange={(v) => form.setValue('roleId', v)}
             >
               <SelectTrigger id="invite-role">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={AdminRole.ADMIN}>{t('invite-dialog.role-admin')}</SelectItem>
-                <SelectItem value={AdminRole.SUPERADMIN}>
-                  {t('invite-dialog.role-superadmin')}
-                </SelectItem>
+                {roles.map((role) => (
+                  <SelectItem key={role.id} value={role.id}>
+                    {role.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

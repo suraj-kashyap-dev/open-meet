@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "회의",
+    "subtitle": "즉석 회의를 시작하거나 코드로 참여하세요."
+  },
   "greeting": {
     "up-late": "늦게까지 계시네요",
     "good-morning": "좋은 아침입니다",

@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "Obrolan",
+    "subtitle": "Pesan langsung dan obrolan grup Anda.",
+    "new": "Pesan baru",
+    "recent": "Terbaru",
+    "filter": "Filter",
+    "start-meeting": "Mulai rapat",
+    "compose": "Obrolan baru",
+    "search": "Cari percakapan",
+    "loading": "Memuat…",
+    "empty": "Belum ada percakapan.",
+    "untitled": "Percakapan",
+    "attachment": "Lampiran",
+    "no-messages": "Belum ada pesan",
+    "actions": "Tindakan percakapan",
+    "pin-chat": "Sematkan ke atas",
+    "unpin-chat": "Lepas sematan",
+    "mute": "Bisukan",
+    "unmute": "Bunyikan",
+    "mark-unread": "Tandai belum dibaca",
+    "hide": "Sembunyikan",
+    "unhide": "Tampilkan",
+    "show-hidden": "Tampilkan obrolan tersembunyi",
+    "hide-confirmed": "Obrolan disembunyikan",
+    "hide-undo": "Urungkan"
+  },
+  "view": {
+    "empty": "Pilih percakapan untuk mulai mengobrol.",
+    "no-messages": "Belum ada pesan. Sapa dulu!",
+    "loading": "Memuat percakapan…",
+    "not-found": "Percakapan tidak ditemukan.",
+    "back": "Kembali ke percakapan",
+    "jump-to-latest": "Lompat ke terbaru",
+    "peer-disabled": "Obrolan dinonaktifkan untuk pengguna ini.",
+    "you-disabled": "Akses obrolan Anda telah dinonaktifkan.",
+    "no-send-permission": "Anda tidak memiliki izin untuk mengirim pesan."
+  },
+  "header": {
+    "members": "{count, plural, one {# anggota} other {# anggota}}",
+    "actions": "Tindakan percakapan",
+    "clear": "Bersihkan obrolan",
+    "delete": "Hapus obrolan",
+    "clear-confirmed": "Pesan dihapus dari tampilan Anda",
+    "delete-confirmed": "Obrolan dihapus"
+  },
+  "presence": {
+    "online": "Online",
+    "offline": "Offline",
+    "last-seen": "Terakhir dilihat {time}",
+    "set-status": "Atur status Anda",
+    "available": "Tersedia",
+    "busy": "Sibuk",
+    "dnd": "Jangan ganggu",
+    "brb": "Segera kembali",
+    "away": "Tidak di tempat"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "Cari GIF",
+    "empty": "Tidak ada GIF ditemukan."
+  },
+  "bubble": {
+    "you": "Anda",
+    "unknown-user": "Tidak diketahui",
+    "deleted": "Pesan ini telah dihapus",
+    "edited": "(diedit)",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "reply": "Balas",
+    "more": "Tindakan lainnya",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "pinned": "Disematkan",
+    "pin": "Sematkan",
+    "unpin": "Lepas sematan",
+    "save-message": "Simpan",
+    "unsave-message": "Hapus dari tersimpan",
+    "forward": "Teruskan",
+    "copy-link": "Salin tautan",
+    "link-copied": "Tautan disalin"
+  },
+  "priority": {
+    "normal": "Standar",
+    "important": "Penting",
+    "urgent": "Mendesak",
+    "label": "Prioritas"
+  },
+  "forward": {
+    "title": "Teruskan ke…",
+    "success": "Pesan diteruskan",
+    "error": "Tidak dapat meneruskan pesan"
+  },
+  "receipts": {
+    "seen": "Dilihat",
+    "seen-by": "Dilihat oleh {count}"
+  },
+  "typing": {
+    "one": "{name} sedang mengetik…",
+    "many": "{count} orang sedang mengetik…"
+  },
+  "composer": {
+    "placeholder": "Tulis pesan…",
+    "send": "Kirim pesan",
+    "attach-file": "Lampirkan file",
+    "take-photo": "Ambil foto",
+    "cancel-reply": "Batalkan balasan",
+    "uploading": "Mengunggah… {percent}%",
+    "failed": "Gagal",
+    "remove-attachment": "Hapus lampiran",
+    "max-attachments": "Anda dapat melampirkan hingga {max} file.",
+    "wait-for-uploads": "Tunggu unggahan selesai.",
+    "upload-failed": "Unggahan gagal",
+    "poll-failed": "Tidak dapat membuat jajak pendapat",
+    "send-failed": "Tidak dapat mengirim pesan",
+    "disabled": "Anda tidak dapat mengirim pesan di sini."
+  },
+  "poll": {
+    "create": "Buat jajak pendapat",
+    "question": "Pertanyaan",
+    "question-placeholder": "Tanyakan sesuatu…",
+    "options": "Opsi",
+    "option-placeholder": "Opsi {index}",
+    "add-option": "Tambah opsi",
+    "remove-option": "Hapus opsi",
+    "allow-multiple": "Izinkan banyak jawaban",
+    "cancel": "Batal",
+    "create-submit": "Buat",
+    "votes": "{count, plural, one {# suara} other {# suara}}",
+    "closed": "Ditutup"
+  },
+  "group": {
+    "compose-chat": "Obrolan baru",
+    "compose-group": "Grup baru",
+    "create-title": "Grup baru",
+    "create-subtitle": "Pilih nama dan undang beberapa orang.",
+    "name-label": "Nama grup",
+    "name-placeholder": "misal: tim peluncuran Q4",
+    "description-label": "Deskripsi (opsional)",
+    "description-placeholder": "Tentang apa grup ini?",
+    "members-label": "Anggota",
+    "members-placeholder": "Cari rekan…",
+    "no-teammates": "Tidak ada rekan ditemukan.",
+    "create-submit": "Buat grup",
+    "create-failed": "Tidak dapat membuat grup",
+    "cancel": "Batal",
+    "admin-badge": "Admin",
+    "you-badge": "Anda",
+    "promote": "Jadikan admin",
+    "demote": "Hapus admin",
+    "remove-member": "Hapus dari grup",
+    "leave": "Keluar dari grup",
+    "leave-confirm": "Keluar dari grup ini?",
+    "last-admin-warning": "Anda satu-satunya admin. Promosikan seseorang dulu.",
+    "delete": "Hapus grup",
+    "delete-confirm": "Hapus grup ini? Tidak dapat dibatalkan.",
+    "groups-disabled": "Pembuatan grup dinonaktifkan oleh admin."
+  },
+  "new-dm": {
+    "title": "Percakapan baru",
+    "search": "Cari rekan tim",
+    "no-teammates": "Tidak ada rekan tim yang ditemukan.",
+    "disabled": "Tidak tersedia"
+  },
+  "new-chat": {
+    "title": "Obrolan baru",
+    "to-label": "Kepada:",
+    "to-placeholder": "Masukkan nama atau email",
+    "no-teammates": "Tidak ada rekan ditemukan.",
+    "disabled": "Tidak tersedia",
+    "empty-title": "Anda memulai percakapan baru",
+    "empty-subtitle": "Ketik pesan pertama Anda di bawah.",
+    "send-placeholder": "Ketik pesan pertama Anda…"
+  },
+  "teams": {
+    "title": "Tim",
+    "subtitle": "Tim dan saluran Anda.",
+    "empty": "Anda belum menjadi anggota tim mana pun.",
+    "empty-title": "Belum ada tim",
+    "empty-subtitle": "Admin akan menambahkan Anda ke tim untuk mulai berkolaborasi.",
+    "no-channels": "Belum ada kanal."
+  },
+  "activity": {
+    "title": "Aktivitas",
+    "subtitle": "Pesan yang me-@mention Anda.",
+    "empty": "Belum ada sebutan.",
+    "empty-title": "Belum ada sebutan",
+    "empty-subtitle": "Saat seseorang @menyebut Anda, akan muncul di sini."
+  },
+  "saved": {
+    "title": "Tersimpan",
+    "subtitle": "Pesan yang Anda simpan untuk nanti.",
+    "empty": "Anda belum menyimpan pesan apa pun.",
+    "empty-title": "Tidak ada pesan tersimpan",
+    "empty-subtitle": "Simpan pesan dari obrolan untuk menemukannya di sini."
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

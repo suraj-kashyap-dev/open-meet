@@ -6,16 +6,18 @@
   "sections": {
     "overview": "Genel bakış",
     "manage": "Yönet",
-    "insights": "İçgörüler",
     "system": "Sistem"
   },
   "items": {
     "dashboard": "Kontrol paneli",
     "users": "Kullanıcılar",
+    "teams": "Takımlar",
+    "groups": "Gruplar",
     "meetings": "Toplantılar",
-    "analytics": "Analitik",
     "settings": "Ayarlar",
     "administrators": "Yöneticiler",
+    "roles": "Yönetici rolleri",
+    "user-roles": "Kullanıcı rolleri",
     "branding": "Marka",
     "configuration": "Yapılandırma",
     "more": "Daha fazla"

@@ -11,6 +11,8 @@
     "joined": "Se unió",
     "hosted": "Organizó",
     "attended": "Asistió",
+    "chat": "Chat",
+    "chat-toggle": "Alternar acceso al chat",
     "actions": "Acciones",
     "open-actions": "Abrir acciones",
     "edit": "Editar",
@@ -22,6 +24,36 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "page-of": "Página {page} de {pageCount}"
+  },
+  "create-dialog": {
+    "button": "Nuevo usuario",
+    "title": "Crear un usuario",
+    "subtitle": "Crea una cuenta activa con una contraseña que tú definas. El usuario podrá iniciar sesión de inmediato.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "password-helper": "Al menos 8 caracteres. Compártela de forma segura con el usuario.",
+    "cancel": "Cancelar",
+    "submit": "Crear usuario",
+    "submitting": "Creando…",
+    "success": "{email} creado",
+    "error": "No se pudo crear al usuario",
+    "validation": {
+      "name-required": "El nombre es obligatorio",
+      "invalid-email": "Ingresa un correo electrónico válido",
+      "password-too-short": "Al menos 8 caracteres",
+      "password-too-long": "Demasiado largo"
+    }
+  },
+  "detail": {
+    "eyebrow": "Editar usuario",
+    "back": "Volver a usuarios",
+    "subtitle": "Actualiza el perfil, la localización, la biografía o restablece la contraseña.",
+    "not-found-title": "Usuario no encontrado",
+    "not-found-description": "Es posible que este usuario haya sido eliminado.",
+    "danger-title": "Zona de peligro",
+    "danger-description": "Elimina permanentemente a este usuario y todo lo que haya creado. Esta acción no se puede deshacer.",
+    "delete": "Eliminar usuario"
   },
   "edit-dialog": {
     "title": "Editar usuario",
@@ -36,6 +68,7 @@
     "timezone-placeholder": "Elige una zona horaria",
     "language": "Idioma",
     "language-placeholder": "Elige un idioma",
+    "can-create-groups": "Puede crear grupos",
     "bio": "Biografía",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Opcional",
@@ -76,5 +109,29 @@
     "submitting": "Eliminando…",
     "success": "{email} eliminado",
     "error": "No se pudo eliminar al usuario"
+  },
+  "invite": {
+    "button": "Invitar usuario",
+    "title": "Invitar a un usuario",
+    "subtitle": "Recibirán un correo para establecer una contraseña y activar su cuenta.",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "submit": "Enviar invitación",
+    "success": "Invitación enviada a {email}",
+    "error": "No se pudo enviar la invitación"
+  },
+  "pending": {
+    "title": "Invitaciones pendientes",
+    "empty": "No hay invitaciones pendientes.",
+    "loading-error": "No se pudieron cargar las invitaciones.",
+    "status-pending": "Pendiente",
+    "status-expired": "Caducada",
+    "expires": "Caduca {when}",
+    "resend-label": "Reenviar invitación a {email}",
+    "revoke-label": "Revocar invitación de {email}",
+    "resend-success": "Invitación reenviada a {email}",
+    "resend-error": "No se pudo reenviar la invitación",
+    "revoke-success": "Invitación de {email} revocada",
+    "revoke-error": "No se pudo revocar la invitación"
   }
 }

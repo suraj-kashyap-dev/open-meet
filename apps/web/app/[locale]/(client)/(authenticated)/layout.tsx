@@ -3,19 +3,16 @@ import type { ReactNode } from 'react';
 import { AuthGuard } from '@/features/web/auth/components/auth-guard';
 import { CommandPalette } from '@/components/shared/command-palette';
 import { ActiveMeetingMount } from '@/features/web/meeting/components/active-meeting-mount';
-import { AppHeader } from '@/components/web/header/header';
-
-export const dynamic = 'force-dynamic';
+import { ChatSocketProvider } from '@/features/web/chat/components/chat-socket-provider';
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   return (
     <AuthGuard>
-      <div className="min-h-screen">
-        <AppHeader />
+      <ChatSocketProvider>
         {children}
         <CommandPalette />
         <ActiveMeetingMount />
-      </div>
+      </ChatSocketProvider>
     </AuthGuard>
   );
 }

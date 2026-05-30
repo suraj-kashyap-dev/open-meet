@@ -5,17 +5,23 @@
 export interface PublicConfigDto {
   appName: string;
   logoUrl: string | null;
+  /** Whether the GIF picker is available (Tenor configured on the server). */
+  gifsEnabled: boolean;
+  /** Brand accent — preset slug ("indigo", "blue", ...) or `#RRGGBB` hex. */
+  accentColor: string;
 }
 
 /** Branding as seen by the admin console (`GET /api/admin/branding`). */
 export interface AdminBrandingDto {
   appName: string;
   logoUrl: string | null;
+  accentColor: string;
 }
 
-/** Request body for updating the application name (`PATCH /api/admin/branding`). */
+/** Request body for updating branding (`PATCH /api/admin/branding`). */
 export interface UpdateBrandingInput {
-  appName: string;
+  appName?: string;
+  accentColor?: string;
 }
 
 /** Workspace configuration managed by admins (`GET /api/admin/configuration`). */

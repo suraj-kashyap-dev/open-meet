@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "チャット",
+    "subtitle": "あなたのダイレクトメッセージとグループチャット。",
+    "new": "新しいメッセージ",
+    "recent": "最近",
+    "filter": "フィルター",
+    "start-meeting": "会議を開始",
+    "compose": "新しいチャット",
+    "search": "会話を検索",
+    "loading": "読み込み中…",
+    "empty": "まだ会話がありません。",
+    "untitled": "会話",
+    "attachment": "添付ファイル",
+    "no-messages": "まだメッセージがありません",
+    "actions": "会話の操作",
+    "pin-chat": "上部にピン留め",
+    "unpin-chat": "ピン留めを解除",
+    "mute": "ミュート",
+    "unmute": "ミュート解除",
+    "mark-unread": "未読にする",
+    "hide": "非表示",
+    "unhide": "表示",
+    "show-hidden": "非表示のチャットを表示",
+    "hide-confirmed": "チャットを非表示にしました",
+    "hide-undo": "元に戻す"
+  },
+  "view": {
+    "empty": "会話を選択してチャットを開始してください。",
+    "no-messages": "まだメッセージがありません。挨拶してみましょう！",
+    "loading": "会話を読み込み中…",
+    "not-found": "会話が見つかりません。",
+    "back": "会話に戻る",
+    "jump-to-latest": "最新へ移動",
+    "peer-disabled": "このユーザーのチャットは無効になっています。",
+    "you-disabled": "あなたのチャットアクセスは無効になっています。",
+    "no-send-permission": "メッセージを送信する権限がありません。"
+  },
+  "header": {
+    "members": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}",
+    "actions": "会話のアクション",
+    "clear": "チャットをクリア",
+    "delete": "チャットを削除",
+    "clear-confirmed": "あなたのビューからメッセージをクリアしました",
+    "delete-confirmed": "チャットを削除しました"
+  },
+  "presence": {
+    "online": "オンライン",
+    "offline": "オフライン",
+    "last-seen": "最終ログイン {time}",
+    "set-status": "ステータスを設定",
+    "available": "対応可能",
+    "busy": "取り込み中",
+    "dnd": "通知をオフ",
+    "brb": "すぐに戻ります",
+    "away": "離席中"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "GIF を検索",
+    "empty": "GIF が見つかりません。"
+  },
+  "bubble": {
+    "you": "あなた",
+    "unknown-user": "不明",
+    "deleted": "このメッセージは削除されました",
+    "edited": "（編集済み）",
+    "edit": "編集",
+    "delete": "削除",
+    "reply": "返信",
+    "more": "その他の操作",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "pinned": "ピン留め済み",
+    "pin": "ピン留め",
+    "unpin": "ピン留めを解除",
+    "save-message": "保存",
+    "unsave-message": "保存から削除",
+    "forward": "転送",
+    "copy-link": "リンクをコピー",
+    "link-copied": "リンクをコピーしました"
+  },
+  "priority": {
+    "normal": "標準",
+    "important": "重要",
+    "urgent": "緊急",
+    "label": "優先度"
+  },
+  "forward": {
+    "title": "転送先…",
+    "success": "メッセージを転送しました",
+    "error": "メッセージを転送できませんでした"
+  },
+  "receipts": {
+    "seen": "既読",
+    "seen-by": "{count} 人が既読"
+  },
+  "typing": {
+    "one": "{name} が入力中…",
+    "many": "{count} 人が入力中…"
+  },
+  "composer": {
+    "placeholder": "メッセージを入力…",
+    "send": "メッセージを送信",
+    "attach-file": "ファイルを添付",
+    "take-photo": "写真を撮る",
+    "cancel-reply": "返信をキャンセル",
+    "uploading": "アップロード中… {percent}%",
+    "failed": "失敗",
+    "remove-attachment": "添付ファイルを削除",
+    "max-attachments": "最大 {max} 個のファイルを添付できます。",
+    "wait-for-uploads": "アップロードが完了するまでお待ちください。",
+    "upload-failed": "アップロードに失敗しました",
+    "poll-failed": "アンケートを作成できませんでした",
+    "send-failed": "メッセージを送信できませんでした",
+    "disabled": "ここではメッセージを送信できません。"
+  },
+  "poll": {
+    "create": "アンケートを作成",
+    "question": "質問",
+    "question-placeholder": "何か質問してください…",
+    "options": "選択肢",
+    "option-placeholder": "選択肢 {index}",
+    "add-option": "選択肢を追加",
+    "remove-option": "選択肢を削除",
+    "allow-multiple": "複数回答を許可",
+    "cancel": "キャンセル",
+    "create-submit": "作成",
+    "votes": "{count, plural, one {# 票} other {# 票}}",
+    "closed": "終了"
+  },
+  "group": {
+    "compose-chat": "新しいチャット",
+    "compose-group": "新しいグループ",
+    "create-title": "新しいグループ",
+    "create-subtitle": "名前を選んでメンバーを招待します。",
+    "name-label": "グループ名",
+    "name-placeholder": "例: Q4ローンチチーム",
+    "description-label": "説明（任意）",
+    "description-placeholder": "このグループについて",
+    "members-label": "メンバー",
+    "members-placeholder": "チームメイトを検索…",
+    "no-teammates": "チームメイトが見つかりません。",
+    "create-submit": "グループ作成",
+    "create-failed": "グループを作成できませんでした",
+    "cancel": "キャンセル",
+    "admin-badge": "管理者",
+    "you-badge": "あなた",
+    "promote": "管理者にする",
+    "demote": "管理者を解除",
+    "remove-member": "グループから削除",
+    "leave": "グループを退出",
+    "leave-confirm": "このグループを退出しますか?",
+    "last-admin-warning": "唯一の管理者です。先に誰かを管理者にしてください。",
+    "delete": "グループを削除",
+    "delete-confirm": "このグループを削除しますか? 取り消せません。",
+    "groups-disabled": "グループ作成は管理者により無効化されています。"
+  },
+  "new-dm": {
+    "title": "新しい会話",
+    "search": "チームメイトを検索",
+    "no-teammates": "チームメイトが見つかりません。",
+    "disabled": "利用不可"
+  },
+  "new-chat": {
+    "title": "新しいチャット",
+    "to-label": "宛先:",
+    "to-placeholder": "名前またはメールアドレスを入力",
+    "no-teammates": "メンバーが見つかりません。",
+    "disabled": "利用不可",
+    "empty-title": "新しい会話を開始します",
+    "empty-subtitle": "下に最初のメッセージを入力してください。",
+    "send-placeholder": "最初のメッセージを入力…"
+  },
+  "teams": {
+    "title": "チーム",
+    "subtitle": "あなたのチームとチャンネル。",
+    "empty": "まだどのチームのメンバーでもありません。",
+    "empty-title": "まだチームがありません",
+    "empty-subtitle": "管理者がチームに追加してコラボレーションを開始します。",
+    "no-channels": "まだチャンネルがありません。"
+  },
+  "activity": {
+    "title": "アクティビティ",
+    "subtitle": "あなたを @メンション したメッセージ。",
+    "empty": "まだメンションがありません。",
+    "empty-title": "まだメンションはありません",
+    "empty-subtitle": "誰かが@メンションすると、ここに表示されます。"
+  },
+  "saved": {
+    "title": "保存済み",
+    "subtitle": "後で読むために保存したメッセージ。",
+    "empty": "まだメッセージを保存していません。",
+    "empty-title": "保存されたメッセージはありません",
+    "empty-subtitle": "チャットからメッセージを保存すると、ここに表示されます。"
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

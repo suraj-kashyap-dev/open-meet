@@ -47,6 +47,8 @@
     "eyebrow": "Account",
     "title": "Settings",
     "description": "Defaults for meetings, what others can see, and your language.",
+    "appearance-title": "Appearance",
+    "appearance-description": "Theme and brand accent for this device.",
     "localization-title": "Localization",
     "localization-description": "Used for meeting times, dates, and the UI language.",
     "defaults-title": "Meeting defaults",
@@ -84,6 +86,29 @@
     "direct-messages-description": "Let others start a 1-1 chat with you outside of meetings.",
     "usage-data-title": "Share anonymous usage data",
     "usage-data-description": "Helps us improve Open Meet. No meeting content is ever shared."
+  },
+  "appearance": {
+    "theme-label": "Theme",
+    "theme-hint": "Switch between light and dark.",
+    "light": "Light",
+    "dark": "Dark",
+    "accent-label": "Brand accent",
+    "accent-hint": "Color used for buttons, links, and the focus ring.",
+    "advanced": "Use a custom color",
+    "hex-picker": "Custom color picker",
+    "hex-input": "Hex color value",
+    "apply-hex": "Apply",
+    "reset": "Reset to workspace default",
+    "using-workspace": "Using the workspace default.",
+    "preset": {
+      "indigo": "Indigo",
+      "blue": "Blue",
+      "green": "Green",
+      "purple": "Purple",
+      "rose": "Rose",
+      "amber": "Amber",
+      "teal": "Teal"
+    }
   },
   "actions": {
     "reset": "Reset",

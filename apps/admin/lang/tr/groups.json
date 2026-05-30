@@ -1,0 +1,54 @@
+{
+  "eyebrow": "Yönet",
+  "title": "Gruplar",
+  "subtitle": "Grup sohbetleri yöneticiler tarafından oluşturulur ve yönetilir.",
+  "empty": "Henüz grup yok.",
+  "columns": {
+    "name": "Ad",
+    "members": "Üyeler"
+  },
+  "actions": {
+    "manage": "Üyeleri yönet",
+    "delete": "Grubu sil"
+  },
+  "create": {
+    "button": "Yeni grup",
+    "title": "Grup oluştur",
+    "name": "Grup adı",
+    "placeholder": "örn. Ürün lansmanı",
+    "choose-members": "Üye seç",
+    "choose-confirm": "Seç",
+    "selected": "{count, plural, one {# üye seçildi} other {# üye seçildi}}",
+    "submit": "Oluştur",
+    "success": "Grup oluşturuldu",
+    "error": "Grup oluşturulamadı"
+  },
+  "manage": {
+    "title": "Üyeler",
+    "members": "{count, plural, one {# üye} other {# üye}}",
+    "add": "Üye ekle",
+    "search": "Kullanıcı ara",
+    "no-users": "Kullanıcı bulunamadı.",
+    "add-confirm": "Ekle",
+    "empty": "Henüz üye yok.",
+    "remove": "Üyeyi çıkar"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Group updated",
+    "request-error": "Could not update this group",
+    "empty-title": "Group not found",
+    "empty-description": "This group may have been removed or you may not have access to it.",
+    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-success": "Group deleted",
+    "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Grup silinsin mi?",
+    "description": "{name} silinecek ve her üyeden anında kaldırılacak. Bu işlem geri alınamaz.",
+    "cancel": "İptal",
+    "confirm": "Grubu sil",
+    "deleting": "Siliniyor…"
+  }
+}

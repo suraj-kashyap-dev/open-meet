@@ -16,7 +16,7 @@ import { useMeetingStore } from '@/features/web/meeting/stores';
 export function useMeeting(code: string | undefined) {
   return useQuery<MeetingDto>({
     queryKey: ['meeting', code],
-    queryFn: ({ signal }) => meetingsApi.get(code as string, signal),
+    queryFn: ({ signal }) => meetingsApi.get(code as string, { signal }),
     enabled: Boolean(code),
   });
 }
@@ -24,7 +24,7 @@ export function useMeeting(code: string | undefined) {
 export function useParticipants(code: string | undefined) {
   return useQuery<ParticipantDto[]>({
     queryKey: ['meeting', code, 'participants'],
-    queryFn: ({ signal }) => meetingsApi.participants(code as string, signal),
+    queryFn: ({ signal }) => meetingsApi.participants(code as string, { signal }),
     enabled: Boolean(code),
     refetchInterval: 10_000,
   });

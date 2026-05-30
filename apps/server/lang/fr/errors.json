@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "Impossible de rétrograder le dernier super-administrateur restant",
   "cannot-delete-self": "Vous ne pouvez pas supprimer votre propre compte administrateur",
   "cannot-delete-last-superadmin": "Impossible de supprimer le dernier super-administrateur restant",
-  "superadmin-required": "Les privilèges de super-administrateur sont requis pour cette action"
+  "permission-required": "Vous n'avez pas l'autorisation d'effectuer cette action",
+  "role-not-found": "Rôle introuvable",
+  "role-name-taken": "Un rôle portant ce nom existe déjà",
+  "role-is-system": "Les rôles système ne peuvent pas être modifiés ni supprimés",
+  "role-has-members": "Réaffectez chaque administrateur de ce rôle avant de le supprimer",
+  "role-permission-invalid": "Une ou plusieurs clés d'autorisation ne sont pas valides"
 }

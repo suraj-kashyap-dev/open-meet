@@ -1,4 +1,3 @@
-import { AdminRole } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { PrismaService } from '@/database/prisma.service';
@@ -38,18 +37,18 @@ describe('AdminRepository', () => {
   });
 
   describe('list()', () => {
-    it('should order by role then creation date', async () => {
+    it('should order by creation date', async () => {
       await repo.list();
       expect(admin.findMany).toHaveBeenCalledWith({
-        orderBy: [{ role: 'asc' }, { createdAt: 'asc' }],
+        orderBy: [{ createdAt: 'asc' }],
       });
     });
   });
 
-  describe('countByRole()', () => {
-    it('should filter the count by role', async () => {
-      await expect(repo.countByRole(AdminRole.SUPERADMIN)).resolves.toBe(1);
-      expect(admin.count).toHaveBeenCalledWith({ where: { role: AdminRole.SUPERADMIN } });
+  describe('countByRoleRecord()', () => {
+    it('should filter the count by RBAC role id', async () => {
+      await expect(repo.countByRoleRecord('role_sys_admin')).resolves.toBe(1);
+      expect(admin.count).toHaveBeenCalledWith({ where: { roleRecordId: 'role_sys_admin' } });
     });
   });
 

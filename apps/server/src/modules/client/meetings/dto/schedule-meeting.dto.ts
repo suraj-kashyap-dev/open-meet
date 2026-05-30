@@ -13,10 +13,11 @@ import {
 } from 'class-validator';
 
 export class ScheduleMeetingApiDto {
-  @ApiProperty({ example: 'Weekly sync' })
+  @ApiPropertyOptional({ example: 'Weekly sync' })
+  @IsOptional()
   @IsString()
   @MaxLength(200)
-  title!: string;
+  title?: string;
 
   @ApiProperty({ example: '2026-05-20T15:00:00.000Z' })
   @IsISO8601()

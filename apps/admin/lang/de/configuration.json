@@ -7,6 +7,49 @@
     "title": "Konfiguration ist in Vorbereitung",
     "description": "Arbeitsbereichsstandards, Branding und Besprechungsrichtlinien werden bald hier verfügbar sein."
   },
+  "hub": {
+    "empty": "Sie haben noch keinen Zugriff auf Einstellungen.",
+    "sections": {
+      "access": {
+        "title": "Zugriff",
+        "description": "Verwalten Sie, wer sich an der Konsole anmelden kann und welche Aktionen erlaubt sind."
+      },
+      "users": {
+        "title": "Benutzer",
+        "description": "Verwalten Sie die Endbenutzer der App und die ihnen zugewiesenen Rollen."
+      },
+      "workspace": {
+        "title": "Arbeitsbereich",
+        "description": "Branden Sie die Konsole und konfigurieren Sie die Arbeitsbereichsstandards."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Administratoren",
+        "description": "Administrator-Konten, die sich an der Konsole anmelden können, hinzufügen, bearbeiten oder entfernen."
+      },
+      "roles": {
+        "title": "Admin-Rollen",
+        "description": "Legen Sie fest, welche Berechtigungen jede Admin-Rolle gewährt."
+      },
+      "users": {
+        "title": "Benutzer",
+        "description": "Endbenutzerkonten verwalten, neue Benutzer einladen und deren Zugriff umschalten."
+      },
+      "user-roles": {
+        "title": "Benutzerrollen",
+        "description": "Legen Sie fest, welche Berechtigungen jede Benutzerrolle innerhalb der App gewährt."
+      },
+      "branding": {
+        "title": "Branding",
+        "description": "Passen Sie App-Name, Logo und Akzentfarbe an."
+      },
+      "configuration": {
+        "title": "Konfiguration",
+        "description": "Arbeitsbereichsstandards, Besprechungsrichtlinien und Feature-Schalter."
+      }
+    }
+  },
   "form": {
     "title": "Arbeitsbereichsstandards",
     "subtitle": "Standards, die auf neue Besprechungen im gesamten Arbeitsbereich angewendet werden.",

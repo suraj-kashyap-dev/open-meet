@@ -1,19 +1,23 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { ChevronLeft, ChevronRight, Pencil, Search, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Mail, Pencil, Search, Trash2, UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 
 import type { AdminUserDto } from '@open-meet/types';
 
 import { DataTable } from '@open-meet/ui/data-table';
+import { CreateUserDialog } from '@/features/users/components/create-user-dialog';
 import { DeleteUserDialog } from '@/features/users/components/delete-user-dialog';
 import { EditUserDialog } from '@/features/users/components/edit-user-dialog';
+import { InviteUserDialog } from '@/features/users/components/invite-user-dialog';
+import { PendingUserInvites } from '@/features/users/components/pending-user-invites';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
-import { useAdminUsers } from '@/features/users/hooks/use-admin-users';
+import { Switch } from '@open-meet/ui/switch';
+import { useAdminUsers, useUpdateAdminUser } from '@/features/users/hooks/use-admin-users';
 
 const PAGE_SIZE = 20;
 
@@ -33,9 +37,12 @@ export default function AdminUsersPage() {
   const [search, setSearch] = useState('');
   const [editing, setEditing] = useState<AdminUserDto | null>(null);
   const [deleting, setDeleting] = useState<AdminUserDto | null>(null);
+  const [inviteOpen, setInviteOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(false);
 
   const query = { page, pageSize: PAGE_SIZE, search: search.trim() || undefined };
   const { data, isLoading, isFetching } = useAdminUsers(query);
+  const updateUser = useUpdateAdminUser();
 
   const columns = useMemo(
     () => [
@@ -59,14 +66,21 @@ export default function AdminUsersPage() {
         ),
         meta: { headerClassName: 'hidden md:table-cell', cellClassName: 'hidden md:table-cell' },
       }),
-      column.accessor('meetingsHosted', {
-        header: () => <span className="block text-end">{t('table.hosted')}</span>,
-        cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
-        meta: { headerClassName: 'hidden sm:table-cell', cellClassName: 'hidden sm:table-cell' },
-      }),
-      column.accessor('meetingsAttended', {
-        header: () => <span className="block text-end">{t('table.attended')}</span>,
-        cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
+      column.display({
+        id: 'chat',
+        header: () => <span className="block text-center">{t('table.chat')}</span>,
+        cell: ({ row }) => (
+          <div className="flex justify-center">
+            <Switch
+              checked={!row.original.chatDisabled}
+              disabled={updateUser.isPending}
+              aria-label={t('table.chat-toggle')}
+              onCheckedChange={(enabled) =>
+                updateUser.mutate({ id: row.original.id, body: { chatDisabled: !enabled } })
+              }
+            />
+          </div>
+        ),
         meta: { headerClassName: 'hidden sm:table-cell', cellClassName: 'hidden sm:table-cell' },
       }),
       column.display({
@@ -97,7 +111,7 @@ export default function AdminUsersPage() {
         ),
       }),
     ],
-    [t],
+    [t, updateUser],
   );
 
   const total = data?.total ?? 0;
@@ -111,11 +125,21 @@ export default function AdminUsersPage() {
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           {t('eyebrow')}
         </p>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
-          <span className="text-sm text-muted-foreground">
-            {t('total-count', { count: total })}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground">
+              {t('total-count', { count: total })}
+            </span>
+            <Button variant="outline" onClick={() => setInviteOpen(true)} className="gap-2">
+              <Mail className="h-4 w-4" />
+              {t('invite.button')}
+            </Button>
+            <Button onClick={() => setCreateOpen(true)} className="gap-2">
+              <UserPlus className="h-4 w-4" />
+              {t('create-dialog.button')}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -133,6 +157,7 @@ export default function AdminUsersPage() {
             className="ps-9"
           />
         </div>
+        
         {isFetching && !isLoading ? (
           <span className="text-xs text-muted-foreground">{t('refreshing')}</span>
         ) : null}
@@ -149,6 +174,7 @@ export default function AdminUsersPage() {
         <p className="text-center text-muted-foreground sm:text-start">
           {total === 0 ? t('pagination.no-results') : t('pagination.showing', { from, to, total })}
         </p>
+
         <div className="flex items-center justify-between gap-2 sm:justify-end">
           <Button
             variant="outline"
@@ -157,11 +183,14 @@ export default function AdminUsersPage() {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
             <ChevronLeft className="h-4 w-4" />
+            
             {t('pagination.previous')}
           </Button>
+          
           <span className="text-xs text-muted-foreground">
             {t('pagination.page-of', { page, pageCount })}
           </span>
+          
           <Button
             variant="outline"
             size="sm"
@@ -174,7 +203,18 @@ export default function AdminUsersPage() {
         </div>
       </footer>
 
+      <section className="space-y-3 rounded-xl border border-border bg-card/40 p-4">
+        <h2 className="text-sm font-semibold">{t('pending.title')}</h2>
+        
+        <PendingUserInvites />
+      </section>
+
+      <InviteUserDialog open={inviteOpen} onOpenChange={setInviteOpen} />
+      
+      <CreateUserDialog open={createOpen} onOpenChange={setCreateOpen} />
+      
       <EditUserDialog user={editing} onClose={() => setEditing(null)} />
+
       <DeleteUserDialog user={deleting} onClose={() => setDeleting(null)} />
     </main>
   );

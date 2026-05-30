@@ -6,16 +6,18 @@
   "sections": {
     "overview": "Resumen",
     "manage": "Gestionar",
-    "insights": "Estadísticas",
     "system": "Sistema"
   },
   "items": {
     "dashboard": "Panel",
     "users": "Usuarios",
+    "teams": "Equipos",
+    "groups": "Grupos",
     "meetings": "Reuniones",
-    "analytics": "Analíticas",
     "settings": "Configuración",
     "administrators": "Administradores",
+    "roles": "Roles de administrador",
+    "user-roles": "Roles de usuario",
     "branding": "Marca",
     "configuration": "Configuración",
     "more": "Más"

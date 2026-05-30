@@ -47,6 +47,8 @@
     "eyebrow": "アカウント",
     "title": "設定",
     "description": "ミーティングのデフォルト、他のユーザーへの表示内容、および言語設定。",
+    "appearance-title": "外観",
+    "appearance-description": "このデバイスのテーマとブランドアクセント。",
     "localization-title": "ローカライズ",
     "localization-description": "ミーティングの時刻、日付、UI 言語に使用されます。",
     "defaults-title": "ミーティングのデフォルト",
@@ -84,6 +86,29 @@
     "direct-messages-description": "他のユーザーがミーティング外で 1 対 1 のチャットを開始できるようにします。",
     "usage-data-title": "匿名の使用データを共有",
     "usage-data-description": "Open Meet の改善に役立てます。ミーティングのコンテンツが共有されることはありません。"
+  },
+  "appearance": {
+    "theme-label": "テーマ",
+    "theme-hint": "ライトとダークを切り替えます。",
+    "light": "ライト",
+    "dark": "ダーク",
+    "accent-label": "ブランドアクセント",
+    "accent-hint": "ボタンとリンクの色。",
+    "advanced": "カスタムカラーを使用",
+    "hex-picker": "カラーピッカー",
+    "hex-input": "Hex値",
+    "apply-hex": "適用",
+    "reset": "ワークスペース既定にリセット",
+    "using-workspace": "ワークスペース既定を使用中。",
+    "preset": {
+      "indigo": "インディゴ",
+      "blue": "ブルー",
+      "green": "グリーン",
+      "purple": "パープル",
+      "rose": "ローズ",
+      "amber": "アンバー",
+      "teal": "ティール"
+    }
   },
   "actions": {
     "reset": "リセット",

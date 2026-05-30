@@ -11,6 +11,8 @@
     "joined": "Inscrit",
     "hosted": "Organisées",
     "attended": "Participées",
+    "chat": "Discussion",
+    "chat-toggle": "Activer/désactiver l'accès à la discussion",
     "actions": "Actions",
     "open-actions": "Ouvrir les actions",
     "edit": "Modifier",
@@ -22,6 +24,36 @@
     "previous": "Précédent",
     "next": "Suivant",
     "page-of": "Page {page} sur {pageCount}"
+  },
+  "create-dialog": {
+    "button": "Nouvel utilisateur",
+    "title": "Créer un utilisateur",
+    "subtitle": "Créez un compte actif avec un mot de passe que vous définissez. L'utilisateur peut se connecter immédiatement.",
+    "name": "Nom",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "password-helper": "Au moins 8 caractères. Communiquez-le à l'utilisateur de manière sécurisée.",
+    "cancel": "Annuler",
+    "submit": "Créer l'utilisateur",
+    "submitting": "Création…",
+    "success": "{email} créé",
+    "error": "Impossible de créer l'utilisateur",
+    "validation": {
+      "name-required": "Le nom est requis",
+      "invalid-email": "Saisissez un e-mail valide",
+      "password-too-short": "Au moins 8 caractères",
+      "password-too-long": "Trop long"
+    }
+  },
+  "detail": {
+    "eyebrow": "Modifier l'utilisateur",
+    "back": "Retour aux utilisateurs",
+    "subtitle": "Mettez à jour le profil, la localisation, la biographie ou réinitialisez le mot de passe.",
+    "not-found-title": "Utilisateur introuvable",
+    "not-found-description": "Cet utilisateur a peut-être été supprimé.",
+    "danger-title": "Zone de danger",
+    "danger-description": "Supprimez définitivement cet utilisateur et tout ce qu'il a créé. Cette action est irréversible.",
+    "delete": "Supprimer l'utilisateur"
   },
   "edit-dialog": {
     "title": "Modifier l'utilisateur",
@@ -36,6 +68,7 @@
     "timezone-placeholder": "Choisir un fuseau horaire",
     "language": "Langue",
     "language-placeholder": "Choisir une langue",
+    "can-create-groups": "Peut créer des groupes",
     "bio": "Biographie",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Facultatif",
@@ -76,5 +109,29 @@
     "submitting": "Suppression…",
     "success": "{email} supprimé",
     "error": "Impossible de supprimer l'utilisateur"
+  },
+  "invite": {
+    "button": "Inviter un utilisateur",
+    "title": "Inviter un utilisateur",
+    "subtitle": "Il recevra un e-mail pour définir un mot de passe et activer son compte.",
+    "name": "Nom",
+    "email": "E-mail",
+    "submit": "Envoyer l'invitation",
+    "success": "Invitation envoyée à {email}",
+    "error": "Impossible d'envoyer l'invitation"
+  },
+  "pending": {
+    "title": "Invitations en attente",
+    "empty": "Aucune invitation en attente.",
+    "loading-error": "Impossible de charger les invitations.",
+    "status-pending": "En attente",
+    "status-expired": "Expirée",
+    "expires": "Expire {when}",
+    "resend-label": "Renvoyer l'invitation à {email}",
+    "revoke-label": "Révoquer l'invitation de {email}",
+    "resend-success": "Invitation renvoyée à {email}",
+    "resend-error": "Impossible de renvoyer l'invitation",
+    "revoke-success": "Invitation de {email} révoquée",
+    "revoke-error": "Impossible de révoquer l'invitation"
   }
 }

@@ -15,6 +15,10 @@ export const apiEnvSchema = z.object({
   ADMIN_JWT_ACCESS_SECRET: z.string().min(16),
   ADMIN_JWT_ACCESS_EXPIRY: z.string().default('2h'),
 
+  USER_INVITE_TTL_HOURS: z.coerce.number().int().positive().default(168),
+  CHAT_MESSAGE_MAX_LENGTH: z.coerce.number().int().positive().default(8000),
+  TENOR_API_KEY: z.string().optional(),
+
   DEFAULT_ADMIN_EMAIL: z.string().email().default('admin@example.com'),
   DEFAULT_ADMIN_PASSWORD: z.string().min(8).default('admin12345'),
   DEFAULT_ADMIN_NAME: z.string().min(1).default('Example'),

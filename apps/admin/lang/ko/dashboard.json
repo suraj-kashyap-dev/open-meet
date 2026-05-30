@@ -10,7 +10,11 @@
     "active-now": "현재 활성",
     "active-now-hint": "상태가 ACTIVE인 룸",
     "messages-24h": "24h 메시지",
-    "messages-24h-hint": "최근 24시간 채팅 메시지 수"
+    "messages-24h-hint": "최근 24시간 채팅 메시지 수",
+    "groups": "그룹",
+    "groups-hint": "생성된 그룹 대화",
+    "teams": "팀",
+    "teams-hint": "워크스페이스의 팀"
   },
   "trends": {
     "signups": "신규 가입",

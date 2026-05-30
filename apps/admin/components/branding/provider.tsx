@@ -4,7 +4,12 @@ import { createContext, useContext, type ReactNode } from 'react';
 
 import type { PublicConfigDto } from '@open-meet/types';
 
-const FALLBACK: PublicConfigDto = { appName: 'Open Meet', logoUrl: null };
+const FALLBACK: PublicConfigDto = {
+  appName: 'Open Meet',
+  logoUrl: null,
+  gifsEnabled: false,
+  accentColor: 'indigo',
+};
 
 const BrandingContext = createContext<PublicConfigDto>(FALLBACK);
 

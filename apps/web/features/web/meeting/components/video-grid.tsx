@@ -12,10 +12,10 @@ import { Hand } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
+import { MeetingDefaultView } from '@open-meet/types';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
-import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { parseParticipantMetadata } from '@/features/web/meeting/lib/participant-metadata';
-import { useMeetingStore } from '@/features/web/meeting/stores';
+import { useActiveMeeting, useMeetingStore } from '@/features/web/meeting/stores';
 import { cn } from '@open-meet/ui/cn';
 
 function gridClass(count: number): string {
@@ -59,7 +59,8 @@ function Tile({ track, raisedHands, className }: TileProps) {
   const showAvatar = isCamera && isMuted;
 
   const { localParticipant } = useLocalParticipant();
-  const { data: currentUser } = useCurrentUser();
+  const session = useActiveMeeting((s) => s.session);
+  const currentUser = session?.viewer ?? null;
   const isLocal = identity === localParticipant?.identity;
 
   const remoteName = track.participant.name?.trim();
@@ -96,6 +97,7 @@ function Tile({ track, raisedHands, className }: TileProps) {
 }
 
 export function VideoGrid() {
+  const { localParticipant } = useLocalParticipant();
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
@@ -105,6 +107,7 @@ export function VideoGrid() {
   );
 
   const raisedHands = useMeetingStore((s) => s.raisedHands);
+  const layoutMode = useMeetingStore((s) => s.layoutMode);
 
   const { screens, cameras } = useMemo(() => {
     const screens: TrackReferenceOrPlaceholder[] = [];
@@ -120,6 +123,19 @@ export function VideoGrid() {
 
     return { screens, cameras };
   }, [tracks]);
+
+  const primarySpeaker = useMemo(() => {
+    if (layoutMode !== MeetingDefaultView.SPEAKER || cameras.length <= 1) {
+      return null;
+    }
+
+    return (
+      cameras.find((track) => track.participant.isSpeaking) ??
+      cameras.find((track) => track.participant.identity === localParticipant?.identity) ??
+      cameras[0] ??
+      null
+    );
+  }, [cameras, layoutMode, localParticipant?.identity]);
 
   if (screens.length > 0) {
     return (
@@ -152,6 +168,36 @@ export function VideoGrid() {
               <Tile
                 key={`${cam.participant.identity}-${cam.source}`}
                 track={cam}
+                raisedHands={raisedHands}
+                className="aspect-video h-full shrink-0 lg:h-auto lg:w-full"
+              />
+            ))}
+          </aside>
+        ) : null}
+      </div>
+    );
+  }
+
+  if (primarySpeaker) {
+    const secondary = cameras.filter((track) => track !== primarySpeaker);
+
+    return (
+      <div className="flex h-full w-full flex-col gap-3 lg:flex-row">
+        <section className="min-h-0 flex-1">
+          <Tile track={primarySpeaker} raisedHands={raisedHands} className="h-full" />
+        </section>
+
+        {secondary.length > 0 ? (
+          <aside
+            className={cn(
+              'flex shrink-0 gap-2 overflow-auto',
+              'h-32 flex-row lg:h-full lg:w-72 lg:flex-col',
+            )}
+          >
+            {secondary.map((track) => (
+              <Tile
+                key={`${track.participant.identity}-${track.source}`}
+                track={track}
                 raisedHands={raisedHands}
                 className="aspect-video h-full shrink-0 lg:h-auto lg:w-full"
               />

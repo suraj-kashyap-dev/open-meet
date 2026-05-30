@@ -17,6 +17,29 @@
     "remove": "移除",
     "hint": "建议：方形图片，至少 64×64px，不超过 2MB。"
   },
+  "accent": {
+    "title": "品牌色",
+    "description": "应用中按钮、链接和焦点环的颜色。",
+    "advanced": "使用自定义颜色",
+    "hex-picker": "取色器",
+    "hex-input": "十六进制值",
+    "apply-hex": "应用",
+    "preset": {
+      "indigo": "靛蓝",
+      "blue": "蓝",
+      "green": "绿",
+      "purple": "紫",
+      "rose": "玫红",
+      "amber": "琥珀",
+      "teal": "青绿"
+    }
+  },
+  "groups": {
+    "title": "用户创建的群组",
+    "description": "允许同事从会话列表中开启自己的群组聊天。",
+    "label": "允许用户创建群组",
+    "hint": "关闭时仅管理员可创建群组。"
+  },
   "form": {
     "name-required": "请输入应用名称。",
     "name-too-long": "名称不得超过 60 个字符。",
@@ -25,6 +48,8 @@
     "logo-removed": "标志已移除",
     "logo-invalid-type": "标志必须是 PNG、JPEG、WebP 或 GIF 图片。",
     "logo-too-large": "标志必须为 2MB 或更小。",
+    "accent-saved": "品牌色已更新",
+    "groups-saved": "群组设置已更新",
     "save": "保存",
     "saving": "正在保存…",
     "uploading": "正在上传…",

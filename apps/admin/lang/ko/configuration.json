@@ -7,6 +7,49 @@
     "title": "구성 기능이 곧 제공됩니다",
     "description": "워크스페이스 기본값, 브랜딩, 회의 정책이 곧 여기에 추가됩니다."
   },
+  "hub": {
+    "empty": "아직 접근 권한이 있는 설정이 없습니다.",
+    "sections": {
+      "access": {
+        "title": "접근",
+        "description": "콘솔에 로그인할 수 있는 사람과 그들이 할 수 있는 작업을 관리합니다."
+      },
+      "users": {
+        "title": "사용자",
+        "description": "앱의 최종 사용자와 그들에게 할당된 역할을 관리합니다."
+      },
+      "workspace": {
+        "title": "워크스페이스",
+        "description": "콘솔에 브랜드를 적용하고 워크스페이스 기본값을 구성합니다."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "관리자",
+        "description": "콘솔에 로그인할 수 있는 관리자 계정을 추가, 편집 또는 삭제합니다."
+      },
+      "roles": {
+        "title": "관리자 역할",
+        "description": "각 관리자 역할이 부여하는 권한을 정의합니다."
+      },
+      "users": {
+        "title": "사용자",
+        "description": "최종 사용자 계정을 관리하고, 새 사용자를 초대하며, 그들의 접근을 전환합니다."
+      },
+      "user-roles": {
+        "title": "사용자 역할",
+        "description": "앱 내에서 각 사용자 역할이 부여하는 권한을 정의합니다."
+      },
+      "branding": {
+        "title": "브랜딩",
+        "description": "앱 이름, 로고 및 강조 색상을 사용자 정의합니다."
+      },
+      "configuration": {
+        "title": "구성",
+        "description": "워크스페이스 기본값, 회의 정책 및 기능 토글."
+      }
+    }
+  },
   "form": {
     "title": "워크스페이스 기본값",
     "subtitle": "워크스페이스 전반의 새 회의에 적용되는 기본값.",

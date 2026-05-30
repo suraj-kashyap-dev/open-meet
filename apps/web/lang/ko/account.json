@@ -47,6 +47,8 @@
     "eyebrow": "계정",
     "title": "설정",
     "description": "회의 기본값, 다른 사람이 볼 수 있는 항목, 언어를 설정합니다.",
+    "appearance-title": "모양",
+    "appearance-description": "이 기기의 테마 및 브랜드 강조색.",
     "localization-title": "지역화",
     "localization-description": "회의 시간, 날짜 및 UI 언어에 사용됩니다.",
     "defaults-title": "회의 기본값",
@@ -84,6 +86,29 @@
     "direct-messages-description": "다른 사람이 회의 외부에서 1:1 채팅을 시작할 수 있도록 허용합니다.",
     "usage-data-title": "익명 사용 데이터 공유",
     "usage-data-description": "Open Meet 개선에 도움이 됩니다. 회의 내용은 절대 공유되지 않습니다."
+  },
+  "appearance": {
+    "theme-label": "테마",
+    "theme-hint": "밝게/어둡게 전환.",
+    "light": "밝게",
+    "dark": "어둡게",
+    "accent-label": "브랜드 강조색",
+    "accent-hint": "버튼, 링크, 포커스 색상.",
+    "advanced": "사용자 지정 색상 사용",
+    "hex-picker": "색상 선택기",
+    "hex-input": "Hex 값",
+    "apply-hex": "적용",
+    "reset": "워크스페이스 기본값으로 재설정",
+    "using-workspace": "워크스페이스 기본값 사용 중.",
+    "preset": {
+      "indigo": "인디고",
+      "blue": "파랑",
+      "green": "초록",
+      "purple": "보라",
+      "rose": "로즈",
+      "amber": "앰버",
+      "teal": "틸"
+    }
   },
   "actions": {
     "reset": "초기화",

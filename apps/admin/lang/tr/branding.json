@@ -17,6 +17,29 @@
     "remove": "Kaldır",
     "hint": "Önerilen: kare bir görsel, en az 64×64px, en fazla 2MB."
   },
+  "accent": {
+    "title": "Marka vurgusu",
+    "description": "Uygulamalardaki düğme, bağlantı ve odak halkası rengi.",
+    "advanced": "Özel renk kullan",
+    "hex-picker": "Renk seçici",
+    "hex-input": "Hex değeri",
+    "apply-hex": "Uygula",
+    "preset": {
+      "indigo": "Çivit",
+      "blue": "Mavi",
+      "green": "Yeşil",
+      "purple": "Mor",
+      "rose": "Gül",
+      "amber": "Kehribar",
+      "teal": "Petrol"
+    }
+  },
+  "groups": {
+    "title": "Kullanıcı oluşturulan gruplar",
+    "description": "Takım arkadaşlarınızın konuşma listesinden kendi grup sohbetlerini başlatmasına izin verin.",
+    "label": "Kullanıcıların grup oluşturmasına izin ver",
+    "hint": "Kapalıyken yalnızca yöneticiler grup oluşturabilir."
+  },
   "form": {
     "name-required": "Bir uygulama adı girin.",
     "name-too-long": "Ad en fazla 60 karakter olmalıdır.",
@@ -25,6 +48,8 @@
     "logo-removed": "Logo kaldırıldı",
     "logo-invalid-type": "Logo bir PNG, JPEG, WebP veya GIF görseli olmalıdır.",
     "logo-too-large": "Logo 2MB veya daha küçük olmalıdır.",
+    "accent-saved": "Vurgu rengi güncellendi",
+    "groups-saved": "Grup ayarları güncellendi",
     "save": "Kaydet",
     "saving": "Kaydediliyor…",
     "uploading": "Yükleniyor…",

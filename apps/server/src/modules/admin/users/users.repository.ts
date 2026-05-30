@@ -3,6 +3,10 @@ import { type Prisma, type User } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
+const userInclude = {
+  _count: { select: { hostedMeetings: true, meetings: true } },
+} satisfies Prisma.UserInclude;
+
 export type UserWithCounts = User & {
   _count: {
     hostedMeetings: number;
@@ -39,7 +43,7 @@ export class AdminUsersRepository {
       take,
       where: this.whereFromSearch(search),
       orderBy: { createdAt: 'desc' },
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 
@@ -47,10 +51,26 @@ export class AdminUsersRepository {
     return this.prisma.user.count({ where: this.whereFromSearch(search) });
   }
 
+  emailTaken(email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+  }
+
+  create(data: { name: string; email: string; passwordHash: string }): Promise<UserWithCounts> {
+    return this.prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email.toLowerCase(),
+        passwordHash: data.passwordHash,
+        emailVerifiedAt: new Date(),
+      },
+      include: userInclude,
+    });
+  }
+
   findById(id: string): Promise<UserWithCounts | null> {
     return this.prisma.user.findUnique({
       where: { id },
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 
@@ -64,7 +84,7 @@ export class AdminUsersRepository {
     return this.prisma.user.update({
       where: { id },
       data,
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 

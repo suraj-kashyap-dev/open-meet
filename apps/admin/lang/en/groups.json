@@ -1,0 +1,54 @@
+{
+  "eyebrow": "Manage",
+  "title": "Groups",
+  "subtitle": "Group conversations are created and managed by admins.",
+  "empty": "No groups yet.",
+  "columns": {
+    "name": "Name",
+    "members": "Members"
+  },
+  "actions": {
+    "manage": "Manage members",
+    "delete": "Delete group"
+  },
+  "create": {
+    "button": "New group",
+    "title": "Create group",
+    "name": "Group name",
+    "placeholder": "e.g. Product launch",
+    "choose-members": "Choose members",
+    "choose-confirm": "Select",
+    "selected": "{count, plural, one {# member selected} other {# members selected}}",
+    "submit": "Create",
+    "success": "Group created",
+    "error": "Could not create group"
+  },
+  "manage": {
+    "title": "Members",
+    "members": "{count, plural, one {# member} other {# members}}",
+    "add": "Add members",
+    "search": "Search users",
+    "no-users": "No users found.",
+    "add-confirm": "Add",
+    "empty": "No members yet.",
+    "remove": "Remove member"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Group updated",
+    "request-error": "Could not update this group",
+    "empty-title": "Group not found",
+    "empty-description": "This group may have been removed or you may not have access to it.",
+    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-success": "Group deleted",
+    "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Delete group?",
+    "description": "{name} will be deleted and removed for every member immediately. This cannot be undone.",
+    "cancel": "Cancel",
+    "confirm": "Delete group",
+    "deleting": "Deleting…"
+  }
+}

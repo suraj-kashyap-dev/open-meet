@@ -116,6 +116,12 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     return sockets.length > 0;
   }
 
+  private assertMeetingScope(user: SocketUser, meetingCode: string): void {
+    if (user.isGuest && user.guestMeetingCode !== meetingCode) {
+      throw new WsException('Guest access is limited to the invited meeting');
+    }
+  }
+
   async handleConnection(client: AuthSocket): Promise<void> {
     try {
       const token = extractAccessTokenFromSocket(client);
@@ -126,6 +132,8 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         sub: string;
         email: string;
         name: string;
+        guest?: boolean;
+        guestMeetingCode?: string;
       }>(token, {
         secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET'),
       });
@@ -133,6 +141,8 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         id: payload.sub,
         email: payload.email,
         name: payload.name,
+        isGuest: payload.guest === true,
+        guestMeetingCode: payload.guestMeetingCode ?? null,
       };
       this.logger.log(`WS connected: ${payload.sub}`);
     } catch (err) {
@@ -173,7 +183,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         continue;
       }
 
-      await this.meetings.leave(room, user.id);
+      await this.meetings.leave(room, user);
       const payload: ParticipantLeftPayload = { participantId: user.id };
       this.server.to(room).emit(ServerEvent.PARTICIPANT_LEFT, payload);
     }
@@ -203,7 +213,8 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: JoinRoomGatewayDto,
   ): Promise<{ joined: true }> {
     const user = this.requireUser(client);
-    const { meeting, participant } = await this.meetings.join(body.meetingCode, user.id);
+    this.assertMeetingScope(user, body.meetingCode);
+    const { meeting, participant } = await this.meetings.join(body.meetingCode, user);
     await client.join(meeting.code);
 
     if (meeting.hostId === user.id) {
@@ -234,7 +245,8 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: JoinRoomGatewayDto,
   ): Promise<{ left: true }> {
     const user = this.requireUser(client);
-    await this.meetings.leave(body.meetingCode, user.id);
+    this.assertMeetingScope(user, body.meetingCode);
+    await this.meetings.leave(body.meetingCode, user);
     await client.leave(body.meetingCode);
 
     const payload: ParticipantLeftPayload = { participantId: user.id };
@@ -248,6 +260,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: JoinRoomGatewayDto,
   ): Promise<{ knocked: true }> {
     const user = this.requireUser(client);
+    this.assertMeetingScope(user, body.meetingCode);
     const meeting = await this.meetings.findRawByCode(body.meetingCode);
 
     if (!meeting) {
@@ -293,6 +306,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: JoinRoomGatewayDto,
   ): Promise<{ cancelled: true }> {
     const user = this.requireUser(client);
+    this.assertMeetingScope(user, body.meetingCode);
     const removed = this.removeKnock(body.meetingCode, user.id);
 
     if (removed) {
@@ -342,6 +356,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: SendMessageGatewayDto,
   ): Promise<{ delivered: true }> {
     const user = this.requireUser(client);
+    this.assertMeetingScope(user, body.meetingCode);
     const meeting = await this.meetings.findRawByCode(body.meetingCode);
 
     if (!meeting) {
@@ -371,6 +386,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: ReactionGatewayDto,
   ): Promise<{ delivered: true }> {
     const user = this.requireUser(client);
+    this.assertMeetingScope(user, body.meetingCode);
     const payload: ReactionReceivedPayload = {
       emoji: body.emoji,
       senderId: user.id,
@@ -386,6 +402,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: JoinRoomGatewayDto,
   ): Promise<{ delivered: true }> {
     const user = this.requireUser(client);
+    this.assertMeetingScope(user, body.meetingCode);
     const payload: HandRaisedPayload = { userId: user.id, name: user.name };
     this.server.to(body.meetingCode).emit(ServerEvent.HAND_RAISED, payload);
     return { delivered: true };
@@ -397,6 +414,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() body: JoinRoomGatewayDto,
   ): Promise<{ delivered: true }> {
     const user = this.requireUser(client);
+    this.assertMeetingScope(user, body.meetingCode);
     const payload: HandLoweredPayload = { userId: user.id };
     this.server.to(body.meetingCode).emit(ServerEvent.HAND_LOWERED, payload);
     return { delivered: true };

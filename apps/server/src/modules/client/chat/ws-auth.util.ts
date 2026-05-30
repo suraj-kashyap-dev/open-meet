@@ -4,6 +4,8 @@ export interface SocketUser {
   id: string;
   email: string;
   name: string;
+  isGuest?: boolean;
+  guestMeetingCode?: string | null;
 }
 
 const ACCESS_COOKIE = 'access_token';

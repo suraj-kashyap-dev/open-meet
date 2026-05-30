@@ -25,6 +25,32 @@ export class AuthRepository {
     });
   }
 
+  /** Create a user whose email is already verified (invite acceptance). */
+  createInvited(input: { name: string; email: string; passwordHash: string }): Promise<User> {
+    return this.prisma.user.create({
+      data: {
+        ...input,
+        email: input.email.toLowerCase(),
+        emailVerifiedAt: new Date(),
+      },
+    });
+  }
+
+  /**
+   * Create an ephemeral guest user for a meeting-scoped access token. Guests
+   * cannot create groups; meeting access is scoped via the JWT `guest: true` flag.
+   */
+  createGuest(input: { name: string; email: string }): Promise<User> {
+    return this.prisma.user.create({
+      data: {
+        name: input.name,
+        email: input.email.toLowerCase(),
+        emailVerifiedAt: new Date(),
+        canCreateGroups: false,
+      },
+    });
+  }
+
   createGoogleUser(input: {
     name: string;
     email: string;
@@ -45,6 +71,14 @@ export class AuthRepository {
     return this.prisma.user.update({
       where: { id },
       data,
+    });
+  }
+
+  /** User + their settings (for profile visibility checks). */
+  findByIdWithSettings(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: { settings: true },
     });
   }
 }

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { type AdminDto, AdminRole } from '@open-meet/types';
+import type { AdminDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
 import { cn } from '@open-meet/ui/cn';
@@ -254,15 +254,13 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
           <span
             className={cn(
               'inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider',
-              admin.role === AdminRole.SUPERADMIN
+              admin.role?.permissionType === 'ALL'
                 ? 'border-warning/30 bg-warning/10 text-warning'
                 : 'border-border bg-muted text-muted-foreground',
             )}
           >
-            {admin.role === AdminRole.SUPERADMIN ? <Crown className="h-3 w-3" /> : null}
-            {admin.role === AdminRole.SUPERADMIN
-              ? t('account.role-superadmin')
-              : t('account.role-admin')}
+            {admin.role?.permissionType === 'ALL' ? <Crown className="h-3 w-3" /> : null}
+            {admin.role?.name ?? '—'}
           </span>
 
           <Button type="submit" disabled={pending || (!isDirty && !avatarDirty)}>

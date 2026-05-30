@@ -18,6 +18,6 @@ test.describe('Web auth guard', () => {
     await mockWebApi(page);
     await page.goto('/en/login');
 
-    await expect(page).toHaveURL(/\/en$/);
+    await expect(page).toHaveURL(/\/en\/chat$/);
   });
 });

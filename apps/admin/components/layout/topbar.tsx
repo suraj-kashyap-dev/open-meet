@@ -22,7 +22,7 @@ import { useAdminLogout, useCurrentAdmin } from '@/features/auth/hooks/use-admin
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@open-meet/ui/cn';
 
-import { nav } from './nav-config';
+import { matchSettingsHubRoute, nav } from './nav-config';
 
 interface Crumb {
   labelKey?: string;
@@ -33,6 +33,21 @@ interface Crumb {
 function deriveCrumbs(pathname: string): Crumb[] {
   if (pathname === '/') {
     return [{ labelKey: 'topbar.dashboard' }];
+  }
+
+  // Settings-hub virtual children: render Admin / Settings / <route> / [tail].
+  const hub = matchSettingsHubRoute(pathname);
+  if (hub) {
+    const crumbs: Crumb[] = [
+      { labelKey: 'topbar.root', href: '/' },
+      { labelKey: 'items.settings', href: '/settings' },
+      { labelKey: hub.labelKey, href: hub.href },
+    ];
+    const tail = pathname.slice(hub.href.length).split('/').filter(Boolean);
+    for (const segment of tail) {
+      crumbs.push({ label: decodeURIComponent(segment) });
+    }
+    return crumbs;
   }
 
   for (const section of nav) {
@@ -76,7 +91,7 @@ export function Topbar({
   const { appName, logoUrl } = useBranding();
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-xl sm:px-6">
+    <header className="sticky top-0 z-30 hidden h-14 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-xl sm:px-6 lg:flex">
       {onOpenSidebar ? (
         <Button
           variant="ghost"
@@ -122,6 +137,10 @@ export function Topbar({
         {crumbs.map((crumb, index) => {
           const isLast = index === crumbs.length - 1;
           const text = crumb.labelKey ? t(crumb.labelKey) : (crumb.label ?? '');
+          const textClass = cn(
+            'truncate',
+            isLast ? 'font-medium text-foreground' : 'text-muted-foreground',
+          );
           return (
             <span
               key={`${crumb.labelKey ?? crumb.label}-${index}`}
@@ -130,14 +149,19 @@ export function Topbar({
               {index > 0 ? (
                 <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60 rtl:-scale-x-100" />
               ) : null}
-              <span
-                className={cn(
-                  'truncate',
-                  isLast ? 'font-medium text-foreground' : 'text-muted-foreground',
-                )}
-              >
-                {text}
-              </span>
+              {crumb.href && !isLast ? (
+                <Link
+                  href={crumb.href}
+                  className={cn(
+                    textClass,
+                    'rounded-sm outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent',
+                  )}
+                >
+                  {text}
+                </Link>
+              ) : (
+                <span className={textClass}>{text}</span>
+              )}
             </span>
           );
         })}

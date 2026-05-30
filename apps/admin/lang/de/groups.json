@@ -1,0 +1,54 @@
+{
+  "eyebrow": "Verwalten",
+  "title": "Gruppen",
+  "subtitle": "Gruppenunterhaltungen werden von Administratoren erstellt und verwaltet.",
+  "empty": "Noch keine Gruppen.",
+  "columns": {
+    "name": "Name",
+    "members": "Mitglieder"
+  },
+  "actions": {
+    "manage": "Mitglieder verwalten",
+    "delete": "Gruppe löschen"
+  },
+  "create": {
+    "button": "Neue Gruppe",
+    "title": "Gruppe erstellen",
+    "name": "Gruppenname",
+    "placeholder": "z. B. Produkteinführung",
+    "choose-members": "Mitglieder auswählen",
+    "choose-confirm": "Auswählen",
+    "selected": "{count, plural, one {# Mitglied ausgewählt} other {# Mitglieder ausgewählt}}",
+    "submit": "Erstellen",
+    "success": "Gruppe erstellt",
+    "error": "Gruppe konnte nicht erstellt werden"
+  },
+  "manage": {
+    "title": "Mitglieder",
+    "members": "{count, plural, one {# Mitglied} other {# Mitglieder}}",
+    "add": "Mitglieder hinzufügen",
+    "search": "Benutzer suchen",
+    "no-users": "Keine Benutzer gefunden.",
+    "add-confirm": "Hinzufügen",
+    "empty": "Noch keine Mitglieder.",
+    "remove": "Mitglied entfernen"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Group updated",
+    "request-error": "Could not update this group",
+    "empty-title": "Group not found",
+    "empty-description": "This group may have been removed or you may not have access to it.",
+    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-success": "Group deleted",
+    "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "Gruppe löschen?",
+    "description": "{name} wird sofort gelöscht und für jedes Mitglied entfernt. Dies kann nicht rückgängig gemacht werden.",
+    "cancel": "Abbrechen",
+    "confirm": "Gruppe löschen",
+    "deleting": "Wird gelöscht…"
+  }
+}

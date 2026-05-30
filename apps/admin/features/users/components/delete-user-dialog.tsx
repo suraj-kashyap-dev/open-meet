@@ -21,9 +21,11 @@ import { ApiClientError } from '@/lib/api/client';
 interface Props {
   user: AdminUserDto | null;
   onClose: () => void;
+  /** Called after a successful deletion, in addition to onClose (e.g. to navigate away). */
+  onDeleted?: () => void;
 }
 
-export function DeleteUserDialog({ user, onClose }: Props) {
+export function DeleteUserDialog({ user, onClose, onDeleted }: Props) {
   const t = useTranslations('users.delete-dialog');
   const del = useDeleteAdminUser();
   const open = user !== null;
@@ -38,6 +40,7 @@ export function DeleteUserDialog({ user, onClose }: Props) {
       await del.mutateAsync(user.id);
       toast.success(t('success', { email: user.email }));
       onClose();
+      onDeleted?.();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('error');
       toast.error(message);

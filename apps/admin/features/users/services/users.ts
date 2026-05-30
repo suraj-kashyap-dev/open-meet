@@ -1,8 +1,12 @@
 import type {
+  AdminCreateUserDto,
+  AdminCreateUserInviteDto,
   AdminUpdateUserDto,
   AdminUserDto,
   AdminUserListQuery,
   AdminUserListResponseDto,
+  UserInviteDto,
+  UserInviteListResponseDto,
 } from '@open-meet/types';
 
 import { api, ApiClientError } from '@/lib/api/client';
@@ -89,6 +93,8 @@ export const adminUsersApi = {
   get: (id: string, signal?: AbortSignal) =>
     api.get<AdminUserDto>(`/admin/users/${id}`, { signal }),
 
+  create: (body: AdminCreateUserDto) => api.post<AdminUserDto>('/admin/users', body),
+
   update: (id: string, body: AdminUpdateUserDto) =>
     api.patch<AdminUserDto>(`/admin/users/${id}`, body),
 
@@ -97,4 +103,13 @@ export const adminUsersApi = {
   uploadAvatar,
 
   removeAvatar: (id: string) => api.delete<AdminUserDto>(`/admin/users/${id}/avatar`),
+
+  invite: (body: AdminCreateUserInviteDto) => api.post<UserInviteDto>('/admin/users/invite', body),
+
+  listInvites: (signal?: AbortSignal) =>
+    api.get<UserInviteListResponseDto>('/admin/users/invites', { signal }),
+
+  resendInvite: (id: string) => api.post<UserInviteDto>(`/admin/users/invites/${id}/resend`),
+
+  revokeInvite: (id: string) => api.delete<{ deleted: true }>(`/admin/users/invites/${id}`),
 };

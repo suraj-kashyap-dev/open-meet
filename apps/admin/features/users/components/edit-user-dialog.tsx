@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Camera, Loader2, Pencil, Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import type { ChangeEvent, ReactNode } from 'react';
+import type { ChangeEvent } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -11,7 +11,6 @@ import { z } from 'zod';
 
 import type { AdminUpdateUserDto, AdminUserDto } from '@open-meet/types';
 
-import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import { cn } from '@open-meet/ui/cn';
 import {
@@ -37,7 +36,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@open-meet/ui/select';
+import { Switch } from '@open-meet/ui/switch';
 import { Textarea } from '@open-meet/ui/textarea';
+import { UserAvatar } from '@open-meet/ui/user-avatar';
+
 import {
   useRemoveAdminUserAvatar,
   useUpdateAdminUser,
@@ -120,13 +122,13 @@ interface Props {
 export function EditUserDialog({ user, onClose }: Props) {
   const t = useTranslations('users.edit-dialog');
   const tAvatar = useTranslations('users.avatar');
+
   const update = useUpdateAdminUser();
   const uploadAvatar = useUploadAdminUserAvatar();
   const removeAvatar = useRemoveAdminUserAvatar();
-  const open = user !== null;
+  const [canCreateGroups, setCanCreateGroups] = useState<boolean>(user?.canCreateGroups ?? true);
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  // Avatar changes are staged locally and only persisted on "Save changes",
-  // never on file pick.
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarRemoved, setAvatarRemoved] = useState(false);
@@ -155,17 +157,21 @@ export function EditUserDialog({ user, onClose }: Props) {
     reset,
     setValue,
     watch,
-    formState: { errors, isSubmitting, isDirty, dirtyFields },
+    formState: { errors, isSubmitting, dirtyFields },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: defaultsFor(user),
   });
 
+  // Re-seed the form (and clear staged avatar state) whenever a user is opened.
   useEffect(() => {
-    reset(defaultsFor(user));
-    setAvatarFile(null);
-    setAvatarPreview(null);
-    setAvatarRemoved(false);
+    if (user) {
+      reset(defaultsFor(user));
+      setCanCreateGroups(user.canCreateGroups ?? true);
+      setAvatarFile(null);
+      setAvatarPreview(null);
+      setAvatarRemoved(false);
+    }
   }, [user, reset]);
 
   // Revoke the staged preview's object URL when it changes or on unmount.
@@ -199,7 +205,6 @@ export function EditUserDialog({ user, onClose }: Props) {
     fileInputRef.current?.click();
   };
 
-  // Stage the picked file (validate + preview). Nothing is uploaded until save.
   const onFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
     event.target.value = '';
@@ -260,6 +265,10 @@ export function EditUserDialog({ user, onClose }: Props) {
       body.newPassword = values.newPassword;
     }
 
+    if (canCreateGroups !== user.canCreateGroups) {
+      body.canCreateGroups = canCreateGroups;
+    }
+
     const hasProfileChanges = Object.keys(body).length > 0;
 
     if (!hasProfileChanges && !avatarDirty) {
@@ -289,15 +298,15 @@ export function EditUserDialog({ user, onClose }: Props) {
     isSubmitting || update.isPending || uploadAvatar.isPending || removeAvatar.isPending;
 
   return (
-    <Dialog open={open} onOpenChange={(o) => (!o ? onClose() : undefined)}>
-      <DialogContent className="max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>{t('title')}</DialogTitle>
-          <DialogDescription>{t('description')}</DialogDescription>
-        </DialogHeader>
+    <>
+      <Dialog open={Boolean(user)} onOpenChange={(o) => (!o ? onClose() : null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{t('title')}</DialogTitle>
+            <DialogDescription>{t('description')}</DialogDescription>
+          </DialogHeader>
 
-        <form onSubmit={onSubmit} className="flex flex-col gap-6">
-          <DialogSection title={t('section-account')}>
+          <form onSubmit={onSubmit} className="space-y-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <input
                 ref={fileInputRef}
@@ -377,32 +386,28 @@ export function EditUserDialog({ user, onClose }: Props) {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <Label htmlFor="name">{t('name')}</Label>
-
-                <Input id="name" autoComplete="off" {...register('name')} />
-
+                <Label htmlFor="edit-user-name">{t('name')}</Label>
+                <Input id="edit-user-name" autoComplete="off" {...register('name')} />
                 {errors.name ? (
                   <p className="text-xs text-destructive">{errors.name.message}</p>
                 ) : null}
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="email">{t('email')}</Label>
-
-                <Input id="email" type="email" autoComplete="off" {...register('email')} />
-
+                <Label htmlFor="edit-user-email">{t('email')}</Label>
+                <Input
+                  id="edit-user-email"
+                  type="email"
+                  autoComplete="off"
+                  {...register('email')}
+                />
                 {errors.email ? (
                   <p className="text-xs text-destructive">{errors.email.message}</p>
                 ) : null}
               </div>
-            </div>
-          </DialogSection>
 
-          <DialogSection title={t('section-localization')}>
-            <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <Label>{t('timezone')}</Label>
-
                 <Select
                   value={timezone}
                   onValueChange={(v) => setValue('timezone', v, { shouldDirty: true })}
@@ -410,7 +415,6 @@ export function EditUserDialog({ user, onClose }: Props) {
                   <SelectTrigger>
                     <SelectValue placeholder={t('timezone-placeholder')} />
                   </SelectTrigger>
-
                   <SelectContent>
                     {tzOptions.map((tz) => (
                       <SelectItem key={tz} value={tz}>
@@ -423,7 +427,6 @@ export function EditUserDialog({ user, onClose }: Props) {
 
               <div className="space-y-1.5">
                 <Label>{t('language')}</Label>
-
                 <Select
                   value={language}
                   onValueChange={(v) => setValue('language', v, { shouldDirty: true })}
@@ -431,7 +434,6 @@ export function EditUserDialog({ user, onClose }: Props) {
                   <SelectTrigger>
                     <SelectValue placeholder={t('language-placeholder')} />
                   </SelectTrigger>
-
                   <SelectContent>
                     {LANGUAGES.map((l) => (
                       <SelectItem key={l.value} value={l.value}>
@@ -441,74 +443,65 @@ export function EditUserDialog({ user, onClose }: Props) {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-          </DialogSection>
 
-          <DialogSection title={t('section-about')}>
+              <div className="flex items-center justify-between gap-3 rounded-lg border border-border p-3 sm:col-span-2">
+                <Label htmlFor="edit-user-can-create-groups" className="cursor-pointer font-normal">
+                  {t('can-create-groups')}
+                </Label>
+                <Switch
+                  id="edit-user-can-create-groups"
+                  checked={canCreateGroups}
+                  onCheckedChange={setCanCreateGroups}
+                />
+              </div>
+            </div>
+
             <div className="space-y-1.5">
               <div className="flex items-center justify-between gap-3">
-                <Label htmlFor="bio">{t('bio')}</Label>
-
+                <Label htmlFor="edit-user-bio">{t('bio')}</Label>
                 <span className="text-[11px] tabular-nums text-muted-foreground">
                   {t('bio-counter', { count: bioValue.length })}
                 </span>
               </div>
-
-              <Textarea id="bio" rows={3} placeholder={t('bio-placeholder')} {...register('bio')} />
-
-              {errors.bio ? <p className="text-xs text-destructive">{errors.bio.message}</p> : null}
+              <Textarea
+                id="edit-user-bio"
+                rows={3}
+                placeholder={t('bio-placeholder')}
+                {...register('bio')}
+              />
+              {errors.bio ? (
+                <p className="text-xs text-destructive">{errors.bio.message}</p>
+              ) : null}
             </div>
-          </DialogSection>
 
-          <DialogSection title={t('section-password')}>
             <div className="space-y-1.5">
-              <Label htmlFor="newPassword">{t('new-password')}</Label>
-
+              <Label htmlFor="edit-user-password">{t('new-password')}</Label>
               <Input
-                id="newPassword"
+                id="edit-user-password"
                 type="password"
                 placeholder={t('new-password-placeholder')}
                 autoComplete="new-password"
                 {...register('newPassword')}
               />
-
               {errors.newPassword ? (
                 <p className="text-xs text-destructive">{errors.newPassword.message}</p>
               ) : (
                 <p className="text-xs text-muted-foreground">{t('new-password-helper')}</p>
               )}
             </div>
-          </DialogSection>
-        </form>
 
-        <DialogFooter>
-          <Button type="button" variant="outline" onClick={onClose} disabled={pending}>
-            {t('cancel')}
-          </Button>
-
-          <Button
-            type="button"
-            variant="accent"
-            disabled={pending || (!isDirty && !avatarDirty)}
-            onClick={onSubmit}
-          >
-            {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-            {pending ? t('submitting') : t('submit')}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function DialogSection({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="flex flex-col gap-4">
-      <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        {title}
-      </h3>
-
-      {children}
-    </section>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={onClose} disabled={pending}>
+                {t('cancel')}
+              </Button>
+              <Button type="submit" variant="accent" disabled={pending}>
+                {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {pending ? t('submitting') : t('submit')}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

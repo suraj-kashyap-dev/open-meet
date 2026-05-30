@@ -17,6 +17,29 @@
     "remove": "Eliminar",
     "hint": "Recomendado: una imagen cuadrada, de al menos 64×64px, hasta 2MB."
   },
+  "accent": {
+    "title": "Acento de marca",
+    "description": "Color usado para botones, enlaces y anillos de foco en las apps.",
+    "advanced": "Usar un color personalizado",
+    "hex-picker": "Selector de color",
+    "hex-input": "Valor hex",
+    "apply-hex": "Aplicar",
+    "preset": {
+      "indigo": "Índigo",
+      "blue": "Azul",
+      "green": "Verde",
+      "purple": "Morado",
+      "rose": "Rosa",
+      "amber": "Ámbar",
+      "teal": "Verde azulado"
+    }
+  },
+  "groups": {
+    "title": "Grupos creados por usuarios",
+    "description": "Permite a los compañeros iniciar sus propios chats grupales desde la lista de conversaciones.",
+    "label": "Permitir a los usuarios crear grupos",
+    "hint": "Cuando está desactivado, solo los administradores pueden crear grupos."
+  },
   "form": {
     "name-required": "Ingresa un nombre de aplicación.",
     "name-too-long": "El nombre debe tener 60 caracteres o menos.",
@@ -25,6 +48,8 @@
     "logo-removed": "Logotipo eliminado",
     "logo-invalid-type": "El logotipo debe ser una imagen PNG, JPEG, WebP o GIF.",
     "logo-too-large": "El logotipo debe ser de 2MB o menos.",
+    "accent-saved": "Color de acento actualizado",
+    "groups-saved": "Configuración de grupos actualizada",
     "save": "Guardar",
     "saving": "Guardando…",
     "uploading": "Subiendo…",

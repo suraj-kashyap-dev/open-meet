@@ -17,6 +17,29 @@
     "remove": "Entfernen",
     "hint": "Empfohlen: ein quadratisches Bild, mindestens 64×64px, bis zu 2MB."
   },
+  "accent": {
+    "title": "Marken-Akzent",
+    "description": "Farbe für Schaltflächen, Links und Fokus-Ringe in den Apps.",
+    "advanced": "Eigene Farbe verwenden",
+    "hex-picker": "Farbauswahl",
+    "hex-input": "Hex-Farbwert",
+    "apply-hex": "Anwenden",
+    "preset": {
+      "indigo": "Indigo",
+      "blue": "Blau",
+      "green": "Grün",
+      "purple": "Violett",
+      "rose": "Rosa",
+      "amber": "Bernstein",
+      "teal": "Petrol"
+    }
+  },
+  "groups": {
+    "title": "Benutzer-erstellte Gruppen",
+    "description": "Teammitglieder können eigene Gruppen-Chats aus der Konversationsliste starten.",
+    "label": "Benutzern Gruppenerstellung erlauben",
+    "hint": "Wenn aus, können nur Admins Gruppen erstellen."
+  },
   "form": {
     "name-required": "Geben Sie einen Anwendungsnamen ein.",
     "name-too-long": "Der Name darf höchstens 60 Zeichen lang sein.",
@@ -25,6 +48,8 @@
     "logo-removed": "Logo entfernt",
     "logo-invalid-type": "Das Logo muss ein PNG-, JPEG-, WebP- oder GIF-Bild sein.",
     "logo-too-large": "Das Logo darf höchstens 2MB groß sein.",
+    "accent-saved": "Akzentfarbe aktualisiert",
+    "groups-saved": "Gruppen-Einstellungen aktualisiert",
     "save": "Speichern",
     "saving": "Wird gespeichert…",
     "uploading": "Wird hochgeladen…",

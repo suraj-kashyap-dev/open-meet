@@ -66,6 +66,8 @@ function uploadLogo(file: File): Promise<AdminBrandingDto> {
 export const adminBrandingApi = {
   get: (signal?: AbortSignal) => api.get<AdminBrandingDto>('/admin/branding', { signal }),
 
+  update: (input: UpdateBrandingInput) => api.patch<AdminBrandingDto>('/admin/branding', input),
+
   updateName: (input: UpdateBrandingInput) => api.patch<AdminBrandingDto>('/admin/branding', input),
 
   uploadLogo,

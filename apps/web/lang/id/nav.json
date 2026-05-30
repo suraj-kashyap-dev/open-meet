@@ -7,6 +7,20 @@
     "sign-out": "Keluar"
   },
   "user-menu-label": "Buka menu akun",
+  "chat-link-label": "Buka obrolan",
+  "activity-link-label": "Aktivitas",
+  "teams-link-label": "Tim",
+  "saved-link-label": "Tersimpan",
+  "search-placeholder": "Cari",
+  "rail": {
+    "label": "Utama",
+    "chat": "Obrolan",
+    "meet": "Rapat",
+    "teams": "Tim",
+    "activity": "Aktivitas",
+    "saved": "Tersimpan",
+    "history": "Riwayat"
+  },
   "command": {
     "placeholder": "Ketik perintah atau kode rapat…",
     "no-results": "Tidak ada hasil.",

@@ -13,6 +13,7 @@ const NAMESPACES = [
   'account',
   'history',
   'footer',
+  'chat',
 ] as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {

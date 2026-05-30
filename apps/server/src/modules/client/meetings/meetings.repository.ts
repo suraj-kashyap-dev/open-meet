@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { Meeting, MeetingInvite, Participant, User } from '@prisma/client';
+import type { Meeting, MeetingInvite, Participant, Prisma, User } from '@prisma/client';
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
@@ -50,6 +50,7 @@ export class MeetingsRepository {
     durationMin: number | null;
     recurrence: string | null;
     invitees: string[];
+    settings?: Prisma.InputJsonValue;
   }): Promise<Meeting & { invites: MeetingInvite[] }> {
     return this.prisma.meeting.create({
       data: {
@@ -60,6 +61,7 @@ export class MeetingsRepository {
         scheduledFor: data.scheduledFor,
         durationMin: data.durationMin,
         recurrence: data.recurrence,
+        ...(data.settings !== undefined ? { settings: data.settings } : {}),
         participants: {
           create: {
             userId: data.hostId,
@@ -71,7 +73,7 @@ export class MeetingsRepository {
         },
       },
       include: { invites: true },
-    });
+    }) as Promise<Meeting & { invites: MeetingInvite[] }>;
   }
 
   markInviteSent(inviteId: string): Promise<MeetingInvite> {
@@ -199,6 +201,7 @@ export class MeetingsRepository {
     return this.prisma.meeting.findMany({
       where: {
         participants: { some: { userId: params.userId } },
+        status: { in: [MeetingStatus.ACTIVE, MeetingStatus.ENDED] },
       },
       orderBy: [{ startedAt: { sort: 'desc', nulls: 'last' } }, { createdAt: 'desc' }],
       skip: params.skip,
@@ -226,6 +229,7 @@ export class MeetingsRepository {
     return this.prisma.meeting.count({
       where: {
         participants: { some: { userId } },
+        status: { in: [MeetingStatus.ACTIVE, MeetingStatus.ENDED] },
       },
     });
   }

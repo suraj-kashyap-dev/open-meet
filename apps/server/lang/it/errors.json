@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "Impossibile degradare l'ultimo superamministratore rimasto",
   "cannot-delete-self": "Non puoi eliminare il tuo account amministratore",
   "cannot-delete-last-superadmin": "Impossibile eliminare l'ultimo superamministratore rimasto",
-  "superadmin-required": "Per questa azione sono richiesti i privilegi di superamministratore"
+  "permission-required": "Non hai il permesso di eseguire questa azione",
+  "role-not-found": "Ruolo non trovato",
+  "role-name-taken": "Esiste già un ruolo con quel nome",
+  "role-is-system": "I ruoli di sistema non possono essere modificati o eliminati",
+  "role-has-members": "Riassegna ogni amministratore di questo ruolo prima di eliminarlo",
+  "role-permission-invalid": "Una o più chiavi di permesso non sono valide"
 }

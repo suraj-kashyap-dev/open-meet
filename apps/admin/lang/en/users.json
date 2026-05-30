@@ -11,6 +11,8 @@
     "joined": "Joined",
     "hosted": "Hosted",
     "attended": "Attended",
+    "chat": "Chat",
+    "chat-toggle": "Toggle chat access",
     "actions": "Actions",
     "open-actions": "Open actions",
     "edit": "Edit",
@@ -22,6 +24,36 @@
     "previous": "Previous",
     "next": "Next",
     "page-of": "Page {page} of {pageCount}"
+  },
+  "create-dialog": {
+    "button": "New user",
+    "title": "Create a user",
+    "subtitle": "Create an active account with a password you set. The user can sign in right away.",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "password-helper": "At least 8 characters. Share it securely with the user.",
+    "cancel": "Cancel",
+    "submit": "Create user",
+    "submitting": "Creating…",
+    "success": "Created {email}",
+    "error": "Could not create the user",
+    "validation": {
+      "name-required": "Name is required",
+      "invalid-email": "Enter a valid email",
+      "password-too-short": "At least 8 characters",
+      "password-too-long": "Too long"
+    }
+  },
+  "detail": {
+    "eyebrow": "Edit user",
+    "back": "Back to users",
+    "subtitle": "Update profile, localization, bio, or reset the password.",
+    "not-found-title": "User not found",
+    "not-found-description": "This user may have been deleted.",
+    "danger-title": "Danger zone",
+    "danger-description": "Permanently delete this user and everything they created. This cannot be undone.",
+    "delete": "Delete user"
   },
   "edit-dialog": {
     "title": "Edit user",
@@ -36,6 +68,7 @@
     "timezone-placeholder": "Pick a timezone",
     "language": "Language",
     "language-placeholder": "Pick a language",
+    "can-create-groups": "Can create groups",
     "bio": "Bio",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Optional",
@@ -76,5 +109,29 @@
     "submitting": "Deleting…",
     "success": "Deleted {email}",
     "error": "Could not delete user"
+  },
+  "invite": {
+    "button": "Invite user",
+    "title": "Invite a user",
+    "subtitle": "They'll get an email to set a password and activate their account.",
+    "name": "Name",
+    "email": "Email",
+    "submit": "Send invite",
+    "success": "Invitation sent to {email}",
+    "error": "Could not send the invite"
+  },
+  "pending": {
+    "title": "Pending invitations",
+    "empty": "No pending invitations.",
+    "loading-error": "Could not load invitations.",
+    "status-pending": "Pending",
+    "status-expired": "Expired",
+    "expires": "Expires {when}",
+    "resend-label": "Resend invite to {email}",
+    "revoke-label": "Revoke invite for {email}",
+    "resend-success": "Invitation re-sent to {email}",
+    "resend-error": "Could not resend the invite",
+    "revoke-success": "Invitation for {email} revoked",
+    "revoke-error": "Could not revoke the invite"
   }
 }

@@ -20,11 +20,25 @@ export interface UpdateMeetingDto {
 }
 
 export interface ScheduleMeetingDto {
-  title: string;
+  title?: string;
   scheduledFor: string;
   durationMin?: number;
   recurrence?: string | null;
   invitees?: string[];
+}
+
+export interface CreateGuestMeetingSessionDto {
+  name: string;
+}
+
+export interface GuestMeetingSessionDto {
+  token: string;
+  expiresAt: string;
+  user: {
+    id: string;
+    name: string;
+    avatar: string | null;
+  };
 }
 
 export interface MeetingDto {

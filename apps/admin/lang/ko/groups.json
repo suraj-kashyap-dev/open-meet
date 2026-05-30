@@ -1,0 +1,54 @@
+{
+  "eyebrow": "관리",
+  "title": "그룹",
+  "subtitle": "그룹 대화는 관리자가 생성하고 관리합니다.",
+  "empty": "아직 그룹이 없습니다.",
+  "columns": {
+    "name": "이름",
+    "members": "멤버"
+  },
+  "actions": {
+    "manage": "멤버 관리",
+    "delete": "그룹 삭제"
+  },
+  "create": {
+    "button": "새 그룹",
+    "title": "그룹 만들기",
+    "name": "그룹 이름",
+    "placeholder": "예: 제품 출시",
+    "choose-members": "멤버 선택",
+    "choose-confirm": "선택",
+    "selected": "{count, plural, one {멤버 #명 선택됨} other {멤버 #명 선택됨}}",
+    "submit": "만들기",
+    "success": "그룹이 생성됨",
+    "error": "그룹을 만들 수 없습니다"
+  },
+  "manage": {
+    "title": "멤버",
+    "members": "{count, plural, one {멤버 #명} other {멤버 #명}}",
+    "add": "멤버 추가",
+    "search": "사용자 검색",
+    "no-users": "사용자를 찾을 수 없습니다.",
+    "add-confirm": "추가",
+    "empty": "아직 멤버가 없습니다.",
+    "remove": "멤버 제거"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Group updated",
+    "request-error": "Could not update this group",
+    "empty-title": "Group not found",
+    "empty-description": "This group may have been removed or you may not have access to it.",
+    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-success": "Group deleted",
+    "delete-error": "Could not delete group"
+  },
+  "delete-dialog": {
+    "title": "그룹을 삭제하시겠습니까?",
+    "description": "{name}이(가) 삭제되고 모든 멤버에게서 즉시 제거됩니다. 이 작업은 취소할 수 없습니다.",
+    "cancel": "취소",
+    "confirm": "그룹 삭제",
+    "deleting": "삭제 중…"
+  }
+}

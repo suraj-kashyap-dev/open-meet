@@ -13,6 +13,8 @@ interface JwtPayload {
   sub: string;
   email: string;
   name: string;
+  guest?: boolean;
+  guestMeetingCode?: string;
 }
 
 const ACCESS_COOKIE = 'access_token';
@@ -42,7 +44,13 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         message: 'Invalid token payload',
       });
     }
-    return { id: payload.sub, email: payload.email, name: payload.name };
+    return {
+      id: payload.sub,
+      email: payload.email,
+      name: payload.name,
+      isGuest: payload.guest === true,
+      guestMeetingCode: payload.guestMeetingCode ?? null,
+    };
   }
 }
 

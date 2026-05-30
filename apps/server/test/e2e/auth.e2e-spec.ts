@@ -1,7 +1,29 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
+import { createHash } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { PrismaService } from '@/database/prisma.service';
+
 import { createTestApp, http, registerUser, resetDb } from './setup-app';
+
+const hashToken = (token: string) => createHash('sha256').update(token).digest('hex');
+
+// Seed a pending invite the way the admin invite flow would, returning the raw
+// token the email link would carry (only its sha256 hash is persisted).
+async function seedInvite(
+  app: NestFastifyApplication,
+  opts: { email: string; name?: string; token: string; expiresInMs?: number },
+): Promise<void> {
+  const prisma = app.get(PrismaService);
+  await prisma.userInvite.create({
+    data: {
+      email: opts.email.toLowerCase(),
+      name: opts.name ?? 'Invited User',
+      tokenHash: hashToken(opts.token),
+      expiresAt: new Date(Date.now() + (opts.expiresInMs ?? 24 * 60 * 60_000)),
+    },
+  });
+}
 
 describe('Auth (e2e)', () => {
   let app: NestFastifyApplication;
@@ -18,36 +40,72 @@ describe('Auth (e2e)', () => {
     await resetDb(app);
   });
 
-  describe('POST /api/auth/register', () => {
-    it('should create a user, return the success envelope, and set httpOnly cookies', async () => {
-      const res = await http(app)
-        .post('/api/auth/register')
-        .send({ name: 'Ada', email: 'ada@example.com', password: 'secretpass1' });
+  describe('GET /api/auth/invite/:token', () => {
+    it('should return the pending invite for a valid token', async () => {
+      await seedInvite(app, { email: 'ada@example.com', name: 'Ada Lovelace', token: 'tok-ada' });
 
-      expect(res.status).toBe(201);
+      const res = await http(app).get('/api/auth/invite/tok-ada');
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.email).toBe('ada@example.com');
+      expect(res.body.data.name).toBe('Ada Lovelace');
+      expect(res.body.data.expiresAt).toBeTypeOf('string');
+    });
+
+    it('should return 404 INVITE_INVALID for an unknown token', async () => {
+      const res = await http(app).get('/api/auth/invite/does-not-exist');
+
+      expect(res.status).toBe(404);
+      expect(res.body.success).toBe(false);
+      expect(res.body.error.code).toBe('INVITE_INVALID');
+    });
+  });
+
+  describe('POST /api/auth/invite/accept', () => {
+    it('should create a verified account, set httpOnly cookies, and consume the invite', async () => {
+      await seedInvite(app, { email: 'ada@example.com', name: 'Ada', token: 'tok-accept' });
+
+      const res = await http(app)
+        .post('/api/auth/invite/accept')
+        .send({ token: 'tok-accept', password: 'secretpass1' });
+
+      expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
       expect(res.body.data.user.email).toBe('ada@example.com');
-      expect(res.body.meta.timestamp).toBeTypeOf('string');
 
       const setCookie = res.headers['set-cookie'] as unknown as string[];
       expect(setCookie.join(';')).toContain('access_token=');
       expect(setCookie.some((c) => /httponly/i.test(c))).toBe(true);
+
+      // The new account can sign in with the password it just set.
+      const login = await http(app)
+        .post('/api/auth/login')
+        .send({ email: 'ada@example.com', password: 'secretpass1' });
+      expect(login.status).toBe(200);
     });
 
-    it('should reject a duplicate email with 409', async () => {
-      await registerUser(app, { email: 'dup@example.com', password: 'secretpass1' });
-      const res = await http(app)
-        .post('/api/auth/register')
-        .send({ name: 'Ada2', email: 'dup@example.com', password: 'secretpass1' });
+    it('should reject reusing an already-consumed invite with 404', async () => {
+      await seedInvite(app, { email: 'reuse@example.com', token: 'tok-once' });
 
-      expect(res.status).toBe(409);
-      expect(res.body.success).toBe(false);
+      const first = await http(app)
+        .post('/api/auth/invite/accept')
+        .send({ token: 'tok-once', password: 'secretpass1' });
+      expect(first.status).toBe(200);
+
+      const second = await http(app)
+        .post('/api/auth/invite/accept')
+        .send({ token: 'tok-once', password: 'secretpass1' });
+      expect(second.status).toBe(404);
+      expect(second.body.error.code).toBe('INVITE_INVALID');
     });
 
-    it('should reject invalid input with a 400 validation envelope', async () => {
+    it('should reject a too-short password with a 400 validation envelope', async () => {
+      await seedInvite(app, { email: 'short@example.com', token: 'tok-short' });
+
       const res = await http(app)
-        .post('/api/auth/register')
-        .send({ name: '', email: 'not-an-email', password: 'x' });
+        .post('/api/auth/invite/accept')
+        .send({ token: 'tok-short', password: 'x' });
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
@@ -76,7 +134,9 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/me').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
-      expect(res.body.data.email).toBe('ada@example.com');
+      // /auth/me returns { user, canCreateGroups } — user RBAC was removed.
+      expect(res.body.data.user.email).toBe('ada@example.com');
+      expect(typeof res.body.data.canCreateGroups).toBe('boolean');
     });
 
     it('should return 401 without authentication', async () => {

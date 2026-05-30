@@ -1,0 +1,200 @@
+{
+  "list": {
+    "title": "聊天",
+    "subtitle": "您的私聊和群聊。",
+    "new": "新消息",
+    "recent": "最近",
+    "filter": "筛选",
+    "start-meeting": "发起会议",
+    "compose": "新聊天",
+    "search": "搜索会话",
+    "loading": "加载中…",
+    "empty": "暂无会话。",
+    "untitled": "会话",
+    "attachment": "附件",
+    "no-messages": "暂无消息",
+    "actions": "会话操作",
+    "pin-chat": "置顶",
+    "unpin-chat": "取消置顶",
+    "mute": "静音",
+    "unmute": "取消静音",
+    "mark-unread": "标记为未读",
+    "hide": "隐藏",
+    "unhide": "显示",
+    "show-hidden": "显示隐藏的聊天",
+    "hide-confirmed": "聊天已隐藏",
+    "hide-undo": "撤销"
+  },
+  "view": {
+    "empty": "选择一个会话开始聊天。",
+    "no-messages": "暂无消息。打个招呼吧！",
+    "loading": "正在加载会话…",
+    "not-found": "未找到会话。",
+    "back": "返回会话",
+    "jump-to-latest": "跳到最新",
+    "peer-disabled": "该用户的聊天已被禁用。",
+    "you-disabled": "您的聊天权限已被禁用。",
+    "no-send-permission": "您没有发送消息的权限。"
+  },
+  "header": {
+    "members": "{count, plural, one {# 位成员} other {# 位成员}}",
+    "actions": "对话操作",
+    "clear": "清空聊天",
+    "delete": "删除聊天",
+    "clear-confirmed": "已从您的视图中清除消息",
+    "delete-confirmed": "聊天已删除"
+  },
+  "presence": {
+    "online": "在线",
+    "offline": "离线",
+    "last-seen": "最后上线时间 {time}",
+    "set-status": "设置您的状态",
+    "available": "有空",
+    "busy": "忙碌",
+    "dnd": "请勿打扰",
+    "brb": "马上回来",
+    "away": "离开"
+  },
+  "gif": {
+    "button": "GIF",
+    "search": "搜索 GIF",
+    "empty": "未找到 GIF。"
+  },
+  "bubble": {
+    "you": "您",
+    "unknown-user": "未知",
+    "deleted": "此消息已被删除",
+    "edited": "(已编辑)",
+    "edit": "编辑",
+    "delete": "删除",
+    "reply": "回复",
+    "more": "更多操作",
+    "save": "保存",
+    "cancel": "取消",
+    "pinned": "已置顶",
+    "pin": "置顶",
+    "unpin": "取消置顶",
+    "save-message": "保存",
+    "unsave-message": "从已保存中移除",
+    "forward": "转发",
+    "copy-link": "复制链接",
+    "link-copied": "链接已复制"
+  },
+  "priority": {
+    "normal": "标准",
+    "important": "重要",
+    "urgent": "紧急",
+    "label": "优先级"
+  },
+  "forward": {
+    "title": "转发给…",
+    "success": "消息已转发",
+    "error": "无法转发该消息"
+  },
+  "receipts": {
+    "seen": "已读",
+    "seen-by": "{count} 人已读"
+  },
+  "typing": {
+    "one": "{name} 正在输入…",
+    "many": "{count} 人正在输入…"
+  },
+  "composer": {
+    "placeholder": "写一条消息…",
+    "send": "发送消息",
+    "attach-file": "添加附件",
+    "take-photo": "拍照",
+    "cancel-reply": "取消回复",
+    "uploading": "上传中… {percent}%",
+    "failed": "失败",
+    "remove-attachment": "移除附件",
+    "max-attachments": "您最多可以添加 {max} 个文件。",
+    "wait-for-uploads": "请等待上传完成。",
+    "upload-failed": "上传失败",
+    "poll-failed": "无法创建投票",
+    "send-failed": "无法发送消息",
+    "disabled": "您无法在此处发送消息。"
+  },
+  "poll": {
+    "create": "创建投票",
+    "question": "问题",
+    "question-placeholder": "提个问题…",
+    "options": "选项",
+    "option-placeholder": "选项 {index}",
+    "add-option": "添加选项",
+    "remove-option": "移除选项",
+    "allow-multiple": "允许多选",
+    "cancel": "取消",
+    "create-submit": "创建",
+    "votes": "{count, plural, one {# 票} other {# 票}}",
+    "closed": "已关闭"
+  },
+  "group": {
+    "compose-chat": "新聊天",
+    "compose-group": "新群组",
+    "create-title": "新群组",
+    "create-subtitle": "取一个名字并邀请一些人。",
+    "name-label": "群组名称",
+    "name-placeholder": "例如: Q4 发布团队",
+    "description-label": "描述（可选）",
+    "description-placeholder": "这个群组关于什么?",
+    "members-label": "成员",
+    "members-placeholder": "搜索队友…",
+    "no-teammates": "未找到队友。",
+    "create-submit": "创建群组",
+    "create-failed": "无法创建群组",
+    "cancel": "取消",
+    "admin-badge": "管理员",
+    "you-badge": "您",
+    "promote": "设为管理员",
+    "demote": "移除管理员",
+    "remove-member": "从群组中移除",
+    "leave": "退出群组",
+    "leave-confirm": "退出此群组?",
+    "last-admin-warning": "您是唯一管理员。请先提升他人。",
+    "delete": "删除群组",
+    "delete-confirm": "删除此群组? 无法撤销。",
+    "groups-disabled": "管理员当前已禁用群组创建。"
+  },
+  "new-dm": {
+    "title": "新会话",
+    "search": "搜索队友",
+    "no-teammates": "未找到队友。",
+    "disabled": "不可用"
+  },
+  "new-chat": {
+    "title": "新聊天",
+    "to-label": "收件人：",
+    "to-placeholder": "输入姓名或邮箱",
+    "no-teammates": "未找到队友。",
+    "disabled": "不可用",
+    "empty-title": "您正在开始新的对话",
+    "empty-subtitle": "在下方输入您的第一条消息。",
+    "send-placeholder": "输入您的第一条消息…"
+  },
+  "teams": {
+    "title": "团队",
+    "subtitle": "您的团队和频道。",
+    "empty": "您还不是任何团队的成员。",
+    "empty-title": "暂无团队",
+    "empty-subtitle": "管理员会将您添加到团队以开始协作。",
+    "no-channels": "暂无频道。"
+  },
+  "activity": {
+    "title": "动态",
+    "subtitle": "@提及您的消息。",
+    "empty": "暂无提及。",
+    "empty-title": "暂无提及",
+    "empty-subtitle": "当有人@提及您时，会显示在这里。"
+  },
+  "saved": {
+    "title": "已保存",
+    "subtitle": "您已保存以便稍后查看的消息。",
+    "empty": "您还没有保存任何消息。",
+    "empty-title": "暂无已保存的消息",
+    "empty-subtitle": "从聊天中保存消息以便在此处找到。"
+  },
+  "size-bytes": "{bytes} B",
+  "size-kb": "{kb} KB",
+  "size-mb": "{mb} MB"
+}

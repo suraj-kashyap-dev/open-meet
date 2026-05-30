@@ -1,13 +1,20 @@
 import type { Page } from '@playwright/test';
 
 import type {
+  ActivityFeedDto,
+  ConversationListDto,
   MeetingDto,
   MeetingHistoryListResponseDto,
   MessagePageDto,
   ParticipantDto,
   RecordingDto,
+  SavedMessageListDto,
+  TeammateListDto,
+  UnreadSummaryDto,
   UpcomingMeetingDto,
   UserDto,
+  UserInviteLookupDto,
+  UserPresenceDto,
   UserSettingsDto,
 } from '@open-meet/types';
 
@@ -35,6 +42,15 @@ export interface WebApiMockOptions {
   messages?: MessagePageDto;
   recordings?: RecordingDto[];
   googleEnabled?: boolean;
+  /** Chat conversation list returned by `GET /messaging/conversations`. */
+  conversations?: ConversationListDto;
+  teammates?: TeammateListDto;
+  presence?: UserPresenceDto;
+  unread?: UnreadSummaryDto;
+  activity?: ActivityFeedDto;
+  saved?: SavedMessageListDto;
+  /** Invite returned by `GET /auth/invite/:token`, or null to simulate an invalid/expired link (404). */
+  invite?: UserInviteLookupDto | null;
 }
 
 const BARE_MEETING = /^\/meetings\/[^/]+$/;
@@ -49,6 +65,13 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
   const messages = options.messages ?? fixtures.messagePage;
   const recordings = options.recordings ?? fixtures.recordings;
   const googleEnabled = options.googleEnabled ?? false;
+  const conversations = options.conversations ?? fixtures.conversationList;
+  const teammates = options.teammates ?? fixtures.teammateList;
+  const presence = options.presence ?? fixtures.presenceMe;
+  const unread = options.unread ?? fixtures.unreadSummary;
+  const activity = options.activity ?? fixtures.activityFeed;
+  const saved = options.saved ?? fixtures.savedMessages;
+  const invite = options.invite === undefined ? fixtures.pendingInvite : options.invite;
 
   await page.route('**/api/**', async (route) => {
     const request = route.request();
@@ -80,6 +103,18 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
           return json(200, ok(upcoming));
         case '/meetings/history':
           return json(200, ok(history));
+        case '/messaging/conversations':
+          return json(200, ok(conversations));
+        case '/messaging/teammates':
+          return json(200, ok(teammates));
+        case '/messaging/presence/me':
+          return json(200, ok(presence));
+        case '/messaging/unread':
+          return json(200, ok(unread));
+        case '/messaging/activity':
+          return json(200, ok(activity));
+        case '/messaging/saved':
+          return json(200, ok(saved));
         default:
           break;
       }
@@ -90,13 +125,22 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
         if (path.endsWith('/participants')) return json(200, ok(participants));
         if (BARE_MEETING.test(path)) return meetingResponse();
       }
+
+      if (path.startsWith('/auth/invite/')) {
+        return invite
+          ? json(200, ok(invite))
+          : json(404, err('INVITE_NOT_FOUND', 'Invitation not found', 404));
+      }
     }
 
     if (method === 'POST') {
       switch (path) {
         case '/auth/login':
         case '/auth/register':
+        case '/auth/invite/accept':
           return json(200, ok(fixtures.authResponse));
+        case '/messaging/conversations/direct':
+          return json(200, ok(fixtures.dmConversation));
         case '/auth/logout':
           return json(200, ok({ loggedOut: true }));
         case '/auth/refresh':

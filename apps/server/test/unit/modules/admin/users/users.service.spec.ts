@@ -24,6 +24,7 @@ function makeUser(over: Partial<UserWithCounts> = {}): UserWithCounts {
     bio: null,
     createdAt: new Date('2026-01-01T00:00:00Z'),
     _count: { hostedMeetings: 2, meetings: 5 },
+    canCreateGroups: true,
     ...over,
   } as UserWithCounts;
 }
@@ -42,7 +43,9 @@ describe('AdminUsersService', () => {
       list: vi.fn().mockResolvedValue([makeUser()]),
       count: vi.fn().mockResolvedValue(1),
       findById: vi.fn().mockResolvedValue(makeUser()),
+      emailTaken: vi.fn().mockResolvedValue(null),
       emailTakenByOther: vi.fn().mockResolvedValue(null),
+      create: vi.fn().mockResolvedValue(makeUser()),
       update: vi.fn().mockResolvedValue(makeUser()),
       delete: vi.fn().mockResolvedValue(makeUser()),
     };
@@ -69,6 +72,32 @@ describe('AdminUsersService', () => {
       users.list.mockResolvedValueOnce([makeUser({ avatarKey: 'avatars/u1/a.png' })]);
       const res = await service.list({} as never);
       expect(res.items[0].avatar).toBe('pub:avatars/u1/a.png');
+    });
+  });
+
+  describe('create()', () => {
+    it('should reject an email already used by an existing account', async () => {
+      users.emailTaken.mockResolvedValueOnce({ id: 'other' });
+      await expect(
+        service.create({ name: 'Jane', email: 'jane@x.com', password: 'changeme' } as never),
+      ).rejects.toBeInstanceOf(ConflictException);
+      expect(users.create).not.toHaveBeenCalled();
+    });
+
+    it('should normalize the email, hash the password, and create the user', async () => {
+      const res = await service.create({
+        name: '  Jane ',
+        email: 'NEW@X.com',
+        password: 'changeme',
+      } as never);
+
+      expect(users.emailTaken).toHaveBeenCalledWith('new@x.com');
+      expect(users.create).toHaveBeenCalledWith({
+        name: 'Jane',
+        email: 'new@x.com',
+        passwordHash: 'HASH',
+      });
+      expect(res).toMatchObject({ id: 'u1' });
     });
   });
 
@@ -191,6 +220,13 @@ describe('AdminUsersService', () => {
 
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: null });
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/a.png');
+    });
+  });
+
+  describe('update()', () => {
+    it('should set the per-user canCreateGroups flag', async () => {
+      await service.update('u1', { canCreateGroups: false });
+      expect(users.update).toHaveBeenCalledWith('u1', { canCreateGroups: false });
     });
   });
 });

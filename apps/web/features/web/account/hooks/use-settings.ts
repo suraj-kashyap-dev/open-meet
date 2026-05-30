@@ -8,10 +8,11 @@ import { settingsApi } from '@/features/web/account/services/settings';
 
 const SETTINGS_KEY = ['auth', 'me', 'settings'] as const;
 
-export function useUserSettings() {
+export function useUserSettings(enabled: boolean = true) {
   return useQuery<UserSettingsDto>({
     queryKey: SETTINGS_KEY,
     queryFn: ({ signal }) => settingsApi.me(signal),
+    enabled,
     staleTime: 60_000,
   });
 }

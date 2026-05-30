@@ -8,6 +8,7 @@ import type { ApiEnv } from '@open-meet/config';
 
 import type { AdminRepository } from '@/modules/admin/admin.repository';
 import { AdminAuthService } from '@/modules/admin/auth/auth.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
 import type { StorageService } from '@/storage/storage.service';
 
 vi.mock('argon2', () => ({
@@ -20,11 +21,23 @@ const adminRow = {
   id: 'a1',
   email: 'admin@x.com',
   name: 'Admin',
-  role: 'SUPERADMIN',
   passwordHash: 'hash',
   avatarKey: null,
+  roleRecordId: 'role_sys_admin',
   createdAt: new Date('2026-01-01T00:00:00Z'),
   lastLoginAt: null,
+};
+
+const adminRole = {
+  id: 'role_sys_admin',
+  name: 'Administrator',
+  description: null,
+  permissionType: 'ALL' as const,
+  permissions: [],
+  isSystem: true,
+  cacheRev: 1,
+  createdAt: new Date('2026-01-01T00:00:00Z'),
+  updatedAt: new Date('2026-01-01T00:00:00Z'),
 };
 
 describe('AdminAuthService', () => {
@@ -32,6 +45,7 @@ describe('AdminAuthService', () => {
   let admins: Record<string, ReturnType<typeof vi.fn>>;
   let jwt: { signAsync: ReturnType<typeof vi.fn> };
   let storage: { publicUrl: ReturnType<typeof vi.fn> };
+  let roles: { findById: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     vi.mocked(argon2.verify).mockReset().mockResolvedValue(true);
@@ -46,6 +60,7 @@ describe('AdminAuthService', () => {
     };
     jwt = { signAsync: vi.fn().mockResolvedValue('signed.jwt') };
     storage = { publicUrl: vi.fn((key: string) => `https://cdn.example/${key}`) };
+    roles = { findById: vi.fn().mockResolvedValue(adminRole) };
     const config = {
       getOrThrow: (k: string) =>
         ({ ADMIN_JWT_ACCESS_EXPIRY: '2h', ADMIN_JWT_ACCESS_SECRET: 'secret' })[k],
@@ -55,6 +70,7 @@ describe('AdminAuthService', () => {
       jwt as unknown as JwtService,
       config,
       storage as unknown as StorageService,
+      roles as unknown as AdminRoleRepository,
     );
   });
 
@@ -77,11 +93,12 @@ describe('AdminAuthService', () => {
       const { admin, tokens } = await service.login({ email: 'admin@x.com', password: 'p' });
       expect(admins.touchLastLogin).toHaveBeenCalledWith('a1');
       expect(jwt.signAsync).toHaveBeenCalledWith(
-        { sub: 'a1', email: 'admin@x.com', role: 'SUPERADMIN' },
+        { sub: 'a1', email: 'admin@x.com', roleId: 'role_sys_admin' },
         { secret: 'secret', expiresIn: 7200 },
       );
       expect(tokens).toEqual({ accessToken: 'signed.jwt', accessTtlMs: 7_200_000 });
       expect(admin.id).toBe('a1');
+      expect(admin.role?.id).toBe('role_sys_admin');
     });
   });
 

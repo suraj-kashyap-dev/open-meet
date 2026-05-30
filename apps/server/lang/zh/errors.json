@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "无法降级最后一位超级管理员",
   "cannot-delete-self": "您无法删除自己的管理员账户",
   "cannot-delete-last-superadmin": "无法删除最后一位超级管理员",
-  "superadmin-required": "此操作需要超级管理员权限"
+  "permission-required": "您没有执行此操作的权限",
+  "role-not-found": "未找到角色",
+  "role-name-taken": "该名称的角色已存在",
+  "role-is-system": "系统角色无法修改或删除",
+  "role-has-members": "删除前请重新分配此角色中的每位管理员",
+  "role-permission-invalid": "一个或多个权限键无效"
 }

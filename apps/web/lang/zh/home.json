@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "会议",
+    "subtitle": "发起即时会议或使用代码加入。"
+  },
   "greeting": {
     "up-late": "夜猫子",
     "good-morning": "早上好",

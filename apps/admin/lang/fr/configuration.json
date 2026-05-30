@@ -7,6 +7,49 @@
     "title": "La configuration est en cours de développement",
     "description": "Les valeurs par défaut de l'espace de travail, l'image de marque et les politiques de réunion seront bientôt disponibles ici."
   },
+  "hub": {
+    "empty": "Vous n'avez encore accès à aucun paramètre.",
+    "sections": {
+      "access": {
+        "title": "Accès",
+        "description": "Gérez qui peut se connecter à la console et ce qu'ils peuvent faire."
+      },
+      "users": {
+        "title": "Utilisateurs",
+        "description": "Gérez les utilisateurs finaux de l'application et les rôles qui leur sont attribués."
+      },
+      "workspace": {
+        "title": "Espace de travail",
+        "description": "Personnalisez l'image de marque de la console et configurez les valeurs par défaut de l'espace de travail."
+      }
+    },
+    "cards": {
+      "administrators": {
+        "title": "Administrateurs",
+        "description": "Ajoutez, modifiez ou supprimez les comptes d'administrateur autorisés à se connecter à la console."
+      },
+      "roles": {
+        "title": "Rôles d'administrateur",
+        "description": "Définissez les autorisations accordées par chaque rôle d'administrateur."
+      },
+      "users": {
+        "title": "Utilisateurs",
+        "description": "Gérez les comptes des utilisateurs finaux, invitez de nouveaux utilisateurs et activez ou désactivez leur accès."
+      },
+      "user-roles": {
+        "title": "Rôles d'utilisateur",
+        "description": "Définissez les autorisations accordées par chaque rôle d'utilisateur dans l'application."
+      },
+      "branding": {
+        "title": "Image de marque",
+        "description": "Personnalisez le nom de l'application, le logo et la couleur d'accentuation."
+      },
+      "configuration": {
+        "title": "Configuration",
+        "description": "Valeurs par défaut de l'espace de travail, politiques de réunion et bascules de fonctionnalités."
+      }
+    }
+  },
   "form": {
     "title": "Valeurs par défaut de l'espace de travail",
     "subtitle": "Valeurs par défaut appliquées aux nouvelles réunions dans tout l'espace de travail.",

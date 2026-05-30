@@ -92,7 +92,7 @@ export function PendingInvites() {
               <div className="flex items-center gap-2">
                 <p className="truncate text-sm font-medium">{invite.name}</p>
                 <span className="rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {invite.role === 'SUPERADMIN' ? t('roles.superadmin') : t('roles.admin')}
+                  {invite.role?.name ?? '—'}
                 </span>
                 <span
                   className={cn(

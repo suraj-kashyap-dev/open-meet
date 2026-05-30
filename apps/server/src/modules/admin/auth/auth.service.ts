@@ -1,21 +1,28 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import type { AdminRoleRecord } from '@prisma/client';
 import * as argon2 from 'argon2';
 
-import type { AdminChangePasswordDto, AdminDto, AdminUpdateProfileDto } from '@open-meet/types';
+import type {
+  AdminChangePasswordDto,
+  AdminDto,
+  AdminMeResponseDto,
+  AdminUpdateProfileDto,
+} from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
 import { StorageService } from '../../../storage/storage.service';
 
 import { AdminRepository } from '../admin.repository';
+import { AdminRoleRepository } from '../rbac/admin-role.repository';
 import type { AdminLoginDto } from './dto/admin-login.dto';
 
 interface AdminAccessPayload {
   sub: string;
   email: string;
-  role: string;
+  roleId: string | null;
 }
 
 export interface IssuedAdminTokens {
@@ -30,6 +37,7 @@ export class AdminAuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly storage: StorageService,
+    private readonly roles: AdminRoleRepository,
   ) {}
 
   async login(dto: AdminLoginDto): Promise<{ admin: AdminDto; tokens: IssuedAdminTokens }> {
@@ -46,8 +54,9 @@ export class AdminAuthService {
     }
 
     await this.admins.touchLastLogin(admin.id);
-    const tokens = await this.issueTokens(admin.id, admin.email, admin.role);
-    return { admin: this.toDto({ ...admin, lastLoginAt: new Date() }), tokens };
+    const tokens = await this.issueTokens(admin.id, admin.email, admin.roleRecordId);
+    const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
+    return { admin: this.toDto({ ...admin, lastLoginAt: new Date() }, role), tokens };
   }
 
   async getAdminDtoById(id: string): Promise<AdminDto> {
@@ -60,7 +69,27 @@ export class AdminAuthService {
       });
     }
 
-    return this.toDto(admin);
+    const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
+    return this.toDto(admin, role);
+  }
+
+  /** Identity + RBAC context (single round-trip for the admin client). */
+  async getMe(id: string): Promise<AdminMeResponseDto> {
+    const admin = await this.admins.findById(id);
+    if (!admin) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'Admin not found',
+      });
+    }
+    const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
+    return {
+      admin: this.toDto(admin, role),
+      role: role
+        ? { id: role.id, name: role.name, permissionType: role.permissionType }
+        : null,
+      grantedSet: role ? [...role.permissions].sort() : [],
+    };
   }
 
   async updateProfile(id: string, dto: AdminUpdateProfileDto): Promise<AdminDto> {
@@ -84,7 +113,8 @@ export class AdminAuthService {
     }
 
     const updated = await this.admins.update(id, data);
-    return this.toDto(updated);
+    const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+    return this.toDto(updated, role);
   }
 
   async changePassword(id: string, dto: AdminChangePasswordDto): Promise<void> {
@@ -113,11 +143,11 @@ export class AdminAuthService {
   private async issueTokens(
     adminId: string,
     email: string,
-    role: string,
+    roleId: string | null,
   ): Promise<IssuedAdminTokens> {
     const accessTtl = this.config.getOrThrow<string>('ADMIN_JWT_ACCESS_EXPIRY');
     const accessTtlMs = this.parseTtlMs(accessTtl);
-    const payload: AdminAccessPayload = { sub: adminId, email, role };
+    const payload: AdminAccessPayload = { sub: adminId, email, roleId };
     const accessToken = await this.jwt.signAsync(payload, {
       secret: this.config.getOrThrow<string>('ADMIN_JWT_ACCESS_SECRET'),
       expiresIn: Math.floor(accessTtlMs / 1000),
@@ -125,20 +155,24 @@ export class AdminAuthService {
     return { accessToken, accessTtlMs };
   }
 
-  private toDto(a: {
-    id: string;
-    email: string;
-    name: string;
-    role: string;
-    avatarKey: string | null;
-    createdAt: Date;
-    lastLoginAt: Date | null;
-  }): AdminDto {
+  private toDto(
+    a: {
+      id: string;
+      email: string;
+      name: string;
+      avatarKey: string | null;
+      createdAt: Date;
+      lastLoginAt: Date | null;
+    },
+    role: AdminRoleRecord | null,
+  ): AdminDto {
     return {
       id: a.id,
       email: a.email,
       name: a.name,
-      role: a.role as AdminDto['role'],
+      role: role
+        ? { id: role.id, name: role.name, permissionType: role.permissionType }
+        : null,
       avatar: a.avatarKey ? this.storage.publicUrl(a.avatarKey) : null,
       createdAt: a.createdAt.toISOString(),
       lastLoginAt: a.lastLoginAt?.toISOString() ?? null,

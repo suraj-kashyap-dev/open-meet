@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { Admin, AdminRole } from '@prisma/client';
+import type { Admin } from '@prisma/client';
 
 import { PrismaService } from '../../database/prisma.service';
 
@@ -23,30 +23,35 @@ export class AdminRepository {
   }
 
   list(): Promise<Admin[]> {
-    return this.prisma.admin.findMany({ orderBy: [{ role: 'asc' }, { createdAt: 'asc' }] });
+    return this.prisma.admin.findMany({ orderBy: [{ createdAt: 'asc' }] });
   }
 
   create(data: {
     email: string;
     name: string;
     passwordHash: string;
-    role: AdminRole;
+    roleRecordId: string;
   }): Promise<Admin> {
     return this.prisma.admin.create({ data });
   }
 
   update(
     id: string,
-    data: { name?: string; role?: AdminRole; avatarKey?: string | null; passwordHash?: string },
+    data: { name?: string; avatarKey?: string | null; passwordHash?: string },
   ): Promise<Admin> {
     return this.prisma.admin.update({ where: { id }, data });
+  }
+
+  updateRoleRecord(id: string, roleRecordId: string): Promise<Admin> {
+    return this.prisma.admin.update({ where: { id }, data: { roleRecordId } });
   }
 
   delete(id: string): Promise<Admin> {
     return this.prisma.admin.delete({ where: { id } });
   }
 
-  countByRole(role: AdminRole): Promise<number> {
-    return this.prisma.admin.count({ where: { role } });
+  /** Count admins assigned to a given RBAC role id. Replaces the legacy countByRole enum. */
+  countByRoleRecord(roleRecordId: string): Promise<number> {
+    return this.prisma.admin.count({ where: { roleRecordId } });
   }
 }

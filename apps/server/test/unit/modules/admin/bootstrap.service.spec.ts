@@ -33,10 +33,15 @@ describe('AdminBootstrapService', () => {
       expect(admin.create).not.toHaveBeenCalled();
     });
 
-    it('should create a lowercased SUPERADMIN from DEFAULT_ADMIN_* when none exist', async () => {
+    it('should create a lowercased admin linked to the Administrator role when none exist', async () => {
       await service.onModuleInit();
       expect(admin.create).toHaveBeenCalledWith({
-        data: { email: 'root@x.com', name: 'Root', passwordHash: 'HASH', role: 'SUPERADMIN' },
+        data: {
+          email: 'root@x.com',
+          name: 'Root',
+          passwordHash: 'HASH',
+          roleRecordId: 'role_sys_admin',
+        },
       });
     });
   });

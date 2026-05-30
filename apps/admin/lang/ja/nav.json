@@ -6,16 +6,18 @@
   "sections": {
     "overview": "概要",
     "manage": "管理",
-    "insights": "分析",
     "system": "システム"
   },
   "items": {
     "dashboard": "ダッシュボード",
     "users": "ユーザー",
+    "teams": "チーム",
+    "groups": "グループ",
     "meetings": "ミーティング",
-    "analytics": "アナリティクス",
     "settings": "設定",
     "administrators": "管理者",
+    "roles": "管理者ロール",
+    "user-roles": "ユーザーロール",
     "branding": "ブランディング",
     "configuration": "構成",
     "more": "その他"

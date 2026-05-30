@@ -9,11 +9,18 @@ import { Link } from '@/i18n/navigation';
 
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
 import { Separator } from '@open-meet/ui/separator';
 import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useMediaDevices } from '@/features/web/lobby/hooks/use-media-devices';
+import {
+  clearGuestSession,
+  getGuestSession,
+  saveGuestSession,
+} from '@/features/web/meeting/lib/guest-session';
 import { useMeeting, useUpdateMeeting } from '@/features/web/meeting/hooks/use-meetings';
+import { meetingsApi } from '@/features/web/meeting/services/meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
 
@@ -27,9 +34,11 @@ export function LobbyClient({ code }: { code: string }) {
   const nav = useNavigateTransition();
   const media = useMediaDevices();
   const { data: meeting, error, isLoading } = useMeeting(code);
-  const { data: user } = useCurrentUser();
-  const { data: settings } = useUserSettings();
+  const { data: user, isLoading: userLoading } = useCurrentUser();
+  const { data: settings } = useUserSettings(Boolean(user));
   const [copied, setCopied] = useState(false);
+  const [guestSession, setGuestSession] = useState(() => getGuestSession(code));
+  const [guestName, setGuestName] = useState(() => getGuestSession(code)?.user.name ?? '');
   const appliedDefaults = useRef(false);
 
   useEffect(() => {
@@ -72,7 +81,33 @@ export function LobbyClient({ code }: { code: string }) {
     }
   };
 
-  const onJoin = () => {
+  const onJoin = async () => {
+    if (!user) {
+      const trimmed = guestName.trim();
+
+      if (!trimmed) {
+        return;
+      }
+
+      try {
+        if (guestSession && guestSession.user.name !== trimmed) {
+          clearGuestSession(code);
+          setGuestSession(null);
+        }
+
+        const next =
+          guestSession && guestSession.user.name === trimmed
+            ? guestSession
+            : saveGuestSession(code, await meetingsApi.createGuestSession(code, { name: trimmed }));
+
+        setGuestSession(next);
+      } catch (err) {
+        const message = err instanceof ApiClientError ? err.message : 'Could not join meeting';
+        toast.error(message);
+        return;
+      }
+    }
+
     saveJoinPreferences(code, {
       micEnabled: media.micEnabled,
       cameraEnabled: media.cameraEnabled,
@@ -83,7 +118,7 @@ export function LobbyClient({ code }: { code: string }) {
 
   if (isLoading) {
     return (
-      <div className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+      <div className="flex h-screen items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
       </div>
     );
@@ -93,11 +128,11 @@ export function LobbyClient({ code }: { code: string }) {
     return null;
   }
 
-  const displayName = user?.name ?? t('you');
+  const displayName = user?.name ?? (guestName.trim() || t('you'));
   const isHost = Boolean(user && user.id === meeting.hostId);
 
   return (
-    <div className="relative isolate min-h-[calc(100vh-3.5rem)] overflow-hidden">
+    <div className="relative isolate min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight opacity-70" />
       <div className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-50" />
 
@@ -112,7 +147,11 @@ export function LobbyClient({ code }: { code: string }) {
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
           <section className="space-y-4">
-            <LobbyPreview media={media} displayName={displayName} avatar={user?.avatar ?? null} />
+            <LobbyPreview
+              media={media}
+              displayName={displayName}
+              avatar={user?.avatar ?? guestSession?.user.avatar ?? null}
+            />
 
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1">
@@ -130,6 +169,20 @@ export function LobbyClient({ code }: { code: string }) {
           <aside className="flex flex-col gap-4">
             <section className="rounded-2xl border border-border bg-card shadow-sm">
               <div className="space-y-2.5 p-5">
+                {!user && (
+                  <div className="space-y-1.5">
+                    <Label htmlFor="guest-name">{t('you')}</Label>
+                    <Input
+                      id="guest-name"
+                      value={guestName}
+                      onChange={(e) => setGuestName(e.target.value)}
+                      placeholder={t('you')}
+                      maxLength={60}
+                      autoComplete="name"
+                    />
+                  </div>
+                )}
+
                 <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                   {t('meeting-code')}
                 </p>
@@ -169,7 +222,7 @@ export function LobbyClient({ code }: { code: string }) {
             <div className="hidden space-y-2 pt-1 lg:block">
               <Button
                 onClick={onJoin}
-                disabled={nav.isNavigating}
+                disabled={nav.isNavigating || (!user && (userLoading || guestName.trim().length === 0))}
                 className="group w-full"
                 size="lg"
               >
@@ -194,7 +247,12 @@ export function LobbyClient({ code }: { code: string }) {
           >
             {t('cancel')}
           </Link>
-          <Button onClick={onJoin} disabled={nav.isNavigating} className="group flex-1" size="lg">
+          <Button
+            onClick={onJoin}
+            disabled={nav.isNavigating || (!user && (userLoading || guestName.trim().length === 0))}
+            className="group flex-1"
+            size="lg"
+          >
             {nav.isNavigating ? t('joining') : t('join-now')}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </Button>

@@ -1,4 +1,4 @@
-import { locales } from '@/i18n/routing';
+import { defaultLocale, locales } from '@/i18n/routing';
 
 export const REDIRECT_PARAM = 'redirect';
 
@@ -60,4 +60,27 @@ export function currentClientPath(): string {
   const { pathname, search, hash } = window.location;
 
   return stripLocale(`${pathname}${search}${hash}`);
+}
+
+function currentLocale(): string {
+  if (typeof window === 'undefined') {
+    return defaultLocale;
+  }
+
+  const segment = window.location.pathname.split('/')[1];
+
+  return (locales as readonly string[]).includes(segment) ? segment : defaultLocale;
+}
+
+export function browserLoginHref(intended: string): string {
+  const target = loginHref(intended);
+  const localePrefix = `/${currentLocale()}`;
+
+  if (typeof target === 'string') {
+    return `${localePrefix}${target}`;
+  }
+
+  const search = new URLSearchParams(target.query).toString();
+
+  return `${localePrefix}${target.pathname}${search ? `?${search}` : ''}`;
 }

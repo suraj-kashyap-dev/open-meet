@@ -10,7 +10,11 @@
     "active-now": "Aktif sekarang",
     "active-now-hint": "Ruang dengan status = ACTIVE",
     "messages-24h": "Pesan 24j",
-    "messages-24h-hint": "Pesan obrolan dalam 24 jam terakhir"
+    "messages-24h-hint": "Pesan obrolan dalam 24 jam terakhir",
+    "groups": "Grup",
+    "groups-hint": "Percakapan grup yang dibuat",
+    "teams": "Tim",
+    "teams-hint": "Tim di ruang kerja"
   },
   "trends": {
     "signups": "Pendaftaran baru",

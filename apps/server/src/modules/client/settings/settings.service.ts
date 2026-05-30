@@ -35,6 +35,14 @@ export class SettingsService {
       }
     }
 
+    if (input.appearance) {
+      for (const [k, v] of Object.entries(input.appearance)) {
+        if (v !== undefined) {
+          data[k] = v;
+        }
+      }
+    }
+
     if (Object.keys(data).length === 0) {
       const row = await this.repo.ensureForUser(userId);
       return this.toDto(row);
@@ -58,6 +66,9 @@ export class SettingsService {
         allowDirectMessages: row.allowDirectMessages,
         profileVisibility: row.profileVisibility,
         shareUsageData: row.shareUsageData,
+      },
+      appearance: {
+        accentColorOverride: row.accentColorOverride,
       },
     };
   }

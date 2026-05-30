@@ -17,6 +17,8 @@ describe('JwtStrategy', () => {
         id: 'u1',
         email: 'a@x.com',
         name: 'Alice',
+        isGuest: false,
+        guestMeetingCode: null,
       });
     });
 

@@ -6,6 +6,8 @@ import type { ApiEnv } from '@open-meet/config';
 
 import { PrismaService } from '../../database/prisma.service';
 
+import { SYSTEM_ADMIN_ROLE_ID } from './rbac/admin-rbac-seed.service';
+
 @Injectable()
 export class AdminBootstrapService implements OnModuleInit {
   private readonly logger = new Logger(AdminBootstrapService.name);
@@ -28,7 +30,12 @@ export class AdminBootstrapService implements OnModuleInit {
     const passwordHash = await argon2.hash(password, { type: argon2.argon2id });
 
     await this.prisma.admin.create({
-      data: { email, name, passwordHash, role: 'SUPERADMIN' },
+      data: {
+        email,
+        name,
+        passwordHash,
+        roleRecordId: SYSTEM_ADMIN_ROLE_ID,
+      },
     });
 
     const isProd = this.config.get<string>('NODE_ENV') === 'production';

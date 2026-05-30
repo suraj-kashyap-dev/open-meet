@@ -16,9 +16,11 @@ function setup() {
     publicUrl: vi.fn((key: string) => `http://cdn.test/api/uploads/public/${key}`),
     delete: vi.fn().mockResolvedValue(undefined),
   };
+  const config = { get: vi.fn().mockReturnValue(undefined) };
   const service = new BrandingService(
     repo as unknown as BrandingRepository,
     storage as unknown as StorageService,
+    config as never,
   );
 
   return { service, repo, storage };
@@ -38,6 +40,8 @@ describe('BrandingService', () => {
       await expect(ctx.service.getPublicConfig()).resolves.toEqual({
         appName: 'Open Meet',
         logoUrl: null,
+        gifsEnabled: false,
+        accentColor: 'indigo',
       });
     });
 
@@ -47,6 +51,8 @@ describe('BrandingService', () => {
       await expect(ctx.service.getPublicConfig()).resolves.toEqual({
         appName: 'Acme',
         logoUrl: 'http://cdn.test/api/uploads/public/branding/logo_abc.png',
+        gifsEnabled: false,
+        accentColor: 'indigo',
       });
     });
   });

@@ -4,6 +4,8 @@ import type {
   GoogleAuthStatusDto,
   UpdateProfileDto,
   UserDto,
+  UserInviteLookupDto,
+  UserMeResponseDto,
 } from '@open-meet/types';
 
 import { api, ApiClientError } from '@/lib/api/client';
@@ -90,17 +92,20 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
 }
 
 export const authApi = {
-  register: (input: { name: string; email: string; password: string }) =>
-    api.post<AuthResponseDto>('/auth/register', input),
-
   login: (input: { email: string; password: string }) =>
     api.post<AuthResponseDto>('/auth/login', input),
+
+  lookupInvite: (token: string, signal?: AbortSignal) =>
+    api.get<UserInviteLookupDto>(`/auth/invite/${encodeURIComponent(token)}`, { signal }),
+
+  acceptInvite: (input: { token: string; password: string }) =>
+    api.post<AuthResponseDto>('/auth/invite/accept', input),
 
   logout: () => api.post<{ loggedOut: true }>('/auth/logout'),
 
   refresh: () => api.post<{ refreshed: true }>('/auth/refresh'),
 
-  me: (signal?: AbortSignal) => api.get<UserDto>('/auth/me', { signal }),
+  me: (signal?: AbortSignal) => api.get<UserMeResponseDto>('/auth/me', { signal }),
 
   googleStatus: (signal?: AbortSignal) =>
     api.get<GoogleAuthStatusDto>('/auth/google/status', { signal }),

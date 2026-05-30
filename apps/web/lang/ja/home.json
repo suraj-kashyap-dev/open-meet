@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "会議",
+    "subtitle": "インスタント会議を開始するか、コードで参加します。"
+  },
   "greeting": {
     "up-late": "夜更かしですね",
     "good-morning": "おはようございます",

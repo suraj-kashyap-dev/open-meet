@@ -1,4 +1,8 @@
 {
+  "page": {
+    "title": "Meet",
+    "subtitle": "Start an instant meeting or join with a code."
+  },
   "greeting": {
     "up-late": "Up late",
     "good-morning": "Good morning",

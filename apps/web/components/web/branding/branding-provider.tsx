@@ -4,14 +4,15 @@ import { createContext, useContext, type ReactNode } from 'react';
 
 import type { PublicConfigDto } from '@open-meet/types';
 
-const FALLBACK: PublicConfigDto = { appName: 'Open Meet', logoUrl: null };
+const FALLBACK: PublicConfigDto = {
+  appName: 'Open Meet',
+  logoUrl: null,
+  gifsEnabled: false,
+  accentColor: 'indigo',
+};
 
 const BrandingContext = createContext<PublicConfigDto>(FALLBACK);
 
-/**
- * Seeds the active branding (fetched server-side) into the client tree so
- * client components render the live app name/logo without a flash.
- */
 export function BrandingProvider({
   value,
   children,

@@ -24,13 +24,14 @@ const RETRY_INTERVAL_MS = 5000;
 interface Props {
   code: string;
   displayName: string;
+  authToken?: string | null;
   onAdmitted: () => void;
 }
 
-export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
+export function WaitingRoom({ code, displayName, authToken, onAdmitted }: Props) {
   const t = useTranslations('meeting');
   const router = useRouter();
-  const { socket } = useMeetingSocket(true);
+  const { socket } = useMeetingSocket(true, authToken);
   const [status, setStatus] = useState<Status>('connecting');
   const knockSentRef = useRef(false);
   const admittedRef = useRef(false);
@@ -137,7 +138,7 @@ export function WaitingRoom({ code, displayName, onAdmitted }: Props) {
         : t('waiting.status-waiting');
 
   return (
-    <main className="relative isolate flex min-h-[calc(100vh-3.5rem)] items-center justify-center px-4">
+    <main className="relative isolate flex min-h-screen items-center justify-center px-4">
       <div className="pointer-events-none absolute inset-0 -z-10 spotlight opacity-70" />
       <div className="pointer-events-none absolute inset-0 -z-10 grid-backdrop opacity-50" />
 

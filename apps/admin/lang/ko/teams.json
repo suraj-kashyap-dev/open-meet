@@ -1,0 +1,59 @@
+{
+  "eyebrow": "관리",
+  "title": "팀",
+  "subtitle": "팀은 누가 누구에게 메시지를 보낼 수 있는지 결정합니다 — 사용자는 공유 팀의 누구에게나 DM을 보낼 수 있습니다.",
+  "empty": "아직 팀이 없습니다.",
+  "columns": {
+    "name": "이름",
+    "members": "멤버"
+  },
+  "actions": {
+    "manage": "멤버 관리",
+    "delete": "팀 삭제"
+  },
+  "create": {
+    "button": "새 팀",
+    "title": "팀 만들기",
+    "name": "팀 이름",
+    "placeholder": "예: 엔지니어링",
+    "submit": "만들기",
+    "success": "팀이 생성됨",
+    "error": "팀을 만들 수 없습니다"
+  },
+  "manage": {
+    "title": "멤버",
+    "members": "{count, plural, one {멤버 #명} other {멤버 #명}}",
+    "add": "멤버 추가",
+    "search": "사용자 검색",
+    "no-users": "사용자를 찾을 수 없습니다.",
+    "add-confirm": "추가",
+    "empty": "아직 멤버가 없습니다.",
+    "remove": "멤버 제거"
+  },
+  "channels": {
+    "title": "채널",
+    "empty": "아직 채널이 없습니다.",
+    "general": "일반",
+    "add": "채널 추가",
+    "delete": "채널 삭제",
+    "name-placeholder": "새 채널 이름"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Team updated",
+    "request-error": "Could not update this team",
+    "empty-title": "Team not found",
+    "empty-description": "This team may have been removed or you may not have access to it.",
+    "delete-description": "Removing this team also removes access to its channels for every member.",
+    "delete-success": "Team deleted",
+    "delete-error": "Could not delete team"
+  },
+  "delete-dialog": {
+    "title": "팀을 삭제하시겠습니까?",
+    "description": "{name}이(가) 삭제되고 모든 멤버가 즉시 접근 권한을 잃게 됩니다. 이 작업은 취소할 수 없습니다.",
+    "cancel": "취소",
+    "confirm": "팀 삭제",
+    "deleting": "삭제 중…"
+  }
+}

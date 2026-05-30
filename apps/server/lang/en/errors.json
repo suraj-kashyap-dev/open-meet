@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "Cannot demote the last remaining superadmin",
   "cannot-delete-self": "You cannot delete your own admin account",
   "cannot-delete-last-superadmin": "Cannot delete the last remaining superadmin",
-  "superadmin-required": "Superadmin privileges are required for this action"
+  "permission-required": "You do not have permission to perform this action",
+  "role-not-found": "Role not found",
+  "role-name-taken": "A role with that name already exists",
+  "role-is-system": "System roles cannot be modified or deleted",
+  "role-has-members": "Reassign every admin in this role before deleting it",
+  "role-permission-invalid": "One or more permission keys are not valid"
 }
