@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { type AdminAccountDto, AdminRole } from '@open-meet/types';
+import type { AdminAccountDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
 import {
@@ -28,11 +28,14 @@ import {
   SelectValue,
 } from '@open-meet/ui/select';
 import { useUpdateAdminAccount } from '@/features/accounts/hooks/use-admin-accounts';
+import { useAdminRoles } from '@/features/rbac/hooks/use-admin-roles';
 import { ApiClientError } from '@/lib/api/client';
+
+const DEFAULT_ROLE_ID = 'role_sys_member';
 
 interface FormValues {
   name: string;
-  role: AdminRole;
+  roleId: string;
 }
 
 interface Props {
@@ -43,25 +46,27 @@ interface Props {
 export function EditAdminDialog({ admin, onClose }: Props) {
   const t = useTranslations('accounts');
   const update = useUpdateAdminAccount();
+  const rolesQuery = useAdminRoles();
+  const roles = rolesQuery.data?.items ?? [];
 
   const schema = useMemo(
     () =>
       z.object({
         name: z.string().min(1, t('edit-dialog.validation.name-required')).max(120),
-        role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
+        roleId: z.string().min(1),
       }),
     [t],
   );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: '', role: AdminRole.ADMIN },
+    defaultValues: { name: '', roleId: DEFAULT_ROLE_ID },
   });
 
   const { reset } = form;
   useEffect(() => {
     if (admin) {
-      reset({ name: admin.name, role: admin.role });
+      reset({ name: admin.name, roleId: admin.role?.id ?? DEFAULT_ROLE_ID });
     }
   }, [admin, reset]);
 
@@ -100,17 +105,18 @@ export function EditAdminDialog({ admin, onClose }: Props) {
           <div className="space-y-1.5">
             <Label htmlFor="edit-role">{t('edit-dialog.role')}</Label>
             <Select
-              value={form.watch('role')}
-              onValueChange={(v) => form.setValue('role', v as AdminRole)}
+              value={form.watch('roleId')}
+              onValueChange={(v) => form.setValue('roleId', v)}
             >
               <SelectTrigger id="edit-role">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={AdminRole.ADMIN}>{t('edit-dialog.role-admin')}</SelectItem>
-                <SelectItem value={AdminRole.SUPERADMIN}>
-                  {t('edit-dialog.role-superadmin')}
-                </SelectItem>
+                {roles.map((role) => (
+                  <SelectItem key={role.id} value={role.id}>
+                    {role.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

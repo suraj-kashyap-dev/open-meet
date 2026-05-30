@@ -20,6 +20,7 @@ import { ChatModule } from './modules/client/chat/chat.module';
 import { MessagingModule } from './modules/client/messaging/messaging.module';
 import { RecordingModule } from './modules/client/recording/recording.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { ClientRbacModule } from './modules/client/rbac/rbac.module';
 import { AppConfigModule } from './modules/config/config.module';
 import { StorageModule } from './storage/storage.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
@@ -75,6 +76,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     RecordingModule,
     AppConfigModule,
     AdminModule,
+    ClientRbacModule,
     StorageModule,
     UploadsModule,
   ],

@@ -1,5 +1,4 @@
-import { AdminRole } from '@prisma/client';
-import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateAdminAccountDto {
   @IsEmail()
@@ -16,7 +15,9 @@ export class CreateAdminAccountDto {
   @MaxLength(200)
   password!: string;
 
+  /** RBAC role id. When omitted the new admin is assigned the seeded Member role. */
   @IsOptional()
-  @IsEnum(AdminRole)
-  role?: AdminRole;
+  @IsString()
+  @MinLength(1)
+  roleId?: string;
 }

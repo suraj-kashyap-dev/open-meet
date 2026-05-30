@@ -12,13 +12,14 @@ export const ADMIN_ACCESS_COOKIE = 'admin_access_token';
 export interface AdminRequestUser {
   id: string;
   email: string;
-  role: string;
+  /** RBAC role id. Annotated handlers reject the request when this is null. */
+  roleId: string | null;
 }
 
 interface AdminJwtPayload {
   sub: string;
   email: string;
-  role: string;
+  roleId?: string | null;
 }
 
 @Injectable()
@@ -41,6 +42,10 @@ export class AdminJwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
       });
     }
 
-    return { id: payload.sub, email: payload.email, role: payload.role };
+    return {
+      id: payload.sub,
+      email: payload.email,
+      roleId: payload.roleId ?? null,
+    };
   }
 }

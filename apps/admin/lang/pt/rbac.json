@@ -1,0 +1,143 @@
+{
+  "eyebrow": "Sistema",
+  "title": {
+    "admin-roles": "Funções de administrador",
+    "user-roles": "Funções de usuário"
+  },
+  "subtitle": {
+    "admin-roles": "Controle o que cada administrador pode fazer.",
+    "user-roles": "Controle o que cada usuário pode fazer no aplicativo."
+  },
+  "table": {
+    "name": "Função",
+    "description": "Descrição",
+    "members": "Membros",
+    "type": "Tipo",
+    "actions": "Ações",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "system": "Sistema",
+    "empty": "Nenhuma função ainda."
+  },
+  "type": {
+    "all": "Acesso total",
+    "custom": "Personalizado"
+  },
+  "create": {
+    "title": "Nova função",
+    "submit": "Criar função",
+    "cancel": "Cancelar",
+    "success": "Função criada.",
+    "error": "Não foi possível criar a função.",
+    "name-label": "Nome",
+    "name-placeholder": "ex.: Suporte",
+    "description-label": "Descrição",
+    "description-placeholder": "O que essa função pode fazer?",
+    "type-label": "Acesso",
+    "type-all": "Acesso total — concede todas as permissões atuais e futuras.",
+    "type-custom": "Personalizado — escolha exatamente o que podem fazer."
+  },
+  "edit": {
+    "title": "Editar função",
+    "submit": "Salvar alterações",
+    "success": "Função atualizada.",
+    "error": "Não foi possível salvar a função.",
+    "system-locked": "As funções do sistema não podem ser renomeadas nem alterar o tipo de acesso."
+  },
+  "delete": {
+    "title": "Excluir função",
+    "description": "Reatribua {count, plural, =0 {nenhum membro} one {# membro} other {# membros}} antes de excluir.",
+    "confirm": "Excluir função",
+    "cancel": "Cancelar",
+    "success": "{name} excluído.",
+    "error": "Não foi possível excluir a função.",
+    "system-locked": "As funções do sistema não podem ser excluídas."
+  },
+  "assign": {
+    "title": "Atribuir função",
+    "placeholder": "Escolha uma função",
+    "success": "Função atribuída."
+  },
+  "permissions": {
+    "tree-heading": "Permissões",
+    "users": {
+      "_self": "Usuários",
+      "view": "Ver usuários",
+      "invite": "Convidar usuários",
+      "update": "Editar usuários",
+      "delete": "Excluir usuários",
+      "manage-avatar": "Gerenciar avatares dos usuários",
+      "disable-chat": "Desativar chat para um usuário"
+    },
+    "meetings": {
+      "_self": "Reuniões",
+      "view": "Ver reuniões",
+      "force-end": "Encerrar reuniões à força",
+      "delete": "Excluir reuniões",
+      "kick": "Remover participantes"
+    },
+    "teams": {
+      "_self": "Equipes",
+      "view": "Ver equipes",
+      "create": "Criar equipes",
+      "update": "Atualizar equipes",
+      "delete": "Excluir equipes",
+      "manage-members": "Gerenciar membros da equipe",
+      "channels": {
+        "_self": "Canais",
+        "view": "Ver canais",
+        "create": "Criar canais",
+        "update": "Atualizar canais",
+        "delete": "Excluir canais"
+      }
+    },
+    "groups": {
+      "_self": "Grupos",
+      "view": "Ver grupos",
+      "create": "Criar grupos",
+      "update": "Atualizar grupos",
+      "delete": "Excluir grupos",
+      "manage-members": "Gerenciar membros do grupo"
+    },
+    "branding": {
+      "_self": "Identidade visual",
+      "view": "Ver identidade visual",
+      "update": "Atualizar identidade visual",
+      "manage-logo": "Gerenciar logotipo"
+    },
+    "configuration": {
+      "_self": "Configuração",
+      "view": "Ver configuração",
+      "update": "Atualizar configuração"
+    },
+    "analytics": {
+      "_self": "Análises",
+      "view": "Ver análises",
+      "view-deep": "Ver análises detalhadas"
+    },
+    "admin-accounts": {
+      "_self": "Contas de administrador",
+      "view": "Ver administradores",
+      "create": "Criar administradores",
+      "update": "Editar administradores",
+      "delete": "Excluir administradores",
+      "invite": "Convidar administradores"
+    },
+    "roles": {
+      "_self": "Funções de administrador",
+      "view": "Ver funções de administrador",
+      "create": "Criar funções de administrador",
+      "update": "Atualizar funções de administrador",
+      "delete": "Excluir funções de administrador",
+      "assign": "Atribuir funções de administrador"
+    },
+    "user-roles": {
+      "_self": "Funções de usuário",
+      "view": "Ver funções de usuário",
+      "create": "Criar funções de usuário",
+      "update": "Atualizar funções de usuário",
+      "delete": "Excluir funções de usuário",
+      "assign": "Atribuir funções de usuário"
+    }
+  }
+}

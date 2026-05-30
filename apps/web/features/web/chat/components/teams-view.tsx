@@ -18,8 +18,8 @@ export function TeamsView() {
         {isLoading ? (
           <p className="text-sm text-muted-foreground">{t('list.loading')}</p>
         ) : teams.length === 0 ? (
-          <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border bg-card/50 py-12 text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
+          <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed border-border bg-card/50 py-12 text-center">
+            <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-muted text-muted-foreground">
               <Users className="h-6 w-6" />
             </span>
             <div>
@@ -32,13 +32,13 @@ export function TeamsView() {
         ) : (
           <div className="space-y-4">
             {teams.map((team) => (
-              <section key={team.teamId} className="rounded-xl border border-border bg-card">
+              <section key={team.teamId} className="rounded-lg border border-border bg-card">
                 <header className="flex items-center gap-2.5 border-b border-border px-4 py-3">
                   <span className="flex h-7 w-7 items-center justify-center rounded-md bg-muted text-muted-foreground">
                     <Users className="h-3.5 w-3.5" />
                   </span>
                   <h2 className="flex-1 text-sm font-semibold tracking-tight">{team.teamName}</h2>
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                  <span className="rounded-md bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
                     {team.channels.length}
                   </span>
                 </header>
@@ -47,12 +47,12 @@ export function TeamsView() {
                     {t('teams.no-channels')}
                   </p>
                 ) : (
-                  <ul className="py-1">
+                  <ul className="space-y-0.5 px-1 py-1">
                     {team.channels.map((c) => (
                       <li key={c.id}>
                         <Link
                           href={`/chat/${c.id}`}
-                          className="flex items-center gap-2.5 px-4 py-2 transition-colors hover:bg-muted/40"
+                          className="flex items-center gap-2.5 rounded-md px-3 py-2 transition-colors hover:bg-muted/40"
                         >
                           <Hash className="h-4 w-4 shrink-0 text-muted-foreground" />
                           <span className="flex-1 truncate text-sm">{c.title}</span>

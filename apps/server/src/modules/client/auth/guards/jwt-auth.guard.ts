@@ -59,7 +59,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     }
 
     const req = context.switchToHttp().getRequest<{ url?: string }>();
-    const authUser = user as RequestUser;
+    const authUser = user as unknown as RequestUser;
 
     if (authUser.isGuest && !isAllowedGuestPath(req?.url)) {
       throw new UnauthorizedException({

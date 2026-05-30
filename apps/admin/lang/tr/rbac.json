@@ -1,0 +1,143 @@
+{
+  "eyebrow": "Sistem",
+  "title": {
+    "admin-roles": "Yönetici rolleri",
+    "user-roles": "Kullanıcı rolleri"
+  },
+  "subtitle": {
+    "admin-roles": "Her yöneticinin neler yapabileceğini kontrol edin.",
+    "user-roles": "Her kullanıcının uygulamada neler yapabileceğini kontrol edin."
+  },
+  "table": {
+    "name": "Rol",
+    "description": "Açıklama",
+    "members": "Üyeler",
+    "type": "Tür",
+    "actions": "Eylemler",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "system": "Sistem",
+    "empty": "Henüz rol yok."
+  },
+  "type": {
+    "all": "Tam erişim",
+    "custom": "Özel"
+  },
+  "create": {
+    "title": "Yeni rol",
+    "submit": "Rol oluştur",
+    "cancel": "İptal",
+    "success": "Rol oluşturuldu.",
+    "error": "Rol oluşturulamadı.",
+    "name-label": "Ad",
+    "name-placeholder": "ör. Destek",
+    "description-label": "Açıklama",
+    "description-placeholder": "Bu rol ne yapabilir?",
+    "type-label": "Erişim",
+    "type-all": "Tam erişim — mevcut ve gelecekteki tüm izinleri verir.",
+    "type-custom": "Özel — tam olarak ne yapabileceklerini seçin."
+  },
+  "edit": {
+    "title": "Rolü düzenle",
+    "submit": "Değişiklikleri kaydet",
+    "success": "Rol güncellendi.",
+    "error": "Rol kaydedilemedi.",
+    "system-locked": "Sistem rollerinin adı değiştirilemez ve erişim türleri sabittir."
+  },
+  "delete": {
+    "title": "Rolü sil",
+    "description": "Silmeden önce {count, plural, =0 {üye yok} one {# üye} other {# üye}} için yeniden atama yapın.",
+    "confirm": "Rolü sil",
+    "cancel": "İptal",
+    "success": "{name} silindi.",
+    "error": "Rol silinemedi.",
+    "system-locked": "Sistem rolleri silinemez."
+  },
+  "assign": {
+    "title": "Rol ata",
+    "placeholder": "Bir rol seçin",
+    "success": "Rol atandı."
+  },
+  "permissions": {
+    "tree-heading": "İzinler",
+    "users": {
+      "_self": "Kullanıcılar",
+      "view": "Kullanıcıları görüntüle",
+      "invite": "Kullanıcı davet et",
+      "update": "Kullanıcıları düzenle",
+      "delete": "Kullanıcıları sil",
+      "manage-avatar": "Kullanıcı avatarlarını yönet",
+      "disable-chat": "Bir kullanıcının sohbetini devre dışı bırak"
+    },
+    "meetings": {
+      "_self": "Toplantılar",
+      "view": "Toplantıları görüntüle",
+      "force-end": "Toplantıları zorla bitir",
+      "delete": "Toplantıları sil",
+      "kick": "Katılımcıları çıkar"
+    },
+    "teams": {
+      "_self": "Takımlar",
+      "view": "Takımları görüntüle",
+      "create": "Takım oluştur",
+      "update": "Takımları güncelle",
+      "delete": "Takımları sil",
+      "manage-members": "Takım üyelerini yönet",
+      "channels": {
+        "_self": "Kanallar",
+        "view": "Kanalları görüntüle",
+        "create": "Kanal oluştur",
+        "update": "Kanalları güncelle",
+        "delete": "Kanalları sil"
+      }
+    },
+    "groups": {
+      "_self": "Gruplar",
+      "view": "Grupları görüntüle",
+      "create": "Grup oluştur",
+      "update": "Grupları güncelle",
+      "delete": "Grupları sil",
+      "manage-members": "Grup üyelerini yönet"
+    },
+    "branding": {
+      "_self": "Marka",
+      "view": "Markayı görüntüle",
+      "update": "Markayı güncelle",
+      "manage-logo": "Logoyu yönet"
+    },
+    "configuration": {
+      "_self": "Yapılandırma",
+      "view": "Yapılandırmayı görüntüle",
+      "update": "Yapılandırmayı güncelle"
+    },
+    "analytics": {
+      "_self": "Analitik",
+      "view": "Analitiği görüntüle",
+      "view-deep": "Derin analitiği görüntüle"
+    },
+    "admin-accounts": {
+      "_self": "Yönetici hesapları",
+      "view": "Yöneticileri görüntüle",
+      "create": "Yönetici oluştur",
+      "update": "Yöneticileri düzenle",
+      "delete": "Yöneticileri sil",
+      "invite": "Yönetici davet et"
+    },
+    "roles": {
+      "_self": "Yönetici rolleri",
+      "view": "Yönetici rollerini görüntüle",
+      "create": "Yönetici rolleri oluştur",
+      "update": "Yönetici rollerini güncelle",
+      "delete": "Yönetici rollerini sil",
+      "assign": "Yönetici rolleri ata"
+    },
+    "user-roles": {
+      "_self": "Kullanıcı rolleri",
+      "view": "Kullanıcı rollerini görüntüle",
+      "create": "Kullanıcı rolleri oluştur",
+      "update": "Kullanıcı rollerini güncelle",
+      "delete": "Kullanıcı rollerini sil",
+      "assign": "Kullanıcı rolleri ata"
+    }
+  }
+}

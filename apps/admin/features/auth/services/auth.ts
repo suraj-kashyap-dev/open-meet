@@ -2,6 +2,7 @@ import type {
   AdminChangePasswordDto,
   AdminDto,
   AdminLoginResponseDto,
+  AdminMeResponseDto,
   AdminUpdateProfileDto,
 } from '@open-meet/types';
 
@@ -13,7 +14,7 @@ export const adminAuthApi = {
 
   logout: () => api.post<{ loggedOut: true }>('/admin/auth/logout'),
 
-  me: (signal?: AbortSignal) => api.get<AdminDto>('/admin/auth/me', { signal }),
+  me: (signal?: AbortSignal) => api.get<AdminMeResponseDto>('/admin/auth/me', { signal }),
 
   updateMe: (dto: AdminUpdateProfileDto) => api.patch<AdminDto>('/admin/auth/me', dto),
 

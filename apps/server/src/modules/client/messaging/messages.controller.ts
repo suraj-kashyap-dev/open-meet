@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
+import { RequireUserPermissions } from '../rbac/decorators/require-user-permissions.decorator';
 
 import { EditMessageBodyDto, ForwardMessageBodyDto, ReactionBodyDto } from './dto/messaging.dto';
 import { MessagesService } from './messages.service';
@@ -32,6 +33,7 @@ export class MessagesController {
   }
 
   @Post(':id/forward')
+  @RequireUserPermissions('chat.send')
   forward(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,
@@ -41,11 +43,13 @@ export class MessagesController {
   }
 
   @Post(':id/reactions')
+  @RequireUserPermissions('chat.react')
   react(@CurrentUser() user: RequestUser, @Param('id') id: string, @Body() body: ReactionBodyDto) {
     return this.reactions.add(id, user.id, body.emoji);
   }
 
   @Delete(':id/reactions/:emoji')
+  @RequireUserPermissions('chat.react')
   unreact(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,

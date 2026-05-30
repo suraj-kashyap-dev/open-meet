@@ -18,6 +18,8 @@
     "analytics": "アナリティクス",
     "settings": "設定",
     "administrators": "管理者",
+    "roles": "管理者ロール",
+    "user-roles": "ユーザーロール",
     "branding": "ブランディング",
     "configuration": "構成",
     "more": "その他"

@@ -76,6 +76,12 @@ export interface UserDto {
   createdAt: string;
 }
 
+export interface UserMeResponseDto {
+  user: UserDto;
+  role: import('./rbac').RoleSummaryDto | null;
+  grantedSet: string[];
+}
+
 export interface UpdateProfileDto {
   name?: string;
   timezone?: string;
@@ -89,7 +95,6 @@ export interface UpdateUserSettingsDto {
   appearance?: Partial<AppearanceSettingsDto>;
 }
 
-/** A peer-visible profile. Email is gated by the target's profileVisibility. */
 export interface PublicUserDto {
   id: string;
   name: string;
@@ -98,9 +103,7 @@ export interface PublicUserDto {
   timezone: string | null;
   language: string | null;
   email: string | null;
-  /** ISO timestamp when the account joined. Hidden for PRIVATE visibility. */
   joinedAt: string | null;
-  /** Effective visibility level the server applied to compute this DTO. */
   visibility: ProfileVisibility;
 }
 

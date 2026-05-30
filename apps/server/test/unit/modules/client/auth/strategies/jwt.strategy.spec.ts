@@ -19,6 +19,20 @@ describe('JwtStrategy', () => {
         name: 'Alice',
         isGuest: false,
         guestMeetingCode: null,
+        roleId: null,
+      });
+    });
+
+    it('should carry roleId through to the RequestUser when the payload includes it', () => {
+      expect(
+        strategy.validate({ sub: 'u1', email: 'a@x.com', name: 'Alice', roleId: 'urole_x' }),
+      ).toEqual({
+        id: 'u1',
+        email: 'a@x.com',
+        name: 'Alice',
+        isGuest: false,
+        guestMeetingCode: null,
+        roleId: 'urole_x',
       });
     });
 

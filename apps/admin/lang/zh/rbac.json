@@ -1,0 +1,143 @@
+{
+  "eyebrow": "系统",
+  "title": {
+    "admin-roles": "管理员角色",
+    "user-roles": "用户角色"
+  },
+  "subtitle": {
+    "admin-roles": "控制每位管理员可以执行的操作。",
+    "user-roles": "控制每位用户在应用中可以执行的操作。"
+  },
+  "table": {
+    "name": "角色",
+    "description": "描述",
+    "members": "成员",
+    "type": "类型",
+    "actions": "操作",
+    "edit": "编辑",
+    "delete": "删除",
+    "system": "系统",
+    "empty": "尚无角色。"
+  },
+  "type": {
+    "all": "完全访问权限",
+    "custom": "自定义"
+  },
+  "create": {
+    "title": "新建角色",
+    "submit": "创建角色",
+    "cancel": "取消",
+    "success": "已创建角色。",
+    "error": "无法创建角色。",
+    "name-label": "名称",
+    "name-placeholder": "例如:支持",
+    "description-label": "描述",
+    "description-placeholder": "此角色可以做什么?",
+    "type-label": "访问权限",
+    "type-all": "完全访问权限 — 授予所有现有和未来的权限。",
+    "type-custom": "自定义 — 精确选择允许执行的操作。"
+  },
+  "edit": {
+    "title": "编辑角色",
+    "submit": "保存更改",
+    "success": "已更新角色。",
+    "error": "无法保存角色。",
+    "system-locked": "系统角色无法重命名,也无法更改访问类型。"
+  },
+  "delete": {
+    "title": "删除角色",
+    "description": "删除前请重新分配 {count, plural, =0 {没有成员} one {# 位成员} other {# 位成员}}。",
+    "confirm": "删除角色",
+    "cancel": "取消",
+    "success": "已删除 {name}。",
+    "error": "无法删除角色。",
+    "system-locked": "系统角色无法删除。"
+  },
+  "assign": {
+    "title": "分配角色",
+    "placeholder": "选择一个角色",
+    "success": "已分配角色。"
+  },
+  "permissions": {
+    "tree-heading": "权限",
+    "users": {
+      "_self": "用户",
+      "view": "查看用户",
+      "invite": "邀请用户",
+      "update": "编辑用户",
+      "delete": "删除用户",
+      "manage-avatar": "管理用户头像",
+      "disable-chat": "禁用某用户的聊天"
+    },
+    "meetings": {
+      "_self": "会议",
+      "view": "查看会议",
+      "force-end": "强制结束会议",
+      "delete": "删除会议",
+      "kick": "移除参与者"
+    },
+    "teams": {
+      "_self": "团队",
+      "view": "查看团队",
+      "create": "创建团队",
+      "update": "更新团队",
+      "delete": "删除团队",
+      "manage-members": "管理团队成员",
+      "channels": {
+        "_self": "频道",
+        "view": "查看频道",
+        "create": "创建频道",
+        "update": "更新频道",
+        "delete": "删除频道"
+      }
+    },
+    "groups": {
+      "_self": "群组",
+      "view": "查看群组",
+      "create": "创建群组",
+      "update": "更新群组",
+      "delete": "删除群组",
+      "manage-members": "管理群组成员"
+    },
+    "branding": {
+      "_self": "品牌",
+      "view": "查看品牌",
+      "update": "更新品牌",
+      "manage-logo": "管理徽标"
+    },
+    "configuration": {
+      "_self": "配置",
+      "view": "查看配置",
+      "update": "更新配置"
+    },
+    "analytics": {
+      "_self": "分析",
+      "view": "查看分析",
+      "view-deep": "查看深度分析"
+    },
+    "admin-accounts": {
+      "_self": "管理员账户",
+      "view": "查看管理员",
+      "create": "创建管理员",
+      "update": "编辑管理员",
+      "delete": "删除管理员",
+      "invite": "邀请管理员"
+    },
+    "roles": {
+      "_self": "管理员角色",
+      "view": "查看管理员角色",
+      "create": "创建管理员角色",
+      "update": "更新管理员角色",
+      "delete": "删除管理员角色",
+      "assign": "分配管理员角色"
+    },
+    "user-roles": {
+      "_self": "用户角色",
+      "view": "查看用户角色",
+      "create": "创建用户角色",
+      "update": "更新用户角色",
+      "delete": "删除用户角色",
+      "assign": "分配用户角色"
+    }
+  }
+}

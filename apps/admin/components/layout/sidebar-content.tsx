@@ -11,8 +11,9 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { isRtl } from '@/i18n/routing';
 import { env } from '@/lib/env';
 import { useBranding } from '@/components/branding/provider';
+import { useCurrentAdminMe } from '@/features/auth/hooks/use-admin-auth';
 
-import { nav, isActive } from './nav-config';
+import { nav, isActive, type NavItem, type NavSection } from './nav-config';
 
 interface Props {
   onNavigate?: () => void;
@@ -24,6 +25,8 @@ export function SidebarContent({ onNavigate, collapsed = false }: Props) {
   const t = useTranslations('nav');
   const tooltipSide = isRtl(useLocale()) ? 'left' : 'right';
   const { appName, logoUrl } = useBranding();
+  const { data: me } = useCurrentAdminMe();
+  const visibleNav = filterNav(nav, me);
 
   return (
     <TooltipProvider delayDuration={150}>
@@ -66,7 +69,7 @@ export function SidebarContent({ onNavigate, collapsed = false }: Props) {
             collapsed ? 'space-y-2 px-2' : 'space-y-6 px-3',
           )}
         >
-          {nav.map((section, sectionIndex) => (
+          {visibleNav.map((section, sectionIndex) => (
             <div key={section.labelKey} className="space-y-1">
               {collapsed ? (
                 sectionIndex > 0 ? (
@@ -253,4 +256,36 @@ export function SidebarContent({ onNavigate, collapsed = false }: Props) {
       </div>
     </TooltipProvider>
   );
+}
+
+/**
+ * Filter sections + items + children based on the signed-in admin's grantedSet.
+ * - Items without `permission` are always visible.
+ * - `permissionType: 'ALL'` short-circuits to keep everything visible.
+ * - Sections that end up empty are dropped.
+ * - While `me` is loading, returns the full nav so we don't flicker.
+ */
+function filterNav(
+  sections: NavSection[],
+  me: ReturnType<typeof useCurrentAdminMe>['data'],
+): NavSection[] {
+  if (!me) return sections;
+  const bypass = me.role?.permissionType === 'ALL';
+  const granted = me.grantedSet;
+  const can = (key: string | undefined): boolean =>
+    !key || bypass || granted.includes(key);
+
+  return sections
+    .map((section) => {
+      const items = section.items
+        .map((item: NavItem) => {
+          if (!can(item.permission)) return null;
+          if (!item.children?.length) return item;
+          const children = item.children.filter((c) => can(c.permission));
+          return { ...item, children };
+        })
+        .filter((item): item is NavItem => item !== null);
+      return { ...section, items };
+    })
+    .filter((section) => section.items.length > 0);
 }

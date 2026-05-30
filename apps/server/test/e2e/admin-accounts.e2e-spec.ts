@@ -1,7 +1,6 @@
 import { createHash } from 'node:crypto';
 
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { AdminRole } from '@prisma/client';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { PrismaService } from '@/database/prisma.service';
@@ -12,13 +11,13 @@ const SUPER = {
   email: 'super@example.com',
   password: 'super-pass-1',
   name: 'Super',
-  role: AdminRole.SUPERADMIN,
+  roleRecordId: 'role_sys_admin',
 };
 const REGULAR = {
   email: 'regular@example.com',
   password: 'regular-pass-1',
   name: 'Reg',
-  role: AdminRole.ADMIN,
+  roleRecordId: 'role_sys_member',
 };
 
 const RAW_TOKEN = 'test-raw-invite-token-abc123';
@@ -47,7 +46,7 @@ describe('Admin accounts & invites (e2e)', () => {
       data: {
         email: 'invitee@example.com',
         name: 'Invitee',
-        role: AdminRole.ADMIN,
+        roleRecordId: 'role_sys_member',
         tokenHash: TOKEN_HASH,
         expiresAt: new Date(Date.now() + 60_000),
         ...overrides,
@@ -67,7 +66,8 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
       expect(res.body.data.email).toBe('direct@example.com');
-      expect(res.body.data.role).toBe('ADMIN');
+      // New admins default to the Member RBAC role.
+      expect(res.body.data.role?.id).toBe('role_sys_member');
 
       const list = await http(app).get('/api/admin/accounts').set('Cookie', cookie);
       expect(
@@ -81,18 +81,18 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(loginRes.status).toBe(200);
     });
 
-    it('should create a superadmin when role is SUPERADMIN', async () => {
+    it('should honor the requested roleId on create', async () => {
       const { cookie } = await loginAdmin(app, SUPER);
 
       const res = await http(app).post('/api/admin/accounts').set('Cookie', cookie).send({
         email: 'boss@example.com',
         name: 'Boss',
         password: 'boss-pass-1',
-        role: AdminRole.SUPERADMIN,
+        roleId: 'role_sys_admin',
       });
 
       expect(res.status).toBe(201);
-      expect(res.body.data.role).toBe('SUPERADMIN');
+      expect(res.body.data.role?.id).toBe('role_sys_admin');
     });
 
     it('should reject a regular admin with 403', async () => {
@@ -188,9 +188,11 @@ describe('Admin accounts & invites (e2e)', () => {
         .set('x-locale', 'ar')
         .send({ email: 'new@example.com', name: 'New Admin' });
 
+      // Restricted admins fail the PermissionsGuard with the localised
+      // permission-required message.
       expect(res.status).toBe(403);
       expect(res.body.error.code).toBe('FORBIDDEN');
-      expect(res.body.error.message).toBe('صلاحيات المسؤول الرئيسي مطلوبة لهذا الإجراء');
+      expect(res.body.error.message).toBe('ليس لديك الصلاحية لتنفيذ هذا الإجراء');
     });
 
     it('should conflict when inviting an email that already belongs to an admin', async () => {
@@ -214,7 +216,7 @@ describe('Admin accounts & invites (e2e)', () => {
 
       expect(res.status).toBe(200);
       expect(res.body.data.email).toBe('invitee@example.com');
-      expect(res.body.data.role).toBe('ADMIN');
+      expect(res.body.data.role?.id).toBe('role_sys_member');
     });
 
     it('should 404 an unknown token', async () => {

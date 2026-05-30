@@ -3,6 +3,7 @@ import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common
 import type { UserPresenceDto } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
+import { RequireUserPermissions } from '../rbac/decorators/require-user-permissions.decorator';
 
 import { ActivityService } from './activity.service';
 import { ChannelsService } from './channels.service';
@@ -124,6 +125,7 @@ export class ConversationsController {
   }
 
   @Post('conversations/:id/messages')
+  @RequireUserPermissions('chat.send')
   send(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,
@@ -146,6 +148,7 @@ export class ConversationsController {
   }
 
   @Post('conversations/:id/polls')
+  @RequireUserPermissions('chat.polls.create')
   createPoll(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,

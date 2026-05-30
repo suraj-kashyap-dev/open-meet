@@ -7,8 +7,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
-import { AdminRole } from '@open-meet/types';
-
 import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
@@ -28,14 +26,17 @@ import {
   SelectValue,
 } from '@open-meet/ui/select';
 import { useCreateAdminAccount } from '@/features/accounts/hooks/use-admin-accounts';
+import { useAdminRoles } from '@/features/rbac/hooks/use-admin-roles';
 import { ApiClientError } from '@/lib/api/client';
+
+const DEFAULT_ROLE_ID = 'role_sys_member';
 
 interface FormValues {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
-  role: AdminRole;
+  roleId: string;
 }
 
 interface Props {
@@ -46,6 +47,8 @@ interface Props {
 export function CreateAdminDialog({ open, onClose }: Props) {
   const t = useTranslations('accounts');
   const create = useCreateAdminAccount();
+  const rolesQuery = useAdminRoles();
+  const roles = rolesQuery.data?.items ?? [];
 
   const schema = useMemo(
     () =>
@@ -55,7 +58,7 @@ export function CreateAdminDialog({ open, onClose }: Props) {
           email: z.string().email(t('create-dialog.validation.invalid-email')).max(254),
           password: z.string().min(8, t('create-dialog.validation.password-min')).max(200),
           confirmPassword: z.string(),
-          role: z.enum([AdminRole.ADMIN, AdminRole.SUPERADMIN]),
+          roleId: z.string().min(1),
         })
         .refine((v) => v.password === v.confirmPassword, {
           message: t('create-dialog.validation.password-mismatch'),
@@ -71,7 +74,7 @@ export function CreateAdminDialog({ open, onClose }: Props) {
       email: '',
       password: '',
       confirmPassword: '',
-      role: AdminRole.ADMIN,
+      roleId: DEFAULT_ROLE_ID,
     },
   });
 
@@ -152,17 +155,18 @@ export function CreateAdminDialog({ open, onClose }: Props) {
           <div className="space-y-1.5">
             <Label htmlFor="create-role">{t('create-dialog.role')}</Label>
             <Select
-              value={form.watch('role')}
-              onValueChange={(v) => form.setValue('role', v as AdminRole)}
+              value={form.watch('roleId')}
+              onValueChange={(v) => form.setValue('roleId', v)}
             >
               <SelectTrigger id="create-role">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={AdminRole.ADMIN}>{t('create-dialog.role-admin')}</SelectItem>
-                <SelectItem value={AdminRole.SUPERADMIN}>
-                  {t('create-dialog.role-superadmin')}
-                </SelectItem>
+                {roles.map((role) => (
+                  <SelectItem key={role.id} value={role.id}>
+                    {role.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

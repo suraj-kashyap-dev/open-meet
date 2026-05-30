@@ -37,9 +37,17 @@ import { AdminBrandingController } from './branding/branding.controller';
 import { AdminConfigurationController } from './configuration/configuration.controller';
 import { AdminRepository } from './admin.repository';
 import { AdminBootstrapService } from './bootstrap.service';
+import { AdminRbacModule } from './rbac/rbac.module';
 
 @Module({
-  imports: [PassportModule, JwtModule.register({}), LiveKitModule, MailModule, AppConfigModule],
+  imports: [
+    PassportModule,
+    JwtModule.register({}),
+    LiveKitModule,
+    MailModule,
+    AppConfigModule,
+    AdminRbacModule,
+  ],
   controllers: [
     AdminAuthController,
     AdminAnalyticsController,

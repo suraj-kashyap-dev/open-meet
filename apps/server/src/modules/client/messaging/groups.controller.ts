@@ -11,6 +11,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
+import { RequireUserPermissions } from '../rbac/decorators/require-user-permissions.decorator';
 
 import {
   AddGroupMembersBodyDto,
@@ -26,6 +27,7 @@ export class GroupsController {
   constructor(private readonly groups: GroupsService) {}
 
   @Post()
+  @RequireUserPermissions('groups.create')
   create(@CurrentUser() user: RequestUser, @Body() body: CreateGroupBodyDto) {
     return this.groups.create(user.id, {
       title: body.title,
@@ -35,6 +37,7 @@ export class GroupsController {
   }
 
   @Patch(':id')
+  @RequireUserPermissions('groups.update')
   update(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,
@@ -44,6 +47,7 @@ export class GroupsController {
   }
 
   @Post(':id/members')
+  @RequireUserPermissions('groups.manage-members')
   addMembers(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,
@@ -53,6 +57,7 @@ export class GroupsController {
   }
 
   @Delete(':id/members/:userId')
+  @RequireUserPermissions('groups.manage-members')
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeMember(
     @CurrentUser() user: RequestUser,
@@ -63,6 +68,7 @@ export class GroupsController {
   }
 
   @Post(':id/members/:userId/role')
+  @RequireUserPermissions('groups.manage-members')
   updateMemberRole(
     @CurrentUser() user: RequestUser,
     @Param('id') id: string,
@@ -73,6 +79,7 @@ export class GroupsController {
   }
 
   @Delete(':id')
+  @RequireUserPermissions('groups.delete')
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(@CurrentUser() user: RequestUser, @Param('id') id: string): Promise<void> {
     await this.groups.delete(id, user.id);

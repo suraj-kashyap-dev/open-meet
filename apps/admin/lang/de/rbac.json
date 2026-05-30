@@ -1,0 +1,143 @@
+{
+  "eyebrow": "System",
+  "title": {
+    "admin-roles": "Admin-Rollen",
+    "user-roles": "Benutzerrollen"
+  },
+  "subtitle": {
+    "admin-roles": "Lege fest, was jeder Administrator tun darf.",
+    "user-roles": "Lege fest, was jeder Benutzer in der App tun darf."
+  },
+  "table": {
+    "name": "Rolle",
+    "description": "Beschreibung",
+    "members": "Mitglieder",
+    "type": "Typ",
+    "actions": "Aktionen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "system": "System",
+    "empty": "Noch keine Rollen."
+  },
+  "type": {
+    "all": "Vollzugriff",
+    "custom": "Benutzerdefiniert"
+  },
+  "create": {
+    "title": "Neue Rolle",
+    "submit": "Rolle erstellen",
+    "cancel": "Abbrechen",
+    "success": "Rolle erstellt.",
+    "error": "Rolle konnte nicht erstellt werden.",
+    "name-label": "Name",
+    "name-placeholder": "z. B. Support",
+    "description-label": "Beschreibung",
+    "description-placeholder": "Was darf diese Rolle?",
+    "type-label": "Zugriff",
+    "type-all": "Vollzugriff — gewährt alle aktuellen und zukünftigen Berechtigungen.",
+    "type-custom": "Benutzerdefiniert — wähle genau aus, was erlaubt ist."
+  },
+  "edit": {
+    "title": "Rolle bearbeiten",
+    "submit": "Änderungen speichern",
+    "success": "Rolle aktualisiert.",
+    "error": "Rolle konnte nicht gespeichert werden.",
+    "system-locked": "Systemrollen können nicht umbenannt werden, ihr Zugriffstyp ist fest."
+  },
+  "delete": {
+    "title": "Rolle löschen",
+    "description": "Weise {count, plural, =0 {keine Mitglieder} one {# Mitglied} other {# Mitglieder}} vor dem Löschen neu zu.",
+    "confirm": "Rolle löschen",
+    "cancel": "Abbrechen",
+    "success": "{name} gelöscht.",
+    "error": "Rolle konnte nicht gelöscht werden.",
+    "system-locked": "Systemrollen können nicht gelöscht werden."
+  },
+  "assign": {
+    "title": "Rolle zuweisen",
+    "placeholder": "Rolle auswählen",
+    "success": "Rolle zugewiesen."
+  },
+  "permissions": {
+    "tree-heading": "Berechtigungen",
+    "users": {
+      "_self": "Benutzer",
+      "view": "Benutzer ansehen",
+      "invite": "Benutzer einladen",
+      "update": "Benutzer bearbeiten",
+      "delete": "Benutzer löschen",
+      "manage-avatar": "Benutzeravatare verwalten",
+      "disable-chat": "Chat eines Benutzers deaktivieren"
+    },
+    "meetings": {
+      "_self": "Besprechungen",
+      "view": "Besprechungen ansehen",
+      "force-end": "Besprechungen erzwungen beenden",
+      "delete": "Besprechungen löschen",
+      "kick": "Teilnehmer entfernen"
+    },
+    "teams": {
+      "_self": "Teams",
+      "view": "Teams ansehen",
+      "create": "Teams erstellen",
+      "update": "Teams aktualisieren",
+      "delete": "Teams löschen",
+      "manage-members": "Teammitglieder verwalten",
+      "channels": {
+        "_self": "Kanäle",
+        "view": "Kanäle ansehen",
+        "create": "Kanäle erstellen",
+        "update": "Kanäle aktualisieren",
+        "delete": "Kanäle löschen"
+      }
+    },
+    "groups": {
+      "_self": "Gruppen",
+      "view": "Gruppen ansehen",
+      "create": "Gruppen erstellen",
+      "update": "Gruppen aktualisieren",
+      "delete": "Gruppen löschen",
+      "manage-members": "Gruppenmitglieder verwalten"
+    },
+    "branding": {
+      "_self": "Branding",
+      "view": "Branding ansehen",
+      "update": "Branding aktualisieren",
+      "manage-logo": "Logo verwalten"
+    },
+    "configuration": {
+      "_self": "Konfiguration",
+      "view": "Konfiguration ansehen",
+      "update": "Konfiguration aktualisieren"
+    },
+    "analytics": {
+      "_self": "Analysen",
+      "view": "Analysen ansehen",
+      "view-deep": "Detaillierte Analysen ansehen"
+    },
+    "admin-accounts": {
+      "_self": "Admin-Konten",
+      "view": "Admins ansehen",
+      "create": "Admins erstellen",
+      "update": "Admins bearbeiten",
+      "delete": "Admins löschen",
+      "invite": "Admins einladen"
+    },
+    "roles": {
+      "_self": "Admin-Rollen",
+      "view": "Admin-Rollen ansehen",
+      "create": "Admin-Rollen erstellen",
+      "update": "Admin-Rollen aktualisieren",
+      "delete": "Admin-Rollen löschen",
+      "assign": "Admin-Rollen zuweisen"
+    },
+    "user-roles": {
+      "_self": "Benutzerrollen",
+      "view": "Benutzerrollen ansehen",
+      "create": "Benutzerrollen erstellen",
+      "update": "Benutzerrollen aktualisieren",
+      "delete": "Benutzerrollen löschen",
+      "assign": "Benutzerrollen zuweisen"
+    }
+  }
+}

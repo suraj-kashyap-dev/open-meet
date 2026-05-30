@@ -1,0 +1,143 @@
+{
+  "eyebrow": "Sistema",
+  "title": {
+    "admin-roles": "Roles de administrador",
+    "user-roles": "Roles de usuario"
+  },
+  "subtitle": {
+    "admin-roles": "Controla lo que puede hacer cada administrador.",
+    "user-roles": "Controla lo que puede hacer cada usuario en la aplicación."
+  },
+  "table": {
+    "name": "Rol",
+    "description": "Descripción",
+    "members": "Miembros",
+    "type": "Tipo",
+    "actions": "Acciones",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "system": "Sistema",
+    "empty": "Aún no hay roles."
+  },
+  "type": {
+    "all": "Acceso completo",
+    "custom": "Personalizado"
+  },
+  "create": {
+    "title": "Nuevo rol",
+    "submit": "Crear rol",
+    "cancel": "Cancelar",
+    "success": "Rol creado.",
+    "error": "No se pudo crear el rol.",
+    "name-label": "Nombre",
+    "name-placeholder": "p. ej. Soporte",
+    "description-label": "Descripción",
+    "description-placeholder": "¿Qué puede hacer este rol?",
+    "type-label": "Acceso",
+    "type-all": "Acceso completo — concede todos los permisos actuales y futuros.",
+    "type-custom": "Personalizado — elige exactamente qué pueden hacer."
+  },
+  "edit": {
+    "title": "Editar rol",
+    "submit": "Guardar cambios",
+    "success": "Rol actualizado.",
+    "error": "No se pudo guardar el rol.",
+    "system-locked": "Los roles del sistema no pueden renombrarse ni cambiar su tipo de acceso."
+  },
+  "delete": {
+    "title": "Eliminar rol",
+    "description": "Reasigna {count, plural, =0 {ningún miembro} one {# miembro} other {# miembros}} antes de eliminar.",
+    "confirm": "Eliminar rol",
+    "cancel": "Cancelar",
+    "success": "{name} eliminado.",
+    "error": "No se pudo eliminar el rol.",
+    "system-locked": "Los roles del sistema no se pueden eliminar."
+  },
+  "assign": {
+    "title": "Asignar rol",
+    "placeholder": "Elige un rol",
+    "success": "Rol asignado."
+  },
+  "permissions": {
+    "tree-heading": "Permisos",
+    "users": {
+      "_self": "Usuarios",
+      "view": "Ver usuarios",
+      "invite": "Invitar usuarios",
+      "update": "Editar usuarios",
+      "delete": "Eliminar usuarios",
+      "manage-avatar": "Gestionar avatares de usuarios",
+      "disable-chat": "Desactivar el chat de un usuario"
+    },
+    "meetings": {
+      "_self": "Reuniones",
+      "view": "Ver reuniones",
+      "force-end": "Finalizar reuniones a la fuerza",
+      "delete": "Eliminar reuniones",
+      "kick": "Expulsar participantes"
+    },
+    "teams": {
+      "_self": "Equipos",
+      "view": "Ver equipos",
+      "create": "Crear equipos",
+      "update": "Actualizar equipos",
+      "delete": "Eliminar equipos",
+      "manage-members": "Gestionar miembros del equipo",
+      "channels": {
+        "_self": "Canales",
+        "view": "Ver canales",
+        "create": "Crear canales",
+        "update": "Actualizar canales",
+        "delete": "Eliminar canales"
+      }
+    },
+    "groups": {
+      "_self": "Grupos",
+      "view": "Ver grupos",
+      "create": "Crear grupos",
+      "update": "Actualizar grupos",
+      "delete": "Eliminar grupos",
+      "manage-members": "Gestionar miembros del grupo"
+    },
+    "branding": {
+      "_self": "Marca",
+      "view": "Ver marca",
+      "update": "Actualizar marca",
+      "manage-logo": "Gestionar logotipo"
+    },
+    "configuration": {
+      "_self": "Configuración",
+      "view": "Ver configuración",
+      "update": "Actualizar configuración"
+    },
+    "analytics": {
+      "_self": "Analíticas",
+      "view": "Ver analíticas",
+      "view-deep": "Ver analíticas avanzadas"
+    },
+    "admin-accounts": {
+      "_self": "Cuentas de administrador",
+      "view": "Ver administradores",
+      "create": "Crear administradores",
+      "update": "Editar administradores",
+      "delete": "Eliminar administradores",
+      "invite": "Invitar administradores"
+    },
+    "roles": {
+      "_self": "Roles de administrador",
+      "view": "Ver roles de administrador",
+      "create": "Crear roles de administrador",
+      "update": "Actualizar roles de administrador",
+      "delete": "Eliminar roles de administrador",
+      "assign": "Asignar roles de administrador"
+    },
+    "user-roles": {
+      "_self": "Roles de usuario",
+      "view": "Ver roles de usuario",
+      "create": "Crear roles de usuario",
+      "update": "Actualizar roles de usuario",
+      "delete": "Eliminar roles de usuario",
+      "assign": "Asignar roles de usuario"
+    }
+  }
+}

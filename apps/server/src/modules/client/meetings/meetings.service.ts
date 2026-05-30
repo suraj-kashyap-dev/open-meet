@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { MeetingStatus } from '@prisma/client';
+import { MeetingStatus, type Prisma } from '@prisma/client';
 import { randomBytes } from 'node:crypto';
 
 import type { ApiEnv } from '@open-meet/config';
@@ -228,7 +228,7 @@ export class MeetingsService {
           durationMin: input.durationMin,
           recurrence: input.recurrence,
           invitees: input.invitees,
-          settings: input.settings,
+          settings: input.settings as Prisma.InputJsonValue | undefined,
         });
       } catch (err) {
         if (this.isUniqueViolation(err)) {

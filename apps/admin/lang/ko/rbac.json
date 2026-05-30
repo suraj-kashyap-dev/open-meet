@@ -1,0 +1,143 @@
+{
+  "eyebrow": "시스템",
+  "title": {
+    "admin-roles": "관리자 역할",
+    "user-roles": "사용자 역할"
+  },
+  "subtitle": {
+    "admin-roles": "각 관리자가 무엇을 할 수 있는지 제어합니다.",
+    "user-roles": "각 사용자가 앱에서 무엇을 할 수 있는지 제어합니다."
+  },
+  "table": {
+    "name": "역할",
+    "description": "설명",
+    "members": "구성원",
+    "type": "유형",
+    "actions": "작업",
+    "edit": "편집",
+    "delete": "삭제",
+    "system": "시스템",
+    "empty": "아직 역할이 없습니다."
+  },
+  "type": {
+    "all": "전체 액세스",
+    "custom": "사용자 지정"
+  },
+  "create": {
+    "title": "새 역할",
+    "submit": "역할 만들기",
+    "cancel": "취소",
+    "success": "역할이 생성되었습니다.",
+    "error": "역할을 생성할 수 없습니다.",
+    "name-label": "이름",
+    "name-placeholder": "예: 지원",
+    "description-label": "설명",
+    "description-placeholder": "이 역할은 무엇을 할 수 있나요?",
+    "type-label": "액세스",
+    "type-all": "전체 액세스 — 현재 및 향후 모든 권한을 부여합니다.",
+    "type-custom": "사용자 지정 — 가능한 작업을 정확히 선택합니다."
+  },
+  "edit": {
+    "title": "역할 편집",
+    "submit": "변경 사항 저장",
+    "success": "역할이 업데이트되었습니다.",
+    "error": "역할을 저장할 수 없습니다.",
+    "system-locked": "시스템 역할은 이름을 바꾸거나 액세스 유형을 변경할 수 없습니다."
+  },
+  "delete": {
+    "title": "역할 삭제",
+    "description": "삭제하기 전에 {count, plural, =0 {구성원 없음} one {# 명의 구성원} other {# 명의 구성원}}을(를) 재할당하세요.",
+    "confirm": "역할 삭제",
+    "cancel": "취소",
+    "success": "{name}을(를) 삭제했습니다.",
+    "error": "역할을 삭제할 수 없습니다.",
+    "system-locked": "시스템 역할은 삭제할 수 없습니다."
+  },
+  "assign": {
+    "title": "역할 할당",
+    "placeholder": "역할 선택",
+    "success": "역할이 할당되었습니다."
+  },
+  "permissions": {
+    "tree-heading": "권한",
+    "users": {
+      "_self": "사용자",
+      "view": "사용자 보기",
+      "invite": "사용자 초대",
+      "update": "사용자 편집",
+      "delete": "사용자 삭제",
+      "manage-avatar": "사용자 아바타 관리",
+      "disable-chat": "사용자의 채팅 비활성화"
+    },
+    "meetings": {
+      "_self": "회의",
+      "view": "회의 보기",
+      "force-end": "회의 강제 종료",
+      "delete": "회의 삭제",
+      "kick": "참가자 내보내기"
+    },
+    "teams": {
+      "_self": "팀",
+      "view": "팀 보기",
+      "create": "팀 만들기",
+      "update": "팀 업데이트",
+      "delete": "팀 삭제",
+      "manage-members": "팀 구성원 관리",
+      "channels": {
+        "_self": "채널",
+        "view": "채널 보기",
+        "create": "채널 만들기",
+        "update": "채널 업데이트",
+        "delete": "채널 삭제"
+      }
+    },
+    "groups": {
+      "_self": "그룹",
+      "view": "그룹 보기",
+      "create": "그룹 만들기",
+      "update": "그룹 업데이트",
+      "delete": "그룹 삭제",
+      "manage-members": "그룹 구성원 관리"
+    },
+    "branding": {
+      "_self": "브랜딩",
+      "view": "브랜딩 보기",
+      "update": "브랜딩 업데이트",
+      "manage-logo": "로고 관리"
+    },
+    "configuration": {
+      "_self": "구성",
+      "view": "구성 보기",
+      "update": "구성 업데이트"
+    },
+    "analytics": {
+      "_self": "분석",
+      "view": "분석 보기",
+      "view-deep": "심층 분석 보기"
+    },
+    "admin-accounts": {
+      "_self": "관리자 계정",
+      "view": "관리자 보기",
+      "create": "관리자 만들기",
+      "update": "관리자 편집",
+      "delete": "관리자 삭제",
+      "invite": "관리자 초대"
+    },
+    "roles": {
+      "_self": "관리자 역할",
+      "view": "관리자 역할 보기",
+      "create": "관리자 역할 만들기",
+      "update": "관리자 역할 업데이트",
+      "delete": "관리자 역할 삭제",
+      "assign": "관리자 역할 할당"
+    },
+    "user-roles": {
+      "_self": "사용자 역할",
+      "view": "사용자 역할 보기",
+      "create": "사용자 역할 만들기",
+      "update": "사용자 역할 업데이트",
+      "delete": "사용자 역할 삭제",
+      "assign": "사용자 역할 할당"
+    }
+  }
+}

@@ -1,5 +1,4 @@
-import { AdminRole } from '@prisma/client';
-import { IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class UpdateAdminAccountDto {
   @IsOptional()
@@ -8,7 +7,9 @@ export class UpdateAdminAccountDto {
   @MaxLength(120)
   name?: string;
 
+  /** RBAC role id — reassigns the admin's role. */
   @IsOptional()
-  @IsEnum(AdminRole)
-  role?: AdminRole;
+  @IsString()
+  @MinLength(1)
+  roleId?: string;
 }

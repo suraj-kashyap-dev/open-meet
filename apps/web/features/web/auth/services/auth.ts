@@ -5,6 +5,7 @@ import type {
   UpdateProfileDto,
   UserDto,
   UserInviteLookupDto,
+  UserMeResponseDto,
 } from '@open-meet/types';
 
 import { api, ApiClientError } from '@/lib/api/client';
@@ -104,7 +105,7 @@ export const authApi = {
 
   refresh: () => api.post<{ refreshed: true }>('/auth/refresh'),
 
-  me: (signal?: AbortSignal) => api.get<UserDto>('/auth/me', { signal }),
+  me: (signal?: AbortSignal) => api.get<UserMeResponseDto>('/auth/me', { signal }),
 
   googleStatus: (signal?: AbortSignal) =>
     api.get<GoogleAuthStatusDto>('/auth/google/status', { signal }),

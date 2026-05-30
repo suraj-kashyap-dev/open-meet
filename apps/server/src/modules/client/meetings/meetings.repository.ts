@@ -50,7 +50,7 @@ export class MeetingsRepository {
     durationMin: number | null;
     recurrence: string | null;
     invitees: string[];
-    settings?: Prisma.JsonValue;
+    settings?: Prisma.InputJsonValue;
   }): Promise<Meeting & { invites: MeetingInvite[] }> {
     return this.prisma.meeting.create({
       data: {
@@ -61,7 +61,7 @@ export class MeetingsRepository {
         scheduledFor: data.scheduledFor,
         durationMin: data.durationMin,
         recurrence: data.recurrence,
-        settings: data.settings,
+        ...(data.settings !== undefined ? { settings: data.settings } : {}),
         participants: {
           create: {
             userId: data.hostId,
@@ -73,7 +73,7 @@ export class MeetingsRepository {
         },
       },
       include: { invites: true },
-    });
+    }) as Promise<Meeting & { invites: MeetingInvite[] }>;
   }
 
   markInviteSent(inviteId: string): Promise<MeetingInvite> {

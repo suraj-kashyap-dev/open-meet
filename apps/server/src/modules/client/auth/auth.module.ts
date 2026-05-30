@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { MessagingModule } from '../messaging/messaging.module';
+import { ClientRbacModule } from '../rbac/rbac.module';
 
 import { ChatPermissionsRepository } from '../messaging/chat-permissions.repository';
 
@@ -20,6 +21,7 @@ import { UsersController } from './users.controller';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({}),
     MessagingModule,
+    ClientRbacModule,
   ],
   controllers: [AuthController, UsersController],
   providers: [

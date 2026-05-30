@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "अंतिम शेष superadmin को पदावनत नहीं किया जा सकता",
   "cannot-delete-self": "आप अपना स्वयं का एडमिन खाता हटा नहीं सकते",
   "cannot-delete-last-superadmin": "अंतिम शेष superadmin को हटाया नहीं जा सकता",
-  "superadmin-required": "इस कार्रवाई के लिए superadmin अधिकार आवश्यक हैं"
+  "permission-required": "आपके पास यह कार्रवाई करने की अनुमति नहीं है",
+  "role-not-found": "भूमिका नहीं मिली",
+  "role-name-taken": "इस नाम की एक भूमिका पहले से मौजूद है",
+  "role-is-system": "सिस्टम भूमिकाओं को संशोधित या हटाया नहीं जा सकता",
+  "role-has-members": "इसे हटाने से पहले इस भूमिका के प्रत्येक एडमिन को पुनः नियुक्त करें",
+  "role-permission-invalid": "एक या अधिक अनुमति कुंजी मान्य नहीं हैं"
 }

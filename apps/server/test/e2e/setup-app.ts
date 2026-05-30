@@ -5,7 +5,6 @@ import { FastifyAdapter, type NestFastifyApplication } from '@nestjs/platform-fa
 import { Test } from '@nestjs/testing';
 import fastifyCookie from '@fastify/cookie';
 import fastifyMultipart from '@fastify/multipart';
-import { AdminRole } from '@prisma/client';
 import * as argon2 from 'argon2';
 import request from 'supertest';
 
@@ -97,12 +96,15 @@ export async function registerUser(
 }> {
   const prisma = app.get(PrismaService);
   const passwordHash = await argon2.hash(creds.password, { type: argon2.argon2id });
+  // Default to the Member user role so existing e2e suites still pass the
+  // ClientPermissionsGuard once Step 11 annotations land.
   const created = await prisma.user.create({
     data: {
       name: creds.name ?? 'Test User',
       email: creds.email.toLowerCase(),
       passwordHash,
       emailVerifiedAt: new Date(),
+      roleRecordId: 'urole_sys_member',
     },
   });
 
@@ -120,9 +122,10 @@ export async function registerUser(
   };
 }
 
+/** Seed an admin with an RBAC role. Defaults to the Administrator role (ALL bypass). */
 export async function seedAdmin(
   app: NestFastifyApplication,
-  creds: Creds & { role?: AdminRole },
+  creds: Creds & { roleRecordId?: string },
 ): Promise<void> {
   const prisma = app.get(PrismaService);
   const passwordHash = await argon2.hash(creds.password, { type: argon2.argon2id });
@@ -131,7 +134,7 @@ export async function seedAdmin(
       email: creds.email.toLowerCase(),
       name: creds.name ?? 'Admin',
       passwordHash,
-      role: creds.role ?? AdminRole.SUPERADMIN,
+      roleRecordId: creds.roleRecordId ?? 'role_sys_admin',
     },
   });
 }

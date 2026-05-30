@@ -18,6 +18,8 @@
     "analytics": "Analitik",
     "settings": "Pengaturan",
     "administrators": "Administrator",
+    "roles": "Peran admin",
+    "user-roles": "Peran pengguna",
     "branding": "Merek",
     "configuration": "Konfigurasi",
     "more": "Lainnya"

@@ -22,9 +22,12 @@ import type {
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
-import { SuperAdminGuard } from '../auth/guards/super-admin.guard';
 import { CurrentAdmin } from '../auth/decorators/current-admin.decorator';
 import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
+import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
+
+import { AssignRoleBodyDto } from '../rbac/dto/role.dto';
 
 import { AdminAccountsService } from './accounts.service';
 import { CreateAdminAccountDto } from './dto/create-account.dto';
@@ -33,34 +36,35 @@ import { UpdateAdminAccountDto } from './dto/update-account.dto';
 
 @ApiTags('admin-accounts')
 @Controller('admin/accounts')
-@UseGuards(AdminAuthGuard)
+@UseGuards(AdminAuthGuard, AdminPermissionsGuard)
 @Public()
 export class AdminAccountsController {
   constructor(private readonly accounts: AdminAccountsService) {}
 
   @Get()
+  @RequirePermissions('admin-accounts.view')
   @ApiOperation({ summary: 'List every admin account' })
   list(): Promise<AdminAccountListResponseDto> {
     return this.accounts.list();
   }
 
   @Post()
-  @UseGuards(SuperAdminGuard)
-  @ApiOperation({ summary: 'Create an admin account directly with a password (superadmin only)' })
+  @RequirePermissions('admin-accounts.create')
+  @ApiOperation({ summary: 'Create an admin account directly with a password' })
   create(@Body() dto: CreateAdminAccountDto): Promise<AdminAccountDto> {
     return this.accounts.create(dto);
   }
 
   @Get('invites')
-  @UseGuards(SuperAdminGuard)
-  @ApiOperation({ summary: 'List pending admin invites (superadmin only)' })
+  @RequirePermissions('admin-accounts.view')
+  @ApiOperation({ summary: 'List pending admin invites' })
   listInvites(): Promise<AdminInviteListResponseDto> {
     return this.accounts.listInvites();
   }
 
   @Post('invites')
-  @UseGuards(SuperAdminGuard)
-  @ApiOperation({ summary: 'Invite a new admin by email (superadmin only)' })
+  @RequirePermissions('admin-accounts.invite')
+  @ApiOperation({ summary: 'Invite a new admin by email' })
   createInvite(
     @CurrentAdmin() admin: AdminRequestUser,
     @Body() dto: CreateAdminInviteDto,
@@ -69,30 +73,37 @@ export class AdminAccountsController {
   }
 
   @Post('invites/:id/resend')
-  @UseGuards(SuperAdminGuard)
-  @ApiOperation({ summary: 'Re-send an invite email with a fresh link (superadmin only)' })
+  @RequirePermissions('admin-accounts.invite')
+  @ApiOperation({ summary: 'Re-send an invite email with a fresh link' })
   resendInvite(@Param('id') id: string): Promise<AdminInviteDto> {
     return this.accounts.resendInvite(id);
   }
 
   @Delete('invites/:id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(SuperAdminGuard)
-  @ApiOperation({ summary: 'Revoke a pending invite (superadmin only)' })
+  @RequirePermissions('admin-accounts.invite')
+  @ApiOperation({ summary: 'Revoke a pending invite' })
   revokeInvite(@Param('id') id: string): Promise<{ deleted: true }> {
     return this.accounts.revokeInvite(id);
   }
 
   @Patch(':id')
-  @UseGuards(SuperAdminGuard)
-  @ApiOperation({ summary: "Update an admin's name or role (superadmin only)" })
+  @RequirePermissions('admin-accounts.update')
+  @ApiOperation({ summary: "Update an admin's name or role" })
   update(@Param('id') id: string, @Body() dto: UpdateAdminAccountDto): Promise<AdminAccountDto> {
     return this.accounts.update(id, dto);
   }
 
+  @Patch(':id/role')
+  @RequirePermissions('admin-accounts.update', 'roles.assign')
+  @ApiOperation({ summary: 'Assign an RBAC role to an admin (re-login required to apply)' })
+  assignRole(@Param('id') id: string, @Body() dto: AssignRoleBodyDto): Promise<AdminAccountDto> {
+    return this.accounts.assignRole(id, dto.roleId);
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(SuperAdminGuard)
+  @RequirePermissions('admin-accounts.delete')
   @ApiOperation({ summary: 'Delete an admin (cannot delete self or last superadmin)' })
   remove(
     @Param('id') id: string,

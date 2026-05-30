@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import type { UserDto } from '@open-meet/types';
+import type { UserDto, UserMeResponseDto, UserPermissionKey } from '@open-meet/types';
 
 import { authApi } from '@/features/web/auth/services/auth';
 import { useChatStore } from '@/features/web/chat/stores';
@@ -14,7 +14,7 @@ const ME_KEY = ['auth', 'me'] as const;
 const GOOGLE_STATUS_KEY = ['auth', 'google-status'] as const;
 const CACHE_KEY = 'open-meet:user';
 
-function readCachedUser(): UserDto | null {
+function readCachedMe(): UserMeResponseDto | null {
   if (typeof window === 'undefined') {
     return null;
   }
@@ -26,26 +26,35 @@ function readCachedUser(): UserDto | null {
       return null;
     }
 
-    return JSON.parse(raw) as UserDto;
+    const parsed = JSON.parse(raw) as UserMeResponseDto | UserDto;
+    // Backward compat with the previous cached shape (raw UserDto).
+    if ('user' in parsed && 'grantedSet' in parsed) {
+      return parsed as UserMeResponseDto;
+    }
+    return { user: parsed as UserDto, role: null, grantedSet: [] };
   } catch {
     return null;
   }
 }
 
-function writeCachedUser(user: UserDto | null): void {
+function writeCachedMe(me: UserMeResponseDto | null): void {
   if (typeof window === 'undefined') {
     return;
   }
 
   try {
-    if (user) {
-      window.localStorage.setItem(CACHE_KEY, JSON.stringify(user));
+    if (me) {
+      window.localStorage.setItem(CACHE_KEY, JSON.stringify(me));
     } else {
       window.localStorage.removeItem(CACHE_KEY);
     }
   } catch {
     // Ignore storage failures (private mode, quota) — the cache is best-effort.
   }
+}
+
+function meFromUser(user: UserDto | null): UserMeResponseDto | null {
+  return user ? { user, role: null, grantedSet: [] } : null;
 }
 
 /**
@@ -57,13 +66,13 @@ function writeCachedUser(user: UserDto | null): void {
 export function useAuthBootstrap(): void {
   const qc = useQueryClient();
   useEffect(() => {
-    const cached = readCachedUser();
+    const cached = readCachedMe();
 
     if (!cached) {
       return;
     }
 
-    const current = qc.getQueryData<UserDto | null>(ME_KEY);
+    const current = qc.getQueryData<UserMeResponseDto | null>(ME_KEY);
 
     if (current === undefined) {
       qc.setQueryData(ME_KEY, cached);
@@ -71,28 +80,20 @@ export function useAuthBootstrap(): void {
   }, [qc]);
 }
 
-/**
- * Returns the authenticated user, or null if signed out, or undefined while
- * the very first /auth/me round-trip is in flight on a cold start.
- *
- * The query is intentionally NOT pre-populated from localStorage here —
- * doing so synchronously on the client breaks hydration because the server
- * has no access to localStorage. See `useAuthBootstrap` above which primes
- * the cache *after* hydration completes.
- */
-export function useCurrentUser() {
-  return useQuery<UserDto | null>({
+/** Identity + RBAC context (null when signed out, undefined on first cold load). */
+export function useCurrentUserMe() {
+  return useQuery<UserMeResponseDto | null>({
     queryKey: ME_KEY,
     queryFn: async ({ signal }) => {
       try {
-        const user = await authApi.me(signal);
+        const me = await authApi.me(signal);
 
-        writeCachedUser(user);
+        writeCachedMe(me);
 
-        return user;
+        return me;
       } catch (err) {
         if (err instanceof ApiClientError && err.statusCode === 401) {
-          writeCachedUser(null);
+          writeCachedMe(null);
 
           return null;
         }
@@ -103,6 +104,28 @@ export function useCurrentUser() {
     staleTime: 10_000,
     refetchOnWindowFocus: true,
   });
+}
+
+/**
+ * Backward-compatible identity hook — returns just the `UserDto`. Existing
+ * consumers (avatars, profile UI, guards) keep working unchanged. For RBAC
+ * checks, use {@link useCan} or {@link useCurrentUserMe} directly.
+ */
+export function useCurrentUser() {
+  const { data, ...rest } = useCurrentUserMe();
+  return { ...rest, data: data?.user ?? null };
+}
+
+/**
+ * Boolean check for the user RBAC catalog. `false` while loading or signed out,
+ * `true` for `permissionType: 'ALL'`, otherwise `grantedSet.includes(key)`.
+ * Per-resource checks (host-of-meeting, member-of-team) still run on the server.
+ */
+export function useCan(key: UserPermissionKey): boolean {
+  const { data } = useCurrentUserMe();
+  if (!data) return false;
+  if (data.role?.permissionType === 'ALL') return true;
+  return data.grantedSet.includes(key);
 }
 
 export function useGoogleAuthEnabled() {
@@ -122,8 +145,11 @@ export function useLogin(redirectTo: string = '/') {
   return useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      writeCachedUser(data.user);
-      qc.setQueryData(ME_KEY, data.user);
+      const me = meFromUser(data.user);
+      writeCachedMe(me);
+      qc.setQueryData(ME_KEY, me);
+      // Re-fetch /me so the role + grantedSet land before the next page render.
+      void qc.invalidateQueries({ queryKey: ME_KEY });
       router.replace(redirectTo);
     },
   });
@@ -147,8 +173,11 @@ export function useAcceptInvite(redirectTo: string = '/') {
   return useMutation({
     mutationFn: authApi.acceptInvite,
     onSuccess: (data) => {
-      writeCachedUser(data.user);
-      qc.setQueryData(ME_KEY, data.user);
+      const me = meFromUser(data.user);
+      writeCachedMe(me);
+      qc.setQueryData(ME_KEY, me);
+      // Re-fetch /me so the role + grantedSet land before the next page render.
+      void qc.invalidateQueries({ queryKey: ME_KEY });
       router.replace(redirectTo);
     },
   });
@@ -160,8 +189,13 @@ export function useUpdateProfile() {
   return useMutation({
     mutationFn: authApi.updateMe,
     onSuccess: (user) => {
-      writeCachedUser(user);
-      qc.setQueryData(ME_KEY, user);
+      // Profile mutations return a fresh UserDto; splice into cached MeResponse so
+      // role + grantedSet are preserved.
+      qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
+        const next = current ? { ...current, user } : meFromUser(user);
+        writeCachedMe(next);
+        return next;
+      });
     },
   });
 }
@@ -172,8 +206,13 @@ export function useUploadAvatar() {
   return useMutation({
     mutationFn: (file: File) => authApi.uploadAvatar(file),
     onSuccess: (user) => {
-      writeCachedUser(user);
-      qc.setQueryData(ME_KEY, user);
+      // Profile mutations return a fresh UserDto; splice into cached MeResponse so
+      // role + grantedSet are preserved.
+      qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
+        const next = current ? { ...current, user } : meFromUser(user);
+        writeCachedMe(next);
+        return next;
+      });
     },
   });
 }
@@ -184,8 +223,13 @@ export function useDeleteAvatar() {
   return useMutation({
     mutationFn: () => authApi.deleteAvatar(),
     onSuccess: (user) => {
-      writeCachedUser(user);
-      qc.setQueryData(ME_KEY, user);
+      // Profile mutations return a fresh UserDto; splice into cached MeResponse so
+      // role + grantedSet are preserved.
+      qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
+        const next = current ? { ...current, user } : meFromUser(user);
+        writeCachedMe(next);
+        return next;
+      });
     },
   });
 }
@@ -198,7 +242,7 @@ export function useChangePassword() {
   return useMutation({
     mutationFn: authApi.changePassword,
     onSuccess: () => {
-      writeCachedUser(null);
+      writeCachedMe(null);
       qc.setQueryData(ME_KEY, null);
       useChatStore.getState().reset();
       qc.clear();
@@ -215,7 +259,7 @@ export function useLogout() {
   return useMutation({
     mutationFn: authApi.logout,
     onSettled: () => {
-      writeCachedUser(null);
+      writeCachedMe(null);
       qc.setQueryData(ME_KEY, null);
       useChatStore.getState().reset();
       qc.clear();

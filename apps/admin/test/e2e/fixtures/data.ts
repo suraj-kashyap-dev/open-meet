@@ -9,13 +9,23 @@ import type {
   AdminInviteListResponseDto,
   AdminInviteLookupDto,
   AdminLoginResponseDto,
+  AdminMeResponseDto,
   AdminMeetingListResponseDto,
   AdminStatsOverviewDto,
   AdminTeamDetailDto,
   AdminTeamListResponseDto,
   AdminUserListResponseDto,
+  PermissionCatalogResponseDto,
+  RoleListResponseDto,
   UserInviteListResponseDto,
   WorkspaceConfigDto,
+} from '@open-meet/types';
+import {
+  ADMIN_PERMISSION_KEYS,
+  PERMISSION_TREE_ADMIN,
+  PERMISSION_TREE_USER,
+  USER_PERMISSION_KEYS,
+  buildCatalogTree,
 } from '@open-meet/types';
 
 function dailySeries(days: number): { date: string; count: number }[] {
@@ -42,6 +52,12 @@ export const currentAdmin: AdminDto = {
   avatar: null,
   createdAt: '2026-01-02T09:00:00.000Z',
   lastLoginAt: '2026-05-20T08:30:00.000Z',
+};
+
+export const currentAdminMe: AdminMeResponseDto = {
+  admin: currentAdmin,
+  role: { id: 'role_sys_admin', name: 'Administrator', permissionType: 'ALL' },
+  grantedSet: [],
 };
 
 export const loginResponse: AdminLoginResponseDto = { admin: currentAdmin };
@@ -266,4 +282,94 @@ export const userInvites: UserInviteListResponseDto = {
       createdAt: '2026-05-20T09:00:00.000Z',
     },
   ],
+};
+
+export const adminRoles: RoleListResponseDto = {
+  items: [
+    {
+      id: 'role_sys_admin',
+      name: 'Administrator',
+      description: 'Full access — grants every permission.',
+      permissionType: 'ALL',
+      permissions: [],
+      isSystem: true,
+      memberCount: 2,
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: '2026-01-01T00:00:00.000Z',
+    },
+    {
+      id: 'role_sys_member',
+      name: 'Member',
+      description: 'Read-only baseline access.',
+      permissionType: 'CUSTOM',
+      permissions: ['users.view', 'meetings.view', 'teams.view', 'groups.view', 'analytics.view'],
+      isSystem: true,
+      memberCount: 0,
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: '2026-01-01T00:00:00.000Z',
+    },
+    {
+      id: 'role_custom_analyst',
+      name: 'Analyst',
+      description: 'Read everything plus deep analytics.',
+      permissionType: 'CUSTOM',
+      permissions: ['users.view', 'meetings.view', 'analytics.view', 'analytics.view-deep'],
+      isSystem: false,
+      memberCount: 1,
+      createdAt: '2026-04-12T00:00:00.000Z',
+      updatedAt: '2026-04-12T00:00:00.000Z',
+    },
+  ],
+};
+
+export const permissionCatalog: PermissionCatalogResponseDto = {
+  tree: buildCatalogTree(PERMISSION_TREE_ADMIN, 'rbac.permissions'),
+  keys: [...ADMIN_PERMISSION_KEYS],
+};
+
+export const userRoles: RoleListResponseDto = {
+  items: [
+    {
+      id: 'urole_sys_member',
+      name: 'Member',
+      description: 'Standard active user.',
+      permissionType: 'CUSTOM',
+      permissions: [
+        'meetings.create',
+        'meetings.schedule',
+        'meetings.host',
+        'chat.send',
+        'chat.react',
+        'chat.upload',
+      ],
+      isSystem: true,
+      memberCount: 12,
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: '2026-01-01T00:00:00.000Z',
+    },
+    {
+      id: 'urole_custom_facilitator',
+      name: 'Facilitator',
+      description: 'Hosts and runs polls.',
+      permissionType: 'CUSTOM',
+      permissions: [
+        'meetings.create',
+        'meetings.schedule',
+        'meetings.host',
+        'chat.send',
+        'chat.react',
+        'chat.upload',
+        'chat.polls.create',
+      ],
+      isSystem: false,
+      memberCount: 3,
+      createdAt: '2026-04-12T00:00:00.000Z',
+      updatedAt: '2026-04-12T00:00:00.000Z',
+    },
+  ],
+};
+
+export const userPermissionCatalog: PermissionCatalogResponseDto = {
+  tree: buildCatalogTree(PERMISSION_TREE_USER, 'rbac.user-permissions'),
+  keys: [...USER_PERMISSION_KEYS],
 };

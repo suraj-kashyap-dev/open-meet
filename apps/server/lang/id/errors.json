@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "Tidak dapat menurunkan superadmin terakhir yang tersisa",
   "cannot-delete-self": "Anda tidak dapat menghapus akun admin Anda sendiri",
   "cannot-delete-last-superadmin": "Tidak dapat menghapus superadmin terakhir yang tersisa",
-  "superadmin-required": "Hak superadmin diperlukan untuk tindakan ini"
+  "permission-required": "Anda tidak memiliki izin untuk melakukan tindakan ini",
+  "role-not-found": "Peran tidak ditemukan",
+  "role-name-taken": "Peran dengan nama tersebut sudah ada",
+  "role-is-system": "Peran sistem tidak dapat diubah atau dihapus",
+  "role-has-members": "Tetapkan ulang setiap admin pada peran ini sebelum menghapusnya",
+  "role-permission-invalid": "Satu atau lebih kunci izin tidak valid"
 }

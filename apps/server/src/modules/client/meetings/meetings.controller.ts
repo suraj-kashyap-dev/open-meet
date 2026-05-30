@@ -25,6 +25,7 @@ import type {
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
 import { Public } from '../../../common/decorators/public.decorator';
+import { RequireUserPermissions } from '../rbac/decorators/require-user-permissions.decorator';
 import { CreateMeetingDto } from './dto/create-meeting.dto';
 import { CreateGuestSessionDto } from './dto/create-guest-session.dto';
 import { HistoryQueryDto } from './dto/history-query.dto';
@@ -38,6 +39,7 @@ export class MeetingsController {
   constructor(private readonly meetings: MeetingsService) {}
 
   @Post()
+  @RequireUserPermissions('meetings.create')
   @ApiOperation({ summary: 'Create a new meeting' })
   async create(
     @Body() dto: CreateMeetingDto,
@@ -47,6 +49,7 @@ export class MeetingsController {
   }
 
   @Post('schedule')
+  @RequireUserPermissions('meetings.schedule')
   @ApiOperation({ summary: 'Schedule a meeting for a future time' })
   async schedule(
     @Body() dto: ScheduleMeetingApiDto,

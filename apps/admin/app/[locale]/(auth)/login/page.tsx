@@ -17,14 +17,15 @@ export default async function AdminLoginPage({ params }: { params: Promise<{ loc
   const t = await getTranslations('auth');
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-muted/40 px-4 py-12">
+    <main className="relative flex min-h-screen items-center justify-center bg-muted/40 px-4 py-12">
+      <div className="absolute end-4 top-4">
+        <LanguageSwitcher />
+      </div>
+
       <div className="w-full max-w-sm">
-        <div className="mb-8 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 text-sm font-semibold tracking-tight">
-            <Logo className="h-7 w-7" />
-            <span>Open Meet</span>
-          </div>
-          <LanguageSwitcher />
+        <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
+          <Logo className="h-7 w-7" />
+          <span>Open Meet</span>
         </div>
 
         <div className="space-y-6 rounded-2xl border border-border bg-card p-7 shadow-sm">

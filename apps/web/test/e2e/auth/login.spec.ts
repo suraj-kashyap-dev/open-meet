@@ -25,6 +25,14 @@ test.describe('Web login page', () => {
     await expect(page).toHaveURL(/\/en\/login$/);
   });
 
+  test('should not treat /register as a meeting code', async ({ page }) => {
+    await mockWebApi(page, { me: null });
+    await page.goto('/en/register');
+
+    await expect(page).toHaveURL(/\/en\/register$/);
+    await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+  });
+
   test('should sign in and land on chat (the chat-first home)', async ({ page }) => {
     await mockWebApi(page, { me: null });
     await page.goto('/en/login');

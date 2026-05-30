@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "Son kalan süper yönetici düşürülemez",
   "cannot-delete-self": "Kendi yönetici hesabınızı silemezsiniz",
   "cannot-delete-last-superadmin": "Son kalan süper yönetici silinemez",
-  "superadmin-required": "Bu işlem için süper yönetici ayrıcalıkları gereklidir"
+  "permission-required": "Bu işlemi gerçekleştirme izniniz yok",
+  "role-not-found": "Rol bulunamadı",
+  "role-name-taken": "Bu adda bir rol zaten mevcut",
+  "role-is-system": "Sistem rolleri değiştirilemez veya silinemez",
+  "role-has-members": "Bu rolü silmeden önce roldeki her yöneticiyi yeniden atayın",
+  "role-permission-invalid": "Bir veya daha fazla izin anahtarı geçersiz"
 }

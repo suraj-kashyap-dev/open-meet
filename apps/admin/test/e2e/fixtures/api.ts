@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
 
-import type { AdminDto } from '@open-meet/types';
+import type { AdminMeResponseDto } from '@open-meet/types';
 
 import * as fixtures from './data';
 
@@ -13,7 +13,7 @@ function err(code: string, message: string, statusCode: number) {
 }
 
 export interface AdminApiMockOptions {
-  me?: AdminDto | null;
+  me?: AdminMeResponseDto | null;
   overview?: typeof fixtures.overview;
   users?: typeof fixtures.usersList;
   meetings?: typeof fixtures.meetingsList;
@@ -29,10 +29,14 @@ export interface AdminApiMockOptions {
   groups?: typeof fixtures.groupsList;
   groupDetail?: typeof fixtures.groupDetail;
   userInvites?: typeof fixtures.userInvites;
+  adminRoles?: typeof fixtures.adminRoles;
+  permissionCatalog?: typeof fixtures.permissionCatalog;
+  userRoles?: typeof fixtures.userRoles;
+  userPermissionCatalog?: typeof fixtures.userPermissionCatalog;
 }
 
 export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}): Promise<void> {
-  const me = options.me === undefined ? fixtures.currentAdmin : options.me;
+  const me = options.me === undefined ? fixtures.currentAdminMe : options.me;
   const overview = options.overview ?? fixtures.overview;
   const users = options.users ?? fixtures.usersList;
   const meetings = options.meetings ?? fixtures.meetingsList;
@@ -48,6 +52,10 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
   const groups = options.groups ?? fixtures.groupsList;
   const groupDetail = options.groupDetail ?? fixtures.groupDetail;
   const userInvites = options.userInvites ?? fixtures.userInvites;
+  const adminRoles = options.adminRoles ?? fixtures.adminRoles;
+  const permissionCatalog = options.permissionCatalog ?? fixtures.permissionCatalog;
+  const userRoles = options.userRoles ?? fixtures.userRoles;
+  const userPermissionCatalog = options.userPermissionCatalog ?? fixtures.userPermissionCatalog;
 
   await page.route('**/api/**', async (route) => {
     const request = route.request();
@@ -110,8 +118,34 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           return json(200, ok(teams));
         case '/admin/groups':
           return json(200, ok(groups));
+        case '/admin/roles':
+          return json(200, ok(adminRoles));
+        case '/admin/user-roles':
+          return json(200, ok(userRoles));
+        case '/admin/permissions/catalog':
+          return json(200, ok(permissionCatalog));
+        case '/admin/permissions/user-catalog':
+          return json(200, ok(userPermissionCatalog));
         default:
           break;
+      }
+
+      // Role detail: /admin/roles/:id
+      const roleMatch = /^\/admin\/roles\/([^/]+)$/.exec(path);
+      if (roleMatch) {
+        const found = adminRoles.items.find((r) => r.id === roleMatch[1]);
+        return found
+          ? json(200, ok(found))
+          : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
+      }
+
+      // User role detail: /admin/user-roles/:id
+      const userRoleMatch = /^\/admin\/user-roles\/([^/]+)$/.exec(path);
+      if (userRoleMatch) {
+        const found = userRoles.items.find((r) => r.id === userRoleMatch[1]);
+        return found
+          ? json(200, ok(found))
+          : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
       }
 
       // Team channels: /admin/teams/:id/channels

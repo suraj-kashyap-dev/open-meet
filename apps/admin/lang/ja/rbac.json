@@ -1,0 +1,143 @@
+{
+  "eyebrow": "システム",
+  "title": {
+    "admin-roles": "管理者ロール",
+    "user-roles": "ユーザーロール"
+  },
+  "subtitle": {
+    "admin-roles": "各管理者ができることを管理します。",
+    "user-roles": "各ユーザーがアプリ内でできることを管理します。"
+  },
+  "table": {
+    "name": "ロール",
+    "description": "説明",
+    "members": "メンバー",
+    "type": "タイプ",
+    "actions": "アクション",
+    "edit": "編集",
+    "delete": "削除",
+    "system": "システム",
+    "empty": "ロールはまだありません。"
+  },
+  "type": {
+    "all": "フルアクセス",
+    "custom": "カスタム"
+  },
+  "create": {
+    "title": "新しいロール",
+    "submit": "ロールを作成",
+    "cancel": "キャンセル",
+    "success": "ロールを作成しました。",
+    "error": "ロールを作成できませんでした。",
+    "name-label": "名前",
+    "name-placeholder": "例: サポート",
+    "description-label": "説明",
+    "description-placeholder": "このロールは何ができますか?",
+    "type-label": "アクセス",
+    "type-all": "フルアクセス — 現在および今後のすべての権限を付与します。",
+    "type-custom": "カスタム — できることを個別に選びます。"
+  },
+  "edit": {
+    "title": "ロールを編集",
+    "submit": "変更を保存",
+    "success": "ロールを更新しました。",
+    "error": "ロールを保存できませんでした。",
+    "system-locked": "システムロールは名前変更やアクセスタイプの変更はできません。"
+  },
+  "delete": {
+    "title": "ロールを削除",
+    "description": "削除前に {count, plural, =0 {メンバーなし} one {# 人のメンバー} other {# 人のメンバー}} を再割り当てしてください。",
+    "confirm": "ロールを削除",
+    "cancel": "キャンセル",
+    "success": "{name} を削除しました。",
+    "error": "ロールを削除できませんでした。",
+    "system-locked": "システムロールは削除できません。"
+  },
+  "assign": {
+    "title": "ロールを割り当て",
+    "placeholder": "ロールを選択",
+    "success": "ロールを割り当てました。"
+  },
+  "permissions": {
+    "tree-heading": "権限",
+    "users": {
+      "_self": "ユーザー",
+      "view": "ユーザーを表示",
+      "invite": "ユーザーを招待",
+      "update": "ユーザーを編集",
+      "delete": "ユーザーを削除",
+      "manage-avatar": "ユーザーのアバターを管理",
+      "disable-chat": "ユーザーのチャットを無効化"
+    },
+    "meetings": {
+      "_self": "ミーティング",
+      "view": "ミーティングを表示",
+      "force-end": "ミーティングを強制終了",
+      "delete": "ミーティングを削除",
+      "kick": "参加者を退出させる"
+    },
+    "teams": {
+      "_self": "チーム",
+      "view": "チームを表示",
+      "create": "チームを作成",
+      "update": "チームを更新",
+      "delete": "チームを削除",
+      "manage-members": "チームメンバーを管理",
+      "channels": {
+        "_self": "チャンネル",
+        "view": "チャンネルを表示",
+        "create": "チャンネルを作成",
+        "update": "チャンネルを更新",
+        "delete": "チャンネルを削除"
+      }
+    },
+    "groups": {
+      "_self": "グループ",
+      "view": "グループを表示",
+      "create": "グループを作成",
+      "update": "グループを更新",
+      "delete": "グループを削除",
+      "manage-members": "グループメンバーを管理"
+    },
+    "branding": {
+      "_self": "ブランディング",
+      "view": "ブランディングを表示",
+      "update": "ブランディングを更新",
+      "manage-logo": "ロゴを管理"
+    },
+    "configuration": {
+      "_self": "構成",
+      "view": "構成を表示",
+      "update": "構成を更新"
+    },
+    "analytics": {
+      "_self": "アナリティクス",
+      "view": "アナリティクスを表示",
+      "view-deep": "詳細なアナリティクスを表示"
+    },
+    "admin-accounts": {
+      "_self": "管理者アカウント",
+      "view": "管理者を表示",
+      "create": "管理者を作成",
+      "update": "管理者を編集",
+      "delete": "管理者を削除",
+      "invite": "管理者を招待"
+    },
+    "roles": {
+      "_self": "管理者ロール",
+      "view": "管理者ロールを表示",
+      "create": "管理者ロールを作成",
+      "update": "管理者ロールを更新",
+      "delete": "管理者ロールを削除",
+      "assign": "管理者ロールを割り当て"
+    },
+    "user-roles": {
+      "_self": "ユーザーロール",
+      "view": "ユーザーロールを表示",
+      "create": "ユーザーロールを作成",
+      "update": "ユーザーロールを更新",
+      "delete": "ユーザーロールを削除",
+      "assign": "ユーザーロールを割り当て"
+    }
+  }
+}

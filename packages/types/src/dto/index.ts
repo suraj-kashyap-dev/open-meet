@@ -5,5 +5,6 @@ export * from './chat';
 export * from './messaging';
 export * from './livekit';
 export * from './admin';
+export * from './rbac';
 export * from './recording';
 export * from './config';

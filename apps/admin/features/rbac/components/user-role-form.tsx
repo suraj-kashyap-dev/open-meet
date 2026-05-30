@@ -1,0 +1,159 @@
+'use client';
+
+import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+
+import type { CreateRoleDto, RoleDto, UpdateRoleDto } from '@open-meet/types';
+import { PermissionType } from '@open-meet/types';
+import { Button } from '@open-meet/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@open-meet/ui/card';
+import { Input } from '@open-meet/ui/input';
+import { Label } from '@open-meet/ui/label';
+import { Textarea } from '@open-meet/ui/textarea';
+
+import { PermissionTreePicker } from '@/features/rbac/components/permission-tree-picker';
+import { useUserPermissionCatalog } from '@/features/rbac/hooks/use-admin-user-roles';
+
+interface Props {
+  initial?: RoleDto;
+  /** Existing system roles render a read-only banner — name + type are immutable. */
+  systemLocked?: boolean;
+  submitLabel: string;
+  onSubmit: (input: CreateRoleDto | UpdateRoleDto) => Promise<void> | void;
+  isSubmitting?: boolean;
+}
+
+export function UserRoleForm({
+  initial,
+  systemLocked = false,
+  submitLabel,
+  onSubmit,
+  isSubmitting = false,
+}: Props) {
+  const t = useTranslations('rbac');
+  const catalog = useUserPermissionCatalog();
+  const [name, setName] = useState(initial?.name ?? '');
+  const [description, setDescription] = useState(initial?.description ?? '');
+  const [permissionType, setPermissionType] = useState<PermissionType>(
+    initial?.permissionType ?? PermissionType.CUSTOM,
+  );
+  const [permissions, setPermissions] = useState<string[]>(initial?.permissions ?? []);
+
+  const treeReady = catalog.data?.tree ?? [];
+  const isAll = permissionType === PermissionType.ALL;
+  const canSubmit = name.trim().length > 0 && !isSubmitting;
+
+  const handleSubmit = () => {
+    void onSubmit({
+      name: name.trim(),
+      description: description.trim() ? description.trim() : null,
+      permissionType,
+      permissions: isAll ? [] : permissions,
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      {systemLocked ? (
+        <div className="rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-sm text-warning">
+          {t('edit.system-locked')}
+        </div>
+      ) : null}
+
+      <Card className="rounded-2xl">
+        <CardHeader>
+          <CardTitle>{t('create.title')}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <div className="space-y-1.5">
+            <Label htmlFor="role-name">{t('create.name-label')}</Label>
+            <Input
+              id="role-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t('create.name-placeholder')}
+              maxLength={60}
+              disabled={systemLocked}
+              autoFocus
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="role-description">{t('create.description-label')}</Label>
+            <Textarea
+              id="role-description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder={t('create.description-placeholder')}
+              maxLength={280}
+              rows={3}
+            />
+          </div>
+
+          <fieldset className="space-y-2">
+            <legend className="text-sm font-medium">{t('create.type-label')}</legend>
+            <div className="space-y-1.5">
+              <label className="flex items-start gap-2 rounded-md border border-border p-3 hover:bg-muted/40">
+                <input
+                  type="radio"
+                  className="mt-1"
+                  checked={permissionType === PermissionType.ALL}
+                  disabled={systemLocked}
+                  onChange={() => setPermissionType(PermissionType.ALL)}
+                />
+                <div>
+                  <p className="text-sm font-medium">{t('type.all')}</p>
+                  <p className="text-xs text-muted-foreground">{t('create.type-all')}</p>
+                </div>
+              </label>
+              <label className="flex items-start gap-2 rounded-md border border-border p-3 hover:bg-muted/40">
+                <input
+                  type="radio"
+                  className="mt-1"
+                  checked={permissionType === PermissionType.CUSTOM}
+                  disabled={systemLocked}
+                  onChange={() => setPermissionType(PermissionType.CUSTOM)}
+                />
+                <div>
+                  <p className="text-sm font-medium">{t('type.custom')}</p>
+                  <p className="text-xs text-muted-foreground">{t('create.type-custom')}</p>
+                </div>
+              </label>
+            </div>
+          </fieldset>
+        </CardContent>
+      </Card>
+
+      <Card className="rounded-2xl">
+        <CardHeader>
+          <CardTitle>{t('permissions.tree-heading')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {catalog.isLoading ? (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Loading…
+            </div>
+          ) : isAll ? (
+            <p className="text-sm text-muted-foreground">{t('create.type-all')}</p>
+          ) : (
+            <PermissionTreePicker
+              tree={treeReady}
+              value={permissions}
+              onChange={setPermissions}
+              disabled={systemLocked && initial?.id === 'urole_sys_member'}
+            />
+          )}
+        </CardContent>
+      </Card>
+
+      <div className="flex justify-end">
+        <Button onClick={handleSubmit} disabled={!canSubmit} className="gap-2">
+          {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+          {submitLabel}
+        </Button>
+      </div>
+    </div>
+  );
+}

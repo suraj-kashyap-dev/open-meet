@@ -12,12 +12,13 @@ import type { UserInvite } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { createHash, randomBytes } from 'node:crypto';
 
-import type { UserDto, UserInviteLookupDto } from '@open-meet/types';
+import type { UserDto, UserInviteLookupDto, UserMeResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
 import { RedisService } from '../../../integrations/redis/redis.service';
 import { PresenceService } from '../messaging/presence.service';
+import { UserRoleRepository } from '../rbac/user-role.repository';
 import { AuthRepository } from './auth.repository';
 import { AvatarsService } from './avatars.service';
 import type { AcceptUserInviteDto } from './dto/accept-user-invite.dto';
@@ -32,6 +33,7 @@ interface AccessTokenPayload {
   name: string;
   guest?: boolean;
   guestMeetingCode?: string;
+  roleId?: string | null;
 }
 
 interface RefreshTokenPayload {
@@ -65,6 +67,7 @@ export class AuthService {
     private readonly redis: RedisService,
     private readonly userInvites: UserInviteRepository,
     private readonly presence: PresenceService,
+    private readonly roles: UserRoleRepository,
   ) {}
 
   /** Look up a pending user invite by its raw token (public, pre-account). */
@@ -101,7 +104,7 @@ export class AuthService {
     await this.userInvites.delete(invite.id);
 
     await this.presence.resetStatus(user.id);
-    const tokens = await this.issueTokens(user.id, user.email, user.name);
+    const tokens = await this.issueTokens(user.id, user.email, user.name, user.roleRecordId ?? null);
     return { user: this.avatars.toUserDto(user), tokens };
   }
 
@@ -135,7 +138,7 @@ export class AuthService {
     if (!valid) throw this.invalidCredentials();
 
     await this.presence.resetStatus(user.id);
-    const tokens = await this.issueTokens(user.id, user.email, user.name);
+    const tokens = await this.issueTokens(user.id, user.email, user.name, user.roleRecordId ?? null);
     return { user: this.avatars.toUserDto(user), tokens };
   }
 
@@ -167,7 +170,7 @@ export class AuthService {
     }
 
     await this.presence.resetStatus(user.id);
-    const tokens = await this.issueTokens(user.id, user.email, user.name);
+    const tokens = await this.issueTokens(user.id, user.email, user.name, user.roleRecordId ?? null);
     return { user: this.avatars.toUserDto(user), tokens };
   }
 
@@ -212,7 +215,7 @@ export class AuthService {
       });
     }
 
-    return this.issueTokens(user.id, user.email, user.name);
+    return this.issueTokens(user.id, user.email, user.name, user.roleRecordId ?? null);
   }
 
   async logout(refreshToken: string | undefined, userId?: string): Promise<void> {
@@ -257,6 +260,24 @@ export class AuthService {
       });
     }
     return this.avatars.toUserDto(user);
+  }
+
+  async getMe(id: string): Promise<UserMeResponseDto> {
+    const user = await this.users.findById(id);
+    if (!user) {
+      throw new UnauthorizedException({
+        code: ApiErrorCode.UNAUTHORIZED,
+        message: 'User not found',
+      });
+    }
+    const role = user.roleRecordId ? await this.roles.findById(user.roleRecordId) : null;
+    return {
+      user: this.avatars.toUserDto(user),
+      role: role
+        ? { id: role.id, name: role.name, permissionType: role.permissionType }
+        : null,
+      grantedSet: role ? [...role.permissions].sort() : [],
+    };
   }
 
   async issueGuestAccessToken(input: {
@@ -424,13 +445,18 @@ export class AuthService {
     return { changed: true };
   }
 
-  private async issueTokens(userId: string, email: string, name: string): Promise<IssuedTokens> {
+  private async issueTokens(
+    userId: string,
+    email: string,
+    name: string,
+    roleId: string | null = null,
+  ): Promise<IssuedTokens> {
     const accessTtl = this.config.getOrThrow<string>('JWT_ACCESS_EXPIRY');
     const refreshTtl = this.config.getOrThrow<string>('JWT_REFRESH_EXPIRY');
     const accessTtlMs = this.parseTtlMs(accessTtl);
     const refreshTtlMs = this.parseTtlMs(refreshTtl);
 
-    const accessPayload: AccessTokenPayload = { sub: userId, email, name };
+    const accessPayload: AccessTokenPayload = { sub: userId, email, name, roleId };
     const accessToken = await this.jwt.signAsync(accessPayload, {
       secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET'),
       expiresIn: Math.floor(accessTtlMs / 1000),

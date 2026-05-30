@@ -17,22 +17,26 @@ import { ApiErrorCode, type AdminBrandingDto } from '@open-meet/types';
 import { Public } from '../../../common/decorators/public.decorator';
 import { BrandingService } from '../../config/branding.service';
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
+import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 import { UpdateBrandingDto } from './dto/update-branding.dto';
 
 @ApiTags('admin-branding')
 @Controller('admin/branding')
-@UseGuards(AdminAuthGuard)
+@UseGuards(AdminAuthGuard, AdminPermissionsGuard)
 @Public()
 export class AdminBrandingController {
   constructor(private readonly branding: BrandingService) {}
 
   @Get()
+  @RequirePermissions('branding.view')
   @ApiOperation({ summary: 'Get the current application branding' })
   getBranding(): Promise<AdminBrandingDto> {
     return this.branding.getBranding();
   }
 
   @Patch()
+  @RequirePermissions('branding.update')
   @ApiOperation({ summary: 'Update branding (app name, accent color, group policy)' })
   async update(@Body() dto: UpdateBrandingDto): Promise<AdminBrandingDto> {
     if (dto.appName !== undefined) {
@@ -48,6 +52,7 @@ export class AdminBrandingController {
   }
 
   @Post('logo')
+  @RequirePermissions('branding.manage-logo')
   @ApiOperation({ summary: 'Upload a new application logo (multipart/form-data, field "file")' })
   async uploadLogo(@Req() req: FastifyRequest): Promise<AdminBrandingDto> {
     if (!req.isMultipart()) {
@@ -75,6 +80,7 @@ export class AdminBrandingController {
   }
 
   @Delete('logo')
+  @RequirePermissions('branding.manage-logo')
   @ApiOperation({ summary: 'Remove the application logo' })
   removeLogo(): Promise<AdminBrandingDto> {
     return this.branding.clearLogo();

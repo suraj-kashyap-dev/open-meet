@@ -1,15 +1,11 @@
-export const AdminRole = {
-  SUPERADMIN: 'SUPERADMIN',
-  ADMIN: 'ADMIN',
-} as const;
-
-export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole];
+import type { RoleSummaryDto } from './rbac';
 
 export interface AdminDto {
   id: string;
   email: string;
   name: string;
-  role: AdminRole;
+  /** Admin's RBAC role summary. Null only during the transition window for legacy data. */
+  role: RoleSummaryDto | null;
   avatar: string | null;
   createdAt: string;
   lastLoginAt: string | null;
@@ -32,6 +28,17 @@ export interface AdminLoginRequestDto {
 
 export interface AdminLoginResponseDto {
   admin: AdminDto;
+}
+
+/**
+ * Returned by `GET /api/admin/auth/me`. Bundles identity + RBAC context so the
+ * admin frontend can drive `useCan(...)` without a second round-trip.
+ */
+export interface AdminMeResponseDto {
+  admin: AdminDto;
+  /** Mirrors `admin.role` for convenience; `null` when the admin has no role assigned. */
+  role: RoleSummaryDto | null;
+  grantedSet: string[];
 }
 
 export interface DailyCountPoint {
@@ -191,7 +198,7 @@ export interface AdminAccountDto {
   id: string;
   email: string;
   name: string;
-  role: AdminRole;
+  role: RoleSummaryDto | null;
   avatar: string | null;
   createdAt: string;
   lastLoginAt: string | null;
@@ -201,17 +208,19 @@ export interface AdminAccountListResponseDto {
   items: AdminAccountDto[];
 }
 
-/** Fields a superadmin may change on an existing admin account. */
+/** Fields an authorised admin may change on an existing admin account. */
 export interface AdminUpdateAccountDto {
   name?: string;
-  role?: AdminRole;
+  /** Reassign the admin to a different RBAC role. */
+  roleId?: string;
 }
 
 export interface AdminCreateAccountDto {
   email: string;
   name: string;
   password: string;
-  role?: AdminRole;
+  /** RBAC role for the new admin. Defaults to the seeded Member role. */
+  roleId?: string;
 }
 
 export const AdminInviteStatus = {
@@ -225,7 +234,8 @@ export type AdminInviteStatus = (typeof AdminInviteStatus)[keyof typeof AdminInv
 export interface AdminCreateInviteDto {
   email: string;
   name: string;
-  role?: AdminRole;
+  /** RBAC role the invitee will receive when they accept. Defaults to Member. */
+  roleId?: string;
 }
 
 /** A pending admin invite, as shown in the console. */
@@ -233,7 +243,8 @@ export interface AdminInviteDto {
   id: string;
   email: string;
   name: string;
-  role: AdminRole;
+  /** RBAC role the invitee will receive on accept. */
+  role: RoleSummaryDto | null;
   status: AdminInviteStatus;
   invitedByName: string | null;
   expiresAt: string;
@@ -247,7 +258,7 @@ export interface AdminInviteListResponseDto {
 export interface AdminInviteLookupDto {
   email: string;
   name: string;
-  role: AdminRole;
+  role: RoleSummaryDto | null;
   expiresAt: string;
 }
 

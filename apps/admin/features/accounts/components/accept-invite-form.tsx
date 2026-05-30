@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
-import { Crown, Loader2, ShieldCheck } from 'lucide-react';
+import { Loader2, ShieldCheck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
@@ -96,8 +96,7 @@ export function AcceptInviteForm() {
         <div className="mt-0.5 flex items-center gap-2">
           <span className="font-medium">{invite.email}</span>
           <span className="inline-flex items-center gap-1 rounded-full border border-border bg-card px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-            {invite.role === 'SUPERADMIN' ? <Crown className="h-3 w-3" /> : null}
-            {invite.role === 'SUPERADMIN' ? t('roles.superadmin') : t('roles.admin')}
+            {invite.role?.name ?? ''}
           </span>
         </div>
       </div>

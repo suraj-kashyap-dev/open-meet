@@ -1,6 +1,6 @@
 'use client';
 
-import { Search, UserPlus, X } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -15,12 +15,12 @@ import {
   DialogTitle,
 } from '@open-meet/ui/dialog';
 import { Input } from '@open-meet/ui/input';
-import { UserAvatar } from '@open-meet/ui/user-avatar';
 
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
 import { useCreateGroup, useTeammates } from '../hooks/use-chat';
+import { GroupMemberPicker } from './group-member-picker';
 
 /**
  * "New group" composer modal. Title + optional description + multi-select
@@ -116,71 +116,27 @@ export function NewGroupDialog({
             <label className="mb-1 block text-xs font-medium text-muted-foreground">
               {t('group.members-label')}
             </label>
-            {pickedList.length > 0 ? (
-              <div className="mb-2 flex flex-wrap gap-1.5">
-                {pickedList.map((m) => (
-                  <span
-                    key={m.id}
-                    className="flex items-center gap-1.5 rounded-full bg-muted py-0.5 ps-1 pe-2 text-xs"
-                  >
-                    <UserAvatar user={m} size="xs" />
-                    <span>{m.name}</span>
-                    <button
-                      type="button"
-                      onClick={() => setPicked((prev) => {
-                        const next = { ...prev };
-                        delete next[m.id];
-                        return next;
-                      })}
-                      className="text-muted-foreground hover:text-foreground"
-                      aria-label="Remove"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            ) : null}
-            <div className="relative">
-              <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={t('group.members-placeholder')}
-                className="ps-9"
-              />
-            </div>
-            {search.trim().length > 0 ? (
-              <ul className="mt-1 max-h-48 overflow-y-auto rounded-md border border-border bg-popover p-1">
-                {suggestions.length === 0 ? (
-                  <li className="py-2 text-center text-xs text-muted-foreground">
-                    {t('group.no-teammates')}
-                  </li>
-                ) : (
-                  suggestions
-                    .filter((t) => !picked[t.id])
-                    .map((tm) => (
-                      <li key={tm.id}>
-                        <button
-                          type="button"
-                          disabled={tm.chatDisabled}
-                          onClick={() => {
-                            setPicked((p) => ({ ...p, [tm.id]: { id: tm.id, name: tm.name, avatar: tm.avatar } }));
-                            setSearch('');
-                          }}
-                          className="flex w-full items-center gap-3 rounded-md px-2 py-1.5 text-start text-sm hover:bg-muted disabled:opacity-50"
-                        >
-                          <UserAvatar user={tm} size="xs" />
-                          <span className="min-w-0 flex-1">
-                            <span className="block truncate font-medium">{tm.name}</span>
-                            <span className="block truncate text-xs text-muted-foreground">{tm.email}</span>
-                          </span>
-                        </button>
-                      </li>
-                    ))
-                )}
-              </ul>
-            ) : null}
+            <GroupMemberPicker
+              search={search}
+              onSearchChange={setSearch}
+              suggestions={suggestions}
+              picked={picked}
+              onPick={(member) => {
+                setPicked((prev) => ({ ...prev, [member.id]: member }));
+                setSearch('');
+              }}
+              onRemove={(userId) =>
+                setPicked((prev) => {
+                  const next = { ...prev };
+                  delete next[userId];
+                  return next;
+                })
+              }
+              placeholder={t('group.members-placeholder')}
+              emptyLabel={t('group.no-teammates')}
+              loadingLabel={t('list.loading')}
+              isLoading={teammates.isLoading}
+            />
           </div>
         </div>
 

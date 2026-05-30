@@ -1,0 +1,186 @@
+{
+  "eyebrow": "System",
+  "title": {
+    "admin-roles": "Admin roles",
+    "user-roles": "User roles"
+  },
+  "subtitle": {
+    "admin-roles": "Control what each administrator can do.",
+    "user-roles": "Control what each user can do in the app."
+  },
+  "table": {
+    "name": "Role",
+    "description": "Description",
+    "members": "Members",
+    "users": "Users",
+    "type": "Type",
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "system": "System",
+    "empty": "No roles yet."
+  },
+  "type": {
+    "all": "Full access",
+    "custom": "Custom"
+  },
+  "create": {
+    "title": "New role",
+    "submit": "Create role",
+    "cancel": "Cancel",
+    "success": "Role created.",
+    "error": "Could not create role.",
+    "name-label": "Name",
+    "name-placeholder": "e.g. Support",
+    "description-label": "Description",
+    "description-placeholder": "What can this role do?",
+    "type-label": "Access",
+    "type-all": "Full access — grants every current and future permission.",
+    "type-custom": "Custom — pick exactly what they can do."
+  },
+  "edit": {
+    "title": "Edit role",
+    "submit": "Save changes",
+    "success": "Role updated.",
+    "error": "Could not save role.",
+    "system-locked": "System roles cannot be renamed or have their access type changed."
+  },
+  "delete": {
+    "title": "Delete role",
+    "description": "Reassign {count, plural, =0 {no members} one {# member} other {# members}} before deleting.",
+    "confirm": "Delete role",
+    "cancel": "Cancel",
+    "success": "Deleted {name}.",
+    "error": "Could not delete role.",
+    "system-locked": "System roles cannot be deleted."
+  },
+  "assign": {
+    "title": "Assign role",
+    "placeholder": "Pick a role",
+    "success": "Role assigned."
+  },
+  "permissions": {
+    "tree-heading": "Permissions",
+    "users": {
+      "_self": "Users",
+      "view": "View users",
+      "invite": "Invite users",
+      "update": "Edit users",
+      "delete": "Delete users",
+      "manage-avatar": "Manage user avatars",
+      "disable-chat": "Disable chat for a user"
+    },
+    "meetings": {
+      "_self": "Meetings",
+      "view": "View meetings",
+      "force-end": "Force-end meetings",
+      "delete": "Delete meetings",
+      "kick": "Kick participants"
+    },
+    "teams": {
+      "_self": "Teams",
+      "view": "View teams",
+      "create": "Create teams",
+      "update": "Update teams",
+      "delete": "Delete teams",
+      "manage-members": "Manage team members",
+      "channels": {
+        "_self": "Channels",
+        "view": "View channels",
+        "create": "Create channels",
+        "update": "Update channels",
+        "delete": "Delete channels"
+      }
+    },
+    "groups": {
+      "_self": "Groups",
+      "view": "View groups",
+      "create": "Create groups",
+      "update": "Update groups",
+      "delete": "Delete groups",
+      "manage-members": "Manage group members"
+    },
+    "branding": {
+      "_self": "Branding",
+      "view": "View branding",
+      "update": "Update branding",
+      "manage-logo": "Manage logo"
+    },
+    "configuration": {
+      "_self": "Configuration",
+      "view": "View configuration",
+      "update": "Update configuration"
+    },
+    "analytics": {
+      "_self": "Analytics",
+      "view": "View analytics",
+      "view-deep": "View deep analytics"
+    },
+    "admin-accounts": {
+      "_self": "Admin accounts",
+      "view": "View admins",
+      "create": "Create admins",
+      "update": "Edit admins",
+      "delete": "Delete admins",
+      "invite": "Invite admins"
+    },
+    "roles": {
+      "_self": "Admin roles",
+      "view": "View admin roles",
+      "create": "Create admin roles",
+      "update": "Update admin roles",
+      "delete": "Delete admin roles",
+      "assign": "Assign admin roles"
+    },
+    "user-roles": {
+      "_self": "User roles",
+      "view": "View user roles",
+      "create": "Create user roles",
+      "update": "Update user roles",
+      "delete": "Delete user roles",
+      "assign": "Assign user roles"
+    }
+  },
+  "user-permissions": {
+    "meetings": {
+      "_self": "Meetings",
+      "create": "Create meetings",
+      "schedule": "Schedule meetings",
+      "host": "Host meetings"
+    },
+    "teams": {
+      "_self": "Teams",
+      "create": "Create teams",
+      "update": "Update teams",
+      "delete": "Delete teams",
+      "manage-members": "Manage team members",
+      "channels": {
+        "_self": "Channels",
+        "create": "Create channels",
+        "update": "Update channels",
+        "delete": "Delete channels"
+      }
+    },
+    "groups": {
+      "_self": "Groups",
+      "create": "Create groups",
+      "update": "Update groups",
+      "delete": "Delete groups",
+      "manage-members": "Manage group members"
+    },
+    "chat": {
+      "_self": "Chat",
+      "send": "Send messages",
+      "react": "React to messages",
+      "upload": "Upload attachments",
+      "polls": {
+        "_self": "Polls",
+        "create": "Create polls"
+      }
+    },
+    "presence": {
+      "_self": "Presence",
+      "change-status": "Change presence status"
+    }
+  }
+}

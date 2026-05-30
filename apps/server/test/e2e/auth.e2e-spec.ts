@@ -134,7 +134,10 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/me').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
-      expect(res.body.data.email).toBe('ada@example.com');
+      // /auth/me now returns { user, role, grantedSet } — see Step 13.
+      expect(res.body.data.user.email).toBe('ada@example.com');
+      expect(res.body.data.role?.id).toBe('urole_sys_member');
+      expect(Array.isArray(res.body.data.grantedSet)).toBe(true);
     });
 
     it('should return 401 without authentication', async () => {

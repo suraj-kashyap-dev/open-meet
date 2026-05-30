@@ -9,5 +9,10 @@
   "cannot-demote-last-superadmin": "Não é possível rebaixar o último superadmin restante",
   "cannot-delete-self": "Você não pode excluir sua própria conta de administrador",
   "cannot-delete-last-superadmin": "Não é possível excluir o último superadmin restante",
-  "superadmin-required": "Privilégios de superadmin são necessários para esta ação"
+  "permission-required": "Você não tem permissão para executar esta ação",
+  "role-not-found": "Função não encontrada",
+  "role-name-taken": "Já existe uma função com esse nome",
+  "role-is-system": "Funções do sistema não podem ser modificadas ou excluídas",
+  "role-has-members": "Reatribua cada administrador desta função antes de excluí-la",
+  "role-permission-invalid": "Uma ou mais chaves de permissão não são válidas"
 }

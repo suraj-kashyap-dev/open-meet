@@ -5,7 +5,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import type { ConfigService } from '@nestjs/config';
-import { AdminRole } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
@@ -15,6 +14,8 @@ import type { I18nService } from 'nestjs-i18n';
 import type { AdminRepository } from '@/modules/admin/admin.repository';
 import type { AdminInviteRepository } from '@/modules/admin/accounts/admin-invite.repository';
 import { AdminAccountsService } from '@/modules/admin/accounts/accounts.service';
+import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
 import type { MailService } from '@/integrations/mail/mail.service';
 import type { StorageService } from '@/storage/storage.service';
 
@@ -22,6 +23,20 @@ vi.mock('argon2', () => ({ hash: vi.fn().mockResolvedValue('HASH'), argon2id: 2 
 
 const futureDate = (): Date => new Date(Date.now() + 60_000);
 const pastDate = (): Date => new Date(Date.now() - 60_000);
+
+const memberRole = {
+  id: 'role_sys_member',
+  name: 'Member',
+  description: null,
+  permissionType: 'CUSTOM' as const,
+  permissions: [],
+  isSystem: true,
+  cacheRev: 1,
+  createdAt: new Date('2026-01-01T00:00:00Z'),
+  updatedAt: new Date('2026-01-01T00:00:00Z'),
+};
+
+const adminRole = { ...memberRole, id: 'role_sys_admin', name: 'Administrator', permissionType: 'ALL' as const };
 
 describe('AdminAccountsService', () => {
   let service: AdminAccountsService;
@@ -31,18 +46,21 @@ describe('AdminAccountsService', () => {
   let config: { getOrThrow: ReturnType<typeof vi.fn> };
   let i18n: { translate: ReturnType<typeof vi.fn> };
   let storage: { publicUrl: ReturnType<typeof vi.fn> };
+  let roles: Record<string, ReturnType<typeof vi.fn>>;
+  let resolver: { invalidate: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     admins = {
       list: vi.fn().mockResolvedValue([]),
       findByEmail: vi.fn().mockResolvedValue(null),
       findById: vi.fn().mockResolvedValue(null),
-      countByRole: vi.fn().mockResolvedValue(2),
+      countByRoleRecord: vi.fn().mockResolvedValue(2),
       create: vi.fn().mockImplementation((data) =>
         Promise.resolve({
           id: 'new',
           createdAt: new Date('2026-01-01T00:00:00Z'),
           lastLoginAt: null,
+          avatarKey: null,
           ...data,
         }),
       ),
@@ -51,10 +69,22 @@ describe('AdminAccountsService', () => {
           id,
           email: 'old@x.com',
           name: 'Old',
-          role: AdminRole.ADMIN,
+          roleRecordId: 'role_sys_member',
           createdAt: new Date('2026-01-01T00:00:00Z'),
           lastLoginAt: null,
+          avatarKey: null,
           ...data,
+        }),
+      ),
+      updateRoleRecord: vi.fn().mockImplementation((id, roleRecordId) =>
+        Promise.resolve({
+          id,
+          email: 'old@x.com',
+          name: 'Old',
+          roleRecordId,
+          createdAt: new Date('2026-01-01T00:00:00Z'),
+          lastLoginAt: null,
+          avatarKey: null,
         }),
       ),
       delete: vi.fn().mockResolvedValue({ id: 'target' }),
@@ -74,7 +104,7 @@ describe('AdminAccountsService', () => {
           id,
           email: 'inv@x.com',
           name: 'Invitee',
-          role: AdminRole.ADMIN,
+          roleRecordId: 'role_sys_member',
           tokenHash,
           expiresAt,
           createdAt: new Date(),
@@ -88,6 +118,12 @@ describe('AdminAccountsService', () => {
     config = { getOrThrow: vi.fn().mockReturnValue('http://localhost:3001') };
     i18n = { translate: vi.fn((key: string) => key) };
     storage = { publicUrl: vi.fn((key: string) => `https://cdn.example/${key}`) };
+    roles = {
+      findById: vi.fn().mockImplementation((id: string) =>
+        Promise.resolve(id === 'role_sys_admin' ? adminRole : id === 'role_sys_member' ? memberRole : null),
+      ),
+    };
+    resolver = { invalidate: vi.fn() };
 
     service = new AdminAccountsService(
       admins as unknown as AdminRepository,
@@ -96,6 +132,8 @@ describe('AdminAccountsService', () => {
       config as unknown as ConfigService<ApiEnv, true>,
       i18n as unknown as I18nService,
       storage as unknown as StorageService,
+      roles as unknown as AdminRoleRepository,
+      resolver as unknown as AdminPermissionResolver,
     );
   });
 
@@ -113,7 +151,7 @@ describe('AdminAccountsService', () => {
       ).rejects.toBeInstanceOf(ConflictException);
     });
 
-    it('should normalize the email, default the role to ADMIN, and persist a hashed password', async () => {
+    it('should normalize the email, default to the Member role, and persist a hashed password', async () => {
       const result = await service.create({
         email: '  A@X.COM ',
         name: '  Jo ',
@@ -124,22 +162,22 @@ describe('AdminAccountsService', () => {
         email: 'a@x.com',
         name: 'Jo',
         passwordHash: 'HASH',
-        role: AdminRole.ADMIN,
+        roleRecordId: 'role_sys_member',
       });
       expect(result.email).toBe('a@x.com');
-      expect(result.role).toBe(AdminRole.ADMIN);
+      expect(result.role?.id).toBe('role_sys_member');
     });
 
-    it('should honor the requested role and clear any pending invite for the email', async () => {
+    it('should honor the requested roleId and clear any pending invite for the email', async () => {
       await service.create({
         email: 'a@x.com',
         name: 'Jo',
         password: 'password1',
-        role: AdminRole.SUPERADMIN,
+        roleId: 'role_sys_admin',
       });
 
       expect(admins.create).toHaveBeenCalledWith(
-        expect.objectContaining({ role: AdminRole.SUPERADMIN }),
+        expect.objectContaining({ roleRecordId: 'role_sys_admin' }),
       );
       expect(invites.deleteByEmail).toHaveBeenCalledWith('a@x.com');
     });
@@ -159,14 +197,14 @@ describe('AdminAccountsService', () => {
       ).rejects.toBeInstanceOf(ConflictException);
     });
 
-    it('should normalize the email, default the role to ADMIN, and persist a hashed token', async () => {
+    it('should normalize the email, default to the Member role, and persist a hashed token', async () => {
       await service.createInvite('actor', { email: '  A@X.COM ', name: '  Jo ' });
 
       expect(invites.upsertByEmail).toHaveBeenCalledTimes(1);
       const arg = invites.upsertByEmail.mock.calls[0][0];
       expect(arg.email).toBe('a@x.com');
       expect(arg.name).toBe('Jo');
-      expect(arg.role).toBe(AdminRole.ADMIN);
+      expect(arg.roleRecordId).toBe('role_sys_member');
       expect(arg.invitedById).toBe('actor');
       expect(arg.tokenHash).toMatch(/^[a-f0-9]{64}$/);
       expect(arg.expiresAt).toBeInstanceOf(Date);
@@ -176,14 +214,13 @@ describe('AdminAccountsService', () => {
       await service.createInvite('actor', {
         email: 'a@x.com',
         name: 'Jo',
-        role: AdminRole.SUPERADMIN,
+        roleId: 'role_sys_admin',
       });
 
       expect(mail.send).toHaveBeenCalledTimes(1);
       const sent = mail.send.mock.calls[0][0];
       expect(sent.to).toBe('a@x.com');
       expect(sent.html).toContain('http://localhost:3001/accept-invite?token=');
-      // The stored hash must NOT be the raw token that is emailed.
       const stored = invites.upsertByEmail.mock.calls[0][0].tokenHash;
       expect(sent.html).not.toContain(stored);
     });
@@ -201,7 +238,7 @@ describe('AdminAccountsService', () => {
         id: 'inv1',
         email: 'a@x.com',
         name: 'A',
-        role: AdminRole.ADMIN,
+        roleRecordId: 'role_sys_member',
         expiresAt: pastDate(),
       });
       await expect(
@@ -214,7 +251,7 @@ describe('AdminAccountsService', () => {
         id: 'inv1',
         email: 'a@x.com',
         name: 'Ann',
-        role: AdminRole.SUPERADMIN,
+        roleRecordId: 'role_sys_admin',
         expiresAt: futureDate(),
       });
 
@@ -224,7 +261,7 @@ describe('AdminAccountsService', () => {
         email: 'a@x.com',
         name: 'Ann',
         passwordHash: 'HASH',
-        role: AdminRole.SUPERADMIN,
+        roleRecordId: 'role_sys_admin',
       });
       expect(invites.delete).toHaveBeenCalledWith('inv1');
       expect(result.email).toBe('a@x.com');
@@ -235,7 +272,7 @@ describe('AdminAccountsService', () => {
         id: 'inv1',
         email: 'a@x.com',
         name: 'Ann',
-        role: AdminRole.ADMIN,
+        roleRecordId: 'role_sys_member',
         expiresAt: futureDate(),
       });
       admins.findByEmail.mockResolvedValueOnce({ id: 'exists' });
@@ -258,11 +295,12 @@ describe('AdminAccountsService', () => {
         id: 'inv1',
         email: 'a@x.com',
         name: 'Ann',
-        role: AdminRole.ADMIN,
+        roleRecordId: 'role_sys_member',
         expiresAt: futureDate(),
       });
       const result = await service.lookupInvite('raw');
-      expect(result).toMatchObject({ email: 'a@x.com', name: 'Ann', role: AdminRole.ADMIN });
+      expect(result).toMatchObject({ email: 'a@x.com', name: 'Ann' });
+      expect(result.role?.id).toBe('role_sys_member');
     });
   });
 
@@ -284,21 +322,19 @@ describe('AdminAccountsService', () => {
       await expect(service.update('a1', { name: 'New' })).rejects.toBeInstanceOf(NotFoundException);
     });
 
-    it('should refuse to demote the last remaining superadmin', async () => {
-      admins.findById.mockResolvedValueOnce({ id: 'a1', role: AdminRole.SUPERADMIN });
-      admins.countByRole.mockResolvedValueOnce(1);
-      await expect(service.update('a1', { role: AdminRole.ADMIN })).rejects.toBeInstanceOf(
-        ForbiddenException,
-      );
+    it('should refuse to demote the last remaining Administrator-role admin', async () => {
+      admins.findById.mockResolvedValueOnce({ id: 'a1', roleRecordId: 'role_sys_admin' });
+      admins.countByRoleRecord.mockResolvedValueOnce(1);
+      await expect(
+        service.update('a1', { roleId: 'role_sys_member' }),
+      ).rejects.toBeInstanceOf(ForbiddenException);
     });
 
-    it('should update name and role for a valid change', async () => {
-      admins.findById.mockResolvedValueOnce({ id: 'a1', name: 'Old', role: AdminRole.ADMIN });
-      await service.update('a1', { name: '  New  ', role: AdminRole.SUPERADMIN });
-      expect(admins.update).toHaveBeenCalledWith('a1', {
-        name: 'New',
-        role: AdminRole.SUPERADMIN,
-      });
+    it('should update name and reassign role on a valid change', async () => {
+      admins.findById.mockResolvedValueOnce({ id: 'a1', name: 'Old', roleRecordId: 'role_sys_member' });
+      await service.update('a1', { name: '  New  ', roleId: 'role_sys_admin' });
+      expect(admins.update).toHaveBeenCalledWith('a1', { name: 'New' });
+      expect(admins.updateRoleRecord).toHaveBeenCalledWith('a1', 'role_sys_admin');
     });
   });
 
@@ -312,14 +348,14 @@ describe('AdminAccountsService', () => {
       await expect(service.delete('a1', 'a2')).rejects.toBeInstanceOf(NotFoundException);
     });
 
-    it('should refuse to remove the last remaining superadmin', async () => {
-      admins.findById.mockResolvedValueOnce({ id: 'a2', role: AdminRole.SUPERADMIN });
-      admins.countByRole.mockResolvedValueOnce(1);
+    it('should refuse to remove the last remaining Administrator-role admin', async () => {
+      admins.findById.mockResolvedValueOnce({ id: 'a2', roleRecordId: 'role_sys_admin' });
+      admins.countByRoleRecord.mockResolvedValueOnce(1);
       await expect(service.delete('a1', 'a2')).rejects.toBeInstanceOf(ForbiddenException);
     });
 
-    it('should remove a regular admin', async () => {
-      admins.findById.mockResolvedValueOnce({ id: 'a2', role: AdminRole.ADMIN });
+    it('should remove a regular Member admin', async () => {
+      admins.findById.mockResolvedValueOnce({ id: 'a2', roleRecordId: 'role_sys_member' });
       await expect(service.delete('a1', 'a2')).resolves.toEqual({ deleted: true });
       expect(admins.delete).toHaveBeenCalledWith('a2');
     });

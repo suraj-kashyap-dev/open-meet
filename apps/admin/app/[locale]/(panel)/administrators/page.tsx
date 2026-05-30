@@ -1,7 +1,7 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { Crown, Pencil, Plus, Trash2, UserPlus } from 'lucide-react';
+import { Pencil, Plus, Trash2, UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
@@ -9,7 +9,6 @@ import { toast } from 'sonner';
 import type { AdminAccountDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
-import { cn } from '@open-meet/ui/cn';
 import { DataTable } from '@open-meet/ui/data-table';
 import {
   Dialog,
@@ -28,7 +27,7 @@ import {
   useAdminAccounts,
   useDeleteAdminAccount,
 } from '@/features/accounts/hooks/use-admin-accounts';
-import { useCurrentAdmin } from '@/features/auth/hooks/use-admin-auth';
+import { useCan } from '@/features/auth/hooks/use-admin-auth';
 import { ApiClientError } from '@/lib/api/client';
 
 function formatJoined(iso: string): string {
@@ -57,7 +56,10 @@ const column = createColumnHelper<AdminAccountDto>();
 export default function AdministratorsPage() {
   const t = useTranslations('accounts');
   const { data, isLoading } = useAdminAccounts();
-  const { data: currentAdmin } = useCurrentAdmin();
+  const canCreate = useCan('admin-accounts.create');
+  const canUpdate = useCan('admin-accounts.update');
+  const canDelete = useCan('admin-accounts.delete');
+  const canInvite = useCan('admin-accounts.invite');
   const remove = useDeleteAdminAccount();
 
   const [inviteOpen, setInviteOpen] = useState(false);
@@ -65,7 +67,7 @@ export default function AdministratorsPage() {
   const [editing, setEditing] = useState<AdminAccountDto | null>(null);
   const [deleting, setDeleting] = useState<AdminAccountDto | null>(null);
 
-  const isSuperadmin = currentAdmin?.role === 'SUPERADMIN';
+  const hasRowActions = canUpdate || canDelete;
 
   const onConfirmDelete = async () => {
     if (!deleting) {
@@ -102,16 +104,8 @@ export default function AdministratorsPage() {
         cell: (info) => {
           const role = info.getValue();
           return (
-            <span
-              className={cn(
-                'inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider',
-                role === 'SUPERADMIN'
-                  ? 'border-warning/30 bg-warning/10 text-warning'
-                  : 'border-border bg-muted text-muted-foreground',
-              )}
-            >
-              {role === 'SUPERADMIN' ? <Crown className="h-3 w-3" /> : null}
-              {role === 'SUPERADMIN' ? t('roles.superadmin') : t('roles.admin')}
+            <span className="inline-flex items-center gap-1 rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+              {role?.name ?? '—'}
             </span>
           );
         },
@@ -134,7 +128,7 @@ export default function AdministratorsPage() {
       }),
     ];
 
-    if (!isSuperadmin) {
+    if (!hasRowActions) {
       return base;
     }
 
@@ -145,30 +139,34 @@ export default function AdministratorsPage() {
         header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
           <div className="flex items-center justify-end gap-1">
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => setEditing(row.original)}
-              aria-label={t('table.edit')}
-            >
-              <Pencil className="h-4 w-4" />
-              <span className="hidden sm:inline">{t('table.edit')}</span>
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              onClick={() => setDeleting(row.original)}
-              aria-label={t('table.delete')}
-              className="text-destructive hover:text-destructive"
-            >
-              <Trash2 className="h-4 w-4" />
-              <span className="hidden sm:inline">{t('table.delete')}</span>
-            </Button>
+            {canUpdate ? (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setEditing(row.original)}
+                aria-label={t('table.edit')}
+              >
+                <Pencil className="h-4 w-4" />
+                <span className="hidden sm:inline">{t('table.edit')}</span>
+              </Button>
+            ) : null}
+            {canDelete ? (
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setDeleting(row.original)}
+                aria-label={t('table.delete')}
+                className="text-destructive hover:text-destructive"
+              >
+                <Trash2 className="h-4 w-4" />
+                <span className="hidden sm:inline">{t('table.delete')}</span>
+              </Button>
+            ) : null}
           </div>
         ),
       }),
     ];
-  }, [isSuperadmin, t]);
+  }, [hasRowActions, canUpdate, canDelete, t]);
 
   const total = data?.items.length ?? 0;
 
@@ -181,16 +179,20 @@ export default function AdministratorsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
 
-          {isSuperadmin ? (
+          {canInvite || canCreate ? (
             <div className="flex flex-wrap items-center gap-2">
-              <Button variant="outline" onClick={() => setInviteOpen(true)} className="gap-2">
-                <Plus className="h-4 w-4" />
-                {t('invite-button')}
-              </Button>
-              <Button onClick={() => setCreateOpen(true)} className="gap-2">
-                <UserPlus className="h-4 w-4" />
-                {t('create-button')}
-              </Button>
+              {canInvite ? (
+                <Button variant="outline" onClick={() => setInviteOpen(true)} className="gap-2">
+                  <Plus className="h-4 w-4" />
+                  {t('invite-button')}
+                </Button>
+              ) : null}
+              {canCreate ? (
+                <Button onClick={() => setCreateOpen(true)} className="gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  {t('create-button')}
+                </Button>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -206,7 +208,7 @@ export default function AdministratorsPage() {
         />
       </section>
 
-      {isSuperadmin ? (
+      {canInvite ? (
         <section className="space-y-4">
           <div className="space-y-0.5">
             <h2 className="text-base font-semibold tracking-tight">{t('pending.heading')}</h2>

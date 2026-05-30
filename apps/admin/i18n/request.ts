@@ -18,6 +18,7 @@ const NAMESPACES = [
   'analytics',
   'meetings',
   'profile',
+  'rbac',
 ] as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {

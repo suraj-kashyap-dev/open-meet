@@ -29,6 +29,8 @@ import { Public } from '../../../common/decorators/public.decorator';
 import { CurrentAdmin } from '../auth/decorators/current-admin.decorator';
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
 import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
+import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 import { AdminListUsersQueryDto } from './dto/list-users-query.dto';
 import { CreateUserInviteBodyDto } from './dto/create-user-invite.dto';
 import { AdminUpdateUserBodyDto } from './dto/update-user.dto';
@@ -37,7 +39,7 @@ import { AdminUsersService } from './users.service';
 
 @ApiTags('admin-users')
 @Controller('admin/users')
-@UseGuards(AdminAuthGuard)
+@UseGuards(AdminAuthGuard, AdminPermissionsGuard)
 @Public()
 export class AdminUsersController {
   constructor(
@@ -46,18 +48,21 @@ export class AdminUsersController {
   ) {}
 
   @Get()
+  @RequirePermissions('users.view')
   @ApiOperation({ summary: 'Paginated list of users with optional search' })
   list(@Query() query: AdminListUsersQueryDto): Promise<AdminUserListResponseDto> {
     return this.users.list(query);
   }
 
   @Get('invites')
+  @RequirePermissions('users.invite')
   @ApiOperation({ summary: 'List pending user invites' })
   listInvites(): Promise<UserInviteListResponseDto> {
     return this.userInvites.list();
   }
 
   @Post('invite')
+  @RequirePermissions('users.invite')
   @ApiOperation({ summary: 'Invite a new user by email' })
   invite(
     @CurrentAdmin() admin: AdminRequestUser,
@@ -67,6 +72,7 @@ export class AdminUsersController {
   }
 
   @Post('invites/:id/resend')
+  @RequirePermissions('users.invite')
   @ApiOperation({ summary: 'Re-send a user invite with a fresh link' })
   resendInvite(@Param('id') id: string): Promise<UserInviteDto> {
     return this.userInvites.resend(id);
@@ -74,18 +80,21 @@ export class AdminUsersController {
 
   @Delete('invites/:id')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('users.invite')
   @ApiOperation({ summary: 'Revoke a pending user invite' })
   revokeInvite(@Param('id') id: string): Promise<{ deleted: true }> {
     return this.userInvites.revoke(id);
   }
 
   @Get(':id')
+  @RequirePermissions('users.view')
   @ApiOperation({ summary: 'Get a single user by id' })
   getOne(@Param('id') id: string): Promise<AdminUserDto> {
     return this.users.getById(id);
   }
 
   @Patch(':id')
+  @RequirePermissions('users.update')
   @ApiOperation({ summary: 'Update a user' })
   update(@Param('id') id: string, @Body() dto: AdminUpdateUserBodyDto): Promise<AdminUserDto> {
     return this.users.update(id, dto);
@@ -93,12 +102,14 @@ export class AdminUsersController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('users.delete')
   @ApiOperation({ summary: 'Delete a user' })
   remove(@Param('id') id: string): Promise<{ deleted: true }> {
     return this.users.delete(id);
   }
 
   @Post(':id/avatar')
+  @RequirePermissions('users.manage-avatar')
   @ApiOperation({ summary: "Upload (or replace) a user's profile image" })
   async uploadAvatar(@Param('id') id: string, @Req() req: FastifyRequest): Promise<AdminUserDto> {
     if (!req.isMultipart()) {
@@ -124,6 +135,7 @@ export class AdminUsersController {
 
   @Delete(':id/avatar')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('users.manage-avatar')
   @ApiOperation({ summary: "Remove a user's avatar" })
   removeAvatar(@Param('id') id: string): Promise<AdminUserDto> {
     return this.users.removeAvatar(id);

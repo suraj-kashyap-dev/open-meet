@@ -1,0 +1,143 @@
+{
+  "eyebrow": "Sistema",
+  "title": {
+    "admin-roles": "Ruoli amministratore",
+    "user-roles": "Ruoli utente"
+  },
+  "subtitle": {
+    "admin-roles": "Controlla cosa può fare ogni amministratore.",
+    "user-roles": "Controlla cosa può fare ogni utente nell'app."
+  },
+  "table": {
+    "name": "Ruolo",
+    "description": "Descrizione",
+    "members": "Membri",
+    "type": "Tipo",
+    "actions": "Azioni",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "system": "Sistema",
+    "empty": "Nessun ruolo ancora."
+  },
+  "type": {
+    "all": "Accesso completo",
+    "custom": "Personalizzato"
+  },
+  "create": {
+    "title": "Nuovo ruolo",
+    "submit": "Crea ruolo",
+    "cancel": "Annulla",
+    "success": "Ruolo creato.",
+    "error": "Impossibile creare il ruolo.",
+    "name-label": "Nome",
+    "name-placeholder": "es. Supporto",
+    "description-label": "Descrizione",
+    "description-placeholder": "Cosa può fare questo ruolo?",
+    "type-label": "Accesso",
+    "type-all": "Accesso completo — concede ogni autorizzazione attuale e futura.",
+    "type-custom": "Personalizzato — scegli esattamente cosa può fare."
+  },
+  "edit": {
+    "title": "Modifica ruolo",
+    "submit": "Salva modifiche",
+    "success": "Ruolo aggiornato.",
+    "error": "Impossibile salvare il ruolo.",
+    "system-locked": "I ruoli di sistema non possono essere rinominati né cambiare tipo di accesso."
+  },
+  "delete": {
+    "title": "Elimina ruolo",
+    "description": "Riassegna {count, plural, =0 {nessun membro} one {# membro} other {# membri}} prima di eliminare.",
+    "confirm": "Elimina ruolo",
+    "cancel": "Annulla",
+    "success": "{name} eliminato.",
+    "error": "Impossibile eliminare il ruolo.",
+    "system-locked": "I ruoli di sistema non possono essere eliminati."
+  },
+  "assign": {
+    "title": "Assegna ruolo",
+    "placeholder": "Scegli un ruolo",
+    "success": "Ruolo assegnato."
+  },
+  "permissions": {
+    "tree-heading": "Autorizzazioni",
+    "users": {
+      "_self": "Utenti",
+      "view": "Visualizza utenti",
+      "invite": "Invita utenti",
+      "update": "Modifica utenti",
+      "delete": "Elimina utenti",
+      "manage-avatar": "Gestisci avatar utenti",
+      "disable-chat": "Disattiva la chat per un utente"
+    },
+    "meetings": {
+      "_self": "Riunioni",
+      "view": "Visualizza riunioni",
+      "force-end": "Termina forzatamente le riunioni",
+      "delete": "Elimina riunioni",
+      "kick": "Espelli partecipanti"
+    },
+    "teams": {
+      "_self": "Team",
+      "view": "Visualizza team",
+      "create": "Crea team",
+      "update": "Aggiorna team",
+      "delete": "Elimina team",
+      "manage-members": "Gestisci membri del team",
+      "channels": {
+        "_self": "Canali",
+        "view": "Visualizza canali",
+        "create": "Crea canali",
+        "update": "Aggiorna canali",
+        "delete": "Elimina canali"
+      }
+    },
+    "groups": {
+      "_self": "Gruppi",
+      "view": "Visualizza gruppi",
+      "create": "Crea gruppi",
+      "update": "Aggiorna gruppi",
+      "delete": "Elimina gruppi",
+      "manage-members": "Gestisci membri del gruppo"
+    },
+    "branding": {
+      "_self": "Branding",
+      "view": "Visualizza branding",
+      "update": "Aggiorna branding",
+      "manage-logo": "Gestisci logo"
+    },
+    "configuration": {
+      "_self": "Configurazione",
+      "view": "Visualizza configurazione",
+      "update": "Aggiorna configurazione"
+    },
+    "analytics": {
+      "_self": "Analisi",
+      "view": "Visualizza analisi",
+      "view-deep": "Visualizza analisi approfondite"
+    },
+    "admin-accounts": {
+      "_self": "Account amministratori",
+      "view": "Visualizza amministratori",
+      "create": "Crea amministratori",
+      "update": "Modifica amministratori",
+      "delete": "Elimina amministratori",
+      "invite": "Invita amministratori"
+    },
+    "roles": {
+      "_self": "Ruoli amministratore",
+      "view": "Visualizza ruoli amministratore",
+      "create": "Crea ruoli amministratore",
+      "update": "Aggiorna ruoli amministratore",
+      "delete": "Elimina ruoli amministratore",
+      "assign": "Assegna ruoli amministratore"
+    },
+    "user-roles": {
+      "_self": "Ruoli utente",
+      "view": "Visualizza ruoli utente",
+      "create": "Crea ruoli utente",
+      "update": "Aggiorna ruoli utente",
+      "delete": "Elimina ruoli utente",
+      "assign": "Assegna ruoli utente"
+    }
+  }
+}

@@ -21,17 +21,20 @@ import type {
 import { Public } from '../../../common/decorators/public.decorator';
 
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
+import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 import { AdminListMeetingsQueryDto } from './dto/list-meetings-query.dto';
 import { AdminMeetingsService } from './meetings.service';
 
 @ApiTags('admin-meetings')
 @Controller('admin/meetings')
-@UseGuards(AdminAuthGuard)
+@UseGuards(AdminAuthGuard, AdminPermissionsGuard)
 @Public()
 export class AdminMeetingsController {
   constructor(private readonly meetings: AdminMeetingsService) {}
 
   @Get()
+  @RequirePermissions('meetings.view')
   @ApiOperation({ summary: 'Paginated list of meetings with optional search + status filter' })
   list(@Query() query: AdminListMeetingsQueryDto): Promise<AdminMeetingListResponseDto> {
     return this.meetings.list(query);
@@ -39,12 +42,14 @@ export class AdminMeetingsController {
 
   @Post('end-all-active')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('meetings.force-end')
   @ApiOperation({ summary: 'Force-end every meeting currently in ACTIVE state' })
   bulkEnd(): Promise<AdminBulkEndResponseDto> {
     return this.meetings.bulkEndActive();
   }
 
   @Get(':id')
+  @RequirePermissions('meetings.view')
   @ApiOperation({ summary: 'Single meeting with full participant list' })
   getOne(@Param('id') id: string): Promise<AdminMeetingDetailDto> {
     return this.meetings.getById(id);
@@ -52,6 +57,7 @@ export class AdminMeetingsController {
 
   @Post(':id/end')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('meetings.force-end')
   @ApiOperation({ summary: 'Force-end a single meeting and close its LiveKit room' })
   forceEnd(@Param('id') id: string): Promise<AdminMeetingDto> {
     return this.meetings.forceEnd(id);
@@ -59,6 +65,7 @@ export class AdminMeetingsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('meetings.delete')
   @ApiOperation({ summary: 'Hard-delete a meeting and cascade chat/participants' })
   remove(@Param('id') id: string): Promise<{ deleted: true }> {
     return this.meetings.delete(id);
@@ -66,6 +73,7 @@ export class AdminMeetingsController {
 
   @Post(':id/participants/:userId/kick')
   @HttpCode(HttpStatus.OK)
+  @RequirePermissions('meetings.kick')
   @ApiOperation({ summary: 'Remove a single participant from a live LiveKit room' })
   kick(@Param('id') id: string, @Param('userId') userId: string): Promise<{ kicked: true }> {
     return this.meetings.kickParticipant(id, userId);

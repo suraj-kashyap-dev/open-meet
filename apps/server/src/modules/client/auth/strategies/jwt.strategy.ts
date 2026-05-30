@@ -15,6 +15,7 @@ interface JwtPayload {
   name: string;
   guest?: boolean;
   guestMeetingCode?: string;
+  roleId?: string | null;
 }
 
 const ACCESS_COOKIE = 'access_token';
@@ -50,6 +51,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       name: payload.name,
       isGuest: payload.guest === true,
       guestMeetingCode: payload.guestMeetingCode ?? null,
+      roleId: payload.roleId ?? null,
     };
   }
 }

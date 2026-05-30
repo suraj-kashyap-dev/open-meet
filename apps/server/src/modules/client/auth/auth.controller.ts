@@ -27,6 +27,7 @@ import {
   GoogleAuthStatusDto,
   UserDto,
   type UserInviteLookupDto,
+  type UserMeResponseDto,
 } from '@open-meet/types';
 
 import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
@@ -203,9 +204,9 @@ export class AuthController {
   }
 
   @Get('me')
-  @ApiOperation({ summary: 'Return the currently authenticated user' })
-  async me(@CurrentUser() user: RequestUser): Promise<UserDto> {
-    return this.auth.getUserDtoById(user.id);
+  @ApiOperation({ summary: 'Return the currently authenticated user + RBAC context' })
+  async me(@CurrentUser() user: RequestUser): Promise<UserMeResponseDto> {
+    return this.auth.getMe(user.id);
   }
 
   @Patch('me')

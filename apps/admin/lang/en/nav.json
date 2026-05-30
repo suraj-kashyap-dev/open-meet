@@ -18,6 +18,8 @@
     "analytics": "Analytics",
     "settings": "Settings",
     "administrators": "Administrators",
+    "roles": "Admin roles",
+    "user-roles": "User roles",
     "branding": "Branding",
     "configuration": "Configuration",
     "more": "More"
