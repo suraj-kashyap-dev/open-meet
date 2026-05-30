@@ -5,21 +5,68 @@ import { Loader2, UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@open-meet/ui/select';
+import { Textarea } from '@open-meet/ui/textarea';
 
 import { useAcceptInvite, useInviteLookup } from '@/features/web/auth/hooks/use-auth';
 import { Link } from '@/i18n/navigation';
+import { type Locale, locales } from '@/i18n/routing';
 import { ApiClientError } from '@/lib/api/client';
+
+const LANGUAGE_NAMES: Record<Locale, string> = {
+  en: 'English',
+  ar: 'العربية',
+  es: 'Español',
+  zh: '中文',
+  ru: 'Русский',
+  tr: 'Türkçe',
+  hi: 'हिन्दी',
+  pt: 'Português',
+  fr: 'Français',
+  de: 'Deutsch',
+  ja: '日本語',
+  ko: '한국어',
+  id: 'Bahasa Indonesia',
+  it: 'Italiano',
+  bn: 'বাংলা',
+};
+
+const LANGUAGES = locales.map((value) => ({ value, label: LANGUAGE_NAMES[value] }));
+
+const TIMEZONES = [
+  'UTC',
+  'America/New_York',
+  'America/Chicago',
+  'America/Denver',
+  'America/Los_Angeles',
+  'Europe/London',
+  'Europe/Berlin',
+  'Europe/Paris',
+  'Asia/Kolkata',
+  'Asia/Singapore',
+  'Asia/Tokyo',
+  'Australia/Sydney',
+];
 
 interface FormValues {
   password: string;
   confirm: string;
+  timezone: string;
+  language: string;
+  bio: string;
 }
 
 export function AcceptInviteForm() {
@@ -35,6 +82,9 @@ export function AcceptInviteForm() {
         .object({
           password: z.string().min(8, t('validation.password-min')),
           confirm: z.string(),
+          timezone: z.string().min(1).max(64),
+          language: z.string().min(1).max(8),
+          bio: z.string().trim().max(500, t('accept-invite.bio-too-long')),
         })
         .refine((v) => v.password === v.confirm, {
           path: ['confirm'],
@@ -46,15 +96,22 @@ export function AcceptInviteForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { password: '', confirm: '' },
+    defaultValues: { password: '', confirm: '', timezone: 'UTC', language: 'en', bio: '' },
   });
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await accept.mutateAsync({ token, password: values.password });
+      await accept.mutateAsync({
+        token,
+        password: values.password,
+        timezone: values.timezone,
+        language: values.language,
+        bio: values.bio.trim() || null,
+      });
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('validation.generic'));
     }
@@ -114,6 +171,63 @@ export function AcceptInviteForm() {
           {errors.confirm ? (
             <p className="text-xs text-destructive">{errors.confirm.message}</p>
           ) : null}
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-1.5">
+            <Label>{t('accept-invite.timezone')}</Label>
+            <Controller
+              control={control}
+              name="timezone"
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t('accept-invite.timezone-placeholder')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TIMEZONES.map((tz) => (
+                      <SelectItem key={tz} value={tz}>
+                        {tz}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>{t('accept-invite.language')}</Label>
+            <Controller
+              control={control}
+              name="language"
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t('accept-invite.language-placeholder')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LANGUAGES.map((l) => (
+                      <SelectItem key={l.value} value={l.value}>
+                        {l.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="bio">{t('accept-invite.bio')}</Label>
+          <Textarea
+            id="bio"
+            rows={3}
+            placeholder={t('accept-invite.bio-placeholder')}
+            {...register('bio')}
+          />
+          {errors.bio ? <p className="text-xs text-destructive">{errors.bio.message}</p> : null}
         </div>
 
         <Button type="submit" size="lg" className="w-full" disabled={pending}>

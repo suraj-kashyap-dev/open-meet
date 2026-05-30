@@ -1,4 +1,5 @@
 import type {
+  AcceptUserInviteDto,
   AuthResponseDto,
   ChangePasswordDto,
   GoogleAuthStatusDto,
@@ -98,7 +99,7 @@ export const authApi = {
   lookupInvite: (token: string, signal?: AbortSignal) =>
     api.get<UserInviteLookupDto>(`/auth/invite/${encodeURIComponent(token)}`, { signal }),
 
-  acceptInvite: (input: { token: string; password: string }) =>
+  acceptInvite: (input: AcceptUserInviteDto) =>
     api.post<AuthResponseDto>('/auth/invite/accept', input),
 
   logout: () => api.post<{ loggedOut: true }>('/auth/logout'),

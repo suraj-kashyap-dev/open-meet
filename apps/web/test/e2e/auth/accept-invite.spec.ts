@@ -12,6 +12,9 @@ test.describe('Web accept-invite page', () => {
     await expect(page.getByText(`You're joining as ${pendingInvite.email}.`)).toBeVisible();
     await expect(page.getByLabel('Password', { exact: true })).toBeVisible();
     await expect(page.getByLabel('Confirm password')).toBeVisible();
+    await expect(page.getByText('Timezone')).toBeVisible();
+    await expect(page.getByText('Language', { exact: true })).toBeVisible();
+    await expect(page.getByLabel('Bio')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Create account' })).toBeVisible();
   });
 

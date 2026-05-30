@@ -26,12 +26,23 @@ export class AuthRepository {
   }
 
   /** Create a user whose email is already verified (invite acceptance). */
-  createInvited(input: { name: string; email: string; passwordHash: string }): Promise<User> {
+  createInvited(input: {
+    name: string;
+    email: string;
+    passwordHash: string;
+    timezone?: string;
+    language?: string;
+    bio?: string | null;
+  }): Promise<User> {
     return this.prisma.user.create({
       data: {
-        ...input,
+        name: input.name,
         email: input.email.toLowerCase(),
+        passwordHash: input.passwordHash,
         emailVerifiedAt: new Date(),
+        timezone: input.timezone,
+        language: input.language,
+        bio: input.bio ?? null,
       },
     });
   }

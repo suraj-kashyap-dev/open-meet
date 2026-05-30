@@ -76,6 +76,10 @@ describe('AdminUsersRepository', () => {
           email: 'new@x.com',
           passwordHash: 'HASH',
           emailVerifiedAt: expect.any(Date),
+          timezone: undefined,
+          language: undefined,
+          bio: null,
+          canCreateGroups: undefined,
         },
         include: countInclude,
       });

@@ -55,13 +55,25 @@ export class AdminUsersRepository {
     return this.prisma.user.findUnique({ where: { email: email.toLowerCase() } });
   }
 
-  create(data: { name: string; email: string; passwordHash: string }): Promise<UserWithCounts> {
+  create(data: {
+    name: string;
+    email: string;
+    passwordHash: string;
+    timezone?: string;
+    language?: string;
+    bio?: string | null;
+    canCreateGroups?: boolean;
+  }): Promise<UserWithCounts> {
     return this.prisma.user.create({
       data: {
         name: data.name,
         email: data.email.toLowerCase(),
         passwordHash: data.passwordHash,
         emailVerifiedAt: new Date(),
+        timezone: data.timezone,
+        language: data.language,
+        bio: data.bio ?? null,
+        canCreateGroups: data.canCreateGroups,
       },
       include: userInclude,
     });

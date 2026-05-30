@@ -93,25 +93,32 @@ test.describe('Admin users page', () => {
     });
   });
 
-  test('should navigate to the edit page when Edit is clicked', async ({ page }) => {
+  test('should open the edit dialog when Edit is clicked', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en/users');
 
     await page
       .getByRole('row', { name: /Ada Lovelace/ })
-      .getByRole('link', { name: 'Edit' })
+      .getByRole('button', { name: 'Edit' })
       .click();
 
-    await expect(page).toHaveURL(/\/en\/users\/u-1$/);
-    await expect(page.getByRole('heading', { name: 'Ada Lovelace' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Save changes' })).toBeVisible();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Edit user')).toBeVisible();
+    await expect(dialog.getByLabel('Name')).toHaveValue('Ada Lovelace');
+    await expect(dialog.getByRole('button', { name: 'Save changes' })).toBeVisible();
   });
 
-  test('should save profile changes from the edit page via PATCH', async ({ page }) => {
+  test('should save profile changes from the edit dialog via PATCH', async ({ page }) => {
     await mockAdminApi(page);
-    await page.goto('/en/users/u-1');
+    await page.goto('/en/users');
 
-    const name = page.getByLabel('Name');
+    await page
+      .getByRole('row', { name: /Ada Lovelace/ })
+      .getByRole('button', { name: 'Edit' })
+      .click();
+
+    const dialog = page.getByRole('dialog');
+    const name = dialog.getByLabel('Name');
     await expect(name).toHaveValue('Ada Lovelace');
     await name.fill('Ada L.');
 
@@ -119,7 +126,7 @@ test.describe('Admin users page', () => {
       page.waitForRequest(
         (req) => req.url().includes('/admin/users/u-1') && req.method() === 'PATCH',
       ),
-      page.getByRole('button', { name: 'Save changes' }).click(),
+      dialog.getByRole('button', { name: 'Save changes' }).click(),
     ]);
 
     expect(request.postDataJSON()).toMatchObject({ name: 'Ada L.' });
