@@ -6,7 +6,6 @@
   "sections": {
     "overview": "Overview",
     "manage": "Manage",
-    "insights": "Insights",
     "system": "System"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "Teams",
     "groups": "Groups",
     "meetings": "Meetings",
-    "analytics": "Analytics",
     "settings": "Settings",
     "administrators": "Administrators",
     "roles": "Admin roles",

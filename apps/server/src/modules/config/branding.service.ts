@@ -39,7 +39,6 @@ export class BrandingService {
       logoUrl: settings?.logoKey ? this.storage.publicUrl(settings.logoKey) : null,
       gifsEnabled: Boolean(this.config.get('TENOR_API_KEY')),
       accentColor: settings?.accentColor ?? ACCENT_DEFAULT,
-      userCanCreateGroups: settings?.userCanCreateGroups ?? false,
     };
   }
 
@@ -57,11 +56,6 @@ export class BrandingService {
       });
     }
     await this.repo.setAccentColor(accent);
-    return this.getBranding();
-  }
-
-  async updateUserCanCreateGroups(value: boolean): Promise<AdminBrandingDto> {
-    await this.repo.setUserCanCreateGroups(value);
     return this.getBranding();
   }
 

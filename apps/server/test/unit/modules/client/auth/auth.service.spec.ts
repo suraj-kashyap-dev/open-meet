@@ -10,7 +10,6 @@ import { AuthRepository } from '@/modules/client/auth/auth.repository';
 import { AvatarsService } from '@/modules/client/auth/avatars.service';
 import { UserInviteRepository } from '@/modules/client/auth/user-invite.repository';
 import { PresenceService } from '@/modules/client/messaging/presence.service';
-import { UserRoleRepository } from '@/modules/client/rbac/user-role.repository';
 import { RedisService } from '@/integrations/redis/redis.service';
 
 function makeUser(overrides: Partial<{ id: string; email: string; name: string }> = {}) {
@@ -140,10 +139,6 @@ describe('AuthService', () => {
         { provide: RedisService, useValue: redis },
         { provide: UserInviteRepository, useValue: userInvites },
         { provide: PresenceService, useValue: presence },
-        {
-          provide: UserRoleRepository,
-          useValue: { findById: vi.fn().mockResolvedValue(null) },
-        },
       ],
     }).compile();
 

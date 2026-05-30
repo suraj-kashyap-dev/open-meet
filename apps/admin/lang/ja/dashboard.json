@@ -10,7 +10,11 @@
     "active-now": "現在アクティブ",
     "active-now-hint": "ステータスが ACTIVE のルーム",
     "messages-24h": "24h メッセージ",
-    "messages-24h-hint": "過去 24 時間のチャットメッセージ"
+    "messages-24h-hint": "過去 24 時間のチャットメッセージ",
+    "groups": "グループ",
+    "groups-hint": "作成されたグループ会話",
+    "teams": "チーム",
+    "teams-hint": "ワークスペース内のチーム"
   },
   "trends": {
     "signups": "新規登録",

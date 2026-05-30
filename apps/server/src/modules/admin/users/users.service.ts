@@ -152,6 +152,10 @@ export class AdminUsersService {
       data.chatDisabled = dto.chatDisabled;
     }
 
+    if (dto.canCreateGroups !== undefined) {
+      data.canCreateGroups = dto.canCreateGroups;
+    }
+
     const updated = await this.users.update(id, data);
     return this.toDto(updated);
   }
@@ -255,6 +259,7 @@ export class AdminUsersService {
       language: u.language,
       bio: u.bio,
       chatDisabled: u.chatDisabled,
+      canCreateGroups: u.canCreateGroups,
       createdAt: u.createdAt.toISOString(),
       meetingsHosted: u._count.hostedMeetings,
       meetingsAttended: u._count.meetings,

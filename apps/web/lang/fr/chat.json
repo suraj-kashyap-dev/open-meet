@@ -33,7 +33,8 @@
     "back": "Retour aux conversations",
     "jump-to-latest": "Aller au plus récent",
     "peer-disabled": "La discussion est désactivée pour cet utilisateur.",
-    "you-disabled": "Votre accès à la discussion a été désactivé."
+    "you-disabled": "Votre accès à la discussion a été désactivé.",
+    "no-send-permission": "Vous n'avez pas la permission d'envoyer des messages."
   },
   "header": {
     "members": "{count, plural, one {# membre} other {# membres}}",

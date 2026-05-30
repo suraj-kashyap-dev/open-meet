@@ -68,6 +68,7 @@
     "timezone-placeholder": "समय क्षेत्र चुनें",
     "language": "भाषा",
     "language-placeholder": "भाषा चुनें",
+    "can-create-groups": "समूह बना सकते हैं",
     "bio": "परिचय",
     "bio-counter": "{count}/500",
     "bio-placeholder": "वैकल्पिक",

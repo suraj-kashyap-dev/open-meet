@@ -113,13 +113,13 @@ export class ChatPermissionsRepository {
     };
   }
 
-  /** Workspace toggle: whether non-admin users may create groups. */
-  async getUserCanCreateGroups(): Promise<boolean> {
-    const row = await this.prisma.workspaceSettings.findUnique({
-      where: { id: 'default' },
-      select: { userCanCreateGroups: true },
+  /** Per-user flag: whether this user may create groups (admin-set). */
+  async getUserCanCreateGroups(userId: string): Promise<boolean> {
+    const row = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { canCreateGroups: true },
     });
-    return row?.userCanCreateGroups ?? false;
+    return row?.canCreateGroups ?? false;
   }
 
   /** Conversation type + how many ADMIN members remain — used for group rules. */

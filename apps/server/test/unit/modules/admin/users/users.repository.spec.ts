@@ -2,9 +2,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { PrismaService } from '@/database/prisma.service';
 import { AdminUsersRepository } from '@/modules/admin/users/users.repository';
-import { SYSTEM_USER_MEMBER_ROLE_ID } from '@/modules/client/rbac/user-rbac-seed.service';
 
-const countInclude = { _count: { select: { hostedMeetings: true, meetings: true } } };
+const countInclude = {
+  _count: { select: { hostedMeetings: true, meetings: true } },
+};
 
 describe('AdminUsersRepository', () => {
   let repo: AdminUsersRepository;
@@ -67,7 +68,7 @@ describe('AdminUsersRepository', () => {
   });
 
   describe('create()', () => {
-    it('should lowercase the email, verify it, assign the member role, and include counts', async () => {
+    it('should lowercase the email, verify it, and include counts', async () => {
       await repo.create({ name: 'Jane', email: 'NEW@X.com', passwordHash: 'HASH' });
       expect(user.create).toHaveBeenCalledWith({
         data: {
@@ -75,7 +76,6 @@ describe('AdminUsersRepository', () => {
           email: 'new@x.com',
           passwordHash: 'HASH',
           emailVerifiedAt: expect.any(Date),
-          roleRecordId: SYSTEM_USER_MEMBER_ROLE_ID,
         },
         include: countInclude,
       });

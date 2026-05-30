@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  BarChart3,
   CalendarRange,
   LayoutDashboard,
   Menu,
   Users,
+  UsersRound,
   type LucideIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -29,7 +29,7 @@ const TABS: Tab[] = [
   { labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard },
   { labelKey: 'items.users', href: '/users', icon: Users },
   { labelKey: 'items.meetings', href: '/meetings', icon: CalendarRange },
-  { labelKey: 'items.analytics', href: '/analytics', icon: BarChart3 },
+  { labelKey: 'items.teams', href: '/teams', icon: UsersRound },
 ];
 
 function itemClass(active: boolean): string {

@@ -16,7 +16,6 @@ interface PageInfo {
   subtitle: string;
 }
 
-/** Page header shown in the global top bar for each section. */
 function usePageInfo(pathname: string): PageInfo | null {
   const tChat = useTranslations('chat');
   const tHome = useTranslations('home');
@@ -28,12 +27,11 @@ function usePageInfo(pathname: string): PageInfo | null {
       subtitle: tChat('list.subtitle'),
     };
   }
+
   if (pathname === '/meet' || pathname.startsWith('/meet/')) {
     return { icon: Video, title: tHome('page.title'), subtitle: tHome('page.subtitle') };
   }
-  if (pathname === '/teams' || pathname.startsWith('/teams/')) {
-    return { icon: Users, title: tChat('teams.title'), subtitle: tChat('teams.subtitle') };
-  }
+
   if (pathname === '/activity' || pathname.startsWith('/activity/')) {
     return {
       icon: AtSign,
@@ -41,9 +39,11 @@ function usePageInfo(pathname: string): PageInfo | null {
       subtitle: tChat('activity.subtitle'),
     };
   }
+
   if (pathname === '/saved' || pathname.startsWith('/saved/')) {
     return { icon: Bookmark, title: tChat('saved.title'), subtitle: tChat('saved.subtitle') };
   }
+
   return null;
 }
 

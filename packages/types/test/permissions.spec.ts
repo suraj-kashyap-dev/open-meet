@@ -3,8 +3,6 @@ import { describe, expect, it } from 'vitest';
 import {
   ADMIN_PERMISSION_KEYS,
   PERMISSION_TREE_ADMIN,
-  PERMISSION_TREE_USER,
-  USER_PERMISSION_KEYS,
   buildCatalogTree,
   expandToLeaves,
   flattenLeaves,
@@ -22,9 +20,6 @@ describe('flattenLeaves()', () => {
     expect(flattenLeaves(PERMISSION_TREE_ADMIN)).toEqual([...ADMIN_PERMISSION_KEYS]);
   });
 
-  it('should match USER_PERMISSION_KEYS for the user tree', () => {
-    expect(flattenLeaves(PERMISSION_TREE_USER)).toEqual([...USER_PERMISSION_KEYS]);
-  });
 });
 
 describe('leavesUnder()', () => {

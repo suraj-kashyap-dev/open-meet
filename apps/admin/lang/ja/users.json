@@ -68,6 +68,7 @@
     "timezone-placeholder": "タイムゾーンを選択",
     "language": "言語",
     "language-placeholder": "言語を選択",
+    "can-create-groups": "グループを作成可能",
     "bio": "自己紹介",
     "bio-counter": "{count}/500",
     "bio-placeholder": "任意",

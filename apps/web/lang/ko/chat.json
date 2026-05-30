@@ -33,7 +33,8 @@
     "back": "대화로 돌아가기",
     "jump-to-latest": "최신으로 이동",
     "peer-disabled": "이 사용자에 대한 채팅이 비활성화되었습니다.",
-    "you-disabled": "회원님의 채팅 액세스가 비활성화되었습니다."
+    "you-disabled": "회원님의 채팅 액세스가 비활성화되었습니다.",
+    "no-send-permission": "메시지를 보낼 권한이 없습니다."
   },
   "header": {
     "members": "{count, plural, one {멤버 #명} other {멤버 #명}}",

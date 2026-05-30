@@ -33,7 +33,8 @@
     "back": "返回会话",
     "jump-to-latest": "跳到最新",
     "peer-disabled": "该用户的聊天已被禁用。",
-    "you-disabled": "您的聊天权限已被禁用。"
+    "you-disabled": "您的聊天权限已被禁用。",
+    "no-send-permission": "您没有发送消息的权限。"
   },
   "header": {
     "members": "{count, plural, one {# 位成员} other {# 位成员}}",

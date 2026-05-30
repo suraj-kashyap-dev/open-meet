@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { type Prisma, type User } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
-import { SYSTEM_USER_MEMBER_ROLE_ID } from '../../client/rbac/user-rbac-seed.service';
+
+const userInclude = {
+  _count: { select: { hostedMeetings: true, meetings: true } },
+} satisfies Prisma.UserInclude;
 
 export type UserWithCounts = User & {
   _count: {
@@ -40,7 +43,7 @@ export class AdminUsersRepository {
       take,
       where: this.whereFromSearch(search),
       orderBy: { createdAt: 'desc' },
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 
@@ -59,16 +62,15 @@ export class AdminUsersRepository {
         email: data.email.toLowerCase(),
         passwordHash: data.passwordHash,
         emailVerifiedAt: new Date(),
-        roleRecordId: SYSTEM_USER_MEMBER_ROLE_ID,
       },
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 
   findById(id: string): Promise<UserWithCounts | null> {
     return this.prisma.user.findUnique({
       where: { id },
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 
@@ -82,7 +84,7 @@ export class AdminUsersRepository {
     return this.prisma.user.update({
       where: { id },
       data,
-      include: { _count: { select: { hostedMeetings: true, meetings: true } } },
+      include: userInclude,
     });
   }
 

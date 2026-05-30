@@ -373,14 +373,6 @@ export function useGifs(query: string, enabled: boolean) {
   });
 }
 
-export function useMyTeams() {
-  return useQuery({
-    queryKey: ['chat', 'teams'],
-    queryFn: ({ signal }) => chatApi.myTeams(signal),
-    staleTime: 30_000,
-  });
-}
-
 export function useActivity() {
   return useQuery({
     queryKey: ['chat', 'activity'],

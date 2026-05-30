@@ -68,6 +68,7 @@
     "timezone-placeholder": "اختر منطقة زمنية",
     "language": "اللغة",
     "language-placeholder": "اختر لغة",
+    "can-create-groups": "يمكنه إنشاء مجموعات",
     "bio": "النبذة",
     "bio-counter": "{count}/500",
     "bio-placeholder": "اختياري",

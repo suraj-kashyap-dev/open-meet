@@ -12,12 +12,9 @@ import {
   DropdownMenuTrigger,
 } from '@open-meet/ui/dropdown-menu';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
-
 import { useCurrentUser, useLogout } from '@/features/web/auth/hooks/use-auth';
 import { Link } from '@/i18n/navigation';
 
-/** Account avatar + dropdown. Presence is shown by the separate
- * PresenceStatusPicker in the top bar — no status dot on the avatar. */
 export function UserMenu() {
   const t = useTranslations('nav');
   const { data: user } = useCurrentUser();

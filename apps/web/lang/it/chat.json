@@ -33,7 +33,8 @@
     "back": "Torna alle conversazioni",
     "jump-to-latest": "Vai all'ultimo",
     "peer-disabled": "La chat è disabilitata per questo utente.",
-    "you-disabled": "Il tuo accesso alla chat è stato disabilitato."
+    "you-disabled": "Il tuo accesso alla chat è stato disabilitato.",
+    "no-send-permission": "Non hai il permesso di inviare messaggi."
   },
   "header": {
     "members": "{count, plural, one {# membro} other {# membri}}",

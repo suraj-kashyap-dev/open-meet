@@ -3,11 +3,6 @@ import { type Prisma, type User } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
-import {
-  SYSTEM_USER_MEMBER_ROLE_ID,
-  SYSTEM_USER_RESTRICTED_ROLE_ID,
-} from '../rbac/user-rbac-seed.service';
-
 @Injectable()
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -26,7 +21,7 @@ export class AuthRepository {
 
   create(input: { name: string; email: string; passwordHash: string }): Promise<User> {
     return this.prisma.user.create({
-      data: { ...input, email: input.email.toLowerCase(), roleRecordId: SYSTEM_USER_MEMBER_ROLE_ID },
+      data: { ...input, email: input.email.toLowerCase() },
     });
   }
 
@@ -37,16 +32,13 @@ export class AuthRepository {
         ...input,
         email: input.email.toLowerCase(),
         emailVerifiedAt: new Date(),
-        roleRecordId: SYSTEM_USER_MEMBER_ROLE_ID,
       },
     });
   }
 
   /**
-   * Create an ephemeral guest user for a meeting-scoped access token.
-   * Guests get the Restricted role so they cannot trigger user-permission-gated
-   * endpoints even if they crafted a request — meeting access is already
-   * scoped via the JWT `guest: true` flag.
+   * Create an ephemeral guest user for a meeting-scoped access token. Guests
+   * cannot create groups; meeting access is scoped via the JWT `guest: true` flag.
    */
   createGuest(input: { name: string; email: string }): Promise<User> {
     return this.prisma.user.create({
@@ -54,7 +46,7 @@ export class AuthRepository {
         name: input.name,
         email: input.email.toLowerCase(),
         emailVerifiedAt: new Date(),
-        roleRecordId: SYSTEM_USER_RESTRICTED_ROLE_ID,
+        canCreateGroups: false,
       },
     });
   }
@@ -71,7 +63,6 @@ export class AuthRepository {
         email: input.email.toLowerCase(),
         googleId: input.googleId,
         avatarUrl: input.avatarUrl,
-        roleRecordId: SYSTEM_USER_MEMBER_ROLE_ID,
       },
     });
   }

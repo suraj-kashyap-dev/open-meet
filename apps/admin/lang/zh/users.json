@@ -68,6 +68,7 @@
     "timezone-placeholder": "选择时区",
     "language": "语言",
     "language-placeholder": "选择语言",
+    "can-create-groups": "可以创建群组",
     "bio": "简介",
     "bio-counter": "{count}/500",
     "bio-placeholder": "可选",

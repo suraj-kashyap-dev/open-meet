@@ -10,7 +10,6 @@ import { Card, CardContent } from '@open-meet/ui/card';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
 import { ShimmerButton } from '@open-meet/ui/shimmer-button';
-import { useCan } from '@/features/web/auth/hooks/use-auth';
 import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { ApiClientError } from '@/lib/api/client';
@@ -19,7 +18,6 @@ export function HomeActions() {
   const t = useTranslations('home');
   const nav = useNavigateTransition();
   const createMeeting = useCreateMeeting();
-  const canCreateMeeting = useCan('meetings.create');
   const [code, setCode] = useState('');
 
   const creating = createMeeting.isPending || nav.isNavigating;
@@ -62,9 +60,8 @@ export function HomeActions() {
           <ShimmerButton
             type="button"
             onClick={onCreate}
-            disabled={creating || !canCreateMeeting}
+            disabled={creating}
             className="mt-auto w-full"
-            aria-disabled={!canCreateMeeting}
           >
             {creating ? (
               <>{t('actions.creating')}</>

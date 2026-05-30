@@ -51,8 +51,8 @@ export function ConversationHeader({
   const presence = useChatStore((s) =>
     display.peer ? s.presenceByUser[display.peer.userId] : undefined,
   );
-  const infoOpen = useChatStore((s) => s.infoOpen);
   const toggleInfo = useChatStore((s) => s.toggleInfo);
+  const setInfoOpen = useChatStore((s) => s.setInfoOpen);
 
   const subtitle = display.isGroup
     ? t('header.members', { count: conversation.members.length })
@@ -87,7 +87,7 @@ export function ConversationHeader({
   };
 
   return (
-    <header className="flex items-center gap-3 border-b border-border px-4 py-3">
+    <header className="flex min-h-[61px] items-center gap-3 border-b border-border px-4 py-3">
       <Link
         href="/chat"
         aria-label={t('view.back')}
@@ -96,32 +96,29 @@ export function ConversationHeader({
         <ArrowLeft className="h-4 w-4" />
       </Link>
 
-      <div className="relative">
-        {display.isGroup ? (
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
-            <Users className="h-4 w-4" />
-          </span>
-        ) : (
-          <UserAvatar user={{ name: display.title || '?', avatar: display.avatar }} size="sm" />
-        )}
-        {!display.isGroup && display.peer ? (
-          <PresenceDot userId={display.peer.userId} className="absolute -bottom-0.5 -end-0.5" />
-        ) : null}
-      </div>
-
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{display.title || t('list.untitled')}</p>
-        <p className="truncate text-xs text-muted-foreground">{subtitle}</p>
-      </div>
-
       <button
         type="button"
-        onClick={toggleInfo}
+        onClick={() => setInfoOpen(true)}
         aria-label={t('header.info')}
-        aria-pressed={infoOpen}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground aria-pressed:bg-muted aria-pressed:text-foreground"
+        className="-mx-2 -my-1 me-auto flex min-w-0 items-center gap-3 rounded-md px-2 py-1 text-start transition-transform duration-100 hover:bg-muted active:scale-[0.98]"
       >
-        <Info className="h-4 w-4" />
+        <div className="relative">
+          {display.isGroup ? (
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
+              <Users className="h-4 w-4" />
+            </span>
+          ) : (
+            <UserAvatar user={{ name: display.title || '?', avatar: display.avatar }} size="sm" />
+          )}
+          {!display.isGroup && display.peer ? (
+            <PresenceDot userId={display.peer.userId} className="absolute -bottom-0.5 -end-0.5" />
+          ) : null}
+        </div>
+
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold">{display.title || t('list.untitled')}</p>
+          <p className="truncate text-xs text-muted-foreground">{subtitle}</p>
+        </div>
       </button>
 
       <DropdownMenu>
@@ -132,6 +129,11 @@ export function ConversationHeader({
           <MoreVertical className="h-4 w-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem onSelect={toggleInfo}>
+            <Info className="me-2 h-4 w-4" />
+            {t('header.info')}
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => setPollOpen(true)}>
             <BarChart3 className="me-2 h-4 w-4" />
             {t('poll.create')}

@@ -7,14 +7,12 @@ import type {
   ConversationStateDto,
   CreatePollDto,
   GifSearchResultDto,
-  MyTeamsResponseDto,
   PinnedMessageListDto,
   PollDto,
   PublicUserDto,
   SavedMessageListDto,
   SendChatMessageDto,
   TeammateListDto,
-  ThreadDto,
   UnreadSummaryDto,
   UserPresenceDto,
 } from '@open-meet/types';
@@ -127,12 +125,7 @@ export const chatApi = {
   gifs: (q: string, signal?: AbortSignal) =>
     api.get<GifSearchResultDto>(`/messaging/gifs${query({ q })}`, { signal }),
 
-  myTeams: (signal?: AbortSignal) => api.get<MyTeamsResponseDto>('/messaging/teams', { signal }),
-
   activity: (signal?: AbortSignal) => api.get<ActivityFeedDto>('/messaging/activity', { signal }),
-
-  thread: (rootId: string, signal?: AbortSignal) =>
-    api.get<ThreadDto>(`/messaging/threads/${rootId}`, { signal }),
 
   publicUser: (userId: string, signal?: AbortSignal) =>
     api.get<PublicUserDto>(`/users/${userId}/public`, { signal }),

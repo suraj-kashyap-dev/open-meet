@@ -77,6 +77,8 @@ export interface AdminStatsOverviewDto {
     meetings: number;
     activeMeetings: number;
     messagesLast24h: number;
+    groups: number;
+    teams: number;
   };
   trends: {
     signups: DailyCountPoint[];
@@ -95,6 +97,8 @@ export interface AdminUserDto {
   language: string;
   bio: string | null;
   chatDisabled: boolean;
+  /** Whether this user may create group conversations (admin-set). */
+  canCreateGroups: boolean;
   createdAt: string;
   meetingsHosted: number;
   meetingsAttended: number;
@@ -121,6 +125,7 @@ export interface AdminUpdateUserDto {
   bio?: string | null;
   newPassword?: string;
   chatDisabled?: boolean;
+  canCreateGroups?: boolean;
 }
 
 /** Payload to directly create an active user with a password (admin-set). */

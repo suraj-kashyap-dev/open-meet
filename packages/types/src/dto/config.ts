@@ -9,8 +9,6 @@ export interface PublicConfigDto {
   gifsEnabled: boolean;
   /** Brand accent — preset slug ("indigo", "blue", ...) or `#RRGGBB` hex. */
   accentColor: string;
-  /** Workspace policy: when true, any user can create groups via the chat UI. */
-  userCanCreateGroups: boolean;
 }
 
 /** Branding as seen by the admin console (`GET /api/admin/branding`). */
@@ -18,14 +16,12 @@ export interface AdminBrandingDto {
   appName: string;
   logoUrl: string | null;
   accentColor: string;
-  userCanCreateGroups: boolean;
 }
 
-/** Request body for updating branding + workspace flags (`PATCH /api/admin/branding`). */
+/** Request body for updating branding (`PATCH /api/admin/branding`). */
 export interface UpdateBrandingInput {
   appName?: string;
   accentColor?: string;
-  userCanCreateGroups?: boolean;
 }
 
 /** Workspace configuration managed by admins (`GET /api/admin/configuration`). */

@@ -22,8 +22,6 @@ import type {
 import {
   ADMIN_PERMISSION_KEYS,
   PERMISSION_TREE_ADMIN,
-  PERMISSION_TREE_USER,
-  USER_PERMISSION_KEYS,
   buildCatalogTree,
 } from '@open-meet/types';
 
@@ -62,7 +60,7 @@ export const currentAdminMe: AdminMeResponseDto = {
 export const loginResponse: AdminLoginResponseDto = { admin: currentAdmin };
 
 export const overview: AdminStatsOverviewDto = {
-  totals: { users: 128, meetings: 342, activeMeetings: 3, messagesLast24h: 87 },
+  totals: { users: 128, meetings: 342, activeMeetings: 3, messagesLast24h: 87, groups: 9, teams: 5 },
   trends: { signups: dailySeries(14), meetings: dailySeries(14) },
   recentMeetings: [
     {
@@ -95,6 +93,7 @@ export const usersList: AdminUserListResponseDto = {
       language: 'en',
       bio: null,
       chatDisabled: false,
+      canCreateGroups: true,
       createdAt: '2026-02-10T10:00:00.000Z',
       meetingsHosted: 12,
       meetingsAttended: 30,
@@ -108,6 +107,7 @@ export const usersList: AdminUserListResponseDto = {
       language: 'en',
       bio: 'Codebreaker',
       chatDisabled: false,
+      canCreateGroups: true,
       createdAt: '2026-03-01T11:30:00.000Z',
       meetingsHosted: 4,
       meetingsAttended: 9,
@@ -184,7 +184,6 @@ export const branding: AdminBrandingDto = {
   appName: 'Acme Meet',
   logoUrl: null,
   accentColor: 'indigo',
-  userCanCreateGroups: false,
 };
 
 export const configuration: WorkspaceConfigDto = {
@@ -303,51 +302,4 @@ export const adminRoles: RoleListResponseDto = {
 export const permissionCatalog: PermissionCatalogResponseDto = {
   tree: buildCatalogTree(PERMISSION_TREE_ADMIN, 'rbac.permissions'),
   keys: [...ADMIN_PERMISSION_KEYS],
-};
-
-export const userRoles: RoleListResponseDto = {
-  items: [
-    {
-      id: 'urole_sys_member',
-      name: 'Member',
-      description: 'Standard active user.',
-      permissionType: 'CUSTOM',
-      permissions: [
-        'meetings.create',
-        'meetings.schedule',
-        'meetings.host',
-        'chat.send',
-        'chat.react',
-        'chat.upload',
-      ],
-      isSystem: true,
-      memberCount: 12,
-      createdAt: '2026-01-01T00:00:00.000Z',
-      updatedAt: '2026-01-01T00:00:00.000Z',
-    },
-    {
-      id: 'urole_custom_facilitator',
-      name: 'Facilitator',
-      description: 'Hosts and runs polls.',
-      permissionType: 'CUSTOM',
-      permissions: [
-        'meetings.create',
-        'meetings.schedule',
-        'meetings.host',
-        'chat.send',
-        'chat.react',
-        'chat.upload',
-        'chat.polls.create',
-      ],
-      isSystem: false,
-      memberCount: 3,
-      createdAt: '2026-04-12T00:00:00.000Z',
-      updatedAt: '2026-04-12T00:00:00.000Z',
-    },
-  ],
-};
-
-export const userPermissionCatalog: PermissionCatalogResponseDto = {
-  tree: buildCatalogTree(PERMISSION_TREE_USER, 'rbac.user-permissions'),
-  keys: [...USER_PERMISSION_KEYS],
 };

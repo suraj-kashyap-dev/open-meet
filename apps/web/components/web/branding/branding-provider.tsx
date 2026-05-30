@@ -9,15 +9,10 @@ const FALLBACK: PublicConfigDto = {
   logoUrl: null,
   gifsEnabled: false,
   accentColor: 'indigo',
-  userCanCreateGroups: false,
 };
 
 const BrandingContext = createContext<PublicConfigDto>(FALLBACK);
 
-/**
- * Seeds the active branding (fetched server-side) into the client tree so
- * client components render the live app name/logo without a flash.
- */
 export function BrandingProvider({
   value,
   children,

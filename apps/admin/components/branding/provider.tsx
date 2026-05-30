@@ -9,7 +9,6 @@ const FALLBACK: PublicConfigDto = {
   logoUrl: null,
   gifsEnabled: false,
   accentColor: 'indigo',
-  userCanCreateGroups: false,
 };
 
 const BrandingContext = createContext<PublicConfigDto>(FALLBACK);

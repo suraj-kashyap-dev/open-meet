@@ -33,7 +33,8 @@
     "back": "Sohbetlere dön",
     "jump-to-latest": "En sona git",
     "peer-disabled": "Bu kullanıcı için sohbet devre dışı.",
-    "you-disabled": "Sohbet erişiminiz devre dışı bırakıldı."
+    "you-disabled": "Sohbet erişiminiz devre dışı bırakıldı.",
+    "no-send-permission": "Mesaj gönderme izniniz yok."
   },
   "header": {
     "members": "{count, plural, one {# üye} other {# üye}}",

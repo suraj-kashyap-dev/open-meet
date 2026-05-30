@@ -30,8 +30,6 @@ export interface AdminApiMockOptions {
   userInvites?: typeof fixtures.userInvites;
   adminRoles?: typeof fixtures.adminRoles;
   permissionCatalog?: typeof fixtures.permissionCatalog;
-  userRoles?: typeof fixtures.userRoles;
-  userPermissionCatalog?: typeof fixtures.userPermissionCatalog;
 }
 
 export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}): Promise<void> {
@@ -52,8 +50,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
   const userInvites = options.userInvites ?? fixtures.userInvites;
   const adminRoles = options.adminRoles ?? fixtures.adminRoles;
   const permissionCatalog = options.permissionCatalog ?? fixtures.permissionCatalog;
-  const userRoles = options.userRoles ?? fixtures.userRoles;
-  const userPermissionCatalog = options.userPermissionCatalog ?? fixtures.userPermissionCatalog;
 
   await page.route('**/api/**', async (route) => {
     const request = route.request();
@@ -118,12 +114,8 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           return json(200, ok(groups));
         case '/admin/roles':
           return json(200, ok(adminRoles));
-        case '/admin/user-roles':
-          return json(200, ok(userRoles));
         case '/admin/permissions/catalog':
           return json(200, ok(permissionCatalog));
-        case '/admin/permissions/user-catalog':
-          return json(200, ok(userPermissionCatalog));
         default:
           break;
       }
@@ -132,15 +124,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       const roleMatch = /^\/admin\/roles\/([^/]+)$/.exec(path);
       if (roleMatch) {
         const found = adminRoles.items.find((r) => r.id === roleMatch[1]);
-        return found
-          ? json(200, ok(found))
-          : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
-      }
-
-      // User role detail: /admin/user-roles/:id
-      const userRoleMatch = /^\/admin\/user-roles\/([^/]+)$/.exec(path);
-      if (userRoleMatch) {
-        const found = userRoles.items.find((r) => r.id === userRoleMatch[1]);
         return found
           ? json(200, ok(found))
           : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));

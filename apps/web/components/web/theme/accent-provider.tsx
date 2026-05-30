@@ -20,14 +20,6 @@ function resolveTokens(value: string, mode: 'light' | 'dark'): AccentTokens {
   return ACCENT_PALETTE.indigo[mode];
 }
 
-/**
- * Injects the live accent token set onto `:root` as CSS variables. Order of
- * precedence: user override (UserSettings.accentColorOverride) → workspace
- * default (PublicConfigDto.accentColor) → "indigo" fallback. Mode follows
- * next-themes' resolvedTheme.
- *
- * Must live inside ThemeProvider so `resolvedTheme` is known.
- */
 export function AccentProvider({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
   const mode: 'light' | 'dark' = resolvedTheme === 'light' ? 'light' : 'dark';

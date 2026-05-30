@@ -11,7 +11,6 @@ const FALLBACK: PublicConfigDto = {
   logoUrl: null,
   gifsEnabled: false,
   accentColor: 'indigo',
-  userCanCreateGroups: false,
 };
 
 interface PublicConfigEnvelope {
@@ -41,7 +40,6 @@ export const getBranding = cache(async (): Promise<PublicConfigDto> => {
       logoUrl: json.data.logoUrl ?? null,
       gifsEnabled: json.data.gifsEnabled ?? false,
       accentColor: json.data.accentColor ?? FALLBACK.accentColor,
-      userCanCreateGroups: json.data.userCanCreateGroups ?? false,
     };
   } catch {
     return FALLBACK;

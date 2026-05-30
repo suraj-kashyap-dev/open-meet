@@ -6,7 +6,7 @@ const PANEL_ROUTES = [
   '/en',
   '/en/users',
   '/en/meetings',
-  '/en/analytics',
+  '/en/teams',
   '/en/administrators',
   '/en/settings/configuration',
   '/en/settings/branding',

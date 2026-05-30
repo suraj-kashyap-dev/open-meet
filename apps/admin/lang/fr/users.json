@@ -68,6 +68,7 @@
     "timezone-placeholder": "Choisir un fuseau horaire",
     "language": "Langue",
     "language-placeholder": "Choisir une langue",
+    "can-create-groups": "Peut créer des groupes",
     "bio": "Biographie",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Facultatif",

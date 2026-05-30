@@ -68,6 +68,7 @@
     "timezone-placeholder": "Saat dilimi seçin",
     "language": "Dil",
     "language-placeholder": "Dil seçin",
+    "can-create-groups": "Grup oluşturabilir",
     "bio": "Biyografi",
     "bio-counter": "{count}/500",
     "bio-placeholder": "İsteğe bağlı",

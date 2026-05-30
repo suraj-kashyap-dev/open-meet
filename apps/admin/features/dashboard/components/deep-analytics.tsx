@@ -6,10 +6,11 @@ import { useTranslations } from 'next-intl';
 
 import type { AdminConcurrencyPointDto, AdminTopHostDto } from '@open-meet/types';
 
+import { cn } from '@open-meet/ui/cn';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
+
 import { adminAnalyticsApi } from '@/features/analytics/services/analytics';
 import { TrendCard } from '@/features/dashboard/components/trend-card';
-import { cn } from '@open-meet/ui/cn';
 
 function formatDuration(min: number): string {
   if (!Number.isFinite(min) || min <= 0) {
@@ -26,7 +27,7 @@ function formatDuration(min: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-export default function AdminAnalyticsPage() {
+export function DeepAnalytics() {
   const t = useTranslations('analytics');
   const { data, isLoading, error } = useQuery({
     queryKey: ['admin', 'analytics', 'deep'],
@@ -36,29 +37,22 @@ export default function AdminAnalyticsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-[calc(100vh-3.5rem)] items-center justify-center">
+      <div className="flex h-40 items-center justify-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-foreground" />
       </div>
     );
   }
 
   if (error || !data) {
-    return (
-      <main className="w-full px-4 py-10 text-sm text-destructive sm:px-6 lg:px-8">
-        {t('load-error')}
-      </main>
-    );
+    return <p className="text-sm text-destructive">{t('load-error')}</p>;
   }
 
   const topHost = data.topHosts[0];
 
   return (
-    <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <div className="space-y-6">
       <header className="space-y-1">
-        <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          {t('eyebrow')}
-        </p>
-        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
+        <h2 className="text-lg font-semibold tracking-tight">{t('title')}</h2>
         <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
       </header>
 
@@ -99,7 +93,7 @@ export default function AdminAnalyticsPage() {
       </section>
 
       <TopHostsTable hosts={data.topHosts} />
-    </main>
+    </div>
   );
 }
 

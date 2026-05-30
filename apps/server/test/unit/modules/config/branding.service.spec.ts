@@ -42,7 +42,6 @@ describe('BrandingService', () => {
         logoUrl: null,
         gifsEnabled: false,
         accentColor: 'indigo',
-        userCanCreateGroups: false,
       });
     });
 
@@ -54,7 +53,6 @@ describe('BrandingService', () => {
         logoUrl: 'http://cdn.test/api/uploads/public/branding/logo_abc.png',
         gifsEnabled: false,
         accentColor: 'indigo',
-        userCanCreateGroups: false,
       });
     });
   });

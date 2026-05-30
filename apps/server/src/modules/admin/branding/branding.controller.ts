@@ -45,9 +45,6 @@ export class AdminBrandingController {
     if (dto.accentColor !== undefined) {
       await this.branding.updateAccentColor(dto.accentColor);
     }
-    if (dto.userCanCreateGroups !== undefined) {
-      await this.branding.updateUserCanCreateGroups(dto.userCanCreateGroups);
-    }
     return this.branding.getBranding();
   }
 

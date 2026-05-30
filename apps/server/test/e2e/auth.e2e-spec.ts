@@ -134,10 +134,9 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/me').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
-      // /auth/me now returns { user, role, grantedSet } — see Step 13.
+      // /auth/me returns { user, canCreateGroups } — user RBAC was removed.
       expect(res.body.data.user.email).toBe('ada@example.com');
-      expect(res.body.data.role?.id).toBe('urole_sys_member');
-      expect(Array.isArray(res.body.data.grantedSet)).toBe(true);
+      expect(typeof res.body.data.canCreateGroups).toBe('boolean');
     });
 
     it('should return 401 without authentication', async () => {

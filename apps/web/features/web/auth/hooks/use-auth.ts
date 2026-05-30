@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import type { UserDto, UserMeResponseDto, UserPermissionKey } from '@open-meet/types';
+import type { UserDto, UserMeResponseDto } from '@open-meet/types';
 
 import { authApi } from '@/features/web/auth/services/auth';
 import { useChatStore } from '@/features/web/chat/stores';
@@ -28,10 +28,10 @@ function readCachedMe(): UserMeResponseDto | null {
 
     const parsed = JSON.parse(raw) as UserMeResponseDto | UserDto;
     // Backward compat with the previous cached shape (raw UserDto).
-    if ('user' in parsed && 'grantedSet' in parsed) {
+    if ('user' in parsed && 'canCreateGroups' in parsed) {
       return parsed as UserMeResponseDto;
     }
-    return { user: parsed as UserDto, role: null, grantedSet: [] };
+    return { user: parsed as UserDto, canCreateGroups: false };
   } catch {
     return null;
   }
@@ -54,7 +54,7 @@ function writeCachedMe(me: UserMeResponseDto | null): void {
 }
 
 function meFromUser(user: UserDto | null): UserMeResponseDto | null {
-  return user ? { user, role: null, grantedSet: [] } : null;
+  return user ? { user, canCreateGroups: false } : null;
 }
 
 /**
@@ -108,24 +108,17 @@ export function useCurrentUserMe() {
 
 /**
  * Backward-compatible identity hook — returns just the `UserDto`. Existing
- * consumers (avatars, profile UI, guards) keep working unchanged. For RBAC
- * checks, use {@link useCan} or {@link useCurrentUserMe} directly.
+ * consumers (avatars, profile UI, guards) keep working unchanged.
  */
 export function useCurrentUser() {
   const { data, ...rest } = useCurrentUserMe();
   return { ...rest, data: data?.user ?? null };
 }
 
-/**
- * Boolean check for the user RBAC catalog. `false` while loading or signed out,
- * `true` for `permissionType: 'ALL'`, otherwise `grantedSet.includes(key)`.
- * Per-resource checks (host-of-meeting, member-of-team) still run on the server.
- */
-export function useCan(key: UserPermissionKey): boolean {
+/** Whether the current user may create group conversations (admin-set flag). */
+export function useCanCreateGroups(): boolean {
   const { data } = useCurrentUserMe();
-  if (!data) return false;
-  if (data.role?.permissionType === 'ALL') return true;
-  return data.grantedSet.includes(key);
+  return data?.canCreateGroups ?? false;
 }
 
 export function useGoogleAuthEnabled() {

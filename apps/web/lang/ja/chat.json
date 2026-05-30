@@ -33,7 +33,8 @@
     "back": "会話に戻る",
     "jump-to-latest": "最新へ移動",
     "peer-disabled": "このユーザーのチャットは無効になっています。",
-    "you-disabled": "あなたのチャットアクセスは無効になっています。"
+    "you-disabled": "あなたのチャットアクセスは無効になっています。",
+    "no-send-permission": "メッセージを送信する権限がありません。"
   },
   "header": {
     "members": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}",

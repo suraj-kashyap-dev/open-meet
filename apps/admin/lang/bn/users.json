@@ -68,6 +68,7 @@
     "timezone-placeholder": "একটি টাইমজোন বেছে নিন",
     "language": "ভাষা",
     "language-placeholder": "একটি ভাষা বেছে নিন",
+    "can-create-groups": "গ্রুপ তৈরি করতে পারে",
     "bio": "পরিচিতি",
     "bio-counter": "{count}/500",
     "bio-placeholder": "ঐচ্ছিক",

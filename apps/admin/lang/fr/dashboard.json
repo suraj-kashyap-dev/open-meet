@@ -10,7 +10,11 @@
     "active-now": "Actives maintenant",
     "active-now-hint": "Salles avec statut ACTIVE",
     "messages-24h": "Messages 24h",
-    "messages-24h-hint": "Messages du chat dans les dernières 24h"
+    "messages-24h-hint": "Messages du chat dans les dernières 24h",
+    "groups": "Groupes",
+    "groups-hint": "Conversations de groupe créées",
+    "teams": "Équipes",
+    "teams-hint": "Équipes dans l'espace de travail"
   },
   "trends": {
     "signups": "Nouvelles inscriptions",

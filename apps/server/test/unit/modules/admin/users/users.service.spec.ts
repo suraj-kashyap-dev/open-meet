@@ -24,6 +24,7 @@ function makeUser(over: Partial<UserWithCounts> = {}): UserWithCounts {
     bio: null,
     createdAt: new Date('2026-01-01T00:00:00Z'),
     _count: { hostedMeetings: 2, meetings: 5 },
+    canCreateGroups: true,
     ...over,
   } as UserWithCounts;
 }
@@ -219,6 +220,13 @@ describe('AdminUsersService', () => {
 
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: null });
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/a.png');
+    });
+  });
+
+  describe('update()', () => {
+    it('should set the per-user canCreateGroups flag', async () => {
+      await service.update('u1', { canCreateGroups: false });
+      expect(users.update).toHaveBeenCalledWith('u1', { canCreateGroups: false });
     });
   });
 });

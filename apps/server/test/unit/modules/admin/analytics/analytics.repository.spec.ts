@@ -1,4 +1,4 @@
-import { MeetingStatus } from '@prisma/client';
+import { ConversationType, MeetingStatus } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { PrismaService } from '@/database/prisma.service';
@@ -9,19 +9,41 @@ describe('AdminAnalyticsRepository', () => {
   let user: { count: ReturnType<typeof vi.fn> };
   let meeting: { count: ReturnType<typeof vi.fn>; findMany: ReturnType<typeof vi.fn> };
   let message: { count: ReturnType<typeof vi.fn> };
+  let conversation: { count: ReturnType<typeof vi.fn> };
+  let team: { count: ReturnType<typeof vi.fn> };
   let $queryRaw: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     user = { count: vi.fn().mockResolvedValue(10) };
     meeting = { count: vi.fn().mockResolvedValue(4), findMany: vi.fn().mockResolvedValue([]) };
     message = { count: vi.fn().mockResolvedValue(20) };
+    conversation = { count: vi.fn().mockResolvedValue(6) };
+    team = { count: vi.fn().mockResolvedValue(3) };
     $queryRaw = vi.fn().mockResolvedValue([]);
     repo = new AdminAnalyticsRepository({
       user,
       meeting,
       message,
+      conversation,
+      team,
       $queryRaw,
     } as unknown as PrismaService);
+  });
+
+  describe('countGroups()', () => {
+    it('should count only GROUP-type conversations', async () => {
+      await expect(repo.countGroups()).resolves.toBe(6);
+      expect(conversation.count).toHaveBeenCalledWith({
+        where: { type: ConversationType.GROUP },
+      });
+    });
+  });
+
+  describe('countTeams()', () => {
+    it('should count all teams', async () => {
+      await expect(repo.countTeams()).resolves.toBe(3);
+      expect(team.count).toHaveBeenCalledWith();
+    });
   });
 
   describe('countActiveMeetings()', () => {

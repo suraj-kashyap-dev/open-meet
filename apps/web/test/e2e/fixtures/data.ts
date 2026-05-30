@@ -9,7 +9,6 @@ import type {
   MeetingDto,
   MeetingHistoryListResponseDto,
   MessagePageDto,
-  MyTeamsResponseDto,
   ParticipantDto,
   RecordingDto,
   SavedMessageListDto,
@@ -196,7 +195,6 @@ export const dmConversation: ConversationDto = {
   type: 'DIRECT',
   title: null,
   description: null,
-  teamId: null,
   members: [
     {
       userId: currentUser.id,
@@ -280,6 +278,7 @@ export const teammateList: TeammateListDto = {
       email: 'grace@example.com',
       avatar: null,
       chatDisabled: false,
+      allowDirectMessages: true,
       online: true,
       status: 'AVAILABLE',
       lastSeen: null,
@@ -288,44 +287,9 @@ export const teammateList: TeammateListDto = {
   ],
 };
 
-/** Two teams, the first with a couple of channels, used by the Teams view. */
-export const myTeams: MyTeamsResponseDto = {
-  items: [
-    {
-      teamId: 'team-eng',
-      teamName: 'Engineering',
-      channels: [
-        {
-          ...dmConversation,
-          id: 'channel-general',
-          type: 'CHANNEL',
-          title: 'general',
-          teamId: 'team-eng',
-          unreadCount: 0,
-        },
-        {
-          ...dmConversation,
-          id: 'channel-random',
-          type: 'CHANNEL',
-          title: 'random',
-          teamId: 'team-eng',
-          unreadCount: 3,
-        },
-      ],
-    },
-    {
-      teamId: 'team-design',
-      teamName: 'Design',
-      channels: [],
-    },
-  ],
-};
-
-export const emptyTeams: MyTeamsResponseDto = { items: [] };
-
 const mentionMessage: ChatMessageDto = {
   id: 'chat-message-mention',
-  conversationId: 'channel-general',
+  conversationId: dmConversation.id,
   type: 'TEXT',
   priority: 'NORMAL',
   content: 'Hey @Ada Lovelace can you take a look at this?',
@@ -349,8 +313,8 @@ export const activityFeed: ActivityFeedDto = {
   items: [
     {
       message: mentionMessage,
-      conversationId: 'channel-general',
-      conversationTitle: 'general',
+      conversationId: dmConversation.id,
+      conversationTitle: null,
     },
   ],
 };

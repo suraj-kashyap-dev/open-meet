@@ -9,13 +9,11 @@ export interface ConversationDisplay {
   avatar: string | null;
 }
 
-/** Derives how a conversation should be labelled for the current viewer. */
 export function conversationDisplay(
   conversation: ConversationDto,
   currentUserId: string | undefined,
 ): ConversationDisplay {
-  // Groups and channels are title-based (no single peer); DMs derive from the peer.
-  if (conversation.type === 'GROUP' || conversation.type === 'CHANNEL') {
+  if (conversation.type === 'GROUP') {
     return { isGroup: true, peer: null, title: conversation.title ?? '', avatar: null };
   }
 

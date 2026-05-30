@@ -33,7 +33,8 @@
     "back": "العودة إلى المحادثات",
     "jump-to-latest": "الانتقال إلى الأحدث",
     "peer-disabled": "الدردشة معطّلة لهذا المستخدم.",
-    "you-disabled": "تم تعطيل وصولك إلى الدردشة."
+    "you-disabled": "تم تعطيل وصولك إلى الدردشة.",
+    "no-send-permission": "ليس لديك إذن لإرسال الرسائل."
   },
   "header": {
     "members": "{count, plural, one {# عضو} other {# أعضاء}}",

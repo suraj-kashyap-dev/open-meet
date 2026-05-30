@@ -6,7 +6,6 @@
   "sections": {
     "overview": "Panoramica",
     "manage": "Gestisci",
-    "insights": "Analisi",
     "system": "Sistema"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "Team",
     "groups": "Gruppi",
     "meetings": "Riunioni",
-    "analytics": "Analisi",
     "settings": "Impostazioni",
     "administrators": "Amministratori",
     "roles": "Ruoli amministratore",

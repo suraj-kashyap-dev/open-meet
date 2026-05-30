@@ -42,7 +42,7 @@ export function PeerProfilePanel({
 
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex items-center justify-between border-b border-border px-4 py-3">
+      <header className="flex min-h-[61px] items-center justify-between border-b border-border px-4 py-3">
         <p className="text-sm font-semibold">{t('info.title')}</p>
         <button
           type="button"
@@ -62,6 +62,9 @@ export function PeerProfilePanel({
           </div>
           <p className="text-base font-semibold">{peer.name}</p>
           <p className="text-xs text-muted-foreground">{presenceLabel}</p>
+          {data?.visibility !== 'PRIVATE' && data?.bio ? (
+            <p className="mt-1 whitespace-pre-wrap text-sm text-muted-foreground">{data.bio}</p>
+          ) : null}
         </div>
 
         {isLoading ? (
@@ -79,14 +82,6 @@ export function PeerProfilePanel({
           </div>
         ) : (
           <dl className="space-y-3 px-4 py-4">
-            {data.bio ? (
-              <div>
-                <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  {t('info.bio')}
-                </dt>
-                <dd className="mt-1 whitespace-pre-wrap text-sm">{data.bio}</dd>
-              </div>
-            ) : null}
             {data.email ? (
               <div className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -117,12 +112,6 @@ export function PeerProfilePanel({
           </dl>
         )}
       </div>
-
-      <footer className="border-t border-border p-3">
-        <Button variant="ghost" className="w-full" disabled>
-          {t('info.view-profile')}
-        </Button>
-      </footer>
     </div>
   );
 }

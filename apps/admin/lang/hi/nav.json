@@ -6,7 +6,6 @@
   "sections": {
     "overview": "अवलोकन",
     "manage": "प्रबंधन",
-    "insights": "अंतर्दृष्टि",
     "system": "सिस्टम"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "टीमें",
     "groups": "समूह",
     "meetings": "मीटिंग",
-    "analytics": "Analytics",
     "settings": "सेटिंग्स",
     "administrators": "प्रशासक",
     "roles": "एडमिन भूमिकाएँ",

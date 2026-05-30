@@ -68,6 +68,7 @@
     "timezone-placeholder": "Выберите часовой пояс",
     "language": "Язык",
     "language-placeholder": "Выберите язык",
+    "can-create-groups": "Может создавать группы",
     "bio": "О себе",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Необязательно",

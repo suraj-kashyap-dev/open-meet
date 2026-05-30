@@ -68,6 +68,7 @@
     "timezone-placeholder": "Elige una zona horaria",
     "language": "Idioma",
     "language-placeholder": "Elige un idioma",
+    "can-create-groups": "Puede crear grupos",
     "bio": "Biografía",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Opcional",

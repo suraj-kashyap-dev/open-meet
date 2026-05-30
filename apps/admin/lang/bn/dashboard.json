@@ -10,7 +10,11 @@
     "active-now": "এখন সক্রিয়",
     "active-now-hint": "ACTIVE স্ট্যাটাসের রুম",
     "messages-24h": "২৪ ঘণ্টার বার্তা",
-    "messages-24h-hint": "শেষ ২৪ ঘণ্টায় চ্যাট বার্তা"
+    "messages-24h-hint": "শেষ ২৪ ঘণ্টায় চ্যাট বার্তা",
+    "groups": "গ্রুপ",
+    "groups-hint": "তৈরি করা গ্রুপ কথোপকথন",
+    "teams": "টিম",
+    "teams-hint": "ওয়ার্কস্পেসের টিম"
   },
   "trends": {
     "signups": "নতুন নিবন্ধন",

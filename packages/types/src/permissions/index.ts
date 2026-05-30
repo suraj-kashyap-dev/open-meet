@@ -1,6 +1,5 @@
 export * from './shared';
 export * from './admin-catalog';
-export * from './user-catalog';
 
 export const PermissionType = {
   ALL: 'ALL',

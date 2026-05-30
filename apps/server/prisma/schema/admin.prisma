@@ -46,9 +46,6 @@ model WorkspaceSettings {
   // Brand accent (CSS var driver). Either a preset slug ("indigo", "blue",
   // "green", "purple", "rose", "amber", "teal") or a `#RRGGBB` hex.
   accentColor         String   @default("indigo")
-  // When true, any non-chatDisabled user can create groups; when false,
-  // groups are admin-created only via `/api/admin/groups`.
-  userCanCreateGroups Boolean  @default(false)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 }

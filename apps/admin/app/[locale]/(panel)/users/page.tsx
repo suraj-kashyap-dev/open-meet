@@ -10,13 +10,13 @@ import type { AdminUserDto } from '@open-meet/types';
 import { DataTable } from '@open-meet/ui/data-table';
 import { CreateUserDialog } from '@/features/users/components/create-user-dialog';
 import { DeleteUserDialog } from '@/features/users/components/delete-user-dialog';
+import { EditUserDialog } from '@/features/users/components/edit-user-dialog';
 import { InviteUserDialog } from '@/features/users/components/invite-user-dialog';
 import { PendingUserInvites } from '@/features/users/components/pending-user-invites';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import { Input } from '@open-meet/ui/input';
 import { Switch } from '@open-meet/ui/switch';
-import { Link } from '@/i18n/navigation';
 import { useAdminUsers, useUpdateAdminUser } from '@/features/users/hooks/use-admin-users';
 
 const PAGE_SIZE = 20;
@@ -35,6 +35,7 @@ export default function AdminUsersPage() {
   const t = useTranslations('users');
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [editing, setEditing] = useState<AdminUserDto | null>(null);
   const [deleting, setDeleting] = useState<AdminUserDto | null>(null);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
@@ -87,11 +88,14 @@ export default function AdminUsersPage() {
         header: () => <span className="sr-only">{t('table.actions')}</span>,
         cell: ({ row }) => (
           <div className="flex items-center justify-end gap-1">
-            <Button size="sm" variant="ghost" asChild aria-label={t('table.edit')}>
-              <Link href={`/users/${row.original.id}`}>
-                <Pencil className="h-4 w-4" />
-                <span className="hidden sm:inline">{t('table.edit')}</span>
-              </Link>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => setEditing(row.original)}
+              aria-label={t('table.edit')}
+            >
+              <Pencil className="h-4 w-4" />
+              <span className="hidden sm:inline">{t('table.edit')}</span>
             </Button>
             <Button
               size="sm"
@@ -153,6 +157,7 @@ export default function AdminUsersPage() {
             className="ps-9"
           />
         </div>
+        
         {isFetching && !isLoading ? (
           <span className="text-xs text-muted-foreground">{t('refreshing')}</span>
         ) : null}
@@ -169,6 +174,7 @@ export default function AdminUsersPage() {
         <p className="text-center text-muted-foreground sm:text-start">
           {total === 0 ? t('pagination.no-results') : t('pagination.showing', { from, to, total })}
         </p>
+
         <div className="flex items-center justify-between gap-2 sm:justify-end">
           <Button
             variant="outline"
@@ -177,11 +183,14 @@ export default function AdminUsersPage() {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
             <ChevronLeft className="h-4 w-4" />
+            
             {t('pagination.previous')}
           </Button>
+          
           <span className="text-xs text-muted-foreground">
             {t('pagination.page-of', { page, pageCount })}
           </span>
+          
           <Button
             variant="outline"
             size="sm"
@@ -196,12 +205,17 @@ export default function AdminUsersPage() {
 
       <section className="space-y-3 rounded-xl border border-border bg-card/40 p-4">
         <h2 className="text-sm font-semibold">{t('pending.title')}</h2>
+        
         <PendingUserInvites />
       </section>
 
-      <DeleteUserDialog user={deleting} onClose={() => setDeleting(null)} />
       <InviteUserDialog open={inviteOpen} onOpenChange={setInviteOpen} />
+      
       <CreateUserDialog open={createOpen} onOpenChange={setCreateOpen} />
+      
+      <EditUserDialog user={editing} onClose={() => setEditing(null)} />
+
+      <DeleteUserDialog user={deleting} onClose={() => setDeleting(null)} />
     </main>
   );
 }

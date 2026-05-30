@@ -116,7 +116,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
 
   return (
     <div className="flex h-full flex-col bg-background">
-      <header className="flex items-center justify-between border-b border-border px-4 py-3">
+      <header className="flex min-h-[61px] items-center justify-between border-b border-border px-4 py-3">
         <p className="text-sm font-semibold">{t('info.title')}</p>
         <button
           type="button"

@@ -36,4 +36,8 @@ export class AdminUpdateUserBodyDto {
   @IsOptional()
   @IsBoolean()
   chatDisabled?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  canCreateGroups?: boolean;
 }

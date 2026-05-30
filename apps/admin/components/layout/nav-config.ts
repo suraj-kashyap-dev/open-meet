@@ -1,9 +1,9 @@
 import {
-  BarChart3,
   CalendarRange,
   LayoutDashboard,
   MessagesSquare,
   Settings,
+  Users,
   UsersRound,
   type LucideIcon,
 } from 'lucide-react';
@@ -13,7 +13,6 @@ import type { AdminPermissionKey } from '@open-meet/types';
 export interface NavChild {
   labelKey: string;
   href: string;
-  /** Optional RBAC gate — hide the child when the current admin can't access it. */
   permission?: AdminPermissionKey;
 }
 
@@ -53,8 +52,6 @@ export interface SettingsHubRoute {
 export const SETTINGS_HUB_ROUTES: SettingsHubRoute[] = [
   { href: '/administrators', labelKey: 'items.administrators' },
   { href: '/roles', labelKey: 'items.roles' },
-  { href: '/users', labelKey: 'items.users' },
-  { href: '/user-roles', labelKey: 'items.user-roles' },
   { href: '/settings/branding', labelKey: 'items.branding' },
   { href: '/settings/configuration', labelKey: 'items.configuration' },
 ];
@@ -85,6 +82,7 @@ export const nav: NavSection[] = [
   {
     labelKey: 'sections.manage',
     items: [
+      { labelKey: 'items.users', href: '/users', icon: Users, permission: 'users.view' },
       { labelKey: 'items.teams', href: '/teams', icon: UsersRound, permission: 'teams.view' },
       { labelKey: 'items.groups', href: '/groups', icon: MessagesSquare, permission: 'groups.view' },
       {
@@ -92,17 +90,6 @@ export const nav: NavSection[] = [
         href: '/meetings',
         icon: CalendarRange,
         permission: 'meetings.view',
-      },
-    ],
-  },
-  {
-    labelKey: 'sections.insights',
-    items: [
-      {
-        labelKey: 'items.analytics',
-        href: '/analytics',
-        icon: BarChart3,
-        permission: 'analytics.view',
       },
     ],
   },

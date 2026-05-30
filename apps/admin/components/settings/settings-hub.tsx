@@ -5,8 +5,6 @@ import {
   Palette,
   ShieldCheck,
   SlidersHorizontal,
-  UserCog,
-  Users,
   type LucideIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -14,7 +12,7 @@ import { useTranslations } from 'next-intl';
 import type { AdminPermissionKey } from '@open-meet/types';
 import { cn } from '@open-meet/ui/cn';
 
-import { useCan, useCurrentAdminMe } from '@/features/auth/hooks/use-admin-auth';
+import { useCurrentAdminMe } from '@/features/auth/hooks/use-admin-auth';
 import { Link } from '@/i18n/navigation';
 
 interface SettingsCard {
@@ -51,27 +49,6 @@ const sections: SettingsSection[] = [
         titleKey: 'hub.cards.roles.title',
         descriptionKey: 'hub.cards.roles.description',
         permission: 'roles.view',
-      },
-    ],
-  },
-  {
-    id: 'users',
-    titleKey: 'hub.sections.users.title',
-    descriptionKey: 'hub.sections.users.description',
-    cards: [
-      {
-        href: '/users',
-        icon: Users,
-        titleKey: 'hub.cards.users.title',
-        descriptionKey: 'hub.cards.users.description',
-        permission: 'users.view',
-      },
-      {
-        href: '/user-roles',
-        icon: UserCog,
-        titleKey: 'hub.cards.user-roles.title',
-        descriptionKey: 'hub.cards.user-roles.description',
-        permission: 'user-roles.view',
       },
     ],
   },

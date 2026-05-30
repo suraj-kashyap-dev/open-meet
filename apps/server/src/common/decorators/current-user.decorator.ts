@@ -6,8 +6,6 @@ export interface RequestUser {
   name: string;
   isGuest?: boolean;
   guestMeetingCode?: string | null;
-  /** Client-side RBAC role id (null for guests; null on legacy tokens until reauth). */
-  roleId?: string | null;
 }
 
 export const CurrentUser = createParamDecorator(

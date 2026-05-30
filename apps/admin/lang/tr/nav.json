@@ -6,7 +6,6 @@
   "sections": {
     "overview": "Genel bakış",
     "manage": "Yönet",
-    "insights": "İçgörüler",
     "system": "Sistem"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "Takımlar",
     "groups": "Gruplar",
     "meetings": "Toplantılar",
-    "analytics": "Analitik",
     "settings": "Ayarlar",
     "administrators": "Yöneticiler",
     "roles": "Yönetici rolleri",

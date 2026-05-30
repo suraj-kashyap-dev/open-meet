@@ -10,7 +10,11 @@
     "active-now": "Jetzt aktiv",
     "active-now-hint": "Räume mit Status = ACTIVE",
     "messages-24h": "Nachrichten 24h",
-    "messages-24h-hint": "Chatnachrichten in den letzten 24h"
+    "messages-24h-hint": "Chatnachrichten in den letzten 24h",
+    "groups": "Gruppen",
+    "groups-hint": "Erstellte Gruppenkonversationen",
+    "teams": "Teams",
+    "teams-hint": "Teams im Arbeitsbereich"
   },
   "trends": {
     "signups": "Neue Anmeldungen",

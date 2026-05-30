@@ -6,7 +6,6 @@
   "sections": {
     "overview": "ওভারভিউ",
     "manage": "ম্যানেজ",
-    "insights": "ইনসাইটস",
     "system": "সিস্টেম"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "টিম",
     "groups": "গ্রুপ",
     "meetings": "মিটিং",
-    "analytics": "অ্যানালিটিক্স",
     "settings": "সেটিংস",
     "administrators": "অ্যাডমিনিস্ট্রেটর",
     "roles": "অ্যাডমিন রোল",

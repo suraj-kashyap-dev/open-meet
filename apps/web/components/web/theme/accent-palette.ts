@@ -1,9 +1,3 @@
-/**
- * Single source of truth for brand accent presets. Each preset has both a
- * light and dark token set so the AccentProvider can pick the right one based
- * on the resolved theme. The indigo entry reproduces the current values
- * baked into `packages/tailwind-config/styles.css` exactly.
- */
 export const ACCENT_PRESETS = [
   'indigo',
   'blue',

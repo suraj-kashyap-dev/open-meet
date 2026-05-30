@@ -6,7 +6,6 @@
   "sections": {
     "overview": "概要",
     "manage": "管理",
-    "insights": "分析",
     "system": "システム"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "チーム",
     "groups": "グループ",
     "meetings": "ミーティング",
-    "analytics": "アナリティクス",
     "settings": "設定",
     "administrators": "管理者",
     "roles": "管理者ロール",

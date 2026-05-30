@@ -6,7 +6,6 @@
   "sections": {
     "overview": "Ikhtisar",
     "manage": "Kelola",
-    "insights": "Wawasan",
     "system": "Sistem"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "Tim",
     "groups": "Grup",
     "meetings": "Rapat",
-    "analytics": "Analitik",
     "settings": "Pengaturan",
     "administrators": "Administrator",
     "roles": "Peran admin",

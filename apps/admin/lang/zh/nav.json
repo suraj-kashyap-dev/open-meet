@@ -6,7 +6,6 @@
   "sections": {
     "overview": "概览",
     "manage": "管理",
-    "insights": "洞察",
     "system": "系统"
   },
   "items": {
@@ -15,7 +14,6 @@
     "teams": "团队",
     "groups": "群组",
     "meetings": "会议",
-    "analytics": "分析",
     "settings": "设置",
     "administrators": "管理员",
     "roles": "管理员角色",

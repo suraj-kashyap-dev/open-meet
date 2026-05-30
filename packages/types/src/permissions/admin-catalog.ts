@@ -58,13 +58,6 @@ export const PERMISSION_TREE_ADMIN = {
     delete: null,
     assign: null,
   },
-  'user-roles': {
-    view: null,
-    create: null,
-    update: null,
-    delete: null,
-    assign: null,
-  },
 } as const;
 
 export type AdminPermissionKey = Leaves<typeof PERMISSION_TREE_ADMIN>;

@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ImageIcon, Loader2, Trash2, Upload } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useMemo, useRef, useState, type ChangeEvent } from 'react';
+import { useMemo, useRef, type ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -12,7 +12,6 @@ import { Button } from '@open-meet/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@open-meet/ui/card';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
-import { Switch } from '@open-meet/ui/switch';
 
 import { AccentPicker } from '@/components/branding/accent-picker';
 import { SettingsSubpageShell } from '@/components/settings/settings-subpage-shell';
@@ -112,23 +111,8 @@ export function BrandingForm() {
     }
   };
 
-  const [groupsToggleBusy, setGroupsToggleBusy] = useState(false);
-  const onGroupsToggle = async (next: boolean) => {
-    setGroupsToggleBusy(true);
-    try {
-      await updateBranding.mutateAsync({ userCanCreateGroups: next });
-      toast.success(t('form.groups-saved'));
-      router.refresh();
-    } catch (err) {
-      toast.error(err instanceof ApiClientError ? err.message : t('form.error'));
-    } finally {
-      setGroupsToggleBusy(false);
-    }
-  };
-
   const logoUrl = data?.logoUrl ?? null;
   const accentColor = data?.accentColor ?? 'indigo';
-  const userCanCreateGroups = data?.userCanCreateGroups ?? false;
 
   const saveAction = (
     <Button
@@ -246,29 +230,6 @@ export function BrandingForm() {
               onChange={onAccentChange}
               disabled={isLoading || updateBranding.isPending}
             />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('groups.title')}</CardTitle>
-            <CardDescription>{t('groups.description')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between gap-4">
-              <div className="space-y-0.5">
-                <Label htmlFor="userCanCreateGroups" className="cursor-pointer">
-                  {t('groups.label')}
-                </Label>
-                <p className="text-xs text-muted-foreground">{t('groups.hint')}</p>
-              </div>
-              <Switch
-                id="userCanCreateGroups"
-                checked={userCanCreateGroups}
-                onCheckedChange={onGroupsToggle}
-                disabled={isLoading || groupsToggleBusy}
-              />
-            </div>
           </CardContent>
         </Card>
       </div>

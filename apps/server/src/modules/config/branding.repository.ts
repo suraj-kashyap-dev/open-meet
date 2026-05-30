@@ -37,11 +37,4 @@ export class BrandingRepository {
     });
   }
 
-  setUserCanCreateGroups(userCanCreateGroups: boolean): Promise<WorkspaceSettings> {
-    return this.prisma.workspaceSettings.upsert({
-      where: { id: SINGLETON_ID },
-      update: { userCanCreateGroups },
-      create: { id: SINGLETON_ID, userCanCreateGroups },
-    });
-  }
 }

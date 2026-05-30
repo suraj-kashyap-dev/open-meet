@@ -1,13 +1,11 @@
 import type { AccentTokens } from './accent-palette';
 
-/** Parse a `#RRGGBB` into [r,g,b] integers. */
 function hexToRgb(hex: string): [number, number, number] {
   const m = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
   if (!m) return [0, 0, 0];
   return [parseInt(m[1] ?? '0', 16), parseInt(m[2] ?? '0', 16), parseInt(m[3] ?? '0', 16)];
 }
 
-/** Relative luminance per WCAG 2.x. */
 function luminance(r: number, g: number, b: number): number {
   const channel = (c: number) => {
     const v = c / 255;
@@ -26,17 +24,15 @@ function contrast(a: [number, number, number], b: [number, number, number]): num
 const WHITE: [number, number, number] = [255, 255, 255];
 const NEAR_BLACK: [number, number, number] = [10, 10, 10];
 
-/**
- * Given a user-supplied `#RRGGBB` accent, derive the rest of the token set so
- * the app stays readable. Picks the foreground (white vs near-black) by WCAG
- * contrast and tunes the hero glow alpha for the mode.
- */
 export function deriveAccent(hex: string, mode: 'light' | 'dark'): AccentTokens {
   const rgb = hexToRgb(hex);
+  
   const fg =
     contrast(rgb, WHITE) >= contrast(rgb, NEAR_BLACK) ? '#ffffff' : '#0a0a0a';
   const [r, g, b] = rgb;
+
   const alpha = mode === 'light' ? 0.18 : 0.35;
+
   return {
     accent: hex,
     accentForeground: fg,

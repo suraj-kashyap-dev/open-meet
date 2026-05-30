@@ -68,6 +68,7 @@
     "timezone-placeholder": "Pilih zona waktu",
     "language": "Bahasa",
     "language-placeholder": "Pilih bahasa",
+    "can-create-groups": "Dapat membuat grup",
     "bio": "Bio",
     "bio-counter": "{count}/500",
     "bio-placeholder": "Opsional",

@@ -33,7 +33,8 @@
     "back": "Kembali ke percakapan",
     "jump-to-latest": "Lompat ke terbaru",
     "peer-disabled": "Obrolan dinonaktifkan untuk pengguna ini.",
-    "you-disabled": "Akses obrolan Anda telah dinonaktifkan."
+    "you-disabled": "Akses obrolan Anda telah dinonaktifkan.",
+    "no-send-permission": "Anda tidak memiliki izin untuk mengirim pesan."
   },
   "header": {
     "members": "{count, plural, one {# anggota} other {# anggota}}",

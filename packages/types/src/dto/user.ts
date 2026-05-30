@@ -78,8 +78,8 @@ export interface UserDto {
 
 export interface UserMeResponseDto {
   user: UserDto;
-  role: import('./rbac').RoleSummaryDto | null;
-  grantedSet: string[];
+  /** Whether this user may create group conversations (admin-set). */
+  canCreateGroups: boolean;
 }
 
 export interface UpdateProfileDto {

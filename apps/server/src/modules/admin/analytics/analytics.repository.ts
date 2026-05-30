@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MeetingStatus, Prisma } from '@prisma/client';
+import { ConversationType, MeetingStatus, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
@@ -26,6 +26,14 @@ export class AdminAnalyticsRepository {
 
   countMessagesSince(since: Date): Promise<number> {
     return this.prisma.message.count({ where: { sentAt: { gte: since } } });
+  }
+
+  countGroups(): Promise<number> {
+    return this.prisma.conversation.count({ where: { type: ConversationType.GROUP } });
+  }
+
+  countTeams(): Promise<number> {
+    return this.prisma.team.count();
   }
 
   async dailyUserSignups(since: Date): Promise<DailyRow[]> {

@@ -54,6 +54,7 @@ export function useUpdateAdminUser() {
   });
 }
 
+
 export function useDeleteAdminUser() {
   const qc = useQueryClient();
   return useMutation({

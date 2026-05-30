@@ -17,17 +17,3 @@ model AdminRoleRecord {
   admins        Admin[]
   pendingInvites AdminInvite[]
 }
-
-model UserRoleRecord {
-  id             String         @id @default(cuid())
-  name           String         @unique
-  description    String?
-  permissionType PermissionType @default(CUSTOM)
-  permissions    String[]       @default([])
-  isSystem       Boolean        @default(false)
-  cacheRev       Int            @default(1)
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-
-  users User[]
-}

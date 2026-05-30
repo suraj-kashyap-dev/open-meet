@@ -6,7 +6,6 @@ import type {
   MeetingDto,
   MeetingHistoryListResponseDto,
   MessagePageDto,
-  MyTeamsResponseDto,
   ParticipantDto,
   RecordingDto,
   SavedMessageListDto,
@@ -48,7 +47,6 @@ export interface WebApiMockOptions {
   teammates?: TeammateListDto;
   presence?: UserPresenceDto;
   unread?: UnreadSummaryDto;
-  teams?: MyTeamsResponseDto;
   activity?: ActivityFeedDto;
   saved?: SavedMessageListDto;
   /** Invite returned by `GET /auth/invite/:token`, or null to simulate an invalid/expired link (404). */
@@ -71,7 +69,6 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
   const teammates = options.teammates ?? fixtures.teammateList;
   const presence = options.presence ?? fixtures.presenceMe;
   const unread = options.unread ?? fixtures.unreadSummary;
-  const teams = options.teams ?? fixtures.myTeams;
   const activity = options.activity ?? fixtures.activityFeed;
   const saved = options.saved ?? fixtures.savedMessages;
   const invite = options.invite === undefined ? fixtures.pendingInvite : options.invite;
@@ -114,8 +111,6 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
           return json(200, ok(presence));
         case '/messaging/unread':
           return json(200, ok(unread));
-        case '/messaging/teams':
-          return json(200, ok(teams));
         case '/messaging/activity':
           return json(200, ok(activity));
         case '/messaging/saved':

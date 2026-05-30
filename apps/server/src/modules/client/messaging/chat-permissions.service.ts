@@ -105,8 +105,8 @@ export class ChatPermissionsService {
     return membership;
   }
 
-  /** User-initiated group creation: blocked when the workspace toggle is OFF
-   * or the user is chatDisabled. Admins use a separate `/api/admin/groups`. */
+  /** User-initiated group creation: blocked when the user is chatDisabled or
+   * their per-user `canCreateGroups` flag is off. Admins use `/api/admin/groups`. */
   async assertCanCreateGroup(userId: string): Promise<void> {
     const user = await this.repo.findUserBasics(userId);
 
@@ -117,11 +117,11 @@ export class ChatPermissionsService {
       });
     }
 
-    const allowed = await this.repo.getUserCanCreateGroups();
+    const allowed = await this.repo.getUserCanCreateGroups(userId);
     if (!allowed) {
       throw new ForbiddenException({
         code: ApiErrorCode.GROUPS_DISABLED,
-        message: 'Group creation is currently disabled by the workspace admin.',
+        message: 'You do not have permission to create groups.',
       });
     }
   }

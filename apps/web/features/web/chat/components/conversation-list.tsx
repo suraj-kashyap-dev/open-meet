@@ -14,11 +14,10 @@ import {
 } from '@open-meet/ui/dropdown-menu';
 import { Input } from '@open-meet/ui/input';
 
-import { useBranding } from '@/components/web/branding/branding-provider';
 
 import { NewGroupDialog } from './new-group-dialog';
 
-import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { useCanCreateGroups, useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import { useNavigateTransition } from '@/hooks/use-navigate-transition';
 import { Link, usePathname } from '@/i18n/navigation';
@@ -41,7 +40,7 @@ export function ConversationList() {
   const [filter, setFilter] = useState('');
   const [hiddenMode, setHiddenMode] = useState(false);
   const [newGroupOpen, setNewGroupOpen] = useState(false);
-  const { userCanCreateGroups } = useBranding();
+  const canCreateGroup = useCanCreateGroups();
 
   useEffect(() => {
     if (!data?.items) {
@@ -119,7 +118,7 @@ export function ConversationList() {
         >
           <Video className="h-4 w-4" />
         </Button>
-        {userCanCreateGroups ? (
+        {canCreateGroup ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button

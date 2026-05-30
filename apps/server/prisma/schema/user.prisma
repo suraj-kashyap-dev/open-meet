@@ -10,9 +10,8 @@ model User {
   language        String        @default("en")
   bio             String?
   chatDisabled    Boolean       @default(false)
+  canCreateGroups Boolean       @default(true)
   emailVerifiedAt DateTime?
-  roleRecordId    String
-  roleRecord      UserRoleRecord @relation(fields: [roleRecordId], references: [id], onDelete: Restrict)
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   settings        UserSettings?
@@ -32,7 +31,6 @@ model User {
 
   @@index([email])
   @@index([googleId])
-  @@index([roleRecordId])
 }
 
 model UserSettings {

@@ -33,7 +33,8 @@
     "back": "बातचीत पर वापस जाएं",
     "jump-to-latest": "नवीनतम पर जाएं",
     "peer-disabled": "इस उपयोगकर्ता के लिए चैट अक्षम है।",
-    "you-disabled": "आपकी चैट पहुंच अक्षम कर दी गई है।"
+    "you-disabled": "आपकी चैट पहुंच अक्षम कर दी गई है।",
+    "no-send-permission": "आपको संदेश भेजने की अनुमति नहीं है।"
   },
   "header": {
     "members": "{count, plural, one {# सदस्य} other {# सदस्य}}",
