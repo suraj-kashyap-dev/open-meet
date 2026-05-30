@@ -67,7 +67,7 @@ function currentLocale(): string {
     return defaultLocale;
   }
 
-  const segment = window.location.pathname.split('/')[1];
+  const segment = window.location.pathname.split('/')[1] ?? '';
 
   return (locales as readonly string[]).includes(segment) ? segment : defaultLocale;
 }

@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.16.0",
   "scripts": {
     "build": "turbo run build",
+    "start": "turbo run start --filter=./apps/*",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint -- --fix",

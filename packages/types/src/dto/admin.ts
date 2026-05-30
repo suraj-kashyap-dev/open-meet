@@ -128,11 +128,14 @@ export interface AdminUpdateUserDto {
   canCreateGroups?: boolean;
 }
 
-/** Payload to directly create an active user with a password (admin-set). */
 export interface AdminCreateUserDto {
   name: string;
   email: string;
   password: string;
+  timezone?: string;
+  language?: string;
+  bio?: string | null;
+  canCreateGroups?: boolean;
 }
 
 export interface AdminMeetingDto {

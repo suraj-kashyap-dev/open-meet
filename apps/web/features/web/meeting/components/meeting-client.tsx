@@ -114,6 +114,7 @@ export function MeetingClient({ code }: { code: string }) {
       return;
     }
 
+    const currentViewer = viewer;
     let cancelled = false;
 
     async function lookup() {
@@ -126,7 +127,7 @@ export function MeetingClient({ code }: { code: string }) {
 
         setMeeting(m);
 
-        if (viewer.id !== m.hostId) {
+        if (currentViewer.id !== m.hostId) {
           setGuestStage('knocking');
         }
       } catch (err) {

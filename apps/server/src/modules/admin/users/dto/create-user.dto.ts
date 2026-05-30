@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class AdminCreateUserBodyDto {
   @IsString()
@@ -14,4 +14,23 @@ export class AdminCreateUserBodyDto {
   @MinLength(8)
   @MaxLength(128)
   password!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(64)
+  timezone?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(8)
+  language?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  bio?: string | null;
+
+  @IsOptional()
+  @IsBoolean()
+  canCreateGroups?: boolean;
 }

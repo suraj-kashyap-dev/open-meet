@@ -398,4 +398,7 @@ export interface UserInviteLookupDto {
 export interface AcceptUserInviteDto {
   token: string;
   password: string;
+  timezone?: string;
+  language?: string;
+  bio?: string | null;
 }

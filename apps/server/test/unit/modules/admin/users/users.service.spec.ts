@@ -96,6 +96,10 @@ describe('AdminUsersService', () => {
         name: 'Jane',
         email: 'new@x.com',
         passwordHash: 'HASH',
+        timezone: undefined,
+        language: undefined,
+        bio: null,
+        canCreateGroups: undefined,
       });
       expect(res).toMatchObject({ id: 'u1' });
     });

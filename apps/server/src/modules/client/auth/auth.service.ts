@@ -97,6 +97,9 @@ export class AuthService {
       name: invite.name,
       email: invite.email,
       passwordHash,
+      timezone: dto.timezone?.trim() || undefined,
+      language: dto.language?.trim() || undefined,
+      bio: dto.bio?.trim() || null,
     });
     await this.userInvites.delete(invite.id);
 

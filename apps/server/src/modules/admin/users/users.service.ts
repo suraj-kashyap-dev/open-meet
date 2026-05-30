@@ -82,7 +82,15 @@ export class AdminUsersService {
     }
 
     const passwordHash = await argon2.hash(dto.password, { type: argon2.argon2id });
-    const created = await this.users.create({ name, email, passwordHash });
+    const created = await this.users.create({
+      name,
+      email,
+      passwordHash,
+      timezone: dto.timezone?.trim() || undefined,
+      language: dto.language?.trim() || undefined,
+      bio: dto.bio?.trim() || null,
+      canCreateGroups: dto.canCreateGroups,
+    });
 
     return this.toDto(created);
   }
