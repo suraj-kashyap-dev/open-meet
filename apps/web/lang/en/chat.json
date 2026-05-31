@@ -89,9 +89,7 @@
     "unpin": "Unpin",
     "save-message": "Save",
     "unsave-message": "Remove from saved",
-    "forward": "Forward",
-    "copy-link": "Copy link",
-    "link-copied": "Link copied"
+    "forward": "Forward"
   },
   "priority": {
     "normal": "Standard",

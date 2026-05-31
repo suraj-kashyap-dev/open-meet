@@ -76,9 +76,7 @@
     "unpin": "পিন সরান",
     "save-message": "সংরক্ষণ করুন",
     "unsave-message": "সংরক্ষিত থেকে সরান",
-    "forward": "ফরওয়ার্ড করুন",
-    "copy-link": "লিঙ্ক কপি করুন",
-    "link-copied": "লিঙ্ক কপি হয়েছে"
+    "forward": "ফরওয়ার্ড করুন"
   },
   "priority": {
     "normal": "সাধারণ",

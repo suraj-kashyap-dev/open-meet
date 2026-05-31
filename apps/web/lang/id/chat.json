@@ -76,9 +76,7 @@
     "unpin": "Lepas sematan",
     "save-message": "Simpan",
     "unsave-message": "Hapus dari tersimpan",
-    "forward": "Teruskan",
-    "copy-link": "Salin tautan",
-    "link-copied": "Tautan disalin"
+    "forward": "Teruskan"
   },
   "priority": {
     "normal": "Standar",

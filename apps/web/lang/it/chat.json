@@ -76,9 +76,7 @@
     "unpin": "Rimuovi dai fissati",
     "save-message": "Salva",
     "unsave-message": "Rimuovi dai salvati",
-    "forward": "Inoltra",
-    "copy-link": "Copia link",
-    "link-copied": "Link copiato"
+    "forward": "Inoltra"
   },
   "priority": {
     "normal": "Standard",

@@ -76,9 +76,7 @@
     "unpin": "Sabitlemeyi kaldır",
     "save-message": "Kaydet",
     "unsave-message": "Kaydedilenlerden kaldır",
-    "forward": "İlet",
-    "copy-link": "Bağlantıyı kopyala",
-    "link-copied": "Bağlantı kopyalandı"
+    "forward": "İlet"
   },
   "priority": {
     "normal": "Standart",

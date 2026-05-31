@@ -76,9 +76,7 @@
     "unpin": "고정 해제",
     "save-message": "저장",
     "unsave-message": "저장 목록에서 제거",
-    "forward": "전달",
-    "copy-link": "링크 복사",
-    "link-copied": "링크가 복사됨"
+    "forward": "전달"
   },
   "priority": {
     "normal": "표준",

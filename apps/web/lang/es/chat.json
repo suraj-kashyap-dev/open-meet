@@ -76,9 +76,7 @@
     "unpin": "Desfijar",
     "save-message": "Guardar",
     "unsave-message": "Quitar de guardados",
-    "forward": "Reenviar",
-    "copy-link": "Copiar enlace",
-    "link-copied": "Enlace copiado"
+    "forward": "Reenviar"
   },
   "priority": {
     "normal": "Estándar",

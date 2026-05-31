@@ -76,9 +76,7 @@
     "unpin": "Désépingler",
     "save-message": "Enregistrer",
     "unsave-message": "Retirer des enregistrés",
-    "forward": "Transférer",
-    "copy-link": "Copier le lien",
-    "link-copied": "Lien copié"
+    "forward": "Transférer"
   },
   "priority": {
     "normal": "Standard",

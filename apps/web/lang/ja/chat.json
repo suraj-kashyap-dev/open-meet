@@ -76,9 +76,7 @@
     "unpin": "ピン留めを解除",
     "save-message": "保存",
     "unsave-message": "保存から削除",
-    "forward": "転送",
-    "copy-link": "リンクをコピー",
-    "link-copied": "リンクをコピーしました"
+    "forward": "転送"
   },
   "priority": {
     "normal": "標準",

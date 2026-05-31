@@ -76,9 +76,7 @@
     "unpin": "Открепить",
     "save-message": "Сохранить",
     "unsave-message": "Удалить из сохранённых",
-    "forward": "Переслать",
-    "copy-link": "Копировать ссылку",
-    "link-copied": "Ссылка скопирована"
+    "forward": "Переслать"
   },
   "priority": {
     "normal": "Обычный",

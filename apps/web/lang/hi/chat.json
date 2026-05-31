@@ -76,9 +76,7 @@
     "unpin": "अनपिन करें",
     "save-message": "सहेजें",
     "unsave-message": "सहेजे गए से हटाएं",
-    "forward": "अग्रेषित करें",
-    "copy-link": "लिंक कॉपी करें",
-    "link-copied": "लिंक कॉपी किया गया"
+    "forward": "अग्रेषित करें"
   },
   "priority": {
     "normal": "मानक",

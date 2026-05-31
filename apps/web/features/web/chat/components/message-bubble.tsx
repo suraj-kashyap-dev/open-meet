@@ -6,7 +6,6 @@ import {
   BookmarkX,
   CornerUpLeft,
   Forward,
-  Link2,
   MoreHorizontal,
   Pencil,
   Pin,
@@ -15,7 +14,6 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 import { cn } from '@open-meet/ui/cn';
 import {
@@ -93,15 +91,6 @@ export function MessageBubble({
       onEdit(message.id, next);
     }
     setEditing(false);
-  };
-
-  const copyLink = () => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
-      void navigator.clipboard.writeText(
-        `${window.location.origin}/chat/${message.conversationId}`,
-      );
-      toast.success(t('bubble.link-copied'));
-    }
   };
 
   return (
@@ -341,11 +330,6 @@ export function MessageBubble({
             <DropdownMenuItem onSelect={() => onForward(message)}>
               <Forward className="me-2 h-4 w-4" />
               {t('bubble.forward')}
-            </DropdownMenuItem>
-
-            <DropdownMenuItem onSelect={copyLink}>
-              <Link2 className="me-2 h-4 w-4" />
-              {t('bubble.copy-link')}
             </DropdownMenuItem>
 
             {isMe ? (

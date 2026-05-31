@@ -76,9 +76,7 @@
     "unpin": "取消置顶",
     "save-message": "保存",
     "unsave-message": "从已保存中移除",
-    "forward": "转发",
-    "copy-link": "复制链接",
-    "link-copied": "链接已复制"
+    "forward": "转发"
   },
   "priority": {
     "normal": "标准",

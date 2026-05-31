@@ -76,9 +76,7 @@
     "unpin": "إلغاء التثبيت",
     "save-message": "حفظ",
     "unsave-message": "إزالة من المحفوظات",
-    "forward": "إعادة توجيه",
-    "copy-link": "نسخ الرابط",
-    "link-copied": "تم نسخ الرابط"
+    "forward": "إعادة توجيه"
   },
   "priority": {
     "normal": "عادي",
