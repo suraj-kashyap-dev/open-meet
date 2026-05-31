@@ -5,11 +5,20 @@
   "empty": "Henüz takım yok.",
   "columns": {
     "name": "Ad",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "Üyeler"
   },
   "actions": {
     "manage": "Üyeleri yönet",
     "delete": "Takımı sil"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "Yeni takım",

@@ -5,11 +5,20 @@
   "empty": "まだチームがありません。",
   "columns": {
     "name": "名前",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "メンバー"
   },
   "actions": {
     "manage": "メンバーを管理",
     "delete": "チームを削除"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "新しいチーム",

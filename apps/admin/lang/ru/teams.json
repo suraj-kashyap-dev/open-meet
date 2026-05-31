@@ -5,11 +5,20 @@
   "empty": "Команд пока нет.",
   "columns": {
     "name": "Название",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "Участники"
   },
   "actions": {
     "manage": "Управление участниками",
     "delete": "Удалить команду"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "Новая команда",

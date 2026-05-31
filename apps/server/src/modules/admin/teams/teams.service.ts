@@ -15,6 +15,7 @@ import {
   type TeamMemberWithUser,
   type TeamWithCount,
 } from './teams.repository';
+import type { CreateTeamBodyDto, UpdateTeamBodyDto } from './dto/team.dto';
 
 @Injectable()
 export class AdminTeamsService {
@@ -28,17 +29,24 @@ export class AdminTeamsService {
     return { items: rows.map((t) => this.toDto(t)) };
   }
 
-  async create(name: string): Promise<AdminTeamDto> {
-    const trimmed = name.trim();
+  async create(input: CreateTeamBodyDto): Promise<AdminTeamDto> {
+    const name = input.name.trim();
 
-    if (trimmed.length === 0) {
+    if (name.length === 0) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'Team name is required.',
       });
     }
 
-    const team = await this.teams.create(trimmed);
+    const responsibleAdminId = this.normalizeNullable(input.responsibleAdminId);
+    if (responsibleAdminId) await this.ensureAdminExists(responsibleAdminId);
+
+    const team = await this.teams.create({
+      name,
+      description: this.normalizeNullable(input.description),
+      responsibleAdminId,
+    });
     return this.toDto(team);
   }
 
@@ -49,16 +57,35 @@ export class AdminTeamsService {
     return { ...this.toDto(team), members: members.map((m) => this.toMemberDto(m)) };
   }
 
-  async update(id: string, name?: string): Promise<AdminTeamDto> {
+  async update(id: string, input: UpdateTeamBodyDto): Promise<AdminTeamDto> {
     await this.require(id);
 
-    const trimmed = name?.trim();
+    const data: { name?: string; description?: string | null; responsibleAdminId?: string | null } =
+      {};
+    if (input.name !== undefined) {
+      const name = input.name.trim();
+      if (name.length === 0) {
+        throw new BadRequestException({
+          code: ApiErrorCode.VALIDATION_FAILED,
+          message: 'Team name is required.',
+        });
+      }
+      data.name = name;
+    }
+    if (input.description !== undefined) {
+      data.description = this.normalizeNullable(input.description);
+    }
+    if (input.responsibleAdminId !== undefined) {
+      const responsibleAdminId = this.normalizeNullable(input.responsibleAdminId);
+      if (responsibleAdminId) await this.ensureAdminExists(responsibleAdminId);
+      data.responsibleAdminId = responsibleAdminId;
+    }
 
-    if (!trimmed) {
+    if (Object.keys(data).length === 0) {
       return this.toDto(await this.require(id));
     }
 
-    return this.toDto(await this.teams.update(id, trimmed));
+    return this.toDto(await this.teams.update(id, data));
   }
 
   async remove(id: string): Promise<{ deleted: true }> {
@@ -93,10 +120,28 @@ export class AdminTeamsService {
     return team;
   }
 
+  private async ensureAdminExists(id: string): Promise<void> {
+    if (!(await this.teams.adminExists(id))) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Selected responsible admin does not exist.',
+      });
+    }
+  }
+
+  private normalizeNullable(raw: string | null | undefined): string | null {
+    if (raw === null || raw === undefined) return null;
+    const trimmed = raw.trim();
+    return trimmed.length === 0 ? null : trimmed;
+  }
+
   private toDto(team: TeamWithCount): AdminTeamDto {
     return {
       id: team.id,
       name: team.name,
+      description: team.description,
+      responsibleAdminId: team.responsibleAdminId,
+      responsibleAdminName: team.responsibleAdmin?.name ?? null,
       memberCount: team._count.members,
       createdAt: team.createdAt.toISOString(),
     };

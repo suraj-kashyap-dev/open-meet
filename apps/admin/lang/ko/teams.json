@@ -5,11 +5,20 @@
   "empty": "아직 팀이 없습니다.",
   "columns": {
     "name": "이름",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "멤버"
   },
   "actions": {
     "manage": "멤버 관리",
     "delete": "팀 삭제"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "새 팀",

@@ -5,11 +5,20 @@
   "empty": "Belum ada tim.",
   "columns": {
     "name": "Nama",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "Anggota"
   },
   "actions": {
     "manage": "Kelola anggota",
     "delete": "Hapus tim"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "Tim baru",

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import type { AdminTeamDto } from '@open-meet/types';
+import type { AdminTeamDto, AdminUpdateTeamDto } from '@open-meet/types';
 
 import { Button } from '@open-meet/ui/button';
 import {
@@ -18,14 +18,25 @@ import {
 } from '@open-meet/ui/dialog';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@open-meet/ui/select';
+import { Textarea } from '@open-meet/ui/textarea';
 
 import { MemberMultiSelect } from '@/components/shared/member-multi-select';
+import { useAdminAccounts } from '@/features/accounts/hooks/use-admin-accounts';
 import {
   useAdminTeam,
   useSyncTeamMembers,
   useUpdateTeam,
 } from '@/features/teams/hooks/use-admin-teams';
 import { ApiClientError } from '@/lib/api/client';
+
+const NO_RESPONSIBLE = '__none__';
 
 interface Props {
   team: AdminTeamDto | null;
@@ -38,13 +49,18 @@ export function EditTeamDialog({ team, onClose }: Props) {
   const detail = useAdminTeam(team?.id ?? null);
   const update = useUpdateTeam();
   const syncMembers = useSyncTeamMembers();
+  const accounts = useAdminAccounts();
 
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [responsibleAdminId, setResponsibleAdminId] = useState<string>(NO_RESPONSIBLE);
   const [memberIds, setMemberIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (detail.data) {
       setName(detail.data.name);
+      setDescription(detail.data.description ?? '');
+      setResponsibleAdminId(detail.data.responsibleAdminId ?? NO_RESPONSIBLE);
       setMemberIds(detail.data.members.map((member) => member.userId));
     }
   }, [detail.data]);
@@ -57,17 +73,31 @@ export function EditTeamDialog({ team, onClose }: Props) {
     }
 
     const current = detail.data?.members.map((member) => member.userId) ?? [];
-    const nameDirty = name.trim() !== (detail.data?.name ?? team.name);
-    const memberDirty = [...current].sort().join('|') !== [...memberIds].sort().join('|');
+    const nextResponsibleId = responsibleAdminId === NO_RESPONSIBLE ? null : responsibleAdminId;
+    const nextDescription = description.trim() ? description.trim() : null;
 
-    if (!nameDirty && !memberDirty) {
+    const patch: AdminUpdateTeamDto = {};
+    if (name.trim() !== (detail.data?.name ?? team.name)) {
+      patch.name = name.trim();
+    }
+    if (nextDescription !== (detail.data?.description ?? null)) {
+      patch.description = nextDescription;
+    }
+    if (nextResponsibleId !== (detail.data?.responsibleAdminId ?? null)) {
+      patch.responsibleAdminId = nextResponsibleId;
+    }
+
+    const memberDirty = [...current].sort().join('|') !== [...memberIds].sort().join('|');
+    const teamDirty = Object.keys(patch).length > 0;
+
+    if (!teamDirty && !memberDirty) {
       onClose();
       return;
     }
 
     try {
-      if (nameDirty) {
-        await update.mutateAsync({ id: team.id, body: { name: name.trim() } });
+      if (teamDirty) {
+        await update.mutateAsync({ id: team.id, body: patch });
       }
 
       if (memberDirty) {
@@ -103,6 +133,34 @@ export function EditTeamDialog({ team, onClose }: Props) {
               placeholder={t('create.placeholder')}
               maxLength={120}
             />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="edit-team-description">{t('form.description')}</Label>
+            <Textarea
+              id="edit-team-description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              placeholder={t('form.description-placeholder')}
+              maxLength={500}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>{t('form.responsible')}</Label>
+            <Select value={responsibleAdminId} onValueChange={setResponsibleAdminId}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t('form.responsible-placeholder')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={NO_RESPONSIBLE}>{t('form.responsible-none')}</SelectItem>
+                {(accounts.data?.items ?? []).map((account) => (
+                  <SelectItem key={account.id} value={account.id}>
+                    {account.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-1.5">

@@ -201,14 +201,33 @@ export const inviteLookup: AdminInviteLookupDto = {
 
 export const teamsList: AdminTeamListResponseDto = {
   items: [
-    { id: 't-1', name: 'Engineering', memberCount: 2, createdAt: '2026-02-01T09:00:00.000Z' },
-    { id: 't-2', name: 'Marketing', memberCount: 1, createdAt: '2026-02-05T09:00:00.000Z' },
+    {
+      id: 't-1',
+      name: 'Engineering',
+      description: null,
+      responsibleAdminId: null,
+      responsibleAdminName: null,
+      memberCount: 2,
+      createdAt: '2026-02-01T09:00:00.000Z',
+    },
+    {
+      id: 't-2',
+      name: 'Marketing',
+      description: null,
+      responsibleAdminId: null,
+      responsibleAdminName: null,
+      memberCount: 1,
+      createdAt: '2026-02-05T09:00:00.000Z',
+    },
   ],
 };
 
 export const teamDetail: AdminTeamDetailDto = {
   id: 't-1',
   name: 'Engineering',
+  description: null,
+  responsibleAdminId: null,
+  responsibleAdminName: null,
   memberCount: 2,
   createdAt: '2026-02-01T09:00:00.000Z',
   members: [

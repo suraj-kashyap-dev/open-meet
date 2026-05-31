@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { AdminUpdateTeamDto } from '@open-meet/types';
+import type { AdminCreateTeamDto, AdminUpdateTeamDto } from '@open-meet/types';
 
 import { adminTeamsApi } from '@/features/teams/services/teams';
 
@@ -27,7 +27,7 @@ export function useAdminTeam(id: string | null) {
 export function useCreateTeam() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (name: string) => adminTeamsApi.create({ name }),
+    mutationFn: (body: AdminCreateTeamDto) => adminTeamsApi.create(body),
     onSuccess: () => void qc.invalidateQueries({ queryKey: [TEAMS_KEY] }),
   });
 }

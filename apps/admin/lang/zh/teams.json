@@ -5,11 +5,20 @@
   "empty": "暂无团队。",
   "columns": {
     "name": "名称",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "成员"
   },
   "actions": {
     "manage": "管理成员",
     "delete": "删除团队"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "新建团队",

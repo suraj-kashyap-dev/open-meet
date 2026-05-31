@@ -7,42 +7,42 @@ const memberInclude = {
   user: { select: { id: true, name: true, email: true, avatarKey: true } },
 } satisfies Prisma.TeamMemberInclude;
 
+const teamInclude = {
+  responsibleAdmin: { select: { id: true, name: true } },
+  _count: { select: { members: true } },
+} satisfies Prisma.TeamInclude;
+
 export type TeamMemberWithUser = Prisma.TeamMemberGetPayload<{ include: typeof memberInclude }>;
-export type TeamWithCount = Prisma.TeamGetPayload<{
-  include: { _count: { select: { members: true } } };
-}>;
+export type TeamWithCount = Prisma.TeamGetPayload<{ include: typeof teamInclude }>;
+
+export interface TeamWriteData {
+  name?: string;
+  description?: string | null;
+  responsibleAdminId?: string | null;
+}
 
 @Injectable()
 export class AdminTeamsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   list(): Promise<TeamWithCount[]> {
-    return this.prisma.team.findMany({
-      orderBy: { name: 'asc' },
-      include: { _count: { select: { members: true } } },
-    });
+    return this.prisma.team.findMany({ orderBy: { name: 'asc' }, include: teamInclude });
   }
 
   findWithCount(id: string): Promise<TeamWithCount | null> {
-    return this.prisma.team.findUnique({
-      where: { id },
-      include: { _count: { select: { members: true } } },
-    });
+    return this.prisma.team.findUnique({ where: { id }, include: teamInclude });
   }
 
-  create(name: string): Promise<TeamWithCount> {
-    return this.prisma.team.create({
-      data: { name },
-      include: { _count: { select: { members: true } } },
-    });
+  create(data: {
+    name: string;
+    description: string | null;
+    responsibleAdminId: string | null;
+  }): Promise<TeamWithCount> {
+    return this.prisma.team.create({ data, include: teamInclude });
   }
 
-  update(id: string, name: string): Promise<TeamWithCount> {
-    return this.prisma.team.update({
-      where: { id },
-      data: { name },
-      include: { _count: { select: { members: true } } },
-    });
+  update(id: string, data: TeamWriteData): Promise<TeamWithCount> {
+    return this.prisma.team.update({ where: { id }, data, include: teamInclude });
   }
 
   async delete(id: string): Promise<void> {
@@ -66,5 +66,9 @@ export class AdminTeamsRepository {
 
   async removeMember(teamId: string, userId: string): Promise<void> {
     await this.prisma.teamMember.deleteMany({ where: { teamId, userId } });
+  }
+
+  adminExists(id: string): Promise<boolean> {
+    return this.prisma.admin.count({ where: { id } }).then((c) => c > 0);
   }
 }

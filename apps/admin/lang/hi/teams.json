@@ -5,11 +5,20 @@
   "empty": "अभी तक कोई टीम नहीं।",
   "columns": {
     "name": "नाम",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "सदस्य"
   },
   "actions": {
     "manage": "सदस्य प्रबंधित करें",
     "delete": "टीम हटाएं"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "नई टीम",

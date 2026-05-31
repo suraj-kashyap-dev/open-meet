@@ -5,11 +5,20 @@
   "empty": "এখনো কোনো টিম নেই।",
   "columns": {
     "name": "নাম",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "সদস্য"
   },
   "actions": {
     "manage": "সদস্য পরিচালনা করুন",
     "delete": "টিম মুছুন"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "নতুন টিম",

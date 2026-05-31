@@ -14,9 +14,20 @@ import {
 } from '@open-meet/ui/dialog';
 import { Input } from '@open-meet/ui/input';
 import { Label } from '@open-meet/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@open-meet/ui/select';
+import { Textarea } from '@open-meet/ui/textarea';
 
+import { useAdminAccounts } from '@/features/accounts/hooks/use-admin-accounts';
 import { useCreateTeam } from '@/features/teams/hooks/use-admin-teams';
 import { ApiClientError } from '@/lib/api/client';
+
+const NO_RESPONSIBLE = '__none__';
 
 export function CreateTeamDialog({
   open,
@@ -27,17 +38,31 @@ export function CreateTeamDialog({
 }) {
   const t = useTranslations('teams');
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [responsibleAdminId, setResponsibleAdminId] = useState<string>(NO_RESPONSIBLE);
   const create = useCreateTeam();
+  const accounts = useAdminAccounts();
+
+  const reset = () => {
+    setName('');
+    setDescription('');
+    setResponsibleAdminId(NO_RESPONSIBLE);
+  };
 
   const submit = async () => {
-    if (!name.trim()) {
+    const trimmed = name.trim();
+    if (!trimmed) {
       return;
     }
 
     try {
-      await create.mutateAsync(name.trim());
+      await create.mutateAsync({
+        name: trimmed,
+        description: description.trim() ? description.trim() : null,
+        responsibleAdminId: responsibleAdminId === NO_RESPONSIBLE ? null : responsibleAdminId,
+      });
       toast.success(t('create.success'));
-      setName('');
+      reset();
       onOpenChange(false);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('create.error'));
@@ -48,7 +73,7 @@ export function CreateTeamDialog({
     <Dialog
       open={open}
       onOpenChange={(next) => {
-        if (!next) setName('');
+        if (!next) reset();
         onOpenChange(next);
       }}
     >
@@ -57,20 +82,50 @@ export function CreateTeamDialog({
           <DialogTitle>{t('create.title')}</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-1.5">
-          <Label htmlFor="team-name">{t('create.name')}</Label>
-          <Input
-            id="team-name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={t('create.placeholder')}
-            maxLength={120}
-            autoFocus
-          />
+        <div className="space-y-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="team-name">{t('create.name')}</Label>
+            <Input
+              id="team-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t('create.placeholder')}
+              maxLength={120}
+              autoFocus
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="team-description">{t('form.description')}</Label>
+            <Textarea
+              id="team-description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder={t('form.description-placeholder')}
+              maxLength={500}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <Label>{t('form.responsible')}</Label>
+            <Select value={responsibleAdminId} onValueChange={setResponsibleAdminId}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t('form.responsible-placeholder')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={NO_RESPONSIBLE}>{t('form.responsible-none')}</SelectItem>
+                {(accounts.data?.items ?? []).map((account) => (
+                  <SelectItem key={account.id} value={account.id}>
+                    {account.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <DialogFooter>
-          <Button onClick={submit} disabled={!name.trim() || create.isPending}>
+          <Button onClick={() => void submit()} disabled={!name.trim() || create.isPending}>
             {t('create.submit')}
           </Button>
         </DialogFooter>

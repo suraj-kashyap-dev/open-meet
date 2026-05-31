@@ -29,6 +29,7 @@ import {
   CreateTeamBodyDto,
   UpdateTeamBodyDto,
 } from './dto/team.dto';
+
 import { AdminTeamsService } from './teams.service';
 
 @ApiTags('admin-teams')
@@ -49,7 +50,7 @@ export class AdminTeamsController {
   @RequirePermissions('teams.create')
   @ApiOperation({ summary: 'Create a team' })
   create(@Body() dto: CreateTeamBodyDto): Promise<AdminTeamDto> {
-    return this.teams.create(dto.name);
+    return this.teams.create(dto);
   }
 
   @Get(':id')
@@ -61,9 +62,9 @@ export class AdminTeamsController {
 
   @Patch(':id')
   @RequirePermissions('teams.update')
-  @ApiOperation({ summary: 'Rename a team' })
+  @ApiOperation({ summary: 'Update a team' })
   update(@Param('id') id: string, @Body() dto: UpdateTeamBodyDto): Promise<AdminTeamDto> {
-    return this.teams.update(id, dto.name);
+    return this.teams.update(id, dto);
   }
 
   @Delete(':id')

@@ -5,11 +5,20 @@
   "empty": "Aún no hay equipos.",
   "columns": {
     "name": "Nombre",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "Miembros"
   },
   "actions": {
     "manage": "Gestionar miembros",
     "delete": "Eliminar equipo"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "Nuevo equipo",

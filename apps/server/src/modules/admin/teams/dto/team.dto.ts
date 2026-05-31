@@ -6,6 +6,7 @@ import {
   IsString,
   MaxLength,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 
 export class CreateTeamBodyDto {
@@ -13,6 +14,17 @@ export class CreateTeamBodyDto {
   @MinLength(1)
   @MaxLength(120)
   name!: string;
+
+  @IsOptional()
+  @ValidateIf((_, v) => v !== null)
+  @IsString()
+  @MaxLength(500)
+  description?: string | null;
+
+  @IsOptional()
+  @ValidateIf((_, v) => v !== null)
+  @IsString()
+  responsibleAdminId?: string | null;
 }
 
 export class UpdateTeamBodyDto {
@@ -21,6 +33,17 @@ export class UpdateTeamBodyDto {
   @MinLength(1)
   @MaxLength(120)
   name?: string;
+
+  @IsOptional()
+  @ValidateIf((_, v) => v !== null)
+  @IsString()
+  @MaxLength(500)
+  description?: string | null;
+
+  @IsOptional()
+  @ValidateIf((_, v) => v !== null)
+  @IsString()
+  responsibleAdminId?: string | null;
 }
 
 export class AddTeamMembersBodyDto {

@@ -301,6 +301,9 @@ export interface AdminTeamMemberDto {
 export interface AdminTeamDto {
   id: string;
   name: string;
+  description: string | null;
+  responsibleAdminId: string | null;
+  responsibleAdminName: string | null;
   memberCount: number;
   createdAt: string;
 }
@@ -315,10 +318,14 @@ export interface AdminTeamListResponseDto {
 
 export interface AdminCreateTeamDto {
   name: string;
+  description?: string | null;
+  responsibleAdminId?: string | null;
 }
 
 export interface AdminUpdateTeamDto {
   name?: string;
+  description?: string | null;
+  responsibleAdminId?: string | null;
 }
 
 export interface AdminAddTeamMembersDto {

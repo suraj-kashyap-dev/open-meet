@@ -38,14 +38,17 @@ enum MentionKind {
   EVERYONE
 }
 
-// Admin-managed grouping that gates who may DM whom: a DIRECT conversation is
-// allowed only when both users share at least one team.
 model Team {
-  id        String       @id @default(cuid())
-  name      String
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  members   TeamMember[]
+  id                 String       @id @default(cuid())
+  name               String
+  description        String?
+  responsibleAdminId String?
+  responsibleAdmin   Admin?       @relation("TeamResponsible", fields: [responsibleAdminId], references: [id], onDelete: SetNull)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  members            TeamMember[]
+
+  @@index([responsibleAdminId])
 }
 
 model TeamMember {

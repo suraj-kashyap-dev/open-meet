@@ -5,11 +5,20 @@
   "empty": "لا توجد فِرَق بعد.",
   "columns": {
     "name": "الاسم",
+    "responsible": "Responsible",
+    "no-responsible": "—",
     "members": "الأعضاء"
   },
   "actions": {
     "manage": "إدارة الأعضاء",
     "delete": "حذف الفريق"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
   },
   "create": {
     "button": "فريق جديد",
