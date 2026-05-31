@@ -45,9 +45,10 @@ export function useScheduleMeeting() {
   });
 }
 
-export function useUpcomingMeetings() {
+export function useUpcomingMeetings(options?: { enabled?: boolean }) {
   return useQuery<UpcomingMeetingDto[]>({
     queryKey: ['meetings', 'upcoming'],
+    enabled: options?.enabled ?? true,
     queryFn: ({ signal }) => meetingsApi.upcoming(signal),
     refetchInterval: 60_000,
   });

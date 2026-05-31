@@ -36,11 +36,13 @@ function makeNonce(): string {
     : `${Date.now()}-${Math.random()}`;
 }
 
-export function useConversations(opts: { includeHidden?: boolean } = {}) {
+export function useConversations(opts: { includeHidden?: boolean; enabled?: boolean } = {}) {
   const includeHidden = opts.includeHidden ?? false;
+  const enabled = opts.enabled ?? true;
 
   return useQuery<ConversationListDto>({
     queryKey: [...chatKeys.conversations(), { includeHidden }],
+    enabled,
     queryFn: ({ signal }) => chatApi.conversations({ includeHidden }, signal),
     staleTime: 15_000,
   });

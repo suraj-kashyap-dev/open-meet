@@ -17,9 +17,10 @@ const HISTORY_MEETING_KEY = 'history-meeting' as const;
 const HISTORY_MESSAGES_KEY = 'history-messages' as const;
 const HISTORY_RECORDINGS_KEY = 'history-recordings' as const;
 
-export function useHistoryList(page: number, pageSize = 20) {
+export function useHistoryList(page: number, pageSize = 20, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: [HISTORY_LIST_KEY, page, pageSize],
+    enabled: options?.enabled ?? true,
     queryFn: ({ signal }) => historyApi.list({ page, pageSize }, signal),
     placeholderData: keepPreviousData,
     staleTime: 30_000,

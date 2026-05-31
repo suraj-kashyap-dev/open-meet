@@ -39,6 +39,22 @@ test.describe('Web app shell', () => {
 
     await page.getByRole('button', { name: 'Search' }).click();
 
-    await expect(page.getByPlaceholder('Type a command or meeting code…')).toBeVisible();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByRole('heading', { name: 'Search', exact: true })).toBeVisible();
+    await expect(dialog.getByPlaceholder('Type a command or meeting code…')).toBeVisible();
+    await expect(dialog.getByText('New meeting')).toBeVisible();
+    await expect(dialog.getByText('Schedule a meeting')).toBeVisible();
+    await expect(dialog.getByText('New chat')).toBeVisible();
+  });
+
+  test('should surface chat and meeting results inside the command palette', async ({ page }) => {
+    await mockWebApi(page);
+    await page.goto('/en/chat');
+
+    await page.getByRole('button', { name: 'Search' }).click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Grace Hopper')).toBeVisible();
+    await expect(dialog.getByText('Quarterly review')).toBeVisible();
   });
 });
