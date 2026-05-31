@@ -20,7 +20,10 @@ import { ChatPermissionsRepository } from './chat-permissions.repository';
 export class ChatPermissionsService {
   constructor(private readonly repo: ChatPermissionsRepository) {}
 
-  /** Throws unless `actor` may open/continue a 1:1 DM with `target`. */
+  /**
+   * Open DMs: any user may message any other user. The only guards are
+   * structural — you can't DM yourself, and the target must exist.
+   */
   async assertCanDirectMessage(actorId: string, targetId: string): Promise<void> {
     if (actorId === targetId) {
       throw new BadRequestException({
@@ -29,36 +32,12 @@ export class ChatPermissionsService {
       });
     }
 
-    const [actor, target] = await Promise.all([
-      this.repo.findUserBasics(actorId),
-      this.repo.findUserBasics(targetId),
-    ]);
+    const target = await this.repo.findUserBasics(targetId);
 
     if (!target) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
         message: 'User not found.',
-      });
-    }
-
-    if (actor?.chatDisabled || target.chatDisabled) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.CHAT_DISABLED,
-        message: 'Direct messages are disabled for this user.',
-      });
-    }
-
-    if (!target.allowDirectMessages) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.FORBIDDEN,
-        message: 'This user does not accept direct messages.',
-      });
-    }
-
-    if (!(await this.repo.haveSharedSurface(actorId, targetId))) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.NOT_TEAMMATES,
-        message: 'You can only message people you share a team or group with.',
       });
     }
   }
@@ -80,50 +59,17 @@ export class ChatPermissionsService {
     return membership;
   }
 
-  /** Write gate: membership plus the user not being chat-disabled. */
+  /**
+   * Write gate: the only requirement to post is being a member of the
+   * conversation. Chat is otherwise open.
+   */
   async assertCanPost(conversationId: string, userId: string): Promise<ConversationMember> {
-    const membership = await this.assertConversationMember(conversationId, userId);
-    const [user, directPeer] = await Promise.all([
-      this.repo.findUserBasics(userId),
-      this.repo.getDirectPeer(conversationId, userId),
-    ]);
-
-    if (user?.chatDisabled) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.CHAT_DISABLED,
-        message: 'Your chat access has been disabled.',
-      });
-    }
-
-    if (directPeer && !directPeer.allowDirectMessages) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.FORBIDDEN,
-        message: 'This user does not accept direct messages.',
-      });
-    }
-
-    return membership;
+    return this.assertConversationMember(conversationId, userId);
   }
 
-  /** User-initiated group creation: blocked when the user is chatDisabled or
-   * their per-user `canCreateGroups` flag is off. Admins use `/api/admin/groups`. */
-  async assertCanCreateGroup(userId: string): Promise<void> {
-    const user = await this.repo.findUserBasics(userId);
-
-    if (user?.chatDisabled) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.CHAT_DISABLED,
-        message: 'Your chat access has been disabled.',
-      });
-    }
-
-    const allowed = await this.repo.getUserCanCreateGroups(userId);
-    if (!allowed) {
-      throw new ForbiddenException({
-        code: ApiErrorCode.GROUPS_DISABLED,
-        message: 'You do not have permission to create groups.',
-      });
-    }
+  /** Group creation is open to every user — no per-user gate. */
+  async assertCanCreateGroup(_userId: string): Promise<void> {
+    // Intentionally unrestricted: any authenticated user may create a group.
   }
 
   /** Group-management gate: viewer must be a member with role=ADMIN of a GROUP. */

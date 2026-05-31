@@ -115,10 +115,9 @@ export function useCurrentUser() {
   return { ...rest, data: data?.user ?? null };
 }
 
-/** Whether the current user may create group conversations (admin-set flag). */
+/** Group creation is open to every user on the web app. */
 export function useCanCreateGroups(): boolean {
-  const { data } = useCurrentUserMe();
-  return data?.canCreateGroups ?? false;
+  return true;
 }
 
 export function useGoogleAuthEnabled() {
