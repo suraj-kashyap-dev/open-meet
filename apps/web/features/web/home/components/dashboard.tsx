@@ -181,12 +181,12 @@ function ActionCard({
             </span>
           </div>
 
-          <div className="mt-auto flex flex-col gap-2 sm:flex-row sm:items-center">
+          <div className="mt-auto grid gap-2 sm:grid-cols-2">
             <ShimmerButton
               type="button"
               onClick={onCreate}
               disabled={isCreating}
-              className="w-full sm:w-auto sm:min-w-45"
+              className="h-11 w-full"
             >
               {isCreating ? (
                 <>
@@ -205,7 +205,7 @@ function ActionCard({
               type="button"
               variant="outline"
               onClick={onSchedule}
-              className="w-full sm:w-auto"
+              className="h-11 w-full"
             >
               <CalendarClock className="h-3.5 w-3.5" />
               {t('instant.schedule-for-later')}
@@ -257,9 +257,8 @@ function ActionCard({
 
             <Button
               type="submit"
-              size="lg"
               disabled={!code.trim() || isJoining}
-              className="sm:min-w-27.5"
+              className="h-11 w-full sm:w-auto sm:min-w-27.5"
             >
               {isJoining ? (
                 <>
