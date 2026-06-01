@@ -207,6 +207,7 @@ export function MessageList({
         currentUserId={currentUserId}
         isGroup={isGroup}
         onOpenMessage={jumpToMessage}
+        onUnpin={(messageId) => pin.mutate({ messageId, pinned: false })}
       />
 
       <div className="relative flex-1 overflow-hidden">

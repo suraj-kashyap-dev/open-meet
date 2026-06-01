@@ -83,8 +83,9 @@
     "forward": "전달"
   },
   "pins": {
-    "previous": "이전 고정 메시지",
-    "next": "다음 고정 메시지"
+    "view-all": "고정된 메시지 모두 보기",
+    "title": "고정된 메시지",
+    "empty": "아직 고정된 메시지가 없습니다."
   },
   "priority": {
     "normal": "표준",

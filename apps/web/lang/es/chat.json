@@ -83,8 +83,9 @@
     "forward": "Reenviar"
   },
   "pins": {
-    "previous": "Mensaje fijado anterior",
-    "next": "Siguiente mensaje fijado"
+    "view-all": "Ver todos los mensajes fijados",
+    "title": "Mensajes fijados",
+    "empty": "Aún no hay mensajes fijados."
   },
   "priority": {
     "normal": "Estándar",

@@ -83,8 +83,9 @@
     "forward": "Teruskan"
   },
   "pins": {
-    "previous": "Pesan sematan sebelumnya",
-    "next": "Pesan sematan berikutnya"
+    "view-all": "Lihat semua pesan tersemat",
+    "title": "Pesan tersemat",
+    "empty": "Belum ada pesan tersemat."
   },
   "priority": {
     "normal": "Standar",

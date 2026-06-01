@@ -83,8 +83,9 @@
     "forward": "转发"
   },
   "pins": {
-    "previous": "上一条置顶消息",
-    "next": "下一条置顶消息"
+    "view-all": "查看所有置顶消息",
+    "title": "置顶消息",
+    "empty": "暂无置顶消息。"
   },
   "priority": {
     "normal": "标准",

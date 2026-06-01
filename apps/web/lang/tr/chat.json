@@ -83,8 +83,9 @@
     "forward": "İlet"
   },
   "pins": {
-    "previous": "Önceki sabitlenen mesaj",
-    "next": "Sonraki sabitlenen mesaj"
+    "view-all": "Tüm sabitlenen mesajları görüntüle",
+    "title": "Sabitlenen mesajlar",
+    "empty": "Henüz sabitlenen mesaj yok."
   },
   "priority": {
     "normal": "Standart",

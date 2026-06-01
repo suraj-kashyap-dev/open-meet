@@ -337,43 +337,32 @@
     }
   }
 
+  /* Flash-and-fade glow drawn OUTSIDE the bubble (no layout impact). */
   @keyframes chat-jump-target {
     0% {
-      transform: translateY(4px) scale(0.985);
-      background-color: color-mix(in srgb, var(--color-accent) 0%, transparent);
-      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent);
+      opacity: 0;
     }
 
-    38% {
-      transform: translateY(0) scale(1);
-      background-color: color-mix(in srgb, var(--color-accent) 16%, transparent);
-      box-shadow: 0 18px 36px -28px color-mix(in srgb, var(--color-accent) 38%, transparent);
+    28% {
+      opacity: 1;
     }
 
     100% {
-      transform: translateY(0) scale(1);
-      background-color: color-mix(in srgb, var(--color-accent) 10%, transparent);
-      box-shadow: 0 10px 22px -26px color-mix(in srgb, var(--color-accent) 20%, transparent);
+      opacity: 0;
     }
   }
 
   @keyframes chat-jump-surface {
     0% {
-      box-shadow:
-        0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent),
-        0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent);
     }
 
-    38% {
-      box-shadow:
-        0 0 0 2px color-mix(in srgb, var(--color-accent) 20%, transparent),
-        0 14px 30px -24px color-mix(in srgb, var(--color-accent) 22%, transparent);
+    28% {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 35%, transparent);
     }
 
     100% {
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent),
-        0 8px 20px -24px color-mix(in srgb, var(--color-accent) 14%, transparent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent);
     }
   }
 
@@ -413,57 +402,66 @@
     animation: aurora 18s ease-in-out infinite;
   }
 
+  /*
+   * The jump highlight must never reflow the message. `.chat-jump-target` only
+   * establishes a positioning context; the visible highlight is an overlay glow
+   * drawn just OUTSIDE the bubble via `::after` (negative inset), so the layout
+   * is untouched. No side accent bar, no padding, no background on the element.
+   */
   .chat-jump-target {
     position: relative;
-    border-radius: 1.5rem;
-    padding: 0.25rem 0.35rem;
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--color-accent) 12%, transparent) 0%,
-      color-mix(in srgb, var(--color-accent) 7%, transparent) 100%
-    );
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent),
-      0 8px 20px -28px color-mix(in srgb, var(--color-accent) 12%, transparent);
-    animation: chat-jump-target 640ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform, background-color, box-shadow;
-  }
-
-  .chat-jump-target::before {
-    position: absolute;
-    top: 0.55rem;
-    bottom: 0.55rem;
-    width: 3px;
-    content: '';
-    border-radius: 9999px;
-    background-color: color-mix(in srgb, var(--color-accent) 82%, transparent);
-    opacity: 0.92;
-    pointer-events: none;
-  }
-
-  .chat-jump-target-start::before {
-    left: 0.18rem;
-  }
-
-  .chat-jump-target-end::before {
-    right: 0.18rem;
   }
 
   .chat-jump-target::after {
     position: absolute;
-    inset: 0;
+    inset: -0.3rem -0.45rem;
     content: '';
-    border-radius: inherit;
+    border-radius: 1.4rem;
     pointer-events: none;
     box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, white 12%, transparent),
-      inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
+      0 0 0 1.5px color-mix(in srgb, var(--color-accent) 42%, transparent),
+      0 18px 42px -28px color-mix(in srgb, var(--color-accent) 55%, transparent);
+    animation: chat-jump-target 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity;
   }
 
   .chat-jump-surface {
     position: relative;
-    animation: chat-jump-surface 640ms cubic-bezier(0.22, 1, 0.36, 1);
+    border-radius: 1rem;
+    animation: chat-jump-surface 1100ms cubic-bezier(0.22, 1, 0.36, 1);
     will-change: box-shadow;
+  }
+
+  /* Pinned-bar preview transition when cycling between pinned messages. */
+  @keyframes chat-pin-swap {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .chat-pin-swap {
+    animation: chat-pin-swap 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chat-jump-target::after,
+    .chat-jump-surface,
+    .chat-pin-swap {
+      animation: none;
+      transform: none;
+    }
+
+    /* Keep a static (non-animated) glow so the jump target is still obvious. */
+    .chat-jump-target::after {
+      opacity: 1;
+    }
   }
 
   /* - Gradient text - */

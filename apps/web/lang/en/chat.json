@@ -96,8 +96,9 @@
     "forward": "Forward"
   },
   "pins": {
-    "previous": "Previous pinned message",
-    "next": "Next pinned message"
+    "view-all": "View all pinned messages",
+    "title": "Pinned messages",
+    "empty": "No pinned messages yet."
   },
   "priority": {
     "normal": "Standard",

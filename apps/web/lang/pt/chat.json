@@ -83,8 +83,9 @@
     "forward": "Encaminhar"
   },
   "pins": {
-    "previous": "Mensagem fixada anterior",
-    "next": "Próxima mensagem fixada"
+    "view-all": "Ver todas as mensagens fixadas",
+    "title": "Mensagens fixadas",
+    "empty": "Nenhuma mensagem fixada ainda."
   },
   "priority": {
     "normal": "Padrão",

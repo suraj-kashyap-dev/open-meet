@@ -83,8 +83,9 @@
     "forward": "Weiterleiten"
   },
   "pins": {
-    "previous": "Vorherige angeheftete Nachricht",
-    "next": "Nächste angeheftete Nachricht"
+    "view-all": "Alle angehefteten Nachrichten anzeigen",
+    "title": "Angeheftete Nachrichten",
+    "empty": "Noch keine angehefteten Nachrichten."
   },
   "priority": {
     "normal": "Standard",

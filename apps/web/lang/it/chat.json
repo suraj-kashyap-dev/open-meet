@@ -83,8 +83,9 @@
     "forward": "Inoltra"
   },
   "pins": {
-    "previous": "Messaggio fissato precedente",
-    "next": "Messaggio fissato successivo"
+    "view-all": "Visualizza tutti i messaggi fissati",
+    "title": "Messaggi fissati",
+    "empty": "Ancora nessun messaggio fissato."
   },
   "priority": {
     "normal": "Standard",

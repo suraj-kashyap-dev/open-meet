@@ -83,8 +83,9 @@
     "forward": "Transférer"
   },
   "pins": {
-    "previous": "Message épinglé précédent",
-    "next": "Message épinglé suivant"
+    "view-all": "Voir tous les messages épinglés",
+    "title": "Messages épinglés",
+    "empty": "Aucun message épinglé pour l'instant."
   },
   "priority": {
     "normal": "Standard",
