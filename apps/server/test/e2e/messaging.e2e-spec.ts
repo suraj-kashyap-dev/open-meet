@@ -8,7 +8,7 @@ import { createTestApp, http, registerUser, resetDb } from './setup-app';
 describe('Messaging / persistent chat (e2e)', () => {
   let app: NestFastifyApplication;
 
-  // Two teammates (share a team) + one outsider (shares no team with anyone).
+  // Two teammates (share a department) + one outsider (shares no department with anyone).
   let alice: { id: string; cookie: string };
   let bob: { id: string; cookie: string };
   let outsider: { id: string; cookie: string };
@@ -21,15 +21,15 @@ describe('Messaging / persistent chat (e2e)', () => {
     await app.close();
   });
 
-  // Admin-managed teams gate DMs, so seed a shared Team + TeamMember rows
-  // directly via Prisma (there is no client-facing endpoint to create teams).
-  async function seedSharedTeam(userIds: string[]): Promise<string> {
+  // Admin-managed departments gate DMs, so seed a shared Department + DepartmentMember rows
+  // directly via Prisma (there is no client-facing endpoint to create departments).
+  async function seedSharedDepartment(userIds: string[]): Promise<string> {
     const prisma = app.get(PrismaService);
-    const team = await prisma.team.create({ data: { name: 'Engineering' } });
-    await prisma.teamMember.createMany({
-      data: userIds.map((userId) => ({ teamId: team.id, userId })),
+    const department = await prisma.department.create({ data: { name: 'Engineering' } });
+    await prisma.departmentMember.createMany({
+      data: userIds.map((userId) => ({ departmentId: department.id, userId })),
     });
-    return team.id;
+    return department.id;
   }
 
   beforeEach(async () => {
@@ -55,8 +55,8 @@ describe('Messaging / persistent chat (e2e)', () => {
     bob = { id: b.user!.id, cookie: b.cookie };
     outsider = { id: c.user!.id, cookie: c.cookie };
 
-    // Alice and Bob share a team; the outsider is left out on purpose.
-    await seedSharedTeam([alice.id, bob.id]);
+    // Alice and Bob share a department; the outsider is left out on purpose.
+    await seedSharedDepartment([alice.id, bob.id]);
   });
 
   function openDirect(cookie: string, targetUserId: string) {
@@ -79,8 +79,24 @@ describe('Messaging / persistent chat (e2e)', () => {
       .set('Cookie', cookie);
   }
 
+  function listConversations(cookie: string) {
+    return http(app).get('/api/messaging/conversations').set('Cookie', cookie);
+  }
+
+  function clearConversation(cookie: string, conversationId: string) {
+    return http(app)
+      .post(`/api/messaging/conversations/${conversationId}/clear`)
+      .set('Cookie', cookie);
+  }
+
+  function deleteConversation(cookie: string, conversationId: string) {
+    return http(app)
+      .post(`/api/messaging/conversations/${conversationId}/delete`)
+      .set('Cookie', cookie);
+  }
+
   describe('POST /api/messaging/conversations/direct', () => {
-    it('should open a DIRECT conversation with both users as members when the two share a team', async () => {
+    it('should open a DIRECT conversation with both users as members when the two share a department', async () => {
       const res = await openDirect(alice.cookie, bob.id);
 
       expect(res.status).toBe(201);
@@ -108,7 +124,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       expect(fromBob.body.data.id).toBe(fromAlice.body.data.id);
     });
 
-    it('should allow a DM with anyone, even with no shared team or group (chat is open)', async () => {
+    it('should allow a DM with anyone, even with no shared department or group (chat is open)', async () => {
       const res = await openDirect(alice.cookie, outsider.id);
 
       expect(res.status).toBe(201);
@@ -231,6 +247,91 @@ describe('Messaging / persistent chat (e2e)', () => {
     });
   });
 
+  describe('POST /api/messaging/conversations/:id/clear', () => {
+    it('should clear history only for the caller and only show later messages afterwards', async () => {
+      const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
+      await sendMessage(alice.cookie, conversationId, 'Before clear');
+      await sendMessage(bob.cookie, conversationId, 'Still before clear');
+
+      const cleared = await clearConversation(alice.cookie, conversationId);
+      expect(cleared.status).toBe(201);
+      expect(cleared.body.success).toBe(true);
+      expect(cleared.body.data.ok).toBe(true);
+
+      const aliceAfterClear = await history(alice.cookie, conversationId);
+      expect(aliceAfterClear.status).toBe(200);
+      expect(aliceAfterClear.body.data.items).toHaveLength(0);
+
+      const bobAfterClear = await history(bob.cookie, conversationId);
+      expect(bobAfterClear.status).toBe(200);
+      expect(bobAfterClear.body.data.items).toHaveLength(2);
+
+      const aliceList = await listConversations(alice.cookie);
+      const aliceConversation = (
+        aliceList.body.data.items as { id: string; lastMessage: unknown; unreadCount: number }[]
+      ).find((conversation) => conversation.id === conversationId);
+      expect(aliceConversation).toBeDefined();
+      expect(aliceConversation!.lastMessage).toBeNull();
+      expect(aliceConversation!.unreadCount).toBe(0);
+
+      await sendMessage(bob.cookie, conversationId, 'After clear');
+
+      const aliceAfterNewMessage = await history(alice.cookie, conversationId);
+      expect(
+        (aliceAfterNewMessage.body.data.items as { content: string }[]).map(
+          (message) => message.content,
+        ),
+      ).toEqual(['After clear']);
+    });
+  });
+
+  describe('POST /api/messaging/conversations/:id/delete', () => {
+    it('should remove the chat only for the caller and revive it on later activity', async () => {
+      const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
+      await sendMessage(alice.cookie, conversationId, 'Before delete');
+
+      const deleted = await deleteConversation(alice.cookie, conversationId);
+      expect(deleted.status).toBe(201);
+      expect(deleted.body.success).toBe(true);
+      expect(deleted.body.data.ok).toBe(true);
+
+      const aliceListAfterDelete = await listConversations(alice.cookie);
+      const aliceIds = (aliceListAfterDelete.body.data.items as { id: string }[]).map(
+        (conversation) => conversation.id,
+      );
+      expect(aliceIds).not.toContain(conversationId);
+
+      const bobList = await listConversations(bob.cookie);
+      const bobIds = (bobList.body.data.items as { id: string }[]).map(
+        (conversation) => conversation.id,
+      );
+      expect(bobIds).toContain(conversationId);
+
+      const aliceHistoryAfterDelete = await history(alice.cookie, conversationId);
+      expect(aliceHistoryAfterDelete.status).toBe(200);
+      expect(aliceHistoryAfterDelete.body.data.items).toHaveLength(0);
+
+      await sendMessage(bob.cookie, conversationId, 'After delete');
+
+      const aliceListAfterRevive = await listConversations(alice.cookie);
+      const revived = (
+        aliceListAfterRevive.body.data.items as {
+          id: string;
+          lastMessage: { content: string } | null;
+        }[]
+      ).find((conversation) => conversation.id === conversationId);
+      expect(revived).toBeDefined();
+      expect(revived!.lastMessage?.content).toBe('After delete');
+
+      const aliceHistoryAfterRevive = await history(alice.cookie, conversationId);
+      expect(
+        (aliceHistoryAfterRevive.body.data.items as { content: string }[]).map(
+          (message) => message.content,
+        ),
+      ).toEqual(['After delete']);
+    });
+  });
+
   describe('GET /api/messaging/teammates', () => {
     it('should return every other user (open directory), excluding only the caller', async () => {
       const res = await http(app).get('/api/messaging/teammates').set('Cookie', alice.cookie);
@@ -238,7 +339,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       expect(res.status).toBe(200);
       const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
       expect(ids).toContain(bob.id);
-      // Chat is open — even a user who shares no team is reachable.
+      // Chat is open - even a user who shares no department is reachable.
       expect(ids).toContain(outsider.id);
       expect(ids).not.toContain(alice.id);
     });

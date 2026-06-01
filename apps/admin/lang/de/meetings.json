@@ -76,7 +76,7 @@
     "title": "Alle aktiven Besprechungen beenden?",
     "description": "Dies markiert alle Besprechungen mit Status ACTIVE als ENDED und schließt ihre LiveKit-Räume. Alle Teilnehmer, die sich derzeit in einem Anruf befinden, werden sofort getrennt.",
     "active-summary": "{count, plural, one {# Besprechung} other {# Besprechungen}} derzeit aktiv.",
-    "none-active": "Derzeit keine aktiven Besprechungen — es wird nichts passieren.",
+    "none-active": "Derzeit keine aktiven Besprechungen - es wird nichts passieren.",
     "cancel": "Abbrechen",
     "submit": "Alle aktiven beenden",
     "submitting": "Wird beendet…",

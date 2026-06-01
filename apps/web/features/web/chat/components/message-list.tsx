@@ -12,12 +12,14 @@ import { buildMessageRows } from '@/components/shared/chat';
 
 import { ForwardDialog } from './forward-dialog';
 import { MessageBubble } from './message-bubble';
+import { PinnedMessagesBar } from './pinned-messages-bar';
 import {
   useConversationMessages,
   useDeleteMessage,
   useEditMessage,
   useMarkRead,
   usePollVote,
+  usePins,
   useToggleReaction,
   useTogglePin,
   useToggleSave,
@@ -42,7 +44,11 @@ export function MessageList({
 }) {
   const t = useTranslations('chat');
   const query = useConversationMessages(conversationId);
+  const pins = usePins(conversationId);
   const formatSize = useFormatSize();
+  const fetchNextPage = query.fetchNextPage;
+  const hasNextPage = query.hasNextPage;
+  const isFetchingNextPage = query.isFetchingNextPage;
 
   const react = useToggleReaction(conversationId);
   const edit = useEditMessage(conversationId);
@@ -69,7 +75,10 @@ export function MessageList({
   const pinnedRef = useRef(true);
   const restoringRef = useRef<number | null>(null);
   const lastMarkedRef = useRef<string | null>(null);
+  const highlightNonceRef = useRef(0);
   const [showJump, setShowJump] = useState(false);
+  const [pendingJumpId, setPendingJumpId] = useState<string | null>(null);
+  const [highlighted, setHighlighted] = useState<{ id: string; nonce: number } | null>(null);
 
   const isPinned = useCallback(() => {
     const el = scrollRef.current;
@@ -117,9 +126,9 @@ export function MessageList({
       setShowJump(false);
     }
 
-    if (el.scrollTop < 80 && query.hasNextPage && !query.isFetchingNextPage) {
+    if (el.scrollTop < 80 && hasNextPage && !isFetchingNextPage) {
       restoringRef.current = el.scrollHeight - el.scrollTop;
-      void query.fetchNextPage();
+      void fetchNextPage();
     }
   };
 
@@ -131,35 +140,103 @@ export function MessageList({
     setShowJump(false);
   };
 
+  const revealMessage = useCallback((id: string) => {
+    const el = scrollRef.current?.querySelector<HTMLElement>(`[data-mid="${id}"]`);
+
+    if (!el) {
+      return false;
+    }
+
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    highlightNonceRef.current += 1;
+    setHighlighted({ id, nonce: highlightNonceRef.current });
+    return true;
+  }, []);
+
+  useEffect(() => {
+    if (!highlighted) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => setHighlighted(null), 1200);
+    return () => window.clearTimeout(timeout);
+  }, [highlighted]);
+
+  useEffect(() => {
+    if (!pendingJumpId) {
+      return;
+    }
+
+    if (revealMessage(pendingJumpId)) {
+      setPendingJumpId(null);
+      return;
+    }
+
+    if (!hasNextPage && !isFetchingNextPage) {
+      setPendingJumpId(null);
+      return;
+    }
+
+    if (isFetchingNextPage) {
+      return;
+    }
+
+    const el = scrollRef.current;
+
+    if (el) {
+      restoringRef.current = el.scrollHeight - el.scrollTop;
+    }
+
+    pinnedRef.current = false;
+    setShowJump(true);
+    void fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage, pendingJumpId, revealMessage]);
+
   const jumpToMessage = (id: string) => {
-    const el = scrollRef.current?.querySelector(`[data-mid="${id}"]`);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (revealMessage(id)) {
+      return;
+    }
+
+    setPendingJumpId(id);
   };
 
   return (
-    <div className="relative flex-1 overflow-hidden">
-      <div
-        ref={scrollRef}
-        onScroll={onScroll}
-        className="absolute inset-0 overflow-y-auto px-3 py-4"
-      >
-        {query.isFetchingNextPage ? (
-          <div className="flex justify-center py-2">
-            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-          </div>
-        ) : null}
+    <div className="flex min-h-0 flex-1 flex-col">
+      <PinnedMessagesBar
+        items={pins.data?.items ?? []}
+        currentUserId={currentUserId}
+        isGroup={isGroup}
+        onOpenMessage={jumpToMessage}
+      />
 
-        {messages.length === 0 && !query.isLoading ? (
-          <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
-            {t('view.no-messages')}
-          </div>
-        ) : (
-          <ul className="space-y-1">
-            {rows.map((row) => (
-              <div key={row.key} data-mid={row.message.id}>
+      <div className="relative flex-1 overflow-hidden">
+        <div
+          ref={scrollRef}
+          onScroll={onScroll}
+          className="absolute inset-0 overflow-y-auto px-3 py-4"
+        >
+          {query.isFetchingNextPage ? (
+            <div className="flex justify-center py-2">
+              <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+            </div>
+          ) : null}
+
+          {messages.length === 0 && !query.isLoading ? (
+            <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
+              {t('view.no-messages')}
+            </div>
+          ) : (
+            <ul className="space-y-1">
+              {rows.map((row) => (
                 <MessageBubble
+                  key={
+                    highlighted?.id === row.message.id
+                      ? `${row.key}:${highlighted.nonce}`
+                      : row.key
+                  }
                   message={row.message}
                   isMe={row.isMe}
+                  highlighted={highlighted?.id === row.message.id}
                   isGroupHead={row.isGroupHead}
                   isGroupTail={row.isGroupTail}
                   showSenderName={isGroup && !row.isMe}
@@ -182,24 +259,24 @@ export function MessageList({
                   onSave={(messageId, saved) => save.mutate({ messageId, saved })}
                   onForward={setForwarding}
                 />
-              </div>
-            ))}
-          </ul>
-        )}
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <ForwardDialog message={forwarding} onClose={() => setForwarding(null)} />
+
+        {showJump ? (
+          <Button
+            size="icon"
+            onClick={scrollToBottom}
+            aria-label={t('view.jump-to-latest')}
+            className="absolute bottom-3 end-3 h-8 w-8 rounded-full shadow-lg"
+          >
+            <ArrowDown className="h-4 w-4" />
+          </Button>
+        ) : null}
       </div>
-
-      <ForwardDialog message={forwarding} onClose={() => setForwarding(null)} />
-
-      {showJump ? (
-        <Button
-          size="icon"
-          onClick={scrollToBottom}
-          aria-label={t('view.jump-to-latest')}
-          className="absolute bottom-3 end-3 h-8 w-8 rounded-full shadow-lg"
-        >
-          <ArrowDown className="h-4 w-4" />
-        </Button>
-      ) : null}
     </div>
   );
 }

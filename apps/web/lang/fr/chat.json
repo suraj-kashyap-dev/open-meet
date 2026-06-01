@@ -41,6 +41,10 @@
     "actions": "Actions de conversation",
     "clear": "Vider la discussion",
     "delete": "Supprimer la discussion",
+    "clear-confirm-title": "Vider la discussion ?",
+    "clear-confirm-description": "Cela supprime les messages actuels uniquement de votre vue. Les autres participants les verront toujours.",
+    "delete-confirm-title": "Supprimer la discussion ?",
+    "delete-confirm-description": "Cela supprime la discussion de votre liste de conversations. Cette action est irréversible.",
     "clear-confirmed": "Messages effacés de votre vue",
     "delete-confirmed": "Discussion supprimée"
   },
@@ -77,6 +81,10 @@
     "save-message": "Enregistrer",
     "unsave-message": "Retirer des enregistrés",
     "forward": "Transférer"
+  },
+  "pins": {
+    "previous": "Message épinglé précédent",
+    "next": "Message épinglé suivant"
   },
   "priority": {
     "normal": "Standard",
@@ -137,8 +145,8 @@
     "description-label": "Description (facultatif)",
     "description-placeholder": "De quoi parle ce groupe ?",
     "members-label": "Membres",
-    "members-placeholder": "Rechercher des coéquipiers…",
-    "no-teammates": "Aucun coéquipier trouvé.",
+    "members-placeholder": "Rechercher des personnes…",
+    "no-teammates": "Aucune personne trouvée.",
     "create-submit": "Créer le groupe",
     "create-failed": "Impossible de créer le groupe",
     "cancel": "Annuler",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "Nouvelle conversation",
-    "search": "Rechercher des coéquipiers",
-    "no-teammates": "Aucun coéquipier trouvé.",
+    "search": "Rechercher des personnes",
+    "no-teammates": "Aucune personne trouvée.",
     "disabled": "Indisponible"
   },
   "new-chat": {
     "title": "Nouvelle discussion",
     "to-label": "À :",
     "to-placeholder": "Saisir un nom ou un e-mail",
-    "no-teammates": "Aucun coéquipier trouvé.",
+    "no-teammates": "Aucune personne trouvée.",
     "disabled": "Indisponible",
     "empty-title": "Vous démarrez une nouvelle conversation",
     "empty-subtitle": "Saisissez votre premier message ci-dessous.",
     "send-placeholder": "Saisissez votre premier message…"
   },
-  "teams": {
-    "title": "Équipes",
-    "subtitle": "Vos équipes et canaux.",
-    "empty": "Vous n'êtes encore membre d'aucune équipe.",
-    "empty-title": "Aucune équipe pour l'instant",
-    "empty-subtitle": "Un administrateur vous ajoutera à une équipe pour commencer à collaborer.",
+  "departments": {
+    "title": "Départements",
+    "subtitle": "Vos départements et canaux.",
+    "empty": "Vous n'êtes encore membre d'aucun département.",
+    "empty-title": "Aucun département pour l'instant",
+    "empty-subtitle": "Un administrateur vous ajoutera à un département pour commencer à collaborer.",
     "no-channels": "Aucun canal pour l'instant."
   },
   "activity": {

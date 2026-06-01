@@ -34,8 +34,8 @@
     "description-label": "Description",
     "description-placeholder": "Que peut faire ce rôle ?",
     "type-label": "Accès",
-    "type-all": "Accès complet — accorde toutes les autorisations actuelles et futures.",
-    "type-custom": "Personnalisé — choisissez exactement ce qu'il peut faire."
+    "type-all": "Accès complet - accorde toutes les autorisations actuelles et futures.",
+    "type-custom": "Personnalisé - choisissez exactement ce qu'il peut faire."
   },
   "edit": {
     "title": "Modifier le rôle",
@@ -81,13 +81,13 @@
       "delete": "Supprimer des réunions",
       "kick": "Expulser des participants"
     },
-    "teams": {
-      "_self": "Équipes",
-      "view": "Voir les équipes",
-      "create": "Créer des équipes",
-      "update": "Mettre à jour les équipes",
-      "delete": "Supprimer des équipes",
-      "manage-members": "Gérer les membres de l'équipe",
+    "departments": {
+      "_self": "Départements",
+      "view": "Voir les départements",
+      "create": "Créer des départements",
+      "update": "Mettre à jour les départements",
+      "delete": "Supprimer des départements",
+      "manage-members": "Gérer les membres du département",
       "channels": {
         "_self": "Canaux",
         "view": "Voir les canaux",

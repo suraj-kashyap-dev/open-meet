@@ -26,7 +26,7 @@ export class UploadsRepository {
   }
 
   // Attach previously-uploaded files to a message, but only the ones still
-  // unclaimed AND owned by the uploader — prevents stealing another user's
+  // unclaimed AND owned by the uploader - prevents stealing another user's
   // attachment by guessing its id. Returns how many rows were actually linked.
   async claim(attachmentIds: string[], uploaderId: string, messageId: string): Promise<number> {
     const result = await this.prisma.attachment.updateMany({

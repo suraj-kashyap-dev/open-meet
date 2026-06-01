@@ -1,11 +1,19 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, BarChart3, Eraser, Info, MoreVertical, Trash2, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
+import { Button } from '@open-meet/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@open-meet/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,17 +29,18 @@ import { formatTime } from '@/components/shared/chat';
 import { Link, useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
-import { chatKeys, useConversationState, useCreatePoll } from '../hooks/use-chat';
+import {
+  useClearConversation,
+  useCreatePoll,
+  useDeleteConversation,
+} from '../hooks/use-chat';
 import { conversationDisplay } from '../lib/conversation-display';
 import { formatPresenceLabel } from '../lib/presence';
 import { useChatStore } from '../stores';
 import { PollComposer } from './poll-composer';
 import { PresenceDot } from './presence-dot';
 
-type MessagesCache = {
-  pages: { items: unknown[]; nextCursor: string | null }[];
-  pageParams: unknown[];
-};
+type ConfirmAction = 'clear' | 'delete';
 
 export function ConversationHeader({
   conversation,
@@ -41,18 +50,21 @@ export function ConversationHeader({
   currentUserId: string | undefined;
 }) {
   const t = useTranslations('chat');
-  const qc = useQueryClient();
   const router = useRouter();
-  const state = useConversationState();
+  const clearConversation = useClearConversation();
+  const deleteConversation = useDeleteConversation();
   const createPoll = useCreatePoll(conversation.id);
   const [pollOpen, setPollOpen] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const display = conversationDisplay(conversation, currentUserId);
   const presence = useChatStore((s) =>
     display.peer ? s.presenceByUser[display.peer.userId] : undefined,
   );
   const toggleInfo = useChatStore((s) => s.toggleInfo);
-  const setInfoOpen = useChatStore((s) => s.setInfoOpen);
+
+  const handleApiError = (err: unknown, fallback: string) =>
+    toast.error(err instanceof ApiClientError ? err.message : fallback);
 
   const subtitle = display.isGroup
     ? t('header.members', { count: conversation.members.length })
@@ -61,29 +73,51 @@ export function ConversationHeader({
       });
 
   const clearChat = () => {
-    qc.setQueryData<MessagesCache>(chatKeys.messages(conversation.id), () => ({
-      pages: [{ items: [], nextCursor: null }],
-      pageParams: [undefined],
-    }));
-    toast(t('header.clear-confirmed'));
+    clearConversation.mutate(conversation.id, {
+      onSuccess: () => {
+        setConfirmAction(null);
+        toast.success(t('header.clear-confirmed'));
+      },
+      onError: (err) => handleApiError(err, t('group.action-failed')),
+    });
   };
 
   const deleteChat = () => {
-    state.mutate(
-      { conversationId: conversation.id, state: { hidden: true } },
-      {
-        onSuccess: () => {
-          router.push('/chat');
-          toast(t('header.delete-confirmed'), {
-            action: {
-              label: t('list.hide-undo'),
-              onClick: () =>
-                state.mutate({ conversationId: conversation.id, state: { hidden: false } }),
-            },
-          });
-        },
+    deleteConversation.mutate(conversation.id, {
+      onSuccess: () => {
+        setConfirmAction(null);
+        router.push('/chat');
+        toast.success(t('header.delete-confirmed'));
       },
-    );
+      onError: (err) => handleApiError(err, t('group.action-failed')),
+    });
+  };
+
+  const confirmDialog =
+    confirmAction === 'clear'
+      ? {
+          title: t('header.clear-confirm-title'),
+          description: t('header.clear-confirm-description'),
+          actionLabel: t('header.clear'),
+          pending: clearConversation.isPending,
+          onConfirm: clearChat,
+        }
+      : confirmAction === 'delete'
+        ? {
+            title: t('header.delete-confirm-title'),
+            description: t('header.delete-confirm-description'),
+            actionLabel: t('header.delete'),
+            pending: deleteConversation.isPending,
+            onConfirm: deleteChat,
+          }
+        : null;
+
+  const closeConfirm = () => {
+    if (confirmDialog?.pending) {
+      return;
+    }
+
+    setConfirmAction(null);
   };
 
   return (
@@ -98,7 +132,7 @@ export function ConversationHeader({
 
       <button
         type="button"
-        onClick={() => setInfoOpen(true)}
+        onClick={toggleInfo}
         aria-label={t('header.info')}
         className="-mx-2 -my-1 me-auto flex min-w-0 items-center gap-3 rounded-md px-2 py-1 text-start transition-transform duration-100 hover:bg-muted active:scale-[0.98]"
       >
@@ -138,13 +172,17 @@ export function ConversationHeader({
             <BarChart3 className="me-2 h-4 w-4" />
             {t('poll.create')}
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={clearChat}>
+          <DropdownMenuItem
+            onSelect={() => setConfirmAction('clear')}
+            disabled={clearConversation.isPending}
+          >
             <Eraser className="me-2 h-4 w-4" />
             {t('header.clear')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onSelect={deleteChat}
+            onSelect={() => setConfirmAction('delete')}
+            disabled={deleteConversation.isPending}
             className="text-destructive focus:text-destructive"
           >
             <Trash2 className="me-2 h-4 w-4" />
@@ -165,6 +203,32 @@ export function ConversationHeader({
           });
         }}
       />
+
+      <Dialog
+        open={confirmAction !== null}
+        onOpenChange={(open) => (!open ? closeConfirm() : null)}
+      >
+        {confirmDialog ? (
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>{confirmDialog.title}</DialogTitle>
+              <DialogDescription>{confirmDialog.description}</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={closeConfirm} disabled={confirmDialog.pending}>
+                {t('group.cancel')}
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={confirmDialog.onConfirm}
+                disabled={confirmDialog.pending}
+              >
+                {confirmDialog.actionLabel}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        ) : null}
+      </Dialog>
     </header>
   );
 }

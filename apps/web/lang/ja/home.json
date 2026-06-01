@@ -15,7 +15,7 @@
     "badge": "即時",
     "eyebrow": "新しく始める",
     "title": "新しいミーティングを開始",
-    "description": "共有可能な新しいルームです。設定不要 — ルームが空になるとリンクは失効します。",
+    "description": "共有可能な新しいルームです。設定不要 - ルームが空になるとリンクは失効します。",
     "capacity": "最大 100 人",
     "secure": "エンドツーエンド暗号化",
     "creating": "作成中…",
@@ -111,7 +111,7 @@
     "yearly": "毎年"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "たった今",
     "minutes-ago": "{count} 分前",
     "hours-ago": "{count} 時間前",
@@ -170,7 +170,7 @@
     "title-required": "ミーティングにタイトルを付けてください",
     "valid-datetime": "有効な日時を選択してください",
     "future-datetime": "未来の日時を選択してください",
-    "scheduled-invites": "スケジュール完了 — {count, plural, one {# 人のゲスト} other {# 人のゲスト}} に招待状を送信しました",
+    "scheduled-invites": "スケジュール完了 - {count, plural, one {# 人のゲスト} other {# 人のゲスト}} に招待状を送信しました",
     "scheduled": "ミーティングをスケジュールしました",
     "schedule-error": "ミーティングをスケジュールできませんでした",
     "link-copied": "ミーティングリンクをコピーしました",

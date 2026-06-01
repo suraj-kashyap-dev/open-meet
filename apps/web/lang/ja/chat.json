@@ -41,6 +41,10 @@
     "actions": "会話のアクション",
     "clear": "チャットをクリア",
     "delete": "チャットを削除",
+    "clear-confirm-title": "チャットをクリアしますか?",
+    "clear-confirm-description": "現在のメッセージはあなたの表示からのみ削除されます。他の参加者には引き続き表示されます。",
+    "delete-confirm-title": "チャットを削除しますか?",
+    "delete-confirm-description": "この操作はチャットを会話一覧から削除します。元に戻すことはできません。",
     "clear-confirmed": "あなたのビューからメッセージをクリアしました",
     "delete-confirmed": "チャットを削除しました"
   },
@@ -77,6 +81,10 @@
     "save-message": "保存",
     "unsave-message": "保存から削除",
     "forward": "転送"
+  },
+  "pins": {
+    "previous": "前のピン留めメッセージ",
+    "next": "次のピン留めメッセージ"
   },
   "priority": {
     "normal": "標準",
@@ -137,8 +145,8 @@
     "description-label": "説明（任意）",
     "description-placeholder": "このグループについて",
     "members-label": "メンバー",
-    "members-placeholder": "チームメイトを検索…",
-    "no-teammates": "チームメイトが見つかりません。",
+    "members-placeholder": "ユーザーを検索…",
+    "no-teammates": "ユーザーが見つかりません。",
     "create-submit": "グループ作成",
     "create-failed": "グループを作成できませんでした",
     "cancel": "キャンセル",
@@ -156,8 +164,8 @@
   },
   "new-dm": {
     "title": "新しい会話",
-    "search": "チームメイトを検索",
-    "no-teammates": "チームメイトが見つかりません。",
+    "search": "ユーザーを検索",
+    "no-teammates": "ユーザーが見つかりません。",
     "disabled": "利用不可"
   },
   "new-chat": {
@@ -170,12 +178,12 @@
     "empty-subtitle": "下に最初のメッセージを入力してください。",
     "send-placeholder": "最初のメッセージを入力…"
   },
-  "teams": {
-    "title": "チーム",
-    "subtitle": "あなたのチームとチャンネル。",
-    "empty": "まだどのチームのメンバーでもありません。",
-    "empty-title": "まだチームがありません",
-    "empty-subtitle": "管理者がチームに追加してコラボレーションを開始します。",
+  "departments": {
+    "title": "部署",
+    "subtitle": "あなたの部署とチャンネル。",
+    "empty": "まだどの部署のメンバーでもありません。",
+    "empty-title": "まだ部署がありません",
+    "empty-subtitle": "管理者が部署に追加してコラボレーションを開始します。",
     "no-channels": "まだチャンネルがありません。"
   },
   "activity": {

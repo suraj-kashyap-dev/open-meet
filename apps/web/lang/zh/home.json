@@ -15,7 +15,7 @@
     "badge": "即时",
     "eyebrow": "全新开始",
     "title": "发起新会议",
-    "description": "创建一个可分享的全新房间，无需设置 — 房间为空时链接即失效。",
+    "description": "创建一个可分享的全新房间，无需设置 - 房间为空时链接即失效。",
     "capacity": "最多 100 人",
     "secure": "端到端加密",
     "creating": "正在创建…",
@@ -111,7 +111,7 @@
     "yearly": "每年"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "刚刚",
     "minutes-ago": "{count} 分钟前",
     "hours-ago": "{count} 小时前",
@@ -170,7 +170,7 @@
     "title-required": "请为会议添加标题",
     "valid-datetime": "请选择有效的日期和时间",
     "future-datetime": "请选择未来的日期和时间",
-    "scheduled-invites": "已安排 — 邀请已发送给 {count, plural, one {# 位嘉宾} other {# 位嘉宾}}",
+    "scheduled-invites": "已安排 - 邀请已发送给 {count, plural, one {# 位嘉宾} other {# 位嘉宾}}",
     "scheduled": "会议已安排",
     "schedule-error": "无法安排会议",
     "link-copied": "会议链接已复制",

@@ -83,7 +83,7 @@ describe('MeetingsService', () => {
 
     workspaceConfig = {
       getConfig: vi.fn().mockResolvedValue({
-        defaultMeetingTitle: 'Team Sync',
+        defaultMeetingTitle: 'Department Sync',
         allowGuestJoin: true,
         maxMeetingMinutes: null,
       }),
@@ -159,7 +159,7 @@ describe('MeetingsService', () => {
       const result = await service.create('u1', undefined);
       expect(calls).toBe(3);
       expect(result.code).toBeDefined();
-      expect(result.title).toBe('Team Sync');
+      expect(result.title).toBe('Department Sync');
       expect(workspaceConfig.getConfig).toHaveBeenCalled();
     });
 
@@ -173,10 +173,10 @@ describe('MeetingsService', () => {
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({
           hostId: 'u1',
-          title: 'Team Sync',
+          title: 'Department Sync',
         }),
       );
-      expect(result.title).toBe('Team Sync');
+      expect(result.title).toBe('Department Sync');
     });
   });
 
@@ -189,7 +189,7 @@ describe('MeetingsService', () => {
           meeting({
             code: 'abcd-efgh-ijkl',
             hostId: 'u1',
-            title: 'Team Sync',
+            title: 'Department Sync',
             scheduledFor,
             durationMin: 45,
           }),
@@ -209,21 +209,21 @@ describe('MeetingsService', () => {
       expect(repo.createScheduled).toHaveBeenCalledWith(
         expect.objectContaining({
           hostId: 'u1',
-          title: 'Team Sync',
+          title: 'Department Sync',
           scheduledFor,
           durationMin: 45,
           recurrence: null,
           invitees: [],
         }),
       );
-      expect(result.title).toBe('Team Sync');
+      expect(result.title).toBe('Department Sync');
     });
 
     it('should clamp the scheduled duration to the workspace limit', async () => {
       const scheduledFor = new Date('2099-06-01T10:00:00.000Z');
 
       workspaceConfig.getConfig.mockResolvedValue({
-        defaultMeetingTitle: 'Team Sync',
+        defaultMeetingTitle: 'Department Sync',
         allowGuestJoin: true,
         maxMeetingMinutes: 20,
       });
@@ -232,7 +232,7 @@ describe('MeetingsService', () => {
           meeting({
             code: 'abcd-efgh-ijkl',
             hostId: 'u1',
-            title: 'Team Sync',
+            title: 'Department Sync',
             scheduledFor,
             durationMin: 20,
           }),
@@ -352,7 +352,7 @@ describe('MeetingsService', () => {
       const startedAt = new Date(Date.now() - 31 * 60_000);
 
       workspaceConfig.getConfig.mockResolvedValue({
-        defaultMeetingTitle: 'Team Sync',
+        defaultMeetingTitle: 'Department Sync',
         allowGuestJoin: true,
         maxMeetingMinutes: 30,
       });

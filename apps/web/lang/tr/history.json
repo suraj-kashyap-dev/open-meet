@@ -3,7 +3,7 @@
     "eyebrow": "Aktivite",
     "title": "Toplantı geçmişi",
     "total": "{count, plural, one {toplam # toplantı} other {toplam # toplantı}}",
-    "description": "Düzenlediğiniz veya katıldığınız her toplantı — sohbet, ekler ve katılımcı listesiyle birlikte saklanır."
+    "description": "Düzenlediğiniz veya katıldığınız her toplantı - sohbet, ekler ve katılımcı listesiyle birlikte saklanır."
   },
   "default-title": "{date} tarihli toplantı",
   "host": "Ev sahibi",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Kay · {count}",
   "recording-title": "{count, plural, one {# kayıt} other {# kayıt}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Toplantı",
     "started": "Başladı",
@@ -91,7 +91,7 @@
       },
       "failed-title": "Kayıt başarısız",
       "failed-detail": "Çıktı hizmeti tarafından başka bir ayrıntı sağlanmadı.",
-      "processing": "Kayıt işleniyor — kısa süre sonra tekrar kontrol edin.",
+      "processing": "Kayıt işleniyor - kısa süre sonra tekrar kontrol edin.",
       "empty-title": "Bu toplantı için kayıt yok",
       "empty-description": "Ev sahibi, arama içi kontrollerden kayıt başlatabilir. Kayıtlar, bu toplantıya katılan kişilere özel kalır.",
       "relative": {

@@ -41,6 +41,10 @@
     "actions": "إجراءات المحادثة",
     "clear": "مسح المحادثة",
     "delete": "حذف المحادثة",
+    "clear-confirm-title": "مسح الدردشة؟",
+    "clear-confirm-description": "سيؤدي هذا إلى إزالة الرسائل الحالية من عرضك فقط. سيظل المشاركون الآخرون قادرين على رؤيتها.",
+    "delete-confirm-title": "حذف الدردشة؟",
+    "delete-confirm-description": "سيؤدي هذا إلى إزالة الدردشة من قائمة محادثاتك. لا يمكن التراجع عن هذا الإجراء.",
     "clear-confirmed": "تم مسح الرسائل من عرضك",
     "delete-confirmed": "تم حذف المحادثة"
   },
@@ -77,6 +81,10 @@
     "save-message": "حفظ",
     "unsave-message": "إزالة من المحفوظات",
     "forward": "إعادة توجيه"
+  },
+  "pins": {
+    "previous": "الرسالة المثبّتة السابقة",
+    "next": "الرسالة المثبّتة التالية"
   },
   "priority": {
     "normal": "عادي",
@@ -137,8 +145,8 @@
     "description-label": "الوصف (اختياري)",
     "description-placeholder": "ما الغرض من هذه المجموعة؟",
     "members-label": "الأعضاء",
-    "members-placeholder": "ابحث عن زملاء…",
-    "no-teammates": "لم يتم العثور على زملاء.",
+    "members-placeholder": "ابحث عن أشخاص…",
+    "no-teammates": "لم يتم العثور على أشخاص.",
     "create-submit": "إنشاء مجموعة",
     "create-failed": "تعذر إنشاء المجموعة",
     "cancel": "إلغاء",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "محادثة جديدة",
-    "search": "البحث عن زملاء الفريق",
-    "no-teammates": "لم يتم العثور على زملاء فريق.",
+    "search": "البحث عن أشخاص",
+    "no-teammates": "لم يتم العثور على أشخاص.",
     "disabled": "غير متاح"
   },
   "new-chat": {
     "title": "دردشة جديدة",
     "to-label": "إلى:",
     "to-placeholder": "أدخل الاسم أو البريد الإلكتروني",
-    "no-teammates": "لم يتم العثور على زملاء.",
+    "no-teammates": "لم يتم العثور على أشخاص.",
     "disabled": "غير متاح",
     "empty-title": "أنت تبدأ محادثة جديدة",
     "empty-subtitle": "اكتب رسالتك الأولى أدناه.",
     "send-placeholder": "اكتب رسالتك الأولى…"
   },
-  "teams": {
-    "title": "الفِرَق",
-    "subtitle": "فِرقك وقنواتك.",
-    "empty": "لست عضوًا في أي فريق بعد.",
-    "empty-title": "لا توجد فِرق بعد",
-    "empty-subtitle": "سيضيفك المسؤول إلى فريق لبدء التعاون.",
+  "departments": {
+    "title": "الأقسام",
+    "subtitle": "أقسامك وقنواتك.",
+    "empty": "لست عضوًا في أي قسم بعد.",
+    "empty-title": "لا توجد أقسام بعد",
+    "empty-subtitle": "سيضيفك المسؤول إلى قسم لبدء التعاون.",
     "no-channels": "لا توجد قنوات بعد."
   },
   "activity": {

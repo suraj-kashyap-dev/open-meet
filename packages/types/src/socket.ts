@@ -150,7 +150,7 @@ export interface ServerToClientEvents {
   [ServerEvent.RECORDING_STOPPED]: (payload: RecordingStoppedPayload) => void;
 }
 
-// --- Corporate chat (persistent messaging) — separate `/chat` namespace ---
+// --- Corporate chat (persistent messaging) - separate `/chat` namespace ---
 
 export const ChatNamespace = '/chat' as const;
 

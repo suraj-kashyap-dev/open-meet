@@ -16,11 +16,11 @@ describe('isRailActive()', () => {
 
   it('should not be active for a different section', () => {
     expect(isRailActive('/meet', '/chat')).toBe(false);
-    expect(isRailActive('/teams', '/chat')).toBe(false);
+    expect(isRailActive('/departments', '/chat')).toBe(false);
   });
 
   it('should not match a sibling href that merely shares a prefix', () => {
-    expect(isRailActive('/teams-archive', '/teams')).toBe(false);
+    expect(isRailActive('/departments-archive', '/departments')).toBe(false);
     expect(isRailActive('/chatter', '/chat')).toBe(false);
   });
 });

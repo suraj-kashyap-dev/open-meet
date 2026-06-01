@@ -3,7 +3,7 @@
     "eyebrow": "Aktivitas",
     "title": "Riwayat rapat",
     "total": "{count, plural, one {# rapat} other {# rapat}} total",
-    "description": "Setiap rapat yang Anda host atau ikuti — dengan obrolan, lampiran, dan daftar peserta yang tersimpan."
+    "description": "Setiap rapat yang Anda host atau ikuti - dengan obrolan, lampiran, dan daftar peserta yang tersimpan."
   },
   "default-title": "Rapat pada {date}",
   "host": "Host",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Rek · {count}",
   "recording-title": "{count, plural, one {# rekaman} other {# rekaman}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Rapat",
     "started": "Dimulai",
@@ -91,7 +91,7 @@
       },
       "failed-title": "Rekaman gagal",
       "failed-detail": "Tidak ada detail lebih lanjut yang diberikan oleh layanan egress.",
-      "processing": "Memproses rekaman — periksa kembali sebentar lagi.",
+      "processing": "Memproses rekaman - periksa kembali sebentar lagi.",
       "empty-title": "Tidak ada rekaman untuk rapat ini",
       "empty-description": "Host dapat memulai rekaman dari kontrol dalam panggilan. Rekaman tetap privat untuk orang-orang yang bergabung dalam rapat ini.",
       "relative": {

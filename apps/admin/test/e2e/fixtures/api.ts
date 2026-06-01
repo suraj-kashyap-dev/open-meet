@@ -23,8 +23,8 @@ export interface AdminApiMockOptions {
   branding?: typeof fixtures.branding;
   configuration?: typeof fixtures.configuration;
   inviteLookup?: typeof fixtures.inviteLookup | { errorStatus: number };
-  teams?: typeof fixtures.teamsList;
-  teamDetail?: typeof fixtures.teamDetail;
+  departments?: typeof fixtures.departmentsList;
+  departmentDetail?: typeof fixtures.departmentDetail;
   groups?: typeof fixtures.groupsList;
   groupDetail?: typeof fixtures.groupDetail;
   userInvites?: typeof fixtures.userInvites;
@@ -43,8 +43,8 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
   const branding = options.branding ?? fixtures.branding;
   const configuration = options.configuration ?? fixtures.configuration;
   const inviteLookup = options.inviteLookup ?? fixtures.inviteLookup;
-  const teams = options.teams ?? fixtures.teamsList;
-  const teamDetail = options.teamDetail ?? fixtures.teamDetail;
+  const departments = options.departments ?? fixtures.departmentsList;
+  const departmentDetail = options.departmentDetail ?? fixtures.departmentDetail;
   const groups = options.groups ?? fixtures.groupsList;
   const groupDetail = options.groupDetail ?? fixtures.groupDetail;
   const userInvites = options.userInvites ?? fixtures.userInvites;
@@ -108,8 +108,8 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           return json(200, ok(branding));
         case '/admin/configuration':
           return json(200, ok(configuration));
-        case '/admin/teams':
-          return json(200, ok(teams));
+        case '/admin/departments':
+          return json(200, ok(departments));
         case '/admin/groups':
           return json(200, ok(groups));
         case '/admin/roles':
@@ -130,9 +130,9 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       }
 
 
-      // Team detail (members): /admin/teams/:id
-      if (/^\/admin\/teams\/[^/]+$/.test(path)) {
-        return json(200, ok(teamDetail));
+      // Department detail (members): /admin/departments/:id
+      if (/^\/admin\/departments\/[^/]+$/.test(path)) {
+        return json(200, ok(departmentDetail));
       }
 
       // Group detail (members): /admin/groups/:id
@@ -151,8 +151,8 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
     }
 
     if (method === 'POST') {
-      if (path === '/admin/teams') {
-        return json(200, ok(teams.items[0]));
+      if (path === '/admin/departments') {
+        return json(200, ok(departments.items[0]));
       }
       if (path === '/admin/groups') {
         return json(200, ok(groupDetail));

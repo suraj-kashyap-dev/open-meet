@@ -110,7 +110,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
         }
       })
       .catch(() => {
-        // ignore — banner stays hidden if probe fails
+        // ignore - banner stays hidden if probe fails
       });
 
     return () => {

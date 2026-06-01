@@ -36,7 +36,7 @@
   },
   "groups": {
     "title": "Benutzer-erstellte Gruppen",
-    "description": "Teammitglieder können eigene Gruppen-Chats aus der Konversationsliste starten.",
+    "description": "Kollegen können eigene Gruppen-Chats aus der Konversationsliste starten.",
     "label": "Benutzern Gruppenerstellung erlauben",
     "hint": "Wenn aus, können nur Admins Gruppen erstellen."
   },

@@ -197,7 +197,7 @@ export class AuthService {
     }
 
     if (stored !== this.hashToken(refreshToken)) {
-      // token reuse — invalidate everything for this user (best-effort)
+      // token reuse - invalidate everything for this user (best-effort)
       await this.revokeAllForUser(payload.sub);
       throw new UnauthorizedException({
         code: ApiErrorCode.TOKEN_INVALID,
@@ -232,7 +232,7 @@ export class AuthService {
       }
     }
     // Mark the user offline immediately so peers see them disconnect without
-    // waiting for socket.io's idle timeout. Best-effort — never fail logout.
+    // waiting for socket.io's idle timeout. Best-effort - never fail logout.
     if (presenceTarget) {
       try {
         const disconnectedSockets = await this.presence.disconnectSockets(presenceTarget);
@@ -306,7 +306,7 @@ export class AuthService {
    * Peer-visible profile of `targetId` as seen by `viewerId`. Honors the
    * target's `UserSettings.profileVisibility`:
    *   - PUBLIC            → everything is exposed.
-   *   - PARTICIPANTS_ONLY → full profile only when the two share a team or a
+   *   - PARTICIPANTS_ONLY → full profile only when the two share a department or a
    *                        conversation; otherwise minimal.
    *   - PRIVATE           → only id/name/avatar.
    * Always auth-required; "public" here means peer-visible.

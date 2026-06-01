@@ -41,6 +41,10 @@
     "actions": "बातचीत क्रियाएँ",
     "clear": "चैट साफ़ करें",
     "delete": "चैट हटाएँ",
+    "clear-confirm-title": "चैट साफ़ करें?",
+    "clear-confirm-description": "यह मौजूदा संदेशों को केवल आपकी स्क्रीन से हटाता है। दूसरे प्रतिभागी इन्हें देखते रहेंगे।",
+    "delete-confirm-title": "चैट हटाएँ?",
+    "delete-confirm-description": "यह चैट को आपकी बातचीत सूची से हटा देता है। इस कार्रवाई को पूर्ववत नहीं किया जा सकता।",
     "clear-confirmed": "आपके दृश्य से संदेश साफ़ हो गए",
     "delete-confirmed": "चैट हटाई गई"
   },
@@ -77,6 +81,10 @@
     "save-message": "सहेजें",
     "unsave-message": "सहेजे गए से हटाएं",
     "forward": "अग्रेषित करें"
+  },
+  "pins": {
+    "previous": "पिछला पिन किया गया संदेश",
+    "next": "अगला पिन किया गया संदेश"
   },
   "priority": {
     "normal": "मानक",
@@ -137,8 +145,8 @@
     "description-label": "विवरण (वैकल्पिक)",
     "description-placeholder": "यह समूह किस बारे में है?",
     "members-label": "सदस्य",
-    "members-placeholder": "साथी खोजें…",
-    "no-teammates": "कोई साथी नहीं मिला।",
+    "members-placeholder": "लोगों को खोजें…",
+    "no-teammates": "कोई व्यक्ति नहीं मिला।",
     "create-submit": "समूह बनाएं",
     "create-failed": "समूह नहीं बना सका",
     "cancel": "रद्द करें",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "नई बातचीत",
-    "search": "टीम के साथियों को खोजें",
-    "no-teammates": "कोई टीम साथी नहीं मिला।",
+    "search": "लोगों को खोजें",
+    "no-teammates": "कोई व्यक्ति नहीं मिला।",
     "disabled": "अनुपलब्ध"
   },
   "new-chat": {
     "title": "नई चैट",
     "to-label": "को:",
     "to-placeholder": "नाम या ईमेल दर्ज करें",
-    "no-teammates": "कोई साथी नहीं मिला।",
+    "no-teammates": "कोई व्यक्ति नहीं मिला।",
     "disabled": "अनुपलब्ध",
     "empty-title": "आप एक नई बातचीत शुरू कर रहे हैं",
     "empty-subtitle": "नीचे अपना पहला संदेश लिखें।",
     "send-placeholder": "अपना पहला संदेश लिखें…"
   },
-  "teams": {
-    "title": "टीमें",
-    "subtitle": "आपकी टीम और चैनल।",
-    "empty": "आप अभी तक किसी टीम के सदस्य नहीं हैं।",
-    "empty-title": "अभी कोई टीम नहीं",
-    "empty-subtitle": "सहयोग शुरू करने के लिए एक एडमिन आपको टीम में जोड़ेगा।",
+  "departments": {
+    "title": "विभाग",
+    "subtitle": "आपके विभाग और चैनल।",
+    "empty": "आप अभी तक किसी विभाग के सदस्य नहीं हैं।",
+    "empty-title": "अभी कोई विभाग नहीं",
+    "empty-subtitle": "सहयोग शुरू करने के लिए एक एडमिन आपको विभाग में जोड़ेगा।",
     "no-channels": "अभी तक कोई चैनल नहीं।"
   },
   "activity": {

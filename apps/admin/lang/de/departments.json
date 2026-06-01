@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Verwalten",
+  "title": "Abteilungen",
+  "subtitle": "Abteilungen legen fest, wer wem Nachrichten senden darf - Benutzer können jedem in einer gemeinsamen Abteilung eine DM senden.",
+  "empty": "Noch keine Abteilungen.",
+  "columns": {
+    "name": "Name",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "Mitglieder"
+  },
+  "actions": {
+    "manage": "Mitglieder verwalten",
+    "delete": "Abteilung löschen"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this department for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "Neue Abteilung",
+    "title": "Abteilung erstellen",
+    "name": "Abteilungsname",
+    "placeholder": "z. B. Engineering",
+    "submit": "Erstellen",
+    "success": "Abteilung erstellt",
+    "error": "Abteilung konnte nicht erstellt werden"
+  },
+  "manage": {
+    "title": "Mitglieder",
+    "members": "{count, plural, one {# Mitglied} other {# Mitglieder}}",
+    "add": "Mitglieder hinzufügen",
+    "search": "Benutzer suchen",
+    "no-users": "Keine Benutzer gefunden.",
+    "add-confirm": "Hinzufügen",
+    "empty": "Noch keine Mitglieder.",
+    "remove": "Mitglied entfernen"
+  },
+  "channels": {
+    "title": "Kanäle",
+    "empty": "Noch keine Kanäle.",
+    "general": "Allgemein",
+    "add": "Kanal hinzufügen",
+    "delete": "Kanal löschen",
+    "name-placeholder": "Name des neuen Kanals"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Department updated",
+    "request-error": "Could not update this department",
+    "empty-title": "Department not found",
+    "empty-description": "This department may have been removed or you may not have access to it.",
+    "delete-description": "Removing this department also removes access to its channels for every member.",
+    "delete-success": "Department deleted",
+    "delete-error": "Could not delete department"
+  },
+  "delete-dialog": {
+    "title": "Abteilung löschen?",
+    "description": "{name} wird gelöscht und alle Mitglieder verlieren sofort den Zugriff. Dies kann nicht rückgängig gemacht werden.",
+    "cancel": "Abbrechen",
+    "confirm": "Abteilung löschen",
+    "deleting": "Wird gelöscht…"
+  }
+}

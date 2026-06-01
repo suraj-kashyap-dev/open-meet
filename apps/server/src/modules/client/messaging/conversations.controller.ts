@@ -92,6 +92,16 @@ export class ConversationsController {
     return this.conversationState.setState(id, user.id, body);
   }
 
+  @Post('conversations/:id/clear')
+  clear(@CurrentUser() user: RequestUser, @Param('id') id: string) {
+    return this.conversations.clearForViewer(id, user.id);
+  }
+
+  @Post('conversations/:id/delete')
+  delete(@CurrentUser() user: RequestUser, @Param('id') id: string) {
+    return this.conversations.deleteForViewer(id, user.id);
+  }
+
   @Get('conversations/:id/pins')
   pins_(@CurrentUser() user: RequestUser, @Param('id') id: string) {
     return this.pins.list(id, user.id);

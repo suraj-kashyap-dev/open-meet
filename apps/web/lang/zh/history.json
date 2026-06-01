@@ -3,7 +3,7 @@
     "eyebrow": "动态",
     "title": "会议记录",
     "total": "{count, plural, one {# 次会议} other {# 次会议}}共计",
-    "description": "您主持或参与的每一次会议 — 聊天记录、附件和参与者列表均已保存。"
+    "description": "您主持或参与的每一次会议 - 聊天记录、附件和参与者列表均已保存。"
   },
   "default-title": "{date} 的会议",
   "host": "主持人",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "录制 · {count}",
   "recording-title": "{count, plural, one {# 段录制} other {# 段录制}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "会议",
     "started": "开始时间",
@@ -91,7 +91,7 @@
       },
       "failed-title": "录制失败",
       "failed-detail": "推流服务未提供更多详细信息。",
-      "processing": "正在处理录制文件 — 请稍后再查看。",
+      "processing": "正在处理录制文件 - 请稍后再查看。",
       "empty-title": "本次会议无录制文件",
       "empty-description": "主持人可在通话控制中开始录制。录制文件仅对参与本次会议的人可见。",
       "relative": {

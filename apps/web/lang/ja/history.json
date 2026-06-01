@@ -3,7 +3,7 @@
     "eyebrow": "アクティビティ",
     "title": "ミーティング履歴",
     "total": "{count, plural, one {# 件のミーティング} other {# 件のミーティング}}",
-    "description": "参加またはホストしたすべてのミーティング — チャット、添付ファイル、参加者リストが保存されています。"
+    "description": "参加またはホストしたすべてのミーティング - チャット、添付ファイル、参加者リストが保存されています。"
   },
   "default-title": "{date} のミーティング",
   "host": "ホスト",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "録画 · {count}",
   "recording-title": "{count, plural, one {# 件の録画} other {# 件の録画}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "ミーティング",
     "started": "開始日時",
@@ -91,7 +91,7 @@
       },
       "failed-title": "録画に失敗しました",
       "failed-detail": "エグレスサービスから詳細情報は提供されませんでした。",
-      "processing": "録画を処理中です — しばらくしてから確認してください。",
+      "processing": "録画を処理中です - しばらくしてから確認してください。",
       "empty-title": "このミーティングの録画はありません",
       "empty-description": "ホストは通話中のコントロールから録画を開始できます。録画はこのミーティングに参加した方のみに限定されます。",
       "relative": {

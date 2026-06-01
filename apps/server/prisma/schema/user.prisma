@@ -19,7 +19,7 @@ model User {
   messages        Message[]
   hostedMeetings  Meeting[]     @relation("host")
 
-  teamMemberships         TeamMember[]
+  departmentMemberships   DepartmentMember[]
   conversationMemberships ConversationMember[]
   chatMessages            ChatMessage[]
   messageReactions        MessageReaction[]

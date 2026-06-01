@@ -9,14 +9,14 @@
   "user-menu-label": "فتح قائمة الحساب",
   "chat-link-label": "فتح الدردشة",
   "activity-link-label": "النشاط",
-  "teams-link-label": "الفِرَق",
+  "departments-link-label": "الأقسام",
   "saved-link-label": "المحفوظات",
   "search-placeholder": "بحث",
   "rail": {
     "label": "أساسي",
     "chat": "الدردشة",
     "meet": "اجتماع",
-    "teams": "الفِرَق",
+    "departments": "الأقسام",
     "activity": "النشاط",
     "saved": "المحفوظات",
     "history": "السجل"

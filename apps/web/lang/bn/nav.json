@@ -9,14 +9,14 @@
   "user-menu-label": "অ্যাকাউন্ট মেনু খুলুন",
   "chat-link-label": "চ্যাট খুলুন",
   "activity-link-label": "কার্যকলাপ",
-  "teams-link-label": "টিম",
+  "departments-link-label": "বিভাগ",
   "saved-link-label": "সংরক্ষিত",
   "search-placeholder": "অনুসন্ধান",
   "rail": {
     "label": "প্রাথমিক",
     "chat": "চ্যাট",
     "meet": "মিট",
-    "teams": "টিম",
+    "departments": "বিভাগ",
     "activity": "কার্যকলাপ",
     "saved": "সংরক্ষিত",
     "history": "ইতিহাস"

@@ -15,11 +15,11 @@ pass() { PASS=$((PASS + 1)); printf '  %b✓%b %s\n' "$G" "$N" "$1"; }
 fail() { FAIL=$((FAIL + 1)); printf '  %b✗%b %s\n' "$R" "$N" "$1"; }
 skip() { printf '  %b•%b %s (skipped)\n' "$Y" "$N" "$1"; }
 
-assert_eq()     { if [ "$2" = "$3" ]; then pass "$1"; else fail "$1 — got '$2', want '$3'"; fi; }
-assert_ge()     { if [ "${2:-x}" -ge "$3" ] 2>/dev/null; then pass "$1"; else fail "$1 — got '${2:-}', want >= $3"; fi; }
-assert_file()   { if [ -f "$2" ]; then pass "$1"; else fail "$1 — missing $2"; fi; }
-assert_grep()   { if grep -qE "$2" "$3" 2>/dev/null; then pass "$1"; else fail "$1 — /$2/ not in $3"; fi; }
-assert_absent() { if grep -qF -- "$2" "$3" 2>/dev/null; then fail "$1 — found in $3"; else pass "$1"; fi; }
+assert_eq()     { if [ "$2" = "$3" ]; then pass "$1"; else fail "$1 - got '$2', want '$3'"; fi; }
+assert_ge()     { if [ "${2:-x}" -ge "$3" ] 2>/dev/null; then pass "$1"; else fail "$1 - got '${2:-}', want >= $3"; fi; }
+assert_file()   { if [ -f "$2" ]; then pass "$1"; else fail "$1 - missing $2"; fi; }
+assert_grep()   { if grep -qE "$2" "$3" 2>/dev/null; then pass "$1"; else fail "$1 - /$2/ not in $3"; fi; }
+assert_absent() { if grep -qF -- "$2" "$3" 2>/dev/null; then fail "$1 - found in $3"; else pass "$1"; fi; }
 
 run_setup() { ( cd "$1" && shift && bash setup.sh "$@" ) >/dev/null 2>&1; }
 

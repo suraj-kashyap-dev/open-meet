@@ -12,7 +12,7 @@ test.describe('Web chat list page', () => {
     await expect(page.getByRole('heading', { name: 'Chat' })).toBeVisible();
     await expect(page.getByText('Select a conversation to start chatting.')).toBeVisible();
 
-    // The "Recent" section heading from the Teams-style list pane.
+    // The "Recent" section heading from the Departments-style list pane.
     await expect(page.getByText('Recent', { exact: true })).toBeVisible();
 
     // The seeded DM with Grace Hopper renders with its last message preview.

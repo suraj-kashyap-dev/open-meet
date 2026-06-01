@@ -9,14 +9,14 @@
   "user-menu-label": "Hesap menüsünü aç",
   "chat-link-label": "Sohbeti aç",
   "activity-link-label": "Etkinlik",
-  "teams-link-label": "Takımlar",
+  "departments-link-label": "Departmanlar",
   "saved-link-label": "Kaydedilenler",
   "search-placeholder": "Ara",
   "rail": {
     "label": "Birincil",
     "chat": "Sohbet",
     "meet": "Toplantı",
-    "teams": "Takımlar",
+    "departments": "Departmanlar",
     "activity": "Etkinlik",
     "saved": "Kaydedilenler",
     "history": "Geçmiş"

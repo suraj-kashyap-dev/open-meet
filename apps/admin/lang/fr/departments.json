@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Gérer",
+  "title": "Départements",
+  "subtitle": "Les départements déterminent qui peut envoyer des messages à qui - les utilisateurs peuvent envoyer un message à toute personne d'un département partagé.",
+  "empty": "Aucun département pour l'instant.",
+  "columns": {
+    "name": "Nom",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "Membres"
+  },
+  "actions": {
+    "manage": "Gérer les membres",
+    "delete": "Supprimer le département"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "Nouveau département",
+    "title": "Créer un département",
+    "name": "Nom du département",
+    "placeholder": "p. ex. Ingénierie",
+    "submit": "Créer",
+    "success": "Département créé",
+    "error": "Impossible de créer le département"
+  },
+  "manage": {
+    "title": "Membres",
+    "members": "{count, plural, one {# membre} other {# membres}}",
+    "add": "Ajouter des membres",
+    "search": "Rechercher des utilisateurs",
+    "no-users": "Aucun utilisateur trouvé.",
+    "add-confirm": "Ajouter",
+    "empty": "Aucun membre pour l'instant.",
+    "remove": "Retirer le membre"
+  },
+  "channels": {
+    "title": "Canaux",
+    "empty": "Aucun canal pour l'instant.",
+    "general": "Général",
+    "add": "Ajouter un canal",
+    "delete": "Supprimer le canal",
+    "name-placeholder": "Nom du nouveau canal"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Département mis à jour",
+    "request-error": "Impossible de mettre à jour ce département",
+    "empty-title": "Département introuvable",
+    "empty-description": "Ce département a peut-être été supprimé ou vous n'y avez pas accès.",
+    "delete-description": "Supprimer ce département retire également l'accès à ses canaux pour chaque membre.",
+    "delete-success": "Département supprimé",
+    "delete-error": "Impossible de supprimer le département"
+  },
+  "delete-dialog": {
+    "title": "Supprimer le département ?",
+    "description": "{name} sera supprimé et chaque membre perdra immédiatement l'accès. Cette action est irréversible.",
+    "cancel": "Annuler",
+    "confirm": "Supprimer le département",
+    "deleting": "Suppression…"
+  }
+}

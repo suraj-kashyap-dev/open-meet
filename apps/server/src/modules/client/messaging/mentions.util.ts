@@ -5,7 +5,7 @@ export interface ParsedMention {
   userId: string | null;
 }
 
-// Mention encoding the composer emits — a markdown link whose label starts with
+// Mention encoding the composer emits - a markdown link whose label starts with
 // `@` and whose href is a bare userId: `[@Display Name](userId)`. The leading `@`
 // in the label distinguishes mentions from ordinary `[text](url)` links.
 const USER_MENTION = /\[@[^\]]+\]\(([a-zA-Z0-9_-]+)\)/g;

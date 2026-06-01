@@ -1,4 +1,4 @@
--- Step 17 — drop the legacy AdminRole enum and the flat tier columns.
+-- Step 17 - drop the legacy AdminRole enum and the flat tier columns.
 -- After this migration the RBAC `roleRecordId` is the sole authority on admin
 -- + user tier; Admin/User both require a roleRecordId.
 

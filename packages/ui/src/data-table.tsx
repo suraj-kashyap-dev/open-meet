@@ -17,7 +17,7 @@ declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
     /** Extra classes applied to this column's `<th>` (e.g. `hidden md:table-cell`). */
     headerClassName?: string;
-    /** Extra classes applied to this column's `<td>` — keep in sync with `headerClassName`. */
+    /** Extra classes applied to this column's `<td>` - keep in sync with `headerClassName`. */
     cellClassName?: string;
   }
 }

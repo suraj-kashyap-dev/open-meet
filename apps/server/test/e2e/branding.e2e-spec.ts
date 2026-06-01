@@ -152,17 +152,17 @@ describe('Branding & public config (e2e)', () => {
       const res = await http(app)
         .patch('/api/admin/configuration')
         .set('Cookie', cookie)
-        .send({ defaultMeetingTitle: 'Team Sync', allowGuestJoin: false, maxMeetingMinutes: 90 });
+        .send({ defaultMeetingTitle: 'Department Sync', allowGuestJoin: false, maxMeetingMinutes: 90 });
 
       expect(res.status).toBe(200);
       expect(res.body.data).toMatchObject({
-        defaultMeetingTitle: 'Team Sync',
+        defaultMeetingTitle: 'Department Sync',
         allowGuestJoin: false,
         maxMeetingMinutes: 90,
       });
 
       const reread = await http(app).get('/api/admin/configuration').set('Cookie', cookie);
-      expect(reread.body.data.defaultMeetingTitle).toBe('Team Sync');
+      expect(reread.body.data.defaultMeetingTitle).toBe('Department Sync');
     });
 
     it('should accept null to clear the meeting duration cap', async () => {

@@ -40,7 +40,7 @@ describe('ChatPermissionsService', () => {
       );
     });
 
-    it('should allow messaging any existing user (chat is open — no shared team required)', async () => {
+    it('should allow messaging any existing user (chat is open - no shared department required)', async () => {
       repo.findUserBasics.mockResolvedValue(enabled('u2'));
       await expect(service.assertCanDirectMessage('u1', 'u2')).resolves.toBeUndefined();
     });

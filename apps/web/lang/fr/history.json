@@ -3,7 +3,7 @@
     "eyebrow": "Activité",
     "title": "Historique des réunions",
     "total": "{count, plural, one {# réunion} other {# réunions}} au total",
-    "description": "Toutes les réunions que vous avez organisées ou rejointes — avec la discussion, les pièces jointes et la liste des participants préservées."
+    "description": "Toutes les réunions que vous avez organisées ou rejointes - avec la discussion, les pièces jointes et la liste des participants préservées."
   },
   "default-title": "Réunion du {date}",
   "host": "Hôte",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Enr. · {count}",
   "recording-title": "{count, plural, one {# enregistrement} other {# enregistrements}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Réunion",
     "started": "Démarrée",
@@ -91,7 +91,7 @@
       },
       "failed-title": "L'enregistrement a échoué",
       "failed-detail": "Aucun détail supplémentaire n'a été fourni par le service d'egress.",
-      "processing": "Traitement de l'enregistrement — revenez dans un moment.",
+      "processing": "Traitement de l'enregistrement - revenez dans un moment.",
       "empty-title": "Aucun enregistrement pour cette réunion",
       "empty-description": "L'hôte peut démarrer un enregistrement depuis les contrôles en appel. Les enregistrements restent privés pour les personnes qui ont participé à cette réunion.",
       "relative": {

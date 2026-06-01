@@ -20,6 +20,7 @@ import { UploadsService } from '../../uploads/uploads.service';
 import { ChatBus, conversationRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
 import { ConversationsRepository } from './conversations.repository';
+import { ConversationsService } from './conversations.service';
 import type { ChatMessageWithRelations } from './messaging.includes';
 import { MessagesRepository, type MentionInput } from './messages.repository';
 import { MessagingSerializer } from './messaging.serializer';
@@ -47,7 +48,8 @@ export class MessagesService {
 
   constructor(
     private readonly messages: MessagesRepository,
-    private readonly conversations: ConversationsRepository,
+    private readonly conversationRepo: ConversationsRepository,
+    private readonly conversations: ConversationsService,
     private readonly permissions: ChatPermissionsService,
     private readonly uploads: UploadsService,
     private readonly serializer: MessagingSerializer,
@@ -64,11 +66,12 @@ export class MessagesService {
     userId: string,
     options: { cursor?: string; limit?: number },
   ): Promise<ChatMessagePageDto> {
-    await this.permissions.assertConversationMember(conversationId, userId);
+    const membership = await this.permissions.assertConversationMember(conversationId, userId);
 
     const limit = Math.min(100, Math.max(1, options.limit ?? 50));
     const rows = await this.messages.listHistory({
       conversationId,
+      clearedAt: membership.clearedAt ?? null,
       cursor: options.cursor,
       limit: limit + 1,
     });
@@ -141,11 +144,13 @@ export class MessagesService {
     }
 
     const full = (await this.messages.findById(created.id)) ?? created;
-    await this.conversations.touch(input.conversationId, full.createdAt);
+    await this.conversationRepo.touch(input.conversationId, full.createdAt);
 
     if (input.parentId) {
       await this.messages.bumpReplyCount(input.parentId, full.createdAt);
     }
+
+    await this.conversations.revealOnActivity(input.conversationId, input.senderId);
 
     return this.broadcastNew(full, input.senderId, input.clientNonce);
   }
@@ -225,7 +230,8 @@ export class MessagesService {
     });
 
     const full = (await this.messages.findById(created.id)) ?? created;
-    await this.conversations.touch(targetConversationId, full.createdAt);
+    await this.conversationRepo.touch(targetConversationId, full.createdAt);
+    await this.conversations.revealOnActivity(targetConversationId, userId);
 
     return this.broadcastNew(full, userId);
   }

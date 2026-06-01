@@ -122,7 +122,7 @@
     "avatar-remove-failed": "Rimozione avatar non riuscita",
     "profile-updated": "Profilo aggiornato",
     "profile-update-failed": "Aggiornamento profilo non riuscito",
-    "password-changed": "Password modificata — accedi di nuovo",
+    "password-changed": "Password modificata - accedi di nuovo",
     "password-change-failed": "Modifica password non riuscita",
     "localization-updated": "Localizzazione aggiornata",
     "localization-update-failed": "Aggiornamento localizzazione non riuscito",
@@ -131,7 +131,7 @@
     "privacy-updated": "Impostazioni privacy aggiornate",
     "privacy-update-failed": "Aggiornamento impostazioni privacy non riuscito",
     "notifications-unsupported": "Le notifiche non sono supportate in questo browser",
-    "notifications-denied": "Autorizzazione negata — abilita le notifiche nelle impostazioni del browser"
+    "notifications-denied": "Autorizzazione negata - abilita le notifiche nelle impostazioni del browser"
   },
   "validation": {
     "avatar-invalid-type": "L'avatar deve essere un'immagine PNG, JPEG, WebP o GIF",

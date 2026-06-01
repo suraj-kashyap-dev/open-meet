@@ -1,0 +1,68 @@
+{
+  "eyebrow": "प्रबंधन",
+  "title": "विभाग",
+  "subtitle": "विभाग तय करते हैं कि कौन किसे संदेश भेज सकता है - उपयोगकर्ता साझा विभाग के किसी भी सदस्य को DM कर सकते हैं।",
+  "empty": "अभी तक कोई विभाग नहीं।",
+  "columns": {
+    "name": "नाम",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "सदस्य"
+  },
+  "actions": {
+    "manage": "सदस्य प्रबंधित करें",
+    "delete": "विभाग हटाएं"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "नया विभाग",
+    "title": "विभाग बनाएं",
+    "name": "विभाग का नाम",
+    "placeholder": "जैसे इंजीनियरिंग",
+    "submit": "बनाएं",
+    "success": "विभाग बनाया गया",
+    "error": "विभाग नहीं बनाया जा सका"
+  },
+  "manage": {
+    "title": "सदस्य",
+    "members": "{count, plural, one {# सदस्य} other {# सदस्य}}",
+    "add": "सदस्य जोड़ें",
+    "search": "उपयोगकर्ता खोजें",
+    "no-users": "कोई उपयोगकर्ता नहीं मिला।",
+    "add-confirm": "जोड़ें",
+    "empty": "अभी तक कोई सदस्य नहीं।",
+    "remove": "सदस्य हटाएं"
+  },
+  "channels": {
+    "title": "चैनल",
+    "empty": "अभी तक कोई चैनल नहीं।",
+    "general": "सामान्य",
+    "add": "चैनल जोड़ें",
+    "delete": "चैनल हटाएं",
+    "name-placeholder": "नए चैनल का नाम"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "विभाग अपडेट किया गया",
+    "request-error": "इस विभाग को अपडेट नहीं किया जा सका",
+    "empty-title": "विभाग नहीं मिला",
+    "empty-description": "हो सकता है यह विभाग हटा दिया गया हो या आपके पास इसकी पहुंच न हो।",
+    "delete-description": "इस विभाग को हटाने से हर सदस्य की इसके चैनलों तक पहुंच भी समाप्त हो जाती है।",
+    "delete-success": "विभाग हटा दिया गया",
+    "delete-error": "विभाग नहीं हटाया जा सका"
+  },
+  "delete-dialog": {
+    "title": "विभाग हटाएं?",
+    "description": "{name} हटा दिया जाएगा और हर सदस्य की पहुंच तुरंत समाप्त हो जाएगी। इसे पूर्ववत नहीं किया जा सकता।",
+    "cancel": "रद्द करें",
+    "confirm": "विभाग हटाएं",
+    "deleting": "हटाया जा रहा है…"
+  }
+}

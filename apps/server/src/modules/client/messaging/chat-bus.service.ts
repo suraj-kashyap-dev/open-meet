@@ -3,7 +3,7 @@ import type { Server } from 'socket.io';
 
 /**
  * Holds the `/chat` socket.io server so non-gateway code (REST services) can
- * emit into chat rooms — keeping HTTP and WebSocket message flows consistent.
+ * emit into chat rooms - keeping HTTP and WebSocket message flows consistent.
  * Mirrors MeetingBus. Emits fan out across instances via the Redis adapter.
  */
 @Injectable()
@@ -18,7 +18,7 @@ export class ChatBus {
 
   emit(room: string, event: string, payload: unknown): void {
     if (!this.server) {
-      this.logger.warn(`emit("${event}") dropped — chat socket server not attached yet`);
+      this.logger.warn(`emit("${event}") dropped - chat socket server not attached yet`);
       return;
     }
 

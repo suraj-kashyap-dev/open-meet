@@ -11,8 +11,8 @@ import type {
   AdminMeResponseDto,
   AdminMeetingListResponseDto,
   AdminStatsOverviewDto,
-  AdminTeamDetailDto,
-  AdminTeamListResponseDto,
+  AdminDepartmentDetailDto,
+  AdminDepartmentListResponseDto,
   AdminUserListResponseDto,
   PermissionCatalogResponseDto,
   RoleListResponseDto,
@@ -60,7 +60,7 @@ export const currentAdminMe: AdminMeResponseDto = {
 export const loginResponse: AdminLoginResponseDto = { admin: currentAdmin };
 
 export const overview: AdminStatsOverviewDto = {
-  totals: { users: 128, meetings: 342, activeMeetings: 3, messagesLast24h: 87, groups: 9, teams: 5 },
+  totals: { users: 128, meetings: 342, activeMeetings: 3, messagesLast24h: 87, groups: 9, departments: 5 },
   trends: { signups: dailySeries(14), meetings: dailySeries(14) },
   recentMeetings: [
     {
@@ -187,7 +187,7 @@ export const branding: AdminBrandingDto = {
 };
 
 export const configuration: WorkspaceConfigDto = {
-  defaultMeetingTitle: 'Team Sync',
+  defaultMeetingTitle: 'Department Sync',
   allowGuestJoin: true,
   maxMeetingMinutes: 60,
 };
@@ -199,7 +199,7 @@ export const inviteLookup: AdminInviteLookupDto = {
   expiresAt: '2026-06-01T00:00:00.000Z',
 };
 
-export const teamsList: AdminTeamListResponseDto = {
+export const departmentsList: AdminDepartmentListResponseDto = {
   items: [
     {
       id: 't-1',
@@ -222,7 +222,7 @@ export const teamsList: AdminTeamListResponseDto = {
   ],
 };
 
-export const teamDetail: AdminTeamDetailDto = {
+export const departmentDetail: AdminDepartmentDetailDto = {
   id: 't-1',
   name: 'Engineering',
   description: null,
@@ -285,7 +285,7 @@ export const adminRoles: RoleListResponseDto = {
     {
       id: 'role_sys_admin',
       name: 'Administrator',
-      description: 'Full access — grants every permission.',
+      description: 'Full access - grants every permission.',
       permissionType: 'ALL',
       permissions: [],
       isSystem: true,
@@ -298,7 +298,7 @@ export const adminRoles: RoleListResponseDto = {
       name: 'Member',
       description: 'Read-only baseline access.',
       permissionType: 'CUSTOM',
-      permissions: ['users.view', 'meetings.view', 'teams.view', 'groups.view', 'analytics.view'],
+      permissions: ['users.view', 'meetings.view', 'departments.view', 'groups.view', 'analytics.view'],
       isSystem: true,
       memberCount: 0,
       createdAt: '2026-01-01T00:00:00.000Z',

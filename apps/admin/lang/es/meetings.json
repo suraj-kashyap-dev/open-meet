@@ -76,7 +76,7 @@
     "title": "¿Finalizar todas las reuniones activas?",
     "description": "Esto marcará todas las reuniones con estado ACTIVE como ENDED y cerrará sus salas LiveKit. Todos los participantes que estén actualmente en una llamada serán desconectados de inmediato.",
     "active-summary": "{count, plural, one {# reunión} other {# reuniones}} actualmente activa.",
-    "none-active": "No hay reuniones activas en este momento — no ocurrirá nada.",
+    "none-active": "No hay reuniones activas en este momento - no ocurrirá nada.",
     "cancel": "Cancelar",
     "submit": "Finalizar todas las activas",
     "submitting": "Finalizando…",

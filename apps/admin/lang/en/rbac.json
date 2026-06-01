@@ -35,8 +35,8 @@
     "description-label": "Description",
     "description-placeholder": "What can this role do?",
     "type-label": "Access",
-    "type-all": "Full access — grants every current and future permission.",
-    "type-custom": "Custom — pick exactly what they can do."
+    "type-all": "Full access - grants every current and future permission.",
+    "type-custom": "Custom - pick exactly what they can do."
   },
   "edit": {
     "title": "Edit role",
@@ -83,13 +83,13 @@
       "delete": "Delete meetings",
       "kick": "Kick participants"
     },
-    "teams": {
-      "_self": "Teams",
-      "view": "View teams",
-      "create": "Create teams",
-      "update": "Update teams",
-      "delete": "Delete teams",
-      "manage-members": "Manage team members",
+    "departments": {
+      "_self": "Departments",
+      "view": "View departments",
+      "create": "Create departments",
+      "update": "Update departments",
+      "delete": "Delete departments",
+      "manage-members": "Manage department members",
       "channels": {
         "_self": "Channels",
         "view": "View channels",
@@ -154,12 +154,12 @@
       "schedule": "Schedule meetings",
       "host": "Host meetings"
     },
-    "teams": {
-      "_self": "Teams",
-      "create": "Create teams",
-      "update": "Update teams",
-      "delete": "Delete teams",
-      "manage-members": "Manage team members",
+    "departments": {
+      "_self": "Departments",
+      "create": "Create departments",
+      "update": "Update departments",
+      "delete": "Delete departments",
+      "manage-members": "Manage department members",
       "channels": {
         "_self": "Channels",
         "create": "Create channels",

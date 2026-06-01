@@ -58,7 +58,7 @@ export function RolesListPage() {
       column.accessor('description', {
         header: t('table.description'),
         cell: (info) => (
-          <span className="text-sm text-muted-foreground line-clamp-1">{info.getValue() ?? '—'}</span>
+          <span className="text-sm text-muted-foreground line-clamp-1">{info.getValue() ?? '-'}</span>
         ),
         meta: { headerClassName: 'hidden md:table-cell', cellClassName: 'hidden md:table-cell' },
       }),

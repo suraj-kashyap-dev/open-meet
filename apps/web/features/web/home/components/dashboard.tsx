@@ -897,7 +897,7 @@ type Translator = (key: string, values?: Record<string, number | string>) => str
 
 function formatShortDate(iso: string | null): string {
   if (!iso) {
-    return '—';
+    return '-';
   }
 
   return new Date(iso).toLocaleString(undefined, {

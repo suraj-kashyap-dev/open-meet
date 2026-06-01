@@ -517,7 +517,7 @@ function matchesQuery(values: Array<string | null | undefined>, query: string) {
 
 function formatPaletteDate(iso: string | null) {
   if (!iso) {
-    return '—';
+    return '-';
   }
 
   return new Date(iso).toLocaleString(undefined, {

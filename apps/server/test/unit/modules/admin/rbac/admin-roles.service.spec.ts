@@ -1,8 +1,8 @@
 import { ConflictException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
-import { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
+import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
 import { AdminRolesService } from '@/modules/admin/rbac/admin-roles.service';
 
 function makeRole(overrides: Partial<Record<string, unknown>> = {}) {
@@ -51,20 +51,20 @@ describe('AdminRolesService', () => {
       repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
         Promise.resolve(makeRole({ permissions: data.permissions })),
       );
-      const dto = { name: 'Mods', permissions: ['teams'] };
+      const dto = { name: 'Mods', permissions: ['departments'] };
       const created = await service.create(dto);
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({
           permissions: [
-            'teams.create',
-            'teams.delete',
-            'teams.manage-members',
-            'teams.update',
-            'teams.view',
+            'departments.create',
+            'departments.delete',
+            'departments.manage-members',
+            'departments.update',
+            'departments.view',
           ],
         }),
       );
-      expect(created.permissions).toContain('teams.create');
+      expect(created.permissions).toContain('departments.create');
     });
 
     it('should reject duplicate names', async () => {
@@ -77,11 +77,11 @@ describe('AdminRolesService', () => {
       repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
         Promise.resolve(makeRole(data)),
       );
-      // 'teams.channels.create' was removed from the catalog; a legacy role carrying
+      // 'departments.channels.create' was removed from the catalog; a legacy role carrying
       // it must still save (the stale key is dropped, the valid one kept).
       const created = await service.create({
         name: 'Legacy',
-        permissions: ['users.view', 'teams.channels.create', 'mystery.key'],
+        permissions: ['users.view', 'departments.channels.create', 'mystery.key'],
       });
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({ permissions: ['users.view'] }),

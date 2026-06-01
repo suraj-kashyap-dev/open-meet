@@ -111,7 +111,7 @@
     "yearly": "Anualmente"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "ahora mismo",
     "minutes-ago": "hace {count}m",
     "hours-ago": "hace {count}h",
@@ -170,7 +170,7 @@
     "title-required": "Dale un título a tu reunión",
     "valid-datetime": "Elige una fecha y hora válidas",
     "future-datetime": "Elige una fecha y hora futuras",
-    "scheduled-invites": "Programada — invitaciones enviadas a {count, plural, one {# invitado} other {# invitados}}",
+    "scheduled-invites": "Programada - invitaciones enviadas a {count, plural, one {# invitado} other {# invitados}}",
     "scheduled": "Reunión programada",
     "schedule-error": "No se pudo programar la reunión",
     "link-copied": "Enlace de reunión copiado",

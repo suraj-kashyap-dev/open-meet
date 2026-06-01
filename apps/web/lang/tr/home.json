@@ -15,7 +15,7 @@
     "badge": "Anında",
     "eyebrow": "Hemen başla",
     "title": "Yeni toplantı başlat",
-    "description": "Hazır, paylaşılabilir bir oda. Kurulum gerektirmez — oda boşaldığında bağlantı sona erer.",
+    "description": "Hazır, paylaşılabilir bir oda. Kurulum gerektirmez - oda boşaldığında bağlantı sona erer.",
     "capacity": "100'e kadar",
     "secure": "Uçtan uca güvenli",
     "creating": "Oluşturuluyor…",
@@ -111,7 +111,7 @@
     "yearly": "Yıllık"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "az önce",
     "minutes-ago": "{count}d önce",
     "hours-ago": "{count}s önce",
@@ -170,7 +170,7 @@
     "title-required": "Toplantınıza bir başlık verin",
     "valid-datetime": "Geçerli bir tarih ve saat seçin",
     "future-datetime": "Gelecekteki bir tarih ve saat seçin",
-    "scheduled-invites": "Planlandı — {count, plural, one {# konuğa} other {# konuğa}} davet gönderildi",
+    "scheduled-invites": "Planlandı - {count, plural, one {# konuğa} other {# konuğa}} davet gönderildi",
     "scheduled": "Toplantı planlandı",
     "schedule-error": "Toplantı planlanamadı",
     "link-copied": "Toplantı bağlantısı kopyalandı",

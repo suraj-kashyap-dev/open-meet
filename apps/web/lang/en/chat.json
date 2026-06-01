@@ -42,6 +42,10 @@
     "info": "Conversation info",
     "clear": "Clear chat",
     "delete": "Delete chat",
+    "clear-confirm-title": "Clear chat?",
+    "clear-confirm-description": "This removes the current messages from your view only. Other participants will still see them.",
+    "delete-confirm-title": "Delete chat?",
+    "delete-confirm-description": "This removes the chat from your conversation list. This action can't be undone.",
     "clear-confirmed": "Messages cleared from your view",
     "delete-confirmed": "Chat deleted"
   },
@@ -90,6 +94,10 @@
     "save-message": "Save",
     "unsave-message": "Remove from saved",
     "forward": "Forward"
+  },
+  "pins": {
+    "previous": "Previous pinned message",
+    "next": "Next pinned message"
   },
   "priority": {
     "normal": "Standard",
@@ -150,8 +158,8 @@
     "description-label": "Description (optional)",
     "description-placeholder": "What is this group about?",
     "members-label": "Members",
-    "members-placeholder": "Search teammates…",
-    "no-teammates": "No teammates found.",
+    "members-placeholder": "Search people…",
+    "no-teammates": "No people found.",
     "create-submit": "Create group",
     "create-failed": "Could not create group",
     "cancel": "Cancel",
@@ -179,33 +187,33 @@
     "edit-saved": "Group updated",
     "add-members": "Add members",
     "add-members-title": "Add members",
-    "add-members-subtitle": "Invite more teammates to this group.",
+    "add-members-subtitle": "Invite more people to this group.",
     "save": "Save",
     "action-failed": "Something went wrong",
     "groups-disabled": "Group creation is currently disabled by the workspace admin."
   },
   "new-dm": {
     "title": "New conversation",
-    "search": "Search teammates",
-    "no-teammates": "No teammates found.",
+    "search": "Search people",
+    "no-teammates": "No people found.",
     "disabled": "Unavailable"
   },
   "new-chat": {
     "title": "New chat",
     "to-label": "To:",
     "to-placeholder": "Enter name or email",
-    "no-teammates": "No teammates found.",
+    "no-teammates": "No people found.",
     "disabled": "Unavailable",
     "empty-title": "You're starting a new conversation",
     "empty-subtitle": "Type your first message below.",
     "send-placeholder": "Type your first message…"
   },
-  "teams": {
-    "title": "Teams",
-    "subtitle": "Your teams and channels.",
-    "empty": "You're not a member of any team yet.",
-    "empty-title": "No teams yet",
-    "empty-subtitle": "An admin will add you to a team to start collaborating.",
+  "departments": {
+    "title": "Departments",
+    "subtitle": "Your departments and channels.",
+    "empty": "You're not a member of any department yet.",
+    "empty-title": "No departments yet",
+    "empty-subtitle": "An admin will add you to a department to start collaborating.",
     "no-channels": "No channels yet."
   },
   "activity": {

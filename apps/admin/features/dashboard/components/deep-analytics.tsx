@@ -14,7 +14,7 @@ import { TrendCard } from '@/features/dashboard/components/trend-card';
 
 function formatDuration(min: number): string {
   if (!Number.isFinite(min) || min <= 0) {
-    return '—';
+    return '-';
   }
 
   if (min < 60) {
@@ -66,7 +66,7 @@ export function DeepAnalytics() {
         <KpiCard
           icon={Trophy}
           label={t('kpi.top-host')}
-          value={topHost?.name ?? '—'}
+          value={topHost?.name ?? '-'}
           hint={
             topHost
               ? t('kpi.top-host-hint', { count: topHost.hostedCount })
@@ -109,7 +109,7 @@ function pickPeakHour(series: AdminConcurrencyPointDto[]): string {
   }
 
   if (peak <= 0 || hour < 0) {
-    return '—';
+    return '-';
   }
 
   return `${hour.toString().padStart(2, '0')}:00`;
@@ -162,7 +162,7 @@ function HourlyConcurrencyCard({ series }: { series: AdminConcurrencyPointDto[] 
               key={p.hour}
               className="group relative flex-1 rounded-sm bg-accent/15 transition-colors hover:bg-accent/40"
               style={{ height: `${Math.max(4, heightPct)}%` }}
-              title={`${p.hour.toString().padStart(2, '0')}:00 — peak ${p.count}`}
+              title={`${p.hour.toString().padStart(2, '0')}:00 - peak ${p.count}`}
             />
           );
         })}

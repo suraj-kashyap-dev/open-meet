@@ -36,7 +36,7 @@
   },
   "groups": {
     "title": "User-created groups",
-    "description": "Let teammates start their own group chats from the conversation list.",
+    "description": "Let colleagues start their own group chats from the conversation list.",
     "label": "Allow users to create groups",
     "hint": "When off, only admins can create groups."
   },

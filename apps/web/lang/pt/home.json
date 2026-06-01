@@ -15,7 +15,7 @@
     "badge": "Instantâneo",
     "eyebrow": "Começar agora",
     "title": "Iniciar uma nova reunião",
-    "description": "Uma sala nova e compartilhável. Sem configuração — o link expira quando a sala fica vazia.",
+    "description": "Uma sala nova e compartilhável. Sem configuração - o link expira quando a sala fica vazia.",
     "capacity": "Até 100",
     "secure": "Seguro de ponta a ponta",
     "creating": "Criando…",
@@ -111,7 +111,7 @@
     "yearly": "Anualmente"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "agora mesmo",
     "minutes-ago": "há {count}m",
     "hours-ago": "há {count}h",
@@ -170,7 +170,7 @@
     "title-required": "Dê um título à sua reunião",
     "valid-datetime": "Escolha uma data e hora válidas",
     "future-datetime": "Escolha uma data e hora futuras",
-    "scheduled-invites": "Agendada — convites enviados para {count, plural, one {# convidado} other {# convidados}}",
+    "scheduled-invites": "Agendada - convites enviados para {count, plural, one {# convidado} other {# convidados}}",
     "scheduled": "Reunião agendada",
     "schedule-error": "Não foi possível agendar a reunião",
     "link-copied": "Link da reunião copiado",

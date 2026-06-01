@@ -1,6 +1,6 @@
 import type { PresenceStatus } from '@open-meet/types';
 
-/** Color mapping for every PresenceStatus the server may emit — kept complete
+/** Color mapping for every PresenceStatus the server may emit - kept complete
  * (incl. BRB/DND) so all peer and self status states render consistently. */
 export const STATUS_COLOR: Record<PresenceStatus, string> = {
   AVAILABLE: 'bg-emerald-500',

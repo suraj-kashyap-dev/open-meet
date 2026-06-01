@@ -1,6 +1,6 @@
 import { ForbiddenException, InternalServerErrorException, type ExecutionContext } from '@nestjs/common';
 import type { Reflector } from '@nestjs/core';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
 import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
@@ -90,9 +90,9 @@ describe('AdminPermissionsGuard', () => {
     });
 
     it('should not auto-grant parents to children (flat-leaves semantics)', async () => {
-      const guard = makeGuard(['teams.manage-members'], {
+      const guard = makeGuard(['departments.manage-members'], {
         permissionType: 'CUSTOM',
-        granted: new Set(['teams']),
+        granted: new Set(['departments']),
       });
       await expect(guard.canActivate(makeCtx({ id: 'a1', roleId: 'r1' }))).rejects.toBeInstanceOf(
         ForbiddenException,

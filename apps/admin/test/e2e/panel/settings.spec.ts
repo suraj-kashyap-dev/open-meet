@@ -41,7 +41,7 @@ test.describe('Admin settings pages', () => {
 
     await expect(page.getByRole('heading', { name: 'Configuration', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Workspace defaults' })).toBeVisible();
-    await expect(page.getByLabel('Default meeting title')).toHaveValue('Team Sync');
+    await expect(page.getByLabel('Default meeting title')).toHaveValue('Department Sync');
   });
 
   test('should render the branding form with the current app name', async ({ page }) => {

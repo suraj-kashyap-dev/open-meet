@@ -47,7 +47,7 @@ export function UnauthorizedBridge() {
       }
 
       redirectingRef.current = true;
-      toast.error('Your session expired — please sign in again.');
+      toast.error('Your session expired - please sign in again.');
       window.location.replace(adminLoginHref());
     };
 

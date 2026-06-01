@@ -129,7 +129,7 @@ export class AuthController {
 
   @Public()
   @Get('google')
-  @ApiOperation({ summary: 'Begin Google OAuth — redirects to Google consent screen' })
+  @ApiOperation({ summary: 'Begin Google OAuth - redirects to Google consent screen' })
   async googleStart(@Res() res: FastifyReply): Promise<void> {
     const { url, state } = await this.google.buildAuthorizationUrl();
 
@@ -146,7 +146,7 @@ export class AuthController {
 
   @Public()
   @Get('google/callback')
-  @ApiOperation({ summary: 'Google OAuth callback — exchanges code, issues cookies, redirects' })
+  @ApiOperation({ summary: 'Google OAuth callback - exchanges code, issues cookies, redirects' })
   async googleCallback(
     @Query('code') code: string | undefined,
     @Query('state') state: string | undefined,

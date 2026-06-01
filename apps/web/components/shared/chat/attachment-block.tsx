@@ -21,7 +21,7 @@ export function toAbsoluteMediaUrl(url: string): string {
   return `${base}${path}`;
 }
 
-/** Inline renderer for a sent attachment — image/video/audio preview or a file chip. */
+/** Inline renderer for a sent attachment - image/video/audio preview or a file chip. */
 export function AttachmentBlock({
   a,
   formatSize,

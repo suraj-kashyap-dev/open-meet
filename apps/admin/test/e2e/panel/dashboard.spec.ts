@@ -13,12 +13,12 @@ test.describe('Admin dashboard page', () => {
     await expect(page.getByText('128', { exact: true })).toBeVisible();
   });
 
-  test('should surface group and team totals', async ({ page }) => {
+  test('should surface group and department totals', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en');
 
     await expect(page.getByText('Group conversations created')).toBeVisible();
-    await expect(page.getByText('Teams in the workspace')).toBeVisible();
+    await expect(page.getByText('Departments in the workspace')).toBeVisible();
   });
 
   test('should show the recent meetings table', async ({ page }) => {

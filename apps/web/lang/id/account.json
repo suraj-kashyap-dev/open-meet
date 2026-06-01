@@ -122,7 +122,7 @@
     "avatar-remove-failed": "Gagal menghapus avatar",
     "profile-updated": "Profil diperbarui",
     "profile-update-failed": "Gagal memperbarui profil",
-    "password-changed": "Kata sandi diubah — masuk kembali",
+    "password-changed": "Kata sandi diubah - masuk kembali",
     "password-change-failed": "Gagal mengubah kata sandi",
     "localization-updated": "Lokalisasi diperbarui",
     "localization-update-failed": "Gagal memperbarui lokalisasi",
@@ -131,7 +131,7 @@
     "privacy-updated": "Pengaturan privasi diperbarui",
     "privacy-update-failed": "Gagal memperbarui pengaturan privasi",
     "notifications-unsupported": "Notifikasi tidak didukung di browser ini",
-    "notifications-denied": "Izin ditolak — aktifkan notifikasi di pengaturan browser Anda"
+    "notifications-denied": "Izin ditolak - aktifkan notifikasi di pengaturan browser Anda"
   },
   "validation": {
     "avatar-invalid-type": "Avatar harus berupa gambar PNG, JPEG, WebP, atau GIF",

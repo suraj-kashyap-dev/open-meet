@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { ConversationMemberDto } from '@open-meet/types';
 
 /**
- * "Seen" marker shown under the viewer's most recent own message — a member has
+ * "Seen" marker shown under the viewer's most recent own message - a member has
  * read it when their `lastReadAt` is at or after the message timestamp.
  */
 export function ReadReceipts({

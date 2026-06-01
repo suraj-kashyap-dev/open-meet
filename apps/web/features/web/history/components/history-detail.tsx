@@ -48,7 +48,7 @@ function formatTime(iso: string): string {
 
 function formatStartedAt(iso: string | null): string {
   if (!iso) {
-    return '—';
+    return '-';
   }
 
   return new Date(iso).toLocaleString(undefined, {
@@ -63,7 +63,7 @@ function formatStartedAt(iso: string | null): string {
 
 function formatDuration(ms: number | null): string {
   if (ms === null || ms <= 0) {
-    return '—';
+    return '-';
   }
 
   const minutes = Math.round(ms / 60_000);
@@ -194,7 +194,7 @@ function StatTile({ icon, label, value }: { icon: ReactNode; label: string; valu
 
 function formatRecordingDuration(ms: number): string {
   if (ms <= 0) {
-    return '—';
+    return '-';
   }
 
   const totalSec = Math.round(ms / 1000);

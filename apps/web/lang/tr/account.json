@@ -122,7 +122,7 @@
     "avatar-remove-failed": "Avatar kaldırılamadı",
     "profile-updated": "Profil güncellendi",
     "profile-update-failed": "Profil güncellenemedi",
-    "password-changed": "Şifre değiştirildi — tekrar giriş yapın",
+    "password-changed": "Şifre değiştirildi - tekrar giriş yapın",
     "password-change-failed": "Şifre değiştirilemedi",
     "localization-updated": "Yerelleştirme güncellendi",
     "localization-update-failed": "Yerelleştirme güncellenemedi",
@@ -131,7 +131,7 @@
     "privacy-updated": "Gizlilik ayarları güncellendi",
     "privacy-update-failed": "Gizlilik ayarları güncellenemedi",
     "notifications-unsupported": "Bu tarayıcıda bildirimler desteklenmiyor",
-    "notifications-denied": "İzin reddedildi — tarayıcı ayarlarınızda bildirimleri etkinleştirin"
+    "notifications-denied": "İzin reddedildi - tarayıcı ayarlarınızda bildirimleri etkinleştirin"
   },
   "validation": {
     "avatar-invalid-type": "Avatar PNG, JPEG, WebP veya GIF resmi olmalıdır",

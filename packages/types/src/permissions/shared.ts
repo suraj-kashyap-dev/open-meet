@@ -41,7 +41,7 @@ export function leavesUnder(key: string, tree: PermissionTreeNode): string[] {
 
 /**
  * Expand a mixed list of leaf-or-parent keys into a deduped, sorted array of leaves only.
- * Unknown keys are dropped silently — callers are expected to validate against the catalog.
+ * Unknown keys are dropped silently - callers are expected to validate against the catalog.
  */
 export function expandToLeaves(selected: readonly string[], tree: PermissionTreeNode): string[] {
   const all = new Set(flattenLeaves(tree));
@@ -73,9 +73,9 @@ export function unknownKeys(selected: readonly string[], tree: PermissionTreeNod
 }
 
 export interface PermissionCatalogNodeDto {
-  /** Full dot-key, e.g. `teams.channels.create`. */
+  /** Full dot-key, e.g. `departments.manage-members`. */
   key: string;
-  /** Translated label fetched via i18n; key form e.g. `rbac.permissions.teams.channels.create`. */
+  /** Translated label fetched via i18n; key form e.g. `rbac.permissions.departments.manage-members`. */
   labelKey: string;
   /** Empty array on leaves. */
   children: PermissionCatalogNodeDto[];

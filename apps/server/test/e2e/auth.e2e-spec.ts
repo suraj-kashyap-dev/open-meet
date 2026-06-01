@@ -134,7 +134,7 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/me').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
-      // /auth/me returns { user, canCreateGroups } — user RBAC was removed.
+      // /auth/me returns { user, canCreateGroups } - user RBAC was removed.
       expect(res.body.data.user.email).toBe('ada@example.com');
       expect(typeof res.body.data.canCreateGroups).toBe('boolean');
     });

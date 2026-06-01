@@ -41,6 +41,10 @@
     "actions": "Konuşma işlemleri",
     "clear": "Sohbeti temizle",
     "delete": "Sohbeti sil",
+    "clear-confirm-title": "Sohbeti temizlesin mi?",
+    "clear-confirm-description": "Bu, mevcut mesajları yalnızca sizin görünümünüzden kaldırır. Diğer katılımcılar onları görmeye devam eder.",
+    "delete-confirm-title": "Sohbeti silsin mi?",
+    "delete-confirm-description": "Bu, sohbeti konuşma listenizden kaldırır. Bu işlem geri alınamaz.",
     "clear-confirmed": "Mesajlar görünümünüzden temizlendi",
     "delete-confirmed": "Sohbet silindi"
   },
@@ -77,6 +81,10 @@
     "save-message": "Kaydet",
     "unsave-message": "Kaydedilenlerden kaldır",
     "forward": "İlet"
+  },
+  "pins": {
+    "previous": "Önceki sabitlenen mesaj",
+    "next": "Sonraki sabitlenen mesaj"
   },
   "priority": {
     "normal": "Standart",
@@ -137,8 +145,8 @@
     "description-label": "Açıklama (opsiyonel)",
     "description-placeholder": "Bu grup ne hakkında?",
     "members-label": "Üyeler",
-    "members-placeholder": "Takım arkadaşı ara…",
-    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "members-placeholder": "Kişi ara…",
+    "no-teammates": "Kişi bulunamadı.",
     "create-submit": "Grup oluştur",
     "create-failed": "Grup oluşturulamadı",
     "cancel": "İptal",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "Yeni sohbet",
-    "search": "Takım arkadaşı ara",
-    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "search": "Kişi ara",
+    "no-teammates": "Kişi bulunamadı.",
     "disabled": "Kullanılamıyor"
   },
   "new-chat": {
     "title": "Yeni sohbet",
     "to-label": "Kime:",
     "to-placeholder": "Ad veya e-posta girin",
-    "no-teammates": "Takım arkadaşı bulunamadı.",
+    "no-teammates": "Kişi bulunamadı.",
     "disabled": "Kullanılamıyor",
     "empty-title": "Yeni bir görüşme başlatıyorsunuz",
     "empty-subtitle": "İlk mesajınızı aşağıya yazın.",
     "send-placeholder": "İlk mesajınızı yazın…"
   },
-  "teams": {
-    "title": "Takımlar",
-    "subtitle": "Takımlarınız ve kanallarınız.",
-    "empty": "Henüz hiçbir takımın üyesi değilsiniz.",
-    "empty-title": "Henüz takım yok",
-    "empty-subtitle": "Bir yönetici işbirliğine başlamanız için sizi bir takıma ekleyecek.",
+  "departments": {
+    "title": "Departmanlar",
+    "subtitle": "Departmanlarınız ve kanallarınız.",
+    "empty": "Henüz hiçbir departmanın üyesi değilsiniz.",
+    "empty-title": "Henüz departman yok",
+    "empty-subtitle": "Bir yönetici işbirliğine başlamanız için sizi bir departmana ekleyecek.",
     "no-channels": "Henüz kanal yok."
   },
   "activity": {

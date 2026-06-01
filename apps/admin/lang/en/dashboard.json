@@ -13,8 +13,8 @@
     "messages-24h-hint": "Chat messages in last 24h",
     "groups": "Groups",
     "groups-hint": "Group conversations created",
-    "teams": "Teams",
-    "teams-hint": "Teams in the workspace"
+    "departments": "Departments",
+    "departments-hint": "Departments in the workspace"
   },
   "trends": {
     "signups": "New signups",

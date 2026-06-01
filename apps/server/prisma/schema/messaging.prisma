@@ -1,5 +1,5 @@
 // Corporate chat (persistent, admin-governed). Separate from the meeting-scoped
-// `Message` model in chat.prisma — these conversations carry replies, edits,
+// `Message` model in chat.prisma - these conversations carry replies, edits,
 // soft-delete, reactions, polls, and per-member read state.
 
 enum ConversationType {
@@ -38,28 +38,28 @@ enum MentionKind {
   EVERYONE
 }
 
-model Team {
-  id                 String       @id @default(cuid())
+model Department {
+  id                 String             @id @default(cuid())
   name               String
   description        String?
   responsibleAdminId String?
-  responsibleAdmin   Admin?       @relation("TeamResponsible", fields: [responsibleAdminId], references: [id], onDelete: SetNull)
-  createdAt          DateTime     @default(now())
-  updatedAt          DateTime     @updatedAt
-  members            TeamMember[]
+  responsibleAdmin   Admin?             @relation("DepartmentResponsible", fields: [responsibleAdminId], references: [id], onDelete: SetNull)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  members            DepartmentMember[]
 
   @@index([responsibleAdminId])
 }
 
-model TeamMember {
-  id       String   @id @default(cuid())
-  teamId   String
-  team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  userId   String
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  joinedAt DateTime @default(now())
+model DepartmentMember {
+  id           String     @id @default(cuid())
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  joinedAt     DateTime   @default(now())
 
-  @@unique([teamId, userId])
+  @@unique([departmentId, userId])
   @@index([userId])
 }
 
@@ -89,6 +89,8 @@ model ConversationMember {
   user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   role           ConversationMemberRole @default(MEMBER)
   lastReadAt     DateTime?
+  clearedAt      DateTime?
+  removedAt      DateTime?
   muted          Boolean                @default(false)
   pinned         Boolean                @default(false)
   hidden         Boolean                @default(false)
@@ -97,6 +99,7 @@ model ConversationMember {
 
   @@unique([conversationId, userId])
   @@index([userId])
+  @@index([userId, removedAt])
 }
 
 model ChatMessage {

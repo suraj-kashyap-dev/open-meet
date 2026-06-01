@@ -15,7 +15,7 @@ env:
 
 jobs:
   setup-script:
-    name: setup.sh — shellcheck & tests
+    name: setup.sh - shellcheck & tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

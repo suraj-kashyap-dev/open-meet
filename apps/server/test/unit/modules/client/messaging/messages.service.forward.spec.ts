@@ -14,6 +14,7 @@ import { type ChatBus, conversationRoom } from '@/modules/client/messaging/chat-
 describe('MessagesService.forward()', () => {
   let messages: { findById: ReturnType<typeof vi.fn>; create: ReturnType<typeof vi.fn> };
   let conversations: { touch: ReturnType<typeof vi.fn> };
+  let conversationsService: { revealOnActivity: ReturnType<typeof vi.fn> };
   let permissions: {
     assertConversationMember: ReturnType<typeof vi.fn>;
     assertCanPost: ReturnType<typeof vi.fn>;
@@ -37,6 +38,7 @@ describe('MessagesService.forward()', () => {
       create: vi.fn().mockResolvedValue(created),
     };
     conversations = { touch: vi.fn() };
+    conversationsService = { revealOnActivity: vi.fn() };
     permissions = { assertConversationMember: vi.fn(), assertCanPost: vi.fn() };
     serializer = { message: vi.fn().mockReturnValue({ id: 'm2', content: 'hello there' }) };
     bus = { emit: vi.fn() };
@@ -46,6 +48,7 @@ describe('MessagesService.forward()', () => {
     service = new MessagesService(
       messages as unknown as MessagesRepository,
       conversations as unknown as ConversationsRepository,
+      conversationsService as never,
       permissions as unknown as ChatPermissionsService,
       {} as unknown as UploadsService,
       serializer as unknown as MessagingSerializer,

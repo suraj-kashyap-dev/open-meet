@@ -76,7 +76,7 @@
     "title": "Terminare tutte le riunioni attive?",
     "description": "Questa operazione segnerà come ENDED tutte le riunioni con stato ACTIVE e chiuderà le relative sale LiveKit. Ogni partecipante attualmente in una chiamata verrà disconnesso immediatamente.",
     "active-summary": "{count, plural, one {# riunione} other {# riunioni}} attualmente attiva/e.",
-    "none-active": "Nessuna riunione attiva al momento — non accadrà nulla.",
+    "none-active": "Nessuna riunione attiva al momento - non accadrà nulla.",
     "cancel": "Annulla",
     "submit": "Termina tutte le attive",
     "submitting": "Terminazione in corso…",

@@ -217,7 +217,7 @@ export class AdminAccountsService {
 
     if (existing) {
       // An admin with this email was created by other means since the invite
-      // went out — the invite is moot, so clear it and report the conflict.
+      // went out - the invite is moot, so clear it and report the conflict.
       await this.invites.delete(invite.id);
       throw new ConflictException({
         code: ApiErrorCode.EMAIL_TAKEN,
@@ -322,7 +322,7 @@ export class AdminAccountsService {
 
   /**
    * Assign an RBAC role to an admin. After this call, the affected admin must re-login
-   * for their JWT to carry the new roleId — current sessions still use the old roleId
+   * for their JWT to carry the new roleId - current sessions still use the old roleId
    * until token expiry. The acting admin is unaffected.
    */
   async assignRole(targetId: string, roleId: string): Promise<AdminAccountDto> {
@@ -429,7 +429,7 @@ export class AdminAccountsService {
       );
       throw new ServiceUnavailableException({
         code: ApiErrorCode.INTERNAL_ERROR,
-        message: 'The invite was saved but the email could not be sent — try Resend.',
+        message: 'The invite was saved but the email could not be sent - try Resend.',
       });
     }
   }

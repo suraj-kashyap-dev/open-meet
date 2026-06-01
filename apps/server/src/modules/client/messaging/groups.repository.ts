@@ -102,7 +102,7 @@ export class GroupsRepository {
     await this.prisma.conversation.delete({ where: { id } });
   }
 
-  /** Fetch the group with members + last message — what the serializer expects. */
+  /** Fetch the group with members + last message - what the serializer expects. */
   findWithMembers(id: string): Promise<ConversationListRow | null> {
     return this.prisma.conversation.findUnique({
       where: { id },
@@ -110,7 +110,7 @@ export class GroupsRepository {
     });
   }
 
-  /** All current user ids in a group — used for "fan-out" broadcast targets. */
+  /** All current user ids in a group - used for "fan-out" broadcast targets. */
   async memberUserIds(id: string): Promise<string[]> {
     const rows = await this.prisma.conversationMember.findMany({
       where: { conversationId: id },

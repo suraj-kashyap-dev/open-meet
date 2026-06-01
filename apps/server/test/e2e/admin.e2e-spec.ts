@@ -71,7 +71,7 @@ describe('Admin (e2e)', () => {
       expect(res.body.data.name).toBe('Renamed Root');
 
       const me = await http(app).get('/api/admin/auth/me').set('Cookie', cookie);
-      // /me now returns { admin, role, grantedSet } — see Step 7.
+      // /me now returns { admin, role, grantedSet } - see Step 7.
       expect(me.body.data.admin.name).toBe('Renamed Root');
       expect(me.body.data.role?.permissionType).toBe('ALL');
       expect(Array.isArray(me.body.data.grantedSet)).toBe(true);

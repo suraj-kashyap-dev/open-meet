@@ -20,7 +20,7 @@ interface PublicConfigEnvelope {
 
 /**
  * Server-side fetch of the public branding (app name + logo) so the admin shell
- * renders the correct name/logo on first paint — no client-fetch flicker on
+ * renders the correct name/logo on first paint - no client-fetch flicker on
  * refresh. Falls back to defaults if the API is unreachable.
  */
 export const getBranding = cache(async (): Promise<PublicConfigDto> => {

@@ -15,7 +15,7 @@
     "badge": "Istantanea",
     "eyebrow": "Inizia da zero",
     "title": "Avvia una nuova riunione",
-    "description": "Una stanza nuova e condivisibile. Nessuna configurazione — il link scade quando la stanza è vuota.",
+    "description": "Una stanza nuova e condivisibile. Nessuna configurazione - il link scade quando la stanza è vuota.",
     "capacity": "Fino a 100",
     "secure": "Sicuro end-to-end",
     "creating": "Creazione in corso…",
@@ -111,7 +111,7 @@
     "yearly": "Ogni anno"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "proprio ora",
     "minutes-ago": "{count}m fa",
     "hours-ago": "{count}h fa",
@@ -170,7 +170,7 @@
     "title-required": "Dai un titolo alla tua riunione",
     "valid-datetime": "Scegli una data e un orario validi",
     "future-datetime": "Scegli una data e un orario futuri",
-    "scheduled-invites": "Programmata — inviti inviati a {count, plural, one {# ospite} other {# ospiti}}",
+    "scheduled-invites": "Programmata - inviti inviati a {count, plural, one {# ospite} other {# ospiti}}",
     "scheduled": "Riunione programmata",
     "schedule-error": "Impossibile programmare la riunione",
     "link-copied": "Link riunione copiato",

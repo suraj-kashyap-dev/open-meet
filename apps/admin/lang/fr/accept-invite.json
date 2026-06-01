@@ -22,6 +22,6 @@
     "activate-failed": "Impossible d'activer le compte"
   },
   "toast": {
-    "activated": "Compte activé — veuillez vous connecter."
+    "activated": "Compte activé - veuillez vous connecter."
   }
 }

@@ -22,6 +22,6 @@
     "activate-failed": "Could not activate account"
   },
   "toast": {
-    "activated": "Account activated — please sign in."
+    "activated": "Account activated - please sign in."
   }
 }

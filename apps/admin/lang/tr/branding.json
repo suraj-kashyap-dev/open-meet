@@ -36,7 +36,7 @@
   },
   "groups": {
     "title": "Kullanıcı oluşturulan gruplar",
-    "description": "Takım arkadaşlarınızın konuşma listesinden kendi grup sohbetlerini başlatmasına izin verin.",
+    "description": "İş arkadaşlarınızın konuşma listesinden kendi grup sohbetlerini başlatmasına izin verin.",
     "label": "Kullanıcıların grup oluşturmasına izin ver",
     "hint": "Kapalıyken yalnızca yöneticiler grup oluşturabilir."
   },

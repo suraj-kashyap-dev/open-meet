@@ -41,6 +41,10 @@
     "actions": "Unterhaltungsaktionen",
     "clear": "Chat leeren",
     "delete": "Chat löschen",
+    "clear-confirm-title": "Chat leeren?",
+    "clear-confirm-description": "Dies entfernt die aktuellen Nachrichten nur aus Ihrer Ansicht. Andere Teilnehmende sehen sie weiterhin.",
+    "delete-confirm-title": "Chat löschen?",
+    "delete-confirm-description": "Dies entfernt den Chat aus Ihrer Unterhaltungsliste. Diese Aktion kann nicht rückgängig gemacht werden.",
     "clear-confirmed": "Nachrichten aus Ihrer Ansicht entfernt",
     "delete-confirmed": "Chat gelöscht"
   },
@@ -77,6 +81,10 @@
     "save-message": "Speichern",
     "unsave-message": "Aus Gespeichertem entfernen",
     "forward": "Weiterleiten"
+  },
+  "pins": {
+    "previous": "Vorherige angeheftete Nachricht",
+    "next": "Nächste angeheftete Nachricht"
   },
   "priority": {
     "normal": "Standard",
@@ -137,8 +145,8 @@
     "description-label": "Beschreibung (optional)",
     "description-placeholder": "Worum geht es in dieser Gruppe?",
     "members-label": "Mitglieder",
-    "members-placeholder": "Teammitglieder suchen…",
-    "no-teammates": "Keine Teammitglieder gefunden.",
+    "members-placeholder": "Personen suchen…",
+    "no-teammates": "Keine Personen gefunden.",
     "create-submit": "Gruppe erstellen",
     "create-failed": "Gruppe konnte nicht erstellt werden",
     "cancel": "Abbrechen",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "Neue Unterhaltung",
-    "search": "Teammitglieder suchen",
-    "no-teammates": "Keine Teammitglieder gefunden.",
+    "search": "Personen suchen",
+    "no-teammates": "Keine Personen gefunden.",
     "disabled": "Nicht verfügbar"
   },
   "new-chat": {
     "title": "Neuer Chat",
     "to-label": "An:",
     "to-placeholder": "Name oder E-Mail eingeben",
-    "no-teammates": "Keine Teammitglieder gefunden.",
+    "no-teammates": "Keine Personen gefunden.",
     "disabled": "Nicht verfügbar",
     "empty-title": "Sie beginnen eine neue Unterhaltung",
     "empty-subtitle": "Schreiben Sie unten Ihre erste Nachricht.",
     "send-placeholder": "Erste Nachricht schreiben…"
   },
-  "teams": {
-    "title": "Teams",
-    "subtitle": "Ihre Teams und Kanäle.",
-    "empty": "Sie sind noch in keinem Team Mitglied.",
-    "empty-title": "Noch keine Teams",
-    "empty-subtitle": "Ein Admin fügt Sie zu einem Team hinzu, um die Zusammenarbeit zu starten.",
+  "departments": {
+    "title": "Abteilungen",
+    "subtitle": "Ihre Abteilungen und Kanäle.",
+    "empty": "Sie sind noch in keiner Abteilung Mitglied.",
+    "empty-title": "Noch keine Abteilungen",
+    "empty-subtitle": "Ein Admin fügt Sie zu einer Abteilung hinzu, um die Zusammenarbeit zu starten.",
     "no-channels": "Noch keine Kanäle."
   },
   "activity": {

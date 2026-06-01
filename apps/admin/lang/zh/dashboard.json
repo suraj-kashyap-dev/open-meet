@@ -13,8 +13,8 @@
     "messages-24h-hint": "过去24小时内的聊天消息",
     "groups": "群组",
     "groups-hint": "已创建的群组会话",
-    "teams": "团队",
-    "teams-hint": "工作区中的团队"
+    "departments": "部门",
+    "departments-hint": "工作区中的部门"
   },
   "trends": {
     "signups": "新注册",

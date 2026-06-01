@@ -10,7 +10,7 @@ describe('AdminAnalyticsRepository', () => {
   let meeting: { count: ReturnType<typeof vi.fn>; findMany: ReturnType<typeof vi.fn> };
   let message: { count: ReturnType<typeof vi.fn> };
   let conversation: { count: ReturnType<typeof vi.fn> };
-  let team: { count: ReturnType<typeof vi.fn> };
+  let department: { count: ReturnType<typeof vi.fn> };
   let $queryRaw: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
@@ -18,14 +18,14 @@ describe('AdminAnalyticsRepository', () => {
     meeting = { count: vi.fn().mockResolvedValue(4), findMany: vi.fn().mockResolvedValue([]) };
     message = { count: vi.fn().mockResolvedValue(20) };
     conversation = { count: vi.fn().mockResolvedValue(6) };
-    team = { count: vi.fn().mockResolvedValue(3) };
+    department = { count: vi.fn().mockResolvedValue(3) };
     $queryRaw = vi.fn().mockResolvedValue([]);
     repo = new AdminAnalyticsRepository({
       user,
       meeting,
       message,
       conversation,
-      team,
+      department,
       $queryRaw,
     } as unknown as PrismaService);
   });
@@ -39,10 +39,10 @@ describe('AdminAnalyticsRepository', () => {
     });
   });
 
-  describe('countTeams()', () => {
-    it('should count all teams', async () => {
-      await expect(repo.countTeams()).resolves.toBe(3);
-      expect(team.count).toHaveBeenCalledWith();
+  describe('countDepartments()', () => {
+    it('should count all departments', async () => {
+      await expect(repo.countDepartments()).resolves.toBe(3);
+      expect(department.count).toHaveBeenCalledWith();
     });
   });
 

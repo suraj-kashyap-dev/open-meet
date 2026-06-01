@@ -15,7 +15,7 @@
     "badge": "Instantané",
     "eyebrow": "Commencer",
     "title": "Démarrer une nouvelle réunion",
-    "description": "Une salle fraîche et partageable. Sans configuration — le lien expire une fois la salle vide.",
+    "description": "Une salle fraîche et partageable. Sans configuration - le lien expire une fois la salle vide.",
     "capacity": "Jusqu'à 100",
     "secure": "Sécurisé de bout en bout",
     "creating": "Création en cours…",
@@ -111,7 +111,7 @@
     "yearly": "Annuel"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "à l'instant",
     "minutes-ago": "il y a {count}min",
     "hours-ago": "il y a {count}h",
@@ -170,7 +170,7 @@
     "title-required": "Donnez un titre à votre réunion",
     "valid-datetime": "Choisissez une date et une heure valides",
     "future-datetime": "Choisissez une date et une heure dans le futur",
-    "scheduled-invites": "Planifiée — invitations envoyées à {count, plural, one {# participant} other {# participants}}",
+    "scheduled-invites": "Planifiée - invitations envoyées à {count, plural, one {# participant} other {# participants}}",
     "scheduled": "Réunion planifiée",
     "schedule-error": "Impossible de planifier la réunion",
     "link-copied": "Lien de réunion copié",

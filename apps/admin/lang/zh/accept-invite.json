@@ -22,6 +22,6 @@
     "activate-failed": "无法激活账户"
   },
   "toast": {
-    "activated": "账户已激活 — 请登录。"
+    "activated": "账户已激活 - 请登录。"
   }
 }

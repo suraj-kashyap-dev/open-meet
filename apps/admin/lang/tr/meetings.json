@@ -76,7 +76,7 @@
     "title": "Tüm aktif toplantılar sonlandırılsın mı?",
     "description": "Bu işlem ACTIVE durumdaki her toplantıyı ENDED olarak işaretler ve LiveKit odalarını kapatır. Bir görüşmede bulunan tüm katılımcıların bağlantısı hemen kesilecek.",
     "active-summary": "Şu an {count, plural, one {# toplantı} other {# toplantı}} aktif.",
-    "none-active": "Şu an aktif toplantı yok — hiçbir şey olmayacak.",
+    "none-active": "Şu an aktif toplantı yok - hiçbir şey olmayacak.",
     "cancel": "İptal",
     "submit": "Tüm aktif olanları sonlandır",
     "submitting": "Sonlandırılıyor…",

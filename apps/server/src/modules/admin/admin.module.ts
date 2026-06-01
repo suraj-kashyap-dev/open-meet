@@ -25,9 +25,9 @@ import { AdminUsersService } from './users/users.service';
 import { AdminUsersRepository } from './users/users.repository';
 import { AdminUserInviteService } from './users/user-invite.service';
 import { AdminUserInviteRepository } from './users/user-invite.repository';
-import { AdminTeamsController } from './teams/teams.controller';
-import { AdminTeamsService } from './teams/teams.service';
-import { AdminTeamsRepository } from './teams/teams.repository';
+import { AdminDepartmentsController } from './departments/departments.controller';
+import { AdminDepartmentsService } from './departments/departments.service';
+import { AdminDepartmentsRepository } from './departments/departments.repository';
 import { AdminGroupsController } from './groups/groups.controller';
 import { AdminGroupsService } from './groups/groups.service';
 import { AdminGroupsRepository } from './groups/groups.repository';
@@ -53,7 +53,7 @@ import { AdminRbacModule } from './rbac/rbac.module';
     AdminAccountsController,
     AdminInviteController,
     AdminUsersController,
-    AdminTeamsController,
+    AdminDepartmentsController,
     AdminGroupsController,
     AdminBrandingController,
     AdminConfigurationController,
@@ -73,8 +73,8 @@ import { AdminRbacModule } from './rbac/rbac.module';
     AdminUsersRepository,
     AdminUserInviteService,
     AdminUserInviteRepository,
-    AdminTeamsService,
-    AdminTeamsRepository,
+    AdminDepartmentsService,
+    AdminDepartmentsRepository,
     AdminGroupsService,
     AdminGroupsRepository,
     AdminBootstrapService,

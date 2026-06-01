@@ -7,7 +7,7 @@ export interface PublicConfigDto {
   logoUrl: string | null;
   /** Whether the GIF picker is available (Tenor configured on the server). */
   gifsEnabled: boolean;
-  /** Brand accent — preset slug ("indigo", "blue", ...) or `#RRGGBB` hex. */
+  /** Brand accent - preset slug ("indigo", "blue", ...) or `#RRGGBB` hex. */
   accentColor: string;
 }
 

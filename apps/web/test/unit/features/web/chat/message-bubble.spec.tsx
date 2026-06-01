@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -7,13 +7,13 @@ import type { ChatMessageDto } from '@open-meet/types';
 import { MessageBubble } from '@/features/web/chat/components/message-bubble';
 
 vi.mock('@/components/shared/chat', () => ({
-  AttachmentBlock: () => null,
+  AttachmentBlock: () => <div>Attachment</div>,
   MessageContent: ({ content }: { content: string }) => <span>{content}</span>,
-  formatTime: () => '10:00 AM',
+  formatTime: () => '10:00',
 }));
 
 vi.mock('@/features/web/chat/components/poll-card', () => ({
-  PollCard: () => null,
+  PollCard: () => <div>Poll</div>,
 }));
 
 vi.mock('@/features/web/chat/components/reaction-bar', () => ({
@@ -35,78 +35,90 @@ vi.mock('@/features/web/chat/components/reply-preview', () => ({
 const messages = {
   chat: {
     bubble: {
-      deleted: 'This message was deleted',
-      edit: 'Edit',
+      you: 'You',
+      'unknown-user': 'Unknown',
+      pinned: 'Pinned',
+      edited: 'Edited',
+      deleted: 'Deleted',
+      save: 'Save',
+      cancel: 'Cancel',
       reply: 'Reply',
-      more: 'More actions',
+      more: 'More',
+      edit: 'Edit',
       pin: 'Pin',
       unpin: 'Unpin',
-      'save-message': 'Save',
-      'unsave-message': 'Remove from saved',
+      'save-message': 'Save message',
+      'unsave-message': 'Unsave message',
       forward: 'Forward',
       delete: 'Delete',
+    },
+    priority: {
+      urgent: 'Urgent',
+      important: 'Important',
     },
   },
 };
 
-function renderBubble(message: ChatMessageDto) {
-  render(
-    <NextIntlClientProvider locale="en" messages={messages}>
-      <MessageBubble
-        message={message}
-        isMe
-        isGroupHead={false}
-        isGroupTail
-        showSenderName={false}
-        isLastOwn={false}
-        canPost
-        members={[]}
-        currentUserId={message.sender?.id}
-        formatSize={() => '1 KB'}
-        onReply={vi.fn()}
-        onReact={vi.fn()}
-        onEdit={vi.fn()}
-        onDelete={vi.fn()}
-        onVotePoll={vi.fn()}
-        onJumpToParent={vi.fn()}
-        onPin={vi.fn()}
-        onSave={vi.fn()}
-        onForward={vi.fn()}
-      />
-    </NextIntlClientProvider>,
-  );
+function buildMessage(): ChatMessageDto {
+  return {
+    id: 'm1',
+    conversationId: 'c1',
+    type: 'TEXT',
+    priority: 'NORMAL',
+    content: 'Jump target',
+    sender: { id: 'u1', name: 'Ada', avatar: null },
+    parentId: null,
+    parent: null,
+    replyCount: 0,
+    attachments: [],
+    reactions: [],
+    poll: null,
+    mentionedUserIds: [],
+    mentionsEveryone: false,
+    pinned: false,
+    saved: false,
+    editedAt: null,
+    deletedAt: null,
+    sentAt: '2026-05-31T10:00:00.000Z',
+    clientNonce: null,
+  };
 }
 
 describe('<MessageBubble />', () => {
-  it('should not render a copy-link action in the message menu', async () => {
-    const message: ChatMessageDto = {
-      id: 'm1',
-      conversationId: 'c1',
-      type: 'TEXT',
-      priority: 'NORMAL',
-      content: 'hello world',
-      sender: { id: 'u1', name: 'Ada Lovelace', avatar: null },
-      parentId: null,
-      parent: null,
-      replyCount: 0,
-      attachments: [],
-      reactions: [],
-      poll: null,
-      mentionedUserIds: [],
-      mentionsEveryone: false,
-      pinned: false,
-      saved: false,
-      editedAt: null,
-      deletedAt: null,
-      sentAt: '2026-05-31T10:00:00.000Z',
-      clientNonce: null,
-    };
+  it('marks the message row as the jump target and highlights the message surface', () => {
+    render(
+      <NextIntlClientProvider locale="en" messages={messages}>
+        <ul>
+          <MessageBubble
+            message={buildMessage()}
+            isMe
+            highlighted
+            isGroupHead
+            isGroupTail
+            showSenderName={false}
+            isLastOwn={false}
+            canPost={false}
+            members={[]}
+            currentUserId="u1"
+            formatSize={(bytes) => `${bytes}`}
+            onReply={vi.fn()}
+            onReact={vi.fn()}
+            onEdit={vi.fn()}
+            onDelete={vi.fn()}
+            onVotePoll={vi.fn()}
+            onJumpToParent={vi.fn()}
+            onPin={vi.fn()}
+            onSave={vi.fn()}
+            onForward={vi.fn()}
+          />
+        </ul>
+      </NextIntlClientProvider>,
+    );
 
-    renderBubble(message);
+    const item = screen.getByText('Jump target').closest('li');
 
-    fireEvent.pointerDown(screen.getByRole('button', { name: 'More actions' }), { button: 0 });
-
-    expect(await screen.findByText('Forward')).toBeInTheDocument();
-    expect(screen.queryByText('Copy link')).not.toBeInTheDocument();
+    expect(item).toHaveAttribute('data-mid', 'm1');
+    expect(item?.querySelector('.chat-jump-target-end')).not.toBeNull();
+    expect(item?.querySelector('.chat-jump-surface')).not.toBeNull();
   });
 });

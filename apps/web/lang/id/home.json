@@ -15,7 +15,7 @@
     "badge": "Instan",
     "eyebrow": "Mulai baru",
     "title": "Mulai rapat baru",
-    "description": "Ruangan segar yang dapat dibagikan. Tanpa pengaturan — tautan berakhir setelah ruangan kosong.",
+    "description": "Ruangan segar yang dapat dibagikan. Tanpa pengaturan - tautan berakhir setelah ruangan kosong.",
     "capacity": "Hingga 100",
     "secure": "Aman dari ujung ke ujung",
     "creating": "Membuat…",
@@ -111,7 +111,7 @@
     "yearly": "Tahunan"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "baru saja",
     "minutes-ago": "{count}m lalu",
     "hours-ago": "{count}j lalu",
@@ -170,7 +170,7 @@
     "title-required": "Beri judul pada rapat Anda",
     "valid-datetime": "Pilih tanggal dan waktu yang valid",
     "future-datetime": "Pilih tanggal dan waktu di masa depan",
-    "scheduled-invites": "Terjadwal — undangan dikirim ke {count, plural, one {# tamu} other {# tamu}}",
+    "scheduled-invites": "Terjadwal - undangan dikirim ke {count, plural, one {# tamu} other {# tamu}}",
     "scheduled": "Rapat terjadwal",
     "schedule-error": "Tidak dapat menjadwalkan rapat",
     "link-copied": "Tautan rapat disalin",

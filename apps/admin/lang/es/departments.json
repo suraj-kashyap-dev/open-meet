@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Gestionar",
+  "title": "Departamentos",
+  "subtitle": "Los departamentos deciden quién puede enviar mensajes a quién: los usuarios pueden enviar mensajes a cualquiera de un departamento compartido.",
+  "empty": "Aún no hay departamentos.",
+  "columns": {
+    "name": "Nombre",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "Miembros"
+  },
+  "actions": {
+    "manage": "Gestionar miembros",
+    "delete": "Eliminar departamento"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this team for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "Nuevo departamento",
+    "title": "Crear departamento",
+    "name": "Nombre del departamento",
+    "placeholder": "p. ej. Ingeniería",
+    "submit": "Crear",
+    "success": "Departamento creado",
+    "error": "No se pudo crear el departamento"
+  },
+  "manage": {
+    "title": "Miembros",
+    "members": "{count, plural, one {# miembro} other {# miembros}}",
+    "add": "Agregar miembros",
+    "search": "Buscar usuarios",
+    "no-users": "No se encontraron usuarios.",
+    "add-confirm": "Agregar",
+    "empty": "Aún no hay miembros.",
+    "remove": "Quitar miembro"
+  },
+  "channels": {
+    "title": "Canales",
+    "empty": "Aún no hay canales.",
+    "general": "General",
+    "add": "Agregar canal",
+    "delete": "Eliminar canal",
+    "name-placeholder": "Nombre del nuevo canal"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Departamento actualizado",
+    "request-error": "No se pudo actualizar este departamento",
+    "empty-title": "Departamento no encontrado",
+    "empty-description": "Es posible que este departamento haya sido eliminado o que no tengas acceso a él.",
+    "delete-description": "Eliminar este departamento también elimina el acceso a sus canales para todos los miembros.",
+    "delete-success": "Departamento eliminado",
+    "delete-error": "No se pudo eliminar el departamento"
+  },
+  "delete-dialog": {
+    "title": "¿Eliminar departamento?",
+    "description": "{name} se eliminará y todos los miembros perderán el acceso de inmediato. No se puede deshacer.",
+    "cancel": "Cancelar",
+    "confirm": "Eliminar departamento",
+    "deleting": "Eliminando…"
+  }
+}

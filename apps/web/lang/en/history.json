@@ -3,7 +3,7 @@
     "eyebrow": "Activity",
     "title": "Meeting history",
     "total": "{count, plural, one {# meeting} other {# meetings}} total",
-    "description": "Every meeting you hosted or joined — with chat, attachments, and the participant list preserved."
+    "description": "Every meeting you hosted or joined - with chat, attachments, and the participant list preserved."
   },
   "default-title": "Meeting on {date}",
   "host": "Host",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Rec · {count}",
   "recording-title": "{count, plural, one {# recording} other {# recordings}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Meeting",
     "started": "Started",
@@ -91,7 +91,7 @@
       },
       "failed-title": "Recording failed",
       "failed-detail": "No further detail was provided by the egress service.",
-      "processing": "Processing recording — check back shortly.",
+      "processing": "Processing recording - check back shortly.",
       "empty-title": "No recordings for this meeting",
       "empty-description": "The host can start a recording from in-call controls. Recordings stay private to the people who joined this meeting.",
       "relative": {

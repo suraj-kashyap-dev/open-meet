@@ -13,7 +13,7 @@ model Admin {
   invitesSent          AdminInvite[]
   userInvitesSent      UserInvite[]
   conversationsCreated Conversation[]
-  teamsResponsibleFor  Team[]         @relation("TeamResponsible")
+  departmentsResponsibleFor Department[] @relation("DepartmentResponsible")
 
   @@index([email])
   @@index([roleRecordId])

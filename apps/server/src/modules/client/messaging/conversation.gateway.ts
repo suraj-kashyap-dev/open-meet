@@ -87,7 +87,7 @@ export class ConversationGateway
       );
 
       if ((payload as { guest?: boolean }).guest === true) {
-        throw new Error('Guest tokens cannot access team chat');
+        throw new Error('Guest tokens cannot access department chat');
       }
 
       client.data.user = { id: payload.sub, email: payload.email, name: payload.name };

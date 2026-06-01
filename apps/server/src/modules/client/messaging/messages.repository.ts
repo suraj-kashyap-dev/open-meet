@@ -84,13 +84,22 @@ export class MessagesRepository {
 
   async listHistory(params: {
     conversationId: string;
+    clearedAt: Date | null;
     cursor?: string;
     limit: number;
   }): Promise<ChatMessageWithRelations[]> {
+    const createdAt =
+      params.clearedAt || params.cursor
+        ? {
+            ...(params.clearedAt ? { gt: params.clearedAt } : {}),
+            ...(params.cursor ? { lt: new Date(params.cursor) } : {}),
+          }
+        : undefined;
+
     const rows = await this.prisma.chatMessage.findMany({
       where: {
         conversationId: params.conversationId,
-        ...(params.cursor ? { createdAt: { lt: new Date(params.cursor) } } : {}),
+        ...(createdAt ? { createdAt } : {}),
       },
       orderBy: { createdAt: 'desc' },
       take: params.limit,

@@ -15,7 +15,7 @@
     "badge": "Instant",
     "eyebrow": "Start fresh",
     "title": "Start a new meeting",
-    "description": "A fresh, shareable room. No setup — the link expires once the room is empty.",
+    "description": "A fresh, shareable room. No setup - the link expires once the room is empty.",
     "capacity": "Up to 100",
     "secure": "End-to-end secure",
     "creating": "Creating…",
@@ -111,7 +111,7 @@
     "yearly": "Yearly"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "just now",
     "minutes-ago": "{count}m ago",
     "hours-ago": "{count}h ago",
@@ -170,7 +170,7 @@
     "title-required": "Give your meeting a title",
     "valid-datetime": "Pick a valid date and time",
     "future-datetime": "Pick a future date and time",
-    "scheduled-invites": "Scheduled — invites sent to {count, plural, one {# guest} other {# guests}}",
+    "scheduled-invites": "Scheduled - invites sent to {count, plural, one {# guest} other {# guests}}",
     "scheduled": "Meeting scheduled",
     "schedule-error": "Could not schedule meeting",
     "link-copied": "Meeting link copied",

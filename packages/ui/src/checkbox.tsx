@@ -14,8 +14,8 @@ interface CheckboxProps
 }
 
 /**
- * Non-native, tri-state checkbox. Renders a `role="checkbox"` button — no browser
- * default styling, no shadow — and supports an `indeterminate` (partial) state for
+ * Non-native, tri-state checkbox. Renders a `role="checkbox"` button - no browser
+ * default styling, no shadow - and supports an `indeterminate` (partial) state for
  * tree pickers. API mirrors shadcn/Radix (`checked` / `onCheckedChange`).
  */
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(

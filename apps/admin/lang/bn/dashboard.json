@@ -13,8 +13,8 @@
     "messages-24h-hint": "শেষ ২৪ ঘণ্টায় চ্যাট বার্তা",
     "groups": "গ্রুপ",
     "groups-hint": "তৈরি করা গ্রুপ কথোপকথন",
-    "teams": "টিম",
-    "teams-hint": "ওয়ার্কস্পেসের টিম"
+    "departments": "বিভাগ",
+    "departments-hint": "ওয়ার্কস্পেসের বিভাগ"
   },
   "trends": {
     "signups": "নতুন নিবন্ধন",

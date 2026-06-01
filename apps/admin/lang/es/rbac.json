@@ -34,8 +34,8 @@
     "description-label": "Descripción",
     "description-placeholder": "¿Qué puede hacer este rol?",
     "type-label": "Acceso",
-    "type-all": "Acceso completo — concede todos los permisos actuales y futuros.",
-    "type-custom": "Personalizado — elige exactamente qué pueden hacer."
+    "type-all": "Acceso completo - concede todos los permisos actuales y futuros.",
+    "type-custom": "Personalizado - elige exactamente qué pueden hacer."
   },
   "edit": {
     "title": "Editar rol",
@@ -81,13 +81,13 @@
       "delete": "Eliminar reuniones",
       "kick": "Expulsar participantes"
     },
-    "teams": {
-      "_self": "Equipos",
-      "view": "Ver equipos",
-      "create": "Crear equipos",
-      "update": "Actualizar equipos",
-      "delete": "Eliminar equipos",
-      "manage-members": "Gestionar miembros del equipo",
+    "departments": {
+      "_self": "Departamentos",
+      "view": "Ver departamentos",
+      "create": "Crear departamentos",
+      "update": "Actualizar departamentos",
+      "delete": "Eliminar departamentos",
+      "manage-members": "Gestionar miembros del departamento",
       "channels": {
         "_self": "Canales",
         "view": "Ver canales",

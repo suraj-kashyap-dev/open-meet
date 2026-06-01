@@ -34,7 +34,7 @@ async function bootstrap(): Promise<void> {
     limits: { fileSize: uploadMaxSize, files: 1 },
   });
 
-  // LiveKit sends webhooks with `Content-Type: application/webhook+json` —
+  // LiveKit sends webhooks with `Content-Type: application/webhook+json` -
   // Fastify doesn't parse that by default, so req.body would be undefined and
   // signature validation would silently fail. Register a raw-text parser so
   // the original body is preserved byte-for-byte for the HMAC check.
@@ -73,7 +73,7 @@ async function bootstrap(): Promise<void> {
   if (!isProd) {
     const swagger = new DocumentBuilder()
       .setTitle('open-meet API')
-      .setDescription('Open Meet — REST + WebSocket API')
+      .setDescription('Open Meet - REST + WebSocket API')
       .setVersion('0.1.0')
       .addCookieAuth('access_token')
       .build();

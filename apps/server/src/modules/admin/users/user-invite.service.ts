@@ -149,7 +149,7 @@ export class AdminUserInviteService {
       );
       throw new ServiceUnavailableException({
         code: ApiErrorCode.INTERNAL_ERROR,
-        message: 'The invite was saved but the email could not be sent — try Resend.',
+        message: 'The invite was saved but the email could not be sent - try Resend.',
       });
     }
   }

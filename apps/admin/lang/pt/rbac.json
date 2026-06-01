@@ -34,8 +34,8 @@
     "description-label": "Descrição",
     "description-placeholder": "O que essa função pode fazer?",
     "type-label": "Acesso",
-    "type-all": "Acesso total — concede todas as permissões atuais e futuras.",
-    "type-custom": "Personalizado — escolha exatamente o que podem fazer."
+    "type-all": "Acesso total - concede todas as permissões atuais e futuras.",
+    "type-custom": "Personalizado - escolha exatamente o que podem fazer."
   },
   "edit": {
     "title": "Editar função",
@@ -81,13 +81,13 @@
       "delete": "Excluir reuniões",
       "kick": "Remover participantes"
     },
-    "teams": {
-      "_self": "Equipes",
-      "view": "Ver equipes",
-      "create": "Criar equipes",
-      "update": "Atualizar equipes",
-      "delete": "Excluir equipes",
-      "manage-members": "Gerenciar membros da equipe",
+    "departments": {
+      "_self": "Departamentos",
+      "view": "Ver departamentos",
+      "create": "Criar departamentos",
+      "update": "Atualizar departamentos",
+      "delete": "Excluir departamentos",
+      "manage-members": "Gerenciar membros do departamento",
       "channels": {
         "_self": "Canais",
         "view": "Ver canais",

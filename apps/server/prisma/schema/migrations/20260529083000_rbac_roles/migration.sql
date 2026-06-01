@@ -57,7 +57,7 @@ ALTER TABLE "User" ADD CONSTRAINT "User_roleRecordId_fkey" FOREIGN KEY ("roleRec
 -- only to make the FK backfill work in the same migration.
 INSERT INTO "AdminRoleRecord" ("id", "name", "description", "permissionType", "permissions", "isSystem", "updatedAt")
 VALUES
-  ('role_sys_admin',  'Administrator', 'Full access — grants every permission.',                  'ALL',    ARRAY[]::TEXT[], true, CURRENT_TIMESTAMP),
+  ('role_sys_admin',  'Administrator', 'Full access - grants every permission.',                  'ALL',    ARRAY[]::TEXT[], true, CURRENT_TIMESTAMP),
   ('role_sys_member', 'Member',        'Read-only baseline access. Extend via custom roles.',     'CUSTOM',
    ARRAY['users.view','meetings.view','teams.view','groups.view','analytics.view']::TEXT[],
    true, CURRENT_TIMESTAMP)
@@ -75,7 +75,7 @@ VALUES
      'presence.change-status'
    ]::TEXT[],
    true, CURRENT_TIMESTAMP),
-  ('urole_sys_restricted', 'Restricted', 'No capabilities — for chat-disabled / banned users.', 'CUSTOM',
+  ('urole_sys_restricted', 'Restricted', 'No capabilities - for chat-disabled / banned users.', 'CUSTOM',
    ARRAY[]::TEXT[], true, CURRENT_TIMESTAMP)
 ON CONFLICT ("id") DO NOTHING;
 

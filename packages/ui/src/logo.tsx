@@ -8,7 +8,7 @@ interface Props {
 }
 
 /**
- * Open Meet brand mark — a camera-aperture iris. The hexagonal opening reads as
+ * Open Meet brand mark - a camera-aperture iris. The hexagonal opening reads as
  * an "O" ("Open"), the lens says video/meeting, and a gradient in the theme's
  * blue accent sweeps across the six blades. A mask keeps the opening and blade
  * gaps transparent so the mark sits on any surface.
@@ -17,7 +17,7 @@ interface Props {
  * every definition is byte-identical and `url(#…)` resolves to the first.
  */
 export function Logo({ className, title = 'Open Meet' }: Props) {
-  // Unique ids per instance — multiple logos render at once (header, sidebar,
+  // Unique ids per instance - multiple logos render at once (header, sidebar,
   // sheet) and shared ids resolve to whichever is first in the DOM, which can
   // sit inside a `display:none` container and make the mark render blank.
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
@@ -62,7 +62,7 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
 }
 
 /**
- * Monochrome variant for single-color contexts — the same iris filled with
+ * Monochrome variant for single-color contexts - the same iris filled with
  * `currentColor` instead of the gradient.
  */
 export function LogoMark({ className }: { className?: string }) {

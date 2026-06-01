@@ -16,7 +16,7 @@ test.describe('Web new chat (inline "To:" composer)', () => {
     await page.getByPlaceholder('Enter name or email').fill('Grace');
     await page.getByRole('button', { name: /Grace Hopper/ }).click();
 
-    // Type the first message and send — this resolves/opens the DM and navigates to it.
+    // Type the first message and send - this resolves/opens the DM and navigates to it.
     const box = page.getByPlaceholder('Type your first message…');
     await box.fill('Hi Grace!');
     await box.press('Enter');

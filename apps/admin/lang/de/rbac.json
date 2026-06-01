@@ -34,8 +34,8 @@
     "description-label": "Beschreibung",
     "description-placeholder": "Was darf diese Rolle?",
     "type-label": "Zugriff",
-    "type-all": "Vollzugriff — gewährt alle aktuellen und zukünftigen Berechtigungen.",
-    "type-custom": "Benutzerdefiniert — wähle genau aus, was erlaubt ist."
+    "type-all": "Vollzugriff - gewährt alle aktuellen und zukünftigen Berechtigungen.",
+    "type-custom": "Benutzerdefiniert - wähle genau aus, was erlaubt ist."
   },
   "edit": {
     "title": "Rolle bearbeiten",
@@ -81,13 +81,13 @@
       "delete": "Besprechungen löschen",
       "kick": "Teilnehmer entfernen"
     },
-    "teams": {
-      "_self": "Teams",
-      "view": "Teams ansehen",
-      "create": "Teams erstellen",
-      "update": "Teams aktualisieren",
-      "delete": "Teams löschen",
-      "manage-members": "Teammitglieder verwalten",
+    "departments": {
+      "_self": "Abteilungen",
+      "view": "Abteilungen ansehen",
+      "create": "Abteilungen erstellen",
+      "update": "Abteilungen aktualisieren",
+      "delete": "Abteilungen löschen",
+      "manage-members": "Abteilungsmitglieder verwalten",
       "channels": {
         "_self": "Kanäle",
         "view": "Kanäle ansehen",

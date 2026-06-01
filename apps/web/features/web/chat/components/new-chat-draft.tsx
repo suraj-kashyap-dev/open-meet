@@ -19,7 +19,7 @@ import { chatKeys, useTeammates } from '../hooks/use-chat';
 import { chatApi } from '../services/chat';
 
 /**
- * Inline "To:" composer for a brand-new chat (the Teams new-conversation flow).
+ * Inline "To:" composer for a brand-new chat (the Departments new-conversation flow).
  * Pick a recipient, type a first message; on send we resolve the DM (reusing the
  * teammate's existing conversation or opening one idempotently) and hand off to
  * the real conversation route, which renders messages normally.

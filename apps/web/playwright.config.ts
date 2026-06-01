@@ -39,7 +39,7 @@ export default defineConfig({
     timeout: 180_000,
     env: {
       // All /api calls are intercepted by Playwright route mocking, so these
-      // never reach a real backend — they only need to satisfy the env schema.
+      // never reach a real backend - they only need to satisfy the env schema.
       NEXT_PUBLIC_API_URL: 'http://127.0.0.1:59322',
       NEXT_PUBLIC_WS_URL: 'http://127.0.0.1:59323',
       NEXT_PUBLIC_LIVEKIT_URL: 'ws://127.0.0.1:59324',

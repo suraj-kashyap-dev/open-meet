@@ -133,6 +133,7 @@ export class MessagingSerializer {
       viewerId: string;
       presence: ReadonlyMap<string, PresenceSnapshot>;
       lastMessage: ChatMessageWithRelations | null;
+      lastMessageAt: Date | null;
       unreadCount: number;
     },
   ): ConversationDto {
@@ -161,7 +162,7 @@ export class MessagingSerializer {
       description: c.description,
       members,
       lastMessage: opts.lastMessage ? this.message(opts.lastMessage, opts.viewerId) : null,
-      lastMessageAt: c.lastMessageAt?.toISOString() ?? null,
+      lastMessageAt: opts.lastMessageAt?.toISOString() ?? null,
       unreadCount: opts.unreadCount,
       muted: mine?.muted ?? false,
       pinned: mine?.pinned ?? false,

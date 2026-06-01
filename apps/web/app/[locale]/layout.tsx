@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s · ${appName}`,
     },
     description:
-      'Real-time video conferencing for distributed teams. No downloads, no friction — open a link and start talking.',
+      'Real-time video conferencing for distributed teams. No downloads, no friction - open a link and start talking.',
     keywords: ['video conferencing', 'meetings', 'webrtc', 'team collaboration'],
   };
 }

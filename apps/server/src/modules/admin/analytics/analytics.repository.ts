@@ -32,8 +32,8 @@ export class AdminAnalyticsRepository {
     return this.prisma.conversation.count({ where: { type: ConversationType.GROUP } });
   }
 
-  countTeams(): Promise<number> {
-    return this.prisma.team.count();
+  countDepartments(): Promise<number> {
+    return this.prisma.department.count();
   }
 
   async dailyUserSignups(since: Date): Promise<DailyRow[]> {

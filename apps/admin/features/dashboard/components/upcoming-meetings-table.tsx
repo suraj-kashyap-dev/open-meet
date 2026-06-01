@@ -21,7 +21,7 @@ function formatScheduled(iso: string): string {
 
 function formatDuration(min: number | null): string {
   if (min === null) {
-    return '—';
+    return '-';
   }
 
   if (min < 60) {

@@ -41,6 +41,10 @@
     "actions": "Acciones de conversación",
     "clear": "Vaciar chat",
     "delete": "Eliminar chat",
+    "clear-confirm-title": "¿Vaciar chat?",
+    "clear-confirm-description": "Esto elimina los mensajes actuales solo de tu vista. Los demás participantes seguirán viéndolos.",
+    "delete-confirm-title": "¿Eliminar chat?",
+    "delete-confirm-description": "Esto elimina el chat de tu lista de conversaciones. Esta acción no se puede deshacer.",
     "clear-confirmed": "Mensajes borrados de tu vista",
     "delete-confirmed": "Chat eliminado"
   },
@@ -77,6 +81,10 @@
     "save-message": "Guardar",
     "unsave-message": "Quitar de guardados",
     "forward": "Reenviar"
+  },
+  "pins": {
+    "previous": "Mensaje fijado anterior",
+    "next": "Siguiente mensaje fijado"
   },
   "priority": {
     "normal": "Estándar",
@@ -137,8 +145,8 @@
     "description-label": "Descripción (opcional)",
     "description-placeholder": "¿De qué trata este grupo?",
     "members-label": "Miembros",
-    "members-placeholder": "Buscar compañeros…",
-    "no-teammates": "No se encontraron compañeros.",
+    "members-placeholder": "Buscar personas…",
+    "no-teammates": "No se encontraron personas.",
     "create-submit": "Crear grupo",
     "create-failed": "No se pudo crear el grupo",
     "cancel": "Cancelar",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "Nueva conversación",
-    "search": "Buscar compañeros de equipo",
-    "no-teammates": "No se encontraron compañeros de equipo.",
+    "search": "Buscar personas",
+    "no-teammates": "No se encontraron personas.",
     "disabled": "No disponible"
   },
   "new-chat": {
     "title": "Nuevo chat",
     "to-label": "Para:",
     "to-placeholder": "Escribe un nombre o correo",
-    "no-teammates": "No se encontraron compañeros.",
+    "no-teammates": "No se encontraron personas.",
     "disabled": "No disponible",
     "empty-title": "Estás empezando una nueva conversación",
     "empty-subtitle": "Escribe tu primer mensaje abajo.",
     "send-placeholder": "Escribe tu primer mensaje…"
   },
-  "teams": {
-    "title": "Equipos",
-    "subtitle": "Tus equipos y canales.",
-    "empty": "Aún no eres miembro de ningún equipo.",
-    "empty-title": "Aún no hay equipos",
-    "empty-subtitle": "Un administrador te agregará a un equipo para empezar a colaborar.",
+  "departments": {
+    "title": "Departamentos",
+    "subtitle": "Tus departamentos y canales.",
+    "empty": "Aún no eres miembro de ningún departamento.",
+    "empty-title": "Aún no hay departamentos",
+    "empty-subtitle": "Un administrador te agregará a un departamento para empezar a colaborar.",
     "no-channels": "Aún no hay canales."
   },
   "activity": {

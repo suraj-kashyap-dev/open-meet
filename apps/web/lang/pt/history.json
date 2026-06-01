@@ -3,7 +3,7 @@
     "eyebrow": "Atividade",
     "title": "Histórico de reuniões",
     "total": "{count, plural, one {# reunião} other {# reuniões}} no total",
-    "description": "Todas as reuniões que você organizou ou participou — com conversa, anexos e a lista de participantes preservados."
+    "description": "Todas as reuniões que você organizou ou participou - com conversa, anexos e a lista de participantes preservados."
   },
   "default-title": "Reunião em {date}",
   "host": "Organizador",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Grav · {count}",
   "recording-title": "{count, plural, one {# gravação} other {# gravações}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Reunião",
     "started": "Iniciada",
@@ -91,7 +91,7 @@
       },
       "failed-title": "Falha na gravação",
       "failed-detail": "Nenhum detalhe adicional foi fornecido pelo serviço de egresso.",
-      "processing": "Processando gravação — verifique em breve.",
+      "processing": "Processando gravação - verifique em breve.",
       "empty-title": "Nenhuma gravação para esta reunião",
       "empty-description": "O organizador pode iniciar uma gravação pelos controles na chamada. As gravações ficam privadas para as pessoas que participaram desta reunião.",
       "relative": {

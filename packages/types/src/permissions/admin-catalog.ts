@@ -17,7 +17,7 @@ export const PERMISSION_TREE_ADMIN = {
     delete: null,
     kick: null,
   },
-  teams: {
+  departments: {
     view: null,
     create: null,
     update: null,
@@ -69,7 +69,7 @@ export const ADMIN_PERMISSION_KEYS: readonly AdminPermissionKey[] = flattenLeave
 export const DEFAULT_ADMIN_MEMBER_PERMISSIONS: readonly AdminPermissionKey[] = [
   'users.view',
   'meetings.view',
-  'teams.view',
+  'departments.view',
   'groups.view',
   'analytics.view',
 ];

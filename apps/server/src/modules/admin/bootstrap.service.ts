@@ -46,7 +46,7 @@ export class AdminBootstrapService implements OnModuleInit {
       );
     } else {
       this.logger.log(
-        `Bootstrapped default admin — email="${email}" password="${password}" (configure via DEFAULT_ADMIN_* env vars).`,
+        `Bootstrapped default admin - email="${email}" password="${password}" (configure via DEFAULT_ADMIN_* env vars).`,
       );
     }
   }

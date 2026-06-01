@@ -53,7 +53,7 @@ export function UnauthorizedBridge() {
       try {
         window.localStorage.removeItem(CACHE_KEY);
       } catch {
-        /* private mode / quota — nothing to do */
+        /* private mode / quota - nothing to do */
       }
 
       qc.setQueryData(ME_KEY, null);
@@ -74,7 +74,7 @@ export function UnauthorizedBridge() {
       }
 
       redirectingRef.current = true;
-      toast.error('Your session expired — please sign in again.');
+      toast.error('Your session expired - please sign in again.');
       window.location.replace(browserLoginHref(currentClientPath()));
     };
 

@@ -122,7 +122,7 @@
     "avatar-remove-failed": "Échec de la suppression de l'avatar",
     "profile-updated": "Profil mis à jour",
     "profile-update-failed": "Échec de la mise à jour du profil",
-    "password-changed": "Mot de passe modifié — reconnectez-vous",
+    "password-changed": "Mot de passe modifié - reconnectez-vous",
     "password-change-failed": "Échec du changement de mot de passe",
     "localization-updated": "Localisation mise à jour",
     "localization-update-failed": "Échec de la mise à jour de la localisation",
@@ -131,7 +131,7 @@
     "privacy-updated": "Paramètres de confidentialité mis à jour",
     "privacy-update-failed": "Échec de la mise à jour des paramètres de confidentialité",
     "notifications-unsupported": "Les notifications ne sont pas prises en charge par ce navigateur",
-    "notifications-denied": "Permission refusée — activez les notifications dans les paramètres de votre navigateur"
+    "notifications-denied": "Permission refusée - activez les notifications dans les paramètres de votre navigateur"
   },
   "validation": {
     "avatar-invalid-type": "L'avatar doit être une image PNG, JPEG, WebP ou GIF",

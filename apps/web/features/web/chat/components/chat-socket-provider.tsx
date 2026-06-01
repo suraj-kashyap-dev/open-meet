@@ -83,6 +83,17 @@ function applyIncoming(
   return { items: [updated, ...list.items.filter((_, i) => i !== index)] };
 }
 
+function removeConversation(
+  list: ConversationListDto | undefined,
+  conversationId: string,
+): ConversationListDto | undefined {
+  if (!list) {
+    return list;
+  }
+
+  return { items: list.items.filter((conversation) => conversation.id !== conversationId) };
+}
+
 export function ChatSocketProvider({ children }: { children: ReactNode }) {
   const { data: user } = useCurrentUser();
   const socket = useChatSocket(Boolean(user));
@@ -94,6 +105,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
   const setConnection = useChatStore((s) => s.setConnection);
   const bumpUnread = useChatStore((s) => s.bumpUnread);
   const clearUnread = useChatStore((s) => s.clearUnread);
+  const setConversationUnread = useChatStore((s) => s.setConversationUnread);
   const setUnreadSummary = useChatStore((s) => s.setUnreadSummary);
 
   const unread = useQuery({
@@ -130,7 +142,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       qc.setQueryData<MessagesData>(chatKeys.messages(message.conversationId), (data) =>
         upsertMessage(data, message),
       );
-      qc.setQueryData<ConversationListDto>(chatKeys.conversations(), (list) =>
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
         applyIncoming(list, message, !isMine && !isActive),
       );
 
@@ -171,7 +183,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
         clearUnread(conversationId);
       }
 
-      qc.setQueryData<ConversationListDto>(chatKeys.conversations(), (list) =>
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
         list
           ? {
               items: list.items.map((c) =>
@@ -205,6 +217,23 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
 
     const onConversationNew = (conversation: ConversationDto) => {
       socket.emit(ChatClientEvent.CONVERSATION_JOIN, { conversationId: conversation.id });
+      setConversationUnread(conversation.id, conversation.unreadCount);
+      void qc.invalidateQueries({ queryKey: chatKeys.messages(conversation.id) });
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    };
+
+    const onConversationUpdate = (conversation: ConversationDto) => {
+      setConversationUnread(conversation.id, conversation.unreadCount);
+      void qc.invalidateQueries({ queryKey: chatKeys.messages(conversation.id) });
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    };
+
+    const onConversationRemoved = ({ conversationId }: { conversationId: string }) => {
+      clearUnread(conversationId);
+      qc.removeQueries({ queryKey: chatKeys.messages(conversationId) });
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
+        removeConversation(list, conversationId),
+      );
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     };
 
@@ -232,6 +261,8 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
     socket.on(ChatServerEvent.READ_RECEIPT, onReadReceipt);
     socket.on(ChatServerEvent.PRESENCE_UPDATE, onPresence);
     socket.on(ChatServerEvent.CONVERSATION_NEW, onConversationNew);
+    socket.on(ChatServerEvent.CONVERSATION_UPDATE, onConversationUpdate);
+    socket.on(ChatServerEvent.CONVERSATION_REMOVED, onConversationRemoved);
     socket.on(ChatServerEvent.POLL_UPDATE, onPollUpdate);
     socket.on(ChatServerEvent.PIN_UPDATE, onPinUpdate);
 
@@ -247,6 +278,8 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       socket.off(ChatServerEvent.READ_RECEIPT, onReadReceipt);
       socket.off(ChatServerEvent.PRESENCE_UPDATE, onPresence);
       socket.off(ChatServerEvent.CONVERSATION_NEW, onConversationNew);
+      socket.off(ChatServerEvent.CONVERSATION_UPDATE, onConversationUpdate);
+      socket.off(ChatServerEvent.CONVERSATION_REMOVED, onConversationRemoved);
       socket.off(ChatServerEvent.POLL_UPDATE, onPollUpdate);
       socket.off(ChatServerEvent.PIN_UPDATE, onPinUpdate);
     };
@@ -260,6 +293,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
     setConnection,
     bumpUnread,
     clearUnread,
+    setConversationUnread,
     setUnreadSummary,
   ]);
 

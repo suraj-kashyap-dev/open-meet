@@ -34,8 +34,8 @@
     "description-label": "説明",
     "description-placeholder": "このロールは何ができますか?",
     "type-label": "アクセス",
-    "type-all": "フルアクセス — 現在および今後のすべての権限を付与します。",
-    "type-custom": "カスタム — できることを個別に選びます。"
+    "type-all": "フルアクセス - 現在および今後のすべての権限を付与します。",
+    "type-custom": "カスタム - できることを個別に選びます。"
   },
   "edit": {
     "title": "ロールを編集",
@@ -81,13 +81,13 @@
       "delete": "ミーティングを削除",
       "kick": "参加者を退出させる"
     },
-    "teams": {
-      "_self": "チーム",
-      "view": "チームを表示",
-      "create": "チームを作成",
-      "update": "チームを更新",
-      "delete": "チームを削除",
-      "manage-members": "チームメンバーを管理",
+    "departments": {
+      "_self": "部署",
+      "view": "部署を表示",
+      "create": "部署を作成",
+      "update": "部署を更新",
+      "delete": "部署を削除",
+      "manage-members": "部署メンバーを管理",
       "channels": {
         "_self": "チャンネル",
         "view": "チャンネルを表示",

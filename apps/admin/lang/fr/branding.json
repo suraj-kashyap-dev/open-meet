@@ -36,7 +36,7 @@
   },
   "groups": {
     "title": "Groupes créés par les utilisateurs",
-    "description": "Permettre aux coéquipiers de démarrer leurs propres discussions de groupe depuis la liste.",
+    "description": "Permettre aux collègues de démarrer leurs propres discussions de groupe depuis la liste des conversations.",
     "label": "Autoriser les utilisateurs à créer des groupes",
     "hint": "Désactivé, seuls les administrateurs peuvent créer des groupes."
   },

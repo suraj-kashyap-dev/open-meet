@@ -1,10 +1,11 @@
 'use client';
 
-import { Clock, Globe, Lock, Mail, X } from 'lucide-react';
+import { Check, Clock, Copy, Globe, Lock, Mail, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import type { ConversationMemberDto } from '@open-meet/types';
-import { Button } from '@open-meet/ui/button';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 
 import { usePublicUser } from '../hooks/use-chat';
@@ -35,10 +36,43 @@ export function PeerProfilePanel({
   const { data, isLoading } = usePublicUser(peer.userId);
   const setInfoOpen = useChatStore((s) => s.setInfoOpen);
   const presence = useChatStore((s) => s.presenceByUser[peer.userId]);
+  const [emailCopied, setEmailCopied] = useState(false);
+  const copyResetRef = useRef<number | null>(null);
 
   const joined = formatJoinedDate(data?.joinedAt ?? null, locale);
 
   const presenceLabel = formatPresenceLabel(presence, t, { shortLastSeen: true });
+
+  useEffect(() => {
+    return () => {
+      if (copyResetRef.current !== null) {
+        window.clearTimeout(copyResetRef.current);
+      }
+    };
+  }, []);
+
+  const copyEmail = async (email: string) => {
+    if (!navigator.clipboard?.writeText) {
+      toast.error(t('group.action-failed'));
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(email);
+      setEmailCopied(true);
+
+      if (copyResetRef.current !== null) {
+        window.clearTimeout(copyResetRef.current);
+      }
+
+      copyResetRef.current = window.setTimeout(() => {
+        setEmailCopied(false);
+        copyResetRef.current = null;
+      }, 1500);
+    } catch {
+      toast.error(t('group.action-failed'));
+    }
+  };
 
   return (
     <div className="flex h-full flex-col bg-background">
@@ -87,7 +121,21 @@ export function PeerProfilePanel({
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
                   <dt className="text-xs font-medium text-muted-foreground">{t('info.email')}</dt>
-                  <dd className="truncate text-sm">{data.email}</dd>
+                  <dd className="mt-0.5">
+                    <button
+                      type="button"
+                      onClick={() => void copyEmail(data.email!)}
+                      title={data.email}
+                      className="flex w-full min-w-0 items-center gap-2 rounded-md text-left text-sm hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    >
+                      <span className="min-w-0 flex-1 truncate">{data.email}</span>
+                      {emailCopied ? (
+                        <Check className="h-3.5 w-3.5 shrink-0 text-success" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                      )}
+                    </button>
+                  </dd>
                 </div>
               </div>
             ) : null}

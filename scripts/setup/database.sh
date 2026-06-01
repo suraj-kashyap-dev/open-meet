@@ -9,7 +9,7 @@ prepare_database() {
   ok "Prisma client generated"
 
   if [ "$FORCE" = true ]; then
-    warn "Resetting database — every table will be dropped (--force)"
+    warn "Resetting database - every table will be dropped (--force)"
     pnpm --filter @open-meet/server exec prisma migrate reset --force --skip-seed
     ok "Database reset and migrations re-applied"
   else

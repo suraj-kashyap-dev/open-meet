@@ -122,7 +122,7 @@
     "avatar-remove-failed": "Не удалось удалить аватар",
     "profile-updated": "Профиль обновлён",
     "profile-update-failed": "Не удалось обновить профиль",
-    "password-changed": "Пароль изменён — войдите снова",
+    "password-changed": "Пароль изменён - войдите снова",
     "password-change-failed": "Не удалось изменить пароль",
     "localization-updated": "Локализация обновлена",
     "localization-update-failed": "Не удалось обновить локализацию",
@@ -131,7 +131,7 @@
     "privacy-updated": "Настройки конфиденциальности обновлены",
     "privacy-update-failed": "Не удалось обновить настройки конфиденциальности",
     "notifications-unsupported": "Уведомления не поддерживаются в этом браузере",
-    "notifications-denied": "Доступ запрещён — включите уведомления в настройках браузера"
+    "notifications-denied": "Доступ запрещён - включите уведомления в настройках браузера"
   },
   "validation": {
     "avatar-invalid-type": "Аватар должен быть изображением PNG, JPEG, WebP или GIF",

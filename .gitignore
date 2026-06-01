@@ -35,7 +35,7 @@ coverage/
 # Prisma
 **/prisma/migrations/dev.db*
 
-# Local attachment storage (LOCAL_STORAGE_DIR default) — anchored so it does
+# Local attachment storage (LOCAL_STORAGE_DIR default) - anchored so it does
 /apps/server/uploads/
 
 # Claude Code local settings

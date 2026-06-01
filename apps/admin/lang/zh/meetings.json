@@ -76,7 +76,7 @@
     "title": "结束所有活跃会议？",
     "description": "此操作将把所有状态为 ACTIVE 的会议标记为 ENDED 并关闭其 LiveKit 房间。所有当前在通话中的参与者将被立即断开连接。",
     "active-summary": "当前有 {count, plural, one {# 场会议} other {# 场会议}} 处于活跃状态。",
-    "none-active": "当前没有活跃会议 — 不会有任何操作。",
+    "none-active": "当前没有活跃会议 - 不会有任何操作。",
     "cancel": "取消",
     "submit": "结束所有活跃会议",
     "submitting": "正在结束…",

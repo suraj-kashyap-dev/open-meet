@@ -38,7 +38,7 @@ export default tseslint.config(
   },
   {
     // NestJS DI: constructor-injected classes + DTOs in @Body/@Query must keep
-    // RUNTIME class references — `emitDecoratorMetadata` writes them into
+    // RUNTIME class references - `emitDecoratorMetadata` writes them into
     // `design:paramtypes` and ValidationPipe calls `plainToInstance` at runtime.
     // The consistent-type-imports rule would erase them; disable for backend src.
     files: ['apps/server/src/**/*.ts'],

@@ -260,7 +260,7 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
             )}
           >
             {admin.role?.permissionType === 'ALL' ? <Crown className="h-3 w-3" /> : null}
-            {admin.role?.name ?? '—'}
+            {admin.role?.name ?? '-'}
           </span>
 
           <Button type="submit" disabled={pending || (!isDirty && !avatarDirty)}>

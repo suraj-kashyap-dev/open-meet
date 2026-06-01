@@ -42,6 +42,11 @@ export const chatApi = {
   conversation: (id: string, signal?: AbortSignal) =>
     api.get<ConversationDto>(`/messaging/conversations/${id}`, { signal }),
 
+  clearConversation: (id: string) => api.post<{ ok: true }>(`/messaging/conversations/${id}/clear`),
+
+  deleteConversation: (id: string) =>
+    api.post<{ ok: true }>(`/messaging/conversations/${id}/delete`),
+
   messages: (id: string, params: { cursor?: string; limit?: number }, signal?: AbortSignal) =>
     api.get<ChatMessagePageDto>(`/messaging/conversations/${id}/messages${query(params)}`, {
       signal,

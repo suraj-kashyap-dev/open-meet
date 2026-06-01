@@ -9,14 +9,14 @@
   "user-menu-label": "Open account menu",
   "chat-link-label": "Open chat",
   "activity-link-label": "Activity",
-  "teams-link-label": "Teams",
+  "departments-link-label": "Departments",
   "saved-link-label": "Saved",
   "search-placeholder": "Search",
   "rail": {
     "label": "Primary",
     "chat": "Chat",
     "meet": "Meet",
-    "teams": "Teams",
+    "departments": "Departments",
     "activity": "Activity",
     "saved": "Saved",
     "history": "History"

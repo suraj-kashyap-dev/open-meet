@@ -34,8 +34,8 @@
     "description-label": "Açıklama",
     "description-placeholder": "Bu rol ne yapabilir?",
     "type-label": "Erişim",
-    "type-all": "Tam erişim — mevcut ve gelecekteki tüm izinleri verir.",
-    "type-custom": "Özel — tam olarak ne yapabileceklerini seçin."
+    "type-all": "Tam erişim - mevcut ve gelecekteki tüm izinleri verir.",
+    "type-custom": "Özel - tam olarak ne yapabileceklerini seçin."
   },
   "edit": {
     "title": "Rolü düzenle",
@@ -81,13 +81,13 @@
       "delete": "Toplantıları sil",
       "kick": "Katılımcıları çıkar"
     },
-    "teams": {
-      "_self": "Takımlar",
-      "view": "Takımları görüntüle",
-      "create": "Takım oluştur",
-      "update": "Takımları güncelle",
-      "delete": "Takımları sil",
-      "manage-members": "Takım üyelerini yönet",
+    "departments": {
+      "_self": "Departmanlar",
+      "view": "Departmanları görüntüle",
+      "create": "Departman oluştur",
+      "update": "Departmanları güncelle",
+      "delete": "Departmanları sil",
+      "manage-members": "Departman üyelerini yönet",
       "channels": {
         "_self": "Kanallar",
         "view": "Kanalları görüntüle",

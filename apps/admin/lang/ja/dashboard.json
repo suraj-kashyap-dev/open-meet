@@ -13,8 +13,8 @@
     "messages-24h-hint": "過去 24 時間のチャットメッセージ",
     "groups": "グループ",
     "groups-hint": "作成されたグループ会話",
-    "teams": "チーム",
-    "teams-hint": "ワークスペース内のチーム"
+    "departments": "部署",
+    "departments-hint": "ワークスペース内の部署"
   },
   "trends": {
     "signups": "新規登録",

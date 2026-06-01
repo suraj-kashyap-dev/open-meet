@@ -30,7 +30,7 @@ const PAGE_SIZE = 20;
 
 function formatStartedAt(iso: string | null): string {
   if (!iso) {
-    return '—';
+    return '-';
   }
 
   return new Date(iso).toLocaleString(undefined, {
@@ -44,7 +44,7 @@ function formatStartedAt(iso: string | null): string {
 
 function formatDuration(min: number | null): string {
   if (min === null) {
-    return '—';
+    return '-';
   }
 
   if (min < 60) {
@@ -303,7 +303,7 @@ export function HistoryList() {
               <StatCard
                 icon={<Hourglass className="h-4 w-4" />}
                 label={t('stats.total-time')}
-                value={totals.durationMin > 0 ? formatTotalDuration(totals.durationMin) : '—'}
+                value={totals.durationMin > 0 ? formatTotalDuration(totals.durationMin) : '-'}
               />
               <StatCard
                 icon={<Users className="h-4 w-4" />}

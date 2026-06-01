@@ -24,7 +24,7 @@ ART
 
 usage() {
   cat <<'EOF'
-open-meet setup — one command to a running local stack.
+open-meet setup - one command to a running local stack.
 
 Usage:
   ./setup.sh [--force] [--skip-install] [--skip-docker] [--skip-db]

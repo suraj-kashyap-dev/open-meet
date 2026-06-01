@@ -122,7 +122,7 @@
     "avatar-remove-failed": "アバターの削除に失敗しました",
     "profile-updated": "プロフィールを更新しました",
     "profile-update-failed": "プロフィールの更新に失敗しました",
-    "password-changed": "パスワードを変更しました — 再度サインインしてください",
+    "password-changed": "パスワードを変更しました - 再度サインインしてください",
     "password-change-failed": "パスワードの変更に失敗しました",
     "localization-updated": "ローカライズ設定を更新しました",
     "localization-update-failed": "ローカライズ設定の更新に失敗しました",
@@ -131,7 +131,7 @@
     "privacy-updated": "プライバシー設定を更新しました",
     "privacy-update-failed": "プライバシー設定の更新に失敗しました",
     "notifications-unsupported": "このブラウザは通知をサポートしていません",
-    "notifications-denied": "許可が拒否されました — ブラウザの設定で通知を有効にしてください"
+    "notifications-denied": "許可が拒否されました - ブラウザの設定で通知を有効にしてください"
   },
   "validation": {
     "avatar-invalid-type": "アバターは PNG、JPEG、WebP、または GIF 画像である必要があります",

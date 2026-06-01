@@ -76,7 +76,7 @@
     "title": "End every active meeting?",
     "description": "This will mark every meeting with status ACTIVE as ENDED and close their LiveKit rooms. Every participant currently in a call will be disconnected immediately.",
     "active-summary": "{count, plural, one {# meeting} other {# meetings}} currently active.",
-    "none-active": "No active meetings right now — nothing will happen.",
+    "none-active": "No active meetings right now - nothing will happen.",
     "cancel": "Cancel",
     "submit": "End all active",
     "submitting": "Ending…",

@@ -9,7 +9,7 @@ import type { ChatMessageDto, ChatMessagePageDto } from '@open-meet/types';
  */
 export type MessagesData = InfiniteData<ChatMessagePageDto, string | undefined>;
 
-const emptyData: MessagesData = {
+export const emptyMessagesData: MessagesData = {
   pages: [{ items: [], nextCursor: null }],
   pageParams: [undefined],
 };
@@ -34,7 +34,7 @@ export function upsertMessage(
   data: MessagesData | undefined,
   message: ChatMessageDto,
 ): MessagesData {
-  const base = data ?? emptyData;
+  const base = data ?? emptyMessagesData;
   let replaced = false;
 
   const pages = base.pages.map((page) => ({

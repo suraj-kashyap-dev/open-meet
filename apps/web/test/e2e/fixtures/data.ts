@@ -72,14 +72,14 @@ export const hostMeeting: MeetingDto = {
   createdAt: '2026-05-20T08:55:00.000Z',
 };
 
-/** A meeting hosted by someone else — drives the guest WaitingRoom path. */
+/** A meeting hosted by someone else - drives the guest WaitingRoom path. */
 export const guestMeeting: MeetingDto = {
   ...hostMeeting,
   hostId: 'user-other',
   title: "Grace's standup",
 };
 
-/** A finished meeting — used by the history detail page (status has a label). */
+/** A finished meeting - used by the history detail page (status has a label). */
 export const endedMeeting: MeetingDto = {
   ...hostMeeting,
   status: 'ENDED',

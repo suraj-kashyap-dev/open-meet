@@ -41,6 +41,10 @@
     "actions": "대화 작업",
     "clear": "채팅 지우기",
     "delete": "채팅 삭제",
+    "clear-confirm-title": "채팅을 지울까요?",
+    "clear-confirm-description": "현재 메시지는 내 화면에서만 제거됩니다. 다른 참가자는 계속 볼 수 있습니다.",
+    "delete-confirm-title": "채팅을 삭제할까요?",
+    "delete-confirm-description": "이 작업은 대화 목록에서 채팅을 제거합니다. 되돌릴 수 없습니다.",
     "clear-confirmed": "보기에서 메시지를 지웠습니다",
     "delete-confirmed": "채팅이 삭제되었습니다"
   },
@@ -77,6 +81,10 @@
     "save-message": "저장",
     "unsave-message": "저장 목록에서 제거",
     "forward": "전달"
+  },
+  "pins": {
+    "previous": "이전 고정 메시지",
+    "next": "다음 고정 메시지"
   },
   "priority": {
     "normal": "표준",
@@ -137,8 +145,8 @@
     "description-label": "설명(선택)",
     "description-placeholder": "이 그룹은 무엇에 관한 것인가요?",
     "members-label": "구성원",
-    "members-placeholder": "팀원 검색…",
-    "no-teammates": "팀원을 찾을 수 없습니다.",
+    "members-placeholder": "사람 검색…",
+    "no-teammates": "사람을 찾을 수 없습니다.",
     "create-submit": "그룹 만들기",
     "create-failed": "그룹을 만들 수 없습니다",
     "cancel": "취소",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "새 대화",
-    "search": "팀원 검색",
-    "no-teammates": "팀원을 찾을 수 없습니다.",
+    "search": "사람 검색",
+    "no-teammates": "사람을 찾을 수 없습니다.",
     "disabled": "사용 불가"
   },
   "new-chat": {
     "title": "새 채팅",
     "to-label": "받는 사람:",
     "to-placeholder": "이름 또는 이메일 입력",
-    "no-teammates": "팀원을 찾을 수 없습니다.",
+    "no-teammates": "사람을 찾을 수 없습니다.",
     "disabled": "사용 불가",
     "empty-title": "새 대화를 시작합니다",
     "empty-subtitle": "아래에 첫 메시지를 입력하세요.",
     "send-placeholder": "첫 메시지를 입력하세요…"
   },
-  "teams": {
-    "title": "팀",
-    "subtitle": "내 팀과 채널.",
-    "empty": "아직 어떤 팀의 멤버도 아닙니다.",
-    "empty-title": "아직 팀이 없습니다",
-    "empty-subtitle": "관리자가 협업을 시작하기 위해 팀에 추가합니다.",
+  "departments": {
+    "title": "부서",
+    "subtitle": "내 부서와 채널.",
+    "empty": "아직 어떤 부서의 멤버도 아닙니다.",
+    "empty-title": "아직 부서가 없습니다",
+    "empty-subtitle": "관리자가 협업을 시작하기 위해 부서에 추가합니다.",
     "no-channels": "아직 채널이 없습니다."
   },
   "activity": {

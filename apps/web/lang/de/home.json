@@ -15,7 +15,7 @@
     "badge": "Sofort",
     "eyebrow": "Neu starten",
     "title": "Neue Besprechung starten",
-    "description": "Ein neuer, teilbarer Raum. Keine Einrichtung — der Link läuft ab, sobald der Raum leer ist.",
+    "description": "Ein neuer, teilbarer Raum. Keine Einrichtung - der Link läuft ab, sobald der Raum leer ist.",
     "capacity": "Bis zu 100",
     "secure": "Ende-zu-Ende-verschlüsselt",
     "creating": "Wird erstellt…",
@@ -111,7 +111,7 @@
     "yearly": "Jährlich"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "gerade eben",
     "minutes-ago": "vor {count}m",
     "hours-ago": "vor {count}h",
@@ -170,7 +170,7 @@
     "title-required": "Geben Sie Ihrer Besprechung einen Titel",
     "valid-datetime": "Gültiges Datum und Uhrzeit auswählen",
     "future-datetime": "Zukünftiges Datum und Uhrzeit auswählen",
-    "scheduled-invites": "Geplant — Einladungen an {count, plural, one {# Gast} other {# Gäste}} gesendet",
+    "scheduled-invites": "Geplant - Einladungen an {count, plural, one {# Gast} other {# Gäste}} gesendet",
     "scheduled": "Besprechung geplant",
     "schedule-error": "Besprechung konnte nicht geplant werden",
     "link-copied": "Besprechungslink kopiert",

@@ -11,7 +11,7 @@ import { AcceptAdminInviteDto } from './dto/accept-invite.dto';
 /**
  * Public, unauthenticated endpoints for an invitee to inspect and claim an
  * invite. Kept separate from {@link AdminAccountsController} so the admin
- * session guard never applies here — the invitee has no account yet.
+ * session guard never applies here - the invitee has no account yet.
  */
 @ApiTags('admin-invites')
 @Controller('admin/invite')

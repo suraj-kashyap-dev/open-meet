@@ -122,7 +122,7 @@
     "avatar-remove-failed": "অ্যাভাটার সরাতে ব্যর্থ",
     "profile-updated": "প্রোফাইল আপডেট হয়েছে",
     "profile-update-failed": "প্রোফাইল আপডেট করতে ব্যর্থ",
-    "password-changed": "পাসওয়ার্ড পরিবর্তন হয়েছে — আবার সাইন ইন করুন",
+    "password-changed": "পাসওয়ার্ড পরিবর্তন হয়েছে - আবার সাইন ইন করুন",
     "password-change-failed": "পাসওয়ার্ড পরিবর্তন করতে ব্যর্থ",
     "localization-updated": "স্থানীয়করণ আপডেট হয়েছে",
     "localization-update-failed": "স্থানীয়করণ আপডেট করতে ব্যর্থ",
@@ -131,7 +131,7 @@
     "privacy-updated": "গোপনীয়তা সেটিংস আপডেট হয়েছে",
     "privacy-update-failed": "গোপনীয়তা সেটিংস আপডেট করতে ব্যর্থ",
     "notifications-unsupported": "এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়",
-    "notifications-denied": "অনুমতি প্রত্যাখ্যাত — আপনার ব্রাউজার সেটিংসে নোটিফিকেশন সক্রিয় করুন"
+    "notifications-denied": "অনুমতি প্রত্যাখ্যাত - আপনার ব্রাউজার সেটিংসে নোটিফিকেশন সক্রিয় করুন"
   },
   "validation": {
     "avatar-invalid-type": "অ্যাভাটার অবশ্যই PNG, JPEG, WebP বা GIF ছবি হতে হবে",

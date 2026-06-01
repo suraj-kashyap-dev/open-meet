@@ -122,7 +122,7 @@
     "avatar-remove-failed": "अवतार हटाने में विफल",
     "profile-updated": "प्रोफ़ाइल अपडेट की गई",
     "profile-update-failed": "प्रोफ़ाइल अपडेट करने में विफल",
-    "password-changed": "पासवर्ड बदला गया — फिर से साइन इन करें",
+    "password-changed": "पासवर्ड बदला गया - फिर से साइन इन करें",
     "password-change-failed": "पासवर्ड बदलने में विफल",
     "localization-updated": "स्थानीयकरण अपडेट किया गया",
     "localization-update-failed": "स्थानीयकरण अपडेट करने में विफल",
@@ -131,7 +131,7 @@
     "privacy-updated": "गोपनीयता सेटिंग्स अपडेट की गईं",
     "privacy-update-failed": "गोपनीयता सेटिंग्स अपडेट करने में विफल",
     "notifications-unsupported": "इस ब्राउज़र में नोटिफ़िकेशन समर्थित नहीं हैं",
-    "notifications-denied": "अनुमति अस्वीकृत — अपनी ब्राउज़र सेटिंग्स में नोटिफ़िकेशन सक्षम करें"
+    "notifications-denied": "अनुमति अस्वीकृत - अपनी ब्राउज़र सेटिंग्स में नोटिफ़िकेशन सक्षम करें"
   },
   "validation": {
     "avatar-invalid-type": "अवतार एक PNG, JPEG, WebP या GIF छवि होनी चाहिए",

@@ -122,7 +122,7 @@
     "avatar-remove-failed": "头像删除失败",
     "profile-updated": "个人资料已更新",
     "profile-update-failed": "个人资料更新失败",
-    "password-changed": "密码已更改 — 请重新登录",
+    "password-changed": "密码已更改 - 请重新登录",
     "password-change-failed": "密码更改失败",
     "localization-updated": "本地化设置已更新",
     "localization-update-failed": "本地化设置更新失败",
@@ -131,7 +131,7 @@
     "privacy-updated": "隐私设置已更新",
     "privacy-update-failed": "隐私设置更新失败",
     "notifications-unsupported": "此浏览器不支持通知",
-    "notifications-denied": "权限被拒绝 — 请在浏览器设置中启用通知"
+    "notifications-denied": "权限被拒绝 - 请在浏览器设置中启用通知"
   },
   "validation": {
     "avatar-invalid-type": "头像必须是 PNG、JPEG、WebP 或 GIF 图片",

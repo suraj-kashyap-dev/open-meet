@@ -12,7 +12,7 @@ const NAMESPACES = [
   'branding',
   'configuration',
   'users',
-  'teams',
+  'departments',
   'groups',
   'dashboard',
   'analytics',

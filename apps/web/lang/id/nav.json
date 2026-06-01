@@ -9,14 +9,14 @@
   "user-menu-label": "Buka menu akun",
   "chat-link-label": "Buka obrolan",
   "activity-link-label": "Aktivitas",
-  "teams-link-label": "Tim",
+  "departments-link-label": "Departemen",
   "saved-link-label": "Tersimpan",
   "search-placeholder": "Cari",
   "rail": {
     "label": "Utama",
     "chat": "Obrolan",
     "meet": "Rapat",
-    "teams": "Tim",
+    "departments": "Departemen",
     "activity": "Aktivitas",
     "saved": "Tersimpan",
     "history": "Riwayat"

@@ -9,6 +9,7 @@ import { ApiErrorCode, ChatServerEvent, type ConversationDto } from '@open-meet/
 
 import { ChatBus, conversationRoom, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
+import { ConversationsRepository } from './conversations.repository';
 import { GroupsRepository } from './groups.repository';
 import { MessagingSerializer } from './messaging.serializer';
 import { PresenceService } from './presence.service';
@@ -17,11 +18,18 @@ const TITLE_MIN = 1;
 const TITLE_MAX = 80;
 const DESCRIPTION_MAX = 280;
 
+function laterDate(left: Date | null, right: Date | null): Date | null {
+  if (!left) return right;
+  if (!right) return left;
+  return left > right ? left : right;
+}
+
 @Injectable()
 export class GroupsService {
   constructor(
     private readonly repo: GroupsRepository,
     private readonly permissions: ChatPermissionsService,
+    private readonly conversations: ConversationsRepository,
     private readonly serializer: MessagingSerializer,
     private readonly presence: PresenceService,
     private readonly bus: ChatBus,
@@ -36,7 +44,7 @@ export class GroupsService {
     const title = this.requireTitle(body.title);
     const description = this.normalizeDescription(body.description);
 
-    // Drop chat-disabled / unknown users silently — group creation never fails
+    // Drop chat-disabled / unknown users silently - group creation never fails
     // because one teammate was disabled mid-flow.
     const invitable = await this.repo.pickInvitableUsers(
       [...new Set(body.memberIds.filter((id) => id && id !== creatorId))],
@@ -119,11 +127,11 @@ export class GroupsService {
     );
 
     // Last-admin guard: can't remove the only admin (whether self-leaving or
-    // being kicked by themselves — the conversation would have zero admins).
+    // being kicked by themselves - the conversation would have zero admins).
     if (membership.role === ConversationMemberRole.ADMIN && actorId === targetUserId) {
       const admins = await this.permissions.groupAdminCount(conversationId);
       if (admins <= 1) {
-        // Verify there are other members to promote — otherwise allow leaving
+        // Verify there are other members to promote - otherwise allow leaving
         // and let the caller delete instead. We block when there are still
         // other members so the group doesn't end up orphaned.
         const members = await this.repo.memberUserIds(conversationId);
@@ -224,11 +232,24 @@ export class GroupsService {
 
     const memberIds = conv.members.map((m) => m.userId);
     const presence = await this.presence.snapshot(memberIds);
+    const mine = conv.members.find((member) => member.userId === viewerId);
+    const lastMessage = await this.conversations.lastVisibleMessage(
+      conversationId,
+      mine?.clearedAt ?? null,
+    );
+    const unreadBase = await this.conversations.unreadCount(
+      conversationId,
+      viewerId,
+      laterDate(mine?.lastReadAt ?? null, mine?.clearedAt ?? null),
+    );
+    const unread = mine?.manualUnread ? Math.max(1, unreadBase) : unreadBase;
+
     return this.serializer.conversation(conv, {
       viewerId,
       presence,
-      lastMessage: conv.messages[0] ?? null,
-      unreadCount: 0,
+      lastMessage,
+      lastMessageAt: lastMessage?.createdAt ?? null,
+      unreadCount: unread,
     });
   }
 

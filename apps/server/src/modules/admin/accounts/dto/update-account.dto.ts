@@ -7,7 +7,7 @@ export class UpdateAdminAccountDto {
   @MaxLength(120)
   name?: string;
 
-  /** RBAC role id — reassigns the admin's role. */
+  /** RBAC role id - reassigns the admin's role. */
   @IsOptional()
   @IsString()
   @MinLength(1)

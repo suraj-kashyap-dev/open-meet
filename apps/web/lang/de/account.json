@@ -122,7 +122,7 @@
     "avatar-remove-failed": "Avatar konnte nicht entfernt werden",
     "profile-updated": "Profil aktualisiert",
     "profile-update-failed": "Profil konnte nicht aktualisiert werden",
-    "password-changed": "Passwort geändert — erneut anmelden",
+    "password-changed": "Passwort geändert - erneut anmelden",
     "password-change-failed": "Passwort konnte nicht geändert werden",
     "localization-updated": "Lokalisierung aktualisiert",
     "localization-update-failed": "Lokalisierung konnte nicht aktualisiert werden",
@@ -131,7 +131,7 @@
     "privacy-updated": "Datenschutzeinstellungen aktualisiert",
     "privacy-update-failed": "Datenschutzeinstellungen konnten nicht aktualisiert werden",
     "notifications-unsupported": "Benachrichtigungen werden in diesem Browser nicht unterstützt",
-    "notifications-denied": "Berechtigung verweigert — aktivieren Sie Benachrichtigungen in Ihren Browsereinstellungen"
+    "notifications-denied": "Berechtigung verweigert - aktivieren Sie Benachrichtigungen in Ihren Browsereinstellungen"
   },
   "validation": {
     "avatar-invalid-type": "Avatar muss ein PNG-, JPEG-, WebP- oder GIF-Bild sein",

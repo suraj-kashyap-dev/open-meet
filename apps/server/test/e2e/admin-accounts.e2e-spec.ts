@@ -234,7 +234,7 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(accept.status).toBe(200);
       expect(accept.body.data.email).toBe('invitee@example.com');
 
-      // The invite is consumed — the link no longer resolves.
+      // The invite is consumed - the link no longer resolves.
       const lookup = await http(app).get(`/api/admin/invite/${RAW_TOKEN}`);
       expect(lookup.status).toBe(404);
 

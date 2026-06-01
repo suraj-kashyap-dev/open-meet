@@ -34,8 +34,8 @@
     "description-label": "描述",
     "description-placeholder": "此角色可以做什么?",
     "type-label": "访问权限",
-    "type-all": "完全访问权限 — 授予所有现有和未来的权限。",
-    "type-custom": "自定义 — 精确选择允许执行的操作。"
+    "type-all": "完全访问权限 - 授予所有现有和未来的权限。",
+    "type-custom": "自定义 - 精确选择允许执行的操作。"
   },
   "edit": {
     "title": "编辑角色",
@@ -81,13 +81,13 @@
       "delete": "删除会议",
       "kick": "移除参与者"
     },
-    "teams": {
-      "_self": "团队",
-      "view": "查看团队",
-      "create": "创建团队",
-      "update": "更新团队",
-      "delete": "删除团队",
-      "manage-members": "管理团队成员",
+    "departments": {
+      "_self": "部门",
+      "view": "查看部门",
+      "create": "创建部门",
+      "update": "更新部门",
+      "delete": "删除部门",
+      "manage-members": "管理部门成员",
       "channels": {
         "_self": "频道",
         "view": "查看频道",

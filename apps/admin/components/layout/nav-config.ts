@@ -22,11 +22,11 @@ export interface NavItem {
   icon: LucideIcon;
   badge?: string;
   disabled?: boolean;
-  /** Optional RBAC gate — hide the item when the current admin can't access it. */
+  /** Optional RBAC gate - hide the item when the current admin can't access it. */
   permission?: AdminPermissionKey;
   /**
    * Extra route prefixes that should keep this nav item highlighted. Used for
-   * "virtual children" — surfaces that live at a top-level URL but conceptually
+   * "virtual children" - surfaces that live at a top-level URL but conceptually
    * belong under this item (see {@link SETTINGS_HUB_ROUTES}).
    */
   activeFor?: string[];
@@ -70,7 +70,7 @@ export function matchSettingsHubRoute(pathname: string): SettingsHubRoute | null
 /**
  * The sidebar groups day-to-day workspace nav into three sections. Administrative
  * surfaces (users, administrators, admin roles, user roles, branding,
- * configuration) live inside the Settings hub instead of the sidebar — see
+ * configuration) live inside the Settings hub instead of the sidebar - see
  * `apps/admin/components/settings/settings-hub.tsx`. Settings stays in the
  * sidebar as the single entry point for all of them.
  */
@@ -83,7 +83,7 @@ export const nav: NavSection[] = [
     labelKey: 'sections.manage',
     items: [
       { labelKey: 'items.users', href: '/users', icon: Users, permission: 'users.view' },
-      { labelKey: 'items.teams', href: '/teams', icon: UsersRound, permission: 'teams.view' },
+      { labelKey: 'items.departments', href: '/departments', icon: UsersRound, permission: 'departments.view' },
       { labelKey: 'items.groups', href: '/groups', icon: MessagesSquare, permission: 'groups.view' },
       {
         labelKey: 'items.meetings',
@@ -115,7 +115,7 @@ export function isActive(pathname: string, href: string): boolean {
 }
 
 /**
- * Same as {@link isActive} but also honours an item's `activeFor` prefixes —
+ * Same as {@link isActive} but also honours an item's `activeFor` prefixes -
  * used by the sidebar so virtual Settings-hub children keep the Settings item
  * highlighted.
  */

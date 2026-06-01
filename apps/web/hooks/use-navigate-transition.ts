@@ -7,7 +7,7 @@ import { useCallback, useTransition } from 'react';
  * Wraps `router.push` / `router.replace` in a React transition so `isNavigating`
  * stays `true` from the click through the new page's first paint. Lets buttons
  * keep their pending state across the gap between "API resolved" and "next
- * route mounted" — that gap is what makes clicks feel unresponsive.
+ * route mounted" - that gap is what makes clicks feel unresponsive.
  */
 export function useNavigateTransition() {
   const router = useRouter();

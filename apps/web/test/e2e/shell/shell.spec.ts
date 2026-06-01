@@ -16,7 +16,7 @@ test.describe('Web app shell', () => {
 
     const rail = page.getByTestId('app-rail');
     await expect(rail).toBeVisible();
-    for (const name of ['Chat', 'Meet', 'Teams', 'Activity', 'Saved', 'History']) {
+    for (const name of ['Chat', 'Meet', 'Activity', 'Saved', 'History']) {
       await expect(rail.getByRole('link', { name, exact: true })).toBeVisible();
     }
   });

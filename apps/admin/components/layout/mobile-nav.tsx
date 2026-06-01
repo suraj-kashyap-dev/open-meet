@@ -29,7 +29,7 @@ const TABS: Tab[] = [
   { labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard },
   { labelKey: 'items.users', href: '/users', icon: Users },
   { labelKey: 'items.meetings', href: '/meetings', icon: CalendarRange },
-  { labelKey: 'items.teams', href: '/teams', icon: UsersRound },
+  { labelKey: 'items.departments', href: '/departments', icon: UsersRound },
 ];
 
 function itemClass(active: boolean): string {

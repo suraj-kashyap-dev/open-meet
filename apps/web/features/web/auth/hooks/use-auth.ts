@@ -49,7 +49,7 @@ function writeCachedMe(me: UserMeResponseDto | null): void {
       window.localStorage.removeItem(CACHE_KEY);
     }
   } catch {
-    // Ignore storage failures (private mode, quota) — the cache is best-effort.
+    // Ignore storage failures (private mode, quota) - the cache is best-effort.
   }
 }
 
@@ -107,7 +107,7 @@ export function useCurrentUserMe() {
 }
 
 /**
- * Backward-compatible identity hook — returns just the `UserDto`. Existing
+ * Backward-compatible identity hook - returns just the `UserDto`. Existing
  * consumers (avatars, profile UI, guards) keep working unchanged.
  */
 export function useCurrentUser() {

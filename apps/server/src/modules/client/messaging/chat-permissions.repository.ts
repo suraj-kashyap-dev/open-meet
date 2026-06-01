@@ -37,10 +37,10 @@ export class ChatPermissionsRepository {
     );
   }
 
-  /** Whether two users belong to at least one team in common. */
-  async shareTeam(userAId: string, userBId: string): Promise<boolean> {
-    const count = await this.prisma.teamMember.count({
-      where: { userId: userAId, team: { members: { some: { userId: userBId } } } },
+  /** Whether two users belong to at least one department in common. */
+  async shareDepartment(userAId: string, userBId: string): Promise<boolean> {
+    const count = await this.prisma.departmentMember.count({
+      where: { userId: userAId, department: { members: { some: { userId: userBId } } } },
     });
 
     return count > 0;
@@ -58,14 +58,14 @@ export class ChatPermissionsRepository {
   }
 
   /** Used by PublicProfile PARTICIPANTS_ONLY visibility: viewer either shares
-   * a team OR a conversation with the target. */
+   * a department OR a conversation with the target. */
   async haveSharedSurface(viewerId: string, targetId: string): Promise<boolean> {
     if (viewerId === targetId) return true;
-    const [team, conv] = await Promise.all([
-      this.shareTeam(viewerId, targetId),
+    const [department, conv] = await Promise.all([
+      this.shareDepartment(viewerId, targetId),
       this.shareConversation(viewerId, targetId),
     ]);
-    return team || conv;
+    return department || conv;
   }
 
   getMembership(conversationId: string, userId: string): Promise<ConversationMember | null> {
@@ -122,7 +122,7 @@ export class ChatPermissionsRepository {
     return row?.canCreateGroups ?? false;
   }
 
-  /** Conversation type + how many ADMIN members remain — used for group rules. */
+  /** Conversation type + how many ADMIN members remain - used for group rules. */
   async getConversationMeta(
     conversationId: string,
   ): Promise<{ type: string; adminCount: number } | null> {

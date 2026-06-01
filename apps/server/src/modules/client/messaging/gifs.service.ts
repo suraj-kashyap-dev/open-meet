@@ -16,7 +16,7 @@ interface TenorResult {
 
 /**
  * Proxies GIF search to Tenor. Disabled (returns empty) unless `TENOR_API_KEY`
- * is configured — the FE hides the picker via the `gifsEnabled` config flag.
+ * is configured - the FE hides the picker via the `gifsEnabled` config flag.
  */
 @Injectable()
 export class GifsService {

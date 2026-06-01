@@ -3,7 +3,7 @@
     "eyebrow": "Attività",
     "title": "Cronologia riunioni",
     "total": "{count, plural, one {# riunione} other {# riunioni}} in totale",
-    "description": "Ogni riunione che hai ospitato o a cui hai partecipato — con chat, allegati e lista dei partecipanti conservati."
+    "description": "Ogni riunione che hai ospitato o a cui hai partecipato - con chat, allegati e lista dei partecipanti conservati."
   },
   "default-title": "Riunione del {date}",
   "host": "Ospite",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Rec · {count}",
   "recording-title": "{count, plural, one {# registrazione} other {# registrazioni}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Riunione",
     "started": "Iniziata",
@@ -91,7 +91,7 @@
       },
       "failed-title": "Registrazione non riuscita",
       "failed-detail": "Il servizio di egress non ha fornito ulteriori dettagli.",
-      "processing": "Elaborazione registrazione — ricontrolla tra poco.",
+      "processing": "Elaborazione registrazione - ricontrolla tra poco.",
       "empty-title": "Nessuna registrazione per questa riunione",
       "empty-description": "L'ospite può avviare una registrazione dai controlli durante la chiamata. Le registrazioni rimangono private per le persone che hanno partecipato a questa riunione.",
       "relative": {

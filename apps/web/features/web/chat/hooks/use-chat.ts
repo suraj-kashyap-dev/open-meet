@@ -20,7 +20,12 @@ import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 
 import { chatApi } from '../services/chat';
 import { useChatStore } from '../stores';
-import { patchMessage, upsertMessage, type MessagesData } from '../lib/message-cache';
+import {
+  emptyMessagesData,
+  patchMessage,
+  upsertMessage,
+  type MessagesData,
+} from '../lib/message-cache';
 
 export const chatKeys = {
   conversations: () => ['chat', 'conversations'] as const,
@@ -360,6 +365,38 @@ export function useConversationState() {
           );
           return { items };
         },
+      );
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useClearConversation() {
+  const qc = useQueryClient();
+  const clearUnread = useChatStore((s) => s.clearUnread);
+
+  return useMutation({
+    mutationFn: (conversationId: string) => chatApi.clearConversation(conversationId),
+    onSuccess: (_res, conversationId) => {
+      qc.setQueryData<MessagesData>(chatKeys.messages(conversationId), emptyMessagesData);
+      clearUnread(conversationId);
+      void qc.invalidateQueries({ queryKey: chatKeys.messages(conversationId) });
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useDeleteConversation() {
+  const qc = useQueryClient();
+  const clearUnread = useChatStore((s) => s.clearUnread);
+
+  return useMutation({
+    mutationFn: (conversationId: string) => chatApi.deleteConversation(conversationId),
+    onSuccess: (_res, conversationId) => {
+      clearUnread(conversationId);
+      qc.removeQueries({ queryKey: chatKeys.messages(conversationId) });
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
+        list ? { items: list.items.filter((conversation) => conversation.id !== conversationId) } : list,
       );
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },

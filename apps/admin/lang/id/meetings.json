@@ -76,7 +76,7 @@
     "title": "Akhiri semua rapat aktif?",
     "description": "Ini akan menandai setiap rapat dengan status ACTIVE sebagai ENDED dan menutup ruang LiveKit mereka. Setiap peserta yang sedang dalam panggilan akan langsung terputus.",
     "active-summary": "{count, plural, one {# rapat} other {# rapat}} sedang aktif.",
-    "none-active": "Tidak ada rapat aktif saat ini — tidak ada yang akan terjadi.",
+    "none-active": "Tidak ada rapat aktif saat ini - tidak ada yang akan terjadi.",
     "cancel": "Batal",
     "submit": "Akhiri semua yang aktif",
     "submitting": "Mengakhiri…",

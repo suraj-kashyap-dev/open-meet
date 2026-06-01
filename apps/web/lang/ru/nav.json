@@ -9,14 +9,14 @@
   "user-menu-label": "Открыть меню аккаунта",
   "chat-link-label": "Открыть чат",
   "activity-link-label": "Активность",
-  "teams-link-label": "Команды",
+  "departments-link-label": "Отделы",
   "saved-link-label": "Сохранённые",
   "search-placeholder": "Поиск",
   "rail": {
     "label": "Основное",
     "chat": "Чат",
     "meet": "Встреча",
-    "teams": "Команды",
+    "departments": "Отделы",
     "activity": "Активность",
     "saved": "Сохранённые",
     "history": "История"

@@ -37,6 +37,7 @@ import { ReplyPreview } from './reply-preview';
 interface MessageBubbleProps {
   message: ChatMessageDto;
   isMe: boolean;
+  highlighted?: boolean;
   isGroupHead: boolean;
   isGroupTail: boolean;
   showSenderName: boolean;
@@ -59,6 +60,7 @@ interface MessageBubbleProps {
 export function MessageBubble({
   message,
   isMe,
+  highlighted = false,
   isGroupHead,
   isGroupTail,
   showSenderName,
@@ -84,6 +86,10 @@ export function MessageBubble({
   const deleted = message.deletedAt !== null;
   const hasText = message.content.length > 0;
   const isPoll = message.poll !== null;
+  const jumpTargetClass = highlighted
+    ? cn('chat-jump-target', isMe ? 'chat-jump-target-end' : 'chat-jump-target-start')
+    : '';
+  const jumpSurfaceClass = highlighted ? 'chat-jump-surface' : '';
 
   const saveEdit = () => {
     const next = draft.trim();
@@ -95,8 +101,9 @@ export function MessageBubble({
 
   return (
     <li
+      data-mid={message.id}
       className={cn(
-        'group flex items-end gap-2',
+        'group flex scroll-mt-24 items-end gap-2',
         isMe ? 'flex-row-reverse' : 'flex-row',
         isGroupHead ? 'pt-2' : 'pt-0.5',
       )}
@@ -107,7 +114,12 @@ export function MessageBubble({
         </div>
       ) : null}
 
-      <div className={cn('flex max-w-[78%] flex-col gap-1', isMe ? 'items-end' : 'items-start')}>
+      <div
+        className={cn(
+          'relative flex max-w-[78%] flex-col gap-1 px-0.5 py-1',
+          isMe ? 'items-end' : 'items-start',
+        )}
+      >
         {isGroupHead ? (
           <div
             className={cn(
@@ -163,86 +175,104 @@ export function MessageBubble({
         ) : null}
 
         {!deleted && message.attachments.length > 0 ? (
-          <div className="flex flex-col gap-1.5">
-            {message.attachments.map((a) => (
-              <AttachmentBlock key={a.id} a={a} formatSize={formatSize} />
-            ))}
+          <div className={cn('max-w-full', jumpTargetClass)}>
+            <div className={cn('flex flex-col gap-1.5', jumpSurfaceClass)}>
+              {message.attachments.map((a) => (
+                <AttachmentBlock key={a.id} a={a} formatSize={formatSize} />
+              ))}
+            </div>
           </div>
         ) : null}
 
         {isPoll && !deleted ? (
-          <PollCard
-            poll={message.poll!}
-            disabled={!canPost}
-            onVote={(optionIds) => onVotePoll(message.id, message.poll!.id, optionIds)}
-          />
+          <div className={cn('max-w-full', jumpTargetClass)}>
+            <div className={jumpSurfaceClass}>
+              <PollCard
+                poll={message.poll!}
+                disabled={!canPost}
+                onVote={(optionIds) => onVotePoll(message.id, message.poll!.id, optionIds)}
+              />
+            </div>
+          </div>
         ) : null}
 
         {editing ? (
-          <div className="flex w-72 max-w-full flex-col gap-1.5">
-            <textarea
-              value={draft}
-              autoFocus
-              rows={2}
-              onChange={(e) => setDraft(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  saveEdit();
-                }
-                if (e.key === 'Escape') {
-                  setEditing(false);
-                  setDraft(message.content);
-                }
-              }}
-              className="w-full resize-none rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            />
-            <div className="flex gap-2 text-xs text-muted-foreground">
-              <button type="button" className="hover:text-foreground" onClick={saveEdit}>
-                {t('bubble.save')}
-              </button>
-              <button
-                type="button"
-                className="hover:text-foreground"
-                onClick={() => {
-                  setEditing(false);
-                  setDraft(message.content);
+          <div className={cn('w-72 max-w-full', jumpTargetClass)}>
+            <div className={cn('flex flex-col gap-1.5', jumpSurfaceClass)}>
+              <textarea
+                value={draft}
+                autoFocus
+                rows={2}
+                onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    saveEdit();
+                  }
+                  if (e.key === 'Escape') {
+                    setEditing(false);
+                    setDraft(message.content);
+                  }
                 }}
-              >
-                {t('bubble.cancel')}
-              </button>
+                className="w-full resize-none rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              />
+              <div className="flex gap-2 text-xs text-muted-foreground">
+                <button type="button" className="hover:text-foreground" onClick={saveEdit}>
+                  {t('bubble.save')}
+                </button>
+                <button
+                  type="button"
+                  className="hover:text-foreground"
+                  onClick={() => {
+                    setEditing(false);
+                    setDraft(message.content);
+                  }}
+                >
+                  {t('bubble.cancel')}
+                </button>
+              </div>
             </div>
           </div>
         ) : deleted ? (
-          <p className="rounded-2xl border border-dashed border-border/60 px-3.5 py-2 text-sm italic text-muted-foreground">
-            {t('bubble.deleted')}
-          </p>
-        ) : hasText ? (
-          <div className="flex items-center gap-1">
-            {isMe ? renderActions() : null}
-            <div
+          <div className={jumpTargetClass}>
+            <p
               className={cn(
-                'relative px-3.5 py-2.5 text-[0.9375rem] leading-snug rounded-2xl transition-shadow',
-                isMe
-                  ? 'bg-gradient-to-br from-accent to-accent/85 text-accent-foreground shadow-md shadow-accent/15 ring-1 ring-inset ring-white/10'
-                  : 'border border-border/70 bg-card text-foreground shadow-sm',
+                'rounded-2xl border border-dashed border-border/60 px-3.5 py-2 text-sm italic text-muted-foreground',
+                jumpSurfaceClass,
               )}
             >
-              <MessageContent
-                content={message.content}
-                currentUserId={currentUserId}
-                inverted={isMe}
-              />
-              {message.editedAt ? (
-                <span
-                  className={cn(
-                    'ms-1.5 align-baseline text-[10px] italic',
-                    isMe ? 'text-accent-foreground/70' : 'text-muted-foreground',
-                  )}
-                >
-                  {t('bubble.edited')}
-                </span>
-              ) : null}
+              {t('bubble.deleted')}
+            </p>
+          </div>
+        ) : hasText ? (
+          <div className="flex max-w-full items-center gap-1">
+            {isMe ? renderActions() : null}
+            <div className={cn('min-w-0', jumpTargetClass)}>
+              <div
+                className={cn(
+                  'relative px-3.5 py-2.5 text-[0.9375rem] leading-snug rounded-2xl transition-shadow',
+                  isMe
+                    ? 'bg-gradient-to-br from-accent to-accent/85 text-accent-foreground shadow-md shadow-accent/15 ring-1 ring-inset ring-white/10'
+                    : 'border border-border/70 bg-card text-foreground shadow-sm',
+                  jumpSurfaceClass,
+                )}
+              >
+                <MessageContent
+                  content={message.content}
+                  currentUserId={currentUserId}
+                  inverted={isMe}
+                />
+                {message.editedAt ? (
+                  <span
+                    className={cn(
+                      'ms-1.5 align-baseline text-[10px] italic',
+                      isMe ? 'text-accent-foreground/70' : 'text-muted-foreground',
+                    )}
+                  >
+                    {t('bubble.edited')}
+                  </span>
+                ) : null}
+              </div>
             </div>
             {!isMe ? renderActions() : null}
           </div>

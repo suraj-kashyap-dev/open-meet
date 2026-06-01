@@ -9,14 +9,14 @@
   "user-menu-label": "アカウントメニューを開く",
   "chat-link-label": "チャットを開く",
   "activity-link-label": "アクティビティ",
-  "teams-link-label": "チーム",
+  "departments-link-label": "部署",
   "saved-link-label": "保存済み",
   "search-placeholder": "検索",
   "rail": {
     "label": "メイン",
     "chat": "チャット",
     "meet": "ミート",
-    "teams": "チーム",
+    "departments": "部署",
     "activity": "アクティビティ",
     "saved": "保存済み",
     "history": "履歴"

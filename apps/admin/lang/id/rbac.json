@@ -34,8 +34,8 @@
     "description-label": "Deskripsi",
     "description-placeholder": "Apa yang dapat dilakukan peran ini?",
     "type-label": "Akses",
-    "type-all": "Akses penuh — memberikan semua izin saat ini dan di masa depan.",
-    "type-custom": "Kustom — pilih dengan tepat apa yang dapat mereka lakukan."
+    "type-all": "Akses penuh - memberikan semua izin saat ini dan di masa depan.",
+    "type-custom": "Kustom - pilih dengan tepat apa yang dapat mereka lakukan."
   },
   "edit": {
     "title": "Edit peran",
@@ -81,13 +81,13 @@
       "delete": "Hapus rapat",
       "kick": "Keluarkan peserta"
     },
-    "teams": {
-      "_self": "Tim",
-      "view": "Lihat tim",
-      "create": "Buat tim",
-      "update": "Perbarui tim",
-      "delete": "Hapus tim",
-      "manage-members": "Kelola anggota tim",
+    "departments": {
+      "_self": "Departemen",
+      "view": "Lihat departemen",
+      "create": "Buat departemen",
+      "update": "Perbarui departemen",
+      "delete": "Hapus departemen",
+      "manage-members": "Kelola anggota departemen",
       "channels": {
         "_self": "Saluran",
         "view": "Lihat saluran",

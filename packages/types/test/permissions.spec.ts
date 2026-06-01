@@ -28,12 +28,12 @@ describe('leavesUnder()', () => {
   });
 
   it('should return all descendant leaves when key is a parent', () => {
-    expect(leavesUnder('teams', PERMISSION_TREE_ADMIN)).toEqual([
-      'teams.view',
-      'teams.create',
-      'teams.update',
-      'teams.delete',
-      'teams.manage-members',
+    expect(leavesUnder('departments', PERMISSION_TREE_ADMIN)).toEqual([
+      'departments.view',
+      'departments.create',
+      'departments.update',
+      'departments.delete',
+      'departments.manage-members',
     ]);
   });
 
@@ -75,13 +75,13 @@ describe('expandToLeaves()', () => {
 
 describe('unknownKeys()', () => {
   it('should return [] when every key is a valid leaf or parent', () => {
-    expect(unknownKeys(['users', 'users.view', 'teams'], PERMISSION_TREE_ADMIN)).toEqual([]);
+    expect(unknownKeys(['users', 'users.view', 'departments'], PERMISSION_TREE_ADMIN)).toEqual([]);
   });
 
   it('should return the keys that are neither leaves nor known parents', () => {
     expect(
-      unknownKeys(['users.view', 'mystery.leaf', 'teams.channels.fly'], PERMISSION_TREE_ADMIN),
-    ).toEqual(['mystery.leaf', 'teams.channels.fly']);
+      unknownKeys(['users.view', 'mystery.leaf', 'departments.channels.fly'], PERMISSION_TREE_ADMIN),
+    ).toEqual(['mystery.leaf', 'departments.channels.fly']);
     // (a removed-feature key is still correctly reported as unknown)
   });
 });

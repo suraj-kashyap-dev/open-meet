@@ -23,7 +23,7 @@ const listLocales = (root: string): string[] =>
     .map((entry) => entry.name)
     .sort();
 
-console.log(`\n🌐  Translation sync check — base locale: "${BASE_LOCALE}"\n`);
+console.log(`\n🌐  Translation sync check - base locale: "${BASE_LOCALE}"\n`);
 
 let filesChecked = 0;
 let problemCount = 0;
@@ -33,7 +33,7 @@ for (const relRoot of LANG_ROOTS) {
   const root = join(REPO_ROOT, relRoot);
 
   if (!existsSync(root)) {
-    console.log(`•  ${relRoot} — skipped (directory not found)\n`);
+    console.log(`•  ${relRoot} - skipped (directory not found)\n`);
     continue;
   }
 
@@ -54,7 +54,7 @@ for (const relRoot of LANG_ROOTS) {
   const otherLocales = locales.filter((locale) => locale !== BASE_LOCALE);
 
   if (otherLocales.length === 0) {
-    console.log(`  (only "${BASE_LOCALE}" present — nothing to compare)\n`);
+    console.log(`  (only "${BASE_LOCALE}" present - nothing to compare)\n`);
     continue;
   }
 
@@ -63,13 +63,13 @@ for (const relRoot of LANG_ROOTS) {
     const localeNamespaces = listNamespaces(localeDir);
 
     for (const file of baseNamespaces.filter((f) => !localeNamespaces.includes(f))) {
-      console.log(`  ✗  ${locale}/${file} — MISSING file (exists in "${BASE_LOCALE}")`);
+      console.log(`  ✗  ${locale}/${file} - MISSING file (exists in "${BASE_LOCALE}")`);
       problemCount += 1;
       process.exitCode = 1;
     }
 
     for (const file of localeNamespaces.filter((f) => !baseNamespaces.includes(f))) {
-      console.log(`  ✗  ${locale}/${file} — EXTRA file (no "${BASE_LOCALE}" counterpart)`);
+      console.log(`  ✗  ${locale}/${file} - EXTRA file (no "${BASE_LOCALE}" counterpart)`);
       problemCount += 1;
       process.exitCode = 1;
     }
@@ -81,13 +81,13 @@ for (const relRoot of LANG_ROOTS) {
       const target = readJson(join(localeDir, file));
 
       if (base.error) {
-        console.log(`  ✗  ${BASE_LOCALE}/${file} — invalid JSON: ${base.error}`);
+        console.log(`  ✗  ${BASE_LOCALE}/${file} - invalid JSON: ${base.error}`);
         problemCount += 1;
         process.exitCode = 1;
         continue;
       }
       if (target.error) {
-        console.log(`  ✗  ${locale}/${file} — invalid JSON: ${target.error}`);
+        console.log(`  ✗  ${locale}/${file} - invalid JSON: ${target.error}`);
         problemCount += 1;
         process.exitCode = 1;
         continue;
@@ -112,7 +112,7 @@ for (const relRoot of LANG_ROOTS) {
 }
 
 if (process.exitCode === 1) {
-  console.log(`✖  Translations are OUT OF SYNC — ${problemCount} problem(s) found.`);
+  console.log(`✖  Translations are OUT OF SYNC - ${problemCount} problem(s) found.`);
   console.log(
     `   English ("${BASE_LOCALE}") is the source of truth: every other locale must have the same`,
   );
@@ -121,7 +121,7 @@ if (process.exitCode === 1) {
   );
 } else {
   console.log(
-    `✔  In sync — ${filesChecked} translation file(s) across ${rootsChecked} ` +
+    `✔  In sync - ${filesChecked} translation file(s) across ${rootsChecked} ` +
       `director${rootsChecked === 1 ? 'y' : 'ies'} match the "${BASE_LOCALE}" base ` +
       `(files, keys, nesting, and order).\n`,
   );

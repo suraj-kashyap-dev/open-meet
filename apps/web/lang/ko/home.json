@@ -15,7 +15,7 @@
     "badge": "즉시",
     "eyebrow": "새로 시작",
     "title": "새 회의 시작",
-    "description": "공유 가능한 새 방입니다. 설정 없이 — 방이 비면 링크가 만료됩니다.",
+    "description": "공유 가능한 새 방입니다. 설정 없이 - 방이 비면 링크가 만료됩니다.",
     "capacity": "최대 100명",
     "secure": "종단 간 보안",
     "creating": "생성 중…",
@@ -111,7 +111,7 @@
     "yearly": "매년"
   },
   "relative": {
-    "none": "—",
+    "none": "-",
     "just-now": "방금",
     "minutes-ago": "{count}분 전",
     "hours-ago": "{count}시간 전",
@@ -170,7 +170,7 @@
     "title-required": "회의 제목을 입력하세요",
     "valid-datetime": "유효한 날짜와 시간을 선택하세요",
     "future-datetime": "미래의 날짜와 시간을 선택하세요",
-    "scheduled-invites": "예약됨 — {count, plural, one {# 명의 게스트} other {# 명의 게스트}}에게 초대장 발송",
+    "scheduled-invites": "예약됨 - {count, plural, one {# 명의 게스트} other {# 명의 게스트}}에게 초대장 발송",
     "scheduled": "회의가 예약되었습니다",
     "schedule-error": "회의를 예약할 수 없습니다",
     "link-copied": "회의 링크가 복사되었습니다",

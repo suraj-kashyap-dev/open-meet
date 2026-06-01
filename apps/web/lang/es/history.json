@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Grab · {count}",
   "recording-title": "{count, plural, one {# grabación} other {# grabaciones}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Reunión",
     "started": "Iniciada",
@@ -91,7 +91,7 @@
       },
       "failed-title": "La grabación falló",
       "failed-detail": "El servicio de egress no proporcionó más detalles.",
-      "processing": "Procesando grabación — comprueba de nuevo en breve.",
+      "processing": "Procesando grabación - comprueba de nuevo en breve.",
       "empty-title": "No hay grabaciones para esta reunión",
       "empty-description": "El anfitrión puede iniciar una grabación desde los controles de la llamada. Las grabaciones son privadas para las personas que se unieron a esta reunión.",
       "relative": {

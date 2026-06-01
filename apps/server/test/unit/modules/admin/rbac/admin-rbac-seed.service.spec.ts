@@ -53,7 +53,7 @@ describe('AdminRbacSeedService', () => {
       );
     });
 
-    it('should be idempotent — invoking twice issues one system + one default upsert per call', async () => {
+    it('should be idempotent - invoking twice issues one system + one default upsert per call', async () => {
       await service.onModuleInit();
       await service.onModuleInit();
       expect(repo.upsertSystem).toHaveBeenCalledTimes(2);

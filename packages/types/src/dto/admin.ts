@@ -78,7 +78,7 @@ export interface AdminStatsOverviewDto {
     activeMeetings: number;
     messagesLast24h: number;
     groups: number;
-    teams: number;
+    departments: number;
   };
   trends: {
     signups: DailyCountPoint[];
@@ -245,7 +245,7 @@ export const AdminInviteStatus = {
 
 export type AdminInviteStatus = (typeof AdminInviteStatus)[keyof typeof AdminInviteStatus];
 
-/** Payload to invite a new admin by email (no password — they set their own). */
+/** Payload to invite a new admin by email (no password - they set their own). */
 export interface AdminCreateInviteDto {
   email: string;
   name: string;

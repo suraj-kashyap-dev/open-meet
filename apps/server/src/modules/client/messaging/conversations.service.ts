@@ -23,6 +23,16 @@ function isUniqueViolation(err: unknown): boolean {
   return err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002';
 }
 
+function laterDate(left: Date | null, right: Date | null): Date | null {
+  if (!left) return right;
+  if (!right) return left;
+  return left > right ? left : right;
+}
+
+function sortTimestamp(conversation: ConversationDto): number {
+  return new Date(conversation.lastMessageAt ?? conversation.createdAt).getTime();
+}
+
 @Injectable()
 export class ConversationsService {
   constructor(
@@ -35,34 +45,22 @@ export class ConversationsService {
 
   async list(userId: string, opts: { includeHidden?: boolean } = {}): Promise<ConversationListDto> {
     const all = await this.repo.listForUser(userId);
-    // Hide conversations the viewer has hidden unless the caller explicitly
-    // asks for them (the "Show hidden" filter); pinned ones sort to the top.
-    const rows = all
-      .filter((c) => opts.includeHidden || !c.members.find((m) => m.userId === userId)?.hidden)
-      .sort((a, b) => {
-        const ap = a.members.find((m) => m.userId === userId)?.pinned ? 1 : 0;
-        const bp = b.members.find((m) => m.userId === userId)?.pinned ? 1 : 0;
-        if (ap !== bp) return bp - ap;
-        return (b.lastMessageAt?.getTime() ?? 0) - (a.lastMessageAt?.getTime() ?? 0);
-      });
+    const rows = all.filter(
+      (c) => opts.includeHidden || !c.members.find((m) => m.userId === userId)?.hidden,
+    );
 
     const memberIds = [...new Set(rows.flatMap((c) => c.members.map((m) => m.userId)))];
     const presence = await this.presence.snapshot(memberIds);
 
-    const items = await Promise.all(
-      rows.map(async (c) => {
-        const mine = c.members.find((m) => m.userId === userId);
-        const count = await this.repo.unreadCount(c.id, userId, mine?.lastReadAt ?? null);
-        const unread = mine?.manualUnread ? Math.max(1, count) : count;
+    const items = await Promise.all(rows.map((conversation) => this.toDtoWithPresence(conversation, userId, presence)));
 
-        return this.serializer.conversation(c, {
-          viewerId: userId,
-          presence,
-          lastMessage: c.messages[0] ?? null,
-          unreadCount: unread,
-        });
-      }),
-    );
+    items.sort((left, right) => {
+      if (left.pinned !== right.pinned) {
+        return left.pinned ? -1 : 1;
+      }
+
+      return sortTimestamp(right) - sortTimestamp(left);
+    });
 
     return { items };
   }
@@ -78,7 +76,7 @@ export class ConversationsService {
       });
     }
 
-    return this.toDto(conversation, userId, null);
+    return this.toDto(conversation, userId);
   }
 
   /** Get-or-create the 1:1 conversation between the actor and the target. */
@@ -86,10 +84,30 @@ export class ConversationsService {
     await this.permissions.assertCanDirectMessage(actorId, targetId);
 
     const key = directKeyFor(actorId, targetId);
-    const existing = await this.repo.findDirectByKey(key);
+    let existing = await this.repo.findDirectByKey(key);
 
     if (existing) {
-      return this.toDto(existing, actorId);
+      const mine = existing.members.find((member) => member.userId === actorId);
+      const wasRemoved = Boolean(mine?.removedAt);
+      const wasHidden = Boolean(mine?.hidden);
+
+      if (wasRemoved || wasHidden) {
+        await this.repo.restoreForViewer(existing.id, actorId, {
+          hidden: false,
+          removedAt: null,
+        });
+        existing = (await this.repo.findDirectByKey(key)) ?? existing;
+      }
+
+      const dto = await this.toDto(existing, actorId);
+
+      if (wasRemoved) {
+        this.bus.emit(userRoom(actorId), ChatServerEvent.CONVERSATION_NEW, dto);
+      } else if (wasHidden) {
+        this.bus.emit(userRoom(actorId), ChatServerEvent.CONVERSATION_UPDATE, dto);
+      }
+
+      return dto;
     }
 
     let conversation: ConversationWithMembers;
@@ -115,20 +133,93 @@ export class ConversationsService {
     return this.toDto(conversation, actorId);
   }
 
+  async clearForViewer(conversationId: string, userId: string): Promise<{ ok: true }> {
+    await this.permissions.assertConversationMember(conversationId, userId);
+
+    const at = new Date();
+    await this.repo.clearForViewer(conversationId, userId, at);
+
+    const conversation = await this.repo.findById(conversationId);
+    if (!conversation) {
+      throw new NotFoundException({
+        code: ApiErrorCode.CONVERSATION_NOT_FOUND,
+        message: 'Conversation not found.',
+      });
+    }
+
+    const dto = await this.toDto(conversation, userId);
+    this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_UPDATE, dto);
+
+    return { ok: true };
+  }
+
+  async deleteForViewer(conversationId: string, userId: string): Promise<{ ok: true }> {
+    await this.permissions.assertConversationMember(conversationId, userId);
+
+    await this.repo.removeForViewer(conversationId, userId, new Date());
+    this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_REMOVED, { conversationId });
+
+    return { ok: true };
+  }
+
+  async revealOnActivity(conversationId: string, senderId: string): Promise<void> {
+    const { revivedUserIds, senderNeedsUpdate } = await this.repo.activityVisibilityChanges(
+      conversationId,
+      senderId,
+    );
+
+    if (revivedUserIds.length === 0 && !senderNeedsUpdate) {
+      return;
+    }
+
+    const conversation = await this.repo.findById(conversationId);
+    if (!conversation) {
+      return;
+    }
+
+    const memberIds = conversation.members.map((member) => member.userId);
+    const presence = await this.presence.snapshot(memberIds);
+
+    for (const userId of revivedUserIds) {
+      const dto = await this.toDtoWithPresence(conversation, userId, presence);
+      this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_NEW, dto);
+    }
+
+    if (senderNeedsUpdate) {
+      const dto = await this.toDtoWithPresence(conversation, senderId, presence);
+      this.bus.emit(userRoom(senderId), ChatServerEvent.CONVERSATION_UPDATE, dto);
+    }
+  }
+
   private async toDto(
     conversation: ConversationWithMembers & { messages?: ChatMessageWithRelations[] },
     viewerId: string,
-    lastMessage: ChatMessageWithRelations | null = null,
   ): Promise<ConversationDto> {
     const memberIds = conversation.members.map((m) => m.userId);
     const presence = await this.presence.snapshot(memberIds);
-    const mine = conversation.members.find((m) => m.userId === viewerId);
-    const unread = await this.repo.unreadCount(conversation.id, viewerId, mine?.lastReadAt ?? null);
+    return this.toDtoWithPresence(conversation, viewerId, presence);
+  }
+
+  private async toDtoWithPresence(
+    conversation: ConversationWithMembers & { messages?: ChatMessageWithRelations[] },
+    viewerId: string,
+    presence: Awaited<ReturnType<PresenceService['snapshot']>>,
+  ): Promise<ConversationDto> {
+    const mine = conversation.members.find((member) => member.userId === viewerId);
+    const clearedAt = mine?.clearedAt ?? null;
+    const lastMessage = await this.repo.lastVisibleMessage(conversation.id, clearedAt);
+    const unreadBase = await this.repo.unreadCount(
+      conversation.id,
+      viewerId,
+      laterDate(mine?.lastReadAt ?? null, clearedAt),
+    );
+    const unread = mine?.manualUnread ? Math.max(1, unreadBase) : unreadBase;
 
     return this.serializer.conversation(conversation, {
       viewerId,
       presence,
       lastMessage,
+      lastMessageAt: lastMessage?.createdAt ?? null,
       unreadCount: unread,
     });
   }

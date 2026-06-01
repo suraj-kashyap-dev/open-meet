@@ -7,6 +7,17 @@ import { ChatPermissionsService } from './chat-permissions.service';
 import { ConversationsRepository } from './conversations.repository';
 import { MessagesRepository } from './messages.repository';
 
+function laterDate(left: Date | null, right: Date | null): Date | null {
+  if (!left) {
+    return right;
+  }
+
+  if (!right) {
+    return left;
+  }
+  return left > right ? left : right;
+}
+
 @Injectable()
 export class ReadStateService {
   constructor(
@@ -21,7 +32,7 @@ export class ReadStateService {
     userId: string,
     messageId?: string,
   ): Promise<{ unread: number }> {
-    await this.permissions.assertConversationMember(conversationId, userId);
+    const membership = await this.permissions.assertConversationMember(conversationId, userId);
 
     let readAt = new Date();
 
@@ -33,6 +44,7 @@ export class ReadStateService {
       }
     }
 
+    readAt = laterDate(readAt, membership.clearedAt ?? null) ?? readAt;
     await this.conversations.markRead(conversationId, userId, readAt);
 
     this.bus.emit(conversationRoom(conversationId), ChatServerEvent.READ_RECEIPT, {
@@ -52,7 +64,11 @@ export class ReadStateService {
 
     await Promise.all(
       memberships.map(async (m) => {
-        const count = await this.conversations.unreadCount(m.conversationId, userId, m.lastReadAt);
+        const count = await this.conversations.unreadCount(
+          m.conversationId,
+          userId,
+          laterDate(m.lastReadAt, m.clearedAt),
+        );
 
         if (count > 0) {
           byConversation[m.conversationId] = count;

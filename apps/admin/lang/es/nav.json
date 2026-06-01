@@ -11,7 +11,7 @@
   "items": {
     "dashboard": "Panel",
     "users": "Usuarios",
-    "teams": "Equipos",
+    "departments": "Departamentos",
     "groups": "Grupos",
     "meetings": "Reuniones",
     "settings": "Configuración",

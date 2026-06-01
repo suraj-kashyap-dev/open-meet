@@ -1,4 +1,4 @@
 @import '@open-meet/tailwind-config/styles.css';
 
-/* Tailwind v4 doesn't scan node_modules by default — point it at the shared UI package source. */
+/* Tailwind v4 doesn't scan node_modules by default - point it at the shared UI package source. */
 @source '../../../packages/ui/src/**/*.{ts,tsx}';

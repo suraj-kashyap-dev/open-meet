@@ -23,7 +23,7 @@ function statusClasses(status: RecentMeetingDto['status']): string {
 
 function formatRelative(iso: string | null): string {
   if (!iso) {
-    return '—';
+    return '-';
   }
 
   return new Date(iso).toLocaleString(undefined, {
@@ -75,7 +75,7 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
         header: () => <span className="block text-end">{t('recent.columns.duration')}</span>,
         cell: (info) => (
           <span className="block text-end tabular-nums">
-            {info.getValue() !== null ? `${info.getValue()}m` : '—'}
+            {info.getValue() !== null ? `${info.getValue()}m` : '-'}
           </span>
         ),
       }),

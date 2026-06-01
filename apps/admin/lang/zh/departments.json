@@ -1,0 +1,68 @@
+{
+  "eyebrow": "管理",
+  "title": "部门",
+  "subtitle": "部门决定谁可以向谁发送消息--用户可以向同一部门中的任何人发送私信。",
+  "empty": "暂无部门。",
+  "columns": {
+    "name": "名称",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "成员"
+  },
+  "actions": {
+    "manage": "管理成员",
+    "delete": "删除部门"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "这个部门是做什么的？",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "新建部门",
+    "title": "创建部门",
+    "name": "部门名称",
+    "placeholder": "例如：工程部",
+    "submit": "创建",
+    "success": "部门已创建",
+    "error": "无法创建部门"
+  },
+  "manage": {
+    "title": "成员",
+    "members": "{count, plural, one {# 位成员} other {# 位成员}}",
+    "add": "添加成员",
+    "search": "搜索用户",
+    "no-users": "未找到用户。",
+    "add-confirm": "添加",
+    "empty": "暂无成员。",
+    "remove": "移除成员"
+  },
+  "channels": {
+    "title": "频道",
+    "empty": "暂无频道。",
+    "general": "通用",
+    "add": "添加频道",
+    "delete": "删除频道",
+    "name-placeholder": "新频道名称"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "部门已更新",
+    "request-error": "无法更新此部门",
+    "empty-title": "未找到部门",
+    "empty-description": "此部门可能已被删除，或您没有访问权限。",
+    "delete-description": "删除此部门也会移除每位成员对其频道的访问权限。",
+    "delete-success": "部门已删除",
+    "delete-error": "无法删除部门"
+  },
+  "delete-dialog": {
+    "title": "删除部门？",
+    "description": "{name} 将被删除，每位成员将立即失去访问权限。此操作无法撤销。",
+    "cancel": "取消",
+    "confirm": "删除部门",
+    "deleting": "正在删除…"
+  }
+}

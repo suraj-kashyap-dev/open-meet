@@ -19,7 +19,7 @@ function resolveTokens(value: string, mode: 'light' | 'dark'): AccentTokens {
 }
 
 /**
- * Mirrors the web AccentProvider but reads only the workspace default —
+ * Mirrors the web AccentProvider but reads only the workspace default -
  * admins don't have per-user accent overrides. Lives inside ThemeProvider so
  * `resolvedTheme` is known.
  */

@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Gerenciar",
+  "title": "Departamentos",
+  "subtitle": "Os departamentos definem quem pode enviar mensagens a quem - os usuários podem enviar DMs a qualquer pessoa de um departamento compartilhado.",
+  "empty": "Nenhum departamento ainda.",
+  "columns": {
+    "name": "Nome",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "Membros"
+  },
+  "actions": {
+    "manage": "Gerenciar membros",
+    "delete": "Excluir departamento"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "Para que serve este departamento?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "Novo departamento",
+    "title": "Criar departamento",
+    "name": "Nome do departamento",
+    "placeholder": "ex.: Engenharia",
+    "submit": "Criar",
+    "success": "Departamento criado",
+    "error": "Não foi possível criar o departamento"
+  },
+  "manage": {
+    "title": "Membros",
+    "members": "{count, plural, one {# membro} other {# membros}}",
+    "add": "Adicionar membros",
+    "search": "Pesquisar usuários",
+    "no-users": "Nenhum usuário encontrado.",
+    "add-confirm": "Adicionar",
+    "empty": "Nenhum membro ainda.",
+    "remove": "Remover membro"
+  },
+  "channels": {
+    "title": "Canais",
+    "empty": "Nenhum canal ainda.",
+    "general": "Geral",
+    "add": "Adicionar canal",
+    "delete": "Excluir canal",
+    "name-placeholder": "Nome do novo canal"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Departamento atualizado",
+    "request-error": "Não foi possível atualizar este departamento",
+    "empty-title": "Departamento não encontrado",
+    "empty-description": "Este departamento pode ter sido removido ou você pode não ter acesso a ele.",
+    "delete-description": "Remover este departamento também remove o acesso aos seus canais para todos os membros.",
+    "delete-success": "Departamento excluído",
+    "delete-error": "Não foi possível excluir o departamento"
+  },
+  "delete-dialog": {
+    "title": "Excluir departamento?",
+    "description": "{name} será excluído e todos os membros perderão o acesso imediatamente. Isso não pode ser desfeito.",
+    "cancel": "Cancelar",
+    "confirm": "Excluir departamento",
+    "deleting": "Excluindo…"
+  }
+}

@@ -34,8 +34,8 @@
     "description-label": "설명",
     "description-placeholder": "이 역할은 무엇을 할 수 있나요?",
     "type-label": "액세스",
-    "type-all": "전체 액세스 — 현재 및 향후 모든 권한을 부여합니다.",
-    "type-custom": "사용자 지정 — 가능한 작업을 정확히 선택합니다."
+    "type-all": "전체 액세스 - 현재 및 향후 모든 권한을 부여합니다.",
+    "type-custom": "사용자 지정 - 가능한 작업을 정확히 선택합니다."
   },
   "edit": {
     "title": "역할 편집",
@@ -81,13 +81,13 @@
       "delete": "회의 삭제",
       "kick": "참가자 내보내기"
     },
-    "teams": {
-      "_self": "팀",
-      "view": "팀 보기",
-      "create": "팀 만들기",
-      "update": "팀 업데이트",
-      "delete": "팀 삭제",
-      "manage-members": "팀 구성원 관리",
+    "departments": {
+      "_self": "부서",
+      "view": "부서 보기",
+      "create": "부서 만들기",
+      "update": "부서 업데이트",
+      "delete": "부서 삭제",
+      "manage-members": "부서 구성원 관리",
       "channels": {
         "_self": "채널",
         "view": "채널 보기",

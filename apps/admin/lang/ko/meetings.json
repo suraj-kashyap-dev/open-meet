@@ -76,7 +76,7 @@
     "title": "모든 활성 회의를 종료하시겠습니까?",
     "description": "상태가 ACTIVE인 모든 회의를 ENDED로 표시하고 LiveKit 룸을 닫습니다. 현재 통화 중인 모든 참가자는 즉시 연결이 끊어집니다.",
     "active-summary": "현재 {count, plural, one {회의 # 건이} other {회의 # 건이}} 활성 상태입니다.",
-    "none-active": "현재 활성 회의가 없습니다 — 아무것도 실행되지 않습니다.",
+    "none-active": "현재 활성 회의가 없습니다 - 아무것도 실행되지 않습니다.",
     "cancel": "취소",
     "submit": "활성 회의 모두 종료",
     "submitting": "종료 중…",

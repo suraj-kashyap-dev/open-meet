@@ -78,10 +78,10 @@ export default function AdminOverviewPage() {
           hint={t('stats.groups-hint')}
         />
         <StatCard
-          label={t('stats.teams')}
-          value={data.totals.teams.toLocaleString()}
+          label={t('stats.departments')}
+          value={data.totals.departments.toLocaleString()}
           icon={UsersRound}
-          hint={t('stats.teams-hint')}
+          hint={t('stats.departments-hint')}
         />
       </section>
 

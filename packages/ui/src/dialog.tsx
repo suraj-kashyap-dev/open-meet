@@ -87,7 +87,7 @@ export const DialogContent = forwardRef<
     {/*
       The Content is the full-screen scroll container (Radix only allows scrolling
       WITHIN Content, since it wraps Content in RemoveScroll). The window sits in
-      normal flow inside it, so the WHOLE modal scrolls as one — Filament-style —
+      normal flow inside it, so the WHOLE modal scrolls as one - Filament-style -
       instead of a center-pinned box with an inner scroll region.
     */}
     <DialogPrimitive.Content

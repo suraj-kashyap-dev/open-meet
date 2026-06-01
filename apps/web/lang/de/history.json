@@ -3,7 +3,7 @@
     "eyebrow": "Aktivität",
     "title": "Besprechungsverlauf",
     "total": "{count, plural, one {# Besprechung} other {# Besprechungen}} insgesamt",
-    "description": "Jede Besprechung, die Sie gehostet oder besucht haben — mit Chat, Anhängen und der Teilnehmerliste."
+    "description": "Jede Besprechung, die Sie gehostet oder besucht haben - mit Chat, Anhängen und der Teilnehmerliste."
   },
   "default-title": "Besprechung am {date}",
   "host": "Gastgeber",
@@ -12,7 +12,7 @@
   "overflow": "+{count}",
   "recording-badge": "Aufn. · {count}",
   "recording-title": "{count, plural, one {# Aufnahme} other {# Aufnahmen}}",
-  "empty-cell": "—",
+  "empty-cell": "-",
   "columns": {
     "meeting": "Besprechung",
     "started": "Gestartet",
@@ -91,7 +91,7 @@
       },
       "failed-title": "Aufnahme fehlgeschlagen",
       "failed-detail": "Vom Egress-Dienst wurden keine weiteren Details bereitgestellt.",
-      "processing": "Aufnahme wird verarbeitet — schauen Sie in Kürze wieder vorbei.",
+      "processing": "Aufnahme wird verarbeitet - schauen Sie in Kürze wieder vorbei.",
       "empty-title": "Keine Aufnahmen für diese Besprechung",
       "empty-description": "Der Gastgeber kann eine Aufnahme über die Anrufsteuerung starten. Aufnahmen bleiben nur für die Teilnehmer dieser Besprechung privat.",
       "relative": {

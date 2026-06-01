@@ -43,7 +43,7 @@ export function useCurrentAdmin() {
 /**
  * Boolean check for the admin RBAC catalog. Returns `false` while loading or
  * when signed out, `true` for Administrator (ALL) bypass, otherwise
- * `grantedSet.includes(key)` (flat-leaves storage — no ancestor walking).
+ * `grantedSet.includes(key)` (flat-leaves storage - no ancestor walking).
  */
 export function useCan(key: AdminPermissionKey): boolean {
   const { data } = useCurrentAdminMe();

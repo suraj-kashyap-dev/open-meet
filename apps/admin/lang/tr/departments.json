@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Yönet",
+  "title": "Departmanlar",
+  "subtitle": "Departmanlar kimin kime mesaj atabileceğini belirler - kullanıcılar ortak bir departmandaki herkese DM gönderebilir.",
+  "empty": "Henüz departman yok.",
+  "columns": {
+    "name": "Ad",
+    "responsible": "Responsible",
+    "no-responsible": "-",
+    "members": "Üyeler"
+  },
+  "actions": {
+    "manage": "Üyeleri yönet",
+    "delete": "Departmanı sil"
+  },
+  "form": {
+    "description": "Description",
+    "description-placeholder": "What is this department for?",
+    "responsible": "Responsible admin",
+    "responsible-placeholder": "Select a responsible admin",
+    "responsible-none": "No responsible admin"
+  },
+  "create": {
+    "button": "Yeni departman",
+    "title": "Departman oluştur",
+    "name": "Departman adı",
+    "placeholder": "örn. Mühendislik",
+    "submit": "Oluştur",
+    "success": "Departman oluşturuldu",
+    "error": "Departman oluşturulamadı"
+  },
+  "manage": {
+    "title": "Üyeler",
+    "members": "{count, plural, one {# üye} other {# üye}}",
+    "add": "Üye ekle",
+    "search": "Kullanıcı ara",
+    "no-users": "Kullanıcı bulunamadı.",
+    "add-confirm": "Ekle",
+    "empty": "Henüz üye yok.",
+    "remove": "Üyeyi çıkar"
+  },
+  "channels": {
+    "title": "Kanallar",
+    "empty": "Henüz kanal yok.",
+    "general": "Genel",
+    "add": "Kanal ekle",
+    "delete": "Kanalı sil",
+    "name-placeholder": "Yeni kanal adı"
+  },
+  "detail": {
+    "rename-submit": "Save changes",
+    "rename-submitting": "Saving...",
+    "rename-success": "Department updated",
+    "request-error": "Could not update this department",
+    "empty-title": "Department not found",
+    "empty-description": "This department may have been removed or you may not have access to it.",
+    "delete-description": "Removing this department also removes access to its channels for every member.",
+    "delete-success": "Department deleted",
+    "delete-error": "Could not delete department"
+  },
+  "delete-dialog": {
+    "title": "Departman silinsin mi?",
+    "description": "{name} silinecek ve her üye anında erişimini kaybedecek. Bu geri alınamaz.",
+    "cancel": "İptal",
+    "confirm": "Departmanı sil",
+    "deleting": "Siliniyor…"
+  }
+}

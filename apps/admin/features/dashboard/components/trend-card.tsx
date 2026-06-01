@@ -35,7 +35,7 @@ export function TrendCard({ title, series }: Props) {
               key={point.date}
               className="group relative flex-1 rounded-sm bg-accent/15 transition-colors hover:bg-accent/40"
               style={{ height: `${Math.max(4, heightPct)}%` }}
-              title={`${formatDay(point.date)} — ${point.count}`}
+              title={`${formatDay(point.date)} - ${point.count}`}
             />
           );
         })}

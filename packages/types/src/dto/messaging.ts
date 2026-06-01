@@ -133,7 +133,7 @@ export interface ChatMessageDto {
   saved: boolean;
   editedAt: string | null;
   deletedAt: string | null;
-  /** createdAt — named `sentAt` so the shared message-grouping util works for both meeting and chat messages. */
+  /** createdAt - named `sentAt` so the shared message-grouping util works for both meeting and chat messages. */
   sentAt: string;
   /** Echoed back to the sender so an optimistic message can be reconciled. */
   clientNonce?: string | null;
@@ -153,12 +153,12 @@ export interface ConversationDto {
   muted: boolean;
   pinned: boolean;
   hidden: boolean;
-  /** True when the viewer's ConversationMember.role is ADMIN — derived. */
+  /** True when the viewer's ConversationMember.role is ADMIN - derived. */
   youAreAdmin: boolean;
   createdAt: string;
 }
 
-/** Request body for `POST /messaging/groups` — user-initiated group creation. */
+/** Request body for `POST /messaging/groups` - user-initiated group creation. */
 export interface CreateGroupBodyDto {
   title: string;
   description?: string | null;
@@ -288,9 +288,9 @@ export interface ActivityFeedDto {
   items: ActivityItemDto[];
 }
 
-// --- Admin: teams ---
+// --- Admin: departments ---
 
-export interface AdminTeamMemberDto {
+export interface AdminDepartmentMemberDto {
   userId: string;
   name: string;
   email: string;
@@ -298,7 +298,7 @@ export interface AdminTeamMemberDto {
   joinedAt: string;
 }
 
-export interface AdminTeamDto {
+export interface AdminDepartmentDto {
   id: string;
   name: string;
   description: string | null;
@@ -308,27 +308,27 @@ export interface AdminTeamDto {
   createdAt: string;
 }
 
-export interface AdminTeamDetailDto extends AdminTeamDto {
-  members: AdminTeamMemberDto[];
+export interface AdminDepartmentDetailDto extends AdminDepartmentDto {
+  members: AdminDepartmentMemberDto[];
 }
 
-export interface AdminTeamListResponseDto {
-  items: AdminTeamDto[];
+export interface AdminDepartmentListResponseDto {
+  items: AdminDepartmentDto[];
 }
 
-export interface AdminCreateTeamDto {
+export interface AdminCreateDepartmentDto {
   name: string;
   description?: string | null;
   responsibleAdminId?: string | null;
 }
 
-export interface AdminUpdateTeamDto {
+export interface AdminUpdateDepartmentDto {
   name?: string;
   description?: string | null;
   responsibleAdminId?: string | null;
 }
 
-export interface AdminAddTeamMembersDto {
+export interface AdminAddDepartmentMembersDto {
   userIds: string[];
 }
 

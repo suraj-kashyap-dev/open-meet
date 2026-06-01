@@ -60,7 +60,7 @@ export function useHistoryRecordings(code: string | undefined) {
     queryFn: ({ signal }) => historyApi.recordings(code as string, signal),
     enabled: Boolean(code),
     staleTime: 10_000,
-    // Auto-refresh while any recording is still RECORDING/STOPPING — egress
+    // Auto-refresh while any recording is still RECORDING/STOPPING - egress
     // finalization can take 10–30s after the host clicks stop.
     refetchInterval: (query) => {
       const list = query.state.data as RecordingDto[] | undefined;

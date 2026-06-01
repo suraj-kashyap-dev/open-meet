@@ -56,7 +56,7 @@ export class PollsRepository {
       include: chatMessageInclude,
     });
 
-    // Just created in the same call — guaranteed to exist.
+    // Just created in the same call - guaranteed to exist.
     return full as ChatMessageWithRelations;
   }
 

@@ -41,6 +41,10 @@
     "actions": "Tindakan percakapan",
     "clear": "Bersihkan obrolan",
     "delete": "Hapus obrolan",
+    "clear-confirm-title": "Bersihkan obrolan?",
+    "clear-confirm-description": "Ini hanya menghapus pesan saat ini dari tampilan Anda. Peserta lain masih akan melihatnya.",
+    "delete-confirm-title": "Hapus obrolan?",
+    "delete-confirm-description": "Ini menghapus obrolan dari daftar percakapan Anda. Tindakan ini tidak dapat dibatalkan.",
     "clear-confirmed": "Pesan dihapus dari tampilan Anda",
     "delete-confirmed": "Obrolan dihapus"
   },
@@ -77,6 +81,10 @@
     "save-message": "Simpan",
     "unsave-message": "Hapus dari tersimpan",
     "forward": "Teruskan"
+  },
+  "pins": {
+    "previous": "Pesan sematan sebelumnya",
+    "next": "Pesan sematan berikutnya"
   },
   "priority": {
     "normal": "Standar",
@@ -137,8 +145,8 @@
     "description-label": "Deskripsi (opsional)",
     "description-placeholder": "Tentang apa grup ini?",
     "members-label": "Anggota",
-    "members-placeholder": "Cari rekan…",
-    "no-teammates": "Tidak ada rekan ditemukan.",
+    "members-placeholder": "Cari orang…",
+    "no-teammates": "Tidak ada orang ditemukan.",
     "create-submit": "Buat grup",
     "create-failed": "Tidak dapat membuat grup",
     "cancel": "Batal",
@@ -156,26 +164,26 @@
   },
   "new-dm": {
     "title": "Percakapan baru",
-    "search": "Cari rekan tim",
-    "no-teammates": "Tidak ada rekan tim yang ditemukan.",
+    "search": "Cari orang",
+    "no-teammates": "Tidak ada orang ditemukan.",
     "disabled": "Tidak tersedia"
   },
   "new-chat": {
     "title": "Obrolan baru",
     "to-label": "Kepada:",
     "to-placeholder": "Masukkan nama atau email",
-    "no-teammates": "Tidak ada rekan ditemukan.",
+    "no-teammates": "Tidak ada orang ditemukan.",
     "disabled": "Tidak tersedia",
     "empty-title": "Anda memulai percakapan baru",
     "empty-subtitle": "Ketik pesan pertama Anda di bawah.",
     "send-placeholder": "Ketik pesan pertama Anda…"
   },
-  "teams": {
-    "title": "Tim",
-    "subtitle": "Tim dan saluran Anda.",
-    "empty": "Anda belum menjadi anggota tim mana pun.",
-    "empty-title": "Belum ada tim",
-    "empty-subtitle": "Admin akan menambahkan Anda ke tim untuk mulai berkolaborasi.",
+  "departments": {
+    "title": "Departemen",
+    "subtitle": "Departemen dan saluran Anda.",
+    "empty": "Anda belum menjadi anggota departemen mana pun.",
+    "empty-title": "Belum ada departemen",
+    "empty-subtitle": "Admin akan menambahkan Anda ke departemen untuk mulai berkolaborasi.",
     "no-channels": "Belum ada kanal."
   },
   "activity": {

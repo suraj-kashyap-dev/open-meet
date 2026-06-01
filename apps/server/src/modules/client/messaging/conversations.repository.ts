@@ -4,8 +4,10 @@ import { ConversationType } from '@prisma/client';
 import { PrismaService } from '../../../database/prisma.service';
 
 import {
+  chatMessageInclude,
   conversationInclude,
   conversationListInclude,
+  type ChatMessageWithRelations,
   type ConversationListRow,
   type ConversationWithMembers,
 } from './messaging.includes';
@@ -16,9 +18,8 @@ export class ConversationsRepository {
 
   listForUser(userId: string): Promise<ConversationListRow[]> {
     return this.prisma.conversation.findMany({
-      // DMs + group chats.
       where: {
-        members: { some: { userId } },
+        members: { some: { userId, removedAt: null } },
         type: { in: [ConversationType.DIRECT, ConversationType.GROUP] },
       },
       include: conversationListInclude,
@@ -75,10 +76,10 @@ export class ConversationsRepository {
 
   membershipsForUser(
     userId: string,
-  ): Promise<{ conversationId: string; lastReadAt: Date | null }[]> {
+  ): Promise<{ conversationId: string; lastReadAt: Date | null; clearedAt: Date | null }[]> {
     return this.prisma.conversationMember.findMany({
-      where: { userId },
-      select: { conversationId: true, lastReadAt: true },
+      where: { userId, removedAt: null },
+      select: { conversationId: true, lastReadAt: true, clearedAt: true },
     });
   }
 
@@ -94,6 +95,75 @@ export class ConversationsRepository {
       where: { conversationId_userId: { conversationId, userId } },
       data: { lastReadAt: at, manualUnread: false },
     });
+  }
+
+  async clearForViewer(conversationId: string, userId: string, at: Date): Promise<void> {
+    await this.prisma.conversationMember.update({
+      where: { conversationId_userId: { conversationId, userId } },
+      data: {
+        clearedAt: at,
+        lastReadAt: at,
+        manualUnread: false,
+      },
+    });
+  }
+
+  async removeForViewer(conversationId: string, userId: string, at: Date): Promise<void> {
+    await this.prisma.conversationMember.update({
+      where: { conversationId_userId: { conversationId, userId } },
+      data: {
+        removedAt: at,
+        clearedAt: at,
+        lastReadAt: at,
+        hidden: false,
+        manualUnread: false,
+      },
+    });
+  }
+
+  async restoreForViewer(
+    conversationId: string,
+    userId: string,
+    data: { hidden?: boolean; removedAt?: null },
+  ): Promise<void> {
+    await this.prisma.conversationMember.update({
+      where: { conversationId_userId: { conversationId, userId } },
+      data,
+    });
+  }
+
+  async activityVisibilityChanges(
+    conversationId: string,
+    senderId: string,
+  ): Promise<{ revivedUserIds: string[]; senderNeedsUpdate: boolean }> {
+    const memberships = await this.prisma.conversationMember.findMany({
+      where: { conversationId },
+      select: { userId: true, hidden: true, removedAt: true },
+    });
+
+    const revivedUserIds = memberships
+      .filter((membership) => membership.removedAt !== null)
+      .map((membership) => membership.userId);
+    const sender = memberships.find((membership) => membership.userId === senderId);
+
+    if (revivedUserIds.length > 0) {
+      await this.prisma.conversationMember.updateMany({
+        where: { conversationId, removedAt: { not: null } },
+        data: { removedAt: null },
+      });
+    }
+
+    if (sender && (sender.hidden || sender.removedAt !== null)) {
+      await this.prisma.conversationMember.update({
+        where: { conversationId_userId: { conversationId, userId: senderId } },
+        data: { hidden: false, removedAt: null },
+      });
+    }
+
+    return {
+      revivedUserIds,
+      senderNeedsUpdate: Boolean(sender?.hidden) && !revivedUserIds.includes(senderId),
+    };
   }
 
   async updateMemberFlags(
@@ -115,6 +185,20 @@ export class ConversationsRepository {
         senderId: { not: userId },
         ...(after ? { createdAt: { gt: after } } : {}),
       },
+    });
+  }
+
+  lastVisibleMessage(
+    conversationId: string,
+    clearedAt: Date | null,
+  ): Promise<ChatMessageWithRelations | null> {
+    return this.prisma.chatMessage.findFirst({
+      where: {
+        conversationId,
+        ...(clearedAt ? { createdAt: { gt: clearedAt } } : {}),
+      },
+      orderBy: { createdAt: 'desc' },
+      include: chatMessageInclude,
     });
   }
 }

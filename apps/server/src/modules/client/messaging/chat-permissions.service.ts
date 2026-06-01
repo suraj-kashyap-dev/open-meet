@@ -22,7 +22,7 @@ export class ChatPermissionsService {
 
   /**
    * Open DMs: any user may message any other user. The only guards are
-   * structural — you can't DM yourself, and the target must exist.
+   * structural - you can't DM yourself, and the target must exist.
    */
   async assertCanDirectMessage(actorId: string, targetId: string): Promise<void> {
     if (actorId === targetId) {
@@ -67,7 +67,7 @@ export class ChatPermissionsService {
     return this.assertConversationMember(conversationId, userId);
   }
 
-  /** Group creation is open to every user — no per-user gate. */
+  /** Group creation is open to every user - no per-user gate. */
   async assertCanCreateGroup(_userId: string): Promise<void> {
     // Intentionally unrestricted: any authenticated user may create a group.
   }
@@ -91,7 +91,7 @@ export class ChatPermissionsService {
     return membership;
   }
 
-  /** For `DELETE /groups/:id/members/:userId` — the actor either leaves
+  /** For `DELETE /groups/:id/members/:userId` - the actor either leaves
    * themselves (actor === target) or, as admin, removes someone else. */
   async assertGroupAdminOrSelf(
     conversationId: string,

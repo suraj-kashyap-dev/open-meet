@@ -1,6 +1,6 @@
 @import '@open-meet/tailwind-config/styles.css';
 
-/* Tailwind v4 doesn't scan node_modules by default — point it at the shared UI package source. */
+/* Tailwind v4 doesn't scan node_modules by default - point it at the shared UI package source. */
 @source '../../../packages/ui/src/**/*.{ts,tsx}';
 
 /*
@@ -46,10 +46,10 @@ html:not(.dark) [data-lk-theme='default'] {
 }
 
 /*
- * Unified video-tile chip style — every floating overlay on a participant
+ * Unified video-tile chip style - every floating overlay on a participant
  * tile (name pill, mic/camera muted indicator, connection quality, focus
  * toggle) shares the same dark-glass pill look as the in-meeting LIVE timer.
- * Always dark glass — these sit on top of video, theme of the app doesn't
+ * Always dark glass - these sit on top of video, theme of the app doesn't
  * change the contrast requirement.
  */
 [data-lk-theme='default'] .lk-participant-metadata {
@@ -95,7 +95,7 @@ html:not(.dark) [data-lk-theme='default'] {
 }
 
 /*
- * Video-muted placeholder — keep it dark in light mode too so the
+ * Video-muted placeholder - keep it dark in light mode too so the
  * silhouette stays visible against a contrasted background.
  */
 html:not(.dark) [data-lk-theme='default'] .lk-participant-placeholder {

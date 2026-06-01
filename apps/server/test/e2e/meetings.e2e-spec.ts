@@ -44,8 +44,8 @@ describe('Meetings (e2e)', () => {
 
       await prisma.workspaceSettings.upsert({
         where: { id: 'default' },
-        update: { defaultMeetingTitle: 'Team Sync' },
-        create: { id: 'default', defaultMeetingTitle: 'Team Sync' },
+        update: { defaultMeetingTitle: 'Department Sync' },
+        create: { id: 'default', defaultMeetingTitle: 'Department Sync' },
       });
 
       const res = await http(app)
@@ -54,7 +54,7 @@ describe('Meetings (e2e)', () => {
         .send({ title: '   ' });
 
       expect(res.status).toBe(201);
-      expect(res.body.data.title).toBe('Team Sync');
+      expect(res.body.data.title).toBe('Department Sync');
     });
 
     it('should require authentication', async () => {
@@ -69,8 +69,8 @@ describe('Meetings (e2e)', () => {
 
       await prisma.workspaceSettings.upsert({
         where: { id: 'default' },
-        update: { defaultMeetingTitle: 'Team Sync' },
-        create: { id: 'default', defaultMeetingTitle: 'Team Sync' },
+        update: { defaultMeetingTitle: 'Department Sync' },
+        create: { id: 'default', defaultMeetingTitle: 'Department Sync' },
       });
 
       const res = await http(app)
@@ -82,7 +82,7 @@ describe('Meetings (e2e)', () => {
         });
 
       expect(res.status).toBe(201);
-      expect(res.body.data.title).toBe('Team Sync');
+      expect(res.body.data.title).toBe('Department Sync');
       expect(res.body.data.scheduledFor).toBe('2099-06-01T10:00:00.000Z');
     });
 
