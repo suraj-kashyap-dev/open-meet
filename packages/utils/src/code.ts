@@ -8,7 +8,7 @@ export function generateMeetingCode(randomBytes: (n: number) => Uint8Array): str
 
   for (let i = 0; i < JOIN_CODE_LENGTH; i++) {
     const byte = bytes[i] ?? 0;
-    
+
     out += JOIN_CODE_ALPHABET[byte % JOIN_CODE_ALPHABET.length];
   }
 

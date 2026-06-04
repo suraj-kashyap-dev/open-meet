@@ -14,6 +14,7 @@ import { useConversations } from '../hooks/use-chat';
 import { useChatStore } from '../stores';
 import { ConversationListActions } from './conversation-list-actions';
 import { ConversationListItem } from './conversation-list-item';
+import { ConversationListSkeleton } from './conversation-list-skeleton';
 
 export function ConversationList() {
   const t = useTranslations('chat');
@@ -144,7 +145,7 @@ export function ConversationList() {
         ) : null}
 
         {isLoading ? (
-          <p className="px-2 py-4 text-xs text-muted-foreground">{t('list.loading')}</p>
+          <ConversationListSkeleton />
         ) : items.length === 0 ? (
           <p className="px-2 py-6 text-center text-xs text-muted-foreground">{t('list.empty')}</p>
         ) : (

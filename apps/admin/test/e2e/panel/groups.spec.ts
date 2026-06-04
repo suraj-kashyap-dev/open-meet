@@ -38,7 +38,7 @@ test.describe('Admin groups page', () => {
     await page.getByRole('button', { name: 'New group' }).click();
 
     const dialog = page.getByRole('dialog');
-    
+
     await expect(dialog).toBeVisible();
 
     await dialog.getByPlaceholder('Search users').click();

@@ -70,7 +70,7 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       if (options.authenticateOnLogin) {
         me = fixtures.currentAdminMe;
       }
-      
+
       return json(200, ok(fixtures.loginResponse));
     }
 

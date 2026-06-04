@@ -23,17 +23,17 @@ Monorepo: **pnpm workspaces + Turborepo**. Three apps + shared packages. Live AP
 
 ## Where the change goes (by task)
 
-| Task | API | Frontend | Shared contract |
-| --- | --- | --- | --- |
-| User auth | `modules/client/auth/*` | `apps/web` `features/web/auth/*` | `dto/auth.ts` |
-| Meetings / lobby / scheduling | `modules/client/meetings/*` | `features/web/{meeting,lobby,home}` | `dto/meeting.ts` |
-| Meeting-scoped chat / reactions / knock | `modules/client/chat/*` (`chat.gateway.ts`) | `features/web/meeting/*` | `socket.ts` (`/meeting`) |
-| Persistent team chat (DMs/groups) | `modules/client/messaging/*` (`conversation.gateway.ts`) | `features/web/chat/*` | `dto/messaging.ts` + `socket.ts` (`/chat`) |
-| Recording | `modules/client/recording/*` | meeting controls | `dto/recording.ts` |
-| Admin RBAC | `modules/admin/rbac/*` | `apps/admin` `features/rbac/*` | `permissions/*` |
-| Branding / config | `modules/config/*`, `modules/admin/{branding,configuration}/*` | `lib/branding.ts`, admin `features/{branding,configuration}/*` | `dto/config.ts` |
-| Uploads / storage | `modules/uploads/*`, `storage/*` | — | — |
-| Shared response / contracts | — | — | `packages/types/src/{api.ts,dto/*,socket.ts}` |
+| Task                                    | API                                                            | Frontend                                                       | Shared contract                               |
+| --------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| User auth                               | `modules/client/auth/*`                                        | `apps/web` `features/web/auth/*`                               | `dto/auth.ts`                                 |
+| Meetings / lobby / scheduling           | `modules/client/meetings/*`                                    | `features/web/{meeting,lobby,home}`                            | `dto/meeting.ts`                              |
+| Meeting-scoped chat / reactions / knock | `modules/client/chat/*` (`chat.gateway.ts`)                    | `features/web/meeting/*`                                       | `socket.ts` (`/meeting`)                      |
+| Persistent team chat (DMs/groups)       | `modules/client/messaging/*` (`conversation.gateway.ts`)       | `features/web/chat/*`                                          | `dto/messaging.ts` + `socket.ts` (`/chat`)    |
+| Recording                               | `modules/client/recording/*`                                   | meeting controls                                               | `dto/recording.ts`                            |
+| Admin RBAC                              | `modules/admin/rbac/*`                                         | `apps/admin` `features/rbac/*`                                 | `permissions/*`                               |
+| Branding / config                       | `modules/config/*`, `modules/admin/{branding,configuration}/*` | `lib/branding.ts`, admin `features/{branding,configuration}/*` | `dto/config.ts`                               |
+| Uploads / storage                       | `modules/uploads/*`, `storage/*`                               | —                                                              | —                                             |
+| Shared response / contracts             | —                                                              | —                                                              | `packages/types/src/{api.ts,dto/*,socket.ts}` |
 
 When the owning area is unclear, **search before editing**. If you cannot confirm something from the repo, write **"Not detected yet"** rather than guess.
 

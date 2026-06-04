@@ -15,6 +15,7 @@ import { useChatStore } from '../stores';
 import { useChatSocketContext } from './chat-socket-provider';
 import { ConversationHeader } from './conversation-header';
 import { ConversationInfoPanel } from './conversation-info-panel';
+import { ConversationViewSkeleton } from './conversation-view-skeleton';
 import { MessageComposer } from './message-composer';
 import { MessageList } from './message-list';
 import { TypingIndicator } from './typing-indicator';
@@ -38,9 +39,13 @@ export function ConversationView({ conversationId }: { conversationId: string })
   }, [conversationId, setActive, joinConversation]);
 
   if (!conversation) {
+    if (isLoading) {
+      return <ConversationViewSkeleton />;
+    }
+
     return (
       <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-        {isLoading ? t('view.loading') : t('view.not-found')}
+        {t('view.not-found')}
       </div>
     );
   }

@@ -190,7 +190,7 @@ export async function mockChatSocket(page: Page): Promise<void> {
 
     ws.onMessage((message) => {
       const data = typeof message === 'string' ? message : message.toString();
-      
+
       if (data.startsWith('40')) {
         const rest = data.slice(2);
         const namespace = rest.startsWith('/') ? rest.split(',')[0] : '';

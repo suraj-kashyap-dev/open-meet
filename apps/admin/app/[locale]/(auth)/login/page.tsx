@@ -16,7 +16,7 @@ export default async function AdminLoginPage({ params }: { params: Promise<{ loc
   const { locale } = await params;
 
   setRequestLocale(locale);
-  
+
   const t = await getTranslations('auth');
 
   return (

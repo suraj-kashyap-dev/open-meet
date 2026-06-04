@@ -14,6 +14,7 @@ import { usePathname, useRouter } from '@/i18n/navigation';
 
 import { ForwardDialog } from './forward-dialog';
 import { MessageBubble } from './message-bubble';
+import { MessageListSkeleton } from './message-list-skeleton';
 import { PinnedMessagesBar } from './pinned-messages-bar';
 import {
   useConversationMessages,
@@ -247,7 +248,9 @@ export function MessageList({
             </div>
           ) : null}
 
-          {messages.length === 0 && !query.isLoading ? (
+          {messages.length === 0 && query.isLoading ? (
+            <MessageListSkeleton />
+          ) : messages.length === 0 ? (
             <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
               {t('view.no-messages')}
             </div>
