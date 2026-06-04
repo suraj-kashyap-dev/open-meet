@@ -10,7 +10,9 @@ export async function runSeeders(prisma: PrismaClient, only?: string[]): Promise
     const known = new Set(seeders.map((s) => s.name));
     const unknown = only.filter((n) => !known.has(n));
     if (unknown.length > 0) {
-      throw new Error(`Unknown seeder(s): ${unknown.join(', ')}. Available: ${[...known].join(', ')}`);
+      throw new Error(
+        `Unknown seeder(s): ${unknown.join(', ')}. Available: ${[...known].join(', ')}`,
+      );
     }
     list = seeders.filter((s) => only.includes(s.name));
   }

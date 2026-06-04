@@ -4,7 +4,7 @@
 
 # Open Meet
 
-**Open Meet is an open-source, self-hostable team collaboration platform - a privacy-friendly alternative to Google Meet, Zoom, and Slack in one place. Start or join meetings with a code over low-latency WebRTC, *and* keep talking afterwards in persistent team chat: direct messages, group conversations, reactions, replies, pins, polls, presence, and file sharing. Add admin RBAC, branding, and invite-based onboarding, and you have a full workspace you control.**
+**Open Meet is an open-source, self-hostable team collaboration platform - a privacy-friendly alternative to Google Meet, Zoom, and Slack in one place. Start or join meetings with a code over low-latency WebRTC, _and_ keep talking afterwards in persistent team chat: direct messages, group conversations, reactions, replies, pins, polls, presence, and file sharing. Add admin RBAC, branding, and invite-based onboarding, and you have a full workspace you control.**
 
 <sub>Meetings + persistent chat · Full-stack TypeScript · LiveKit SFU · multi-instance ready</sub>
 
