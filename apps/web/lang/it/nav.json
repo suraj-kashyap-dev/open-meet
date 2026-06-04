@@ -10,7 +10,7 @@
   "chat-link-label": "Apri chat",
   "activity-link-label": "Attività",
   "departments-link-label": "Reparti",
-  "saved-link-label": "Salvati",
+  "saved-link-label": "Speciali",
   "search-placeholder": "Cerca",
   "rail": {
     "label": "Principale",
@@ -18,7 +18,7 @@
     "meet": "Riunione",
     "departments": "Reparti",
     "activity": "Attività",
-    "saved": "Salvati",
+    "saved": "Speciali",
     "history": "Cronologia"
   },
   "command": {

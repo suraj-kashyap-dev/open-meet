@@ -62,7 +62,7 @@
     "max-duration-label": "Maksimum toplantı süresi (dakika)",
     "max-duration-placeholder": "Sınır yok",
     "max-duration-help": "Sınır olmaması için boş bırakın. 5 ile 1440 dakika arasında.",
-    "duration-range": "5 ile 1440 arasında bir sayı girin veya boş bırakın.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Değişiklikleri kaydet",
     "saving": "Kaydediliyor…",
     "saved": "Yapılandırma kaydedildi",

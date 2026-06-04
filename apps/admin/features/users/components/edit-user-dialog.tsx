@@ -385,7 +385,7 @@ export function EditUserDialog({ user, onClose }: Props) {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <Label htmlFor="edit-user-name">{t('name')}</Label>
                 <Input id="edit-user-name" autoComplete="off" {...register('name')} />
                 {errors.name ? (
@@ -393,7 +393,7 @@ export function EditUserDialog({ user, onClose }: Props) {
                 ) : null}
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <Label htmlFor="edit-user-email">{t('email')}</Label>
                 <Input
                   id="edit-user-email"
@@ -406,7 +406,7 @@ export function EditUserDialog({ user, onClose }: Props) {
                 ) : null}
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <Label>{t('timezone')}</Label>
                 <Select
                   value={timezone}
@@ -425,7 +425,7 @@ export function EditUserDialog({ user, onClose }: Props) {
                 </Select>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <Label>{t('language')}</Label>
                 <Select
                   value={language}
@@ -444,19 +444,26 @@ export function EditUserDialog({ user, onClose }: Props) {
                 </Select>
               </div>
 
-              <div className="flex items-center justify-between gap-3 rounded-lg border border-border p-3 sm:col-span-2">
-                <Label htmlFor="edit-user-can-create-groups" className="cursor-pointer font-normal">
-                  {t('can-create-groups')}
-                </Label>
+              <div className="flex items-start justify-between gap-4 rounded-lg border border-border p-4 sm:col-span-2">
+                <div className="space-y-0.5">
+                  <Label
+                    htmlFor="edit-user-can-create-groups"
+                    className="cursor-pointer font-medium"
+                  >
+                    {t('can-create-groups')}
+                  </Label>
+                  <p className="text-xs text-muted-foreground">{t('can-create-groups-hint')}</p>
+                </div>
                 <Switch
                   id="edit-user-can-create-groups"
                   checked={canCreateGroups}
                   onCheckedChange={setCanCreateGroups}
+                  className="mt-0.5"
                 />
               </div>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between gap-3">
                 <Label htmlFor="edit-user-bio">{t('bio')}</Label>
                 <span className="text-[11px] tabular-nums text-muted-foreground">
@@ -469,12 +476,10 @@ export function EditUserDialog({ user, onClose }: Props) {
                 placeholder={t('bio-placeholder')}
                 {...register('bio')}
               />
-              {errors.bio ? (
-                <p className="text-xs text-destructive">{errors.bio.message}</p>
-              ) : null}
+              {errors.bio ? <p className="text-xs text-destructive">{errors.bio.message}</p> : null}
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label htmlFor="edit-user-password">{t('new-password')}</Label>
               <Input
                 id="edit-user-password"

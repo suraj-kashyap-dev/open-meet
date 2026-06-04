@@ -26,9 +26,8 @@ const NEAR_BLACK: [number, number, number] = [10, 10, 10];
 
 export function deriveAccent(hex: string, mode: 'light' | 'dark'): AccentTokens {
   const rgb = hexToRgb(hex);
-  
-  const fg =
-    contrast(rgb, WHITE) >= contrast(rgb, NEAR_BLACK) ? '#ffffff' : '#0a0a0a';
+
+  const fg = contrast(rgb, WHITE) >= contrast(rgb, NEAR_BLACK) ? '#ffffff' : '#0a0a0a';
   const [r, g, b] = rgb;
 
   const alpha = mode === 'light' ? 0.18 : 0.35;

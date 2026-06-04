@@ -303,7 +303,9 @@ describe('MeetingsService', () => {
       expect(settings[0]?.recurrenceOccurrenceIndex).toBe(0);
       expect(settings[1]?.recurrenceOccurrenceIndex).toBe(1);
       expect(settings[2]?.recurrenceOccurrenceIndex).toBe(2);
-      expect(settings.every((row) => row.recurrenceSeriesId === settings[0]?.recurrenceSeriesId)).toBe(true);
+      expect(
+        settings.every((row) => row.recurrenceSeriesId === settings[0]?.recurrenceSeriesId),
+      ).toBe(true);
       expect(result.recurrence).toBe(recurrence);
     });
   });

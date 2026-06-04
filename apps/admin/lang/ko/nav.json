@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "대시보드",
+    "analytics": "분석",
     "users": "사용자",
-    "departments": "부서",
     "groups": "그룹",
     "meetings": "회의",
     "settings": "설정",

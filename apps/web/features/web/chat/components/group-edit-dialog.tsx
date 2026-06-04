@@ -92,10 +92,7 @@ export function GroupEditDialog({
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             {t('group.cancel')}
           </Button>
-          <Button
-            onClick={submit}
-            disabled={title.trim().length === 0 || update.isPending}
-          >
+          <Button onClick={submit} disabled={title.trim().length === 0 || update.isPending}>
             {t('group.save')}
           </Button>
         </DialogFooter>

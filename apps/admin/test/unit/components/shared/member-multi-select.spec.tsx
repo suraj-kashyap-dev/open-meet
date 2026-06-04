@@ -34,7 +34,10 @@ function renderSelect(props?: Partial<Parameters<typeof MemberMultiSelect>[0]>) 
 describe('<MemberMultiSelect />', () => {
   beforeEach(() => {
     useAdminUsers.mockReset();
-    useAdminUsers.mockReturnValue({ data: { items: USERS, total: USERS.length }, isFetching: false });
+    useAdminUsers.mockReturnValue({
+      data: { items: USERS, total: USERS.length },
+      isFetching: false,
+    });
   });
 
   describe('initial render', () => {

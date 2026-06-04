@@ -43,7 +43,10 @@ export class AdminRoleRepository {
   /** Updates the role and bumps `cacheRev` atomically so callers can invalidate caches. */
   update(
     id: string,
-    data: Pick<Prisma.AdminRoleRecordUpdateInput, 'name' | 'description' | 'permissionType' | 'permissions'>,
+    data: Pick<
+      Prisma.AdminRoleRecordUpdateInput,
+      'name' | 'description' | 'permissionType' | 'permissions'
+    >,
   ): Promise<AdminRoleRecord> {
     return this.prisma.adminRoleRecord.update({
       where: { id },

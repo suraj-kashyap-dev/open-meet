@@ -104,10 +104,7 @@ export function EditAdminDialog({ admin, onClose }: Props) {
 
           <div className="space-y-1.5">
             <Label htmlFor="edit-role">{t('edit-dialog.role')}</Label>
-            <Select
-              value={form.watch('roleId')}
-              onValueChange={(v) => form.setValue('roleId', v)}
-            >
+            <Select value={form.watch('roleId')} onValueChange={(v) => form.setValue('roleId', v)}>
               <SelectTrigger id="edit-role">
                 <SelectValue />
               </SelectTrigger>

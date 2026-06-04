@@ -10,7 +10,7 @@
   "chat-link-label": "Buka obrolan",
   "activity-link-label": "Aktivitas",
   "departments-link-label": "Departemen",
-  "saved-link-label": "Tersimpan",
+  "saved-link-label": "Berbintang",
   "search-placeholder": "Cari",
   "rail": {
     "label": "Utama",
@@ -18,7 +18,7 @@
     "meet": "Rapat",
     "departments": "Departemen",
     "activity": "Aktivitas",
-    "saved": "Tersimpan",
+    "saved": "Berbintang",
     "history": "Riwayat"
   },
   "command": {

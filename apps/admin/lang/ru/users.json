@@ -86,7 +86,8 @@
       "bio-too-long": "Биография слишком длинная",
       "password-too-long": "Слишком длинный",
       "password-too-short": "Не менее 8 символов"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP или GIF. До {mb} МБ.",

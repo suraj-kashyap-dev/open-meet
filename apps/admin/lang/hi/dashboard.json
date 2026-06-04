@@ -12,9 +12,7 @@
     "messages-24h": "संदेश 24 घंटे",
     "messages-24h-hint": "पिछले 24 घंटों में चैट संदेश",
     "groups": "समूह",
-    "groups-hint": "बनाई गई समूह बातचीत",
-    "departments": "विभाग",
-    "departments-hint": "वर्कस्पेस में विभाग"
+    "groups-hint": "बनाई गई समूह बातचीत"
   },
   "trends": {
     "signups": "नए पंजीकरण",

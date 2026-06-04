@@ -103,9 +103,7 @@ describe('<PinnedMessagesBar />', () => {
 
   it('caps the segmented indicator at five segments', () => {
     renderBar({
-      items: Array.from({ length: 7 }, (_, i) =>
-        buildMessage(`m${i}`, `Pin ${i}`, `User ${i}`),
-      ),
+      items: Array.from({ length: 7 }, (_, i) => buildMessage(`m${i}`, `Pin ${i}`, `User ${i}`)),
     });
 
     expect(screen.getAllByTestId('pin-segment')).toHaveLength(5);

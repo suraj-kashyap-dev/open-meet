@@ -66,7 +66,11 @@ describe('SavedService', () => {
     it('should serialize saved messages (saved=true) with their conversation title', async () => {
       saved.listSaved.mockResolvedValue([
         {
-          message: { id: 'm1', conversationId: 'c1', conversation: { id: 'c1', title: 'Department A' } },
+          message: {
+            id: 'm1',
+            conversationId: 'c1',
+            conversation: { id: 'c1', title: 'Department A' },
+          },
         },
       ]);
       serializer.message.mockReturnValue({ id: 'm1', saved: true });
@@ -75,7 +79,11 @@ describe('SavedService', () => {
 
       expect(result).toEqual({
         items: [
-          { message: { id: 'm1', saved: true }, conversationId: 'c1', conversationTitle: 'Department A' },
+          {
+            message: { id: 'm1', saved: true },
+            conversationId: 'c1',
+            conversationTitle: 'Department A',
+          },
         ],
       });
     });

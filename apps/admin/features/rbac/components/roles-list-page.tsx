@@ -10,7 +10,14 @@ import type { RoleDto } from '@open-meet/types';
 import { Button } from '@open-meet/ui/button';
 import { cn } from '@open-meet/ui/cn';
 import { DataTable } from '@open-meet/ui/data-table';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@open-meet/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@open-meet/ui/dialog';
 
 import { useAdminRoles, useDeleteAdminRole } from '@/features/rbac/hooks/use-admin-roles';
 import { useCan } from '@/features/auth/hooks/use-admin-auth';
@@ -58,7 +65,9 @@ export function RolesListPage() {
       column.accessor('description', {
         header: t('table.description'),
         cell: (info) => (
-          <span className="text-sm text-muted-foreground line-clamp-1">{info.getValue() ?? '-'}</span>
+          <span className="text-sm text-muted-foreground line-clamp-1">
+            {info.getValue() ?? '-'}
+          </span>
         ),
         meta: { headerClassName: 'hidden md:table-cell', cellClassName: 'hidden md:table-cell' },
       }),

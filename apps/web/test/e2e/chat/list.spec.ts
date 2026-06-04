@@ -8,14 +8,16 @@ test.describe('Web chat list page', () => {
     await mockWebApi(page);
     await page.goto('/en/chat');
 
-    // List rail header + the routed empty pane.
+    // Shell header + chat list actions.
     await expect(page.getByRole('heading', { name: 'Chat' })).toBeVisible();
     await expect(page.getByText('Select a conversation to start chatting.')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'New chat' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Start a meeting' })).toBeVisible();
+    await expect(page.getByPlaceholder('Search conversations')).toBeVisible();
 
-    // The "Recent" section heading from the Departments-style list pane.
     await expect(page.getByText('Recent', { exact: true })).toBeVisible();
 
-    // The seeded DM with Grace Hopper renders with its last message preview.
+    // The seeded DM with Grace Hopper renders with its last message preview inside the chat list.
     const dm = page.getByRole('link', { name: /Grace Hopper/ });
     await expect(dm).toBeVisible();
     await expect(page.getByText('Did you get a chance to review the deck?')).toBeVisible();

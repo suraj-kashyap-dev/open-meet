@@ -157,7 +157,7 @@ export default function AdminUsersPage() {
             className="ps-9"
           />
         </div>
-        
+
         {isFetching && !isLoading ? (
           <span className="text-xs text-muted-foreground">{t('refreshing')}</span>
         ) : null}
@@ -183,14 +183,14 @@ export default function AdminUsersPage() {
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
             <ChevronLeft className="h-4 w-4" />
-            
+
             {t('pagination.previous')}
           </Button>
-          
+
           <span className="text-xs text-muted-foreground">
             {t('pagination.page-of', { page, pageCount })}
           </span>
-          
+
           <Button
             variant="outline"
             size="sm"
@@ -205,14 +205,14 @@ export default function AdminUsersPage() {
 
       <section className="space-y-3 rounded-xl border border-border bg-card/40 p-4">
         <h2 className="text-sm font-semibold">{t('pending.title')}</h2>
-        
+
         <PendingUserInvites />
       </section>
 
       <InviteUserDialog open={inviteOpen} onOpenChange={setInviteOpen} />
-      
+
       <CreateUserDialog open={createOpen} onOpenChange={setCreateOpen} />
-      
+
       <EditUserDialog user={editing} onClose={() => setEditing(null)} />
 
       <DeleteUserDialog user={deleting} onClose={() => setDeleting(null)} />

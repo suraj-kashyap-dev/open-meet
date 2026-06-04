@@ -18,6 +18,7 @@ describe('MessagesService.forward()', () => {
   let permissions: {
     assertConversationMember: ReturnType<typeof vi.fn>;
     assertCanPost: ReturnType<typeof vi.fn>;
+    assertDirectConversationAllowed: ReturnType<typeof vi.fn>;
   };
   let serializer: { message: ReturnType<typeof vi.fn> };
   let bus: { emit: ReturnType<typeof vi.fn> };
@@ -39,7 +40,11 @@ describe('MessagesService.forward()', () => {
     };
     conversations = { touch: vi.fn() };
     conversationsService = { revealOnActivity: vi.fn() };
-    permissions = { assertConversationMember: vi.fn(), assertCanPost: vi.fn() };
+    permissions = {
+      assertConversationMember: vi.fn(),
+      assertCanPost: vi.fn(),
+      assertDirectConversationAllowed: vi.fn(),
+    };
     serializer = { message: vi.fn().mockReturnValue({ id: 'm2', content: 'hello there' }) };
     bus = { emit: vi.fn() };
 

@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "仪表盘",
+    "analytics": "分析",
     "users": "用户",
-    "departments": "部门",
     "groups": "群组",
     "meetings": "会议",
     "settings": "设置",

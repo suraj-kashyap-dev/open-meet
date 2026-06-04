@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# 人のメンバー} other {# 人のメンバー}}",
     "actions": "会話のアクション",
+    "info": "会話情報",
     "clear": "チャットをクリア",
     "delete": "チャットを削除",
     "clear-confirm-title": "チャットをクリアしますか?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "あなたのビューからメッセージをクリアしました",
     "delete-confirmed": "チャットを削除しました"
   },
+  "info": {
+    "title": "詳細",
+    "close": "閉じる",
+    "loading": "読み込み中…",
+    "unavailable": "プロフィールは利用できません。",
+    "private": "このプロフィールは非公開です。",
+    "bio": "自己紹介",
+    "email": "メール",
+    "timezone": "タイムゾーン",
+    "joined": "参加日"
+  },
   "presence": {
     "online": "オンライン",
     "offline": "オフライン",
     "last-seen": "最終ログイン {time}",
+    "last-seen-short": "最近オンライン",
     "set-status": "ステータスを設定",
     "available": "対応可能",
     "busy": "取り込み中",
@@ -78,8 +91,9 @@
     "pinned": "ピン留め済み",
     "pin": "ピン留め",
     "unpin": "ピン留めを解除",
-    "save-message": "保存",
-    "unsave-message": "保存から削除",
+    "starred": "スター付き",
+    "save-message": "スターを付ける",
+    "unsave-message": "スターを外す",
     "forward": "転送"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "管理者",
     "you-badge": "あなた",
     "promote": "管理者にする",
+    "promoted": "メンバーを管理者に昇格しました",
     "demote": "管理者を解除",
+    "demoted": "管理者をメンバーに降格しました",
     "remove-member": "グループから削除",
+    "remove-member-confirm": "{name} をグループから削除しますか?",
+    "removed": "メンバーを削除しました",
+    "member-actions": "メンバーの操作",
+    "members-added": "メンバーを追加しました",
     "leave": "グループを退出",
     "leave-confirm": "このグループを退出しますか?",
+    "left": "グループを退出しました",
     "last-admin-warning": "唯一の管理者です。先に誰かを管理者にしてください。",
     "delete": "グループを削除",
     "delete-confirm": "このグループを削除しますか? 取り消せません。",
+    "deleted": "グループを削除しました",
+    "edit-details": "詳細を編集",
+    "edit-title": "グループを編集",
+    "edit-subtitle": "グループ名と説明を更新します。",
+    "edit-saved": "グループを更新しました",
+    "add-members": "メンバーを追加",
+    "add-members-title": "メンバーを追加",
+    "add-members-subtitle": "このグループにさらにメンバーを招待します。",
+    "save": "保存",
+    "action-failed": "問題が発生しました",
     "groups-disabled": "グループ作成は管理者により無効化されています。"
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "新しいチャット",
     "to-label": "宛先:",
     "to-placeholder": "名前またはメールアドレスを入力",
-    "no-teammates": "メンバーが見つかりません。",
+    "no-teammates": "あなたの部署にユーザーが見つかりません。",
     "disabled": "利用不可",
     "empty-title": "新しい会話を開始します",
     "empty-subtitle": "下に最初のメッセージを入力してください。",
     "send-placeholder": "最初のメッセージを入力…"
-  },
-  "departments": {
-    "title": "部署",
-    "subtitle": "あなたの部署とチャンネル。",
-    "empty": "まだどの部署のメンバーでもありません。",
-    "empty-title": "まだ部署がありません",
-    "empty-subtitle": "管理者が部署に追加してコラボレーションを開始します。",
-    "no-channels": "まだチャンネルがありません。"
   },
   "activity": {
     "title": "アクティビティ",
@@ -195,11 +218,15 @@
     "empty-subtitle": "誰かが@メンションすると、ここに表示されます。"
   },
   "saved": {
-    "title": "保存済み",
-    "subtitle": "後で読むために保存したメッセージ。",
-    "empty": "まだメッセージを保存していません。",
-    "empty-title": "保存されたメッセージはありません",
-    "empty-subtitle": "チャットからメッセージを保存すると、ここに表示されます。"
+    "title": "スター付き",
+    "subtitle": "スターを付けたメッセージ。",
+    "empty": "まだメッセージにスターを付けていません。",
+    "empty-title": "スター付きメッセージはありません",
+    "empty-subtitle": "チャットでメッセージにスターを付けると、ここに表示されます。",
+    "view-chat": "スター付きメッセージ",
+    "chat-empty": "このチャットにはまだスター付きメッセージがありません。",
+    "today": "今日",
+    "yesterday": "昨日"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

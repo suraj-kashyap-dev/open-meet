@@ -12,6 +12,7 @@
     "name": "Função",
     "description": "Descrição",
     "members": "Membros",
+    "users": "Users",
     "type": "Tipo",
     "actions": "Ações",
     "edit": "Editar",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "Usuários",
       "view": "Ver usuários",
+      "create": "Create users directly",
       "invite": "Convidar usuários",
       "update": "Editar usuários",
       "delete": "Excluir usuários",
@@ -80,21 +82,6 @@
       "force-end": "Encerrar reuniões à força",
       "delete": "Excluir reuniões",
       "kick": "Remover participantes"
-    },
-    "departments": {
-      "_self": "Departamentos",
-      "view": "Ver departamentos",
-      "create": "Criar departamentos",
-      "update": "Atualizar departamentos",
-      "delete": "Excluir departamentos",
-      "manage-members": "Gerenciar membros do departamento",
-      "channels": {
-        "_self": "Canais",
-        "view": "Ver canais",
-        "create": "Criar canais",
-        "update": "Atualizar canais",
-        "delete": "Excluir canais"
-      }
     },
     "groups": {
       "_self": "Grupos",

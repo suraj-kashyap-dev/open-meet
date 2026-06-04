@@ -15,6 +15,8 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "prisma:reset": "prisma migrate reset",
+    "db:seed:users": "tsx prisma/seed/users.ts",
+    "db:seed": "pnpm db:seed:users",
     "clean": "rimraf dist .turbo *.tsbuildinfo"
   },
   "dependencies": {

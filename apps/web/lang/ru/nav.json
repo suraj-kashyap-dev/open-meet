@@ -10,7 +10,7 @@
   "chat-link-label": "Открыть чат",
   "activity-link-label": "Активность",
   "departments-link-label": "Отделы",
-  "saved-link-label": "Сохранённые",
+  "saved-link-label": "Избранное",
   "search-placeholder": "Поиск",
   "rail": {
     "label": "Основное",
@@ -18,7 +18,7 @@
     "meet": "Встреча",
     "departments": "Отделы",
     "activity": "Активность",
-    "saved": "Сохранённые",
+    "saved": "Избранное",
     "history": "История"
   },
   "command": {

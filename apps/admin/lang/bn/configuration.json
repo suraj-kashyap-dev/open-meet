@@ -62,7 +62,7 @@
     "max-duration-label": "সর্বাধিক মিটিং সময়কাল (মিনিট)",
     "max-duration-placeholder": "কোনো সীমা নেই",
     "max-duration-help": "কোনো সীমা না রাখতে খালি রাখুন। 5 থেকে 1440 মিনিটের মধ্যে।",
-    "duration-range": "5 থেকে 1440-এর মধ্যে একটি সংখ্যা লিখুন, অথবা খালি রাখুন।",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "পরিবর্তন সংরক্ষণ করুন",
     "saving": "সংরক্ষণ হচ্ছে…",
     "saved": "কনফিগারেশন সংরক্ষিত হয়েছে",

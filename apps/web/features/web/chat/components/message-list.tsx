@@ -2,6 +2,7 @@
 
 import { ArrowDown, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { Button } from '@open-meet/ui/button';
@@ -9,6 +10,7 @@ import { Button } from '@open-meet/ui/button';
 import type { ChatMessageDto, ConversationMemberDto } from '@open-meet/types';
 
 import { buildMessageRows } from '@/components/shared/chat';
+import { usePathname, useRouter } from '@/i18n/navigation';
 
 import { ForwardDialog } from './forward-dialog';
 import { MessageBubble } from './message-bubble';
@@ -43,6 +45,10 @@ export function MessageList({
   onReply: (message: ChatMessageDto) => void;
 }) {
   const t = useTranslations('chat');
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const targetMessageId = searchParams.get('m');
   const query = useConversationMessages(conversationId);
   const pins = usePins(conversationId);
   const formatSize = useFormatSize();
@@ -76,6 +82,7 @@ export function MessageList({
   const restoringRef = useRef<number | null>(null);
   const lastMarkedRef = useRef<string | null>(null);
   const highlightNonceRef = useRef(0);
+  const handledJumpRef = useRef<string | null>(null);
   const [showJump, setShowJump] = useState(false);
   const [pendingJumpId, setPendingJumpId] = useState<string | null>(null);
   const [highlighted, setHighlighted] = useState<{ id: string; nonce: number } | null>(null);
@@ -200,6 +207,24 @@ export function MessageList({
     setPendingJumpId(id);
   };
 
+  // Deep-link jump: `/chat/{id}?m={messageId}` scrolls to and highlights the
+  // target once the first page has loaded, then strips the param so it won't
+  // re-fire. Reused by the global Starred page and the per-chat starred panel.
+  useEffect(() => {
+    if (!targetMessageId || query.isLoading) {
+      return;
+    }
+
+    const key = `${conversationId}:${targetMessageId}`;
+    if (handledJumpRef.current === key) {
+      return;
+    }
+
+    handledJumpRef.current = key;
+    setPendingJumpId(targetMessageId);
+    router.replace(pathname);
+  }, [conversationId, targetMessageId, query.isLoading, router, pathname]);
+
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <PinnedMessagesBar
@@ -231,9 +256,7 @@ export function MessageList({
               {rows.map((row) => (
                 <MessageBubble
                   key={
-                    highlighted?.id === row.message.id
-                      ? `${row.key}:${highlighted.nonce}`
-                      : row.key
+                    highlighted?.id === row.message.id ? `${row.key}:${highlighted.nonce}` : row.key
                   }
                   message={row.message}
                   isMe={row.isMe}

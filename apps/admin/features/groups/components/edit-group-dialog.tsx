@@ -124,7 +124,11 @@ export function EditGroupDialog({ group, onClose }: Props) {
         </div>
 
         <DialogFooter>
-          <Button onClick={() => void onSubmit()} disabled={!title.trim() || isSaving} className="gap-2">
+          <Button
+            onClick={() => void onSubmit()}
+            disabled={!title.trim() || isSaving}
+            className="gap-2"
+          >
             {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {isSaving ? t('detail.rename-submitting') : t('detail.rename-submit')}
           </Button>

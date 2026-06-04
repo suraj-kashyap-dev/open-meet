@@ -10,22 +10,22 @@ test.describe('Web app shell', () => {
     await expect(page).toHaveURL(/\/en\/chat$/);
   });
 
-  test('should render the icon rail with every section', async ({ page }) => {
+  test('should render the chatgpt-style sidebar with every section', async ({ page }) => {
     await mockWebApi(page);
     await page.goto('/en/chat');
 
-    const rail = page.getByTestId('app-rail');
-    await expect(rail).toBeVisible();
+    const sidebar = page.getByTestId('app-sidebar');
+    await expect(sidebar).toBeVisible();
     for (const name of ['Chat', 'Meet', 'Activity', 'Saved', 'History']) {
-      await expect(rail.getByRole('link', { name, exact: true })).toBeVisible();
+      await expect(sidebar.getByRole('link', { name, exact: true })).toBeVisible();
     }
   });
 
-  test('should navigate to the meet surface from the rail', async ({ page }) => {
+  test('should navigate to the meet surface from the sidebar', async ({ page }) => {
     await mockWebApi(page);
     await page.goto('/en/chat');
 
-    await page.getByTestId('app-rail').getByRole('link', { name: 'Meet', exact: true }).click();
+    await page.getByTestId('app-sidebar').getByRole('link', { name: 'Meet', exact: true }).click();
 
     await expect(page).toHaveURL(/\/en\/meet$/);
     await expect(

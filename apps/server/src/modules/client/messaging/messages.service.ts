@@ -67,6 +67,7 @@ export class MessagesService {
     options: { cursor?: string; limit?: number },
   ): Promise<ChatMessagePageDto> {
     const membership = await this.permissions.assertConversationMember(conversationId, userId);
+    await this.permissions.assertDirectConversationAllowed(conversationId, userId);
 
     const limit = Math.min(100, Math.max(1, options.limit ?? 50));
     const rows = await this.messages.listHistory({
@@ -101,6 +102,7 @@ export class MessagesService {
 
   async send(input: SendMessageInput): Promise<ChatMessageDto> {
     await this.permissions.assertCanPost(input.conversationId, input.senderId);
+    await this.permissions.assertDirectConversationAllowed(input.conversationId, input.senderId);
 
     const content = (input.content ?? '').trim();
     const attachmentIds = input.attachmentIds ?? [];
@@ -212,6 +214,7 @@ export class MessagesService {
 
     await this.permissions.assertConversationMember(source.conversationId, userId);
     await this.permissions.assertCanPost(targetConversationId, userId);
+    await this.permissions.assertDirectConversationAllowed(targetConversationId, userId);
 
     const content = source.content.trim();
 

@@ -42,7 +42,9 @@ export function NewGroupDialog({
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [search, setSearch] = useState('');
-  const [picked, setPicked] = useState<Record<string, { id: string; name: string; avatar: string | null }>>({});
+  const [picked, setPicked] = useState<
+    Record<string, { id: string; name: string; avatar: string | null }>
+  >({});
 
   const teammates = useTeammates(search);
   const suggestions = teammates.data?.items ?? [];

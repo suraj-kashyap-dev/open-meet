@@ -91,8 +91,9 @@
     "pinned": "Pinned",
     "pin": "Pin",
     "unpin": "Unpin",
-    "save-message": "Save",
-    "unsave-message": "Remove from saved",
+    "starred": "Starred",
+    "save-message": "Star",
+    "unsave-message": "Unstar",
     "forward": "Forward"
   },
   "pins": {
@@ -209,14 +210,6 @@
     "empty-subtitle": "Type your first message below.",
     "send-placeholder": "Type your first message…"
   },
-  "departments": {
-    "title": "Departments",
-    "subtitle": "Your departments and channels.",
-    "empty": "You're not a member of any department yet.",
-    "empty-title": "No departments yet",
-    "empty-subtitle": "An admin will add you to a department to start collaborating.",
-    "no-channels": "No channels yet."
-  },
   "activity": {
     "title": "Activity",
     "subtitle": "Messages that @mention you.",
@@ -225,11 +218,15 @@
     "empty-subtitle": "When someone @mentions you, it'll show up here."
   },
   "saved": {
-    "title": "Saved",
-    "subtitle": "Messages you've saved for later.",
-    "empty": "You haven't saved any messages yet.",
-    "empty-title": "No saved messages",
-    "empty-subtitle": "Save a message from the chat to find it here."
+    "title": "Starred",
+    "subtitle": "Messages you've starred.",
+    "empty": "You haven't starred any messages yet.",
+    "empty-title": "No starred messages",
+    "empty-subtitle": "Star a message from the chat to find it here.",
+    "view-chat": "Starred messages",
+    "chat-empty": "No starred messages in this chat yet.",
+    "today": "Today",
+    "yesterday": "Yesterday"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

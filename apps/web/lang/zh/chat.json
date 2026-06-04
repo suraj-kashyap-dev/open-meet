@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# 位成员} other {# 位成员}}",
     "actions": "对话操作",
+    "info": "会话信息",
     "clear": "清空聊天",
     "delete": "删除聊天",
     "clear-confirm-title": "清除此聊天？",
@@ -48,10 +49,22 @@
     "clear-confirmed": "已从您的视图中清除消息",
     "delete-confirmed": "聊天已删除"
   },
+  "info": {
+    "title": "详情",
+    "close": "关闭",
+    "loading": "加载中…",
+    "unavailable": "资料不可用。",
+    "private": "此资料为私密。",
+    "bio": "简介",
+    "email": "邮箱",
+    "timezone": "时区",
+    "joined": "加入于"
+  },
   "presence": {
     "online": "在线",
     "offline": "离线",
     "last-seen": "最后上线时间 {time}",
+    "last-seen-short": "最近在线",
     "set-status": "设置您的状态",
     "available": "有空",
     "busy": "忙碌",
@@ -78,8 +91,9 @@
     "pinned": "已置顶",
     "pin": "置顶",
     "unpin": "取消置顶",
-    "save-message": "保存",
-    "unsave-message": "从已保存中移除",
+    "starred": "已标星",
+    "save-message": "标星",
+    "unsave-message": "取消标星",
     "forward": "转发"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "管理员",
     "you-badge": "您",
     "promote": "设为管理员",
+    "promoted": "成员已升为管理员",
     "demote": "移除管理员",
+    "demoted": "管理员已降为成员",
     "remove-member": "从群组中移除",
+    "remove-member-confirm": "将 {name} 从群组中移除？",
+    "removed": "成员已移除",
+    "member-actions": "成员操作",
+    "members-added": "已添加成员",
     "leave": "退出群组",
     "leave-confirm": "退出此群组?",
+    "left": "您已退出群组",
     "last-admin-warning": "您是唯一管理员。请先提升他人。",
     "delete": "删除群组",
     "delete-confirm": "删除此群组? 无法撤销。",
+    "deleted": "群组已删除",
+    "edit-details": "编辑详情",
+    "edit-title": "编辑群组",
+    "edit-subtitle": "更新群组名称和描述。",
+    "edit-saved": "群组已更新",
+    "add-members": "添加成员",
+    "add-members-title": "添加成员",
+    "add-members-subtitle": "邀请更多人加入此群组。",
+    "save": "保存",
+    "action-failed": "出了点问题",
     "groups-disabled": "管理员当前已禁用群组创建。"
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "新聊天",
     "to-label": "收件人：",
     "to-placeholder": "输入姓名或邮箱",
-    "no-teammates": "未找到用户。",
+    "no-teammates": "在您的部门中未找到用户。",
     "disabled": "不可用",
     "empty-title": "您正在开始新的对话",
     "empty-subtitle": "在下方输入您的第一条消息。",
     "send-placeholder": "输入您的第一条消息…"
-  },
-  "departments": {
-    "title": "部门",
-    "subtitle": "您的部门和频道。",
-    "empty": "您还不是任何部门的成员。",
-    "empty-title": "暂无部门",
-    "empty-subtitle": "管理员会将您添加到部门以开始协作。",
-    "no-channels": "暂无频道。"
   },
   "activity": {
     "title": "动态",
@@ -195,11 +218,15 @@
     "empty-subtitle": "当有人@提及您时，会显示在这里。"
   },
   "saved": {
-    "title": "已保存",
-    "subtitle": "您已保存以便稍后查看的消息。",
-    "empty": "您还没有保存任何消息。",
-    "empty-title": "暂无已保存的消息",
-    "empty-subtitle": "从聊天中保存消息以便在此处找到。"
+    "title": "已标星",
+    "subtitle": "您已标星的消息。",
+    "empty": "您还没有标星任何消息。",
+    "empty-title": "暂无已标星的消息",
+    "empty-subtitle": "从聊天中给消息标星，即可在此处找到。",
+    "view-chat": "已标星的消息",
+    "chat-empty": "此聊天中暂无已标星的消息。",
+    "today": "今天",
+    "yesterday": "昨天"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

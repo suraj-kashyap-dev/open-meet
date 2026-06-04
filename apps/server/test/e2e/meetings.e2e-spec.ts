@@ -73,13 +73,10 @@ describe('Meetings (e2e)', () => {
         create: { id: 'default', defaultMeetingTitle: 'Department Sync' },
       });
 
-      const res = await http(app)
-        .post('/api/meetings/schedule')
-        .set('Cookie', hostCookie)
-        .send({
-          scheduledFor: '2099-06-01T10:00:00.000Z',
-          durationMin: 30,
-        });
+      const res = await http(app).post('/api/meetings/schedule').set('Cookie', hostCookie).send({
+        scheduledFor: '2099-06-01T10:00:00.000Z',
+        durationMin: 30,
+      });
 
       expect(res.status).toBe(201);
       expect(res.body.data.title).toBe('Department Sync');
@@ -95,14 +92,11 @@ describe('Meetings (e2e)', () => {
         create: { id: 'default', maxMeetingMinutes: 20 },
       });
 
-      const res = await http(app)
-        .post('/api/meetings/schedule')
-        .set('Cookie', hostCookie)
-        .send({
-          title: 'Planning',
-          scheduledFor: '2099-06-01T10:00:00.000Z',
-          durationMin: 45,
-        });
+      const res = await http(app).post('/api/meetings/schedule').set('Cookie', hostCookie).send({
+        title: 'Planning',
+        scheduledFor: '2099-06-01T10:00:00.000Z',
+        durationMin: 45,
+      });
 
       expect(res.status).toBe(201);
       expect(res.body.data.durationMin).toBe(20);
@@ -128,11 +122,9 @@ describe('Meetings (e2e)', () => {
 
       expect(upcoming.status).toBe(200);
       expect(upcoming.body.data).toHaveLength(3);
-      expect(upcoming.body.data.map((item: { scheduledFor: string }) => item.scheduledFor)).toEqual([
-        '2099-06-01T10:00:00.000Z',
-        '2099-06-08T10:00:00.000Z',
-        '2099-06-15T10:00:00.000Z',
-      ]);
+      expect(upcoming.body.data.map((item: { scheduledFor: string }) => item.scheduledFor)).toEqual(
+        ['2099-06-01T10:00:00.000Z', '2099-06-08T10:00:00.000Z', '2099-06-15T10:00:00.000Z'],
+      );
     });
   });
 

@@ -86,7 +86,8 @@
       "bio-too-long": "自己紹介が長すぎます",
       "password-too-long": "長すぎます",
       "password-too-short": "8 文字以上"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG、JPEG、WebP、または GIF。最大 {mb} MB。",

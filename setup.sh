@@ -12,6 +12,7 @@ FORCE=false
 SKIP_INSTALL=false
 SKIP_DOCKER=false
 SKIP_DB=false
+SEED=false
 
 source scripts/setup/config.sh
 source scripts/setup/ui.sh
@@ -21,6 +22,7 @@ source scripts/setup/env.sh
 source scripts/setup/dependencies.sh
 source scripts/setup/infrastructure.sh
 source scripts/setup/database.sh
+source scripts/setup/seed.sh
 source scripts/setup/summary.sh
 
 for arg in "$@"; do
@@ -29,6 +31,7 @@ for arg in "$@"; do
     --skip-install) SKIP_INSTALL=true ;;
     --skip-docker)  SKIP_DOCKER=true ;;
     --skip-db)      SKIP_DB=true ;;
+    --seed)         SEED=true ;;
     -h|--help)      usage ;;
     *)              die "Unknown option: $arg (try --help)" ;;
   esac
@@ -40,4 +43,5 @@ configure_env_files
 install_dependencies
 start_infrastructure
 prepare_database
+seed_demo_data
 print_summary

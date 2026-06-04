@@ -10,6 +10,9 @@ import {
 
 import { StorageService } from '../../../storage/storage.service';
 
+import type { AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
+import { ChatPermissionsService } from '../../client/messaging/chat-permissions.service';
+
 import { AdminGroupsRepository, type GroupDetail, type GroupListRow } from './groups.repository';
 
 @Injectable()
@@ -17,6 +20,7 @@ export class AdminGroupsService {
   constructor(
     private readonly groups: AdminGroupsRepository,
     private readonly storage: StorageService,
+    private readonly permissions: ChatPermissionsService,
   ) {}
 
   async list(): Promise<AdminGroupListResponseDto> {
@@ -25,7 +29,7 @@ export class AdminGroupsService {
   }
 
   async create(
-    createdByAdminId: string,
+    admin: AdminRequestUser,
     title: string,
     memberIds: string[],
   ): Promise<AdminGroupDetailDto> {
@@ -46,16 +50,18 @@ export class AdminGroupsService {
         message: 'A group needs at least one member.',
       });
     }
+    await this.assertMembersCanChat(unique);
 
-    const group = await this.groups.create(trimmed, createdByAdminId, unique);
+    const group = await this.groups.create(trimmed, admin.id, unique);
     return this.toDetailDto(group);
   }
 
   async detail(id: string): Promise<AdminGroupDetailDto> {
-    return this.toDetailDto(await this.require(id));
+    const group = await this.require(id);
+    return this.toDetailDto(group);
   }
 
-  async update(id: string, title?: string): Promise<AdminGroupDetailDto> {
+  async update(id: string, title: string | undefined): Promise<AdminGroupDetailDto> {
     await this.require(id);
 
     const trimmed = title?.trim();
@@ -68,8 +74,10 @@ export class AdminGroupsService {
   }
 
   async addMembers(id: string, userIds: string[]): Promise<AdminGroupDetailDto> {
-    await this.require(id);
-    await this.groups.addMembers(id, [...new Set(userIds)]);
+    const group = await this.require(id);
+    const unique = [...new Set(userIds)];
+    await this.assertMembersCanChat([...group.members.map((member) => member.user.id), ...unique]);
+    await this.groups.addMembers(id, unique);
     return this.detail(id);
   }
 
@@ -118,9 +126,23 @@ export class AdminGroupsService {
     return {
       id: group.id,
       title: group.title ?? '',
-      memberCount: group._count.members,
+      memberCount: members.length,
       createdAt: group.createdAt.toISOString(),
       members,
     };
+  }
+
+  private async assertMembersCanChat(memberIds: string[]): Promise<void> {
+    const unique = [...new Set(memberIds.filter(Boolean))];
+    for (let i = 0; i < unique.length; i++) {
+      for (let j = i + 1; j < unique.length; j++) {
+        if (!(await this.permissions.canDirectMessage(unique[i]!, unique[j]!))) {
+          throw new BadRequestException({
+            code: ApiErrorCode.VALIDATION_FAILED,
+            message: 'Every group member must be a distinct user.',
+          });
+        }
+      }
+    }
   }
 }

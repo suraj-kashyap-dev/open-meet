@@ -60,11 +60,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-
 import { useEndMeeting } from '@/features/web/meeting/hooks/use-meetings';
 import type { MeetingSocket } from '@/features/web/meeting/hooks/use-socket';
 import { recordingApi } from '@/features/web/meeting/services/recording';
-import {
-  useActiveMeeting,
-  useChatStore,
-  useRecordingStore,
-} from '@/features/web/meeting/stores';
+import { useActiveMeeting, useChatStore, useRecordingStore } from '@/features/web/meeting/stores';
 import { useUIStore } from '@/stores';
 import { ApiClientError } from '@/lib/api/client';
 import { meetingsApi } from '@/features/web/meeting/services/meetings';

@@ -30,10 +30,7 @@ export const meetingsApi = {
     }),
 
   createGuestSession: (code: string, input: CreateGuestMeetingSessionDto) =>
-    api.post<GuestMeetingSessionDto>(
-      `/meetings/${encodeURIComponent(code)}/guest-session`,
-      input,
-    ),
+    api.post<GuestMeetingSessionDto>(`/meetings/${encodeURIComponent(code)}/guest-session`, input),
 
   update: (code: string, input: UpdateMeetingDto) =>
     api.patch<MeetingDto>(`/meetings/${encodeURIComponent(code)}`, input),

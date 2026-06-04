@@ -11,19 +11,13 @@ import type {
   AdminMeResponseDto,
   AdminMeetingListResponseDto,
   AdminStatsOverviewDto,
-  AdminDepartmentDetailDto,
-  AdminDepartmentListResponseDto,
   AdminUserListResponseDto,
   PermissionCatalogResponseDto,
   RoleListResponseDto,
   UserInviteListResponseDto,
   WorkspaceConfigDto,
 } from '@open-meet/types';
-import {
-  ADMIN_PERMISSION_KEYS,
-  PERMISSION_TREE_ADMIN,
-  buildCatalogTree,
-} from '@open-meet/types';
+import { ADMIN_PERMISSION_KEYS, PERMISSION_TREE_ADMIN, buildCatalogTree } from '@open-meet/types';
 
 function dailySeries(days: number): { date: string; count: number }[] {
   const out: { date: string; count: number }[] = [];
@@ -60,7 +54,7 @@ export const currentAdminMe: AdminMeResponseDto = {
 export const loginResponse: AdminLoginResponseDto = { admin: currentAdmin };
 
 export const overview: AdminStatsOverviewDto = {
-  totals: { users: 128, meetings: 342, activeMeetings: 3, messagesLast24h: 87, groups: 9, departments: 5 },
+  totals: { users: 128, meetings: 342, activeMeetings: 3, messagesLast24h: 87, groups: 9 },
   trends: { signups: dailySeries(14), meetings: dailySeries(14) },
   recentMeetings: [
     {
@@ -187,7 +181,7 @@ export const branding: AdminBrandingDto = {
 };
 
 export const configuration: WorkspaceConfigDto = {
-  defaultMeetingTitle: 'Department Sync',
+  defaultMeetingTitle: 'Team Sync',
   allowGuestJoin: true,
   maxMeetingMinutes: 60,
 };
@@ -197,55 +191,6 @@ export const inviteLookup: AdminInviteLookupDto = {
   name: 'New Admin',
   role: { id: 'role_sys_member', name: 'Member', permissionType: 'CUSTOM' },
   expiresAt: '2026-06-01T00:00:00.000Z',
-};
-
-export const departmentsList: AdminDepartmentListResponseDto = {
-  items: [
-    {
-      id: 't-1',
-      name: 'Engineering',
-      description: null,
-      responsibleAdminId: null,
-      responsibleAdminName: null,
-      memberCount: 2,
-      createdAt: '2026-02-01T09:00:00.000Z',
-    },
-    {
-      id: 't-2',
-      name: 'Marketing',
-      description: null,
-      responsibleAdminId: null,
-      responsibleAdminName: null,
-      memberCount: 1,
-      createdAt: '2026-02-05T09:00:00.000Z',
-    },
-  ],
-};
-
-export const departmentDetail: AdminDepartmentDetailDto = {
-  id: 't-1',
-  name: 'Engineering',
-  description: null,
-  responsibleAdminId: null,
-  responsibleAdminName: null,
-  memberCount: 2,
-  createdAt: '2026-02-01T09:00:00.000Z',
-  members: [
-    {
-      userId: 'u-1',
-      name: 'Ada Lovelace',
-      email: 'ada@example.com',
-      avatar: null,
-      joinedAt: '2026-02-01T09:05:00.000Z',
-    },
-    {
-      userId: 'u-2',
-      name: 'Alan Turing',
-      email: 'alan@example.com',
-      avatar: null,
-      joinedAt: '2026-02-02T09:05:00.000Z',
-    },
-  ],
 };
 
 export const groupsList: AdminGroupListResponseDto = {
@@ -298,7 +243,7 @@ export const adminRoles: RoleListResponseDto = {
       name: 'Member',
       description: 'Read-only baseline access.',
       permissionType: 'CUSTOM',
-      permissions: ['users.view', 'meetings.view', 'departments.view', 'groups.view', 'analytics.view'],
+      permissions: ['users.view', 'meetings.view', 'groups.view', 'analytics.view'],
       isSystem: true,
       memberCount: 0,
       createdAt: '2026-01-01T00:00:00.000Z',

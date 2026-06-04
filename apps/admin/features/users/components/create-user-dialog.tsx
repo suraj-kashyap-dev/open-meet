@@ -172,7 +172,7 @@ export function CreateUserDialog({
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label htmlFor="create-user-name">{t('name')}</Label>
               <Input id="create-user-name" autoComplete="off" autoFocus {...register('name')} />
               {errors.name ? (
@@ -180,7 +180,7 @@ export function CreateUserDialog({
               ) : null}
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label htmlFor="create-user-email">{t('email')}</Label>
               <Input
                 id="create-user-email"
@@ -194,7 +194,7 @@ export function CreateUserDialog({
               ) : null}
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label>{tEdit('timezone')}</Label>
               <Select value={timezone} onValueChange={(v) => setValue('timezone', v)}>
                 <SelectTrigger>
@@ -210,7 +210,7 @@ export function CreateUserDialog({
               </Select>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label>{tEdit('language')}</Label>
               <Select value={language} onValueChange={(v) => setValue('language', v)}>
                 <SelectTrigger>
@@ -227,7 +227,7 @@ export function CreateUserDialog({
             </div>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor="create-user-password">{t('password')}</Label>
             <Input
               id="create-user-password"
@@ -242,7 +242,7 @@ export function CreateUserDialog({
             )}
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor="create-user-bio">{tEdit('bio')}</Label>
             <Textarea
               id="create-user-bio"
@@ -253,14 +253,18 @@ export function CreateUserDialog({
             {errors.bio ? <p className="text-xs text-destructive">{errors.bio.message}</p> : null}
           </div>
 
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-border p-3">
-            <Label htmlFor="create-user-can-create-groups" className="cursor-pointer font-normal">
-              {tEdit('can-create-groups')}
-            </Label>
+          <div className="flex items-start justify-between gap-4 rounded-lg border border-border p-4">
+            <div className="space-y-0.5">
+              <Label htmlFor="create-user-can-create-groups" className="cursor-pointer font-medium">
+                {tEdit('can-create-groups')}
+              </Label>
+              <p className="text-xs text-muted-foreground">{tEdit('can-create-groups-hint')}</p>
+            </div>
             <Switch
               id="create-user-can-create-groups"
               checked={canCreateGroups}
               onCheckedChange={(v) => setValue('canCreateGroups', v)}
+              className="mt-0.5"
             />
           </div>
 

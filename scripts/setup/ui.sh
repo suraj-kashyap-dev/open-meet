@@ -27,7 +27,7 @@ usage() {
 open-meet setup - one command to a running local stack.
 
 Usage:
-  ./setup.sh [--force] [--skip-install] [--skip-docker] [--skip-db]
+  ./setup.sh [--force] [--skip-install] [--skip-docker] [--skip-db] [--seed]
 
   --force         Regenerate every secret and RESET the database (drops all
                   tables). Overwrites apps/server/.env, apps/web/.env.local,
@@ -35,6 +35,7 @@ Usage:
   --skip-install  Skip dependency installation.
   --skip-docker   Skip `docker compose up` (infra already running).
   --skip-db       Skip Prisma generate + migrate.
+  --seed          Seed demo departments + users (with memberships). Idempotent.
   -h, --help      Show this help and exit.
 EOF
   exit 0

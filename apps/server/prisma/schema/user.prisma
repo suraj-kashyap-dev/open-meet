@@ -19,7 +19,6 @@ model User {
   messages        Message[]
   hostedMeetings  Meeting[]     @relation("host")
 
-  departmentMemberships   DepartmentMember[]
   conversationMemberships ConversationMember[]
   chatMessages            ChatMessage[]
   messageReactions        MessageReaction[]
@@ -28,7 +27,6 @@ model User {
   savedMessages           SavedMessage[]
   presence                UserPresence?
   pollVotes               PollVote[]
-
   @@index([email])
   @@index([googleId])
 }

@@ -72,7 +72,7 @@ function applyIncoming(
   }
 
   const current = list.items[index]!;
-  
+
   const updated: ConversationDto = {
     ...current,
     lastMessage: message,

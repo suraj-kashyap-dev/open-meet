@@ -10,7 +10,7 @@
   "chat-link-label": "चैट खोलें",
   "activity-link-label": "गतिविधि",
   "departments-link-label": "विभाग",
-  "saved-link-label": "सहेजे गए",
+  "saved-link-label": "तारांकित",
   "search-placeholder": "खोजें",
   "rail": {
     "label": "प्राथमिक",
@@ -18,7 +18,7 @@
     "meet": "मीट",
     "departments": "विभाग",
     "activity": "गतिविधि",
-    "saved": "सहेजे गए",
+    "saved": "तारांकित",
     "history": "इतिहास"
   },
   "command": {

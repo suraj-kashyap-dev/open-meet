@@ -86,7 +86,8 @@
       "bio-too-long": "简介过长",
       "password-too-long": "过长",
       "password-too-short": "至少 8 个字符"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG、JPEG、WebP 或 GIF，最大 {mb} MB。",

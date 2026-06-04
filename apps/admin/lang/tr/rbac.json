@@ -12,6 +12,7 @@
     "name": "Rol",
     "description": "Açıklama",
     "members": "Üyeler",
+    "users": "Users",
     "type": "Tür",
     "actions": "Eylemler",
     "edit": "Düzenle",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "Kullanıcılar",
       "view": "Kullanıcıları görüntüle",
+      "create": "Create users directly",
       "invite": "Kullanıcı davet et",
       "update": "Kullanıcıları düzenle",
       "delete": "Kullanıcıları sil",
@@ -80,21 +82,6 @@
       "force-end": "Toplantıları zorla bitir",
       "delete": "Toplantıları sil",
       "kick": "Katılımcıları çıkar"
-    },
-    "departments": {
-      "_self": "Departmanlar",
-      "view": "Departmanları görüntüle",
-      "create": "Departman oluştur",
-      "update": "Departmanları güncelle",
-      "delete": "Departmanları sil",
-      "manage-members": "Departman üyelerini yönet",
-      "channels": {
-        "_self": "Kanallar",
-        "view": "Kanalları görüntüle",
-        "create": "Kanal oluştur",
-        "update": "Kanalları güncelle",
-        "delete": "Kanalları sil"
-      }
     },
     "groups": {
       "_self": "Gruplar",

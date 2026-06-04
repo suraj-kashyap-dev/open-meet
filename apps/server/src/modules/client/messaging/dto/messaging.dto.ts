@@ -144,3 +144,21 @@ export class GifsQueryDto {
   @MaxLength(120)
   q?: string;
 }
+
+export class CreateChatRequestBodyDto {
+  @IsString()
+  @MinLength(1)
+  targetUserId!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(280)
+  reason?: string | null;
+}
+
+export class UserLookupQueryDto {
+  @IsString()
+  @MinLength(3)
+  @MaxLength(254)
+  email!: string;
+}

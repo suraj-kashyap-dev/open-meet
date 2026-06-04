@@ -54,7 +54,10 @@ export function AccentPicker({
               style={{ background: tokens.accent }}
             >
               {selected ? (
-                <Check className="absolute inset-0 m-auto h-4 w-4" style={{ color: tokens.accentForeground }} />
+                <Check
+                  className="absolute inset-0 m-auto h-4 w-4"
+                  style={{ color: tokens.accentForeground }}
+                />
               ) : null}
             </button>
           );

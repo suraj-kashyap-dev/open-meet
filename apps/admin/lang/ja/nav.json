@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "ダッシュボード",
+    "analytics": "アナリティクス",
     "users": "ユーザー",
-    "departments": "部署",
     "groups": "グループ",
     "meetings": "ミーティング",
     "settings": "設定",

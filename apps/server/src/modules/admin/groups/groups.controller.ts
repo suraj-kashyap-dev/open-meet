@@ -46,7 +46,7 @@ export class AdminGroupsController {
     @CurrentAdmin() admin: AdminRequestUser,
     @Body() dto: CreateGroupBodyDto,
   ): Promise<AdminGroupDetailDto> {
-    return this.groups.create(admin.id, dto.title, dto.memberIds);
+    return this.groups.create(admin, dto.title, dto.memberIds);
   }
 
   @Get(':id')

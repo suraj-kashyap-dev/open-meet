@@ -40,7 +40,9 @@ describe('AdminPermissionResolver', () => {
     });
 
     it('should return the granted set as a Set for a CUSTOM role', async () => {
-      repo.findById.mockResolvedValueOnce(makeRole({ permissions: ['users.view', 'users.invite'] }));
+      repo.findById.mockResolvedValueOnce(
+        makeRole({ permissions: ['users.view', 'users.invite'] }),
+      );
       const resolved = await resolver.resolve('r1');
       expect(resolved).not.toBeNull();
       expect(resolved!.permissionType).toBe('CUSTOM');

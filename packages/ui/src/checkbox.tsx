@@ -7,8 +7,10 @@ import { cn } from './cn';
 
 export type CheckedState = boolean | 'indeterminate';
 
-interface CheckboxProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange' | 'checked'> {
+interface CheckboxProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  'onChange' | 'checked'
+> {
   checked?: CheckedState;
   onCheckedChange?: (checked: boolean) => void;
 }

@@ -62,7 +62,7 @@
     "max-duration-label": "अधिकतम मीटिंग अवधि (मिनट)",
     "max-duration-placeholder": "कोई सीमा नहीं",
     "max-duration-help": "बिना सीमा के लिए खाली छोड़ें। 5 और 1440 मिनट के बीच।",
-    "duration-range": "5 और 1440 के बीच एक संख्या दर्ज करें, या खाली छोड़ें।",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "परिवर्तन सहेजें",
     "saving": "सहेजा जा रहा है…",
     "saved": "कॉन्फ़िगरेशन सहेजा गया",

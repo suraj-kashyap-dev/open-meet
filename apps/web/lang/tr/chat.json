@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# üye} other {# üye}}",
     "actions": "Konuşma işlemleri",
+    "info": "Sohbet bilgileri",
     "clear": "Sohbeti temizle",
     "delete": "Sohbeti sil",
     "clear-confirm-title": "Sohbeti temizlesin mi?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Mesajlar görünümünüzden temizlendi",
     "delete-confirmed": "Sohbet silindi"
   },
+  "info": {
+    "title": "Ayrıntılar",
+    "close": "Kapat",
+    "loading": "Yükleniyor…",
+    "unavailable": "Profil kullanılamıyor.",
+    "private": "Bu profil gizli.",
+    "bio": "Hakkında",
+    "email": "E-posta",
+    "timezone": "Saat dilimi",
+    "joined": "Katıldı"
+  },
   "presence": {
     "online": "Çevrimiçi",
     "offline": "Çevrimdışı",
     "last-seen": "Son görülme {time}",
+    "last-seen-short": "Yakın zamanda görüldü",
     "set-status": "Durumunuzu ayarlayın",
     "available": "Müsait",
     "busy": "Meşgul",
@@ -78,8 +91,9 @@
     "pinned": "Sabitlendi",
     "pin": "Sabitle",
     "unpin": "Sabitlemeyi kaldır",
-    "save-message": "Kaydet",
-    "unsave-message": "Kaydedilenlerden kaldır",
+    "starred": "Yıldızlı",
+    "save-message": "Yıldız ekle",
+    "unsave-message": "Yıldızı kaldır",
     "forward": "İlet"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Yönetici",
     "you-badge": "Sen",
     "promote": "Yönetici yap",
+    "promoted": "Üye yönetici yapıldı",
     "demote": "Yöneticiyi kaldır",
+    "demoted": "Yönetici üyeliğe düşürüldü",
     "remove-member": "Gruptan çıkar",
+    "remove-member-confirm": "{name} gruptan çıkarılsın mı?",
+    "removed": "Üye çıkarıldı",
+    "member-actions": "Üye işlemleri",
+    "members-added": "Üyeler eklendi",
     "leave": "Gruptan ayrıl",
     "leave-confirm": "Bu gruptan ayrılınsın mı?",
+    "left": "Gruptan ayrıldınız",
     "last-admin-warning": "Tek yöneticisiniz. Önce birini yönetici yapın.",
     "delete": "Grubu sil",
     "delete-confirm": "Bu grup silinsin mi? Geri alınamaz.",
+    "deleted": "Grup silindi",
+    "edit-details": "Ayrıntıları düzenle",
+    "edit-title": "Grubu düzenle",
+    "edit-subtitle": "Grup adını ve açıklamasını güncelleyin.",
+    "edit-saved": "Grup güncellendi",
+    "add-members": "Üye ekle",
+    "add-members-title": "Üye ekle",
+    "add-members-subtitle": "Bu gruba daha fazla kişi davet edin.",
+    "save": "Kaydet",
+    "action-failed": "Bir şeyler ters gitti",
     "groups-disabled": "Grup oluşturma şu anda yönetici tarafından devre dışı."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Yeni sohbet",
     "to-label": "Kime:",
     "to-placeholder": "Ad veya e-posta girin",
-    "no-teammates": "Kişi bulunamadı.",
+    "no-teammates": "Departmanlarınızda kişi bulunamadı.",
     "disabled": "Kullanılamıyor",
     "empty-title": "Yeni bir görüşme başlatıyorsunuz",
     "empty-subtitle": "İlk mesajınızı aşağıya yazın.",
     "send-placeholder": "İlk mesajınızı yazın…"
-  },
-  "departments": {
-    "title": "Departmanlar",
-    "subtitle": "Departmanlarınız ve kanallarınız.",
-    "empty": "Henüz hiçbir departmanın üyesi değilsiniz.",
-    "empty-title": "Henüz departman yok",
-    "empty-subtitle": "Bir yönetici işbirliğine başlamanız için sizi bir departmana ekleyecek.",
-    "no-channels": "Henüz kanal yok."
   },
   "activity": {
     "title": "Etkinlik",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Birisi sizi @ile bahsettiğinde burada görünecek."
   },
   "saved": {
-    "title": "Kaydedilenler",
-    "subtitle": "Sonra için kaydettiğiniz mesajlar.",
-    "empty": "Henüz hiçbir mesaj kaydetmediniz.",
-    "empty-title": "Kaydedilmiş mesaj yok",
-    "empty-subtitle": "Burada bulmak için sohbetten bir mesaj kaydedin."
+    "title": "Yıldızlı",
+    "subtitle": "Yıldızladığınız mesajlar.",
+    "empty": "Henüz hiçbir mesaja yıldız eklemediniz.",
+    "empty-title": "Yıldızlı mesaj yok",
+    "empty-subtitle": "Burada bulmak için sohbetten bir mesaja yıldız ekleyin.",
+    "view-chat": "Yıldızlı mesajlar",
+    "chat-empty": "Bu sohbette henüz yıldızlı mesaj yok.",
+    "today": "Bugün",
+    "yesterday": "Dün"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

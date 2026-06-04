@@ -1,7 +1,4 @@
-import type {
-  PermissionCatalogNodeDto,
-  PermissionType,
-} from '../permissions';
+import type { PermissionCatalogNodeDto, PermissionType } from '../permissions';
 
 export interface RoleDto {
   id: string;

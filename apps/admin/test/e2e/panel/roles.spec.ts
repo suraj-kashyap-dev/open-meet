@@ -14,7 +14,9 @@ test.describe('Admin /roles page', () => {
     await expect(page.getByText('Analyst')).toBeVisible();
   });
 
-  test('should hide create + delete actions when the admin lacks roles.create/.delete', async ({ page }) => {
+  test('should hide create + delete actions when the admin lacks roles.create/.delete', async ({
+    page,
+  }) => {
     await mockAdminApi(page, {
       me: {
         ...currentAdminMe,
@@ -28,7 +30,9 @@ test.describe('Admin /roles page', () => {
     await expect(page.getByRole('link', { name: 'Create role' })).toHaveCount(0);
   });
 
-  test('should hide the entire Admin roles nav item when grantedSet excludes roles.view', async ({ page }) => {
+  test('should hide the entire Admin roles nav item when grantedSet excludes roles.view', async ({
+    page,
+  }) => {
     await mockAdminApi(page, {
       me: {
         ...currentAdminMe,

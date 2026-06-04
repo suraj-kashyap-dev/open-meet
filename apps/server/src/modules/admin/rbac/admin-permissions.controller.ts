@@ -21,7 +21,9 @@ import { RequirePermissions } from './decorators/require-permissions.decorator';
 export class AdminPermissionsController {
   @Get('catalog')
   @RequirePermissions('roles.view')
-  @ApiOperation({ summary: 'Hierarchical catalog of all admin permission keys (for the role picker)' })
+  @ApiOperation({
+    summary: 'Hierarchical catalog of all admin permission keys (for the role picker)',
+  })
   catalog(): PermissionCatalogResponseDto {
     return {
       tree: buildCatalogTree(PERMISSION_TREE_ADMIN, 'rbac.permissions'),

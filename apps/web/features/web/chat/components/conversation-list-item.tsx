@@ -27,10 +27,12 @@ export function ConversationListItem({
   conversation,
   currentUserId,
   active,
+  onNavigate,
 }: {
   conversation: ConversationDto;
   currentUserId: string | undefined;
   active: boolean;
+  onNavigate?: () => void;
 }) {
   const t = useTranslations('chat');
   const display = conversationDisplay(conversation, currentUserId);
@@ -64,18 +66,21 @@ export function ConversationListItem({
   return (
     <div
       className={cn(
-        'group relative flex items-center rounded-lg transition-colors',
-        active ? 'bg-muted' : 'hover:bg-muted/60',
+        'group relative flex items-center rounded-2xl border border-transparent transition-all',
+        active
+          ? 'border-border/70 bg-muted/80 shadow-sm'
+          : 'hover:border-border/60 hover:bg-muted/50',
         isHidden && 'opacity-60',
       )}
     >
       <Link
         href={`/chat/${conversation.id}`}
-        className="flex min-w-0 flex-1 items-center gap-3 px-2 py-2"
+        onClick={onNavigate}
+        className="flex min-w-0 flex-1 items-center gap-3 px-3 py-2.5"
       >
         <div className="relative shrink-0">
           {display.isGroup ? (
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
               <Users className="h-5 w-5" />
             </span>
           ) : (
@@ -106,7 +111,7 @@ export function ConversationListItem({
           <div className="flex items-center justify-between gap-2">
             <span className="truncate text-xs text-muted-foreground">{preview}</span>
             {unread > 0 ? (
-              <span className="flex h-4 min-w-4 shrink-0 items-center justify-center rounded-full bg-foreground px-1 text-[10px] font-semibold leading-none text-background">
+              <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-foreground px-1.5 text-[10px] font-semibold leading-none text-background">
                 {unread > 99 ? '99+' : unread}
               </span>
             ) : null}
@@ -117,7 +122,7 @@ export function ConversationListItem({
       <DropdownMenu>
         <DropdownMenuTrigger
           aria-label={t('list.actions')}
-          className="absolute end-1 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-card/80 text-muted-foreground opacity-0 hover:text-foreground group-hover:opacity-100 data-[state=open]:opacity-100"
+          className="absolute end-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-muted-foreground opacity-0 shadow-sm hover:text-foreground group-hover:opacity-100 data-[state=open]:opacity-100"
         >
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>

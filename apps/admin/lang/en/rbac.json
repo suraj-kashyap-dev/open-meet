@@ -83,21 +83,6 @@
       "delete": "Delete meetings",
       "kick": "Kick participants"
     },
-    "departments": {
-      "_self": "Departments",
-      "view": "View departments",
-      "create": "Create departments",
-      "update": "Update departments",
-      "delete": "Delete departments",
-      "manage-members": "Manage department members",
-      "channels": {
-        "_self": "Channels",
-        "view": "View channels",
-        "create": "Create channels",
-        "update": "Update channels",
-        "delete": "Delete channels"
-      }
-    },
     "groups": {
       "_self": "Groups",
       "view": "View groups",
@@ -145,48 +130,6 @@
       "update": "Update user roles",
       "delete": "Delete user roles",
       "assign": "Assign user roles"
-    }
-  },
-  "user-permissions": {
-    "meetings": {
-      "_self": "Meetings",
-      "create": "Create meetings",
-      "schedule": "Schedule meetings",
-      "host": "Host meetings"
-    },
-    "departments": {
-      "_self": "Departments",
-      "create": "Create departments",
-      "update": "Update departments",
-      "delete": "Delete departments",
-      "manage-members": "Manage department members",
-      "channels": {
-        "_self": "Channels",
-        "create": "Create channels",
-        "update": "Update channels",
-        "delete": "Delete channels"
-      }
-    },
-    "groups": {
-      "_self": "Groups",
-      "create": "Create groups",
-      "update": "Update groups",
-      "delete": "Delete groups",
-      "manage-members": "Manage group members"
-    },
-    "chat": {
-      "_self": "Chat",
-      "send": "Send messages",
-      "react": "React to messages",
-      "upload": "Upload attachments",
-      "polls": {
-        "_self": "Polls",
-        "create": "Create polls"
-      }
-    },
-    "presence": {
-      "_self": "Presence",
-      "change-status": "Change presence status"
     }
   }
 }

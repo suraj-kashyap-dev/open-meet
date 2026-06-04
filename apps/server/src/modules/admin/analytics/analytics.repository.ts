@@ -21,27 +21,29 @@ export class AdminAnalyticsRepository {
   }
 
   countActiveMeetings(): Promise<number> {
-    return this.prisma.meeting.count({ where: { status: MeetingStatus.ACTIVE } });
+    return this.prisma.meeting.count({
+      where: { status: MeetingStatus.ACTIVE },
+    });
   }
 
   countMessagesSince(since: Date): Promise<number> {
-    return this.prisma.message.count({ where: { sentAt: { gte: since } } });
+    return this.prisma.message.count({
+      where: { sentAt: { gte: since } },
+    });
   }
 
   countGroups(): Promise<number> {
-    return this.prisma.conversation.count({ where: { type: ConversationType.GROUP } });
-  }
-
-  countDepartments(): Promise<number> {
-    return this.prisma.department.count();
+    return this.prisma.conversation.count({
+      where: { type: ConversationType.GROUP },
+    });
   }
 
   async dailyUserSignups(since: Date): Promise<DailyRow[]> {
     return this.prisma.$queryRaw<DailyRow[]>(
       Prisma.sql`
         SELECT DATE_TRUNC('day', "createdAt") AS day, COUNT(*) AS count
-        FROM "User"
-        WHERE "createdAt" >= ${since}
+        FROM "User" u
+        WHERE u."createdAt" >= ${since}
         GROUP BY day
         ORDER BY day ASC
       `,
@@ -52,8 +54,8 @@ export class AdminAnalyticsRepository {
     return this.prisma.$queryRaw<DailyRow[]>(
       Prisma.sql`
         SELECT DATE_TRUNC('day', "createdAt") AS day, COUNT(*) AS count
-        FROM "Meeting"
-        WHERE "createdAt" >= ${since}
+        FROM "Meeting" m
+        WHERE m."createdAt" >= ${since}
         GROUP BY day
         ORDER BY day ASC
       `,
@@ -170,6 +172,7 @@ export class AdminAnalyticsRepository {
           DATE_TRUNC('day', p."joinedAt") AS day,
           COUNT(DISTINCT p."userId") AS count
         FROM "Participant" p
+        JOIN "Meeting" m ON m."id" = p."meetingId"
         WHERE p."joinedAt" >= ${since}
         GROUP BY day
         ORDER BY day ASC

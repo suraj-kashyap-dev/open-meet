@@ -9,7 +9,7 @@ export default async function SettingsLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  
+
   setRequestLocale(locale);
 
   return children;

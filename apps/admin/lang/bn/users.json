@@ -86,7 +86,8 @@
       "bio-too-long": "পরিচিতি অনেক বড়",
       "password-too-long": "অনেক বড়",
       "password-too-short": "কমপক্ষে ৮ অক্ষর"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP বা GIF। সর্বোচ্চ {mb} MB।",

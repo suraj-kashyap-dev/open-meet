@@ -12,9 +12,7 @@
     "messages-24h": "Mensagens 24h",
     "messages-24h-hint": "Mensagens de chat nas últimas 24h",
     "groups": "Grupos",
-    "groups-hint": "Conversas de grupo criadas",
-    "departments": "Departamentos",
-    "departments-hint": "Departamentos no espaço de trabalho"
+    "groups-hint": "Conversas de grupo criadas"
   },
   "trends": {
     "signups": "Novos cadastros",

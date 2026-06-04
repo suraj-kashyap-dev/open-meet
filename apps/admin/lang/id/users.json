@@ -86,7 +86,8 @@
       "bio-too-long": "Bio terlalu panjang",
       "password-too-long": "Terlalu panjang",
       "password-too-short": "Minimal 8 karakter"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP, atau GIF. Maks {mb} MB.",

@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# Mitglied} other {# Mitglieder}}",
     "actions": "Unterhaltungsaktionen",
+    "info": "Unterhaltungsinfo",
     "clear": "Chat leeren",
     "delete": "Chat löschen",
     "clear-confirm-title": "Chat leeren?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Nachrichten aus Ihrer Ansicht entfernt",
     "delete-confirmed": "Chat gelöscht"
   },
+  "info": {
+    "title": "Details",
+    "close": "Schließen",
+    "loading": "Wird geladen…",
+    "unavailable": "Profil nicht verfügbar.",
+    "private": "Dieses Profil ist privat.",
+    "bio": "Bio",
+    "email": "E-Mail",
+    "timezone": "Zeitzone",
+    "joined": "Beigetreten"
+  },
   "presence": {
     "online": "Online",
     "offline": "Offline",
     "last-seen": "Zuletzt gesehen {time}",
+    "last-seen-short": "Kürzlich zuletzt gesehen",
     "set-status": "Status festlegen",
     "available": "Verfügbar",
     "busy": "Beschäftigt",
@@ -78,8 +91,9 @@
     "pinned": "Angeheftet",
     "pin": "Anheften",
     "unpin": "Lösen",
-    "save-message": "Speichern",
-    "unsave-message": "Aus Gespeichertem entfernen",
+    "starred": "Markiert",
+    "save-message": "Markieren",
+    "unsave-message": "Markierung entfernen",
     "forward": "Weiterleiten"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Admin",
     "you-badge": "Sie",
     "promote": "Zum Admin machen",
+    "promoted": "Mitglied zum Admin befördert",
     "demote": "Admin entfernen",
+    "demoted": "Admin zum Mitglied herabgestuft",
     "remove-member": "Aus Gruppe entfernen",
+    "remove-member-confirm": "{name} aus der Gruppe entfernen?",
+    "removed": "Mitglied entfernt",
+    "member-actions": "Mitgliederaktionen",
+    "members-added": "Mitglieder hinzugefügt",
     "leave": "Gruppe verlassen",
     "leave-confirm": "Diese Gruppe verlassen?",
+    "left": "Sie haben die Gruppe verlassen",
     "last-admin-warning": "Sie sind der einzige Admin. Befördern Sie zuerst jemanden.",
     "delete": "Gruppe löschen",
     "delete-confirm": "Diese Gruppe löschen? Dies kann nicht rückgängig gemacht werden.",
+    "deleted": "Gruppe gelöscht",
+    "edit-details": "Details bearbeiten",
+    "edit-title": "Gruppe bearbeiten",
+    "edit-subtitle": "Aktualisieren Sie Name und Beschreibung der Gruppe.",
+    "edit-saved": "Gruppe aktualisiert",
+    "add-members": "Mitglieder hinzufügen",
+    "add-members-title": "Mitglieder hinzufügen",
+    "add-members-subtitle": "Laden Sie weitere Personen in diese Gruppe ein.",
+    "save": "Speichern",
+    "action-failed": "Etwas ist schiefgelaufen",
     "groups-disabled": "Die Gruppenerstellung ist derzeit vom Admin deaktiviert."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Neuer Chat",
     "to-label": "An:",
     "to-placeholder": "Name oder E-Mail eingeben",
-    "no-teammates": "Keine Personen gefunden.",
+    "no-teammates": "Keine Personen in Ihren Abteilungen gefunden.",
     "disabled": "Nicht verfügbar",
     "empty-title": "Sie beginnen eine neue Unterhaltung",
     "empty-subtitle": "Schreiben Sie unten Ihre erste Nachricht.",
     "send-placeholder": "Erste Nachricht schreiben…"
-  },
-  "departments": {
-    "title": "Abteilungen",
-    "subtitle": "Ihre Abteilungen und Kanäle.",
-    "empty": "Sie sind noch in keiner Abteilung Mitglied.",
-    "empty-title": "Noch keine Abteilungen",
-    "empty-subtitle": "Ein Admin fügt Sie zu einer Abteilung hinzu, um die Zusammenarbeit zu starten.",
-    "no-channels": "Noch keine Kanäle."
   },
   "activity": {
     "title": "Aktivität",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Wenn Sie jemand mit @ erwähnt, wird es hier angezeigt."
   },
   "saved": {
-    "title": "Gespeichert",
-    "subtitle": "Nachrichten, die Sie für später gespeichert haben.",
-    "empty": "Sie haben noch keine Nachrichten gespeichert.",
-    "empty-title": "Keine gespeicherten Nachrichten",
-    "empty-subtitle": "Speichern Sie eine Nachricht aus dem Chat, um sie hier zu finden."
+    "title": "Markiert",
+    "subtitle": "Nachrichten, die Sie markiert haben.",
+    "empty": "Sie haben noch keine Nachrichten markiert.",
+    "empty-title": "Keine markierten Nachrichten",
+    "empty-subtitle": "Markieren Sie eine Nachricht aus dem Chat, um sie hier zu finden.",
+    "view-chat": "Markierte Nachrichten",
+    "chat-empty": "Noch keine markierten Nachrichten in diesem Chat.",
+    "today": "Heute",
+    "yesterday": "Gestern"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

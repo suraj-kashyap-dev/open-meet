@@ -10,7 +10,7 @@
   "chat-link-label": "Ouvrir la discussion",
   "activity-link-label": "Activité",
   "departments-link-label": "Départements",
-  "saved-link-label": "Enregistrés",
+  "saved-link-label": "Suivis",
   "search-placeholder": "Rechercher",
   "rail": {
     "label": "Principal",
@@ -18,7 +18,7 @@
     "meet": "Réunion",
     "departments": "Départements",
     "activity": "Activité",
-    "saved": "Enregistrés",
+    "saved": "Suivis",
     "history": "Historique"
   },
   "command": {

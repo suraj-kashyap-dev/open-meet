@@ -1,14 +1,12 @@
 'use client';
 
-import { AtSign, Bookmark, MessageSquare, Search, Video } from 'lucide-react';
+import { AtSign, MessageSquare, Search, Star, Video } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { useCommandPalette } from '@/components/shared/command-palette-store';
 import { PresenceStatusPicker } from '@/features/web/chat/components/presence-status-picker';
 import { usePathname } from '@/i18n/navigation';
-
-import { UserMenu } from './user-menu';
 
 interface PageInfo {
   icon: LucideIcon;
@@ -41,7 +39,7 @@ function usePageInfo(pathname: string): PageInfo | null {
   }
 
   if (pathname === '/saved' || pathname.startsWith('/saved/')) {
-    return { icon: Bookmark, title: tChat('saved.title'), subtitle: tChat('saved.subtitle') };
+    return { icon: Star, title: tChat('saved.title'), subtitle: tChat('saved.subtitle') };
   }
 
   return null;
@@ -81,7 +79,6 @@ export function TopBar() {
 
       <div className="flex shrink-0 items-center gap-1.5">
         <PresenceStatusPicker />
-        <UserMenu />
       </div>
     </header>
   );

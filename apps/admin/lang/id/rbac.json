@@ -12,6 +12,7 @@
     "name": "Peran",
     "description": "Deskripsi",
     "members": "Anggota",
+    "users": "Users",
     "type": "Tipe",
     "actions": "Tindakan",
     "edit": "Edit",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "Pengguna",
       "view": "Lihat pengguna",
+      "create": "Create users directly",
       "invite": "Undang pengguna",
       "update": "Edit pengguna",
       "delete": "Hapus pengguna",
@@ -80,21 +82,6 @@
       "force-end": "Akhiri paksa rapat",
       "delete": "Hapus rapat",
       "kick": "Keluarkan peserta"
-    },
-    "departments": {
-      "_self": "Departemen",
-      "view": "Lihat departemen",
-      "create": "Buat departemen",
-      "update": "Perbarui departemen",
-      "delete": "Hapus departemen",
-      "manage-members": "Kelola anggota departemen",
-      "channels": {
-        "_self": "Saluran",
-        "view": "Lihat saluran",
-        "create": "Buat saluran",
-        "update": "Perbarui saluran",
-        "delete": "Hapus saluran"
-      }
     },
     "groups": {
       "_self": "Grup",

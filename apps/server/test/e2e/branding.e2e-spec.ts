@@ -149,10 +149,11 @@ describe('Branding & public config (e2e)', () => {
     it('should persist updated workspace configuration', async () => {
       const { cookie } = await loginAdmin(app, ADMIN);
 
-      const res = await http(app)
-        .patch('/api/admin/configuration')
-        .set('Cookie', cookie)
-        .send({ defaultMeetingTitle: 'Department Sync', allowGuestJoin: false, maxMeetingMinutes: 90 });
+      const res = await http(app).patch('/api/admin/configuration').set('Cookie', cookie).send({
+        defaultMeetingTitle: 'Department Sync',
+        allowGuestJoin: false,
+        maxMeetingMinutes: 90,
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.data).toMatchObject({

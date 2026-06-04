@@ -12,6 +12,7 @@
     "name": "ロール",
     "description": "説明",
     "members": "メンバー",
+    "users": "Users",
     "type": "タイプ",
     "actions": "アクション",
     "edit": "編集",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "ユーザー",
       "view": "ユーザーを表示",
+      "create": "Create users directly",
       "invite": "ユーザーを招待",
       "update": "ユーザーを編集",
       "delete": "ユーザーを削除",
@@ -80,21 +82,6 @@
       "force-end": "ミーティングを強制終了",
       "delete": "ミーティングを削除",
       "kick": "参加者を退出させる"
-    },
-    "departments": {
-      "_self": "部署",
-      "view": "部署を表示",
-      "create": "部署を作成",
-      "update": "部署を更新",
-      "delete": "部署を削除",
-      "manage-members": "部署メンバーを管理",
-      "channels": {
-        "_self": "チャンネル",
-        "view": "チャンネルを表示",
-        "create": "チャンネルを作成",
-        "update": "チャンネルを更新",
-        "delete": "チャンネルを削除"
-      }
     },
     "groups": {
       "_self": "グループ",

@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "لوحة التحكم",
+    "analytics": "التحليلات",
     "users": "المستخدمون",
-    "departments": "الأقسام",
     "groups": "المجموعات",
     "meetings": "الاجتماعات",
     "settings": "الإعدادات",

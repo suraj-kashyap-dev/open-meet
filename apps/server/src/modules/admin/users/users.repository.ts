@@ -24,11 +24,8 @@ interface ListParams {
 export class AdminUsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  private whereFromSearch(search?: string): Prisma.UserWhereInput {
-    if (!search) {
-      return {};
-    }
-
+  private whereFor(search?: string): Prisma.UserWhereInput {
+    if (!search) return {};
     return {
       OR: [
         { name: { contains: search, mode: 'insensitive' } },
@@ -41,14 +38,14 @@ export class AdminUsersRepository {
     return this.prisma.user.findMany({
       skip,
       take,
-      where: this.whereFromSearch(search),
+      where: this.whereFor(search),
       orderBy: { createdAt: 'desc' },
       include: userInclude,
     });
   }
 
   count(search?: string): Promise<number> {
-    return this.prisma.user.count({ where: this.whereFromSearch(search) });
+    return this.prisma.user.count({ where: this.whereFor(search) });
   }
 
   emailTaken(email: string): Promise<User | null> {

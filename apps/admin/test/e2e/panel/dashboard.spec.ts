@@ -13,12 +13,11 @@ test.describe('Admin dashboard page', () => {
     await expect(page.getByText('128', { exact: true })).toBeVisible();
   });
 
-  test('should surface group and department totals', async ({ page }) => {
+  test('should surface group totals', async ({ page }) => {
     await mockAdminApi(page);
     await page.goto('/en');
 
     await expect(page.getByText('Group conversations created')).toBeVisible();
-    await expect(page.getByText('Departments in the workspace')).toBeVisible();
   });
 
   test('should show the recent meetings table', async ({ page }) => {
@@ -37,7 +36,7 @@ test.describe('Admin dashboard page', () => {
         grantedSet: ['analytics.view', 'analytics.view-deep'],
       },
     });
-    await page.goto('/en');
+    await page.goto('/en/analytics');
 
     await expect(page.getByRole('heading', { name: 'Analytics', exact: true })).toBeVisible();
     await expect(page.getByText('Avg meeting length', { exact: true })).toBeVisible();
@@ -53,9 +52,9 @@ test.describe('Admin dashboard page', () => {
         grantedSet: ['analytics.view'],
       },
     });
-    await page.goto('/en');
+    await page.goto('/en/analytics');
 
-    await expect(page.getByRole('heading', { name: 'Console', exact: true })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Analytics', exact: true })).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Analytics', exact: true })).toBeVisible();
+    await expect(page.getByText('Avg meeting length', { exact: true })).toHaveCount(0);
   });
 });

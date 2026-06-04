@@ -12,9 +12,7 @@
     "messages-24h": "Pesan 24j",
     "messages-24h-hint": "Pesan obrolan dalam 24 jam terakhir",
     "groups": "Grup",
-    "groups-hint": "Percakapan grup yang dibuat",
-    "departments": "Departemen",
-    "departments-hint": "Departemen di ruang kerja"
+    "groups-hint": "Percakapan grup yang dibuat"
   },
   "trends": {
     "signups": "Pendaftaran baru",

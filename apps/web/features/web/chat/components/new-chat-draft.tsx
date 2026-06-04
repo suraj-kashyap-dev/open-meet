@@ -19,7 +19,7 @@ import { chatKeys, useTeammates } from '../hooks/use-chat';
 import { chatApi } from '../services/chat';
 
 /**
- * Inline "To:" composer for a brand-new chat (the Departments new-conversation flow).
+ * Inline "To:" composer for a brand-new chat.
  * Pick a recipient, type a first message; on send we resolve the DM (reusing the
  * teammate's existing conversation or opening one idempotently) and hand off to
  * the real conversation route, which renders messages normally.
@@ -105,8 +105,8 @@ export function NewChatDraft() {
             {search.trim().length > 0 ? (
               <ul className="absolute z-10 mt-1 max-h-72 w-full overflow-y-auto rounded-md border border-border bg-popover p-1 shadow-lg">
                 {suggestions.length === 0 ? (
-                  <li className="py-4 text-center text-xs text-muted-foreground">
-                    {t('new-chat.no-teammates')}
+                  <li className="px-2 py-3 text-center text-xs text-muted-foreground">
+                    <p>{t('new-chat.no-teammates')}</p>
                   </li>
                 ) : (
                   suggestions.map((teammate) => (

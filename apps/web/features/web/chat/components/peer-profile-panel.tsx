@@ -102,9 +102,7 @@ export function PeerProfilePanel({
         </div>
 
         {isLoading ? (
-          <p className="px-4 py-6 text-center text-xs text-muted-foreground">
-            {t('info.loading')}
-          </p>
+          <p className="px-4 py-6 text-center text-xs text-muted-foreground">{t('info.loading')}</p>
         ) : !data ? (
           <p className="px-4 py-6 text-center text-xs text-muted-foreground">
             {t('info.unavailable')}
@@ -143,7 +141,9 @@ export function PeerProfilePanel({
               <div className="flex items-start gap-3">
                 <Globe className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
-                  <dt className="text-xs font-medium text-muted-foreground">{t('info.timezone')}</dt>
+                  <dt className="text-xs font-medium text-muted-foreground">
+                    {t('info.timezone')}
+                  </dt>
                   <dd className="text-sm">{data.timezone}</dd>
                 </div>
               </div>

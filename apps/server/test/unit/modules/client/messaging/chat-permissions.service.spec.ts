@@ -8,6 +8,8 @@ describe('ChatPermissionsService', () => {
   let repo: {
     findUserBasics: ReturnType<typeof vi.fn>;
     getMembership: ReturnType<typeof vi.fn>;
+    getDirectPeer: ReturnType<typeof vi.fn>;
+    getConversationMeta: ReturnType<typeof vi.fn>;
   };
   let service: ChatPermissionsService;
 
@@ -20,8 +22,10 @@ describe('ChatPermissionsService', () => {
 
   beforeEach(() => {
     repo = {
-      findUserBasics: vi.fn(),
+      findUserBasics: vi.fn().mockResolvedValue(enabled('u2')),
       getMembership: vi.fn(),
+      getDirectPeer: vi.fn().mockResolvedValue(null),
+      getConversationMeta: vi.fn(),
     };
     service = new ChatPermissionsService(repo as unknown as ChatPermissionsRepository);
   });
@@ -40,9 +44,38 @@ describe('ChatPermissionsService', () => {
       );
     });
 
-    it('should allow messaging any existing user (chat is open - no shared department required)', async () => {
+    it('should allow messaging any existing user (chat is open)', async () => {
       repo.findUserBasics.mockResolvedValue(enabled('u2'));
       await expect(service.assertCanDirectMessage('u1', 'u2')).resolves.toBeUndefined();
+    });
+  });
+
+  describe('canDirectMessage()', () => {
+    it('should be false for self', async () => {
+      await expect(service.canDirectMessage('u1', 'u1')).resolves.toBe(false);
+    });
+
+    it('should be true for any other user (chat is open)', async () => {
+      await expect(service.canDirectMessage('u1', 'u2')).resolves.toBe(true);
+    });
+  });
+
+  describe('assertDirectConversationAllowed()', () => {
+    it('should be a no-op (chat is open)', async () => {
+      await expect(service.assertDirectConversationAllowed('c1', 'u1')).resolves.toBeUndefined();
+    });
+  });
+
+  describe('filterEligibleTargets()', () => {
+    it('should keep every candidate except the actor (chat is open)', async () => {
+      await expect(service.filterEligibleTargets('u1', ['u2', 'u3'])).resolves.toEqual([
+        'u2',
+        'u3',
+      ]);
+    });
+
+    it('should drop the actor itself', async () => {
+      await expect(service.filterEligibleTargets('u1', ['u1', 'u2'])).resolves.toEqual(['u2']);
     });
   });
 

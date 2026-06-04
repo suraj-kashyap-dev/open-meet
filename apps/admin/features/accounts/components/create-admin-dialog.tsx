@@ -154,10 +154,7 @@ export function CreateAdminDialog({ open, onClose }: Props) {
 
           <div className="space-y-1.5">
             <Label htmlFor="create-role">{t('create-dialog.role')}</Label>
-            <Select
-              value={form.watch('roleId')}
-              onValueChange={(v) => form.setValue('roleId', v)}
-            >
+            <Select value={form.watch('roleId')} onValueChange={(v) => form.setValue('roleId', v)}>
               <SelectTrigger id="create-role">
                 <SelectValue />
               </SelectTrigger>

@@ -1,20 +1,16 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { CalendarRange, MessageSquare, MessagesSquare, Radio, Users, UsersRound } from 'lucide-react';
+import { CalendarRange, MessageSquare, MessagesSquare, Radio, Users } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { DeepAnalytics } from '@/features/dashboard/components/deep-analytics';
 import { RecentMeetingsTable } from '@/features/dashboard/components/recent-meetings-table';
 import { StatCard } from '@/features/dashboard/components/stat-card';
-import { TrendCard } from '@/features/dashboard/components/trend-card';
 import { UpcomingMeetingsTable } from '@/features/dashboard/components/upcoming-meetings-table';
 import { adminAnalyticsApi } from '@/features/analytics/services/analytics';
-import { useCan } from '@/features/auth/hooks/use-admin-auth';
 
 export default function AdminOverviewPage() {
   const t = useTranslations('dashboard');
-  const canViewDeep = useCan('analytics.view-deep');
   const { data, isLoading, error } = useQuery({
     queryKey: ['admin', 'overview'],
     queryFn: ({ signal }) => adminAnalyticsApi.overview(signal),
@@ -77,24 +73,11 @@ export default function AdminOverviewPage() {
           icon={MessagesSquare}
           hint={t('stats.groups-hint')}
         />
-        <StatCard
-          label={t('stats.departments')}
-          value={data.totals.departments.toLocaleString()}
-          icon={UsersRound}
-          hint={t('stats.departments-hint')}
-        />
-      </section>
-
-      <section className="grid gap-4 lg:grid-cols-2">
-        <TrendCard title={t('trends.signups')} series={data.trends.signups} />
-        <TrendCard title={t('trends.meetings')} series={data.trends.meetings} />
       </section>
 
       <UpcomingMeetingsTable meetings={data.upcomingMeetings} />
 
       <RecentMeetingsTable meetings={data.recentMeetings} />
-
-      {canViewDeep ? <DeepAnalytics /> : null}
     </main>
   );
 }

@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# membro} other {# membros}}",
     "actions": "Ações da conversa",
+    "info": "Informações da conversa",
     "clear": "Limpar chat",
     "delete": "Excluir chat",
     "clear-confirm-title": "Limpar chat?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Mensagens removidas da sua visualização",
     "delete-confirmed": "Chat excluído"
   },
+  "info": {
+    "title": "Detalhes",
+    "close": "Fechar",
+    "loading": "Carregando…",
+    "unavailable": "Perfil indisponível.",
+    "private": "Este perfil é privado.",
+    "bio": "Bio",
+    "email": "E-mail",
+    "timezone": "Fuso horário",
+    "joined": "Entrou"
+  },
   "presence": {
     "online": "Online",
     "offline": "Offline",
     "last-seen": "Visto por último {time}",
+    "last-seen-short": "Visto recentemente",
     "set-status": "Defina seu status",
     "available": "Disponível",
     "busy": "Ocupado",
@@ -78,8 +91,9 @@
     "pinned": "Fixada",
     "pin": "Fixar",
     "unpin": "Desafixar",
-    "save-message": "Salvar",
-    "unsave-message": "Remover dos salvos",
+    "starred": "Favoritada",
+    "save-message": "Favoritar",
+    "unsave-message": "Desfavoritar",
     "forward": "Encaminhar"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Admin",
     "you-badge": "Você",
     "promote": "Tornar admin",
+    "promoted": "Membro promovido a admin",
     "demote": "Remover admin",
+    "demoted": "Admin rebaixado a membro",
     "remove-member": "Remover do grupo",
+    "remove-member-confirm": "Remover {name} do grupo?",
+    "removed": "Membro removido",
+    "member-actions": "Ações do membro",
+    "members-added": "Membros adicionados",
     "leave": "Sair do grupo",
     "leave-confirm": "Sair deste grupo?",
+    "left": "Você saiu do grupo",
     "last-admin-warning": "Você é o único admin. Promova alguém primeiro.",
     "delete": "Excluir grupo",
     "delete-confirm": "Excluir este grupo? Não é possível desfazer.",
+    "deleted": "Grupo excluído",
+    "edit-details": "Editar detalhes",
+    "edit-title": "Editar grupo",
+    "edit-subtitle": "Atualize o nome e a descrição do grupo.",
+    "edit-saved": "Grupo atualizado",
+    "add-members": "Adicionar membros",
+    "add-members-title": "Adicionar membros",
+    "add-members-subtitle": "Convide mais pessoas para este grupo.",
+    "save": "Salvar",
+    "action-failed": "Algo deu errado",
     "groups-disabled": "Criação de grupos desativada pelo administrador."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Novo chat",
     "to-label": "Para:",
     "to-placeholder": "Digite um nome ou e-mail",
-    "no-teammates": "Nenhuma pessoa encontrada.",
+    "no-teammates": "Nenhuma pessoa encontrada nos seus departamentos.",
     "disabled": "Indisponível",
     "empty-title": "Você está iniciando uma nova conversa",
     "empty-subtitle": "Digite sua primeira mensagem abaixo.",
     "send-placeholder": "Digite sua primeira mensagem…"
-  },
-  "departments": {
-    "title": "Departamentos",
-    "subtitle": "Seus departamentos e canais.",
-    "empty": "Você ainda não é membro de nenhum departamento.",
-    "empty-title": "Ainda sem departamentos",
-    "empty-subtitle": "Um administrador adicionará você a um departamento para começar a colaborar.",
-    "no-channels": "Nenhum canal ainda."
   },
   "activity": {
     "title": "Atividade",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Quando alguém te @mencionar, aparecerá aqui."
   },
   "saved": {
-    "title": "Salvos",
-    "subtitle": "Mensagens que você salvou para depois.",
-    "empty": "Você ainda não salvou nenhuma mensagem.",
-    "empty-title": "Sem mensagens salvas",
-    "empty-subtitle": "Salve uma mensagem do chat para encontrá-la aqui."
+    "title": "Favoritas",
+    "subtitle": "Mensagens que você favoritou.",
+    "empty": "Você ainda não favoritou nenhuma mensagem.",
+    "empty-title": "Sem mensagens favoritas",
+    "empty-subtitle": "Favorite uma mensagem do chat para encontrá-la aqui.",
+    "view-chat": "Mensagens favoritas",
+    "chat-empty": "Nenhuma mensagem favorita neste chat ainda.",
+    "today": "Hoje",
+    "yesterday": "Ontem"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

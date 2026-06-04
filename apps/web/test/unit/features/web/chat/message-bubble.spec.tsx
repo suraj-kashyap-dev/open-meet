@@ -47,8 +47,9 @@ const messages = {
       edit: 'Edit',
       pin: 'Pin',
       unpin: 'Unpin',
-      'save-message': 'Save message',
-      'unsave-message': 'Unsave message',
+      starred: 'Starred',
+      'save-message': 'Star',
+      'unsave-message': 'Unstar',
       forward: 'Forward',
       delete: 'Delete',
     },
@@ -120,5 +121,37 @@ describe('<MessageBubble />', () => {
     expect(item).toHaveAttribute('data-mid', 'm1');
     expect(item?.querySelector('.chat-jump-target-end')).not.toBeNull();
     expect(item?.querySelector('.chat-jump-surface')).not.toBeNull();
+  });
+
+  it('shows the starred badge when the message is saved', () => {
+    render(
+      <NextIntlClientProvider locale="en" messages={messages}>
+        <ul>
+          <MessageBubble
+            message={{ ...buildMessage(), saved: true }}
+            isMe
+            isGroupHead={false}
+            isGroupTail={false}
+            showSenderName={false}
+            isLastOwn={false}
+            canPost={false}
+            members={[]}
+            currentUserId="u1"
+            formatSize={(bytes) => `${bytes}`}
+            onReply={vi.fn()}
+            onReact={vi.fn()}
+            onEdit={vi.fn()}
+            onDelete={vi.fn()}
+            onVotePoll={vi.fn()}
+            onJumpToParent={vi.fn()}
+            onPin={vi.fn()}
+            onSave={vi.fn()}
+            onForward={vi.fn()}
+          />
+        </ul>
+      </NextIntlClientProvider>,
+    );
+
+    expect(screen.getByText('Starred')).toBeInTheDocument();
   });
 });

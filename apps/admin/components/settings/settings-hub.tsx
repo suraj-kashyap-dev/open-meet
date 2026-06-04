@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  KeyRound,
-  Palette,
-  ShieldCheck,
-  SlidersHorizontal,
-  type LucideIcon,
-} from 'lucide-react';
+import { KeyRound, Palette, ShieldCheck, SlidersHorizontal, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import type { AdminPermissionKey } from '@open-meet/types';

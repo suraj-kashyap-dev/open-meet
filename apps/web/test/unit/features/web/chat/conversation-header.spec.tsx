@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ConversationDto } from '@open-meet/types';
@@ -46,6 +46,8 @@ vi.mock('@/features/web/chat/hooks/use-chat', () => ({
     mutate: createPollMutate,
     isPending: false,
   }),
+  useSaved: () => ({ data: { items: [] }, isLoading: false }),
+  useToggleSave: () => ({ mutate: () => {}, isPending: false }),
 }));
 
 vi.mock('@/features/web/chat/stores', () => ({
@@ -69,6 +71,26 @@ vi.mock('@/features/web/chat/components/poll-composer', () => ({
 
 vi.mock('@/features/web/chat/components/presence-dot', () => ({
   PresenceDot: () => null,
+}));
+
+vi.mock('@/features/web/chat/components/starred-messages-panel', () => ({
+  StarredMessagesPanel: () => null,
+}));
+
+// Render the confirm dialog synchronously (no Radix portal/animation) so the
+// menu→confirm→mutate flow is deterministic under parallel test runs.
+vi.mock('@open-meet/ui/dialog', () => ({
+  Dialog: ({ open, children }: { open: boolean; children: ReactNode }) =>
+    open ? <>{children}</> : null,
+  DialogContent: ({ children }: { children: ReactNode }) => (
+    <div role="dialog" aria-labelledby="dlg-title">
+      {children}
+    </div>
+  ),
+  DialogHeader: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  DialogFooter: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  DialogTitle: ({ children }: { children: ReactNode }) => <h2 id="dlg-title">{children}</h2>,
+  DialogDescription: ({ children }: { children: ReactNode }) => <p>{children}</p>,
 }));
 
 const messages = {
@@ -97,6 +119,9 @@ const messages = {
     },
     poll: {
       create: 'Create poll',
+    },
+    saved: {
+      'view-chat': 'Starred messages',
     },
     group: {
       'action-failed': 'Something went wrong',

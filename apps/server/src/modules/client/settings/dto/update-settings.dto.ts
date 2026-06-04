@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsEnum, IsOptional, Matches, ValidateIf, ValidateNested } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsOptional,
+  Matches,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
 
 import { MeetingDefaultView, ProfileVisibility } from '@open-meet/types';
 

@@ -62,7 +62,7 @@
     "max-duration-label": "最大ミーティング時間（分）",
     "max-duration-placeholder": "制限なし",
     "max-duration-help": "制限なしの場合は空欄のままにします。5 ～ 1440 分の間。",
-    "duration-range": "5 ～ 1440 の数値を入力するか、空欄のままにしてください。",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "変更を保存",
     "saving": "保存中…",
     "saved": "構成を保存しました",

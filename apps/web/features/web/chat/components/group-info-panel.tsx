@@ -19,11 +19,7 @@ import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
-import {
-  useDeleteGroup,
-  useRemoveGroupMember,
-  useSetGroupMemberRole,
-} from '../hooks/use-chat';
+import { useDeleteGroup, useRemoveGroupMember, useSetGroupMemberRole } from '../hooks/use-chat';
 import { useChatStore } from '../stores';
 import { GroupEditDialog } from './group-edit-dialog';
 import { GroupAddMembersDialog } from './group-add-members-dialog';
@@ -182,14 +178,8 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
                   className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-muted"
                 >
                   <div className="relative shrink-0">
-                    <UserAvatar
-                      user={{ name: member.name, avatar: member.avatar }}
-                      size="sm"
-                    />
-                    <PresenceDot
-                      userId={member.userId}
-                      className="absolute -bottom-0.5 -end-0.5"
-                    />
+                    <UserAvatar user={{ name: member.name, avatar: member.avatar }} size="sm" />
+                    <PresenceDot userId={member.userId} className="absolute -bottom-0.5 -end-0.5" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">
@@ -269,16 +259,8 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
         ) : null}
       </footer>
 
-      <GroupEditDialog
-        open={editOpen}
-        onOpenChange={setEditOpen}
-        conversation={conversation}
-      />
-      <GroupAddMembersDialog
-        open={addOpen}
-        onOpenChange={setAddOpen}
-        conversation={conversation}
-      />
+      <GroupEditDialog open={editOpen} onOpenChange={setEditOpen} conversation={conversation} />
+      <GroupAddMembersDialog open={addOpen} onOpenChange={setAddOpen} conversation={conversation} />
     </div>
   );
 }

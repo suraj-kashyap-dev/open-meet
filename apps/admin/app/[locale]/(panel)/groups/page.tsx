@@ -126,7 +126,10 @@ export default function AdminGroupsPage() {
       <CreateGroupDialog open={createOpen} onOpenChange={setCreateOpen} />
       <EditGroupDialog group={editing} onClose={() => setEditing(null)} />
 
-      <Dialog open={Boolean(deleting)} onOpenChange={(o) => (!o && !del.isPending ? setDeleting(null) : undefined)}>
+      <Dialog
+        open={Boolean(deleting)}
+        onOpenChange={(o) => (!o && !del.isPending ? setDeleting(null) : undefined)}
+      >
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>{t('delete-dialog.title')}</DialogTitle>
@@ -139,7 +142,11 @@ export default function AdminGroupsPage() {
             <Button variant="outline" onClick={() => setDeleting(null)} disabled={del.isPending}>
               {t('delete-dialog.cancel')}
             </Button>
-            <Button variant="destructive" onClick={() => void onConfirmDelete()} disabled={del.isPending}>
+            <Button
+              variant="destructive"
+              onClick={() => void onConfirmDelete()}
+              disabled={del.isPending}
+            >
               {del.isPending ? t('delete-dialog.deleting') : t('delete-dialog.confirm')}
             </Button>
           </DialogFooter>

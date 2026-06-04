@@ -96,11 +96,7 @@ export function PinnedMessagesPanel({
           <ScrollArea className="max-h-[min(60vh,22rem)]">
             <ul className="p-1.5">
               {items.map((message) => {
-                const preview = messagePreview(
-                  message,
-                  t('list.attachment'),
-                  t('bubble.deleted'),
-                );
+                const preview = messagePreview(message, t('list.attachment'), t('bubble.deleted'));
                 const sender = senderLabel(
                   message,
                   currentUserId,

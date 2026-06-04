@@ -62,7 +62,7 @@
     "max-duration-label": "Maximale Besprechungsdauer (Minuten)",
     "max-duration-placeholder": "Kein Limit",
     "max-duration-help": "Für kein Limit leer lassen. Zwischen 5 und 1440 Minuten.",
-    "duration-range": "Geben Sie eine Zahl zwischen 5 und 1440 ein oder lassen Sie das Feld leer.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Änderungen speichern",
     "saving": "Wird gespeichert…",
     "saved": "Konfiguration gespeichert",

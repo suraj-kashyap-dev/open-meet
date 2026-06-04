@@ -10,7 +10,6 @@ describe('AdminAnalyticsRepository', () => {
   let meeting: { count: ReturnType<typeof vi.fn>; findMany: ReturnType<typeof vi.fn> };
   let message: { count: ReturnType<typeof vi.fn> };
   let conversation: { count: ReturnType<typeof vi.fn> };
-  let department: { count: ReturnType<typeof vi.fn> };
   let $queryRaw: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
@@ -18,14 +17,12 @@ describe('AdminAnalyticsRepository', () => {
     meeting = { count: vi.fn().mockResolvedValue(4), findMany: vi.fn().mockResolvedValue([]) };
     message = { count: vi.fn().mockResolvedValue(20) };
     conversation = { count: vi.fn().mockResolvedValue(6) };
-    department = { count: vi.fn().mockResolvedValue(3) };
     $queryRaw = vi.fn().mockResolvedValue([]);
     repo = new AdminAnalyticsRepository({
       user,
       meeting,
       message,
       conversation,
-      department,
       $queryRaw,
     } as unknown as PrismaService);
   });
@@ -36,13 +33,6 @@ describe('AdminAnalyticsRepository', () => {
       expect(conversation.count).toHaveBeenCalledWith({
         where: { type: ConversationType.GROUP },
       });
-    });
-  });
-
-  describe('countDepartments()', () => {
-    it('should count all departments', async () => {
-      await expect(repo.countDepartments()).resolves.toBe(3);
-      expect(department.count).toHaveBeenCalledWith();
     });
   });
 

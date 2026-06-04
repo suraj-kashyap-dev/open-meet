@@ -18,7 +18,8 @@ test.describe('Web profile page', () => {
     await mockWebApi(page);
     await page.goto('/en/profile');
 
+    await expect(page.getByRole('link', { name: 'Profile' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Settings' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Meeting history' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Meeting history' })).toHaveCount(0);
   });
 });

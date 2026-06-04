@@ -1,6 +1,15 @@
 'use client';
 
-import { ArrowLeft, BarChart3, Eraser, Info, MoreVertical, Trash2, Users } from 'lucide-react';
+import {
+  ArrowLeft,
+  BarChart3,
+  Eraser,
+  Info,
+  MoreVertical,
+  Star,
+  Trash2,
+  Users,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -29,16 +38,13 @@ import { formatTime } from '@/components/shared/chat';
 import { Link, useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
-import {
-  useClearConversation,
-  useCreatePoll,
-  useDeleteConversation,
-} from '../hooks/use-chat';
+import { useClearConversation, useCreatePoll, useDeleteConversation } from '../hooks/use-chat';
 import { conversationDisplay } from '../lib/conversation-display';
 import { formatPresenceLabel } from '../lib/presence';
 import { useChatStore } from '../stores';
 import { PollComposer } from './poll-composer';
 import { PresenceDot } from './presence-dot';
+import { StarredMessagesPanel } from './starred-messages-panel';
 
 type ConfirmAction = 'clear' | 'delete';
 
@@ -55,6 +61,7 @@ export function ConversationHeader({
   const deleteConversation = useDeleteConversation();
   const createPoll = useCreatePoll(conversation.id);
   const [pollOpen, setPollOpen] = useState(false);
+  const [starredOpen, setStarredOpen] = useState(false);
   const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const display = conversationDisplay(conversation, currentUserId);
@@ -167,6 +174,10 @@ export function ConversationHeader({
             <Info className="me-2 h-4 w-4" />
             {t('header.info')}
           </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setStarredOpen(true)}>
+            <Star className="me-2 h-4 w-4" />
+            {t('saved.view-chat')}
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onSelect={() => setPollOpen(true)}>
             <BarChart3 className="me-2 h-4 w-4" />
@@ -190,6 +201,14 @@ export function ConversationHeader({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <StarredMessagesPanel
+        conversationId={conversation.id}
+        isGroup={display.isGroup}
+        currentUserId={currentUserId}
+        open={starredOpen}
+        onOpenChange={setStarredOpen}
+      />
 
       <PollComposer
         open={pollOpen}

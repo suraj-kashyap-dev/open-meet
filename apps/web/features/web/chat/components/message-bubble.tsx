@@ -2,14 +2,14 @@
 
 import {
   AlertTriangle,
-  Bookmark,
-  BookmarkX,
   CornerUpLeft,
   Forward,
   MoreHorizontal,
   Pencil,
   Pin,
   PinOff,
+  Star,
+  StarOff,
   Trash2,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -138,7 +138,7 @@ export function MessageBubble({
           </div>
         ) : null}
 
-        {!deleted && (message.pinned || message.priority !== 'NORMAL') ? (
+        {!deleted && (message.pinned || message.saved || message.priority !== 'NORMAL') ? (
           <div
             className={cn('flex items-center gap-2 px-1', isMe ? 'flex-row-reverse' : 'flex-row')}
           >
@@ -146,6 +146,12 @@ export function MessageBubble({
               <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                 <Pin className="h-3 w-3" />
                 {t('bubble.pinned')}
+              </span>
+            ) : null}
+            {message.saved ? (
+              <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                <Star className="h-3 w-3" />
+                {t('bubble.starred')}
               </span>
             ) : null}
             {message.priority !== 'NORMAL' ? (
@@ -350,9 +356,9 @@ export function MessageBubble({
 
             <DropdownMenuItem onSelect={() => onSave(message.id, message.saved)}>
               {message.saved ? (
-                <BookmarkX className="me-2 h-4 w-4" />
+                <StarOff className="me-2 h-4 w-4" />
               ) : (
-                <Bookmark className="me-2 h-4 w-4" />
+                <Star className="me-2 h-4 w-4" />
               )}
               {message.saved ? t('bubble.unsave-message') : t('bubble.save-message')}
             </DropdownMenuItem>

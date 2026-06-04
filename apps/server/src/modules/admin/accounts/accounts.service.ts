@@ -37,10 +37,7 @@ import { StorageService } from '../../../storage/storage.service';
 import { AdminRepository } from '../admin.repository';
 import { AdminPermissionResolver } from '../rbac/admin-permission-resolver.service';
 import { AdminRoleRepository } from '../rbac/admin-role.repository';
-import {
-  SYSTEM_ADMIN_ROLE_ID,
-  SYSTEM_MEMBER_ROLE_ID,
-} from '../rbac/admin-rbac-seed.service';
+import { SYSTEM_ADMIN_ROLE_ID, SYSTEM_MEMBER_ROLE_ID } from '../rbac/admin-rbac-seed.service';
 import { AdminInviteRepository, type AdminInviteWithInviter } from './admin-invite.repository';
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -72,11 +69,17 @@ export class AdminAccountsService {
 
   async list(): Promise<AdminAccountListResponseDto> {
     const rows = await this.admins.list();
-    const roleIds = Array.from(new Set(rows.map((r) => r.roleRecordId).filter((id): id is string => Boolean(id))));
+    const roleIds = Array.from(
+      new Set(rows.map((r) => r.roleRecordId).filter((id): id is string => Boolean(id))),
+    );
     const roles = await Promise.all(roleIds.map((id) => this.roles.findById(id)));
-    const byId = new Map(roles.filter((r): r is AdminRoleRecord => Boolean(r)).map((r) => [r.id, r]));
+    const byId = new Map(
+      roles.filter((r): r is AdminRoleRecord => Boolean(r)).map((r) => [r.id, r]),
+    );
     return {
-      items: rows.map((a) => this.toDto(a, a.roleRecordId ? byId.get(a.roleRecordId) ?? null : null)),
+      items: rows.map((a) =>
+        this.toDto(a, a.roleRecordId ? (byId.get(a.roleRecordId) ?? null) : null),
+      ),
     };
   }
 
@@ -157,7 +160,13 @@ export class AdminAccountsService {
     await this.sendInviteEmail({ email, name, token, expiresAt });
 
     const role = await this.roles.findById(roleId);
-    return this.toInviteDto({ ...invite, invitedBy: null, roleRecord: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null });
+    return this.toInviteDto({
+      ...invite,
+      invitedBy: null,
+      roleRecord: role
+        ? { id: role.id, name: role.name, permissionType: role.permissionType }
+        : null,
+    });
   }
 
   async resendInvite(id: string): Promise<AdminInviteDto> {
@@ -180,7 +189,9 @@ export class AdminAccountsService {
     return this.toInviteDto({
       ...updated,
       invitedBy: null,
-      roleRecord: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
+      roleRecord: role
+        ? { id: role.id, name: role.name, permissionType: role.permissionType }
+        : null,
     });
   }
 
@@ -476,9 +487,7 @@ export class AdminAccountsService {
       id: admin.id,
       email: admin.email,
       name: admin.name,
-      role: role
-        ? { id: role.id, name: role.name, permissionType: role.permissionType }
-        : null,
+      role: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
       avatar: admin.avatarKey ? this.storage.publicUrl(admin.avatarKey) : null,
       createdAt: admin.createdAt.toISOString(),
       lastLoginAt: admin.lastLoginAt?.toISOString() ?? null,

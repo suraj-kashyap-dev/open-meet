@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "Tableau de bord",
+    "analytics": "Analytique",
     "users": "Utilisateurs",
-    "departments": "Départements",
     "groups": "Groupes",
     "meetings": "Réunions",
     "settings": "Paramètres",

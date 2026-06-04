@@ -272,8 +272,7 @@ function filterNav(
   if (!me) return sections;
   const bypass = me.role?.permissionType === 'ALL';
   const granted = me.grantedSet;
-  const can = (key: string | undefined): boolean =>
-    !key || bypass || granted.includes(key);
+  const can = (key: string | undefined): boolean => !key || bypass || granted.includes(key);
 
   return sections
     .map((section) => {

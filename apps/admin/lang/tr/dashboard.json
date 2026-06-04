@@ -12,9 +12,7 @@
     "messages-24h": "24s Mesajlar",
     "messages-24h-hint": "Son 24 saatteki sohbet mesajları",
     "groups": "Gruplar",
-    "groups-hint": "Oluşturulan grup sohbetleri",
-    "departments": "Departmanlar",
-    "departments-hint": "Çalışma alanındaki departmanlar"
+    "groups-hint": "Oluşturulan grup sohbetleri"
   },
   "trends": {
     "signups": "Yeni kayıtlar",

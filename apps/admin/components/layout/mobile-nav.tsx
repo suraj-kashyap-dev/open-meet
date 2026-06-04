@@ -1,13 +1,6 @@
 'use client';
 
-import {
-  CalendarRange,
-  LayoutDashboard,
-  Menu,
-  Users,
-  UsersRound,
-  type LucideIcon,
-} from 'lucide-react';
+import { CalendarRange, LayoutDashboard, Menu, Users, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
@@ -29,7 +22,6 @@ const TABS: Tab[] = [
   { labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard },
   { labelKey: 'items.users', href: '/users', icon: Users },
   { labelKey: 'items.meetings', href: '/meetings', icon: CalendarRange },
-  { labelKey: 'items.departments', href: '/departments', icon: UsersRound },
 ];
 
 function itemClass(active: boolean): string {

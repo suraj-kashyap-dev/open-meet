@@ -37,22 +37,12 @@ describe('presence helpers', () => {
   });
 
   it('should expose the full backend-supported self-status list', () => {
-    expect(SELF_STATUS_OPTIONS).toEqual([
-      'AVAILABLE',
-      'BUSY',
-      'DND',
-      'BRB',
-      'AWAY',
-      'OFFLINE',
-    ]);
+    expect(SELF_STATUS_OPTIONS).toEqual(['AVAILABLE', 'BUSY', 'DND', 'BRB', 'AWAY', 'OFFLINE']);
   });
 
   it('should format explicit online states by their actual status', () => {
     expect(
-      formatPresenceLabel(
-        { online: true, status: 'BUSY', customText: null, lastSeen: null },
-        t,
-      ),
+      formatPresenceLabel({ online: true, status: 'BUSY', customText: null, lastSeen: null }, t),
     ).toBe('Busy');
   });
 

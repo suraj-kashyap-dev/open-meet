@@ -94,7 +94,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
   useEffect(() => {
     const nextMode = viewer?.isGuest
       ? MeetingDefaultView.GALLERY
-      : settings.data?.meetingPreferences.defaultView ?? MeetingDefaultView.GALLERY;
+      : (settings.data?.meetingPreferences.defaultView ?? MeetingDefaultView.GALLERY);
 
     setLayoutMode(nextMode);
   }, [code, setLayoutMode, settings.data?.meetingPreferences.defaultView, viewer?.isGuest]);
@@ -278,7 +278,12 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
           </aside>
         </div>
 
-        <MeetingControls code={code} socket={socket} hostId={meeting.hostId} authToken={authToken} />
+        <MeetingControls
+          code={code}
+          socket={socket}
+          hostId={meeting.hostId}
+          authToken={authToken}
+        />
 
         <ReactionOverlay />
       </div>

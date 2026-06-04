@@ -1,10 +1,10 @@
 import {
+  BarChart3,
   CalendarRange,
   LayoutDashboard,
   MessagesSquare,
   Settings,
   Users,
-  UsersRound,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -77,14 +77,26 @@ export function matchSettingsHubRoute(pathname: string): SettingsHubRoute | null
 export const nav: NavSection[] = [
   {
     labelKey: 'sections.overview',
-    items: [{ labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard }],
+    items: [
+      { labelKey: 'items.dashboard', href: '/', icon: LayoutDashboard },
+      {
+        labelKey: 'items.analytics',
+        href: '/analytics',
+        icon: BarChart3,
+        permission: 'analytics.view',
+      },
+    ],
   },
   {
     labelKey: 'sections.manage',
     items: [
       { labelKey: 'items.users', href: '/users', icon: Users, permission: 'users.view' },
-      { labelKey: 'items.departments', href: '/departments', icon: UsersRound, permission: 'departments.view' },
-      { labelKey: 'items.groups', href: '/groups', icon: MessagesSquare, permission: 'groups.view' },
+      {
+        labelKey: 'items.groups',
+        href: '/groups',
+        icon: MessagesSquare,
+        permission: 'groups.view',
+      },
       {
         labelKey: 'items.meetings',
         href: '/meetings',

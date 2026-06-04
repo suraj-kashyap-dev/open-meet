@@ -86,7 +86,8 @@
       "bio-too-long": "Biyografi çok uzun",
       "password-too-long": "Çok uzun",
       "password-too-short": "En az 8 karakter"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP veya GIF. En fazla {mb} MB.",

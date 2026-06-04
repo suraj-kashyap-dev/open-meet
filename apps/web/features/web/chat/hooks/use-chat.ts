@@ -349,23 +349,20 @@ export function useConversationState() {
       // and includeHidden=true) via prefix-matching setQueriesData. Mutate the
       // matched conversation's flags; the subsequent invalidateQueries refetch
       // reconciles whether the item should stay/leave each variant.
-      qc.setQueriesData<ConversationListDto>(
-        { queryKey: chatKeys.conversations() },
-        (list) => {
-          if (!list) return list;
-          const items = list.items.map((c) =>
-            c.id === conversationId
-              ? {
-                  ...c,
-                  ...(state.muted !== undefined ? { muted: state.muted } : {}),
-                  ...(state.pinned !== undefined ? { pinned: state.pinned } : {}),
-                  ...(state.hidden !== undefined ? { hidden: state.hidden } : {}),
-                }
-              : c,
-          );
-          return { items };
-        },
-      );
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) => {
+        if (!list) return list;
+        const items = list.items.map((c) =>
+          c.id === conversationId
+            ? {
+                ...c,
+                ...(state.muted !== undefined ? { muted: state.muted } : {}),
+                ...(state.pinned !== undefined ? { pinned: state.pinned } : {}),
+                ...(state.hidden !== undefined ? { hidden: state.hidden } : {}),
+              }
+            : c,
+        );
+        return { items };
+      });
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
   });
@@ -396,7 +393,9 @@ export function useDeleteConversation() {
       clearUnread(conversationId);
       qc.removeQueries({ queryKey: chatKeys.messages(conversationId) });
       qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
-        list ? { items: list.items.filter((conversation) => conversation.id !== conversationId) } : list,
+        list
+          ? { items: list.items.filter((conversation) => conversation.id !== conversationId) }
+          : list,
       );
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },

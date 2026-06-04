@@ -1014,9 +1014,7 @@ function uniqueEmails(input: string[]): string[] {
 }
 
 function parseUntilDate(value: string): Date | null {
-  const compact = value.match(
-    /^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})Z?)?$/,
-  );
+  const compact = value.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})Z?)?$/);
 
   if (compact) {
     const [, year, month, day, hours = '0', minutes = '0', seconds = '0'] = compact;

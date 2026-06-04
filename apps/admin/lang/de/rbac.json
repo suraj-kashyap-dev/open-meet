@@ -12,6 +12,7 @@
     "name": "Rolle",
     "description": "Beschreibung",
     "members": "Mitglieder",
+    "users": "Users",
     "type": "Typ",
     "actions": "Aktionen",
     "edit": "Bearbeiten",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "Benutzer",
       "view": "Benutzer ansehen",
+      "create": "Create users directly",
       "invite": "Benutzer einladen",
       "update": "Benutzer bearbeiten",
       "delete": "Benutzer löschen",
@@ -80,21 +82,6 @@
       "force-end": "Besprechungen erzwungen beenden",
       "delete": "Besprechungen löschen",
       "kick": "Teilnehmer entfernen"
-    },
-    "departments": {
-      "_self": "Abteilungen",
-      "view": "Abteilungen ansehen",
-      "create": "Abteilungen erstellen",
-      "update": "Abteilungen aktualisieren",
-      "delete": "Abteilungen löschen",
-      "manage-members": "Abteilungsmitglieder verwalten",
-      "channels": {
-        "_self": "Kanäle",
-        "view": "Kanäle ansehen",
-        "create": "Kanäle erstellen",
-        "update": "Kanäle aktualisieren",
-        "delete": "Kanäle löschen"
-      }
     },
     "groups": {
       "_self": "Gruppen",

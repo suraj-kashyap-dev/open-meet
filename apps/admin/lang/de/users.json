@@ -86,7 +86,8 @@
       "bio-too-long": "Biografie ist zu lang",
       "password-too-long": "Zu lang",
       "password-too-short": "Mindestens 8 Zeichen"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP oder GIF. Bis zu {mb} MB.",

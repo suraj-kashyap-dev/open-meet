@@ -23,8 +23,6 @@ export interface AdminApiMockOptions {
   branding?: typeof fixtures.branding;
   configuration?: typeof fixtures.configuration;
   inviteLookup?: typeof fixtures.inviteLookup | { errorStatus: number };
-  departments?: typeof fixtures.departmentsList;
-  departmentDetail?: typeof fixtures.departmentDetail;
   groups?: typeof fixtures.groupsList;
   groupDetail?: typeof fixtures.groupDetail;
   userInvites?: typeof fixtures.userInvites;
@@ -43,8 +41,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
   const branding = options.branding ?? fixtures.branding;
   const configuration = options.configuration ?? fixtures.configuration;
   const inviteLookup = options.inviteLookup ?? fixtures.inviteLookup;
-  const departments = options.departments ?? fixtures.departmentsList;
-  const departmentDetail = options.departmentDetail ?? fixtures.departmentDetail;
   const groups = options.groups ?? fixtures.groupsList;
   const groupDetail = options.groupDetail ?? fixtures.groupDetail;
   const userInvites = options.userInvites ?? fixtures.userInvites;
@@ -108,8 +104,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           return json(200, ok(branding));
         case '/admin/configuration':
           return json(200, ok(configuration));
-        case '/admin/departments':
-          return json(200, ok(departments));
         case '/admin/groups':
           return json(200, ok(groups));
         case '/admin/roles':
@@ -129,12 +123,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
       }
 
-
-      // Department detail (members): /admin/departments/:id
-      if (/^\/admin\/departments\/[^/]+$/.test(path)) {
-        return json(200, ok(departmentDetail));
-      }
-
       // Group detail (members): /admin/groups/:id
       if (/^\/admin\/groups\/[^/]+$/.test(path)) {
         return json(200, ok(groupDetail));
@@ -144,16 +132,11 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       const userMatch = /^\/admin\/users\/([^/]+)$/.exec(path);
       if (userMatch) {
         const found = users.items.find((u) => u.id === userMatch[1]) ?? users.items[0];
-        return found
-          ? json(200, ok(found))
-          : json(404, err('NOT_FOUND', 'User not found', 404));
+        return found ? json(200, ok(found)) : json(404, err('NOT_FOUND', 'User not found', 404));
       }
     }
 
     if (method === 'POST') {
-      if (path === '/admin/departments') {
-        return json(200, ok(departments.items[0]));
-      }
       if (path === '/admin/groups') {
         return json(200, ok(groupDetail));
       }

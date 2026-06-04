@@ -222,7 +222,9 @@ export function LobbyClient({ code }: { code: string }) {
             <div className="hidden space-y-2 pt-1 lg:block">
               <Button
                 onClick={onJoin}
-                disabled={nav.isNavigating || (!user && (userLoading || guestName.trim().length === 0))}
+                disabled={
+                  nav.isNavigating || (!user && (userLoading || guestName.trim().length === 0))
+                }
                 className="group w-full"
                 size="lg"
               >

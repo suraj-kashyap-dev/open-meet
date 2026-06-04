@@ -74,6 +74,6 @@ import { TeammatesService } from './teammates.service';
     GroupsRepository,
     GroupsService,
   ],
-  exports: [PresenceService],
+  exports: [PresenceService, ConversationsService, ChatBus, ChatPermissionsService],
 })
 export class MessagingModule {}

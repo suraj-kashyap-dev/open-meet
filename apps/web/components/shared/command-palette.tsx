@@ -2,7 +2,7 @@
 
 import {
   AtSign,
-  Bookmark,
+  Star,
   CalendarClock,
   History,
   LogOut,
@@ -179,7 +179,7 @@ export function CommandPalette() {
       key: 'saved',
       title: t('rail.saved'),
       description: tChat('saved.subtitle'),
-      icon: Bookmark,
+      icon: Star,
       action: () => runAction(() => nav.push('/saved')),
     },
     {
@@ -221,8 +221,7 @@ export function CommandPalette() {
 
   for (const item of (upcoming.data ?? []).slice(0, normalizedQuery ? 8 : 4)) {
     const title =
-      item.title ??
-      tHome('upcoming.default-title', { date: formatPaletteDate(item.scheduledFor) });
+      item.title ?? tHome('upcoming.default-title', { date: formatPaletteDate(item.scheduledFor) });
 
     if (!matches([title, item.code, item.hostName, formatPaletteDate(item.scheduledFor)])) {
       continue;
@@ -243,7 +242,14 @@ export function CommandPalette() {
       item.title ??
       tHome('recent.default-title', { date: formatPaletteDate(item.startedAt ?? item.createdAt) });
 
-    if (!matches([title, item.code, item.hostName, formatPaletteDate(item.startedAt ?? item.createdAt)])) {
+    if (
+      !matches([
+        title,
+        item.code,
+        item.hostName,
+        formatPaletteDate(item.startedAt ?? item.createdAt),
+      ])
+    ) {
       continue;
     }
 
@@ -300,8 +306,7 @@ export function CommandPalette() {
   const appearanceItems: ActionItem[] = [
     {
       key: 'toggle-theme',
-      title:
-        resolvedTheme === 'dark' ? t('command.switch-to-light') : t('command.switch-to-dark'),
+      title: resolvedTheme === 'dark' ? t('command.switch-to-light') : t('command.switch-to-dark'),
       description: tAccount('settings.appearance-description'),
       icon: resolvedTheme === 'dark' ? Sun : Moon,
       action: () =>

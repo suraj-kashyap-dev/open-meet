@@ -78,7 +78,6 @@ export interface AdminStatsOverviewDto {
     activeMeetings: number;
     messagesLast24h: number;
     groups: number;
-    departments: number;
   };
   trends: {
     signups: DailyCountPoint[];

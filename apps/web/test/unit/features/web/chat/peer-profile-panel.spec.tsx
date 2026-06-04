@@ -6,10 +6,12 @@ import type { ConversationMemberDto, PublicUserDto } from '@open-meet/types';
 
 import { PeerProfilePanel } from '@/features/web/chat/components/peer-profile-panel';
 
-const writeText = vi.fn();
-const toastError = vi.fn();
-const setInfoOpen = vi.fn();
-const usePublicUserMock = vi.fn();
+const { writeText, toastError, setInfoOpen, usePublicUserMock } = vi.hoisted(() => ({
+  writeText: vi.fn(),
+  toastError: vi.fn(),
+  setInfoOpen: vi.fn(),
+  usePublicUserMock: vi.fn(),
+}));
 
 vi.mock('sonner', () => ({
   toast: {

@@ -10,7 +10,7 @@
   "chat-link-label": "Sohbeti aç",
   "activity-link-label": "Etkinlik",
   "departments-link-label": "Departmanlar",
-  "saved-link-label": "Kaydedilenler",
+  "saved-link-label": "Yıldızlı",
   "search-placeholder": "Ara",
   "rail": {
     "label": "Birincil",
@@ -18,7 +18,7 @@
     "meet": "Toplantı",
     "departments": "Departmanlar",
     "activity": "Etkinlik",
-    "saved": "Kaydedilenler",
+    "saved": "Yıldızlı",
     "history": "Geçmiş"
   },
   "command": {

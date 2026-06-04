@@ -62,7 +62,7 @@
     "max-duration-label": "الحد الأقصى لمدة الاجتماع (دقائق)",
     "max-duration-placeholder": "بلا حد",
     "max-duration-help": "اتركه فارغًا لعدم وجود حد. بين 5 و1440 دقيقة.",
-    "duration-range": "أدخل رقمًا بين 5 و1440، أو اتركه فارغًا.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "حفظ التغييرات",
     "saving": "جارٍ الحفظ…",
     "saved": "تم حفظ الإعدادات",

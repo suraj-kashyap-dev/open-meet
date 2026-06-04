@@ -16,44 +16,46 @@ export class TeammatesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * Open directory: every user (except the caller), optionally filtered by a
-   * name/email query. Chat is open, so the people picker can reach anyone.
+   * Open directory: every other user (except the caller), optionally filtered by
+   * a name/email query. Chat is open, so anyone offered here can be messaged.
    */
   search(userId: string, query?: string): Promise<TeammateRow[]> {
     const trimmed = query?.trim();
 
-    return this.prisma.user.findMany({
-      where: {
-        id: { not: userId },
-        ...(trimmed
-          ? {
-              OR: [
-                { name: { contains: trimmed, mode: 'insensitive' as const } },
-                { email: { contains: trimmed, mode: 'insensitive' as const } },
-              ],
-            }
-          : {}),
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        avatarKey: true,
-        chatDisabled: true,
-        settings: { select: { allowDirectMessages: true } },
-      },
-      orderBy: { name: 'asc' },
-      take: 50,
-    }).then((rows) =>
-      rows.map((row) => ({
-        id: row.id,
-        name: row.name,
-        email: row.email,
-        avatarKey: row.avatarKey,
-        chatDisabled: row.chatDisabled,
-        allowDirectMessages: row.settings?.allowDirectMessages ?? true,
-      })),
-    );
+    return this.prisma.user
+      .findMany({
+        where: {
+          id: { not: userId },
+          ...(trimmed
+            ? {
+                OR: [
+                  { name: { contains: trimmed, mode: 'insensitive' as const } },
+                  { email: { contains: trimmed, mode: 'insensitive' as const } },
+                ],
+              }
+            : {}),
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          avatarKey: true,
+          chatDisabled: true,
+          settings: { select: { allowDirectMessages: true } },
+        },
+        orderBy: { name: 'asc' },
+        take: 50,
+      })
+      .then((rows) =>
+        rows.map((row) => ({
+          id: row.id,
+          name: row.name,
+          email: row.email,
+          avatarKey: row.avatarKey,
+          chatDisabled: row.chatDisabled,
+          allowDirectMessages: row.settings?.allowDirectMessages ?? true,
+        })),
+      );
   }
 
   /** Maps each teammate id to an existing DIRECT conversation id, when one exists. */

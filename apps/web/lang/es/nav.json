@@ -10,7 +10,7 @@
   "chat-link-label": "Abrir chat",
   "activity-link-label": "Actividad",
   "departments-link-label": "Departamentos",
-  "saved-link-label": "Guardados",
+  "saved-link-label": "Destacados",
   "search-placeholder": "Buscar",
   "rail": {
     "label": "Principal",
@@ -18,7 +18,7 @@
     "meet": "Reunión",
     "departments": "Departamentos",
     "activity": "Actividad",
-    "saved": "Guardados",
+    "saved": "Destacados",
     "history": "Historial"
   },
   "command": {

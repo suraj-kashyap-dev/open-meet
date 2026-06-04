@@ -328,9 +328,7 @@ export class AuthService {
     const isSelf = viewerId === targetId;
     const sharedSurface = isSelf || (await haveSharedSurface());
     const showFull =
-      isSelf ||
-      visibility === 'PUBLIC' ||
-      (visibility === 'PARTICIPANTS_ONLY' && sharedSurface);
+      isSelf || visibility === 'PUBLIC' || (visibility === 'PARTICIPANTS_ONLY' && sharedSurface);
     const avatar = this.avatars.resolveUrl(row.avatarKey) ?? row.avatarUrl ?? null;
 
     if (!showFull) {

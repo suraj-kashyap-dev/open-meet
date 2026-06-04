@@ -75,7 +75,7 @@ export class AdminMeetingsRepository {
 
   listActive() {
     return this.prisma.meeting.findMany({
-      where: { status: MeetingStatus.ACTIVE },
+      where: this.whereFromFilters({ status: MeetingStatus.ACTIVE }),
       select: { id: true, code: true },
     });
   }
@@ -91,7 +91,7 @@ export class AdminMeetingsRepository {
   markAllActiveEnded(): Promise<number> {
     return this.prisma.meeting
       .updateMany({
-        where: { status: MeetingStatus.ACTIVE },
+        where: this.whereFromFilters({ status: MeetingStatus.ACTIVE }),
         data: { status: MeetingStatus.ENDED, endedAt: new Date() },
       })
       .then((r) => r.count);

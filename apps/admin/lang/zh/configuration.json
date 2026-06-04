@@ -62,7 +62,7 @@
     "max-duration-label": "最长会议时长（分钟）",
     "max-duration-placeholder": "无限制",
     "max-duration-help": "留空表示无限制。介于 5 到 1440 分钟之间。",
-    "duration-range": "请输入 5 到 1440 之间的数字，或留空。",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "保存更改",
     "saving": "正在保存…",
     "saved": "配置已保存",

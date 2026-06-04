@@ -7,43 +7,32 @@ import { PrismaService } from '../../../database/prisma.service';
 export class ChatPermissionsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  findUserBasics(
-    userId: string,
-  ): Promise<
-    {
-      id: string;
-      name: string;
-      chatDisabled: boolean;
-      allowDirectMessages: boolean;
-    } | null
-  > {
-    return this.prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        name: true,
-        chatDisabled: true,
-        settings: { select: { allowDirectMessages: true } },
-      },
-    }).then((row) =>
-      row
-        ? {
-            id: row.id,
-            name: row.name,
-            chatDisabled: row.chatDisabled,
-            allowDirectMessages: row.settings?.allowDirectMessages ?? true,
-          }
-        : null,
-    );
-  }
-
-  /** Whether two users belong to at least one department in common. */
-  async shareDepartment(userAId: string, userBId: string): Promise<boolean> {
-    const count = await this.prisma.departmentMember.count({
-      where: { userId: userAId, department: { members: { some: { userId: userBId } } } },
-    });
-
-    return count > 0;
+  findUserBasics(userId: string): Promise<{
+    id: string;
+    name: string;
+    chatDisabled: boolean;
+    allowDirectMessages: boolean;
+  } | null> {
+    return this.prisma.user
+      .findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          name: true,
+          chatDisabled: true,
+          settings: { select: { allowDirectMessages: true } },
+        },
+      })
+      .then((row) =>
+        row
+          ? {
+              id: row.id,
+              name: row.name,
+              chatDisabled: row.chatDisabled,
+              allowDirectMessages: row.settings?.allowDirectMessages ?? true,
+            }
+          : null,
+      );
   }
 
   /** Whether two users share a conversation (DM or group). */
@@ -57,15 +46,11 @@ export class ChatPermissionsRepository {
     return count > 0;
   }
 
-  /** Used by PublicProfile PARTICIPANTS_ONLY visibility: viewer either shares
-   * a department OR a conversation with the target. */
+  /** Used by PublicProfile PARTICIPANTS_ONLY visibility: viewer shares a
+   * conversation with the target. */
   async haveSharedSurface(viewerId: string, targetId: string): Promise<boolean> {
     if (viewerId === targetId) return true;
-    const [department, conv] = await Promise.all([
-      this.shareDepartment(viewerId, targetId),
-      this.shareConversation(viewerId, targetId),
-    ]);
-    return department || conv;
+    return this.shareConversation(viewerId, targetId);
   }
 
   getMembership(conversationId: string, userId: string): Promise<ConversationMember | null> {

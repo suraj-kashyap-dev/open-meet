@@ -10,7 +10,7 @@
   "chat-link-label": "فتح الدردشة",
   "activity-link-label": "النشاط",
   "departments-link-label": "الأقسام",
-  "saved-link-label": "المحفوظات",
+  "saved-link-label": "المميّزة بنجمة",
   "search-placeholder": "بحث",
   "rail": {
     "label": "أساسي",
@@ -18,7 +18,7 @@
     "meet": "اجتماع",
     "departments": "الأقسام",
     "activity": "النشاط",
-    "saved": "المحفوظات",
+    "saved": "المميّزة بنجمة",
     "history": "السجل"
   },
   "command": {

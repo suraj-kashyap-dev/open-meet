@@ -16,7 +16,6 @@ describe('AdminAnalyticsService', () => {
       countActiveMeetings: vi.fn().mockResolvedValue(2),
       countMessagesSince: vi.fn().mockResolvedValue(33),
       countGroups: vi.fn().mockResolvedValue(4),
-      countDepartments: vi.fn().mockResolvedValue(3),
       dailyUserSignups: vi.fn().mockResolvedValue([]),
       dailyMeetings: vi.fn().mockResolvedValue([]),
       recentMeetings: vi.fn().mockResolvedValue([]),
@@ -46,7 +45,6 @@ describe('AdminAnalyticsService', () => {
         activeMeetings: 2,
         messagesLast24h: 33,
         groups: 4,
-        departments: 3,
       });
       // 14 days ago .. today inclusive = 15 points
       expect(res.trends.signups).toHaveLength(15);

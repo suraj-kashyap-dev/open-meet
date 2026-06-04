@@ -11,8 +11,7 @@ import { api } from '@/lib/api/client';
 export const adminRolesApi = {
   list: (signal?: AbortSignal) => api.get<RoleListResponseDto>('/admin/roles', { signal }),
 
-  detail: (id: string, signal?: AbortSignal) =>
-    api.get<RoleDto>(`/admin/roles/${id}`, { signal }),
+  detail: (id: string, signal?: AbortSignal) => api.get<RoleDto>(`/admin/roles/${id}`, { signal }),
 
   create: (body: CreateRoleDto) => api.post<RoleDto>('/admin/roles', body),
 

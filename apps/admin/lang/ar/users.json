@@ -86,7 +86,8 @@
       "bio-too-long": "النبذة طويلة جداً",
       "password-too-long": "طويلة جداً",
       "password-too-short": "8 أحرف على الأقل"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG أو JPEG أو WebP أو GIF. حتى {mb} ميجابايت.",

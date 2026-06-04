@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# miembro} other {# miembros}}",
     "actions": "Acciones de conversación",
+    "info": "Información de la conversación",
     "clear": "Vaciar chat",
     "delete": "Eliminar chat",
     "clear-confirm-title": "¿Vaciar chat?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Mensajes borrados de tu vista",
     "delete-confirmed": "Chat eliminado"
   },
+  "info": {
+    "title": "Detalles",
+    "close": "Cerrar",
+    "loading": "Cargando…",
+    "unavailable": "Perfil no disponible.",
+    "private": "Este perfil es privado.",
+    "bio": "Biografía",
+    "email": "Correo",
+    "timezone": "Zona horaria",
+    "joined": "Se unió"
+  },
   "presence": {
     "online": "En línea",
     "offline": "Desconectado",
     "last-seen": "Visto por última vez {time}",
+    "last-seen-short": "Visto hace poco",
     "set-status": "Establece tu estado",
     "available": "Disponible",
     "busy": "Ocupado",
@@ -78,8 +91,9 @@
     "pinned": "Fijado",
     "pin": "Fijar",
     "unpin": "Desfijar",
-    "save-message": "Guardar",
-    "unsave-message": "Quitar de guardados",
+    "starred": "Destacado",
+    "save-message": "Destacar",
+    "unsave-message": "Quitar de destacados",
     "forward": "Reenviar"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Administrador",
     "you-badge": "Tú",
     "promote": "Hacer administrador",
+    "promoted": "Miembro ascendido a administrador",
     "demote": "Quitar administrador",
+    "demoted": "Administrador degradado a miembro",
     "remove-member": "Quitar del grupo",
+    "remove-member-confirm": "¿Quitar a {name} del grupo?",
+    "removed": "Miembro eliminado",
+    "member-actions": "Acciones de miembro",
+    "members-added": "Miembros añadidos",
     "leave": "Salir del grupo",
     "leave-confirm": "¿Salir de este grupo?",
+    "left": "Saliste del grupo",
     "last-admin-warning": "Eres el único administrador. Promueve a alguien primero.",
     "delete": "Eliminar grupo",
     "delete-confirm": "¿Eliminar este grupo? Esto no se puede deshacer.",
+    "deleted": "Grupo eliminado",
+    "edit-details": "Editar detalles",
+    "edit-title": "Editar grupo",
+    "edit-subtitle": "Actualiza el nombre y la descripción del grupo.",
+    "edit-saved": "Grupo actualizado",
+    "add-members": "Añadir miembros",
+    "add-members-title": "Añadir miembros",
+    "add-members-subtitle": "Invita a más personas a este grupo.",
+    "save": "Guardar",
+    "action-failed": "Algo salió mal",
     "groups-disabled": "La creación de grupos está desactivada por el administrador."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Nuevo chat",
     "to-label": "Para:",
     "to-placeholder": "Escribe un nombre o correo",
-    "no-teammates": "No se encontraron personas.",
+    "no-teammates": "No se encontraron personas en tus departamentos.",
     "disabled": "No disponible",
     "empty-title": "Estás empezando una nueva conversación",
     "empty-subtitle": "Escribe tu primer mensaje abajo.",
     "send-placeholder": "Escribe tu primer mensaje…"
-  },
-  "departments": {
-    "title": "Departamentos",
-    "subtitle": "Tus departamentos y canales.",
-    "empty": "Aún no eres miembro de ningún departamento.",
-    "empty-title": "Aún no hay departamentos",
-    "empty-subtitle": "Un administrador te agregará a un departamento para empezar a colaborar.",
-    "no-channels": "Aún no hay canales."
   },
   "activity": {
     "title": "Actividad",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Cuando alguien te @mencione, aparecerá aquí."
   },
   "saved": {
-    "title": "Guardados",
-    "subtitle": "Mensajes que has guardado para más tarde.",
-    "empty": "Aún no has guardado ningún mensaje.",
-    "empty-title": "Sin mensajes guardados",
-    "empty-subtitle": "Guarda un mensaje del chat para encontrarlo aquí."
+    "title": "Destacados",
+    "subtitle": "Mensajes que has destacado.",
+    "empty": "Aún no has destacado ningún mensaje.",
+    "empty-title": "Sin mensajes destacados",
+    "empty-subtitle": "Destaca un mensaje del chat para encontrarlo aquí.",
+    "view-chat": "Mensajes destacados",
+    "chat-empty": "Aún no hay mensajes destacados en este chat.",
+    "today": "Hoy",
+    "yesterday": "Ayer"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

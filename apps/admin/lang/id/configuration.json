@@ -62,7 +62,7 @@
     "max-duration-label": "Durasi rapat maksimum (menit)",
     "max-duration-placeholder": "Tanpa batas",
     "max-duration-help": "Kosongkan untuk tanpa batas. Antara 5 dan 1440 menit.",
-    "duration-range": "Masukkan angka antara 5 dan 1440, atau kosongkan.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Simpan perubahan",
     "saving": "Menyimpan…",
     "saved": "Konfigurasi disimpan",

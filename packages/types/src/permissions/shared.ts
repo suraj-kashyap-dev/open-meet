@@ -73,9 +73,9 @@ export function unknownKeys(selected: readonly string[], tree: PermissionTreeNod
 }
 
 export interface PermissionCatalogNodeDto {
-  /** Full dot-key, e.g. `departments.manage-members`. */
+  /** Full dot-key, e.g. `groups.manage-members`. */
   key: string;
-  /** Translated label fetched via i18n; key form e.g. `rbac.permissions.departments.manage-members`. */
+  /** Translated label fetched via i18n; key form e.g. `rbac.permissions.groups.manage-members`. */
   labelKey: string;
   /** Empty array on leaves. */
   children: PermissionCatalogNodeDto[];
@@ -97,9 +97,7 @@ export function buildCatalogTree(
   return Object.entries(tree).map(([k, v]) => {
     const fullKey = prefix === '' ? k : `${prefix}.${k}`;
     const isLeaf = v === null;
-    const labelKey = isLeaf
-      ? `${labelPrefix}.${fullKey}`
-      : `${labelPrefix}.${fullKey}._self`;
+    const labelKey = isLeaf ? `${labelPrefix}.${fullKey}` : `${labelPrefix}.${fullKey}._self`;
     return {
       key: fullKey,
       labelKey,

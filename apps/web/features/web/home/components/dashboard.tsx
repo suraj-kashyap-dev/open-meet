@@ -201,12 +201,7 @@ function ActionCard({
               )}
             </ShimmerButton>
 
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onSchedule}
-              className="h-11 w-full"
-            >
+            <Button type="button" variant="outline" onClick={onSchedule} className="h-11 w-full">
               <CalendarClock className="h-3.5 w-3.5" />
               {t('instant.schedule-for-later')}
             </Button>

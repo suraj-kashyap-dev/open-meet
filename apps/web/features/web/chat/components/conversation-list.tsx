@@ -1,46 +1,28 @@
 'use client';
 
-import { ArrowLeft, ChevronRight, EyeOff, MessageSquare, Search, SquarePen, Users, Video, X } from 'lucide-react';
+import { ArrowLeft, ChevronRight, EyeOff, Search, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
-import { Button } from '@open-meet/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@open-meet/ui/dropdown-menu';
 import { Input } from '@open-meet/ui/input';
 
-
-import { NewGroupDialog } from './new-group-dialog';
-
-import { useCanCreateGroups, useCurrentUser } from '@/features/web/auth/hooks/use-auth';
-import { useCreateMeeting } from '@/features/web/meeting/hooks/use-meetings';
-import { useNavigateTransition } from '@/hooks/use-navigate-transition';
-import { Link, usePathname } from '@/i18n/navigation';
-import { ApiClientError } from '@/lib/api/client';
+import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { usePathname } from '@/i18n/navigation';
 
 import { conversationDisplay } from '../lib/conversation-display';
 import { useConversations } from '../hooks/use-chat';
 import { useChatStore } from '../stores';
+import { ConversationListActions } from './conversation-list-actions';
 import { ConversationListItem } from './conversation-list-item';
 
 export function ConversationList() {
   const t = useTranslations('chat');
-  const tNav = useTranslations('nav');
   const { data: user } = useCurrentUser();
   const { data, isLoading } = useConversations({ includeHidden: true });
   const pathname = usePathname();
-  const nav = useNavigateTransition();
-  const createMeeting = useCreateMeeting();
   const setPresence = useChatStore((s) => s.setPresence);
   const [filter, setFilter] = useState('');
   const [hiddenMode, setHiddenMode] = useState(false);
-  const [newGroupOpen, setNewGroupOpen] = useState(false);
-  const canCreateGroup = useCanCreateGroups();
 
   useEffect(() => {
     if (!data?.items) {
@@ -86,17 +68,6 @@ export function ConversationList() {
 
   const activeId = pathname.startsWith('/chat/') ? pathname.slice('/chat/'.length) : null;
 
-  const startMeeting = async () => {
-    try {
-      const meeting = await createMeeting.mutateAsync({});
-      nav.push(`/${meeting.code}/lobby`);
-    } catch (err) {
-      toast.error(
-        err instanceof ApiClientError ? err.message : tNav('command.create-meeting-error'),
-      );
-    }
-  };
-
   const all = data?.items ?? [];
   const hiddenChats = all.filter((c) => c.hidden);
   const visibleChats = all.filter((c) => !c.hidden);
@@ -108,76 +79,9 @@ export function ConversationList() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex items-center justify-end gap-1 px-3 py-2">
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={startMeeting}
-          disabled={createMeeting.isPending}
-          aria-label={t('list.start-meeting')}
-        >
-          <Video className="h-4 w-4" />
-        </Button>
-        {canCreateGroup ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                size="icon"
-                variant="ghost"
-                aria-label={t('list.compose')}
-                className="rounded-full border border-transparent hover:border-border data-[state=open]:border-border data-[state=open]:bg-muted"
-              >
-                <SquarePen className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" sideOffset={8} className="w-60 overflow-hidden p-1.5">
-              <DropdownMenuItem asChild className="p-0 focus:bg-transparent">
-                <Link
-                  href="/chat/new"
-                  className="flex items-center gap-3 rounded-md px-2.5 py-2 outline-none transition-colors hover:bg-muted focus-visible:bg-muted"
-                >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                    <MessageSquare className="h-4 w-4" />
-                  </span>
-                  <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                    <span className="truncate text-sm font-medium">
-                      {t('group.compose-chat')}
-                    </span>
-                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground rtl:rotate-180" />
-                  </span>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="p-0 focus:bg-transparent">
-                <button
-                  type="button"
-                  onClick={() => setNewGroupOpen(true)}
-                  className="flex w-full items-center gap-3 rounded-md px-2.5 py-2 text-start outline-none transition-colors hover:bg-muted focus-visible:bg-muted"
-                >
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                    <Users className="h-4 w-4" />
-                  </span>
-                  <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                    <span className="truncate text-sm font-medium">
-                      {t('group.compose-group')}
-                    </span>
-                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground rtl:rotate-180" />
-                  </span>
-                </button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <Button asChild size="icon" variant="ghost" aria-label={t('list.compose')}>
-            <Link href="/chat/new">
-              <SquarePen className="h-4 w-4" />
-            </Link>
-          </Button>
-        )}
-      </header>
+      <ConversationListActions />
 
-      <NewGroupDialog open={newGroupOpen} onOpenChange={setNewGroupOpen} />
-
-      <div className="px-3 pb-2">
+      <div className="px-3 py-2">
         <div className="relative">
           <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input

@@ -66,7 +66,7 @@ export function InviteUserDialog({
         </DialogHeader>
 
         <div className="space-y-4">
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor="invite-name">{t('invite.name')}</Label>
             <Input
               id="invite-name"
@@ -75,7 +75,7 @@ export function InviteUserDialog({
               autoFocus
             />
           </div>
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor="invite-email">{t('invite.email')}</Label>
             <Input
               id="invite-email"

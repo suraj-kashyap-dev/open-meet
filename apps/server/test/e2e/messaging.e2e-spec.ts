@@ -1,14 +1,12 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { PrismaService } from '@/database/prisma.service';
-
 import { createTestApp, http, registerUser, resetDb } from './setup-app';
 
 describe('Messaging / persistent chat (e2e)', () => {
   let app: NestFastifyApplication;
 
-  // Two teammates (share a department) + one outsider (shares no department with anyone).
+  // Chat is open: any user can DM any other user.
   let alice: { id: string; cookie: string };
   let bob: { id: string; cookie: string };
   let outsider: { id: string; cookie: string };
@@ -20,17 +18,6 @@ describe('Messaging / persistent chat (e2e)', () => {
   afterAll(async () => {
     await app.close();
   });
-
-  // Admin-managed departments gate DMs, so seed a shared Department + DepartmentMember rows
-  // directly via Prisma (there is no client-facing endpoint to create departments).
-  async function seedSharedDepartment(userIds: string[]): Promise<string> {
-    const prisma = app.get(PrismaService);
-    const department = await prisma.department.create({ data: { name: 'Engineering' } });
-    await prisma.departmentMember.createMany({
-      data: userIds.map((userId) => ({ departmentId: department.id, userId })),
-    });
-    return department.id;
-  }
 
   beforeEach(async () => {
     await resetDb(app);
@@ -54,9 +41,6 @@ describe('Messaging / persistent chat (e2e)', () => {
     alice = { id: a.user!.id, cookie: a.cookie };
     bob = { id: b.user!.id, cookie: b.cookie };
     outsider = { id: c.user!.id, cookie: c.cookie };
-
-    // Alice and Bob share a department; the outsider is left out on purpose.
-    await seedSharedDepartment([alice.id, bob.id]);
   });
 
   function openDirect(cookie: string, targetUserId: string) {
@@ -96,7 +80,7 @@ describe('Messaging / persistent chat (e2e)', () => {
   }
 
   describe('POST /api/messaging/conversations/direct', () => {
-    it('should open a DIRECT conversation with both users as members when the two share a department', async () => {
+    it('should open a DIRECT conversation with both users as members', async () => {
       const res = await openDirect(alice.cookie, bob.id);
 
       expect(res.status).toBe(201);
@@ -117,22 +101,19 @@ describe('Messaging / persistent chat (e2e)', () => {
       expect(second.body.data.id).toBe(first.body.data.id);
     });
 
-    it('should let either teammate open the same DIRECT thread', async () => {
+    it('should let either user open the same DIRECT thread', async () => {
       const fromAlice = await openDirect(alice.cookie, bob.id);
       const fromBob = await openDirect(bob.cookie, alice.id);
 
       expect(fromBob.body.data.id).toBe(fromAlice.body.data.id);
     });
 
-    it('should allow a DM with anyone, even with no shared department or group (chat is open)', async () => {
+    it('should allow opening a DM with any other user (chat is open)', async () => {
       const res = await openDirect(alice.cookie, outsider.id);
 
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
       expect(res.body.data.type).toBe('DIRECT');
-      const memberIds = (res.body.data.members as { userId: string }[]).map((m) => m.userId);
-      expect(memberIds).toContain(alice.id);
-      expect(memberIds).toContain(outsider.id);
     });
 
     it('should reject opening a DM with yourself with VALIDATION_FAILED', async () => {
@@ -333,26 +314,25 @@ describe('Messaging / persistent chat (e2e)', () => {
   });
 
   describe('GET /api/messaging/teammates', () => {
-    it('should return every other user (open directory), excluding only the caller', async () => {
+    it('should return every other user, excluding the caller (chat is open)', async () => {
       const res = await http(app).get('/api/messaging/teammates').set('Cookie', alice.cookie);
 
       expect(res.status).toBe(200);
       const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
       expect(ids).toContain(bob.id);
-      // Chat is open - even a user who shares no department is reachable.
       expect(ids).toContain(outsider.id);
       expect(ids).not.toContain(alice.id);
     });
 
     it('should filter the directory by a name/email search', async () => {
       const res = await http(app)
-        .get('/api/messaging/teammates?search=Outsider')
+        .get('/api/messaging/teammates?search=Bob')
         .set('Cookie', alice.cookie);
 
       expect(res.status).toBe(200);
       const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
-      expect(ids).toContain(outsider.id);
-      expect(ids).not.toContain(bob.id);
+      expect(ids).toContain(bob.id);
+      expect(ids).not.toContain(outsider.id);
     });
 
     it('should require authentication', async () => {

@@ -4,6 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 
 import { LiveKitModule } from '../../integrations/livekit/livekit.module';
 import { MailModule } from '../../integrations/mail/mail.module';
+import { MessagingModule } from '../client/messaging/messaging.module';
 import { AppConfigModule } from '../config/config.module';
 
 import { AdminAuthController } from './auth/auth.controller';
@@ -25,9 +26,6 @@ import { AdminUsersService } from './users/users.service';
 import { AdminUsersRepository } from './users/users.repository';
 import { AdminUserInviteService } from './users/user-invite.service';
 import { AdminUserInviteRepository } from './users/user-invite.repository';
-import { AdminDepartmentsController } from './departments/departments.controller';
-import { AdminDepartmentsService } from './departments/departments.service';
-import { AdminDepartmentsRepository } from './departments/departments.repository';
 import { AdminGroupsController } from './groups/groups.controller';
 import { AdminGroupsService } from './groups/groups.service';
 import { AdminGroupsRepository } from './groups/groups.repository';
@@ -43,6 +41,7 @@ import { AdminRbacModule } from './rbac/rbac.module';
     JwtModule.register({}),
     LiveKitModule,
     MailModule,
+    MessagingModule,
     AppConfigModule,
     AdminRbacModule,
   ],
@@ -53,7 +52,6 @@ import { AdminRbacModule } from './rbac/rbac.module';
     AdminAccountsController,
     AdminInviteController,
     AdminUsersController,
-    AdminDepartmentsController,
     AdminGroupsController,
     AdminBrandingController,
     AdminConfigurationController,
@@ -73,8 +71,6 @@ import { AdminRbacModule } from './rbac/rbac.module';
     AdminUsersRepository,
     AdminUserInviteService,
     AdminUserInviteRepository,
-    AdminDepartmentsService,
-    AdminDepartmentsRepository,
     AdminGroupsService,
     AdminGroupsRepository,
     AdminBootstrapService,

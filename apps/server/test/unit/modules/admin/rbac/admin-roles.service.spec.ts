@@ -51,20 +51,20 @@ describe('AdminRolesService', () => {
       repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
         Promise.resolve(makeRole({ permissions: data.permissions })),
       );
-      const dto = { name: 'Mods', permissions: ['departments'] };
+      const dto = { name: 'Mods', permissions: ['groups'] };
       const created = await service.create(dto);
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({
           permissions: [
-            'departments.create',
-            'departments.delete',
-            'departments.manage-members',
-            'departments.update',
-            'departments.view',
+            'groups.create',
+            'groups.delete',
+            'groups.manage-members',
+            'groups.update',
+            'groups.view',
           ],
         }),
       );
-      expect(created.permissions).toContain('departments.create');
+      expect(created.permissions).toContain('groups.create');
     });
 
     it('should reject duplicate names', async () => {
@@ -91,8 +91,9 @@ describe('AdminRolesService', () => {
 
     it('should store an empty list when permissionType is ALL', async () => {
       repo.findByName.mockResolvedValueOnce(null);
-      repo.create.mockImplementationOnce((data: { permissions: string[]; permissionType: string }) =>
-        Promise.resolve(makeRole(data)),
+      repo.create.mockImplementationOnce(
+        (data: { permissions: string[]; permissionType: string }) =>
+          Promise.resolve(makeRole(data)),
       );
       await service.create({ name: 'Super', permissionType: 'ALL', permissions: ['users.view'] });
       expect(repo.create).toHaveBeenCalledWith(
@@ -143,7 +144,9 @@ describe('AdminRolesService', () => {
 
     it('should allow editing your own role as long as critical keys remain', async () => {
       repo.findWithMemberCount.mockResolvedValueOnce(
-        makeRole({ permissions: ['roles.view', 'roles.update', 'admin-accounts.update', 'users.view'] }),
+        makeRole({
+          permissions: ['roles.view', 'roles.update', 'admin-accounts.update', 'users.view'],
+        }),
       );
       repo.update.mockImplementationOnce((_: string, data: { permissions: string[] }) =>
         Promise.resolve(makeRole({ permissions: data.permissions })),

@@ -288,50 +288,6 @@ export interface ActivityFeedDto {
   items: ActivityItemDto[];
 }
 
-// --- Admin: departments ---
-
-export interface AdminDepartmentMemberDto {
-  userId: string;
-  name: string;
-  email: string;
-  avatar: string | null;
-  joinedAt: string;
-}
-
-export interface AdminDepartmentDto {
-  id: string;
-  name: string;
-  description: string | null;
-  responsibleAdminId: string | null;
-  responsibleAdminName: string | null;
-  memberCount: number;
-  createdAt: string;
-}
-
-export interface AdminDepartmentDetailDto extends AdminDepartmentDto {
-  members: AdminDepartmentMemberDto[];
-}
-
-export interface AdminDepartmentListResponseDto {
-  items: AdminDepartmentDto[];
-}
-
-export interface AdminCreateDepartmentDto {
-  name: string;
-  description?: string | null;
-  responsibleAdminId?: string | null;
-}
-
-export interface AdminUpdateDepartmentDto {
-  name?: string;
-  description?: string | null;
-  responsibleAdminId?: string | null;
-}
-
-export interface AdminAddDepartmentMembersDto {
-  userIds: string[];
-}
-
 // --- Admin: groups (group conversations) ---
 
 export interface AdminGroupMemberDto {

@@ -86,7 +86,8 @@
       "bio-too-long": "자기소개가 너무 깁니다",
       "password-too-long": "너무 깁니다",
       "password-too-short": "8자 이상이어야 합니다"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP 또는 GIF. 최대 {mb}MB.",

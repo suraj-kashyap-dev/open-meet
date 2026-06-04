@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "Panel",
+    "analytics": "Analíticas",
     "users": "Usuarios",
-    "departments": "Departamentos",
     "groups": "Grupos",
     "meetings": "Reuniones",
     "settings": "Configuración",

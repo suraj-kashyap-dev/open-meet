@@ -19,7 +19,6 @@ describe('flattenLeaves()', () => {
   it('should match ADMIN_PERMISSION_KEYS for the admin tree', () => {
     expect(flattenLeaves(PERMISSION_TREE_ADMIN)).toEqual([...ADMIN_PERMISSION_KEYS]);
   });
-
 });
 
 describe('leavesUnder()', () => {
@@ -28,12 +27,12 @@ describe('leavesUnder()', () => {
   });
 
   it('should return all descendant leaves when key is a parent', () => {
-    expect(leavesUnder('departments', PERMISSION_TREE_ADMIN)).toEqual([
-      'departments.view',
-      'departments.create',
-      'departments.update',
-      'departments.delete',
-      'departments.manage-members',
+    expect(leavesUnder('groups', PERMISSION_TREE_ADMIN)).toEqual([
+      'groups.view',
+      'groups.create',
+      'groups.update',
+      'groups.delete',
+      'groups.manage-members',
     ]);
   });
 
@@ -58,9 +57,11 @@ describe('expandToLeaves()', () => {
   });
 
   it('should expand a mid-level parent and merge with explicit leaves', () => {
-    expect(
-      expandToLeaves(['analytics', 'users.view'], PERMISSION_TREE_ADMIN),
-    ).toEqual(['analytics.view', 'analytics.view-deep', 'users.view']);
+    expect(expandToLeaves(['analytics', 'users.view'], PERMISSION_TREE_ADMIN)).toEqual([
+      'analytics.view',
+      'analytics.view-deep',
+      'users.view',
+    ]);
   });
 
   it('should deduplicate when both a parent and one of its leaves are selected', () => {
@@ -75,13 +76,13 @@ describe('expandToLeaves()', () => {
 
 describe('unknownKeys()', () => {
   it('should return [] when every key is a valid leaf or parent', () => {
-    expect(unknownKeys(['users', 'users.view', 'departments'], PERMISSION_TREE_ADMIN)).toEqual([]);
+    expect(unknownKeys(['users', 'users.view', 'groups'], PERMISSION_TREE_ADMIN)).toEqual([]);
   });
 
   it('should return the keys that are neither leaves nor known parents', () => {
     expect(
-      unknownKeys(['users.view', 'mystery.leaf', 'departments.channels.fly'], PERMISSION_TREE_ADMIN),
-    ).toEqual(['mystery.leaf', 'departments.channels.fly']);
+      unknownKeys(['users.view', 'mystery.leaf', 'groups.channels.fly'], PERMISSION_TREE_ADMIN),
+    ).toEqual(['mystery.leaf', 'groups.channels.fly']);
     // (a removed-feature key is still correctly reported as unknown)
   });
 });

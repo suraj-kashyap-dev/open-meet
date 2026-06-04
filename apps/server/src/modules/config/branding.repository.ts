@@ -36,5 +36,4 @@ export class BrandingRepository {
       create: { id: SINGLETON_ID, accentColor },
     });
   }
-
 }

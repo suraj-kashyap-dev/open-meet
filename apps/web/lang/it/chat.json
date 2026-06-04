@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# membro} other {# membri}}",
     "actions": "Azioni conversazione",
+    "info": "Info conversazione",
     "clear": "Pulisci chat",
     "delete": "Elimina chat",
     "clear-confirm-title": "Pulire la chat?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Messaggi rimossi dalla tua vista",
     "delete-confirmed": "Chat eliminata"
   },
+  "info": {
+    "title": "Dettagli",
+    "close": "Chiudi",
+    "loading": "Caricamento…",
+    "unavailable": "Profilo non disponibile.",
+    "private": "Questo profilo è privato.",
+    "bio": "Bio",
+    "email": "Email",
+    "timezone": "Fuso orario",
+    "joined": "Iscritto"
+  },
   "presence": {
     "online": "Online",
     "offline": "Offline",
     "last-seen": "Ultimo accesso {time}",
+    "last-seen-short": "Visto di recente",
     "set-status": "Imposta il tuo stato",
     "available": "Disponibile",
     "busy": "Occupato",
@@ -78,8 +91,9 @@
     "pinned": "Fissato",
     "pin": "Fissa",
     "unpin": "Rimuovi dai fissati",
-    "save-message": "Salva",
-    "unsave-message": "Rimuovi dai salvati",
+    "starred": "Speciali",
+    "save-message": "Aggiungi a Speciali",
+    "unsave-message": "Rimuovi da Speciali",
     "forward": "Inoltra"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Admin",
     "you-badge": "Tu",
     "promote": "Promuovi ad admin",
+    "promoted": "Membro promosso ad admin",
     "demote": "Rimuovi admin",
+    "demoted": "Admin retrocesso a membro",
     "remove-member": "Rimuovi dal gruppo",
+    "remove-member-confirm": "Rimuovere {name} dal gruppo?",
+    "removed": "Membro rimosso",
+    "member-actions": "Azioni membro",
+    "members-added": "Membri aggiunti",
     "leave": "Esci dal gruppo",
     "leave-confirm": "Uscire da questo gruppo?",
+    "left": "Hai lasciato il gruppo",
     "last-admin-warning": "Sei l'unico admin. Promuovi qualcuno prima.",
     "delete": "Elimina gruppo",
     "delete-confirm": "Eliminare questo gruppo? L'azione è irreversibile.",
+    "deleted": "Gruppo eliminato",
+    "edit-details": "Modifica dettagli",
+    "edit-title": "Modifica gruppo",
+    "edit-subtitle": "Aggiorna il nome e la descrizione del gruppo.",
+    "edit-saved": "Gruppo aggiornato",
+    "add-members": "Aggiungi membri",
+    "add-members-title": "Aggiungi membri",
+    "add-members-subtitle": "Invita altre persone in questo gruppo.",
+    "save": "Salva",
+    "action-failed": "Qualcosa è andato storto",
     "groups-disabled": "La creazione di gruppi è disabilitata dall'amministratore."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Nuova chat",
     "to-label": "A:",
     "to-placeholder": "Inserisci nome o email",
-    "no-teammates": "Nessuna persona trovata.",
+    "no-teammates": "Nessuna persona trovata nei tuoi reparti.",
     "disabled": "Non disponibile",
     "empty-title": "Stai iniziando una nuova conversazione",
     "empty-subtitle": "Scrivi il tuo primo messaggio qui sotto.",
     "send-placeholder": "Scrivi il tuo primo messaggio…"
-  },
-  "departments": {
-    "title": "Reparti",
-    "subtitle": "I tuoi reparti e canali.",
-    "empty": "Non sei ancora membro di nessun reparto.",
-    "empty-title": "Ancora nessun reparto",
-    "empty-subtitle": "Un amministratore ti aggiungerà a un reparto per iniziare a collaborare.",
-    "no-channels": "Ancora nessun canale."
   },
   "activity": {
     "title": "Attività",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Quando qualcuno ti @menziona, apparirà qui."
   },
   "saved": {
-    "title": "Salvati",
-    "subtitle": "Messaggi che hai salvato per dopo.",
-    "empty": "Non hai ancora salvato alcun messaggio.",
-    "empty-title": "Nessun messaggio salvato",
-    "empty-subtitle": "Salva un messaggio dalla chat per trovarlo qui."
+    "title": "Speciali",
+    "subtitle": "Messaggi che hai aggiunto a Speciali.",
+    "empty": "Non hai ancora aggiunto nessun messaggio a Speciali.",
+    "empty-title": "Nessun messaggio speciale",
+    "empty-subtitle": "Aggiungi un messaggio a Speciali dalla chat per ritrovarlo qui.",
+    "view-chat": "Messaggi speciali",
+    "chat-empty": "Ancora nessun messaggio speciale in questa chat.",
+    "today": "Oggi",
+    "yesterday": "Ieri"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

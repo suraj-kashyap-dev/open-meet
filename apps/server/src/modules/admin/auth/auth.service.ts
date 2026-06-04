@@ -85,9 +85,7 @@ export class AdminAuthService {
     const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
     return {
       admin: this.toDto(admin, role),
-      role: role
-        ? { id: role.id, name: role.name, permissionType: role.permissionType }
-        : null,
+      role: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
       grantedSet: role ? [...role.permissions].sort() : [],
     };
   }
@@ -170,9 +168,7 @@ export class AdminAuthService {
       id: a.id,
       email: a.email,
       name: a.name,
-      role: role
-        ? { id: role.id, name: role.name, permissionType: role.permissionType }
-        : null,
+      role: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
       avatar: a.avatarKey ? this.storage.publicUrl(a.avatarKey) : null,
       createdAt: a.createdAt.toISOString(),
       lastLoginAt: a.lastLoginAt?.toISOString() ?? null,

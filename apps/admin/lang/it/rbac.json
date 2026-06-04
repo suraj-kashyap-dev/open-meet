@@ -12,6 +12,7 @@
     "name": "Ruolo",
     "description": "Descrizione",
     "members": "Membri",
+    "users": "Users",
     "type": "Tipo",
     "actions": "Azioni",
     "edit": "Modifica",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "Utenti",
       "view": "Visualizza utenti",
+      "create": "Create users directly",
       "invite": "Invita utenti",
       "update": "Modifica utenti",
       "delete": "Elimina utenti",
@@ -80,21 +82,6 @@
       "force-end": "Termina forzatamente le riunioni",
       "delete": "Elimina riunioni",
       "kick": "Espelli partecipanti"
-    },
-    "departments": {
-      "_self": "Reparti",
-      "view": "Visualizza reparti",
-      "create": "Crea reparti",
-      "update": "Aggiorna reparti",
-      "delete": "Elimina reparti",
-      "manage-members": "Gestisci membri del reparto",
-      "channels": {
-        "_self": "Canali",
-        "view": "Visualizza canali",
-        "create": "Crea canali",
-        "update": "Aggiorna canali",
-        "delete": "Elimina canali"
-      }
     },
     "groups": {
       "_self": "Gruppi",

@@ -62,7 +62,7 @@
     "max-duration-label": "Максимальная продолжительность встречи (минуты)",
     "max-duration-placeholder": "Без ограничения",
     "max-duration-help": "Оставьте пустым, чтобы не ограничивать. От 5 до 1440 минут.",
-    "duration-range": "Введите число от 5 до 1440 или оставьте пустым.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Сохранить изменения",
     "saving": "Сохранение…",
     "saved": "Конфигурация сохранена",

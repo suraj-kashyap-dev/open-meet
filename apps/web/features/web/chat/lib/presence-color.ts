@@ -12,12 +12,5 @@ export const STATUS_COLOR: Record<PresenceStatus, string> = {
 };
 
 /** Full self-settable status list, aligned with the backend enum. */
-export const SELF_STATUS_OPTIONS = [
-  'AVAILABLE',
-  'BUSY',
-  'DND',
-  'BRB',
-  'AWAY',
-  'OFFLINE',
-] as const;
+export const SELF_STATUS_OPTIONS = ['AVAILABLE', 'BUSY', 'DND', 'BRB', 'AWAY', 'OFFLINE'] as const;
 export type SelfStatus = (typeof SELF_STATUS_OPTIONS)[number];

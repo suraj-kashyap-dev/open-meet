@@ -62,7 +62,7 @@
     "max-duration-label": "Durée maximale de réunion (minutes)",
     "max-duration-placeholder": "Aucune limite",
     "max-duration-help": "Laissez vide pour aucune limite. Entre 5 et 1440 minutes.",
-    "duration-range": "Saisissez un nombre entre 5 et 1440, ou laissez vide.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Enregistrer les modifications",
     "saving": "Enregistrement…",
     "saved": "Configuration enregistrée",

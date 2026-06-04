@@ -12,6 +12,7 @@
     "name": "角色",
     "description": "描述",
     "members": "成员",
+    "users": "Users",
     "type": "类型",
     "actions": "操作",
     "edit": "编辑",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "用户",
       "view": "查看用户",
+      "create": "Create users directly",
       "invite": "邀请用户",
       "update": "编辑用户",
       "delete": "删除用户",
@@ -80,21 +82,6 @@
       "force-end": "强制结束会议",
       "delete": "删除会议",
       "kick": "移除参与者"
-    },
-    "departments": {
-      "_self": "部门",
-      "view": "查看部门",
-      "create": "创建部门",
-      "update": "更新部门",
-      "delete": "删除部门",
-      "manage-members": "管理部门成员",
-      "channels": {
-        "_self": "频道",
-        "view": "查看频道",
-        "create": "创建频道",
-        "update": "更新频道",
-        "delete": "删除频道"
-      }
     },
     "groups": {
       "_self": "群组",

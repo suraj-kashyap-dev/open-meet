@@ -38,31 +38,6 @@ enum MentionKind {
   EVERYONE
 }
 
-model Department {
-  id                 String             @id @default(cuid())
-  name               String
-  description        String?
-  responsibleAdminId String?
-  responsibleAdmin   Admin?             @relation("DepartmentResponsible", fields: [responsibleAdminId], references: [id], onDelete: SetNull)
-  createdAt          DateTime           @default(now())
-  updatedAt          DateTime           @updatedAt
-  members            DepartmentMember[]
-
-  @@index([responsibleAdminId])
-}
-
-model DepartmentMember {
-  id           String     @id @default(cuid())
-  departmentId String
-  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
-  userId       String
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  joinedAt     DateTime   @default(now())
-
-  @@unique([departmentId, userId])
-  @@index([userId])
-}
-
 model Conversation {
   id               String               @id @default(cuid())
   type             ConversationType

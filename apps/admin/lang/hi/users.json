@@ -86,7 +86,8 @@
       "bio-too-long": "परिचय बहुत लंबा है",
       "password-too-long": "बहुत लंबा",
       "password-too-short": "कम से कम 8 अक्षर"
-    }
+    },
+    "can-create-groups-hint": "Allow this user to create group conversations."
   },
   "avatar": {
     "helper": "PNG, JPEG, WebP या GIF। {mb} MB तक।",

@@ -24,8 +24,8 @@ export function MessageContent({
   const components: Components = {
     img({ src, alt }) {
       const url = typeof src === 'string' ? src : '';
-      
-      if (! url) {
+
+      if (!url) {
         return null;
       }
 
@@ -49,7 +49,9 @@ export function MessageContent({
             rel="noopener noreferrer"
             className={cn(
               'underline underline-offset-2',
-              inverted ? 'text-accent-foreground/90 decoration-accent-foreground/40' : 'text-accent',
+              inverted
+                ? 'text-accent-foreground/90 decoration-accent-foreground/40'
+                : 'text-accent',
             )}
           >
             {children}

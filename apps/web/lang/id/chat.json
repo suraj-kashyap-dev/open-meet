@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# anggota} other {# anggota}}",
     "actions": "Tindakan percakapan",
+    "info": "Info percakapan",
     "clear": "Bersihkan obrolan",
     "delete": "Hapus obrolan",
     "clear-confirm-title": "Bersihkan obrolan?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Pesan dihapus dari tampilan Anda",
     "delete-confirmed": "Obrolan dihapus"
   },
+  "info": {
+    "title": "Detail",
+    "close": "Tutup",
+    "loading": "Memuat…",
+    "unavailable": "Profil tidak tersedia.",
+    "private": "Profil ini pribadi.",
+    "bio": "Bio",
+    "email": "Email",
+    "timezone": "Zona waktu",
+    "joined": "Bergabung"
+  },
   "presence": {
     "online": "Online",
     "offline": "Offline",
     "last-seen": "Terakhir dilihat {time}",
+    "last-seen-short": "Terakhir dilihat baru-baru ini",
     "set-status": "Atur status Anda",
     "available": "Tersedia",
     "busy": "Sibuk",
@@ -78,8 +91,9 @@
     "pinned": "Disematkan",
     "pin": "Sematkan",
     "unpin": "Lepas sematan",
-    "save-message": "Simpan",
-    "unsave-message": "Hapus dari tersimpan",
+    "starred": "Berbintang",
+    "save-message": "Bintangi",
+    "unsave-message": "Hapus bintang",
     "forward": "Teruskan"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Admin",
     "you-badge": "Anda",
     "promote": "Jadikan admin",
+    "promoted": "Anggota dipromosikan menjadi admin",
     "demote": "Hapus admin",
+    "demoted": "Admin diturunkan menjadi anggota",
     "remove-member": "Hapus dari grup",
+    "remove-member-confirm": "Hapus {name} dari grup?",
+    "removed": "Anggota dihapus",
+    "member-actions": "Tindakan anggota",
+    "members-added": "Anggota ditambahkan",
     "leave": "Keluar dari grup",
     "leave-confirm": "Keluar dari grup ini?",
+    "left": "Anda keluar dari grup",
     "last-admin-warning": "Anda satu-satunya admin. Promosikan seseorang dulu.",
     "delete": "Hapus grup",
     "delete-confirm": "Hapus grup ini? Tidak dapat dibatalkan.",
+    "deleted": "Grup dihapus",
+    "edit-details": "Edit detail",
+    "edit-title": "Edit grup",
+    "edit-subtitle": "Perbarui nama dan deskripsi grup.",
+    "edit-saved": "Grup diperbarui",
+    "add-members": "Tambah anggota",
+    "add-members-title": "Tambah anggota",
+    "add-members-subtitle": "Undang lebih banyak orang ke grup ini.",
+    "save": "Simpan",
+    "action-failed": "Terjadi kesalahan",
     "groups-disabled": "Pembuatan grup dinonaktifkan oleh admin."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Obrolan baru",
     "to-label": "Kepada:",
     "to-placeholder": "Masukkan nama atau email",
-    "no-teammates": "Tidak ada orang ditemukan.",
+    "no-teammates": "Tidak ada orang ditemukan di departemen Anda.",
     "disabled": "Tidak tersedia",
     "empty-title": "Anda memulai percakapan baru",
     "empty-subtitle": "Ketik pesan pertama Anda di bawah.",
     "send-placeholder": "Ketik pesan pertama Anda…"
-  },
-  "departments": {
-    "title": "Departemen",
-    "subtitle": "Departemen dan saluran Anda.",
-    "empty": "Anda belum menjadi anggota departemen mana pun.",
-    "empty-title": "Belum ada departemen",
-    "empty-subtitle": "Admin akan menambahkan Anda ke departemen untuk mulai berkolaborasi.",
-    "no-channels": "Belum ada kanal."
   },
   "activity": {
     "title": "Aktivitas",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Saat seseorang @menyebut Anda, akan muncul di sini."
   },
   "saved": {
-    "title": "Tersimpan",
-    "subtitle": "Pesan yang Anda simpan untuk nanti.",
-    "empty": "Anda belum menyimpan pesan apa pun.",
-    "empty-title": "Tidak ada pesan tersimpan",
-    "empty-subtitle": "Simpan pesan dari obrolan untuk menemukannya di sini."
+    "title": "Berbintang",
+    "subtitle": "Pesan yang Anda beri bintang.",
+    "empty": "Anda belum memberi bintang pada pesan apa pun.",
+    "empty-title": "Tidak ada pesan berbintang",
+    "empty-subtitle": "Beri bintang pada pesan dari obrolan untuk menemukannya di sini.",
+    "view-chat": "Pesan berbintang",
+    "chat-empty": "Belum ada pesan berbintang di obrolan ini.",
+    "today": "Hari ini",
+    "yesterday": "Kemarin"
   },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",

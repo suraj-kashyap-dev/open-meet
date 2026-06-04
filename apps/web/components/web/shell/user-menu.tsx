@@ -4,6 +4,7 @@ import { LogOut, Settings, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@open-meet/ui/button';
+import { cn } from '@open-meet/ui/cn';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +16,15 @@ import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { useCurrentUser, useLogout } from '@/features/web/auth/hooks/use-auth';
 import { Link } from '@/i18n/navigation';
 
-export function UserMenu() {
+export function UserMenu({
+  appearance = 'icon',
+  collapsed = false,
+  className,
+}: {
+  appearance?: 'icon' | 'sidebar';
+  collapsed?: boolean;
+  className?: string;
+}) {
   const t = useTranslations('nav');
   const { data: user } = useCurrentUser();
   const logout = useLogout();
@@ -27,14 +36,38 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label={t('user-menu-label')}
-          className="rounded-full border border-transparent hover:border-border data-[state=open]:border-border"
-        >
-          <UserAvatar user={user} size="sm" className="ring-2 ring-background" />
-        </Button>
+        {appearance === 'sidebar' ? (
+          <button
+            type="button"
+            aria-label={t('user-menu-label')}
+            className={cn(
+              'flex w-full items-center gap-3 rounded-2xl border border-transparent bg-background/60 px-3 py-2.5 text-start outline-none transition-colors hover:bg-muted data-[state=open]:border-border/80 data-[state=open]:bg-muted',
+              collapsed &&
+                'h-10 w-10 justify-center rounded-full bg-transparent px-0 py-0 hover:bg-muted',
+              className,
+            )}
+          >
+            <UserAvatar user={user} size="sm" className="ring-2 ring-background" />
+            {!collapsed ? (
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-sm font-semibold">{user.name}</span>
+                <span className="block truncate text-xs text-muted-foreground">{user.email}</span>
+              </span>
+            ) : null}
+          </button>
+        ) : (
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={t('user-menu-label')}
+            className={cn(
+              'rounded-full border border-transparent hover:border-border data-[state=open]:border-border',
+              className,
+            )}
+          >
+            <UserAvatar user={user} size="sm" className="ring-2 ring-background" />
+          </Button>
+        )}
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" sideOffset={8} className="w-72 overflow-hidden p-0">

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ConversationMemberRole } from '@prisma/client';
 
 import { ApiErrorCode, ChatServerEvent, type ConversationDto } from '@open-meet/types';
@@ -45,24 +41,25 @@ export class GroupsService {
     const description = this.normalizeDescription(body.description);
 
     // Drop chat-disabled / unknown users silently - group creation never fails
-    // because one teammate was disabled mid-flow.
-    const invitable = await this.repo.pickInvitableUsers(
-      [...new Set(body.memberIds.filter((id) => id && id !== creatorId))],
-    );
+    // because one person was disabled mid-flow - then keep only those the
+    // creator may actually reach (shared department / grant).
+    const invitable = await this.repo.pickInvitableUsers([
+      ...new Set(body.memberIds.filter((id) => id && id !== creatorId)),
+    ]);
+    const eligible = await this.permissions.filterEligibleTargets(creatorId, invitable);
 
     const conversation = await this.repo.create({
       creatorId,
       title,
       description,
-      memberIds: invitable,
+      memberIds: eligible,
     });
 
     // Broadcast: each member's `user:` room gets a CONVERSATION_NEW so their
     // list refreshes; the new conversation room is joined lazily by sockets.
     const dto = await this.toDto(conversation.id, creatorId);
     for (const m of conversation.members) {
-      const perViewer =
-        m.userId === creatorId ? dto : await this.toDto(conversation.id, m.userId);
+      const perViewer = m.userId === creatorId ? dto : await this.toDto(conversation.id, m.userId);
       this.bus.emit(userRoom(m.userId), ChatServerEvent.CONVERSATION_NEW, perViewer);
     }
 
@@ -78,7 +75,8 @@ export class GroupsService {
 
     const data: { title?: string; description?: string | null } = {};
     if (body.title !== undefined) data.title = this.requireTitle(body.title);
-    if (body.description !== undefined) data.description = this.normalizeDescription(body.description);
+    if (body.description !== undefined)
+      data.description = this.normalizeDescription(body.description);
 
     if (Object.keys(data).length > 0) {
       await this.repo.update(conversationId, data);
@@ -96,7 +94,8 @@ export class GroupsService {
 
     const existing = new Set(await this.repo.memberUserIds(conversationId));
     const candidate = [...new Set(userIds.filter((id) => id && !existing.has(id)))];
-    const invitable = await this.repo.pickInvitableUsers(candidate);
+    const invitableRaw = await this.repo.pickInvitableUsers(candidate);
+    const invitable = await this.permissions.filterEligibleTargets(actorId, invitableRaw);
 
     if (invitable.length === 0) {
       // Nothing to do; still return current state so the caller's cache stays right.
@@ -115,11 +114,7 @@ export class GroupsService {
   }
 
   /** Either an admin kick (actor != target) or a self-leave (actor == target). */
-  async removeMember(
-    conversationId: string,
-    actorId: string,
-    targetUserId: string,
-  ): Promise<void> {
+  async removeMember(conversationId: string, actorId: string, targetUserId: string): Promise<void> {
     const { membership } = await this.permissions.assertGroupAdminOrSelf(
       conversationId,
       actorId,
@@ -138,8 +133,7 @@ export class GroupsService {
         if (members.length > 1) {
           throw new BadRequestException({
             code: ApiErrorCode.LAST_ADMIN,
-            message:
-              "You're the only admin. Promote someone else before leaving.",
+            message: "You're the only admin. Promote someone else before leaving.",
           });
         }
       }
@@ -167,10 +161,7 @@ export class GroupsService {
     // Last-admin guard on demotion.
     if (role === ConversationMemberRole.MEMBER) {
       const admins = await this.permissions.groupAdminCount(conversationId);
-      const target = await this.permissions.assertConversationMember(
-        conversationId,
-        targetUserId,
-      );
+      const target = await this.permissions.assertConversationMember(conversationId, targetUserId);
       if (target.role === ConversationMemberRole.ADMIN && admins <= 1) {
         throw new BadRequestException({
           code: ApiErrorCode.LAST_ADMIN,

@@ -21,8 +21,17 @@ export class ChatPermissionsService {
   constructor(private readonly repo: ChatPermissionsRepository) {}
 
   /**
-   * Open DMs: any user may message any other user. The only guards are
-   * structural - you can't DM yourself, and the target must exist.
+   * Eligibility predicate "may A direct-message B?". Chat is open: anyone may
+   * message anyone else (only self is excluded). Pure boolean - drives recipient
+   * picker scoping and group member-add gating without throwing.
+   */
+  canDirectMessage(actorId: string, targetId: string): Promise<boolean> {
+    return Promise.resolve(actorId !== targetId);
+  }
+
+  /**
+   * Open DMs: you can start a conversation with anyone. Only self (400) and a
+   * missing target (404) are rejected.
    */
   async assertCanDirectMessage(actorId: string, targetId: string): Promise<void> {
     if (actorId === targetId) {
@@ -40,6 +49,19 @@ export class ChatPermissionsService {
         message: 'User not found.',
       });
     }
+  }
+
+  /** Chat is open - existing DIRECT threads are always allowed. No-op. */
+  async assertDirectConversationAllowed(_conversationId: string, _userId: string): Promise<void> {
+    return Promise.resolve();
+  }
+
+  /**
+   * Returns the subset of `candidateIds` the actor may reach. With open chat
+   * that's everyone except the actor themselves.
+   */
+  filterEligibleTargets(actorId: string, candidateIds: string[]): Promise<string[]> {
+    return Promise.resolve(candidateIds.filter((id) => id !== actorId));
   }
 
   /** Read gate: returns the membership row or throws if the user isn't a member. */

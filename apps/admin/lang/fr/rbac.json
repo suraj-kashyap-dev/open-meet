@@ -12,6 +12,7 @@
     "name": "Rôle",
     "description": "Description",
     "members": "Membres",
+    "users": "Users",
     "type": "Type",
     "actions": "Actions",
     "edit": "Modifier",
@@ -68,6 +69,7 @@
     "users": {
       "_self": "Utilisateurs",
       "view": "Voir les utilisateurs",
+      "create": "Create users directly",
       "invite": "Inviter des utilisateurs",
       "update": "Modifier les utilisateurs",
       "delete": "Supprimer des utilisateurs",
@@ -80,21 +82,6 @@
       "force-end": "Forcer la fin des réunions",
       "delete": "Supprimer des réunions",
       "kick": "Expulser des participants"
-    },
-    "departments": {
-      "_self": "Départements",
-      "view": "Voir les départements",
-      "create": "Créer des départements",
-      "update": "Mettre à jour les départements",
-      "delete": "Supprimer des départements",
-      "manage-members": "Gérer les membres du département",
-      "channels": {
-        "_self": "Canaux",
-        "view": "Voir les canaux",
-        "create": "Créer des canaux",
-        "update": "Mettre à jour les canaux",
-        "delete": "Supprimer des canaux"
-      }
     },
     "groups": {
       "_self": "Groupes",

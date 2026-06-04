@@ -51,7 +51,6 @@ export class AdminAnalyticsService {
       activeMeetings,
       messagesLast24h,
       groups,
-      departments,
       signupRows,
       meetingRows,
       recentMeetings,
@@ -62,7 +61,6 @@ export class AdminAnalyticsService {
       this.stats.countActiveMeetings(),
       this.stats.countMessagesSince(twentyFourHoursAgo),
       this.stats.countGroups(),
-      this.stats.countDepartments(),
       this.stats.dailyUserSignups(fourteenDaysAgo),
       this.stats.dailyMeetings(fourteenDaysAgo),
       this.stats.recentMeetings(10),
@@ -70,7 +68,7 @@ export class AdminAnalyticsService {
     ]);
 
     return {
-      totals: { users, meetings, activeMeetings, messagesLast24h, groups, departments },
+      totals: { users, meetings, activeMeetings, messagesLast24h, groups },
       trends: {
         signups: this.fillDailySeries(signupRows, fourteenDaysAgo, now),
         meetings: this.fillDailySeries(meetingRows, fourteenDaysAgo, now),

@@ -98,6 +98,8 @@ export class AdminMeetingsService {
 
     return {
       ...this.toDto(row, activeParticipants),
+      participantCount: row.participants.length,
+      activeParticipantCount: activeParticipants,
       participants,
     };
   }

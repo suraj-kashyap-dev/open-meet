@@ -31,7 +31,9 @@ export function AppearanceSettings({ settings }: { settings: UserSettingsDto | u
           <p className="text-xs text-muted-foreground">{t('appearance.theme-hint')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground">{theme === 'dark' ? t('appearance.dark') : t('appearance.light')}</span>
+          <span className="text-xs text-muted-foreground">
+            {theme === 'dark' ? t('appearance.dark') : t('appearance.light')}
+          </span>
           <ThemeToggle />
         </div>
       </div>

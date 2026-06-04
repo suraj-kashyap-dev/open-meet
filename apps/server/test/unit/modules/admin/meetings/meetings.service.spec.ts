@@ -80,6 +80,38 @@ describe('AdminMeetingsService', () => {
       meetings.findById.mockResolvedValueOnce(null);
       await expect(service.getById('nope')).rejects.toBeInstanceOf(NotFoundException);
     });
+
+    it('should return every participant (no scoping)', async () => {
+      meetings.findById.mockResolvedValueOnce(
+        makeRow({
+          participants: [
+            {
+              id: 'p1',
+              userId: 'u1',
+              role: 'HOST',
+              joinedAt: new Date('2026-05-01T10:00:00Z'),
+              leftAt: null,
+              user: { id: 'u1', name: 'One', email: 'one@x.com', avatarKey: null },
+            },
+            {
+              id: 'p2',
+              userId: 'u2',
+              role: 'GUEST',
+              joinedAt: new Date('2026-05-01T10:05:00Z'),
+              leftAt: null,
+              user: { id: 'u2', name: 'Two', email: 'two@x.com', avatarKey: null },
+            },
+          ],
+        }),
+      );
+
+      const res = await service.getById('m1');
+
+      expect(res.participants).toHaveLength(2);
+      expect(res.participants.map((p) => p.userId)).toEqual(['u1', 'u2']);
+      expect(res.participantCount).toBe(2);
+      expect(res.activeParticipantCount).toBe(3);
+    });
   });
 
   describe('forceEnd()', () => {
@@ -102,6 +134,8 @@ describe('AdminMeetingsService', () => {
       const res = await service.bulkEndActive();
       expect(res).toEqual({ ended: 2 });
       expect(livekit.closeRoom).toHaveBeenCalledWith('abc');
+      expect(meetings.listActive).toHaveBeenCalled();
+      expect(meetings.markAllActiveEnded).toHaveBeenCalled();
     });
   });
 

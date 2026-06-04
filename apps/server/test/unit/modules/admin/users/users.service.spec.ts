@@ -63,7 +63,11 @@ describe('AdminUsersService', () => {
   describe('list()', () => {
     it('should clamp paging, trim the search, and return meeting counts in the DTO', async () => {
       const res = await service.list({ page: 0, pageSize: 999, search: '  jane ' } as never);
-      expect(users.list).toHaveBeenCalledWith({ skip: 0, take: 100, search: 'jane' });
+      expect(users.list).toHaveBeenCalledWith({
+        skip: 0,
+        take: 100,
+        search: 'jane',
+      });
       expect(res).toMatchObject({ total: 1, page: 1, pageSize: 100 });
       expect(res.items[0]).toMatchObject({ meetingsHosted: 2, meetingsAttended: 5 });
     });
@@ -79,7 +83,11 @@ describe('AdminUsersService', () => {
     it('should reject an email already used by an existing account', async () => {
       users.emailTaken.mockResolvedValueOnce({ id: 'other' });
       await expect(
-        service.create({ name: 'Jane', email: 'jane@x.com', password: 'changeme' } as never),
+        service.create({
+          name: 'Jane',
+          email: 'jane@x.com',
+          password: 'changeme',
+        } as never),
       ).rejects.toBeInstanceOf(ConflictException);
       expect(users.create).not.toHaveBeenCalled();
     });
@@ -135,6 +143,11 @@ describe('AdminUsersService', () => {
         bio: null,
         passwordHash: 'HASH',
       });
+    });
+
+    it('should set the per-user canCreateGroups flag', async () => {
+      await service.update('u1', { canCreateGroups: false } as never);
+      expect(users.update).toHaveBeenCalledWith('u1', { canCreateGroups: false });
     });
   });
 
@@ -224,13 +237,6 @@ describe('AdminUsersService', () => {
 
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: null });
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/a.png');
-    });
-  });
-
-  describe('update()', () => {
-    it('should set the per-user canCreateGroups flag', async () => {
-      await service.update('u1', { canCreateGroups: false });
-      expect(users.update).toHaveBeenCalledWith('u1', { canCreateGroups: false });
     });
   });
 });

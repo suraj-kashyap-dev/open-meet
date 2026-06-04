@@ -62,7 +62,7 @@
     "max-duration-label": "Duración máxima de la reunión (minutos)",
     "max-duration-placeholder": "Sin límite",
     "max-duration-help": "Deja vacío para no establecer límite. Entre 5 y 1440 minutos.",
-    "duration-range": "Ingresa un número entre 5 y 1440, o déjalo vacío.",
+    "allow-guest-join-help": "Let people without an account join meetings via a link.",
     "save": "Guardar cambios",
     "saving": "Guardando…",
     "saved": "Configuración guardada",

@@ -10,7 +10,7 @@
   "chat-link-label": "チャットを開く",
   "activity-link-label": "アクティビティ",
   "departments-link-label": "部署",
-  "saved-link-label": "保存済み",
+  "saved-link-label": "スター付き",
   "search-placeholder": "検索",
   "rail": {
     "label": "メイン",
@@ -18,7 +18,7 @@
     "meet": "ミート",
     "departments": "部署",
     "activity": "アクティビティ",
-    "saved": "保存済み",
+    "saved": "スター付き",
     "history": "履歴"
   },
   "command": {

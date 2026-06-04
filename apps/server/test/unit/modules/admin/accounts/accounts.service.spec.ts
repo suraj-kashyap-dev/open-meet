@@ -36,7 +36,12 @@ const memberRole = {
   updatedAt: new Date('2026-01-01T00:00:00Z'),
 };
 
-const adminRole = { ...memberRole, id: 'role_sys_admin', name: 'Administrator', permissionType: 'ALL' as const };
+const adminRole = {
+  ...memberRole,
+  id: 'role_sys_admin',
+  name: 'Administrator',
+  permissionType: 'ALL' as const,
+};
 
 describe('AdminAccountsService', () => {
   let service: AdminAccountsService;
@@ -119,9 +124,13 @@ describe('AdminAccountsService', () => {
     i18n = { translate: vi.fn((key: string) => key) };
     storage = { publicUrl: vi.fn((key: string) => `https://cdn.example/${key}`) };
     roles = {
-      findById: vi.fn().mockImplementation((id: string) =>
-        Promise.resolve(id === 'role_sys_admin' ? adminRole : id === 'role_sys_member' ? memberRole : null),
-      ),
+      findById: vi
+        .fn()
+        .mockImplementation((id: string) =>
+          Promise.resolve(
+            id === 'role_sys_admin' ? adminRole : id === 'role_sys_member' ? memberRole : null,
+          ),
+        ),
     };
     resolver = { invalidate: vi.fn() };
 
@@ -325,13 +334,17 @@ describe('AdminAccountsService', () => {
     it('should refuse to demote the last remaining Administrator-role admin', async () => {
       admins.findById.mockResolvedValueOnce({ id: 'a1', roleRecordId: 'role_sys_admin' });
       admins.countByRoleRecord.mockResolvedValueOnce(1);
-      await expect(
-        service.update('a1', { roleId: 'role_sys_member' }),
-      ).rejects.toBeInstanceOf(ForbiddenException);
+      await expect(service.update('a1', { roleId: 'role_sys_member' })).rejects.toBeInstanceOf(
+        ForbiddenException,
+      );
     });
 
     it('should update name and reassign role on a valid change', async () => {
-      admins.findById.mockResolvedValueOnce({ id: 'a1', name: 'Old', roleRecordId: 'role_sys_member' });
+      admins.findById.mockResolvedValueOnce({
+        id: 'a1',
+        name: 'Old',
+        roleRecordId: 'role_sys_member',
+      });
       await service.update('a1', { name: '  New  ', roleId: 'role_sys_admin' });
       expect(admins.update).toHaveBeenCalledWith('a1', { name: 'New' });
       expect(admins.updateRoleRecord).toHaveBeenCalledWith('a1', 'role_sys_admin');

@@ -35,10 +35,7 @@ export function nodeState(
   return 'partial';
 }
 
-export function toggleNode(
-  node: PermissionCatalogNodeDto,
-  current: readonly string[],
-): string[] {
+export function toggleNode(node: PermissionCatalogNodeDto, current: readonly string[]): string[] {
   const leaves = new Set(collectLeaves(node));
 
   const granted = new Set(current);

@@ -71,7 +71,10 @@ export function getGuestSession(code: string): GuestMeetingSession | null {
   return session;
 }
 
-export function saveGuestSession(code: string, session: GuestMeetingSessionDto): GuestMeetingSession {
+export function saveGuestSession(
+  code: string,
+  session: GuestMeetingSessionDto,
+): GuestMeetingSession {
   const next: GuestMeetingSession = { ...session, meetingCode: code };
   const all = readAll();
   all[code] = next;

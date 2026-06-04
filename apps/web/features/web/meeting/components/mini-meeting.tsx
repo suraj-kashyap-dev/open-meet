@@ -37,7 +37,9 @@ export function MiniMeeting({ code, meeting }: Props) {
   const position = useActiveMeeting((s) => s.position);
   const setPosition = useActiveMeeting((s) => s.setPosition);
   const maximize = useActiveMeeting((s) => s.maximize);
-  const authToken = useActiveMeeting((s) => (s.session?.code === code ? s.session.authToken : null));
+  const authToken = useActiveMeeting((s) =>
+    s.session?.code === code ? s.session.authToken : null,
+  );
 
   const [leaving, setLeaving] = useState(false);
 

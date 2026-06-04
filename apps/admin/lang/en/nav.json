@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "Dashboard",
+    "analytics": "Analytics",
     "users": "Users",
-    "departments": "Departments",
     "groups": "Groups",
     "meetings": "Meetings",
     "settings": "Settings",

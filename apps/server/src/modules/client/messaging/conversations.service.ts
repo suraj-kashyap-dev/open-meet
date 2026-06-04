@@ -52,7 +52,9 @@ export class ConversationsService {
     const memberIds = [...new Set(rows.flatMap((c) => c.members.map((m) => m.userId)))];
     const presence = await this.presence.snapshot(memberIds);
 
-    const items = await Promise.all(rows.map((conversation) => this.toDtoWithPresence(conversation, userId, presence)));
+    const items = await Promise.all(
+      rows.map((conversation) => this.toDtoWithPresence(conversation, userId, presence)),
+    );
 
     items.sort((left, right) => {
       if (left.pinned !== right.pinned) {
@@ -67,6 +69,7 @@ export class ConversationsService {
 
   async getById(conversationId: string, userId: string): Promise<ConversationDto> {
     await this.permissions.assertConversationMember(conversationId, userId);
+    await this.permissions.assertDirectConversationAllowed(conversationId, userId);
     const conversation = await this.repo.findById(conversationId);
 
     if (!conversation) {

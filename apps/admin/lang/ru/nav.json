@@ -10,8 +10,8 @@
   },
   "items": {
     "dashboard": "Панель управления",
+    "analytics": "Аналитика",
     "users": "Пользователи",
-    "departments": "Отделы",
     "groups": "Группы",
     "meetings": "Встречи",
     "settings": "Настройки",

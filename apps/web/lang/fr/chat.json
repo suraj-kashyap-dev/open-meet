@@ -39,6 +39,7 @@
   "header": {
     "members": "{count, plural, one {# membre} other {# membres}}",
     "actions": "Actions de conversation",
+    "info": "Infos de la conversation",
     "clear": "Vider la discussion",
     "delete": "Supprimer la discussion",
     "clear-confirm-title": "Vider la discussion ?",
@@ -48,10 +49,22 @@
     "clear-confirmed": "Messages effacés de votre vue",
     "delete-confirmed": "Discussion supprimée"
   },
+  "info": {
+    "title": "Détails",
+    "close": "Fermer",
+    "loading": "Chargement…",
+    "unavailable": "Profil indisponible.",
+    "private": "Ce profil est privé.",
+    "bio": "Bio",
+    "email": "E-mail",
+    "timezone": "Fuseau horaire",
+    "joined": "Inscrit"
+  },
   "presence": {
     "online": "En ligne",
     "offline": "Hors ligne",
     "last-seen": "Vu pour la dernière fois {time}",
+    "last-seen-short": "Vu récemment",
     "set-status": "Définir votre statut",
     "available": "Disponible",
     "busy": "Occupé",
@@ -78,8 +91,9 @@
     "pinned": "Épinglé",
     "pin": "Épingler",
     "unpin": "Désépingler",
-    "save-message": "Enregistrer",
-    "unsave-message": "Retirer des enregistrés",
+    "starred": "Suivi",
+    "save-message": "Suivre",
+    "unsave-message": "Ne plus suivre",
     "forward": "Transférer"
   },
   "pins": {
@@ -154,13 +168,30 @@
     "admin-badge": "Admin",
     "you-badge": "Vous",
     "promote": "Nommer admin",
+    "promoted": "Membre promu admin",
     "demote": "Retirer admin",
+    "demoted": "Admin rétrogradé en membre",
     "remove-member": "Retirer du groupe",
+    "remove-member-confirm": "Retirer {name} du groupe ?",
+    "removed": "Membre retiré",
+    "member-actions": "Actions du membre",
+    "members-added": "Membres ajoutés",
     "leave": "Quitter le groupe",
     "leave-confirm": "Quitter ce groupe ?",
+    "left": "Vous avez quitté le groupe",
     "last-admin-warning": "Vous êtes le seul admin. Promouvez quelqu'un d'abord.",
     "delete": "Supprimer le groupe",
     "delete-confirm": "Supprimer ce groupe ? Cette action est irréversible.",
+    "deleted": "Groupe supprimé",
+    "edit-details": "Modifier les détails",
+    "edit-title": "Modifier le groupe",
+    "edit-subtitle": "Mettez à jour le nom et la description du groupe.",
+    "edit-saved": "Groupe mis à jour",
+    "add-members": "Ajouter des membres",
+    "add-members-title": "Ajouter des membres",
+    "add-members-subtitle": "Invitez plus de personnes dans ce groupe.",
+    "save": "Enregistrer",
+    "action-failed": "Une erreur s'est produite",
     "groups-disabled": "La création de groupes est désactivée par l'administrateur."
   },
   "new-dm": {
@@ -173,19 +204,11 @@
     "title": "Nouvelle discussion",
     "to-label": "À :",
     "to-placeholder": "Saisir un nom ou un e-mail",
-    "no-teammates": "Aucune personne trouvée.",
+    "no-teammates": "Aucune personne trouvée dans vos départements.",
     "disabled": "Indisponible",
     "empty-title": "Vous démarrez une nouvelle conversation",
     "empty-subtitle": "Saisissez votre premier message ci-dessous.",
     "send-placeholder": "Saisissez votre premier message…"
-  },
-  "departments": {
-    "title": "Départements",
-    "subtitle": "Vos départements et canaux.",
-    "empty": "Vous n'êtes encore membre d'aucun département.",
-    "empty-title": "Aucun département pour l'instant",
-    "empty-subtitle": "Un administrateur vous ajoutera à un département pour commencer à collaborer.",
-    "no-channels": "Aucun canal pour l'instant."
   },
   "activity": {
     "title": "Activité",
@@ -195,11 +218,15 @@
     "empty-subtitle": "Quand quelqu'un vous @mentionne, ça apparaîtra ici."
   },
   "saved": {
-    "title": "Enregistrés",
-    "subtitle": "Messages que vous avez enregistrés pour plus tard.",
-    "empty": "Vous n'avez encore enregistré aucun message.",
-    "empty-title": "Aucun message enregistré",
-    "empty-subtitle": "Enregistrez un message depuis le chat pour le retrouver ici."
+    "title": "Suivis",
+    "subtitle": "Messages que vous suivez.",
+    "empty": "Vous ne suivez encore aucun message.",
+    "empty-title": "Aucun message suivi",
+    "empty-subtitle": "Suivez un message depuis le chat pour le retrouver ici.",
+    "view-chat": "Messages suivis",
+    "chat-empty": "Aucun message suivi dans cette discussion pour l'instant.",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier"
   },
   "size-bytes": "{bytes} o",
   "size-kb": "{kb} Ko",

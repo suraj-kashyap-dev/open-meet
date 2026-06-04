@@ -1,6 +1,6 @@
 'use client';
 
-import { AtSign, Bookmark, History, MessageSquare, Video } from 'lucide-react';
+import { AtSign, History, MessageSquare, Star, Video } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { LucideIcon } from 'lucide-react';
 
@@ -25,7 +25,7 @@ const ITEMS: RailItem[] = [
   { href: '/chat', icon: MessageSquare, key: 'chat', badge: true },
   { href: '/meet', icon: Video, key: 'meet' },
   { href: '/activity', icon: AtSign, key: 'activity' },
-  { href: '/saved', icon: Bookmark, key: 'saved' },
+  { href: '/saved', icon: Star, key: 'saved' },
   { href: '/history', icon: History, key: 'history' },
 ];
 

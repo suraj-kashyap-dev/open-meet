@@ -79,10 +79,7 @@ test.describe('Admin users page', () => {
     await dialog.getByLabel('Password').fill('supersecret');
 
     const [request] = await Promise.all([
-      page.waitForRequest(
-        (req) =>
-          req.url().endsWith('/admin/users') && req.method() === 'POST',
-      ),
+      page.waitForRequest((req) => req.url().endsWith('/admin/users') && req.method() === 'POST'),
       dialog.getByRole('button', { name: 'Create user' }).click(),
     ]);
 

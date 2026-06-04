@@ -12,9 +12,7 @@
     "messages-24h": "24h 메시지",
     "messages-24h-hint": "최근 24시간 채팅 메시지 수",
     "groups": "그룹",
-    "groups-hint": "생성된 그룹 대화",
-    "departments": "부서",
-    "departments-hint": "워크스페이스의 부서"
+    "groups-hint": "생성된 그룹 대화"
   },
   "trends": {
     "signups": "신규 가입",
