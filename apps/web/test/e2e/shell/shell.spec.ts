@@ -16,7 +16,7 @@ test.describe('Web app shell', () => {
 
     const sidebar = page.getByTestId('app-sidebar');
     await expect(sidebar).toBeVisible();
-    for (const name of ['Chat', 'Meet', 'Activity', 'Saved', 'History']) {
+    for (const name of ['Chat', 'Meet', 'Activity', 'Starred', 'History']) {
       await expect(sidebar.getByRole('link', { name, exact: true })).toBeVisible();
     }
   });

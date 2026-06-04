@@ -28,10 +28,11 @@ export interface AdminApiMockOptions {
   userInvites?: typeof fixtures.userInvites;
   adminRoles?: typeof fixtures.adminRoles;
   permissionCatalog?: typeof fixtures.permissionCatalog;
+  authenticateOnLogin?: boolean;
 }
 
 export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}): Promise<void> {
-  const me = options.me === undefined ? fixtures.currentAdminMe : options.me;
+  let me = options.me === undefined ? fixtures.currentAdminMe : options.me;
   const overview = options.overview ?? fixtures.overview;
   const users = options.users ?? fixtures.usersList;
   const meetings = options.meetings ?? fixtures.meetingsList;
@@ -66,6 +67,10 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
     }
 
     if (path === '/admin/auth/login' && method === 'POST') {
+      if (options.authenticateOnLogin) {
+        me = fixtures.currentAdminMe;
+      }
+      
       return json(200, ok(fixtures.loginResponse));
     }
 

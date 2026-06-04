@@ -1,5 +1,3 @@
-# Fixed identifier (not a secret): must match webhook.api_key in
-# docker/livekit.yaml and the server's LIVEKIT_API_KEY. Only the secret rotates.
 readonly LIVEKIT_KEY_NAME="devkey"
 
 readonly SERVER_ENV="apps/server/.env"

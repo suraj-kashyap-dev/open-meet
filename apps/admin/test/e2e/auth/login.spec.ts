@@ -4,7 +4,7 @@ import { mockAdminApi } from '../fixtures/api';
 
 test.describe('Admin login page', () => {
   test('should render the sign-in form', async ({ page }) => {
-    await mockAdminApi(page);
+    await mockAdminApi(page, { me: null });
     await page.goto('/en/login');
 
     await expect(page.getByRole('heading', { name: 'Sign in', exact: true })).toBeVisible();
@@ -14,7 +14,7 @@ test.describe('Admin login page', () => {
   });
 
   test('should show a validation error for an invalid email', async ({ page }) => {
-    await mockAdminApi(page);
+    await mockAdminApi(page, { me: null });
     await page.goto('/en/login');
 
     await page.getByLabel('Email').fill('not-an-email');
@@ -26,7 +26,7 @@ test.describe('Admin login page', () => {
   });
 
   test('should sign in and land on the dashboard', async ({ page }) => {
-    await mockAdminApi(page);
+    await mockAdminApi(page, { me: null, authenticateOnLogin: true });
     await page.goto('/en/login');
 
     await page.getByLabel('Email').fill('root@admin.test');

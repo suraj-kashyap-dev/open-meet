@@ -31,7 +31,7 @@ test.describe('Web accept-invite page', () => {
   });
 
   test('should accept the invite and land on chat (the chat-first home)', async ({ page }) => {
-    await mockWebApi(page, { me: null });
+    await mockWebApi(page, { me: null, authenticateOnLogin: true });
     await page.goto(`/en/accept-invite?token=${INVITE_TOKEN}`);
 
     await page.getByLabel('Password', { exact: true }).fill('supersecret');

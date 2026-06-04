@@ -15,8 +15,6 @@ configure_env_files() {
     _ensure_env_targets
   fi
 
-  # Enforce the fixed key name on every path so webhooks stay valid even for an
-  # .env from the old installer (random key name). The secret is preserved.
   set_env "$SERVER_ENV" LIVEKIT_API_KEY "$LIVEKIT_KEY_NAME"
 
   _sync_root_env

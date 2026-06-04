@@ -24,6 +24,7 @@ export const ClientEvent = {
   HAND_RAISE: 'hand:raise',
   HAND_LOWER: 'hand:lower',
 } as const;
+
 export type ClientEvent = (typeof ClientEvent)[keyof typeof ClientEvent];
 
 export const ServerEvent = {
@@ -41,6 +42,7 @@ export const ServerEvent = {
   RECORDING_STARTED: 'recording:started',
   RECORDING_STOPPED: 'recording:stopped',
 } as const;
+
 export type ServerEvent = (typeof ServerEvent)[keyof typeof ServerEvent];
 
 export const KnockDenyReason = {
@@ -48,44 +50,54 @@ export const KnockDenyReason = {
   NO_HOST_PRESENT: 'NO_HOST_PRESENT',
   HOST_LEFT: 'HOST_LEFT',
 } as const;
+
 export type KnockDenyReason = (typeof KnockDenyReason)[keyof typeof KnockDenyReason];
 
 export interface MeetingJoinPayload {
   meetingCode: string;
 }
+
 export interface MeetingLeavePayload {
   meetingCode: string;
 }
+
 export interface KnockPayload {
   meetingCode: string;
 }
+
 export interface KnockRespondPayload {
   meetingCode: string;
   userId: string;
   admit: boolean;
 }
+
 export interface KnockRequestedPayload {
   userId: string;
   name: string;
   avatar: string | null;
   knockedAt: string;
 }
+
 export interface KnockResolvedPayload {
   admit: boolean;
   reason?: KnockDenyReason;
 }
+
 export interface KnockCancelledPayload {
   userId: string;
 }
+
 export interface ChatSendPayload {
   meetingCode: string;
   content: string;
   attachmentIds?: string[];
 }
+
 export interface ReactionSendPayload {
   meetingCode: string;
   emoji: string;
 }
+
 export interface HandTogglePayload {
   meetingCode: string;
 }
@@ -93,31 +105,40 @@ export interface HandTogglePayload {
 export interface ParticipantJoinedPayload {
   participant: ParticipantDto;
 }
+
 export interface ParticipantLeftPayload {
   participantId: string;
 }
+
 export interface MeetingEndedPayload {
   endedAt: string;
 }
+
 export type ChatMessagePayload = MessageDto;
+
 export interface ReactionReceivedPayload {
   emoji: string;
   senderId: string;
   senderName: string;
 }
+
 export interface HandRaisedPayload {
   userId: string;
   name: string;
 }
+
 export interface HandLoweredPayload {
   userId: string;
 }
+
 export interface PresenceUpdatePayload {
   participants: PresenceDto[];
 }
+
 export interface RecordingStartedPayload {
   recording: RecordingDto;
 }
+
 export interface RecordingStoppedPayload {
   recording: RecordingDto;
 }
@@ -150,8 +171,6 @@ export interface ServerToClientEvents {
   [ServerEvent.RECORDING_STOPPED]: (payload: RecordingStoppedPayload) => void;
 }
 
-// --- Corporate chat (persistent messaging) - separate `/chat` namespace ---
-
 export const ChatNamespace = '/chat' as const;
 
 export const ChatClientEvent = {
@@ -168,6 +187,7 @@ export const ChatClientEvent = {
   POLL_VOTE: 'chat:poll:vote',
   SET_PRESENCE: 'chat:presence:set',
 } as const;
+
 export type ChatClientEvent = (typeof ChatClientEvent)[keyof typeof ChatClientEvent];
 
 export const ChatServerEvent = {
@@ -186,11 +206,13 @@ export const ChatServerEvent = {
   POLL_UPDATE: 'chat:poll:update',
   PIN_UPDATE: 'chat:pin:update',
 } as const;
+
 export type ChatServerEvent = (typeof ChatServerEvent)[keyof typeof ChatServerEvent];
 
 export interface ChatConversationRefPayload {
   conversationId: string;
 }
+
 export interface ChatMessageSendPayload {
   conversationId: string;
   content?: string;
@@ -199,51 +221,63 @@ export interface ChatMessageSendPayload {
   priority?: ChatMessagePriority;
   clientNonce?: string;
 }
+
 export interface ChatMessageEditPayload {
   messageId: string;
   content: string;
 }
+
 export interface ChatMessageDeletePayload {
   messageId: string;
 }
+
 export interface ChatReactionPayload {
   messageId: string;
   emoji: string;
 }
+
 export interface ChatReadPayload {
   conversationId: string;
   messageId?: string;
 }
+
 export interface ChatPollVotePayload {
   pollId: string;
   optionIds: string[];
 }
 
 export type ChatMessageNewPayload = ChatMessageDto;
+
 export type ChatMessageEditedPayload = ChatMessageDto;
+
 export interface ChatMessageDeletedPayload {
   conversationId: string;
   messageId: string;
 }
+
 export interface ChatReactionUpdatedPayload {
   conversationId: string;
   messageId: string;
   reactions: ReactionSummaryDto[];
 }
+
 export interface ChatTypingPayload {
   conversationId: string;
   userId: string;
   name: string;
 }
+
 export interface ChatTypingStoppedPayload {
   conversationId: string;
   userId: string;
 }
+
 export interface ChatReadReceiptPayload {
   conversationId: string;
   userId: string;
   lastReadAt: string;
 }
+
 export interface ChatPresencePayload {
   userId: string;
   online: boolean;
@@ -251,25 +285,32 @@ export interface ChatPresencePayload {
   customText: string | null;
   lastSeen: string | null;
 }
+
 export interface ChatSetPresencePayload {
   status: PresenceStatus;
   customText?: string | null;
 }
+
 export interface ChatUnreadUpdatePayload {
   conversationId: string;
   unread: number;
   total: number;
 }
+
 export type ChatConversationNewPayload = ConversationDto;
+
 export type ChatConversationUpdatePayload = ConversationDto;
+
 export interface ChatConversationRemovedPayload {
   conversationId: string;
 }
+
 export interface ChatPollUpdatePayload {
   conversationId: string;
   messageId: string;
   poll: PollDto;
 }
+
 export interface ChatPinUpdatePayload {
   conversationId: string;
   messageId: string;

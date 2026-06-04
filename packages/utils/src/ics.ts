@@ -43,6 +43,7 @@ export function buildIcs(event: IcsEvent): string {
   }
 
   const organizerCn = event.organizerName ? `CN=${escapeText(event.organizerName)}:` : '';
+  
   lines.push(`ORGANIZER;${organizerCn}mailto:${event.organizerEmail}`);
 
   for (const email of event.attendees ?? []) {

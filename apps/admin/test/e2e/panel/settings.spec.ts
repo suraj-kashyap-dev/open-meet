@@ -11,11 +11,9 @@ test.describe('Admin settings pages', () => {
     await expect(page).toHaveURL(/\/en\/settings$/);
     await expect(page.getByRole('heading', { name: 'Settings', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Access', exact: true })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Users', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Workspace', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: /Administrators/ })).toBeVisible();
     await expect(page.getByRole('link', { name: /Admin roles/ })).toBeVisible();
-    await expect(page.getByRole('link', { name: /User roles/ })).toBeVisible();
     await expect(page.getByRole('link', { name: /Branding/ })).toBeVisible();
     await expect(page.getByRole('link', { name: /Configuration/ })).toBeVisible();
   });

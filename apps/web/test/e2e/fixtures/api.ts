@@ -31,32 +31,29 @@ function err(code: string, message: string, statusCode: number) {
 type MeetingResult = MeetingDto | { errorStatus: number; code?: string };
 
 export interface WebApiMockOptions {
-  /** Current user. `undefined` → default user; `null` → signed out (401 on /auth/me). */
   me?: UserDto | null;
   settings?: UserSettingsDto;
   upcoming?: UpcomingMeetingDto[];
   history?: MeetingHistoryListResponseDto;
-  /** Meeting returned by `GET /meetings/:code`, or an error to simulate (e.g. 404). */
   meeting?: MeetingResult;
   participants?: ParticipantDto[];
   messages?: MessagePageDto;
   recordings?: RecordingDto[];
   googleEnabled?: boolean;
-  /** Chat conversation list returned by `GET /messaging/conversations`. */
   conversations?: ConversationListDto;
   teammates?: TeammateListDto;
   presence?: UserPresenceDto;
   unread?: UnreadSummaryDto;
   activity?: ActivityFeedDto;
   saved?: SavedMessageListDto;
-  /** Invite returned by `GET /auth/invite/:token`, or null to simulate an invalid/expired link (404). */
   invite?: UserInviteLookupDto | null;
+  authenticateOnLogin?: boolean;
 }
 
 const BARE_MEETING = /^\/meetings\/[^/]+$/;
 
 export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): Promise<void> {
-  const me = options.me === undefined ? fixtures.currentUser : options.me;
+  let me = options.me === undefined ? fixtures.currentUser : options.me;
   const settings = options.settings ?? fixtures.userSettings;
   const upcoming = options.upcoming ?? fixtures.upcoming;
   const history = options.history ?? fixtures.historyList;
@@ -93,7 +90,7 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
       switch (path) {
         case '/auth/me':
           return me
-            ? json(200, ok(me))
+            ? json(200, ok({ user: me, canCreateGroups: true }))
             : json(401, err('UNAUTHORIZED', 'Authentication required', 401));
         case '/auth/google/status':
           return json(200, ok({ enabled: googleEnabled }));
@@ -138,6 +135,9 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
         case '/auth/login':
         case '/auth/register':
         case '/auth/invite/accept':
+          if (options.authenticateOnLogin) {
+            me = fixtures.currentUser;
+          }
           return json(200, ok(fixtures.authResponse));
         case '/messaging/conversations/direct':
           return json(200, ok(fixtures.dmConversation));
@@ -172,5 +172,30 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
     }
 
     return json(200, ok({ ok: true }));
+  });
+}
+
+export async function mockChatSocket(page: Page): Promise<void> {
+  await page.routeWebSocket(/\/socket\.io\//, (ws) => {
+    ws.send(
+      '0' +
+        JSON.stringify({
+          sid: 'mock-eio',
+          upgrades: [],
+          pingInterval: 25000,
+          pingTimeout: 20000,
+          maxPayload: 1000000,
+        }),
+    );
+
+    ws.onMessage((message) => {
+      const data = typeof message === 'string' ? message : message.toString();
+      
+      if (data.startsWith('40')) {
+        const rest = data.slice(2);
+        const namespace = rest.startsWith('/') ? rest.split(',')[0] : '';
+        ws.send(`40${namespace ? `${namespace},` : ''}{"sid":"mock-sio"}`);
+      }
+    });
   });
 }

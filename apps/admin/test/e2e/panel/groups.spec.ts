@@ -38,18 +38,16 @@ test.describe('Admin groups page', () => {
     await page.getByRole('button', { name: 'New group' }).click();
 
     const dialog = page.getByRole('dialog');
+    
     await expect(dialog).toBeVisible();
 
-    // Focusing the search box preloads the user list inline (no portalled popover).
     await dialog.getByPlaceholder('Search users').click();
 
-    // Selecting a member must NOT close the dialog (guards the inline-picker bug).
     await dialog.getByRole('button', { name: /Ada Lovelace/ }).click();
 
     await expect(dialog).toBeVisible();
     await expect(dialog.getByText('Create group')).toBeVisible();
 
-    // Selecting a second member also keeps it open.
     await dialog.getByRole('button', { name: /Alan Turing/ }).click();
     await expect(dialog).toBeVisible();
   });
@@ -64,6 +62,7 @@ test.describe('Admin groups page', () => {
     await dialog.getByLabel('Group name').fill('Roadmap sync');
     await dialog.getByPlaceholder('Search users').click();
     await dialog.getByRole('button', { name: /Ada Lovelace/ }).click();
+    await dialog.getByLabel('Group name').click();
 
     const [request] = await Promise.all([
       page.waitForRequest((req) => req.url().endsWith('/admin/groups') && req.method() === 'POST'),

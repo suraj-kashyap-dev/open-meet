@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { mockWebApi } from '../fixtures/api';
+import { mockChatSocket, mockWebApi } from '../fixtures/api';
 import { emptyConversationList } from '../fixtures/data';
 
 test.describe('Web chat list page', () => {
@@ -8,16 +8,14 @@ test.describe('Web chat list page', () => {
     await mockWebApi(page);
     await page.goto('/en/chat');
 
-    // Shell header + chat list actions.
     await expect(page.getByRole('heading', { name: 'Chat' })).toBeVisible();
     await expect(page.getByText('Select a conversation to start chatting.')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'New chat' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'New chat' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Start a meeting' })).toBeVisible();
     await expect(page.getByPlaceholder('Search conversations')).toBeVisible();
 
     await expect(page.getByText('Recent', { exact: true })).toBeVisible();
 
-    // The seeded DM with Grace Hopper renders with its last message preview inside the chat list.
     const dm = page.getByRole('link', { name: /Grace Hopper/ });
     await expect(dm).toBeVisible();
     await expect(page.getByText('Did you get a chance to review the deck?')).toBeVisible();
@@ -33,9 +31,11 @@ test.describe('Web chat list page', () => {
 
   test('should expose the presence status picker', async ({ page }) => {
     await mockWebApi(page);
+    // The picker is gated on a live chat-socket connection; stub the handshake.
+    await mockChatSocket(page);
     await page.goto('/en/chat');
 
-    await expect(page.getByRole('button', { name: 'Set your status' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Set your status' })).toBeEnabled();
 
     await page.getByRole('button', { name: 'Set your status' }).click();
 

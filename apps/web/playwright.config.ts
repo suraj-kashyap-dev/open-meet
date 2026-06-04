@@ -23,9 +23,6 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        // The lobby calls getUserMedia on mount. These flags make Chromium
-        // auto-grant and return a synthetic A/V stream so the page renders
-        // without a permission prompt or real hardware.
         launchOptions: {
           args: ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'],
         },
@@ -38,8 +35,6 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
     env: {
-      // All /api calls are intercepted by Playwright route mocking, so these
-      // never reach a real backend - they only need to satisfy the env schema.
       NEXT_PUBLIC_API_URL: 'http://127.0.0.1:59322',
       NEXT_PUBLIC_WS_URL: 'http://127.0.0.1:59323',
       NEXT_PUBLIC_LIVEKIT_URL: 'ws://127.0.0.1:59324',

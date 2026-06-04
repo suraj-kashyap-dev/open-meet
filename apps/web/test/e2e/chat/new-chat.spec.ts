@@ -7,16 +7,16 @@ test.describe('Web new chat (inline "To:" composer)', () => {
     await mockWebApi(page);
     await page.goto('/en/chat');
 
-    // The compose action in the list header opens the inline draft.
-    await page.getByRole('link', { name: 'New chat' }).click();
+    // With group-creation enabled the compose control is a dropdown; pick "New
+    // chat" to open the direct-message composer.
+    await page.getByRole('button', { name: 'New chat' }).click();
+    await page.getByRole('menuitem', { name: 'New chat' }).click();
     await expect(page).toHaveURL(/\/en\/chat\/new$/);
     await expect(page.getByText('To:', { exact: true })).toBeVisible();
 
-    // Pick a recipient from the teammate suggestions.
     await page.getByPlaceholder('Enter name or email').fill('Grace');
     await page.getByRole('button', { name: /Grace Hopper/ }).click();
 
-    // Type the first message and send - this resolves/opens the DM and navigates to it.
     const box = page.getByPlaceholder('Type your first message…');
     await box.fill('Hi Grace!');
     await box.press('Enter');

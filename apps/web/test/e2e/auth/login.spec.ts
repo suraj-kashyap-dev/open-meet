@@ -34,7 +34,7 @@ test.describe('Web login page', () => {
   });
 
   test('should sign in and land on chat (the chat-first home)', async ({ page }) => {
-    await mockWebApi(page, { me: null });
+    await mockWebApi(page, { me: null, authenticateOnLogin: true });
     await page.goto('/en/login');
 
     await page.getByLabel('Email').fill('ada@example.com');
