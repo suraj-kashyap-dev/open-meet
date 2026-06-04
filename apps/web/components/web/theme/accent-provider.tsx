@@ -6,19 +6,7 @@ import { useEffect, type ReactNode } from 'react';
 import { useBranding } from '@/components/web/branding/branding-provider';
 import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 
-import { ACCENT_PALETTE, isAccentHex, isAccentPreset } from './accent-palette';
-import type { AccentTokens } from './accent-palette';
-import { deriveAccent } from './derive-accent';
-
-function resolveTokens(value: string, mode: 'light' | 'dark'): AccentTokens {
-  if (isAccentPreset(value)) {
-    return ACCENT_PALETTE[value][mode];
-  }
-  if (isAccentHex(value)) {
-    return deriveAccent(value, mode);
-  }
-  return ACCENT_PALETTE.indigo[mode];
-}
+import { resolveAccentTokens } from './accent-css';
 
 export function AccentProvider({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
@@ -31,7 +19,7 @@ export function AccentProvider({ children }: { children: ReactNode }) {
   const choice = userOverride ?? workspaceAccent;
 
   useEffect(() => {
-    const tokens = resolveTokens(choice, mode);
+    const tokens = resolveAccentTokens(choice, mode);
     const r = document.documentElement.style;
     r.setProperty('--accent', tokens.accent);
     r.setProperty('--accent-foreground', tokens.accentForeground);

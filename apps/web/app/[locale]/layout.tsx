@@ -9,6 +9,7 @@ import { isRtl, routing } from '@/i18n/routing';
 import { getBranding } from '@/lib/branding';
 import { BrandingProvider } from '@/components/web/branding/branding-provider';
 import { AccentProvider } from '@/components/web/theme/accent-provider';
+import { buildAccentCss } from '@/components/web/theme/accent-css';
 import { Providers } from '@/providers';
 import { Toaster } from '@open-meet/ui/sonner';
 import '../globals.css';
@@ -62,6 +63,13 @@ export default async function LocaleLayout({
       className={inter.variable}
       suppressHydrationWarning
     >
+      <head>
+        {/* Pin the workspace accent at SSR so the first paint matches the branding
+            instead of flashing the indigo defaults before AccentProvider runs. */}
+        <style
+          dangerouslySetInnerHTML={{ __html: buildAccentCss(branding.accentColor ?? 'indigo') }}
+        />
+      </head>
       <body
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         suppressHydrationWarning
