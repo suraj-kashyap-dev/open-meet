@@ -9,14 +9,12 @@
   "user-menu-label": "Apri menu account",
   "chat-link-label": "Apri chat",
   "activity-link-label": "Attività",
-  "departments-link-label": "Reparti",
   "saved-link-label": "Speciali",
   "search-placeholder": "Cerca",
   "rail": {
     "label": "Principale",
     "chat": "Chat",
     "meet": "Riunione",
-    "departments": "Reparti",
     "activity": "Attività",
     "saved": "Speciali",
     "history": "Cronologia"

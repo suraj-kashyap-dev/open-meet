@@ -9,14 +9,12 @@
   "user-menu-label": "खाता मेनू खोलें",
   "chat-link-label": "चैट खोलें",
   "activity-link-label": "गतिविधि",
-  "departments-link-label": "विभाग",
   "saved-link-label": "तारांकित",
   "search-placeholder": "खोजें",
   "rail": {
     "label": "प्राथमिक",
     "chat": "चैट",
     "meet": "मीट",
-    "departments": "विभाग",
     "activity": "गतिविधि",
     "saved": "तारांकित",
     "history": "इतिहास"

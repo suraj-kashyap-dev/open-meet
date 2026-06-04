@@ -9,14 +9,12 @@
   "user-menu-label": "فتح قائمة الحساب",
   "chat-link-label": "فتح الدردشة",
   "activity-link-label": "النشاط",
-  "departments-link-label": "الأقسام",
   "saved-link-label": "المميّزة بنجمة",
   "search-placeholder": "بحث",
   "rail": {
     "label": "أساسي",
     "chat": "الدردشة",
     "meet": "اجتماع",
-    "departments": "الأقسام",
     "activity": "النشاط",
     "saved": "المميّزة بنجمة",
     "history": "السجل"

@@ -134,7 +134,7 @@ export class AdminRolesService {
   /**
    * Expand parents into leaves and PRUNE anything that is not a current catalog
    * key. Keys removed from the catalog after a role was saved (e.g. the retired
-   * `departments.channels.*`) are dropped silently instead of rejected, so legacy roles
+   * `legacy-feature.removed.*`) are dropped silently instead of rejected, so legacy roles
    * stay editable and self-heal on the next save. The picker can only emit catalog
    * keys, so this never silently discards a deliberate selection.
    */

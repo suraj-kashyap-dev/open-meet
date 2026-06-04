@@ -8,10 +8,12 @@ interface Props {
 }
 
 /**
- * Open Meet brand mark - a camera-aperture iris. The hexagonal opening reads as
- * an "O" ("Open"), the lens says video/meeting, and a gradient in the theme's
- * blue accent sweeps across the six blades. A mask keeps the opening and blade
- * gaps transparent so the mark sits on any surface.
+ * Open Meet brand mark - a play/join triangle nested inside a chat speech
+ * bubble. The bubble (with its soft bottom-left tail) says persistent
+ * messaging; the play triangle is the universal "start / join a meeting" cue -
+ * the two halves of the product in one calm mark. A gradient in the theme's
+ * blue accent sweeps across the bubble, and a mask keeps the triangle and
+ * everything outside the bubble transparent so it sits on any surface.
  *
  * Multiple instances reuse the `omAccent` / `omIris` ids; this is safe because
  * every definition is byte-identical and `url(#…)` resolves to the first.
@@ -40,19 +42,18 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
         </linearGradient>
 
         <mask id={maskId}>
-          <circle cx="16" cy="16" r="13.44" fill="#fff" />
-          <polygon
-            points="22.25,16 19.12,21.41 12.88,21.41 9.75,16 12.87,10.59 19.12,10.59"
-            fill="#000"
+          <path
+            d="M11 4 H21 A7 7 0 0 1 28 11 V16 A7 7 0 0 1 21 23 H15 L8.5 27.5 L11 23 A7 7 0 0 1 4 16 V11 A7 7 0 0 1 11 4 Z"
+            fill="#fff"
           />
-          <g stroke="#000" strokeWidth="1.5" strokeLinecap="round" fill="none">
-            <path d="M22.25 16 L30.16 22.3" />
-            <path d="M19.12 21.41 L17.62 31.42" />
-            <path d="M12.88 21.41 L3.46 25.11" />
-            <path d="M9.75 16 L1.84 9.7" />
-            <path d="M12.87 10.59 L14.38 0.58" />
-            <path d="M19.12 10.59 L28.54 6.89" />
-          </g>
+          <path
+            d="M13 9 L13 19 L21.5 14 Z"
+            fill="#000"
+            stroke="#000"
+            strokeWidth="1.4"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
         </mask>
       </defs>
 
@@ -76,19 +77,18 @@ export function LogoMark({ className }: { className?: string }) {
       className={cn('shrink-0 rounded-full', className)}
     >
       <mask id={maskId}>
-        <circle cx="16" cy="16" r="13.44" fill="#fff" />
-        <polygon
-          points="22.25,16 19.12,21.41 12.88,21.41 9.75,16 12.87,10.59 19.12,10.59"
-          fill="#000"
+        <path
+          d="M11 4 H21 A7 7 0 0 1 28 11 V16 A7 7 0 0 1 21 23 H15 L8.5 27.5 L11 23 A7 7 0 0 1 4 16 V11 A7 7 0 0 1 11 4 Z"
+          fill="#fff"
         />
-        <g stroke="#000" strokeWidth="1.5" strokeLinecap="round" fill="none">
-          <path d="M22.25 16 L30.16 22.3" />
-          <path d="M19.12 21.41 L17.62 31.42" />
-          <path d="M12.88 21.41 L3.46 25.11" />
-          <path d="M9.75 16 L1.84 9.7" />
-          <path d="M12.87 10.59 L14.38 0.58" />
-          <path d="M19.12 10.59 L28.54 6.89" />
-        </g>
+        <path
+          d="M13 9 L13 19 L21.5 14 Z"
+          fill="#000"
+          stroke="#000"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        />
       </mask>
 
       <rect width="32" height="32" fill="currentColor" mask={`url(#${maskId})`} />

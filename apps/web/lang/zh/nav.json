@@ -9,14 +9,12 @@
   "user-menu-label": "打开账户菜单",
   "chat-link-label": "打开聊天",
   "activity-link-label": "动态",
-  "departments-link-label": "部门",
   "saved-link-label": "已标星",
   "search-placeholder": "搜索",
   "rail": {
     "label": "主要",
     "chat": "聊天",
     "meet": "会议",
-    "departments": "部门",
     "activity": "动态",
     "saved": "已标星",
     "history": "历史"

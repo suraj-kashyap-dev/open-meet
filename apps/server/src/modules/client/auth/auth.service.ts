@@ -306,7 +306,7 @@ export class AuthService {
    * Peer-visible profile of `targetId` as seen by `viewerId`. Honors the
    * target's `UserSettings.profileVisibility`:
    *   - PUBLIC            → everything is exposed.
-   *   - PARTICIPANTS_ONLY → full profile only when the two share a department or a
+   *   - PARTICIPANTS_ONLY → full profile only when the two share a
    *                        conversation; otherwise minimal.
    *   - PRIVATE           → only id/name/avatar.
    * Always auth-required; "public" here means peer-visible.

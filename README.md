@@ -4,9 +4,9 @@
 
 # Open Meet
 
-**OpenMeet is an open-source, self-hostable video conferencing platform, a privacy-friendly alternative to Google Meet and Zoom. Create or join meetings using a code, communicate over low-latency WebRTC, and collaborate with real-time chat, reactions, and host moderation controls.**
+**Open Meet is an open-source, self-hostable team collaboration platform - a privacy-friendly alternative to Google Meet, Zoom, and Slack in one place. Start or join meetings with a code over low-latency WebRTC, *and* keep talking afterwards in persistent team chat: direct messages, group conversations, reactions, replies, pins, polls, presence, and file sharing. Add admin RBAC, branding, and invite-based onboarding, and you have a full workspace you control.**
 
-<sub>Full-stack TypeScript · LiveKit SFU · multi-instance ready</sub>
+<sub>Meetings + persistent chat · Full-stack TypeScript · LiveKit SFU · multi-instance ready</sub>
 
 <p>
   <img alt="Node 22" src="https://img.shields.io/badge/Node-22%20LTS-3c873a?logo=node.js&logoColor=white"/>
@@ -26,24 +26,42 @@
 
 ## Highlights
 
+### Meet
+
 - **Instant rooms** - one-click `xxxx-xxxx-xxxx` meeting codes with room-scoped, short-lived JWT tokens.
+- **Scheduled & recurring meetings** - schedule for later with a recurrence rule and invitees, or spin one up on the spot.
 - **Real pre-join lobby** - camera preview, device pickers, mic level meter, and persisted defaults.
-- **Realtime chat** - Socket.IO `/meeting` namespace fanned out via Redis adapter, so the API scales horizontally.
+- **Knock to join & host controls** - guests knock, the host admits; gallery/speaker views, screen share, and a full control bar.
 - **Reactions & raise hand** - live overlay reactions and raised-hand indicators in tiles and the participants panel.
-- **Hardened auth** - `argon2` hashing, httpOnly access + refresh cookies, rotation hashed in Redis, throttled `/api/auth/*`.
-- **Typed end-to-end** - one shared `@open-meet/types` package for DTOs, socket events, and the response envelope.
+- **In-meeting chat & recording** - ephemeral room chat over the `/meeting` namespace and host-controlled LiveKit recording.
+- **Guest access** - time-limited guest session tokens scoped to a single meeting, with an admin toggle to allow or disable them.
+
+### Chat (persistent team messaging)
+
+- **Direct & group messaging** - open 1:1 DMs between any two users plus user-created group conversations with admin roles.
+- **Rich messages** - replies/threads, editing, soft delete, emoji reactions, @mentions, forwarding, polls, and GIF search (Tenor).
+- **Pinned & starred** - pin messages to a conversation-wide bar and star messages for yourself.
+- **Live everything** - typing indicators, read receipts, unread badges, and presence (online + custom status) over a dedicated `/chat` namespace.
+- **File sharing** - attach images, video, audio, PDFs, and Office docs with MIME/size validation and an Activity feed for mentions.
+
+### Platform
+
+- **Hardened auth** - `argon2` hashing, httpOnly access + refresh cookies, rotation hashed in Redis, throttled `/api/auth/*`, plus optional Google OAuth and invite-only onboarding.
+- **Admin console** - separate admin app with RBAC roles/permissions, user/group/meeting management, analytics, branding (name, logo, accent color), and workspace configuration.
+- **Typed end-to-end** - one shared `@open-meet/types` package for DTOs, socket events (both namespaces), and the response envelope.
 - **Localized** - full UI + API i18n in **15 languages** via `next-intl` (web/admin, URL-prefixed locales) and `nestjs-i18n` (server). English is the source of truth; `pnpm i18n:verify` keeps every locale in lockstep.
-- **Tested** - Vitest unit suites for services and repositories, plus Supertest API e2e over the live HTTP layer.
-- **Self-hostable** - Postgres, Redis, LiveKit, and coturn all wired up in `docker-compose.yml`.
+- **Realtime at scale** - both the `/meeting` and `/chat` Socket.IO namespaces fan out via the Redis adapter, so the API scales horizontally.
+- **Tested** - Vitest unit suites for services and repositories, Supertest API e2e over the live HTTP layer, and Playwright browser flows.
+- **Self-hostable** - Postgres, Redis, LiveKit, and coturn all wired up in `docker-compose.yml`; uploads land on local filesystem storage behind a pluggable provider interface.
 
 ## Stack
 
 - **Frontend** - Next.js 15 · React 19 · Tailwind v4 · shadcn/ui · TanStack Query v5 · Zustand v5
 - **Backend** - NestJS 11 (Fastify) · Prisma 6 · `@nestjs/jwt` + argon2 · BullMQ v5
-- **Realtime** - LiveKit SFU · `@livekit/components-react` · Socket.IO `/meeting` (Redis adapter)
+- **Realtime** - LiveKit SFU · `@livekit/components-react` · Socket.IO `/meeting` (rooms) + `/chat` (persistent messaging), both on the Redis adapter
 - **i18n** - `next-intl` (web/admin) · `nestjs-i18n` (server) · **15 languages**: English (base) · Arabic (RTL) · Spanish · Portuguese · French · German · Italian · Russian · Turkish · Chinese (Simplified) · Japanese · Korean · Indonesian · Hindi · Bengali
 - **Infra** - PostgreSQL 16 · Redis 7 · coturn · MailHog · Docker Compose
-- **Tooling** - pnpm workspaces · Turborepo v2 · Vitest + Supertest · ESLint 9 · Prettier 3
+- **Tooling** - pnpm workspaces · Turborepo v2 · Vitest + Supertest · Playwright · ESLint 9 · Prettier 3
 
 ## Quick start
 

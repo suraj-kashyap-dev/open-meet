@@ -34,8 +34,7 @@ export class AdminPermissionResolver {
     return resolved;
   }
 
-  /** A "super" admin (role permissionType ALL) sees every resource; other
-   *  admins are scoped to the departments they are responsible for. */
+  /** Whether the role grants all permissions (permissionType ALL). */
   async isSuper(roleId: string | null): Promise<boolean> {
     if (!roleId) return false;
     const resolved = await this.resolve(roleId);

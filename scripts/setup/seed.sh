@@ -8,7 +8,7 @@ seed_demo_data() {
     return
   fi
 
-  step "Seeding demo departments + users"
+  step "Seeding demo data"
   pnpm --filter @open-meet/server db:seed
-  ok "Demo departments and users seeded"
+  ok "Demo data seeded"
 }

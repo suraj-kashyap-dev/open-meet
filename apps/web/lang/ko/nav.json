@@ -9,14 +9,12 @@
   "user-menu-label": "계정 메뉴 열기",
   "chat-link-label": "채팅 열기",
   "activity-link-label": "활동",
-  "departments-link-label": "부서",
   "saved-link-label": "별표 표시됨",
   "search-placeholder": "검색",
   "rail": {
     "label": "기본",
     "chat": "채팅",
     "meet": "미트",
-    "departments": "부서",
     "activity": "활동",
     "saved": "별표 표시됨",
     "history": "기록"

@@ -42,7 +42,7 @@ export class GroupsService {
 
     // Drop chat-disabled / unknown users silently - group creation never fails
     // because one person was disabled mid-flow - then keep only those the
-    // creator may actually reach (shared department / grant).
+    // creator may actually reach (chat is open, so anyone but self).
     const invitable = await this.repo.pickInvitableUsers([
       ...new Set(body.memberIds.filter((id) => id && id !== creatorId)),
     ]);

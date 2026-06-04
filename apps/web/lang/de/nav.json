@@ -9,14 +9,12 @@
   "user-menu-label": "Kontomenü öffnen",
   "chat-link-label": "Chat öffnen",
   "activity-link-label": "Aktivität",
-  "departments-link-label": "Abteilungen",
   "saved-link-label": "Markiert",
   "search-placeholder": "Suchen",
   "rail": {
     "label": "Primär",
     "chat": "Chat",
     "meet": "Meet",
-    "departments": "Abteilungen",
     "activity": "Aktivität",
     "saved": "Markiert",
     "history": "Verlauf"

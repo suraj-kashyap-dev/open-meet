@@ -9,14 +9,12 @@
   "user-menu-label": "Abrir menú de cuenta",
   "chat-link-label": "Abrir chat",
   "activity-link-label": "Actividad",
-  "departments-link-label": "Departamentos",
   "saved-link-label": "Destacados",
   "search-placeholder": "Buscar",
   "rail": {
     "label": "Principal",
     "chat": "Chat",
     "meet": "Reunión",
-    "departments": "Departamentos",
     "activity": "Actividad",
     "saved": "Destacados",
     "history": "Historial"

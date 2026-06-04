@@ -9,14 +9,12 @@
   "user-menu-label": "Buka menu akun",
   "chat-link-label": "Buka obrolan",
   "activity-link-label": "Aktivitas",
-  "departments-link-label": "Departemen",
   "saved-link-label": "Berbintang",
   "search-placeholder": "Cari",
   "rail": {
     "label": "Utama",
     "chat": "Obrolan",
     "meet": "Rapat",
-    "departments": "Departemen",
     "activity": "Aktivitas",
     "saved": "Berbintang",
     "history": "Riwayat"

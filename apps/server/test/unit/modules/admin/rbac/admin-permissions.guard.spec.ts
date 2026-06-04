@@ -94,9 +94,9 @@ describe('AdminPermissionsGuard', () => {
     });
 
     it('should not auto-grant parents to children (flat-leaves semantics)', async () => {
-      const guard = makeGuard(['departments.manage-members'], {
+      const guard = makeGuard(['groups.manage-members'], {
         permissionType: 'CUSTOM',
-        granted: new Set(['departments']),
+        granted: new Set(['groups']),
       });
       await expect(guard.canActivate(makeCtx({ id: 'a1', roleId: 'r1' }))).rejects.toBeInstanceOf(
         ForbiddenException,

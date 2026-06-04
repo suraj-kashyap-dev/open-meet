@@ -77,11 +77,11 @@ describe('AdminRolesService', () => {
       repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
         Promise.resolve(makeRole(data)),
       );
-      // 'departments.channels.create' was removed from the catalog; a legacy role carrying
+      // 'legacy-feature.removed' was removed from the catalog; a legacy role carrying
       // it must still save (the stale key is dropped, the valid one kept).
       const created = await service.create({
         name: 'Legacy',
-        permissions: ['users.view', 'departments.channels.create', 'mystery.key'],
+        permissions: ['users.view', 'legacy-feature.removed', 'mystery.key'],
       });
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({ permissions: ['users.view'] }),
