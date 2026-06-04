@@ -168,7 +168,7 @@ scripts/             setup and i18n scripts
   - `apps/web/.env.local`
   - `apps/admin/.env.local`
   - `apps/server/uploads/`
-  - `.claude/`
+  - `.claude/projects/` (local runtime — but `.claude/skills`, `.claude/agents`, and `.claude/docs` are shared config and fair to edit)
 - Dependency manifests and lockfiles unless the task explicitly requires them:
   - `package.json`
   - `pnpm-lock.yaml`
@@ -188,10 +188,8 @@ scripts/             setup and i18n scripts
 ## Related Documentation
 
 - `CLAUDE.md`
-- `docs/architecture.md`
-- `docs/coding-rules.md`
-- `docs/project-commands.md`
-- `specs/README.md`
-- `.ai/decisions.md`
-- `.ai/patterns.md`
-- `.ai/agent-workflow.md`
+- `.claude/docs/architecture.md`
+- `.claude/docs/coding-rules.md`
+- `.claude/docs/project-commands.md`
+- `.claude/skills/*` — on-demand playbooks (repo-map, backend/frontend feature, realtime contracts, prisma, i18n, write-spec, validate-changes)
+- `.claude/agents/code-reviewer.md` — fresh-context, stack-aware reviewer subagent

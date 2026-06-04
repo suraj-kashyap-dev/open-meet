@@ -37,13 +37,14 @@ Before writing code:
 4. Check existing tests in the affected area.
 5. Reuse existing patterns before proposing new abstractions.
 
-Good supporting docs when needed:
+Reach for the on-demand skills in `.claude/skills/` — they encode the repo's playbooks:
 
-- `.ai/repo-map.md`
-- `.ai/api-surface.md`
-- `.ai/patterns.md`
-- `.ai/change-checklist.md`
-- `docs/architecture.md`
+- `repo-map` — where a change goes (app/module/package by task)
+- `backend-feature`, `frontend-feature`, `realtime-contracts`, `prisma-schema`, `i18n-copy` — domain playbooks
+- `write-spec` — plan-first spec for multi-file features
+- `validate-changes` — pick and run the narrowest checks
+
+After non-trivial changes, get an independent pass from the `code-reviewer` subagent (`.claude/agents/code-reviewer.md`) or the built-in `/code-review`. Deeper reference docs live in `.claude/docs/` (`architecture.md`, `coding-rules.md`, `project-commands.md`).
 
 ## Required Workflow
 
@@ -158,7 +159,7 @@ Claude should follow this order on code tasks:
   - `apps/web/.env.local`
   - `apps/admin/.env.local`
   - `apps/server/uploads/`
-  - `.claude/`
+  - `.claude/projects/` (local runtime; the committed `.claude/skills`, `.claude/agents`, and `.claude/docs` are fair game)
 - dependency manifests and lockfiles unless the task explicitly requires them:
   - `package.json`
   - `pnpm-lock.yaml`

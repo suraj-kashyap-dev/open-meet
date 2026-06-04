@@ -39,6 +39,5 @@ coverage/
 /apps/server/uploads/
 
 # Claude Code local settings
-.claude/
-
-TODO.md
+.claude/settings.json
+.claude/settings*
