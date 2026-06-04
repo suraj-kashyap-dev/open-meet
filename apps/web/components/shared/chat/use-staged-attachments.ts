@@ -18,15 +18,10 @@ export interface StagedAttachment {
 }
 
 export interface UseStagedAttachmentsOptions {
-  /** Maximum number of attachments staged at once. */
   max?: number;
-  /** Optional bearer token for guest meeting uploads. */
   authToken?: string | null;
-  /** Called when a stage attempt exceeds the cap (no items are added). */
   onCapacityExceeded?: (max: number) => void;
-  /** Called once per failed upload, with the resolved message. */
   onUploadError?: (message: string) => void;
-  /** Maps an upload error to a user-facing message; defaults to ApiClientError.message. */
   resolveUploadError?: (err: unknown) => string;
 }
 
@@ -46,11 +41,6 @@ function makeId(): string {
     : `${Date.now()}-${Math.random()}`;
 }
 
-/**
- * Staged-upload state machine shared by every message composer: pick files,
- * upload them with progress, surface failures, and expose the attachment ids
- * ready to send. Preview object URLs are revoked on remove/reset/unmount.
- */
 export function useStagedAttachments(
   options: UseStagedAttachmentsOptions = {},
 ): UseStagedAttachments {

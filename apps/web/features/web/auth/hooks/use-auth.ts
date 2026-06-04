@@ -27,7 +27,6 @@ function readCachedMe(): UserMeResponseDto | null {
     }
 
     const parsed = JSON.parse(raw) as UserMeResponseDto | UserDto;
-    // Backward compat with the previous cached shape (raw UserDto).
     if ('user' in parsed && 'canCreateGroups' in parsed) {
       return parsed as UserMeResponseDto;
     }
@@ -48,21 +47,13 @@ function writeCachedMe(me: UserMeResponseDto | null): void {
     } else {
       window.localStorage.removeItem(CACHE_KEY);
     }
-  } catch {
-    // Ignore storage failures (private mode, quota) - the cache is best-effort.
-  }
+  } catch {}
 }
 
 function meFromUser(user: UserDto | null): UserMeResponseDto | null {
   return user ? { user, canCreateGroups: false } : null;
 }
 
-/**
- * Mounted once at the app root (Providers). After hydration completes it
- * primes the user-query cache from localStorage so subsequent renders show
- * the cached user immediately, without causing a server/client hydration
- * mismatch (the very first render still matches whatever the server sent).
- */
 export function useAuthBootstrap(): void {
   const qc = useQueryClient();
   useEffect(() => {
@@ -80,7 +71,6 @@ export function useAuthBootstrap(): void {
   }, [qc]);
 }
 
-/** Identity + RBAC context (null when signed out, undefined on first cold load). */
 export function useCurrentUserMe() {
   return useQuery<UserMeResponseDto | null>({
     queryKey: ME_KEY,
@@ -106,16 +96,11 @@ export function useCurrentUserMe() {
   });
 }
 
-/**
- * Backward-compatible identity hook - returns just the `UserDto`. Existing
- * consumers (avatars, profile UI, guards) keep working unchanged.
- */
 export function useCurrentUser() {
   const { data, ...rest } = useCurrentUserMe();
   return { ...rest, data: data?.user ?? null };
 }
 
-/** Group creation is open to every user on the web app. */
 export function useCanCreateGroups(): boolean {
   return true;
 }
@@ -140,7 +125,6 @@ export function useLogin(redirectTo: string = '/') {
       const me = meFromUser(data.user);
       writeCachedMe(me);
       qc.setQueryData(ME_KEY, me);
-      // Re-fetch /me so the role + grantedSet land before the next page render.
       void qc.invalidateQueries({ queryKey: ME_KEY });
       router.replace(redirectTo);
     },
@@ -168,7 +152,6 @@ export function useAcceptInvite(redirectTo: string = '/') {
       const me = meFromUser(data.user);
       writeCachedMe(me);
       qc.setQueryData(ME_KEY, me);
-      // Re-fetch /me so the role + grantedSet land before the next page render.
       void qc.invalidateQueries({ queryKey: ME_KEY });
       router.replace(redirectTo);
     },
@@ -181,8 +164,6 @@ export function useUpdateProfile() {
   return useMutation({
     mutationFn: authApi.updateMe,
     onSuccess: (user) => {
-      // Profile mutations return a fresh UserDto; splice into cached MeResponse so
-      // role + grantedSet are preserved.
       qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
         const next = current ? { ...current, user } : meFromUser(user);
         writeCachedMe(next);
@@ -198,8 +179,6 @@ export function useUploadAvatar() {
   return useMutation({
     mutationFn: (file: File) => authApi.uploadAvatar(file),
     onSuccess: (user) => {
-      // Profile mutations return a fresh UserDto; splice into cached MeResponse so
-      // role + grantedSet are preserved.
       qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
         const next = current ? { ...current, user } : meFromUser(user);
         writeCachedMe(next);
@@ -215,8 +194,6 @@ export function useDeleteAvatar() {
   return useMutation({
     mutationFn: () => authApi.deleteAvatar(),
     onSuccess: (user) => {
-      // Profile mutations return a fresh UserDto; splice into cached MeResponse so
-      // role + grantedSet are preserved.
       qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
         const next = current ? { ...current, user } : meFromUser(user);
         writeCachedMe(next);

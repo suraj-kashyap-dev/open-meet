@@ -44,9 +44,7 @@ function writeAll(next: Record<string, GuestMeetingSession>): void {
     }
 
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Ignore storage failures.
-  }
+  } catch {}
 }
 
 function isExpired(expiresAt: string): boolean {

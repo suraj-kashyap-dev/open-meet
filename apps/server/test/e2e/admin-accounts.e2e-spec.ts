@@ -66,7 +66,6 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(res.status).toBe(201);
       expect(res.body.success).toBe(true);
       expect(res.body.data.email).toBe('direct@example.com');
-      // New admins default to the Member RBAC role.
       expect(res.body.data.role?.id).toBe('role_sys_member');
 
       const list = await http(app).get('/api/admin/accounts').set('Cookie', cookie);
@@ -188,8 +187,6 @@ describe('Admin accounts & invites (e2e)', () => {
         .set('x-locale', 'ar')
         .send({ email: 'new@example.com', name: 'New Admin' });
 
-      // Restricted admins fail the PermissionsGuard with the localised
-      // permission-required message.
       expect(res.status).toBe(403);
       expect(res.body.error.code).toBe('FORBIDDEN');
       expect(res.body.error.message).toBe('ليس لديك الصلاحية لتنفيذ هذا الإجراء');
@@ -234,11 +231,9 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(accept.status).toBe(200);
       expect(accept.body.data.email).toBe('invitee@example.com');
 
-      // The invite is consumed - the link no longer resolves.
       const lookup = await http(app).get(`/api/admin/invite/${RAW_TOKEN}`);
       expect(lookup.status).toBe(404);
 
-      // The new admin can now sign in with the password they chose.
       const { res } = await loginAdmin(app, {
         email: 'invitee@example.com',
         password: 'invitee-pass-1',

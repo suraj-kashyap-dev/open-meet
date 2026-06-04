@@ -61,10 +61,6 @@ export class AdminRolesService {
     return this.toDto(created, 0);
   }
 
-  /**
-   * Update a role. `currentAdminRoleId` is the role currently held by the caller; when
-   * the caller is editing their own role, we forbid removing self-lockout keys.
-   */
   async update(
     id: string,
     dto: UpdateRoleBodyDto,
@@ -72,7 +68,6 @@ export class AdminRolesService {
   ): Promise<RoleDto> {
     const existing = await this.roles.findWithMemberCount(id);
     if (!existing) throw this.notFound();
-    // Administrator is the only system admin role and is fully immutable.
     if (existing.isSystem) throw this.systemLocked();
 
     const data: Parameters<AdminRoleRepository['update']>[1] = {};
@@ -131,13 +126,6 @@ export class AdminRolesService {
     this.resolver.invalidate(id);
   }
 
-  /**
-   * Expand parents into leaves and PRUNE anything that is not a current catalog
-   * key. Keys removed from the catalog after a role was saved (e.g. the retired
-   * `legacy-feature.removed.*`) are dropped silently instead of rejected, so legacy roles
-   * stay editable and self-heal on the next save. The picker can only emit catalog
-   * keys, so this never silently discards a deliberate selection.
-   */
   private normalizePermissions(selected: readonly string[]): string[] {
     return expandToLeaves(selected, PERMISSION_TREE_ADMIN);
   }

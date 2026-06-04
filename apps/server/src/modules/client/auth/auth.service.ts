@@ -54,8 +54,8 @@ export interface GuestAccessToken {
 
 @Injectable()
 export class AuthService {
-  private readonly refreshTtlSeconds = 60 * 60 * 24 * 7; // 7d in seconds
-  private readonly guestAccessTtlMs = 12 * 60 * 60 * 1000; // 12h
+  private readonly refreshTtlSeconds = 60 * 60 * 24 * 7;
+  private readonly guestAccessTtlMs = 12 * 60 * 60 * 1000;
 
   constructor(
     private readonly users: AuthRepository,
@@ -67,7 +67,6 @@ export class AuthService {
     private readonly presence: PresenceService,
   ) {}
 
-  /** Look up a pending user invite by its raw token (public, pre-account). */
   async lookupUserInvite(token: string): Promise<UserInviteLookupDto> {
     const invite = await this.requireValidUserInvite(token);
     return {
@@ -77,7 +76,6 @@ export class AuthService {
     };
   }
 
-  /** Claim an invite: create the verified account, consume the invite, sign in. */
   async acceptUserInvite(
     dto: AcceptUserInviteDto,
   ): Promise<{ user: UserDto; tokens: IssuedTokens }> {
@@ -159,7 +157,6 @@ export class AuthService {
           avatarUrl: byEmail.avatarUrl ?? profile.picture,
         });
       } else {
-        // Invite-only: Google sign-in cannot create new accounts.
         throw new ForbiddenException({
           code: ApiErrorCode.FORBIDDEN,
           message: 'No account exists for this Google address. Ask an admin for an invite.',
@@ -197,7 +194,6 @@ export class AuthService {
     }
 
     if (stored !== this.hashToken(refreshToken)) {
-      // token reuse - invalidate everything for this user (best-effort)
       await this.revokeAllForUser(payload.sub);
       throw new UnauthorizedException({
         code: ApiErrorCode.TOKEN_INVALID,
@@ -227,27 +223,19 @@ export class AuthService {
         });
         await this.redis.client.del(this.refreshKey(payload.sub, payload.jti));
         presenceTarget = presenceTarget ?? payload.sub;
-      } catch {
-        // Silent: logout should be best-effort
-      }
+      } catch {}
     }
-    // Mark the user offline immediately so peers see them disconnect without
-    // waiting for socket.io's idle timeout. Best-effort - never fail logout.
     if (presenceTarget) {
       try {
         const disconnectedSockets = await this.presence.disconnectSockets(presenceTarget);
         if (disconnectedSockets === 0) {
           await this.presence.forceOffline(presenceTarget);
         }
-      } catch {
-        // Silent
-      }
+      } catch {}
 
       try {
         await this.presence.resetStatus(presenceTarget);
-      } catch {
-        // Silent
-      }
+      } catch {}
     }
   }
 
@@ -302,15 +290,6 @@ export class AuthService {
     };
   }
 
-  /**
-   * Peer-visible profile of `targetId` as seen by `viewerId`. Honors the
-   * target's `UserSettings.profileVisibility`:
-   *   - PUBLIC            → everything is exposed.
-   *   - PARTICIPANTS_ONLY → full profile only when the two share a
-   *                        conversation; otherwise minimal.
-   *   - PRIVATE           → only id/name/avatar.
-   * Always auth-required; "public" here means peer-visible.
-   */
   async getPublicProfile(
     viewerId: string,
     targetId: string,

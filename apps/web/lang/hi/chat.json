@@ -228,6 +228,15 @@
     "today": "आज",
     "yesterday": "कल"
   },
+  "viewer": {
+    "download": "डाउनलोड करें",
+    "close": "बंद करें",
+    "zoom-in": "ज़ूम इन",
+    "zoom-out": "ज़ूम आउट",
+    "reset-zoom": "ज़ूम रीसेट करें",
+    "loading": "लोड हो रहा है…",
+    "load-failed": "यह फ़ाइल लोड नहीं हो सकी।"
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

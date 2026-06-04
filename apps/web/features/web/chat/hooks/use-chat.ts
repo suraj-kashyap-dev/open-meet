@@ -68,6 +68,7 @@ export function useConversationMessages(conversationId: string | undefined) {
       chatApi.messages(conversationId as string, { cursor: pageParam, limit: 50 }, signal),
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     staleTime: 15_000,
+    gcTime: 30 * 60_000,
   });
 }
 
@@ -345,10 +346,6 @@ export function useConversationState() {
       state: ConversationStateDto;
     }) => chatApi.setState(conversationId, state),
     onSuccess: (_res, { conversationId, state }) => {
-      // Update EVERY cached conversation-list variant (both includeHidden=false
-      // and includeHidden=true) via prefix-matching setQueriesData. Mutate the
-      // matched conversation's flags; the subsequent invalidateQueries refetch
-      // reconciles whether the item should stay/leave each variant.
       qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) => {
         if (!list) return list;
         const items = list.items.map((c) =>
@@ -428,8 +425,6 @@ export function usePresenceMe() {
     staleTime: 30_000,
   });
 }
-
-// --- Groups (user-initiated) ---
 
 export function useCreateGroup() {
   const qc = useQueryClient();

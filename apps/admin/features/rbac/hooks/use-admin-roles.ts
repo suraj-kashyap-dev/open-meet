@@ -44,8 +44,6 @@ export function useUpdateAdminRole() {
     onSuccess: (_data, { id }) => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
       void qc.invalidateQueries({ queryKey: [...ADMIN_ROLES_KEY, id] });
-      // Caller may have edited *their own* role - drop the cached /me so
-      // useCan reflects the new permissions on the next render.
       void qc.invalidateQueries({ queryKey: ['admin', 'me'] });
     },
   });

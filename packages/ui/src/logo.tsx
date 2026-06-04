@@ -7,21 +7,7 @@ interface Props {
   title?: string;
 }
 
-/**
- * Open Meet brand mark - a play/join triangle nested inside a chat speech
- * bubble. The bubble (with its soft bottom-left tail) says persistent
- * messaging; the play triangle is the universal "start / join a meeting" cue -
- * the two halves of the product in one calm mark. A gradient in the theme's
- * blue accent sweeps across the bubble, and a mask keeps the triangle and
- * everything outside the bubble transparent so it sits on any surface.
- *
- * Multiple instances reuse the `omAccent` / `omIris` ids; this is safe because
- * every definition is byte-identical and `url(#…)` resolves to the first.
- */
 export function Logo({ className, title = 'Open Meet' }: Props) {
-  // Unique ids per instance - multiple logos render at once (header, sidebar,
-  // sheet) and shared ids resolve to whichever is first in the DOM, which can
-  // sit inside a `display:none` container and make the mark render blank.
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const gradId = `omAccent-${uid}`;
   const maskId = `omIris-${uid}`;
@@ -62,10 +48,6 @@ export function Logo({ className, title = 'Open Meet' }: Props) {
   );
 }
 
-/**
- * Monochrome variant for single-color contexts - the same iris filled with
- * `currentColor` instead of the gradient.
- */
 export function LogoMark({ className }: { className?: string }) {
   const maskId = `omIrisMono-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
 

@@ -157,7 +157,6 @@ export class MessagesService {
     return this.broadcastNew(full, input.senderId, input.clientNonce);
   }
 
-  /** Serialize, broadcast `message:new` to the conversation room, and return the DTO. */
   broadcastNew(
     message: ChatMessageWithRelations,
     viewerId: string,

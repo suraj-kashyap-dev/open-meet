@@ -13,7 +13,6 @@ const activityInclude = {
   conversation: { select: { id: true, title: true } },
 } satisfies Prisma.ChatMessageInclude;
 
-/** "Activity" = messages that @mention the viewer, newest first. */
 @Injectable()
 export class ActivityService {
   constructor(

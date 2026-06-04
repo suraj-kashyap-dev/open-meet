@@ -18,11 +18,6 @@ function resolveTokens(value: string, mode: 'light' | 'dark'): AccentTokens {
   return ACCENT_PALETTE.indigo[mode];
 }
 
-/**
- * Mirrors the web AccentProvider but reads only the workspace default -
- * admins don't have per-user accent overrides. Lives inside ThemeProvider so
- * `resolvedTheme` is known.
- */
 export function AccentProvider({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
   const mode: 'light' | 'dark' = resolvedTheme === 'light' ? 'light' : 'dark';

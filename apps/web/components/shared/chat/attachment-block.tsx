@@ -1,15 +1,14 @@
 'use client';
 
-import { File as FileIcon, X } from 'lucide-react';
+import { File as FileIcon, FileText, X } from 'lucide-react';
 
 import type { AttachmentDto } from '@open-meet/types';
 
 import { env } from '@/lib/env';
 
-import { MediaLightbox } from './media-lightbox';
+import { MediaLightbox, PdfLightbox } from './media-lightbox';
 import type { StagedAttachment } from './use-staged-attachments';
 
-/** Resolves a possibly-relative attachment URL to an absolute one against the API host. */
 export function toAbsoluteMediaUrl(url: string): string {
   if (/^https?:\/\//i.test(url)) {
     return url;
@@ -21,7 +20,6 @@ export function toAbsoluteMediaUrl(url: string): string {
   return `${base}${path}`;
 }
 
-/** Inline renderer for a sent attachment - image/video/audio preview or a file chip. */
 export function AttachmentBlock({
   a,
   formatSize,
@@ -68,6 +66,28 @@ export function AttachmentBlock({
     );
   }
 
+  if (a.mime === 'application/pdf') {
+    return (
+      <PdfLightbox
+        src={src}
+        filename={filename ?? 'document.pdf'}
+        label={filename ?? a.mime}
+        className="flex max-w-xs items-center gap-3 rounded-lg border border-border bg-card px-3 py-2 text-start outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent"
+      >
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+          <FileText className="h-4 w-4" />
+        </span>
+
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-sm font-medium">{filename}</span>
+          <span className="block text-xs text-muted-foreground">
+            {a.mime} · {formatSize(a.size)}
+          </span>
+        </span>
+      </PdfLightbox>
+    );
+  }
+
   return (
     <a
       href={src}
@@ -94,7 +114,6 @@ export interface StagedAttachmentLabels {
   remove: string;
 }
 
-/** Preview strip of files being staged/uploaded, shown above a composer. */
 export function StagedAttachmentPreview({
   items,
   onRemove,

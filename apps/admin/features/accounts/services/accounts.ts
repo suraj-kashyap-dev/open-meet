@@ -33,7 +33,6 @@ export const adminAccountsApi = {
 
   revokeInvite: (id: string) => api.delete<{ deleted: true }>(`/admin/accounts/invites/${id}`),
 
-  // Public - used on the unauthenticated accept-invite page.
   lookupInvite: (token: string, signal?: AbortSignal) =>
     api.get<AdminInviteLookupDto>(`/admin/invite/${encodeURIComponent(token)}`, { signal }),
 

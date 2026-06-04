@@ -12,7 +12,6 @@ export const ADMIN_ACCESS_COOKIE = 'admin_access_token';
 export interface AdminRequestUser {
   id: string;
   email: string;
-  /** RBAC role id. Annotated handlers reject the request when this is null. */
   roleId: string | null;
 }
 

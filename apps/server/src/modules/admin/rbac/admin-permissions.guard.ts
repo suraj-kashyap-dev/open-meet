@@ -32,7 +32,6 @@ export class AdminPermissionsGuard implements CanActivate {
     const req = context.switchToHttp().getRequest<{ user?: AdminRequestUser }>();
     const user = req.user;
     if (!user) {
-      // AdminAuthGuard should have populated req.user before this guard runs.
       throw new InternalServerErrorException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'PermissionsGuard ran without an authenticated admin',

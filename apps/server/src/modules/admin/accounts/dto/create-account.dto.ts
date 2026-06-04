@@ -15,7 +15,6 @@ export class CreateAdminAccountDto {
   @MaxLength(200)
   password!: string;
 
-  /** RBAC role id. When omitted the new admin is assigned the seeded Member role. */
   @IsOptional()
   @IsString()
   @MinLength(1)

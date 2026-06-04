@@ -8,11 +8,6 @@ import { usePathname } from '@/i18n/navigation';
 
 import { ConversationList } from './conversation-list';
 
-/**
- * Two-pane chat frame. On desktop the conversation list rail is always visible
- * next to the routed conversation pane. On mobile the rail is the page until a
- * conversation is opened, then the conversation takes over full width.
- */
 export function ChatShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const conversationOpen = /^\/chat\/.+/.test(pathname);

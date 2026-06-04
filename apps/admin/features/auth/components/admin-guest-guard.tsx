@@ -15,8 +15,6 @@ export function AdminGuestGuard({ children }: { children: ReactNode }) {
     }
   }, [admin, isLoading, router]);
 
-  // While the session resolves, or once we know the admin is signed in (and the
-  // redirect is in flight), show a spinner instead of flashing the form.
   if (isLoading || admin) {
     return (
       <div className="flex min-h-screen items-center justify-center">

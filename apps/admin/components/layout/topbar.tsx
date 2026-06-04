@@ -35,7 +35,6 @@ function deriveCrumbs(pathname: string): Crumb[] {
     return [{ labelKey: 'topbar.dashboard' }];
   }
 
-  // Settings-hub virtual children: render Admin / Settings / <route> / [tail].
   const hub = matchSettingsHubRoute(pathname);
   if (hub) {
     const crumbs: Crumb[] = [

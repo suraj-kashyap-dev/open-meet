@@ -1,9 +1,3 @@
-/**
- * Groups consecutive messages from the same sender within a short time window
- * so a run of messages renders as one visual cluster (avatar + name shown once).
- * Generic over the message shape so both the meeting `MessageDto` and the
- * persistent-chat `ChatMessageDto` can reuse it.
- */
 export const GROUP_WINDOW_MS = 2 * 60_000;
 
 export interface GroupableMessage {

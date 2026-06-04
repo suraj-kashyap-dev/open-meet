@@ -228,6 +228,15 @@
     "today": "اليوم",
     "yesterday": "أمس"
   },
+  "viewer": {
+    "download": "تنزيل",
+    "close": "إغلاق",
+    "zoom-in": "تكبير",
+    "zoom-out": "تصغير",
+    "reset-zoom": "إعادة تعيين التكبير",
+    "loading": "جارٍ التحميل…",
+    "load-failed": "تعذّر تحميل هذا الملف."
+  },
   "size-bytes": "{bytes} بايت",
   "size-kb": "{kb} كيلوبايت",
   "size-mb": "{mb} ميجابايت"

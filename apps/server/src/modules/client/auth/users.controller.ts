@@ -8,10 +8,6 @@ import { ChatPermissionsRepository } from '../messaging/chat-permissions.reposit
 
 import { AuthService } from './auth.service';
 
-/**
- * Peer-visible user data. Auth-required ("public" = visible to other workspace
- * users, not the open internet). Honors the target's profileVisibility.
- */
 @ApiTags('users')
 @Controller('users')
 export class UsersController {

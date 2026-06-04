@@ -85,8 +85,6 @@ function parseRange(
   return { start, end: Math.min(end, totalSize - 1) };
 }
 
-// Extract the storage key from the raw URL rather than a route param so the
-// implementation is independent of how the wildcard segment is named.
 function keyFromUrl(url: string): string {
   const idx = url.indexOf(PUBLIC_PREFIX);
   let key = idx >= 0 ? url.slice(idx + PUBLIC_PREFIX.length) : '';

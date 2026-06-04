@@ -15,7 +15,6 @@ describe('MessageContent', () => {
     const chip = container.querySelector('[data-mention="u1"]');
     expect(chip).not.toBeNull();
     expect(chip?.textContent).toBe('@Ada');
-    // not rendered as an anchor
     expect(container.querySelector('a[href="u1"]')).toBeNull();
   });
 

@@ -258,13 +258,6 @@ export function SidebarContent({ onNavigate, collapsed = false }: Props) {
   );
 }
 
-/**
- * Filter sections + items + children based on the signed-in admin's grantedSet.
- * - Items without `permission` are always visible.
- * - `permissionType: 'ALL'` short-circuits to keep everything visible.
- * - Sections that end up empty are dropped.
- * - While `me` is loading, returns the full nav so we don't flicker.
- */
 function filterNav(
   sections: NavSection[],
   me: ReturnType<typeof useCurrentAdminMe>['data'],

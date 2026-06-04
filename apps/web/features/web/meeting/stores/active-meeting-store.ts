@@ -33,13 +33,9 @@ interface EndedInfo {
 }
 
 interface ActiveMeetingState {
-  /** The live connection, lifted out of the route so it survives navigation. */
   session: ActiveMeetingSession | null;
-  /** Whether the call is shown as the floating mini-player instead of full screen. */
   minimized: boolean;
-  /** Last drag position of the mini-player; null = default (bottom-right). */
   position: MiniPosition | null;
-  /** Set when a call disconnects while its route is open, so it can show the ended screen. */
   ended: EndedInfo | null;
   start: (session: ActiveMeetingSession) => void;
   minimize: () => void;

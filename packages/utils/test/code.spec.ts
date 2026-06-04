@@ -11,7 +11,6 @@ describe('generateMeetingCode()', () => {
   });
 
   it('should wrap byte values modulo the alphabet length', () => {
-    // 32-char alphabet, so byte 32 wraps back to index 0 ('a')
     const code = generateMeetingCode(() => new Uint8Array(12).fill(32));
     expect(code).toBe('aaaa-aaaa-aaaa');
   });
@@ -24,7 +23,7 @@ describe('isValidMeetingCode()', () => {
 
   it('should reject uppercase, ambiguous chars, wrong length, and missing groups', () => {
     expect(isValidMeetingCode('ABCD-EFGH-IJKM')).toBe(false);
-    expect(isValidMeetingCode('ab1d-efgh-ijkm')).toBe(false); // '1' not allowed
+    expect(isValidMeetingCode('ab1d-efgh-ijkm')).toBe(false);
     expect(isValidMeetingCode('abc-efgh-ijkm')).toBe(false);
     expect(isValidMeetingCode('abcdefghijkm')).toBe(false);
   });

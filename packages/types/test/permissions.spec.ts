@@ -83,7 +83,6 @@ describe('unknownKeys()', () => {
     expect(
       unknownKeys(['users.view', 'mystery.leaf', 'groups.channels.fly'], PERMISSION_TREE_ADMIN),
     ).toEqual(['mystery.leaf', 'groups.channels.fly']);
-    // (a removed-feature key is still correctly reported as unknown)
   });
 });
 

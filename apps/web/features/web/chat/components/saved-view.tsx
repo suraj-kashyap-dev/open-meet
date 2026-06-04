@@ -13,13 +13,11 @@ import type { SavedMessageDto } from '@open-meet/types';
 
 import { useSaved } from '../hooks/use-chat';
 
-/** Calendar-day bucket key (local time), e.g. "2026-06-02". */
 function dayKey(iso: string): string {
   const d = new Date(iso);
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 }
 
-/** WhatsApp-style separator: Today / Yesterday / localized date. */
 function formatDateSeparator(
   iso: string,
   locale: string,

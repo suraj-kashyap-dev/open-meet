@@ -59,8 +59,6 @@ export function ConversationListItem({
     });
   };
 
-  // Cast keeps us decoupled from the @open-meet/types build cadence; the field
-  // is present in source (ConversationDto.hidden: boolean) once rebuilt.
   const isHidden = (conversation as ConversationDto & { hidden?: boolean }).hidden ?? false;
 
   return (

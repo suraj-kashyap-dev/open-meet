@@ -29,8 +29,6 @@ export interface PrivacySettingsDto {
 }
 
 export interface AppearanceSettingsDto {
-  /** Preset slug ("indigo", "blue", "green", "purple", "rose", "amber", "teal")
-   *  or `#RRGGBB` hex. `null` falls back to the workspace default. */
   accentColorOverride: string | null;
 }
 
@@ -78,7 +76,6 @@ export interface UserDto {
 
 export interface UserMeResponseDto {
   user: UserDto;
-  /** Whether this user may create group conversations (admin-set). */
   canCreateGroups: boolean;
 }
 

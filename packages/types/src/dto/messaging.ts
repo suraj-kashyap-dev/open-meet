@@ -100,7 +100,6 @@ export interface PollDto {
   options: PollOptionDto[];
 }
 
-/** Lightweight quoted parent shown inside a reply bubble. */
 export interface ChatMessageReplyDto {
   id: string;
   content: string;
@@ -114,37 +113,27 @@ export interface ChatMessageDto {
   type: ChatMessageType;
   priority: ChatMessagePriority;
   content: string;
-  /** null once the sender's account is deleted. */
   sender: MessageSenderDto | null;
   parentId: string | null;
   parent: ChatMessageReplyDto | null;
-  /** Reply count for a message's thread (0 when it has no replies). */
   replyCount: number;
   attachments: AttachmentDto[];
   reactions: ReactionSummaryDto[];
   poll: PollDto | null;
-  /** User ids @mentioned in this message; the client derives "mentions me". */
   mentionedUserIds: string[];
-  /** True when the message @mentions everyone. */
   mentionsEveryone: boolean;
-  /** True when this message is pinned in its conversation (same for all viewers). */
   pinned: boolean;
-  /** True when the requesting viewer has saved this message (REST only; false over socket). */
   saved: boolean;
   editedAt: string | null;
   deletedAt: string | null;
-  /** createdAt - named `sentAt` so the shared message-grouping util works for both meeting and chat messages. */
   sentAt: string;
-  /** Echoed back to the sender so an optimistic message can be reconciled. */
   clientNonce?: string | null;
 }
 
 export interface ConversationDto {
   id: string;
   type: ConversationType;
-  /** Group title; null for DIRECT (the FE derives the peer's name from members). */
   title: string | null;
-  /** Group description; null for DIRECT. */
   description: string | null;
   members: ConversationMemberDto[];
   lastMessage: ChatMessageDto | null;
@@ -153,30 +142,25 @@ export interface ConversationDto {
   muted: boolean;
   pinned: boolean;
   hidden: boolean;
-  /** True when the viewer's ConversationMember.role is ADMIN - derived. */
   youAreAdmin: boolean;
   createdAt: string;
 }
 
-/** Request body for `POST /messaging/groups` - user-initiated group creation. */
 export interface CreateGroupBodyDto {
   title: string;
   description?: string | null;
   memberIds: string[];
 }
 
-/** Request body for `PATCH /messaging/groups/:id`. */
 export interface UpdateGroupBodyDto {
   title?: string;
   description?: string | null;
 }
 
-/** Request body for `POST /messaging/groups/:id/members`. */
 export interface AddGroupMembersBodyDto {
   userIds: string[];
 }
 
-/** Request body for `POST /messaging/groups/:id/members/:userId/role`. */
 export interface UpdateGroupMemberRoleBodyDto {
   role: ConversationMemberRole;
 }
@@ -210,7 +194,6 @@ export interface ForwardChatMessageDto {
   targetConversationId: string;
 }
 
-/** A saved/pinned message bundled with its conversation for the Saved / Pinned views. */
 export interface SavedMessageDto {
   message: ChatMessageDto;
   conversationId: string;
@@ -249,7 +232,6 @@ export interface TeammateDto {
   online: boolean;
   status: PresenceStatus | null;
   lastSeen: string | null;
-  /** An existing DM with this teammate, if one exists. */
   conversationId: string | null;
 }
 
@@ -261,8 +243,6 @@ export interface UnreadSummaryDto {
   total: number;
   byConversation: Record<string, number>;
 }
-
-// --- GIFs (Tenor) ---
 
 export interface GifDto {
   id: string;
@@ -276,8 +256,6 @@ export interface GifSearchResultDto {
   items: GifDto[];
 }
 
-// --- Activity feed ---
-
 export interface ActivityItemDto {
   message: ChatMessageDto;
   conversationId: string;
@@ -287,8 +265,6 @@ export interface ActivityItemDto {
 export interface ActivityFeedDto {
   items: ActivityItemDto[];
 }
-
-// --- Admin: groups (group conversations) ---
 
 export interface AdminGroupMemberDto {
   userId: string;
@@ -324,8 +300,6 @@ export interface AdminUpdateGroupDto {
 export interface AdminAddGroupMembersDto {
   userIds: string[];
 }
-
-// --- User invites (invite-only signup; mirrors the admin invite flow) ---
 
 export const UserInviteStatus = {
   PENDING: 'PENDING',

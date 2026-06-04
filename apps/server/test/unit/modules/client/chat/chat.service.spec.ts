@@ -96,7 +96,6 @@ describe('ChatService', () => {
       ];
       chat.listMeetingHistory.mockResolvedValueOnce(rows);
       const page = await service.pagedHistory('m1', { limit: 2 });
-      // requests limit + 1 to detect "more"
       expect(chat.listMeetingHistory).toHaveBeenCalledWith({
         meetingId: 'm1',
         cursor: undefined,

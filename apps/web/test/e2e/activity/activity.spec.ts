@@ -11,7 +11,6 @@ test.describe('Web activity page', () => {
     await expect(page.getByRole('heading', { name: 'Activity' })).toBeVisible();
     await expect(page.getByText('Messages that @mention you.')).toBeVisible();
 
-    // The seeded mention from Grace Hopper in the #general channel.
     await expect(page.getByText('Grace Hopper')).toBeVisible();
     await expect(page.getByRole('link', { name: /can you take a look at this/ })).toBeVisible();
   });

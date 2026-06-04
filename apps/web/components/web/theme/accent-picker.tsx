@@ -8,11 +8,6 @@ import { cn } from '@open-meet/ui/cn';
 
 import { ACCENT_PALETTE, ACCENT_PRESETS, isAccentHex, isAccentPreset } from './accent-palette';
 
-/**
- * Preset palette + advanced hex picker. `value` is either a preset slug, a
- * `#RRGGBB` hex, or `null` (use the workspace default). `onChange` is fired
- * synchronously on every selection - wire it to live-preview state.
- */
 export function AccentPicker({
   value,
   workspaceDefault,

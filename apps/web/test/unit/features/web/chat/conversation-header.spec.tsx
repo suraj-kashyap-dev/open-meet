@@ -77,8 +77,6 @@ vi.mock('@/features/web/chat/components/starred-messages-panel', () => ({
   StarredMessagesPanel: () => null,
 }));
 
-// Render the confirm dialog synchronously (no Radix portal/animation) so the
-// menu→confirm→mutate flow is deterministic under parallel test runs.
 vi.mock('@open-meet/ui/dialog', () => ({
   Dialog: ({ open, children }: { open: boolean; children: ReactNode }) =>
     open ? <>{children}</> : null,

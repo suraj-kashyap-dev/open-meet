@@ -21,7 +21,6 @@ export class UpdateConfigurationDto {
   @IsBoolean()
   allowGuestJoin?: boolean;
 
-  // `null` clears the cap (no limit); otherwise a sane minutes range.
   @IsOptional()
   @ValidateIf((_, value) => value !== null)
   @IsInt()

@@ -109,9 +109,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
           setActiveRecording(state.recording);
         }
       })
-      .catch(() => {
-        // ignore - banner stays hidden if probe fails
-      });
+      .catch(() => {});
 
     return () => {
       controller.abort();
@@ -201,9 +199,6 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
     t,
   ]);
 
-  // LiveKit participant join / leave sounds. Suppress for the first ~1.2s
-  // after mount so existing participants firing as "Connected" on initial
-  // sync don't unleash a flurry of chimes.
   useEffect(() => {
     if (!room) {
       return;

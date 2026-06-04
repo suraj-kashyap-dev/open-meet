@@ -84,11 +84,6 @@ function emitUnauthorized(path: string): void {
   window.dispatchEvent(new CustomEvent(UNAUTHORIZED_EVENT, { detail: { path } }));
 }
 
-/**
- * Tell the API which locale to answer in (error messages, emails). Derived
- * from the locale prefix in the URL, which next-intl keeps in sync with the
- * user's choice. No-op during SSR.
- */
 function currentLocaleHeader(): Record<string, string> {
   if (typeof window === 'undefined') {
     return {};

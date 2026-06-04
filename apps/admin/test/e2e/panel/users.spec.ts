@@ -141,8 +141,6 @@ test.describe('Admin users page', () => {
     await mockAdminApi(page);
     await page.goto('/en/users');
 
-    // First row (Ada, u-1) chat switch is on (chatDisabled: false). Turning it
-    // off must PATCH /admin/users/u-1 with chatDisabled: true.
     const toggle = page
       .getByRole('row', { name: /Ada Lovelace/ })
       .getByRole('switch', { name: 'Toggle chat access' });

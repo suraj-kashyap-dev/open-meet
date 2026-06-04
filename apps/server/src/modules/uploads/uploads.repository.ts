@@ -25,9 +25,6 @@ export class UploadsRepository {
     return this.prisma.attachment.findUnique({ where: { id } });
   }
 
-  // Attach previously-uploaded files to a message, but only the ones still
-  // unclaimed AND owned by the uploader - prevents stealing another user's
-  // attachment by guessing its id. Returns how many rows were actually linked.
   async claim(attachmentIds: string[], uploaderId: string, messageId: string): Promise<number> {
     const result = await this.prisma.attachment.updateMany({
       where: { id: { in: attachmentIds }, uploaderId, messageId: null, chatMessageId: null },
@@ -37,8 +34,6 @@ export class UploadsRepository {
     return result.count;
   }
 
-  // Same ownership-guarded claim, but for persistent chat messages. An
-  // attachment can be linked to a meeting message OR a chat message, never both.
   async claimForChat(
     attachmentIds: string[],
     uploaderId: string,

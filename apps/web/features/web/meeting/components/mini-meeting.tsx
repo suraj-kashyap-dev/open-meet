@@ -93,9 +93,7 @@ export function MiniMeeting({ code, meeting }: Props) {
 
     try {
       await meetingsApi.leave(code, authToken);
-    } catch {
-      // best-effort - disconnect locally regardless
-    }
+    } catch {}
 
     await room.disconnect();
   };

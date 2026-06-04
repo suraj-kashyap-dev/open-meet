@@ -19,7 +19,6 @@ import {
 export class GroupsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Create a user-initiated group with the creator as ADMIN. */
   async create(input: {
     creatorId: string;
     title: string;
@@ -44,7 +43,6 @@ export class GroupsRepository {
     });
   }
 
-  /** Filter the given user ids down to those that exist + are not chat-disabled. */
   async pickInvitableUsers(userIds: string[]): Promise<string[]> {
     if (userIds.length === 0) return [];
     const rows = await this.prisma.user.findMany({
@@ -102,7 +100,6 @@ export class GroupsRepository {
     await this.prisma.conversation.delete({ where: { id } });
   }
 
-  /** Fetch the group with members + last message - what the serializer expects. */
   findWithMembers(id: string): Promise<ConversationListRow | null> {
     return this.prisma.conversation.findUnique({
       where: { id },
@@ -110,7 +107,6 @@ export class GroupsRepository {
     });
   }
 
-  /** All current user ids in a group - used for "fan-out" broadcast targets. */
   async memberUserIds(id: string): Promise<string[]> {
     const rows = await this.prisma.conversationMember.findMany({
       where: { conversationId: id },

@@ -34,7 +34,6 @@ describe('elapsedSeconds()', () => {
     vi.setSystemTime(new Date('2026-05-01T00:00:10Z'));
     expect(elapsedSeconds(new Date('2026-05-01T00:00:00Z'))).toBe(10);
     expect(elapsedSeconds('2026-05-01T00:00:10Z')).toBe(0);
-    // a start in the future clamps to 0
     expect(elapsedSeconds(new Date('2026-05-01T00:00:20Z'))).toBe(0);
   });
 });

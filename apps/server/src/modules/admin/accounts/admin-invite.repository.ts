@@ -12,10 +12,6 @@ export type AdminInviteWithInviter = AdminInvite & {
 export class AdminInviteRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Create the invite, or overwrite an existing pending one for the same
-   * email with a fresh token + expiry (so re-inviting just refreshes it).
-   */
   upsertByEmail(data: {
     email: string;
     name: string;

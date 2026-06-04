@@ -40,9 +40,6 @@ export class GroupsService {
     const title = this.requireTitle(body.title);
     const description = this.normalizeDescription(body.description);
 
-    // Drop chat-disabled / unknown users silently - group creation never fails
-    // because one person was disabled mid-flow - then keep only those the
-    // creator may actually reach (chat is open, so anyone but self).
     const invitable = await this.repo.pickInvitableUsers([
       ...new Set(body.memberIds.filter((id) => id && id !== creatorId)),
     ]);
@@ -55,8 +52,6 @@ export class GroupsService {
       memberIds: eligible,
     });
 
-    // Broadcast: each member's `user:` room gets a CONVERSATION_NEW so their
-    // list refreshes; the new conversation room is joined lazily by sockets.
     const dto = await this.toDto(conversation.id, creatorId);
     for (const m of conversation.members) {
       const perViewer = m.userId === creatorId ? dto : await this.toDto(conversation.id, m.userId);
@@ -98,13 +93,11 @@ export class GroupsService {
     const invitable = await this.permissions.filterEligibleTargets(actorId, invitableRaw);
 
     if (invitable.length === 0) {
-      // Nothing to do; still return current state so the caller's cache stays right.
       return this.toDto(conversationId, actorId);
     }
 
     await this.repo.addMembers(conversationId, invitable);
 
-    // Each NEW member gets CONVERSATION_NEW; existing get CONVERSATION_UPDATE.
     const updatedDto = await this.broadcastUpdate(conversationId, actorId);
     for (const userId of invitable) {
       const perViewer = await this.toDto(conversationId, userId);
@@ -113,7 +106,6 @@ export class GroupsService {
     return updatedDto;
   }
 
-  /** Either an admin kick (actor != target) or a self-leave (actor == target). */
   async removeMember(conversationId: string, actorId: string, targetUserId: string): Promise<void> {
     const { membership } = await this.permissions.assertGroupAdminOrSelf(
       conversationId,
@@ -121,14 +113,9 @@ export class GroupsService {
       targetUserId,
     );
 
-    // Last-admin guard: can't remove the only admin (whether self-leaving or
-    // being kicked by themselves - the conversation would have zero admins).
     if (membership.role === ConversationMemberRole.ADMIN && actorId === targetUserId) {
       const admins = await this.permissions.groupAdminCount(conversationId);
       if (admins <= 1) {
-        // Verify there are other members to promote - otherwise allow leaving
-        // and let the caller delete instead. We block when there are still
-        // other members so the group doesn't end up orphaned.
         const members = await this.repo.memberUserIds(conversationId);
         if (members.length > 1) {
           throw new BadRequestException({
@@ -141,12 +128,10 @@ export class GroupsService {
 
     await this.repo.removeMember(conversationId, targetUserId);
 
-    // Notify the kicked/leaving member so their list/UI drops the conversation.
     this.bus.emit(userRoom(targetUserId), ChatServerEvent.CONVERSATION_REMOVED, {
       conversationId,
     });
 
-    // The rest of the group sees a roster change.
     await this.broadcastUpdate(conversationId, actorId);
   }
 
@@ -158,7 +143,6 @@ export class GroupsService {
   ): Promise<ConversationDto> {
     await this.permissions.assertGroupAdmin(conversationId, actorId);
 
-    // Last-admin guard on demotion.
     if (role === ConversationMemberRole.MEMBER) {
       const admins = await this.permissions.groupAdminCount(conversationId);
       const target = await this.permissions.assertConversationMember(conversationId, targetUserId);
@@ -185,8 +169,6 @@ export class GroupsService {
     }
   }
 
-  // --- internals ---
-
   private requireTitle(raw: string): string {
     const title = raw.trim();
     if (title.length < TITLE_MIN || title.length > TITLE_MAX) {
@@ -211,7 +193,6 @@ export class GroupsService {
     return trimmed;
   }
 
-  /** Serialize the group for a specific viewer (so `youAreAdmin` is correct). */
   private async toDto(conversationId: string, viewerId: string): Promise<ConversationDto> {
     const conv = await this.repo.findWithMembers(conversationId);
     if (!conv) {
@@ -244,7 +225,6 @@ export class GroupsService {
     });
   }
 
-  /** Push a CONVERSATION_UPDATE to every current member's user room. */
   private async broadcastUpdate(
     conversationId: string,
     actorViewerId: string,
@@ -257,8 +237,6 @@ export class GroupsService {
         userId === actorViewerId ? actorDto : await this.toDto(conversationId, userId);
       this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_UPDATE, perViewer);
     }
-    // Also push to the conversation room so currently-joined clients see it
-    // even before their per-user list-query refetches.
     this.bus.emit(conversationRoom(conversationId), ChatServerEvent.CONVERSATION_UPDATE, actorDto);
 
     return actorDto;

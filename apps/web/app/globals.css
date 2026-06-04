@@ -1,13 +1,7 @@
 @import '@open-meet/tailwind-config/styles.css';
 
-/* Tailwind v4 doesn't scan node_modules by default - point it at the shared UI package source. */
 @source '../../../packages/ui/src/**/*.{ts,tsx}';
 
-/*
- * LiveKit ships a single hardcoded dark palette under [data-lk-theme="default"].
- * Re-map its CSS variables to our light tokens when the app isn't in dark mode
- * so the meeting screen actually follows the theme toggle.
- */
 html:not(.dark) [data-lk-theme='default'] {
   color-scheme: light;
   --lk-bg: #fafafa;
@@ -45,13 +39,6 @@ html:not(.dark) [data-lk-theme='default'] {
   --lk-drop-shadow: rgba(0, 0, 0, 0.18) 0px 0px 24px;
 }
 
-/*
- * Unified video-tile chip style - every floating overlay on a participant
- * tile (name pill, mic/camera muted indicator, connection quality, focus
- * toggle) shares the same dark-glass pill look as the in-meeting LIVE timer.
- * Always dark glass - these sit on top of video, theme of the app doesn't
- * change the contrast requirement.
- */
 [data-lk-theme='default'] .lk-participant-metadata {
   right: 0.625rem;
   bottom: 0.625rem;
@@ -94,10 +81,6 @@ html:not(.dark) [data-lk-theme='default'] {
   display: none !important;
 }
 
-/*
- * Video-muted placeholder - keep it dark in light mode too so the
- * silhouette stays visible against a contrasted background.
- */
 html:not(.dark) [data-lk-theme='default'] .lk-participant-placeholder {
   background-color: #18181b;
   color: #fafafa;

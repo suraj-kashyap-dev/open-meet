@@ -163,7 +163,6 @@ export function EditUserDialog({ user, onClose }: Props) {
     defaultValues: defaultsFor(user),
   });
 
-  // Re-seed the form (and clear staged avatar state) whenever a user is opened.
   useEffect(() => {
     if (user) {
       reset(defaultsFor(user));
@@ -174,7 +173,6 @@ export function EditUserDialog({ user, onClose }: Props) {
     }
   }, [user, reset]);
 
-  // Revoke the staged preview's object URL when it changes or on unmount.
   useEffect(() => {
     return () => {
       if (avatarPreview) {

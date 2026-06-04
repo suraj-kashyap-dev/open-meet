@@ -254,11 +254,11 @@ describe('RecordingService', () => {
         name: 'egress_ended',
         info: {
           egressId: 'eg-1',
-          status: 3, // EGRESS_COMPLETE
+          status: 3,
           error: '',
           fileResults: [
             {
-              duration: BigInt(12_000) * BigInt(1_000_000), // 12s in nanoseconds
+              duration: BigInt(12_000) * BigInt(1_000_000),
               size: BigInt(987_654),
               location: '/out/recordings/2026-05-17/abcd.mp4',
               endedAt: BigInt(Date.parse('2026-05-17T10:01:00Z')) * BigInt(1_000_000),
@@ -286,7 +286,7 @@ describe('RecordingService', () => {
         name: 'egress_ended',
         info: {
           egressId: 'eg-1',
-          status: 4, // EGRESS_FAILED
+          status: 4,
           error: 'compositor crashed',
           fileResults: [],
         } as never,

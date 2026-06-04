@@ -107,8 +107,6 @@ export function MeetingClient({ code }: { code: string }) {
     }
   }, [code, hasActiveSession, isEnded, router, userLoading, viewer]);
 
-  // Pre-join lookup. Skipped when a session for this code already exists (we
-  // returned from the mini-player) or it just ended.
   useEffect(() => {
     if (!viewer || userLoading || hasActiveSession || isEnded) {
       return;

@@ -6,7 +6,6 @@ import { createTestApp, http, registerUser, resetDb } from './setup-app';
 describe('Messaging / persistent chat (e2e)', () => {
   let app: NestFastifyApplication;
 
-  // Chat is open: any user can DM any other user.
   let alice: { id: string; cookie: string };
   let bob: { id: string; cookie: string };
   let outsider: { id: string; cookie: string };

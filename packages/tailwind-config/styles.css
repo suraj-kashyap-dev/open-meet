@@ -2,7 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light theme (default) */
 :root {
   --background: #fafafa;
   --foreground: #09090b;
@@ -135,7 +134,6 @@
     color: var(--color-accent-foreground);
   }
 
-  /* - Native date / time inputs: keep them legible in both themes - */
   input[type='date'],
   input[type='time'],
   input[type='datetime-local'] {
@@ -225,7 +223,6 @@
 }
 
 @layer utilities {
-  /* - Animations - */
   @keyframes overlay-show {
     from {
       opacity: 0;
@@ -337,7 +334,6 @@
     }
   }
 
-  /* Flash-and-fade glow drawn OUTSIDE the bubble (no layout impact). */
   @keyframes chat-jump-target {
     0% {
       opacity: 0;
@@ -402,12 +398,6 @@
     animation: aurora 18s ease-in-out infinite;
   }
 
-  /*
-   * The jump highlight must never reflow the message. `.chat-jump-target` only
-   * establishes a positioning context; the visible highlight is an overlay glow
-   * drawn just OUTSIDE the bubble via `::after` (negative inset), so the layout
-   * is untouched. No side accent bar, no padding, no background on the element.
-   */
   .chat-jump-target {
     position: relative;
   }
@@ -432,7 +422,6 @@
     will-change: box-shadow;
   }
 
-  /* Pinned-bar preview transition when cycling between pinned messages. */
   @keyframes chat-pin-swap {
     0% {
       opacity: 0;
@@ -458,13 +447,11 @@
       transform: none;
     }
 
-    /* Keep a static (non-animated) glow so the jump target is still obvious. */
     .chat-jump-target::after {
       opacity: 1;
     }
   }
 
-  /* - Gradient text - */
   .gradient-text {
     background: linear-gradient(
       90deg,
@@ -479,7 +466,6 @@
     animation: gradient-pan 6s ease-in-out infinite;
   }
 
-  /* - Animated grid backdrop - */
   .grid-backdrop {
     background-image:
       linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
@@ -493,7 +479,6 @@
     background: radial-gradient(ellipse 80% 60% at 50% 0%, var(--hero-glow) 0%, transparent 60%);
   }
 
-  /* - Shimmer for placeholder/loading - */
   .shimmer {
     background: linear-gradient(
       90deg,
@@ -505,7 +490,6 @@
     animation: shimmer 1.6s ease-in-out infinite;
   }
 
-  /* - Subtle glow ring on focus/active - */
   .glow-ring {
     box-shadow:
       0 0 0 1px var(--color-border),

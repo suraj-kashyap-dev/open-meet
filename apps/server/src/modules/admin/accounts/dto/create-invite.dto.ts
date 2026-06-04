@@ -10,7 +10,6 @@ export class CreateAdminInviteDto {
   @MaxLength(120)
   name!: string;
 
-  /** RBAC role id the invitee will receive when they accept. Defaults to Member. */
   @IsOptional()
   @IsString()
   @MinLength(1)

@@ -15,11 +15,6 @@ interface CheckboxProps extends Omit<
   onCheckedChange?: (checked: boolean) => void;
 }
 
-/**
- * Non-native, tri-state checkbox. Renders a `role="checkbox"` button - no browser
- * default styling, no shadow - and supports an `indeterminate` (partial) state for
- * tree pickers. API mirrors shadcn/Radix (`checked` / `onCheckedChange`).
- */
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
   ({ className, checked = false, onCheckedChange, disabled, ...props }, ref) => {
     const state = checked === 'indeterminate' ? 'indeterminate' : checked ? 'checked' : 'unchecked';

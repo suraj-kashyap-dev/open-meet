@@ -5,7 +5,6 @@ import { useCallback } from 'react';
 
 import { byteSize } from '@/components/shared/chat';
 
-/** A `chat`-namespace byte formatter, binding the shared `byteSize` to i18n. */
 export function useFormatSize(): (bytes: number) => string {
   const t = useTranslations('chat');
 

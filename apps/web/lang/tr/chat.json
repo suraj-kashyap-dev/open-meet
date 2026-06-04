@@ -228,6 +228,15 @@
     "today": "Bugün",
     "yesterday": "Dün"
   },
+  "viewer": {
+    "download": "İndir",
+    "close": "Kapat",
+    "zoom-in": "Yakınlaştır",
+    "zoom-out": "Uzaklaştır",
+    "reset-zoom": "Yakınlaştırmayı sıfırla",
+    "loading": "Yükleniyor…",
+    "load-failed": "Bu dosya yüklenemedi."
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

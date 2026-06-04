@@ -16,9 +16,7 @@ interface TypingEntry {
 }
 
 interface ChatStoreState {
-  /** Conversation currently open on screen (suppresses its unread + toasts). */
   activeConversationId: string | null;
-  /** Whether the right-side info panel is open for the active conversation. */
   infoOpen: boolean;
   totalUnread: number;
   unreadByConversation: Record<string, number>;

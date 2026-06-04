@@ -22,12 +22,6 @@ import { ApiClientError } from '@/lib/api/client';
 import { useCreateGroup, useTeammates } from '../hooks/use-chat';
 import { GroupMemberPicker } from './group-member-picker';
 
-/**
- * "New group" composer modal. Title + optional description + multi-select
- * teammate picker. On submit calls `POST /messaging/groups` and navigates to
- * the new conversation. Open only when the workspace allows user-initiated
- * groups (the trigger in the conversation-list header gates visibility).
- */
 export function NewGroupDialog({
   open,
   onOpenChange,

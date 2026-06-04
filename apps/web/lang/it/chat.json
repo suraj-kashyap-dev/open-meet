@@ -228,6 +228,15 @@
     "today": "Oggi",
     "yesterday": "Ieri"
   },
+  "viewer": {
+    "download": "Scarica",
+    "close": "Chiudi",
+    "zoom-in": "Ingrandisci",
+    "zoom-out": "Riduci",
+    "reset-zoom": "Reimposta zoom",
+    "loading": "Caricamento…",
+    "load-failed": "Impossibile caricare questo file."
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

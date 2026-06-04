@@ -6,8 +6,6 @@ import { ConfigController } from './config.controller';
 import { WorkspaceConfigRepository } from './workspace-config.repository';
 import { WorkspaceConfigService } from './workspace-config.service';
 
-// Owns the WorkspaceSettings singleton: serves the public config endpoint and
-// exports services for the admin branding + configuration controllers.
 @Module({
   controllers: [ConfigController],
   providers: [

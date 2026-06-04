@@ -117,7 +117,6 @@ describe('<PinnedMessagesBar />', () => {
     fireEvent.click(cycle);
     expect(onOpenMessage).toHaveBeenLastCalledWith('m3');
 
-    // Preview has advanced to the next pin.
     expect(screen.getByText('2/3')).toBeInTheDocument();
     expect(screen.getByText('Share the venue map')).toBeInTheDocument();
 

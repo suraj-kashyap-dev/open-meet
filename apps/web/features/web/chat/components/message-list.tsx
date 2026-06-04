@@ -10,6 +10,7 @@ import { Button } from '@open-meet/ui/button';
 import type { ChatMessageDto, ConversationMemberDto } from '@open-meet/types';
 
 import { buildMessageRows } from '@/components/shared/chat';
+import { useDelayedFlag } from '@/lib/use-delayed-flag';
 import { usePathname, useRouter } from '@/i18n/navigation';
 
 import { ForwardDialog } from './forward-dialog';
@@ -68,6 +69,7 @@ export function MessageList({
 
   const messages = useMemo(() => flattenMessages(query.data), [query.data]);
   const rows = useMemo(() => buildMessageRows(messages, currentUserId), [messages, currentUserId]);
+  const showSkeleton = useDelayedFlag(messages.length === 0 && query.isLoading);
 
   const lastOwnId = useMemo(() => {
     for (let i = messages.length - 1; i >= 0; i--) {
@@ -94,8 +96,6 @@ export function MessageList({
     return el.scrollHeight - el.scrollTop - el.clientHeight < 64;
   }, []);
 
-  // Anchor the viewport: restore position after loading older messages, or
-  // stick to the bottom when a new message arrives while pinned.
   useLayoutEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -116,7 +116,6 @@ export function MessageList({
 
   const markReadMutate = markRead.mutate;
 
-  // Mark read when the newest message is visible (pinned) and it isn't ours.
   useEffect(() => {
     const last = messages[messages.length - 1];
     if (!last || !pinnedRef.current) return;
@@ -208,9 +207,6 @@ export function MessageList({
     setPendingJumpId(id);
   };
 
-  // Deep-link jump: `/chat/{id}?m={messageId}` scrolls to and highlights the
-  // target once the first page has loaded, then strips the param so it won't
-  // re-fire. Reused by the global Starred page and the per-chat starred panel.
   useEffect(() => {
     if (!targetMessageId || query.isLoading) {
       return;
@@ -249,7 +245,9 @@ export function MessageList({
           ) : null}
 
           {messages.length === 0 && query.isLoading ? (
-            <MessageListSkeleton />
+            showSkeleton ? (
+              <MessageListSkeleton />
+            ) : null
           ) : messages.length === 0 ? (
             <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
               {t('view.no-messages')}

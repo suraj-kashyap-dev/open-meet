@@ -228,6 +228,15 @@
     "today": "今天",
     "yesterday": "昨天"
   },
+  "viewer": {
+    "download": "下载",
+    "close": "关闭",
+    "zoom-in": "放大",
+    "zoom-out": "缩小",
+    "reset-zoom": "重置缩放",
+    "loading": "加载中…",
+    "load-failed": "无法加载此文件。"
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

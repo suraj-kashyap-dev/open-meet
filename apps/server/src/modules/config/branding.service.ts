@@ -14,8 +14,6 @@ const LOGO_MAX_BYTES = 2 * 1024 * 1024;
 const ACCENT_DEFAULT = 'indigo';
 const ACCENT_PATTERN = /^(indigo|blue|green|purple|rose|amber|teal|#[0-9a-fA-F]{6})$/;
 
-// Logos are raster images only; SVG is intentionally excluded to avoid
-// serving attacker-controlled markup from the file origin.
 const LOGO_MIME_EXT: Record<string, string> = {
   'image/png': 'png',
   'image/jpeg': 'jpg',
@@ -42,7 +40,6 @@ export class BrandingService {
     };
   }
 
-  // The admin read uses the same shape as the public config.
   getBranding(): Promise<AdminBrandingDto> {
     return this.getPublicConfig();
   }
@@ -112,7 +109,6 @@ export class BrandingService {
     await this.storage.put({ key, buffer, mime });
     await this.repo.setLogoKey(key);
 
-    // Best-effort cleanup of the replaced logo file.
     if (previous?.logoKey && previous.logoKey !== key) {
       await this.storage.delete(previous.logoKey).catch(() => undefined);
     }

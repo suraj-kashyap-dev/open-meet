@@ -9,7 +9,6 @@ interface Props {
   eyebrowKey?: string;
   titleKey: string;
   description?: string;
-  /** Header actions rendered top-right, before the Back button (e.g. a Save button). */
   actions?: ReactNode;
   children: ReactNode;
 }

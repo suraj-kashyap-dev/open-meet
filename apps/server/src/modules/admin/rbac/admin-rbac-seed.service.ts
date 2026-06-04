@@ -22,9 +22,6 @@ export class AdminRbacSeedService implements OnModuleInit {
       defaultPermissions: [],
     });
 
-    // Member is the fallback role for admins invited without an explicit role.
-    // It is seeded but NOT a system role, so operators can rename, re-scope, or
-    // delete it - Administrator is the only immutable system role.
     await this.roles.ensureDefault({
       id: SYSTEM_MEMBER_ROLE_ID,
       name: 'Member',

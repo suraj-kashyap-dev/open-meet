@@ -12,8 +12,6 @@ function isLocale(segment: string | undefined): segment is (typeof routing.local
 export default function middleware(request: NextRequest) {
   const segments = request.nextUrl.pathname.split('/').filter(Boolean);
 
-  // Send the locale root (e.g. /en or /en/) straight to the chat home instead of
-  // rendering the empty shell index page.
   if (segments.length === 1 && isLocale(segments[0])) {
     const url = request.nextUrl.clone();
     url.pathname = `/${segments[0]}/chat`;

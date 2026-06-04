@@ -73,7 +73,6 @@ export class AdminAuthService {
     return this.toDto(admin, role);
   }
 
-  /** Identity + RBAC context (single round-trip for the admin client). */
   async getMe(id: string): Promise<AdminMeResponseDto> {
     const admin = await this.admins.findById(id);
     if (!admin) {

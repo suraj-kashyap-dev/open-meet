@@ -228,6 +228,15 @@
     "today": "আজ",
     "yesterday": "গতকাল"
   },
+  "viewer": {
+    "download": "ডাউনলোড",
+    "close": "বন্ধ করুন",
+    "zoom-in": "জুম ইন",
+    "zoom-out": "জুম আউট",
+    "reset-zoom": "জুম রিসেট করুন",
+    "loading": "লোড হচ্ছে…",
+    "load-failed": "এই ফাইলটি লোড করা যায়নি।"
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

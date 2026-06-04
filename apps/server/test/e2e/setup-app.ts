@@ -80,12 +80,8 @@ interface Creds {
   password: string;
 }
 
-// Locally-named alias for supertest's response so exported helper return types
-// don't leak an un-nameable @types/superagent path (TS2883).
 type SupertestResponse = Awaited<ReturnType<ReturnType<typeof request>['post']>>;
 
-// Public signup is invite-only, so e2e seeds a verified user directly and logs
-// in to obtain session cookies (same return shape the suites already rely on).
 export async function registerUser(
   app: NestFastifyApplication,
   creds: Creds,
@@ -119,7 +115,6 @@ export async function registerUser(
   };
 }
 
-/** Seed an admin with an RBAC role. Defaults to the Administrator role (ALL bypass). */
 export async function seedAdmin(
   app: NestFastifyApplication,
   creds: Creds & { roleRecordId?: string },

@@ -228,6 +228,15 @@
     "today": "오늘",
     "yesterday": "어제"
   },
+  "viewer": {
+    "download": "다운로드",
+    "close": "닫기",
+    "zoom-in": "확대",
+    "zoom-out": "축소",
+    "reset-zoom": "확대/축소 초기화",
+    "loading": "로딩 중…",
+    "load-failed": "이 파일을 불러올 수 없습니다."
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

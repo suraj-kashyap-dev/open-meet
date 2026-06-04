@@ -31,7 +31,6 @@ test.describe('Web chat list page', () => {
 
   test('should expose the presence status picker', async ({ page }) => {
     await mockWebApi(page);
-    // The picker is gated on a live chat-socket connection; stub the handshake.
     await mockChatSocket(page);
     await page.goto('/en/chat');
 

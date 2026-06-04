@@ -315,7 +315,6 @@ export class ConversationGateway
     return user;
   }
 
-  /** Runs a handler, translating HTTP exceptions from services into WsException. */
   private async guard<T>(fn: () => Promise<T>): Promise<T> {
     try {
       return await fn();

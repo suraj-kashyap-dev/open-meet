@@ -3,7 +3,6 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from './setup-app';
 
-// Use the Administrator RBAC role (ALL bypass) so branding + configuration mutations pass.
 const ADMIN = {
   email: 'brand-admin@example.com',
   password: 'brand-pass-1',
@@ -11,7 +10,6 @@ const ADMIN = {
   roleRecordId: 'role_sys_admin',
 };
 
-// Smallest valid 1x1 transparent PNG.
 const PNG_1x1 = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
   'base64',

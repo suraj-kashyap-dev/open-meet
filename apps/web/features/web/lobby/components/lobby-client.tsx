@@ -48,8 +48,6 @@ export function LobbyClient({ code }: { code: string }) {
     }
   }, [error, nav, t]);
 
-  // Apply the user's saved meeting defaults once the media stream is ready.
-  // Guarded by a ref so a settings refetch can't clobber a manual toggle.
   useEffect(() => {
     if (appliedDefaults.current || !settings || !media.stream) {
       return;

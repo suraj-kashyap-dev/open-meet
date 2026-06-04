@@ -3,7 +3,6 @@ import type { AdminBrandingDto, UpdateBrandingInput } from '@open-meet/types';
 import { api, ApiClientError } from '@/lib/api/client';
 import { env } from '@/lib/env';
 
-// Multipart upload via XHR - the JSON api client can't send FormData.
 function uploadLogo(file: File): Promise<AdminBrandingDto> {
   return new Promise((resolve, reject) => {
     const url = `${env.NEXT_PUBLIC_API_URL}/api/admin/branding/logo`;

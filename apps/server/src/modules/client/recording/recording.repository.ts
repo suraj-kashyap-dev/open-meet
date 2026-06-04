@@ -42,9 +42,6 @@ export class RecordingRepository {
     });
   }
 
-  // Narrower: only rows whose egress is still ACTIVE. STOPPING rows are
-  // already finalising on the LiveKit side and shouldn't block a new
-  // recording from starting.
   findRecordingForMeeting(meetingId: string): Promise<Recording | null> {
     return this.prisma.recording.findFirst({
       where: {

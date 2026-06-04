@@ -263,11 +263,6 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
     try {
       await recordingApi.stop(code, authToken);
-      // Optimistic clear: the egress takes a few seconds to finalize the
-      // MP4 and a few more for the webhook to land, but from the host's
-      // point of view the meeting is no longer being recorded. Clear the
-      // UI immediately so they can start another one or just move on.
-      // The recording will appear in /history as soon as it's processed.
       setActiveRecording(null);
       toast.success(t('toast.recording-saved'), {
         description: t('toast.recording-saved-description'),
@@ -316,9 +311,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
     try {
       await meetingsApi.leave(code, authToken);
-    } catch {
-      // best-effort
-    }
+    } catch {}
 
     await room.disconnect();
   };

@@ -27,11 +27,7 @@ export default defineConfig({
     environment: 'node',
     include: ['test/e2e/**/*.e2e-spec.ts'],
     globalSetup: ['./test/e2e/global-setup.ts'],
-    // env-setup must run before any AppModule import so ConfigModule reads the
-    // test DATABASE_URL; reflect-metadata is needed for Nest DI.
     setupFiles: ['./test/e2e/env-setup.ts', './test/setup.ts'],
-    // The suite shares one Postgres test DB and truncates between tests, so run
-    // files serially in a single worker to avoid cross-file races.
     pool: 'forks',
     poolOptions: { forks: { singleFork: true } },
     fileParallelism: false,

@@ -8,8 +8,6 @@ import { createTestApp, http, registerUser, resetDb } from './setup-app';
 
 const hashToken = (token: string) => createHash('sha256').update(token).digest('hex');
 
-// Seed a pending invite the way the admin invite flow would, returning the raw
-// token the email link would carry (only its sha256 hash is persisted).
 async function seedInvite(
   app: NestFastifyApplication,
   opts: { email: string; name?: string; token: string; expiresInMs?: number },
@@ -78,7 +76,6 @@ describe('Auth (e2e)', () => {
       expect(setCookie.join(';')).toContain('access_token=');
       expect(setCookie.some((c) => /httponly/i.test(c))).toBe(true);
 
-      // The new account can sign in with the password it just set.
       const login = await http(app)
         .post('/api/auth/login')
         .send({ email: 'ada@example.com', password: 'secretpass1' });
@@ -134,7 +131,6 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/me').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
-      // /auth/me returns { user, canCreateGroups } - user RBAC was removed.
       expect(res.body.data.user.email).toBe('ada@example.com');
       expect(typeof res.body.data.canCreateGroups).toBe('boolean');
     });

@@ -64,8 +64,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Pin the workspace accent at SSR so the first paint matches the branding
-            instead of flashing the indigo defaults before AccentProvider runs. */}
+        {}
         <style
           dangerouslySetInnerHTML={{ __html: buildAccentCss(branding.accentColor ?? 'indigo') }}
         />

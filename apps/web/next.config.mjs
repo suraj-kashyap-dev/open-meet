@@ -2,12 +2,9 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@open-meet/ui'],
-  // Next 15.1+ overlays a "static route" indicator in dev that can interfere
-  // with Playwright clicks and delay the `load` event. Keep dev UI quiet.
   devIndicators: {
     appIsrStatus: false,
     buildActivity: false,

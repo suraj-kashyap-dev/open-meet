@@ -10,7 +10,6 @@ import type { ChatMessageDto } from '@open-meet/types';
 
 import { messagePreview, PinnedMessagesPanel } from './pinned-messages-panel';
 
-/** Telegram-style position indicator caps the number of visible segments. */
 const MAX_SEGMENTS = 5;
 
 export function PinnedMessagesBar({
@@ -47,8 +46,6 @@ export function PinnedMessagesBar({
     : t('bubble.unknown-user');
   const preview = messagePreview(active, t('list.attachment'), t('bubble.deleted'));
 
-  // Tap the banner to jump to the active pin, then advance to the next one so
-  // repeated taps cycle through every pin (newest → oldest), like Telegram.
   const cycle = () => {
     onOpenMessage(active.id);
     if (multiple) {

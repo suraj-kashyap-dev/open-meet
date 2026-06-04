@@ -228,6 +228,15 @@
     "today": "Сегодня",
     "yesterday": "Вчера"
   },
+  "viewer": {
+    "download": "Скачать",
+    "close": "Закрыть",
+    "zoom-in": "Увеличить",
+    "zoom-out": "Уменьшить",
+    "reset-zoom": "Сбросить масштаб",
+    "loading": "Загрузка…",
+    "load-failed": "Не удалось загрузить этот файл."
+  },
   "size-bytes": "{bytes} Б",
   "size-kb": "{kb} КБ",
   "size-mb": "{mb} МБ"

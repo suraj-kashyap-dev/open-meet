@@ -35,7 +35,6 @@ export class ChatPermissionsRepository {
       );
   }
 
-  /** Whether two users share a conversation (DM or group). */
   async shareConversation(userAId: string, userBId: string): Promise<boolean> {
     const count = await this.prisma.conversationMember.count({
       where: {
@@ -46,8 +45,6 @@ export class ChatPermissionsRepository {
     return count > 0;
   }
 
-  /** Used by PublicProfile PARTICIPANTS_ONLY visibility: viewer shares a
-   * conversation with the target. */
   async haveSharedSurface(viewerId: string, targetId: string): Promise<boolean> {
     if (viewerId === targetId) return true;
     return this.shareConversation(viewerId, targetId);
@@ -98,7 +95,6 @@ export class ChatPermissionsRepository {
     };
   }
 
-  /** Per-user flag: whether this user may create groups (admin-set). */
   async getUserCanCreateGroups(userId: string): Promise<boolean> {
     const row = await this.prisma.user.findUnique({
       where: { id: userId },
@@ -107,7 +103,6 @@ export class ChatPermissionsRepository {
     return row?.canCreateGroups ?? false;
   }
 
-  /** Conversation type + how many ADMIN members remain - used for group rules. */
   async getConversationMeta(
     conversationId: string,
   ): Promise<{ type: string; adminCount: number } | null> {

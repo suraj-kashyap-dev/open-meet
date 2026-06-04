@@ -21,7 +21,6 @@ import { ApiClientError } from '@/lib/api/client';
 interface Props {
   user: AdminUserDto | null;
   onClose: () => void;
-  /** Called after a successful deletion, in addition to onClose (e.g. to navigate away). */
   onDeleted?: () => void;
 }
 

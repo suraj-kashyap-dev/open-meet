@@ -228,6 +228,15 @@
     "today": "今日",
     "yesterday": "昨日"
   },
+  "viewer": {
+    "download": "ダウンロード",
+    "close": "閉じる",
+    "zoom-in": "拡大",
+    "zoom-out": "縮小",
+    "reset-zoom": "ズームをリセット",
+    "loading": "読み込み中…",
+    "load-failed": "このファイルを読み込めませんでした。"
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

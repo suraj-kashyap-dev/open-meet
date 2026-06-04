@@ -3,8 +3,6 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { createTestApp, http, registerUser, resetDb } from './setup-app';
 
-// These exercise the host/state guards that run *before* any LiveKit egress
-// call, so they need no real egress backend.
 describe('Recording (e2e)', () => {
   let app: NestFastifyApplication;
   let hostCookie: string;

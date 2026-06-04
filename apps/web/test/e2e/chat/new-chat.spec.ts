@@ -7,8 +7,6 @@ test.describe('Web new chat (inline "To:" composer)', () => {
     await mockWebApi(page);
     await page.goto('/en/chat');
 
-    // With group-creation enabled the compose control is a dropdown; pick "New
-    // chat" to open the direct-message composer.
     await page.getByRole('button', { name: 'New chat' }).click();
     await page.getByRole('menuitem', { name: 'New chat' }).click();
     await expect(page).toHaveURL(/\/en\/chat\/new$/);

@@ -228,6 +228,15 @@
     "today": "Hari ini",
     "yesterday": "Kemarin"
   },
+  "viewer": {
+    "download": "Unduh",
+    "close": "Tutup",
+    "zoom-in": "Perbesar",
+    "zoom-out": "Perkecil",
+    "reset-zoom": "Atur ulang zoom",
+    "loading": "Memuat…",
+    "load-failed": "File ini tidak dapat dimuat."
+  },
   "size-bytes": "{bytes} B",
   "size-kb": "{kb} KB",
   "size-mb": "{mb} MB"

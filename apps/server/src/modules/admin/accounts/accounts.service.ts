@@ -40,7 +40,7 @@ import { AdminRoleRepository } from '../rbac/admin-role.repository';
 import { SYSTEM_ADMIN_ROLE_ID, SYSTEM_MEMBER_ROLE_ID } from '../rbac/admin-rbac-seed.service';
 import { AdminInviteRepository, type AdminInviteWithInviter } from './admin-invite.repository';
 
-const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 @Injectable()
 export class AdminAccountsService {
@@ -57,12 +57,10 @@ export class AdminAccountsService {
     private readonly resolver: AdminPermissionResolver,
   ) {}
 
-  /** Locale resolved for the current request, falling back to English. */
   private get lang(): string {
     return I18nContext.current()?.lang ?? 'en';
   }
 
-  /** Translate a key in the request's locale. */
   private t(key: string, args?: Record<string, unknown>): string {
     return this.i18n.translate(key, { lang: this.lang, args }) as string;
   }
@@ -117,7 +115,6 @@ export class AdminAccountsService {
       roleRecordId: roleId,
     });
 
-    // The account now exists, so any outstanding invite for this email is moot.
     await this.invites.deleteByEmail(email);
 
     const role = await this.roles.findById(roleId);
@@ -227,8 +224,6 @@ export class AdminAccountsService {
     const existing = await this.admins.findByEmail(invite.email);
 
     if (existing) {
-      // An admin with this email was created by other means since the invite
-      // went out - the invite is moot, so clear it and report the conflict.
       await this.invites.delete(invite.id);
       throw new ConflictException({
         code: ApiErrorCode.EMAIL_TAKEN,
@@ -282,7 +277,6 @@ export class AdminAccountsService {
     }
 
     if (dto.roleId !== undefined && dto.roleId !== target.roleRecordId) {
-      // Block demoting the last Administrator-role admin.
       if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID && dto.roleId !== SYSTEM_ADMIN_ROLE_ID) {
         const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
         if (remaining <= 1) {
@@ -331,11 +325,6 @@ export class AdminAccountsService {
     return { deleted: true };
   }
 
-  /**
-   * Assign an RBAC role to an admin. After this call, the affected admin must re-login
-   * for their JWT to carry the new roleId - current sessions still use the old roleId
-   * until token expiry. The acting admin is unaffected.
-   */
   async assignRole(targetId: string, roleId: string): Promise<AdminAccountDto> {
     const target = await this.admins.findById(targetId);
     if (!target) {
@@ -345,7 +334,6 @@ export class AdminAccountsService {
       });
     }
 
-    // Block demoting the last Administrator-role admin.
     if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID && roleId !== SYSTEM_ADMIN_ROLE_ID) {
       const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
       if (remaining <= 1) {

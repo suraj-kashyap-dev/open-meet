@@ -40,7 +40,6 @@ export class AdminRoleRepository {
     return this.prisma.adminRoleRecord.create({ data });
   }
 
-  /** Updates the role and bumps `cacheRev` atomically so callers can invalidate caches. */
   update(
     id: string,
     data: Pick<
@@ -62,11 +61,6 @@ export class AdminRoleRepository {
     return this.prisma.admin.count({ where: { roleRecordId: id } });
   }
 
-  /**
-   * Idempotent system-role seeder. Forces `permissionType` and `isSystem` on every run
-   * so the invariants (Administrator is always ALL, system roles cannot drift) hold -
-   * but does NOT overwrite `permissions` on existing records so operator tweaks survive.
-   */
   async upsertSystem(input: {
     id: string;
     name: string;
@@ -92,12 +86,6 @@ export class AdminRoleRepository {
     });
   }
 
-  /**
-   * Seeds a built-in default role that is NOT a system role - it backs a fallback
-   * (e.g. the role assigned to admins invited without an explicit role) but stays
-   * fully editable and deletable. Created only if missing; on existing rows we just
-   * ensure `isSystem` is false so operator edits to name/description/permissions survive.
-   */
   async ensureDefault(input: {
     id: string;
     name: string;

@@ -13,7 +13,6 @@ import type { ChatMessageDto } from '@open-meet/types';
 
 import { formatTime, previewText } from '@/components/shared/chat';
 
-/** One-line preview for a pinned message, shared by the bar and this panel. */
 export function messagePreview(
   message: ChatMessageDto,
   attachmentLabel: string,

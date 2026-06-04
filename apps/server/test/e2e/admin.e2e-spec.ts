@@ -5,7 +5,6 @@ import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from './setup-app
 
 const ADMIN = { email: 'root@example.com', password: 'admin-pass-1', name: 'Root' };
 
-// Smallest valid 1x1 transparent PNG.
 const PNG_1x1 = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
   'base64',
@@ -71,7 +70,6 @@ describe('Admin (e2e)', () => {
       expect(res.body.data.name).toBe('Renamed Root');
 
       const me = await http(app).get('/api/admin/auth/me').set('Cookie', cookie);
-      // /me now returns { admin, role, grantedSet } - see Step 7.
       expect(me.body.data.admin.name).toBe('Renamed Root');
       expect(me.body.data.role?.permissionType).toBe('ALL');
       expect(Array.isArray(me.body.data.grantedSet)).toBe(true);
@@ -95,7 +93,6 @@ describe('Admin (e2e)', () => {
       expect(res.status).toBe(200);
       expect(res.body.data.changed).toBe(true);
 
-      // Old password no longer works; the new one does.
       const oldLogin = await loginAdmin(app, ADMIN);
       expect(oldLogin.res.status).toBe(401);
       const newLogin = await loginAdmin(app, { ...ADMIN, password: 'brand-new-pass-1' });

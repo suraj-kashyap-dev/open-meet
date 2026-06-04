@@ -47,8 +47,6 @@ export function CreateRolePage() {
       <RoleForm
         id="role-form"
         onSubmit={async (input) => {
-          // RoleForm widens to CreateRoleDto | UpdateRoleDto; on the create page
-          // we know the name is always present.
           const body = input as CreateRoleDto;
           try {
             const role = await create.mutateAsync(body);

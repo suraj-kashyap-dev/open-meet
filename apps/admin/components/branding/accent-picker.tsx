@@ -8,11 +8,6 @@ import { cn } from '@open-meet/ui/cn';
 
 import { ACCENT_PALETTE, ACCENT_PRESETS, isAccentHex, isAccentPreset } from './accent-palette';
 
-/**
- * Admin-side accent picker: 7 preset swatches + advanced hex input.
- * Drives the workspace-wide default. Reads its strings from the admin
- * `branding.accent.*` namespace.
- */
 export function AccentPicker({
   value,
   onChange,

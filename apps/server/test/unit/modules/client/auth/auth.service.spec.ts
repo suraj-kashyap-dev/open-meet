@@ -202,7 +202,6 @@ describe('AuthService', () => {
     it('should return tokens on valid credentials', async () => {
       const hash = await argon2.hash('secretpass1', { type: argon2.argon2id });
       repo.findByEmail.mockResolvedValue(makeUser({ id: 'u1' }));
-      // monkey-patch user hash
       (repo.findByEmail as ReturnType<typeof vi.fn>).mockResolvedValue({
         ...makeUser(),
         passwordHash: hash,

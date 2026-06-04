@@ -96,7 +96,6 @@ export class RecordingService {
     const fileOutput = new EncodedFileOutput({
       fileType: EncodedFileType.MP4,
       filepath: egressFilepath,
-      // No `output` set → egress writes to the container's local filesystem.
     });
 
     let info: EgressInfo;
@@ -161,8 +160,6 @@ export class RecordingService {
 
   async getActive(code: string, userId: string): Promise<RecordingDto | null> {
     const { meetingId } = await this.meetings.assertParticipant(code, userId);
-    // Only surface a banner for rows that are still recording. STOPPING rows
-    // are already finalising and shouldn't show "Recording" to participants.
     const active = await this.recordings.findRecordingForMeeting(meetingId);
     return active ? this.toDto(active) : null;
   }
@@ -236,7 +233,6 @@ export class RecordingService {
         ? new Date(Number(fileInfo.endedAt / NS_PER_MS))
         : new Date();
 
-    // EgressStatus enum: STARTING=0, ACTIVE=1, ENDING=2, COMPLETE=3, FAILED=4, ABORTED=5.
     const isFailure = info.status === 4 || info.status === 5;
 
     if (isFailure) {

@@ -82,7 +82,6 @@ export class ConversationsService {
     return this.toDto(conversation, userId);
   }
 
-  /** Get-or-create the 1:1 conversation between the actor and the target. */
   async openDirect(actorId: string, targetId: string): Promise<ConversationDto> {
     await this.permissions.assertCanDirectMessage(actorId, targetId);
 
@@ -129,7 +128,6 @@ export class ConversationsService {
       throw err;
     }
 
-    // Notify the target so a new thread appears in their list without a refresh.
     const targetDto = await this.toDto(conversation, targetId);
     this.bus.emit(userRoom(targetId), ChatServerEvent.CONVERSATION_NEW, targetDto);
 

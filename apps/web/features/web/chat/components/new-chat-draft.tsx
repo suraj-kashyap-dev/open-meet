@@ -18,12 +18,6 @@ import { ApiClientError } from '@/lib/api/client';
 import { chatKeys, useTeammates } from '../hooks/use-chat';
 import { chatApi } from '../services/chat';
 
-/**
- * Inline "To:" composer for a brand-new chat.
- * Pick a recipient, type a first message; on send we resolve the DM (reusing the
- * teammate's existing conversation or opening one idempotently) and hand off to
- * the real conversation route, which renders messages normally.
- */
 export function NewChatDraft() {
   const t = useTranslations('chat');
   const router = useRouter();

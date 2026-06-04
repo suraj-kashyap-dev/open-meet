@@ -57,7 +57,6 @@ export const userSettings: UserSettingsDto = {
   },
 };
 
-/** A meeting the current user hosts (used for the lobby + host paths). */
 export const hostMeeting: MeetingDto = {
   id: 'meeting-1',
   code: MEETING_CODE,
@@ -72,14 +71,12 @@ export const hostMeeting: MeetingDto = {
   createdAt: '2026-05-20T08:55:00.000Z',
 };
 
-/** A meeting hosted by someone else - drives the guest WaitingRoom path. */
 export const guestMeeting: MeetingDto = {
   ...hostMeeting,
   hostId: 'user-other',
   title: "Grace's standup",
 };
 
-/** A finished meeting - used by the history detail page (status has a label). */
 export const endedMeeting: MeetingDto = {
   ...hostMeeting,
   status: 'ENDED',
@@ -185,11 +182,8 @@ export const joinResponse: { meeting: MeetingDto; participant: ParticipantDto } 
   participant: participants[0]!,
 };
 
-// --- Chat / messaging fixtures ---
-
 const otherUser = { id: 'user-other', name: 'Grace Hopper', avatar: null };
 
-/** A direct-message conversation between the current user and a teammate. */
 export const dmConversation: ConversationDto = {
   id: 'conversation-dm',
   type: 'DIRECT',
@@ -337,8 +331,6 @@ export const savedMessages: SavedMessageListDto = {
 };
 
 export const emptySaved: SavedMessageListDto = { items: [] };
-
-// --- User invite (accept-invite page) ---
 
 export const pendingInvite: UserInviteLookupDto = {
   email: 'newcomer@example.com',

@@ -15,10 +15,6 @@ export interface TeammateRow {
 export class TeammatesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  /**
-   * Open directory: every other user (except the caller), optionally filtered by
-   * a name/email query. Chat is open, so anyone offered here can be messaged.
-   */
   search(userId: string, query?: string): Promise<TeammateRow[]> {
     const trimmed = query?.trim();
 
@@ -58,7 +54,6 @@ export class TeammatesRepository {
       );
   }
 
-  /** Maps each teammate id to an existing DIRECT conversation id, when one exists. */
   async directConversationIds(userId: string, otherIds: string[]): Promise<Map<string, string>> {
     if (otherIds.length === 0) {
       return new Map();

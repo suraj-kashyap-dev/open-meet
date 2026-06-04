@@ -158,7 +158,6 @@ export class RecordingController {
     const parsed = parseRange(rangeHeader, totalSize);
 
     if (!parsed) {
-      // Consume the probe stream so the file descriptor isn't leaked.
       probe.stream.destroy();
       const full = await this.storage.read(storageKey);
 

@@ -2,9 +2,7 @@ import type { ConversationDto, ConversationMemberDto } from '@open-meet/types';
 
 export interface ConversationDisplay {
   isGroup: boolean;
-  /** Peer in a DIRECT conversation; null for groups. */
   peer: ConversationMemberDto | null;
-  /** Best-effort display title (peer name or group title); may be empty. */
   title: string;
   avatar: string | null;
 }

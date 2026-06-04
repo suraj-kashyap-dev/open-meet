@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Input } from '@open-meet/ui/input';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { useDelayedFlag } from '@/lib/use-delayed-flag';
 import { usePathname } from '@/i18n/navigation';
 
 import { conversationDisplay } from '../lib/conversation-display';
@@ -24,6 +25,7 @@ export function ConversationList() {
   const setPresence = useChatStore((s) => s.setPresence);
   const [filter, setFilter] = useState('');
   const [hiddenMode, setHiddenMode] = useState(false);
+  const showSkeleton = useDelayedFlag(isLoading);
 
   useEffect(() => {
     if (!data?.items) {
@@ -145,7 +147,9 @@ export function ConversationList() {
         ) : null}
 
         {isLoading ? (
-          <ConversationListSkeleton />
+          showSkeleton ? (
+            <ConversationListSkeleton />
+          ) : null
         ) : items.length === 0 ? (
           <p className="px-2 py-6 text-center text-xs text-muted-foreground">{t('list.empty')}</p>
         ) : (

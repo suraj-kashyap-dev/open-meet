@@ -12,7 +12,6 @@ export class ConversationStateService {
     private readonly permissions: ChatPermissionsService,
   ) {}
 
-  /** Sets the viewer's per-conversation flags (mute / pin / hide / mark-unread). */
   async setState(
     conversationId: string,
     userId: string,

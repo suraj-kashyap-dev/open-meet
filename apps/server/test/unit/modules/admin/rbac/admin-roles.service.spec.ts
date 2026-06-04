@@ -77,8 +77,6 @@ describe('AdminRolesService', () => {
       repo.create.mockImplementationOnce((data: { permissions: string[] }) =>
         Promise.resolve(makeRole(data)),
       );
-      // 'legacy-feature.removed' was removed from the catalog; a legacy role carrying
-      // it must still save (the stale key is dropped, the valid one kept).
       const created = await service.create({
         name: 'Legacy',
         permissions: ['users.view', 'legacy-feature.removed', 'mystery.key'],

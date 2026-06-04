@@ -8,6 +8,7 @@ import type { ChatMessageDto } from '@open-meet/types';
 import { cn } from '@open-meet/ui/cn';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { useDelayedFlag } from '@/lib/use-delayed-flag';
 
 import { conversationDisplay } from '../lib/conversation-display';
 import { useConversations } from '../hooks/use-chat';
@@ -30,6 +31,7 @@ export function ConversationView({ conversationId }: { conversationId: string })
   const [replyingTo, setReplyingTo] = useState<ChatMessageDto | null>(null);
 
   const conversation = data?.items.find((c) => c.id === conversationId);
+  const showSkeleton = useDelayedFlag(!conversation && isLoading);
 
   useEffect(() => {
     setActive(conversationId);
@@ -40,7 +42,7 @@ export function ConversationView({ conversationId }: { conversationId: string })
 
   if (!conversation) {
     if (isLoading) {
-      return <ConversationViewSkeleton />;
+      return showSkeleton ? <ConversationViewSkeleton /> : null;
     }
 
     return (

@@ -249,7 +249,7 @@ describe('ChatGateway', () => {
 
   describe('onKnockRespond()', () => {
     it('should reject a non-host responder', async () => {
-      const { client } = makeClient(USER); // meeting hostId is h2, user is u1
+      const { client } = makeClient(USER);
       await expect(
         gateway.onKnockRespond(client as never, { meetingCode: 'abc', userId: 'u9', admit: true }),
       ).rejects.toBeInstanceOf(WsException);

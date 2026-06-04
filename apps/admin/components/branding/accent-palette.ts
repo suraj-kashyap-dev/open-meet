@@ -1,8 +1,3 @@
-/**
- * Mirror of `apps/web/components/web/theme/accent-palette.ts`. Kept in-app
- * (rather than a shared package) so the admin can ship without depending on
- * web's component graph. Source of truth values must stay in sync.
- */
 export const ACCENT_PRESETS = [
   'indigo',
   'blue',

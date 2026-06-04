@@ -2,10 +2,6 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 
-/**
- * Keeps a textarea sized to its content up to `maxRows`, re-measuring whenever
- * `value` changes. Returns the ref to attach to the textarea.
- */
 export function useAutoResizeTextarea(
   value: string,
   maxRows = 4,

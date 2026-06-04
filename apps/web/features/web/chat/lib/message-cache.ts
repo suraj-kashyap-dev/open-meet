@@ -2,11 +2,6 @@ import type { InfiniteData } from '@tanstack/react-query';
 
 import type { ChatMessageDto, ChatMessagePageDto } from '@open-meet/types';
 
-/**
- * Infinite pages of messages. The first page is the newest batch; subsequent
- * pages (fetched via `nextCursor`) are progressively older. Within a page,
- * items are ascending (oldest → newest).
- */
 export type MessagesData = InfiniteData<ChatMessagePageDto, string | undefined>;
 
 export const emptyMessagesData: MessagesData = {
@@ -14,7 +9,6 @@ export const emptyMessagesData: MessagesData = {
   pageParams: [undefined],
 };
 
-/** Flatten to a single ascending (oldest → newest) list for rendering. */
 export function flattenMessages(data: MessagesData | undefined): ChatMessageDto[] {
   if (!data) {
     return [];
@@ -26,10 +20,6 @@ export function flattenMessages(data: MessagesData | undefined): ChatMessageDto[
     .flatMap((page) => page.items);
 }
 
-/**
- * Insert or replace a message. Matches an existing optimistic row by
- * `clientNonce` first, then by `id`; otherwise appends to the newest page.
- */
 export function upsertMessage(
   data: MessagesData | undefined,
   message: ChatMessageDto,
@@ -67,7 +57,6 @@ export function upsertMessage(
   return { ...base, pages: [{ ...first, items: [...first.items, message] }, ...rest] };
 }
 
-/** Apply a partial update to a message by id, leaving the rest untouched. */
 export function patchMessage(
   data: MessagesData | undefined,
   id: string,

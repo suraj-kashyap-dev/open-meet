@@ -4,14 +4,12 @@ export interface AdminDto {
   id: string;
   email: string;
   name: string;
-  /** Admin's RBAC role summary. Null only during the transition window for legacy data. */
   role: RoleSummaryDto | null;
   avatar: string | null;
   createdAt: string;
   lastLoginAt: string | null;
 }
 
-/** Fields the authenticated admin may change on their own profile. */
 export interface AdminUpdateProfileDto {
   name?: string;
 }
@@ -30,13 +28,8 @@ export interface AdminLoginResponseDto {
   admin: AdminDto;
 }
 
-/**
- * Returned by `GET /api/admin/auth/me`. Bundles identity + RBAC context so the
- * admin frontend can drive `useCan(...)` without a second round-trip.
- */
 export interface AdminMeResponseDto {
   admin: AdminDto;
-  /** Mirrors `admin.role` for convenience; `null` when the admin has no role assigned. */
   role: RoleSummaryDto | null;
   grantedSet: string[];
 }
@@ -96,7 +89,6 @@ export interface AdminUserDto {
   language: string;
   bio: string | null;
   chatDisabled: boolean;
-  /** Whether this user may create group conversations (admin-set). */
   canCreateGroups: boolean;
   createdAt: string;
   meetingsHosted: number;
@@ -222,10 +214,8 @@ export interface AdminAccountListResponseDto {
   items: AdminAccountDto[];
 }
 
-/** Fields an authorised admin may change on an existing admin account. */
 export interface AdminUpdateAccountDto {
   name?: string;
-  /** Reassign the admin to a different RBAC role. */
   roleId?: string;
 }
 
@@ -233,7 +223,6 @@ export interface AdminCreateAccountDto {
   email: string;
   name: string;
   password: string;
-  /** RBAC role for the new admin. Defaults to the seeded Member role. */
   roleId?: string;
 }
 
@@ -244,20 +233,16 @@ export const AdminInviteStatus = {
 
 export type AdminInviteStatus = (typeof AdminInviteStatus)[keyof typeof AdminInviteStatus];
 
-/** Payload to invite a new admin by email (no password - they set their own). */
 export interface AdminCreateInviteDto {
   email: string;
   name: string;
-  /** RBAC role the invitee will receive when they accept. Defaults to Member. */
   roleId?: string;
 }
 
-/** A pending admin invite, as shown in the console. */
 export interface AdminInviteDto {
   id: string;
   email: string;
   name: string;
-  /** RBAC role the invitee will receive on accept. */
   role: RoleSummaryDto | null;
   status: AdminInviteStatus;
   invitedByName: string | null;
@@ -276,7 +261,6 @@ export interface AdminInviteLookupDto {
   expiresAt: string;
 }
 
-/** Payload the invitee submits to claim an invite and set their password. */
 export interface AdminAcceptInviteDto {
   token: string;
   password: string;

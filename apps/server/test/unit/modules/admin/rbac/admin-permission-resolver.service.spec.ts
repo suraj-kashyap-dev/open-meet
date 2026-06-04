@@ -60,7 +60,6 @@ describe('AdminPermissionResolver', () => {
     it('should serve a second call from the cache when cacheRev matches', async () => {
       repo.findById
         .mockResolvedValueOnce(makeRole({ cacheRev: 5 }))
-        // Second response is enough to satisfy the rev check; we then drop the granted-set call.
         .mockResolvedValueOnce(makeRole({ cacheRev: 5, permissions: ['MUTATED.NEVER.SEEN'] }));
       await resolver.resolve('r1');
       const second = await resolver.resolve('r1');

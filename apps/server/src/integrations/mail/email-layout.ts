@@ -4,15 +4,10 @@ export interface EmailButton {
 }
 
 export interface EmailLayoutInput {
-  /** Inbox preview text (hidden preheader). */
   preview: string;
-  /** Bold lead heading inside the card. */
   heading: string;
-  /** Body paragraphs, rendered top-to-bottom as plain text. */
   body: string[];
-  /** Primary call-to-action button. */
   button?: EmailButton;
-  /** Small muted line under the button (e.g. expiry / disclaimer). */
   footnote?: string;
 }
 
@@ -24,12 +19,6 @@ const MUTED = '#6b7280';
 const ACCENT = '#4f46e5';
 const FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
-/**
- * Wrap email content in a modern, responsive, email-client-safe shell:
- * table-based layout, inline styles only, a branded header, a bulletproof
- * CTA button, and a muted footer. All caller-supplied text is HTML-escaped
- * here, so callers pass plain strings.
- */
 export function renderEmail(input: EmailLayoutInput): string {
   const heading = escapeHtml(input.heading);
   const preview = escapeHtml(input.preview);

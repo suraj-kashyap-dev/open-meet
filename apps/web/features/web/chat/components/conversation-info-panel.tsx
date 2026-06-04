@@ -8,11 +8,6 @@ import { conversationDisplay } from '../lib/conversation-display';
 import { GroupInfoPanel } from './group-info-panel';
 import { PeerProfilePanel } from './peer-profile-panel';
 
-/**
- * Routes to the right info-panel view per conversation type. DM → peer
- * profile (server gates fields by visibility). Group/channel → roster +
- * admin controls.
- */
 export function ConversationInfoPanel({
   conversation,
   currentUserId,

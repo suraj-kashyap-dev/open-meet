@@ -46,11 +46,9 @@ describe('AdminAnalyticsService', () => {
         messagesLast24h: 33,
         groups: 4,
       });
-      // 14 days ago .. today inclusive = 15 points
       expect(res.trends.signups).toHaveLength(15);
       const may10 = res.trends.signups.find((p) => p.date === '2026-05-10');
       expect(may10?.count).toBe(5);
-      // a day with no rows is filled with 0
       expect(res.trends.signups.find((p) => p.date === '2026-05-11')?.count).toBe(0);
     });
   });

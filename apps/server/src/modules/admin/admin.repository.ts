@@ -50,7 +50,6 @@ export class AdminRepository {
     return this.prisma.admin.delete({ where: { id } });
   }
 
-  /** Count admins assigned to a given RBAC role id. Replaces the legacy countByRole enum. */
   countByRoleRecord(roleRecordId: string): Promise<number> {
     return this.prisma.admin.count({ where: { roleRecordId } });
   }

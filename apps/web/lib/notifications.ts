@@ -1,10 +1,3 @@
-/**
- * Thin wrapper around the browser Notification API. Centralises permission
- * handling so consumers can just call `notify(...)` and let the helper bail
- * silently when permission was never granted (or the user has the tab in
- * focus, in which case we don't want to double-up on in-app feedback).
- */
-
 export function notificationsSupported(): boolean {
   return typeof window !== 'undefined' && 'Notification' in window;
 }
@@ -61,7 +54,5 @@ export function notify(title: string, opts: NotifyOptions = {}): void {
       opts.onClick?.();
       notification.close();
     };
-  } catch {
-    /* swallowed: Notification can throw in private mode or with bad icons */
-  }
+  } catch {}
 }

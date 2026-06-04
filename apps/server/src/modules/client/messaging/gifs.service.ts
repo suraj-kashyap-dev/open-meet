@@ -14,10 +14,6 @@ interface TenorResult {
   media_formats?: { gif?: TenorMediaFormat; tinygif?: TenorMediaFormat };
 }
 
-/**
- * Proxies GIF search to Tenor. Disabled (returns empty) unless `TENOR_API_KEY`
- * is configured - the FE hides the picker via the `gifsEnabled` config flag.
- */
 @Injectable()
 export class GifsService {
   private readonly logger = new Logger(GifsService.name);

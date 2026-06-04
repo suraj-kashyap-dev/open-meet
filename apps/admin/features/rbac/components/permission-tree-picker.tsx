@@ -17,7 +17,6 @@ interface Props {
   disabled?: boolean;
 }
 
-/** Keys of every node that has children, at any depth. */
 function gatherGroupKeys(nodes: readonly PermissionCatalogNodeDto[]): string[] {
   return nodes.flatMap((n) =>
     n.children.length > 0 ? [n.key, ...gatherGroupKeys(n.children)] : [],
@@ -30,7 +29,6 @@ export function PermissionTreePicker({ tree, value, onChange, disabled = false }
 
   const allLeaves = useMemo(() => tree.flatMap(collectLeaves), [tree]);
   const allGroupKeys = useMemo(() => gatherGroupKeys(tree), [tree]);
-  // Top-level groups start open; nested groups collapsed.
   const [openKeys, setOpenKeys] = useState<Set<string>>(() => new Set(tree.map((n) => n.key)));
 
   const selectedCount = allLeaves.filter((k) => granted.has(k)).length;
@@ -131,7 +129,6 @@ function TreeNode({
   disabled: boolean;
   isOpen: (key: string) => boolean;
   setOpen: (key: string, open: boolean) => void;
-  /** Renders rounded tree connectors (trunk + elbow) linking the node to its parent. */
   isChild?: boolean;
   isLast?: boolean;
 }) {
@@ -149,10 +146,8 @@ function TreeNode({
     <li
       className={cn(
         'relative',
-        // Rounded elbow (└) from the parent trunk to this node, drawn in the row's start padding.
         isChild &&
           "before:absolute before:start-0 before:top-0 before:h-4 before:w-3 before:rounded-es-[7px] before:border-b before:border-s before:border-border before:content-['']",
-        // Trunk continues down to the next sibling unless this is the last child.
         isChild &&
           !isLast &&
           "after:absolute after:start-0 after:top-4 after:bottom-0 after:border-s after:border-border after:content-['']",
@@ -239,8 +234,6 @@ function TreeNode({
   );
 }
 
-// next-intl throws if a key is missing; we want graceful fallback to the last
-// dot-segment so newly-added permissions render even before their translation lands.
 function safeT(t: ReturnType<typeof useTranslations>, key: string, fallback: string): string {
   try {
     return t(key);

@@ -13,11 +13,6 @@ import { env } from '@/lib/env';
 
 export type ChatSocket = Socket<ChatServerToClientEvents, ChatClientToServerEvents>;
 
-/**
- * App-wide, long-lived connection to the `/chat` namespace (cookie auth). Unlike
- * the per-meeting socket, this stays open across navigation so unread badges and
- * presence work everywhere. Consumed by a single ChatSocketProvider.
- */
 export function useChatSocket(enabled: boolean): ChatSocket | null {
   const [socket, setSocket] = useState<ChatSocket | null>(null);
 

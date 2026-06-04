@@ -52,9 +52,7 @@ export function UnauthorizedBridge() {
 
       try {
         window.localStorage.removeItem(CACHE_KEY);
-      } catch {
-        /* private mode / quota - nothing to do */
-      }
+      } catch {}
 
       qc.setQueryData(ME_KEY, null);
       useChatStore.getState().reset();

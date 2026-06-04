@@ -16,9 +16,7 @@ export function saveJoinPreferences(code: string, prefs: JoinPreferences): void 
 
   try {
     window.sessionStorage.setItem(keyFor(code), JSON.stringify(prefs));
-  } catch {
-    /* ignore */
-  }
+  } catch {}
 }
 
 export function consumeJoinPreferences(code: string): JoinPreferences | null {

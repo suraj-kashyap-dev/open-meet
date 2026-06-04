@@ -119,7 +119,6 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           break;
       }
 
-      // Role detail: /admin/roles/:id
       const roleMatch = /^\/admin\/roles\/([^/]+)$/.exec(path);
       if (roleMatch) {
         const found = adminRoles.items.find((r) => r.id === roleMatch[1]);
@@ -128,12 +127,10 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
       }
 
-      // Group detail (members): /admin/groups/:id
       if (/^\/admin\/groups\/[^/]+$/.test(path)) {
         return json(200, ok(groupDetail));
       }
 
-      // User detail: /admin/users/:id (invites handled above)
       const userMatch = /^\/admin\/users\/([^/]+)$/.exec(path);
       if (userMatch) {
         const found = users.items.find((u) => u.id === userMatch[1]) ?? users.items[0];

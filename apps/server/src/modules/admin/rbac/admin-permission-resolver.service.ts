@@ -9,11 +9,6 @@ interface ResolvedRole {
   granted: ReadonlySet<string>;
 }
 
-/**
- * Loads the effective permission set for an admin's role, with an in-process cache
- * keyed by `(roleId, cacheRev)`. The repository bumps `cacheRev` on every update,
- * so a stale entry is recognised on the very next request.
- */
 @Injectable()
 export class AdminPermissionResolver {
   private readonly cache = new Map<string, ResolvedRole>();
@@ -34,7 +29,6 @@ export class AdminPermissionResolver {
     return resolved;
   }
 
-  /** Whether the role grants all permissions (permissionType ALL). */
   async isSuper(roleId: string | null): Promise<boolean> {
     if (!roleId) return false;
     const resolved = await this.resolve(roleId);
