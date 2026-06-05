@@ -19,6 +19,7 @@
     "mute": "Mute",
     "unmute": "Unmute",
     "mark-unread": "Mark as unread",
+    "mark-read": "Mark as read",
     "hide": "Hide",
     "unhide": "Unhide",
     "show-hidden": "Show hidden chats",

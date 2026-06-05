@@ -292,12 +292,7 @@ export function PdfLightbox({
             onOpenAutoFocus={(event) => event.preventDefault()}
           >
             <DialogPrimitive.Title className="sr-only">{label}</DialogPrimitive.Title>
-            <PdfViewer
-              src={src}
-              filename={filename}
-              label={label}
-              onClose={() => setOpen(false)}
-            />
+            <PdfViewer src={src} filename={filename} label={label} onClose={() => setOpen(false)} />
           </DialogPrimitive.Content>
         </DialogPortal>
       </Dialog>

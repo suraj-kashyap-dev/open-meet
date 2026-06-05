@@ -19,6 +19,7 @@
     "mute": "ミュート",
     "unmute": "ミュート解除",
     "mark-unread": "未読にする",
+    "mark-read": "既読にする",
     "hide": "非表示",
     "unhide": "表示",
     "show-hidden": "非表示のチャットを表示",

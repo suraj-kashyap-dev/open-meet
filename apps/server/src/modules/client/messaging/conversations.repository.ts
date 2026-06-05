@@ -74,12 +74,17 @@ export class ConversationsRepository {
     return rows.map((r) => r.conversationId);
   }
 
-  membershipsForUser(
-    userId: string,
-  ): Promise<{ conversationId: string; lastReadAt: Date | null; clearedAt: Date | null }[]> {
+  membershipsForUser(userId: string): Promise<
+    {
+      conversationId: string;
+      lastReadAt: Date | null;
+      clearedAt: Date | null;
+      manualUnread: boolean;
+    }[]
+  > {
     return this.prisma.conversationMember.findMany({
       where: { userId, removedAt: null },
-      select: { conversationId: true, lastReadAt: true, clearedAt: true },
+      select: { conversationId: true, lastReadAt: true, clearedAt: true, manualUnread: true },
     });
   }
 

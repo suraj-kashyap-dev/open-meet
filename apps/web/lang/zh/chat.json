@@ -19,6 +19,7 @@
     "mute": "静音",
     "unmute": "取消静音",
     "mark-unread": "标记为未读",
+    "mark-read": "标记为已读",
     "hide": "隐藏",
     "unhide": "显示",
     "show-hidden": "显示隐藏的聊天",

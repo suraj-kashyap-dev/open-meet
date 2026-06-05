@@ -1,6 +1,16 @@
 'use client';
 
-import { BellOff, Eye, EyeOff, MailMinus, MoreHorizontal, Pin, PinOff, Users } from 'lucide-react';
+import {
+  BellOff,
+  Eye,
+  EyeOff,
+  MailMinus,
+  MailOpen,
+  MoreHorizontal,
+  Pin,
+  PinOff,
+  Users,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
@@ -19,7 +29,7 @@ import { formatTime, previewText } from '@/components/shared/chat';
 import { Link } from '@/i18n/navigation';
 
 import { conversationDisplay } from '../lib/conversation-display';
-import { useConversationState } from '../hooks/use-chat';
+import { useConversationState, useMarkRead } from '../hooks/use-chat';
 import { useChatStore } from '../stores';
 import { PresenceDot } from './presence-dot';
 
@@ -38,6 +48,7 @@ export function ConversationListItem({
   const display = conversationDisplay(conversation, currentUserId);
   const unread = useChatStore((s) => s.unreadByConversation[conversation.id] ?? 0);
   const state = useConversationState();
+  const markRead = useMarkRead(conversation.id);
 
   const last = conversation.lastMessage;
   const preview = last
@@ -137,10 +148,17 @@ export function ConversationListItem({
             <BellOff className="me-2 h-4 w-4" />
             {conversation.muted ? t('list.unmute') : t('list.mute')}
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setState({ manualUnread: true })}>
-            <MailMinus className="me-2 h-4 w-4" />
-            {t('list.mark-unread')}
-          </DropdownMenuItem>
+          {unread > 0 ? (
+            <DropdownMenuItem onSelect={() => markRead.mutate(undefined)}>
+              <MailOpen className="me-2 h-4 w-4" />
+              {t('list.mark-read')}
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem onSelect={() => setState({ manualUnread: true })}>
+              <MailMinus className="me-2 h-4 w-4" />
+              {t('list.mark-unread')}
+            </DropdownMenuItem>
+          )}
           {isHidden ? (
             <DropdownMenuItem onSelect={() => setState({ hidden: false })}>
               <Eye className="me-2 h-4 w-4" />

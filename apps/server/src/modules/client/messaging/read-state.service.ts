@@ -64,11 +64,12 @@ export class ReadStateService {
 
     await Promise.all(
       memberships.map(async (m) => {
-        const count = await this.conversations.unreadCount(
+        const base = await this.conversations.unreadCount(
           m.conversationId,
           userId,
           laterDate(m.lastReadAt, m.clearedAt),
         );
+        const count = m.manualUnread ? Math.max(1, base) : base;
 
         if (count > 0) {
           byConversation[m.conversationId] = count;

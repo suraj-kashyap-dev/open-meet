@@ -243,6 +243,7 @@ export function useMarkRead(conversationId: string) {
     onSuccess: () => {
       clearUnread(conversationId);
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+      void qc.invalidateQueries({ queryKey: ['chat', 'unread'] });
     },
   });
 }
@@ -361,6 +362,9 @@ export function useConversationState() {
         return { items };
       });
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+      if (state.manualUnread !== undefined) {
+        void qc.invalidateQueries({ queryKey: ['chat', 'unread'] });
+      }
     },
   });
 }
