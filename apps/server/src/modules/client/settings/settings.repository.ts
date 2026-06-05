@@ -11,6 +11,17 @@ export class SettingsRepository {
     return this.prisma.userSettings.findUnique({ where: { userId } });
   }
 
+  async disabledNotificationUserIds(userIds: string[]): Promise<Set<string>> {
+    if (userIds.length === 0) {
+      return new Set();
+    }
+    const rows = await this.prisma.userSettings.findMany({
+      where: { userId: { in: userIds }, enableNotifications: false },
+      select: { userId: true },
+    });
+    return new Set(rows.map((r) => r.userId));
+  }
+
   ensureForUser(userId: string): Promise<UserSettings> {
     return this.prisma.userSettings.upsert({
       where: { userId },

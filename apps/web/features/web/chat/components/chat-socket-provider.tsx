@@ -21,6 +21,9 @@ import {
 } from '@open-meet/types';
 
 import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
+import { useNotification } from '@/hooks/use-notification';
+import { previewText } from '@/components/shared/chat';
+import { useRouter } from '@/i18n/navigation';
 
 import { chatApi } from '../services/chat';
 import { chatKeys, presenceMeKey } from '../hooks/use-chat';
@@ -98,6 +101,8 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
   const { data: user } = useCurrentUser();
   const socket = useChatSocket(Boolean(user));
   const qc = useQueryClient();
+  const router = useRouter();
+  const { notify } = useNotification();
 
   const setPresence = useChatStore((s) => s.setPresence);
   const setTyping = useChatStore((s) => s.setTyping);
@@ -148,6 +153,15 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
 
       if (!isMine && !isActive) {
         bumpUnread(message.conversationId);
+
+        // Foreground notification: fires only when the tab is hidden (the helper
+        // self-suppresses when the tab is focused). Background/closed-tab delivery
+        // is handled by web push on the server.
+        notify(message.sender?.name ?? 'New message', {
+          body: message.deletedAt ? '' : previewText(message.content) || 'New message',
+          tag: `chat:${message.conversationId}`,
+          onClick: () => router.push(`/chat/${message.conversationId}`),
+        });
       }
     };
 
@@ -295,6 +309,8 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
     clearUnread,
     setConversationUnread,
     setUnreadSummary,
+    notify,
+    router,
   ]);
 
   const value = useMemo<ChatSocketContextValue>(

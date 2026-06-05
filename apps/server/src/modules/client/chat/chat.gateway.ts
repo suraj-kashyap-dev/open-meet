@@ -1,6 +1,8 @@
+import { InjectQueue } from '@nestjs/bullmq';
 import { Logger, UseGuards } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import type { Queue } from 'bullmq';
 import {
   MessageBody,
   ConnectedSocket,
@@ -15,6 +17,8 @@ import {
 import type { Server, Socket } from 'socket.io';
 
 import { MeetingBus } from '../../../websocket/meeting-bus.service';
+import { PUSH_QUEUE } from '../push/push.constants';
+import type { KnockJob } from '../push/push-dispatch.service';
 
 import {
   ClientEvent,
@@ -77,6 +81,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     private readonly jwt: JwtService,
     private readonly config: ConfigService<ApiEnv, true>,
     private readonly bus: MeetingBus,
+    @InjectQueue(PUSH_QUEUE) private readonly pushQueue: Queue,
   ) {}
 
   afterInit(server: Server): void {
@@ -297,6 +302,14 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
       knockedAt: entry.knockedAt,
     };
     this.server.to(hostRoom(body.meetingCode)).emit(ServerEvent.KNOCK_REQUESTED, payload);
+
+    const knockJob: KnockJob = {
+      hostUserId: meeting.hostId,
+      knockerName: entry.name,
+      meetingCode: body.meetingCode,
+    };
+    void this.pushQueue.add('knock', knockJob, { removeOnComplete: true, removeOnFail: 50 });
+
     return { knocked: true };
   }
 

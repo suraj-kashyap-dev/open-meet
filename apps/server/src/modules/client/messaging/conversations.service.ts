@@ -43,6 +43,10 @@ export class ConversationsService {
     private readonly bus: ChatBus,
   ) {}
 
+  membersWithMuteState(conversationId: string): Promise<{ userId: string; muted: boolean }[]> {
+    return this.repo.membersWithMuteState(conversationId);
+  }
+
   async list(userId: string, opts: { includeHidden?: boolean } = {}): Promise<ConversationListDto> {
     const all = await this.repo.listForUser(userId);
     const rows = all.filter(

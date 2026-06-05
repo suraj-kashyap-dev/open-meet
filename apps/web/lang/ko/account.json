@@ -131,7 +131,8 @@
     "privacy-updated": "개인정보 설정이 업데이트되었습니다",
     "privacy-update-failed": "개인정보 설정 업데이트에 실패했습니다",
     "notifications-unsupported": "이 브라우저에서는 알림이 지원되지 않습니다",
-    "notifications-denied": "권한이 거부되었습니다 - 브라우저 설정에서 알림을 활성화하세요"
+    "notifications-denied": "권한이 거부되었습니다 - 브라우저 설정에서 알림을 활성화하세요",
+    "push-subscribe-failed": "푸시 알림을 활성화할 수 없습니다"
   },
   "validation": {
     "avatar-invalid-type": "아바타는 PNG, JPEG, WebP 또는 GIF 이미지여야 합니다",

@@ -131,7 +131,8 @@
     "privacy-updated": "Datenschutzeinstellungen aktualisiert",
     "privacy-update-failed": "Datenschutzeinstellungen konnten nicht aktualisiert werden",
     "notifications-unsupported": "Benachrichtigungen werden in diesem Browser nicht unterstützt",
-    "notifications-denied": "Berechtigung verweigert - aktivieren Sie Benachrichtigungen in Ihren Browsereinstellungen"
+    "notifications-denied": "Berechtigung verweigert - aktivieren Sie Benachrichtigungen in Ihren Browsereinstellungen",
+    "push-subscribe-failed": "Push-Benachrichtigungen konnten nicht aktiviert werden"
   },
   "validation": {
     "avatar-invalid-type": "Avatar muss ein PNG-, JPEG-, WebP- oder GIF-Bild sein",

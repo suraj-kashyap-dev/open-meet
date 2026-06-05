@@ -131,7 +131,8 @@
     "privacy-updated": "プライバシー設定を更新しました",
     "privacy-update-failed": "プライバシー設定の更新に失敗しました",
     "notifications-unsupported": "このブラウザは通知をサポートしていません",
-    "notifications-denied": "許可が拒否されました - ブラウザの設定で通知を有効にしてください"
+    "notifications-denied": "許可が拒否されました - ブラウザの設定で通知を有効にしてください",
+    "push-subscribe-failed": "プッシュ通知を有効にできませんでした"
   },
   "validation": {
     "avatar-invalid-type": "アバターは PNG、JPEG、WebP、または GIF 画像である必要があります",

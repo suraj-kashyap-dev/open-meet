@@ -131,7 +131,8 @@
     "privacy-updated": "Paramètres de confidentialité mis à jour",
     "privacy-update-failed": "Échec de la mise à jour des paramètres de confidentialité",
     "notifications-unsupported": "Les notifications ne sont pas prises en charge par ce navigateur",
-    "notifications-denied": "Permission refusée - activez les notifications dans les paramètres de votre navigateur"
+    "notifications-denied": "Permission refusée - activez les notifications dans les paramètres de votre navigateur",
+    "push-subscribe-failed": "Impossible d’activer les notifications push"
   },
   "validation": {
     "avatar-invalid-type": "L'avatar doit être une image PNG, JPEG, WebP ou GIF",

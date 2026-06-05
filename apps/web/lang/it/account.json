@@ -131,7 +131,8 @@
     "privacy-updated": "Impostazioni privacy aggiornate",
     "privacy-update-failed": "Aggiornamento impostazioni privacy non riuscito",
     "notifications-unsupported": "Le notifiche non sono supportate in questo browser",
-    "notifications-denied": "Autorizzazione negata - abilita le notifiche nelle impostazioni del browser"
+    "notifications-denied": "Autorizzazione negata - abilita le notifiche nelle impostazioni del browser",
+    "push-subscribe-failed": "Impossibile attivare le notifiche push"
   },
   "validation": {
     "avatar-invalid-type": "L'avatar deve essere un'immagine PNG, JPEG, WebP o GIF",

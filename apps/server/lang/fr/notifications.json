@@ -1,0 +1,6 @@
+{
+  "chat-message-title": "Nouveau message",
+  "chat-message-body": "{name} vous a envoyé un message",
+  "knock-title": "Quelqu’un souhaite rejoindre",
+  "knock-body": "{name} attend pour rejoindre votre réunion"
+}

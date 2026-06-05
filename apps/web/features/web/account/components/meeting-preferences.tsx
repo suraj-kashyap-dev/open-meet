@@ -23,6 +23,12 @@ import { Switch } from '@open-meet/ui/switch';
 import { useUpdateUserSettings } from '@/features/web/account/hooks/use-settings';
 import { ApiClientError } from '@/lib/api/client';
 import { ensureNotificationPermission, notificationsSupported } from '@/lib/notifications';
+import {
+  pushSupported,
+  registerServiceWorker,
+  subscribeToPush,
+  unsubscribeFromPush,
+} from '@/lib/push';
 import { playSound } from '@/lib/sounds';
 import { Button } from '@open-meet/ui/button';
 import { Volume2 } from 'lucide-react';
@@ -164,6 +170,16 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
                 toast.error(t('toast.notifications-denied'));
                 return;
               }
+              if (pushSupported()) {
+                try {
+                  await registerServiceWorker();
+                  await subscribeToPush();
+                } catch {
+                  toast.error(t('toast.push-subscribe-failed'));
+                }
+              }
+            } else if (pushSupported()) {
+              await unsubscribeFromPush().catch(() => undefined);
             }
             setValue('enableNotifications', c, { shouldDirty: true });
           }}

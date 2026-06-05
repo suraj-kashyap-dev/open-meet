@@ -131,7 +131,8 @@
     "privacy-updated": "গোপনীয়তা সেটিংস আপডেট হয়েছে",
     "privacy-update-failed": "গোপনীয়তা সেটিংস আপডেট করতে ব্যর্থ",
     "notifications-unsupported": "এই ব্রাউজারে নোটিফিকেশন সমর্থিত নয়",
-    "notifications-denied": "অনুমতি প্রত্যাখ্যাত - আপনার ব্রাউজার সেটিংসে নোটিফিকেশন সক্রিয় করুন"
+    "notifications-denied": "অনুমতি প্রত্যাখ্যাত - আপনার ব্রাউজার সেটিংসে নোটিফিকেশন সক্রিয় করুন",
+    "push-subscribe-failed": "পুশ বিজ্ঞপ্তি সক্ষম করা যায়নি"
   },
   "validation": {
     "avatar-invalid-type": "অ্যাভাটার অবশ্যই PNG, JPEG, WebP বা GIF ছবি হতে হবে",

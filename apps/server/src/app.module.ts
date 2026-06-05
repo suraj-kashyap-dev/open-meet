@@ -1,10 +1,14 @@
 import { join } from 'node:path';
 
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { Redis } from 'ioredis';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+
+import type { ApiEnv } from '@open-meet/config';
 
 import { envValidate } from './config/env.config';
 import { AppController } from './app.controller';
@@ -21,6 +25,7 @@ import { MessagingModule } from './modules/client/messaging/messaging.module';
 import { RecordingModule } from './modules/client/recording/recording.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AppConfigModule } from './modules/config/config.module';
+import { PushModule } from './modules/client/push/push.module';
 import { StorageModule } from './storage/storage.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 
@@ -33,6 +38,14 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     }),
     ThrottlerModule.forRoot({
       throttlers: [{ ttl: 60_000, limit: 60 }],
+    }),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService<ApiEnv, true>) => ({
+        connection: new Redis(config.getOrThrow<string>('REDIS_URL'), {
+          maxRetriesPerRequest: null,
+        }),
+      }),
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
@@ -74,6 +87,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     MessagingModule,
     RecordingModule,
     AppConfigModule,
+    PushModule,
     AdminModule,
     StorageModule,
     UploadsModule,

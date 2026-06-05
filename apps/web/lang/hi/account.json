@@ -131,7 +131,8 @@
     "privacy-updated": "गोपनीयता सेटिंग्स अपडेट की गईं",
     "privacy-update-failed": "गोपनीयता सेटिंग्स अपडेट करने में विफल",
     "notifications-unsupported": "इस ब्राउज़र में नोटिफ़िकेशन समर्थित नहीं हैं",
-    "notifications-denied": "अनुमति अस्वीकृत - अपनी ब्राउज़र सेटिंग्स में नोटिफ़िकेशन सक्षम करें"
+    "notifications-denied": "अनुमति अस्वीकृत - अपनी ब्राउज़र सेटिंग्स में नोटिफ़िकेशन सक्षम करें",
+    "push-subscribe-failed": "पुश सूचनाएं सक्षम नहीं की जा सकीं"
   },
   "validation": {
     "avatar-invalid-type": "अवतार एक PNG, JPEG, WebP या GIF छवि होनी चाहिए",

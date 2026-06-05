@@ -10,6 +10,7 @@ import { TopProgress } from '@open-meet/ui/top-progress';
 
 import { AuthBootstrap } from './auth-bootstrap';
 import { HydrationMarker } from './hydration-marker';
+import { PushBootstrap } from './push-bootstrap';
 
 export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
@@ -39,6 +40,7 @@ export function Providers({ children }: { children: ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <HydrationMarker />
         <AuthBootstrap />
+        <PushBootstrap />
         <UnauthorizedBridge />
         <TopProgress />
         {children}

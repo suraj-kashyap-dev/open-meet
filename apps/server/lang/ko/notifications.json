@@ -1,0 +1,6 @@
+{
+  "chat-message-title": "새 메시지",
+  "chat-message-body": "{name}님이 메시지를 보냈습니다",
+  "knock-title": "참여 요청",
+  "knock-body": "{name}님이 회의 참여를 기다리고 있습니다"
+}

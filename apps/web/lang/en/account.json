@@ -131,7 +131,8 @@
     "privacy-updated": "Privacy settings updated",
     "privacy-update-failed": "Failed to update privacy settings",
     "notifications-unsupported": "Notifications are not supported in this browser",
-    "notifications-denied": "Permission denied - enable notifications in your browser settings"
+    "notifications-denied": "Permission denied - enable notifications in your browser settings",
+    "push-subscribe-failed": "Couldn't enable push notifications"
   },
   "validation": {
     "avatar-invalid-type": "Avatar must be a PNG, JPEG, WebP, or GIF image",

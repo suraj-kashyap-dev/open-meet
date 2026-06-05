@@ -65,6 +65,15 @@ export class ConversationsRepository {
     return rows.map((r) => r.userId);
   }
 
+  async membersWithMuteState(
+    conversationId: string,
+  ): Promise<{ userId: string; muted: boolean }[]> {
+    return this.prisma.conversationMember.findMany({
+      where: { conversationId, removedAt: null },
+      select: { userId: true, muted: true },
+    });
+  }
+
   async conversationIdsForUser(userId: string): Promise<string[]> {
     const rows = await this.prisma.conversationMember.findMany({
       where: { userId },

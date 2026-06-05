@@ -131,7 +131,8 @@
     "privacy-updated": "تم تحديث إعدادات الخصوصية",
     "privacy-update-failed": "تعذّر تحديث إعدادات الخصوصية",
     "notifications-unsupported": "الإشعارات غير مدعومة في هذا المتصفح",
-    "notifications-denied": "تم رفض الإذن - فعّل الإشعارات من إعدادات متصفحك"
+    "notifications-denied": "تم رفض الإذن - فعّل الإشعارات من إعدادات متصفحك",
+    "push-subscribe-failed": "تعذّر تفعيل الإشعارات الفورية"
   },
   "validation": {
     "avatar-invalid-type": "يجب أن تكون الصورة الرمزية بصيغة PNG أو JPEG أو WebP أو GIF",

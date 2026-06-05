@@ -27,8 +27,23 @@ model User {
   savedMessages           SavedMessage[]
   presence                UserPresence?
   pollVotes               PollVote[]
+  pushSubscriptions       PushSubscription[]
   @@index([email])
   @@index([googleId])
+}
+
+model PushSubscription {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint   String   @unique
+  p256dh     String
+  auth       String
+  userAgent  String?
+  createdAt  DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+
+  @@index([userId])
 }
 
 model UserSettings {

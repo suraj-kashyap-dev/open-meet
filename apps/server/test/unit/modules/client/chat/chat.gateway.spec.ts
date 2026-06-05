@@ -1,6 +1,7 @@
 import type { ConfigService } from '@nestjs/config';
 import type { JwtService } from '@nestjs/jwt';
 import { WsException } from '@nestjs/websockets';
+import type { Queue } from 'bullmq';
 import type { Server } from 'socket.io';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -84,12 +85,14 @@ describe('ChatGateway', () => {
     };
     const config = { getOrThrow: () => 'secret' } as unknown as ConfigService<ApiEnv, true>;
     const bus = { attach: vi.fn() } as unknown as MeetingBus;
+    const pushQueue = { add: vi.fn() } as unknown as Queue;
     gateway = new ChatGateway(
       chat as unknown as ChatService,
       meetings as unknown as MeetingsService,
       jwt as unknown as JwtService,
       config,
       bus,
+      pushQueue,
     );
     srv = makeServer();
     gateway.server = srv.server;

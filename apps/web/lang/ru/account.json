@@ -131,7 +131,8 @@
     "privacy-updated": "Настройки конфиденциальности обновлены",
     "privacy-update-failed": "Не удалось обновить настройки конфиденциальности",
     "notifications-unsupported": "Уведомления не поддерживаются в этом браузере",
-    "notifications-denied": "Доступ запрещён - включите уведомления в настройках браузера"
+    "notifications-denied": "Доступ запрещён - включите уведомления в настройках браузера",
+    "push-subscribe-failed": "Не удалось включить push-уведомления"
   },
   "validation": {
     "avatar-invalid-type": "Аватар должен быть изображением PNG, JPEG, WebP или GIF",

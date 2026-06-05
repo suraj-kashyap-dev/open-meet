@@ -264,13 +264,11 @@ function ViewerButton({
 
 export function PdfLightbox({
   src,
-  filename,
   label,
   className,
   children,
 }: {
   src: string;
-  filename: string;
   label: string;
   className?: string;
   children: React.ReactNode;
@@ -292,7 +290,7 @@ export function PdfLightbox({
             onOpenAutoFocus={(event) => event.preventDefault()}
           >
             <DialogPrimitive.Title className="sr-only">{label}</DialogPrimitive.Title>
-            <PdfViewer src={src} filename={filename} label={label} onClose={() => setOpen(false)} />
+            <PdfViewer src={src} label={label} onClose={() => setOpen(false)} />
           </DialogPrimitive.Content>
         </DialogPortal>
       </Dialog>
@@ -300,23 +298,11 @@ export function PdfLightbox({
   );
 }
 
-function PdfViewer({
-  src,
-  filename,
-  label,
-  onClose,
-}: {
-  src: string;
-  filename: string;
-  label: string;
-  onClose: () => void;
-}) {
+function PdfViewer({ src, label, onClose }: { src: string; label: string; onClose: () => void }) {
   const t = useTranslations('chat');
   const [objectUrl, setObjectUrl] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
 
-  // Fetch with credentials (same as authenticated images) so the PDF loads
-  // regardless of cross-origin cookie rules, then view it from a blob URL.
   useEffect(() => {
     let active = true;
     let created: string | undefined;
@@ -329,13 +315,16 @@ function PdfViewer({
         if (!response.ok) {
           throw new Error(`Failed to load PDF (${response.status})`);
         }
+
         return response.blob();
       })
       .then((blob) => {
         if (!active) {
           return;
         }
+
         created = URL.createObjectURL(blob);
+
         setObjectUrl(created);
       })
       .catch(() => {
@@ -346,6 +335,7 @@ function PdfViewer({
 
     return () => {
       active = false;
+
       if (created) {
         URL.revokeObjectURL(created);
       }
@@ -360,15 +350,6 @@ function PdfViewer({
         </p>
 
         <div className="flex items-center gap-1">
-          <a
-            href={objectUrl ?? src}
-            download={filename}
-            aria-label={t('viewer.download')}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-          >
-            <Download className="h-4 w-4" />
-          </a>
-
           <ViewerButton label={t('viewer.close')} onClick={onClose}>
             <X className="h-5 w-5" />
           </ViewerButton>
@@ -387,6 +368,7 @@ function PdfViewer({
         ) : (
           <span className="flex items-center gap-2 text-sm text-white/70">
             <Loader2 className="h-4 w-4 animate-spin" />
+
             {t('viewer.loading')}
           </span>
         )}

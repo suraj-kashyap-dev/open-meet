@@ -131,7 +131,8 @@
     "privacy-updated": "Gizlilik ayarları güncellendi",
     "privacy-update-failed": "Gizlilik ayarları güncellenemedi",
     "notifications-unsupported": "Bu tarayıcıda bildirimler desteklenmiyor",
-    "notifications-denied": "İzin reddedildi - tarayıcı ayarlarınızda bildirimleri etkinleştirin"
+    "notifications-denied": "İzin reddedildi - tarayıcı ayarlarınızda bildirimleri etkinleştirin",
+    "push-subscribe-failed": "Anlık bildirimler etkinleştirilemedi"
   },
   "validation": {
     "avatar-invalid-type": "Avatar PNG, JPEG, WebP veya GIF resmi olmalıdır",

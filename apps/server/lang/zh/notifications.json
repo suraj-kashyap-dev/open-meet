@@ -1,0 +1,6 @@
+{
+  "chat-message-title": "新消息",
+  "chat-message-body": "{name} 给你发送了一条消息",
+  "knock-title": "有人想加入",
+  "knock-body": "{name} 正在等待加入你的会议"
+}

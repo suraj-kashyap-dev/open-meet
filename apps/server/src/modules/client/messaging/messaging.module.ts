@@ -1,8 +1,10 @@
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 import { UploadsModule } from '../../uploads/uploads.module';
 import { WsJwtGuard } from '../chat/ws-jwt.guard';
+import { PUSH_QUEUE } from '../push/push.constants';
 
 import { ActivityService } from './activity.service';
 import { ChatBus } from './chat-bus.service';
@@ -37,7 +39,7 @@ import { TeammatesRepository } from './teammates.repository';
 import { TeammatesService } from './teammates.service';
 
 @Module({
-  imports: [UploadsModule, JwtModule.register({})],
+  imports: [UploadsModule, JwtModule.register({}), BullModule.registerQueue({ name: PUSH_QUEUE })],
   controllers: [
     ConversationsController,
     GroupsController,

@@ -61,6 +61,7 @@ describe('MessagesService.forward()', () => {
       { pinnedIdsForConversation: vi.fn().mockResolvedValue([]) } as never,
       { savedIdsForViewer: vi.fn().mockResolvedValue([]) } as never,
       config as never,
+      { add: vi.fn() } as never,
     );
   });
 

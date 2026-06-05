@@ -131,7 +131,8 @@
     "privacy-updated": "隐私设置已更新",
     "privacy-update-failed": "隐私设置更新失败",
     "notifications-unsupported": "此浏览器不支持通知",
-    "notifications-denied": "权限被拒绝 - 请在浏览器设置中启用通知"
+    "notifications-denied": "权限被拒绝 - 请在浏览器设置中启用通知",
+    "push-subscribe-failed": "无法启用推送通知"
   },
   "validation": {
     "avatar-invalid-type": "头像必须是 PNG、JPEG、WebP 或 GIF 图片",

@@ -70,7 +70,6 @@ export function AttachmentBlock({
     return (
       <PdfLightbox
         src={src}
-        filename={filename ?? 'document.pdf'}
         label={filename ?? a.mime}
         className="flex max-w-xs items-center gap-3 rounded-lg border border-border bg-card px-3 py-2 text-start outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-accent"
       >

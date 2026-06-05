@@ -1,3 +1,4 @@
+import { InjectQueue } from '@nestjs/bullmq';
 import {
   BadRequestException,
   ForbiddenException,
@@ -5,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import type { Queue } from 'bullmq';
 
 import type { ApiEnv } from '@open-meet/config';
 import {
@@ -27,6 +29,8 @@ import { MessagingSerializer } from './messaging.serializer';
 import { parseMentions } from './mentions.util';
 import { PinsRepository } from './pins.repository';
 import { SavedRepository } from './saved.repository';
+import { PUSH_QUEUE } from '../push/push.constants';
+import type { ChatMessageJob } from '../push/push-dispatch.service';
 
 export interface SendMessageInput {
   conversationId: string;
@@ -57,6 +61,7 @@ export class MessagesService {
     private readonly pins: PinsRepository,
     private readonly saved: SavedRepository,
     config: ConfigService<ApiEnv, true>,
+    @InjectQueue(PUSH_QUEUE) private readonly pushQueue: Queue,
   ) {
     this.maxLength = config.getOrThrow<number>('CHAT_MESSAGE_MAX_LENGTH');
   }
@@ -168,6 +173,17 @@ export class MessagesService {
     };
 
     this.bus.emit(conversationRoom(message.conversationId), ChatServerEvent.MESSAGE_NEW, dto);
+
+    const job: ChatMessageJob = {
+      conversationId: message.conversationId,
+      senderId: viewerId,
+      senderName: dto.sender?.name ?? '',
+    };
+    void this.pushQueue.add('chat-message', job, {
+      removeOnComplete: true,
+      removeOnFail: 50,
+    });
+
     return dto;
   }
 

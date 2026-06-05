@@ -131,7 +131,8 @@
     "privacy-updated": "Pengaturan privasi diperbarui",
     "privacy-update-failed": "Gagal memperbarui pengaturan privasi",
     "notifications-unsupported": "Notifikasi tidak didukung di browser ini",
-    "notifications-denied": "Izin ditolak - aktifkan notifikasi di pengaturan browser Anda"
+    "notifications-denied": "Izin ditolak - aktifkan notifikasi di pengaturan browser Anda",
+    "push-subscribe-failed": "Tidak dapat mengaktifkan notifikasi push"
   },
   "validation": {
     "avatar-invalid-type": "Avatar harus berupa gambar PNG, JPEG, WebP, atau GIF",
