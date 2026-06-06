@@ -27,7 +27,9 @@ export function ActionButton({ action, onClick, className }: ActionButtonProps) 
       className={cn('gap-2', danger && 'text-destructive hover:text-destructive', className)}
     >
       {Icon ? <Icon className="h-4 w-4" /> : null}
-      <span className={action.scope === 'row' ? 'hidden sm:inline' : undefined}>{action.label}</span>
+      <span className={action.scope === 'row' ? 'hidden sm:inline' : undefined}>
+        {action.label}
+      </span>
     </Button>
   );
 }

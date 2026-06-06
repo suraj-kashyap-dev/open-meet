@@ -39,11 +39,18 @@ export function Header({
       <tr>
         {selectable ? (
           <th className="w-10 px-4 py-2.5">
-            <Checkbox checked={isAllSelected} onCheckedChange={onToggleAll} aria-label="Select all" />
+            <Checkbox
+              checked={isAllSelected}
+              onCheckedChange={onToggleAll}
+              aria-label="Select all"
+            />
           </th>
         ) : null}
         {columns.map((column) => (
-          <th key={column.key} className={columnClass(column, 'whitespace-nowrap px-4 py-2.5 font-medium')}>
+          <th
+            key={column.key}
+            className={columnClass(column, 'whitespace-nowrap px-4 py-2.5 font-medium')}
+          >
             {column.sortable ? (
               <button
                 type="button"
