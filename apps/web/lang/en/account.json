@@ -53,6 +53,8 @@
     "localization-description": "Used for meeting times, dates, and the UI language.",
     "defaults-title": "Meeting defaults",
     "defaults-description": "What happens when you start or join a meeting.",
+    "composer-title": "Message composer",
+    "composer-description": "Choose how the chat message box behaves.",
     "privacy-title": "Privacy",
     "privacy-description": "Control what others see and how your data is used.",
     "loading": "Loading…",
@@ -109,6 +111,13 @@
       "amber": "Amber",
       "teal": "Teal"
     }
+  },
+  "composer": {
+    "mode-title": "Editor style",
+    "mode-description": "Pick the chat message editor you prefer.",
+    "mode-normal": "Plain text",
+    "mode-markdown": "Markdown toolbar",
+    "mode-wysiwyg": "Rich editor"
   },
   "actions": {
     "reset": "Reset",

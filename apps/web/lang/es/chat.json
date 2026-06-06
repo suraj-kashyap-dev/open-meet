@@ -113,9 +113,10 @@
     "success": "Mensaje reenviado",
     "error": "No se pudo reenviar el mensaje"
   },
-  "receipts": {
-    "seen": "Visto",
-    "seen-by": "Visto por {count}"
+  "ticks": {
+    "sent": "Enviado",
+    "delivered": "Entregado",
+    "seen": "Visto"
   },
   "typing": {
     "one": "{name} está escribiendo…",
@@ -130,6 +131,12 @@
     "uploading": "Subiendo… {percent}%",
     "failed": "Falló",
     "remove-attachment": "Quitar adjunto",
+    "md-bold": "Negrita",
+    "md-italic": "Cursiva",
+    "md-code": "Código",
+    "md-link": "Enlace",
+    "md-list": "Lista",
+    "md-quote": "Cita",
     "max-attachments": "Puedes adjuntar hasta {max} archivos.",
     "wait-for-uploads": "Espera a que terminen las subidas.",
     "upload-failed": "Error al subir",

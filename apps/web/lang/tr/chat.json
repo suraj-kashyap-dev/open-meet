@@ -113,9 +113,10 @@
     "success": "Mesaj iletildi",
     "error": "Mesaj iletilemedi"
   },
-  "receipts": {
-    "seen": "Görüldü",
-    "seen-by": "{count} kişi tarafından görüldü"
+  "ticks": {
+    "sent": "Gönderildi",
+    "delivered": "İletildi",
+    "seen": "Görüldü"
   },
   "typing": {
     "one": "{name} yazıyor…",
@@ -130,6 +131,12 @@
     "uploading": "Yükleniyor… {percent}%",
     "failed": "Başarısız",
     "remove-attachment": "Eki kaldır",
+    "md-bold": "Kalın",
+    "md-italic": "İtalik",
+    "md-code": "Kod",
+    "md-link": "Bağlantı",
+    "md-list": "Liste",
+    "md-quote": "Alıntı",
     "max-attachments": "En fazla {max} dosya ekleyebilirsiniz.",
     "wait-for-uploads": "Yüklemelerin bitmesini bekleyin.",
     "upload-failed": "Yükleme başarısız",

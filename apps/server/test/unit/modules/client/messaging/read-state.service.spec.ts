@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { ChatServerEvent } from '@open-meet/types';
+
 import { ReadStateService } from '@/modules/client/messaging/read-state.service';
 import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
 import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
 import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { type ChatBus } from '@/modules/client/messaging/chat-bus.service';
+import { conversationRoom, type ChatBus } from '@/modules/client/messaging/chat-bus.service';
 
 describe('ReadStateService.summary', () => {
   let repo: {
@@ -60,5 +62,33 @@ describe('ReadStateService.summary', () => {
     const summary = await service.summary('u1');
 
     expect(summary.byConversation).toEqual({ c1: 4 });
+  });
+});
+
+describe('ReadStateService.markDelivered', () => {
+  it('should gate on membership, advance lastDeliveredAt, and broadcast a delivery receipt', async () => {
+    const conversations = {
+      markDelivered: vi.fn().mockResolvedValue(undefined),
+    };
+    const permissions = { assertConversationMember: vi.fn().mockResolvedValue({}) };
+    const bus = { emit: vi.fn() };
+
+    const service = new ReadStateService(
+      conversations as unknown as ConversationsRepository,
+      {} as unknown as MessagesRepository,
+      permissions as unknown as ChatPermissionsService,
+      bus as unknown as ChatBus,
+    );
+
+    await service.markDelivered('c1', 'u1');
+
+    expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+    expect(conversations.markDelivered).toHaveBeenCalledWith('c1', 'u1', expect.any(Date));
+
+    const [room, event, payload] = bus.emit.mock.calls[0];
+    expect(room).toBe(conversationRoom('c1'));
+    expect(event).toBe(ChatServerEvent.DELIVERY_RECEIPT);
+    expect(payload).toMatchObject({ conversationId: 'c1', userId: 'u1' });
+    expect(typeof payload.lastDeliveredAt).toBe('string');
   });
 });

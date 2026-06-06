@@ -26,6 +26,7 @@ import {
   type ChatPollVotePayload,
   type ChatReactionPayload,
   type ChatReadPayload,
+  type ChatDeliveredPayload,
   type ChatSetPresencePayload,
 } from '@open-meet/types';
 
@@ -273,6 +274,19 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.readState.markRead(body.conversationId, user.id, body.messageId);
+      return { ok: true };
+    });
+  }
+
+  @SubscribeMessage(ChatClientEvent.DELIVERED)
+  async onDelivered(
+    @ConnectedSocket() client: AuthSocket,
+    @MessageBody() body: ChatDeliveredPayload,
+  ): Promise<{ ok: true }> {
+    const user = this.requireUser(client);
+
+    return this.guard(async () => {
+      await this.readState.markDelivered(body.conversationId, user.id);
       return { ok: true };
     });
   }

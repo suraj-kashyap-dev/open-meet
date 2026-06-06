@@ -58,7 +58,7 @@ describe('MessagesService.forward()', () => {
       {} as unknown as UploadsService,
       serializer as unknown as MessagingSerializer,
       bus as unknown as ChatBus,
-      { pinnedIdsForConversation: vi.fn().mockResolvedValue([]) } as never,
+      { pinnedIdsForUser: vi.fn().mockResolvedValue([]) } as never,
       { savedIdsForViewer: vi.fn().mockResolvedValue([]) } as never,
       config as never,
       { add: vi.fn() } as never,

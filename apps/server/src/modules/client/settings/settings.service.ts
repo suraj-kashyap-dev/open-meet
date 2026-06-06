@@ -43,6 +43,14 @@ export class SettingsService {
       }
     }
 
+    if (input.composerPreferences) {
+      for (const [k, v] of Object.entries(input.composerPreferences)) {
+        if (v !== undefined) {
+          data[k] = v;
+        }
+      }
+    }
+
     if (Object.keys(data).length === 0) {
       const row = await this.repo.ensureForUser(userId);
       return this.toDto(row);
@@ -69,6 +77,9 @@ export class SettingsService {
       },
       appearance: {
         accentColorOverride: row.accentColorOverride,
+      },
+      composerPreferences: {
+        composerMode: row.composerMode,
       },
     };
   }

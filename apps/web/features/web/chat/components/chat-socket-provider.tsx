@@ -14,6 +14,7 @@ import {
   type PresenceStatus,
   type ChatReactionUpdatedPayload,
   type ChatReadReceiptPayload,
+  type ChatDeliveryReceiptPayload,
   type ChatTypingPayload,
   type ChatTypingStoppedPayload,
   type ConversationDto,
@@ -37,6 +38,7 @@ interface ChatSocketContextValue {
   leaveConversation: (conversationId: string) => void;
   startTyping: (conversationId: string) => void;
   stopTyping: (conversationId: string) => void;
+  markDelivered: (conversationId: string) => void;
   setPresence: (status: PresenceStatus, customText?: string | null) => void;
 }
 
@@ -52,6 +54,7 @@ export function useChatSocketContext(): ChatSocketContextValue {
       leaveConversation: () => {},
       startTyping: () => {},
       stopTyping: () => {},
+      markDelivered: () => {},
       setPresence: () => {},
     };
   }
@@ -151,6 +154,10 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
         applyIncoming(list, message, !isMine && !isActive),
       );
 
+      if (!isMine) {
+        socket.emit(ChatClientEvent.DELIVERED, { conversationId: message.conversationId });
+      }
+
       if (!isMine && !isActive) {
         bumpUnread(message.conversationId);
 
@@ -206,6 +213,29 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
                       ...c,
                       members: c.members.map((m) =>
                         m.userId === userId ? { ...m, lastReadAt } : m,
+                      ),
+                    }
+                  : c,
+              ),
+            }
+          : list,
+      );
+    };
+
+    const onDeliveryReceipt = ({
+      conversationId,
+      userId,
+      lastDeliveredAt,
+    }: ChatDeliveryReceiptPayload) => {
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
+        list
+          ? {
+              items: list.items.map((c) =>
+                c.id === conversationId
+                  ? {
+                      ...c,
+                      members: c.members.map((m) =>
+                        m.userId === userId ? { ...m, lastDeliveredAt } : m,
                       ),
                     }
                   : c,
@@ -273,6 +303,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
     socket.on(ChatServerEvent.TYPING, onTyping);
     socket.on(ChatServerEvent.TYPING_STOPPED, onTypingStopped);
     socket.on(ChatServerEvent.READ_RECEIPT, onReadReceipt);
+    socket.on(ChatServerEvent.DELIVERY_RECEIPT, onDeliveryReceipt);
     socket.on(ChatServerEvent.PRESENCE_UPDATE, onPresence);
     socket.on(ChatServerEvent.CONVERSATION_NEW, onConversationNew);
     socket.on(ChatServerEvent.CONVERSATION_UPDATE, onConversationUpdate);
@@ -290,6 +321,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       socket.off(ChatServerEvent.TYPING, onTyping);
       socket.off(ChatServerEvent.TYPING_STOPPED, onTypingStopped);
       socket.off(ChatServerEvent.READ_RECEIPT, onReadReceipt);
+      socket.off(ChatServerEvent.DELIVERY_RECEIPT, onDeliveryReceipt);
       socket.off(ChatServerEvent.PRESENCE_UPDATE, onPresence);
       socket.off(ChatServerEvent.CONVERSATION_NEW, onConversationNew);
       socket.off(ChatServerEvent.CONVERSATION_UPDATE, onConversationUpdate);
@@ -322,6 +354,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
         socket?.emit(ChatClientEvent.CONVERSATION_LEAVE, { conversationId: id }),
       startTyping: (id) => socket?.emit(ChatClientEvent.TYPING_START, { conversationId: id }),
       stopTyping: (id) => socket?.emit(ChatClientEvent.TYPING_STOP, { conversationId: id }),
+      markDelivered: (id) => socket?.emit(ChatClientEvent.DELIVERED, { conversationId: id }),
       setPresence: (status, customText) =>
         socket?.emit(ChatClientEvent.SET_PRESENCE, { status, customText: customText ?? null }),
     }),

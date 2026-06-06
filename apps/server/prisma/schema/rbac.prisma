@@ -14,6 +14,6 @@ model AdminRoleRecord {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  admins        Admin[]
+  admins         Admin[]
   pendingInvites AdminInvite[]
 }

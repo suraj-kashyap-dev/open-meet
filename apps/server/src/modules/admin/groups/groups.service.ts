@@ -29,7 +29,6 @@ export class AdminGroupsService {
     private readonly grid: DatagridService,
   ) {}
 
-
   async datagrid(query: AdminGroupsDatagridQueryDto): Promise<DatagridResponseDto<AdminGroupDto>> {
     const { skip, take } = paginate(query);
     const search = query.search?.trim() || undefined;

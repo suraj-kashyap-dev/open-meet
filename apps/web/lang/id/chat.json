@@ -113,9 +113,10 @@
     "success": "Pesan diteruskan",
     "error": "Tidak dapat meneruskan pesan"
   },
-  "receipts": {
-    "seen": "Dilihat",
-    "seen-by": "Dilihat oleh {count}"
+  "ticks": {
+    "sent": "Terkirim",
+    "delivered": "Tersampaikan",
+    "seen": "Dilihat"
   },
   "typing": {
     "one": "{name} sedang mengetik…",
@@ -130,6 +131,12 @@
     "uploading": "Mengunggah… {percent}%",
     "failed": "Gagal",
     "remove-attachment": "Hapus lampiran",
+    "md-bold": "Tebal",
+    "md-italic": "Miring",
+    "md-code": "Kode",
+    "md-link": "Tautan",
+    "md-list": "Daftar",
+    "md-quote": "Kutipan",
     "max-attachments": "Anda dapat melampirkan hingga {max} file.",
     "wait-for-uploads": "Tunggu unggahan selesai.",
     "upload-failed": "Unggahan gagal",

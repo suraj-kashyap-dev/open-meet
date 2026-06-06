@@ -32,10 +32,23 @@ export interface AppearanceSettingsDto {
   accentColorOverride: string | null;
 }
 
+export const ComposerMode = {
+  NORMAL: 'NORMAL',
+  MARKDOWN: 'MARKDOWN',
+  WYSIWYG: 'WYSIWYG',
+} as const;
+
+export type ComposerMode = (typeof ComposerMode)[keyof typeof ComposerMode];
+
+export interface ComposerPreferencesDto {
+  composerMode: ComposerMode;
+}
+
 export interface UserSettingsDto {
   meetingPreferences: MeetingPreferencesDto;
   privacySettings: PrivacySettingsDto;
   appearance: AppearanceSettingsDto;
+  composerPreferences: ComposerPreferencesDto;
 }
 
 export const DEFAULT_MEETING_PREFERENCES: MeetingPreferencesDto = {
@@ -57,10 +70,15 @@ export const DEFAULT_APPEARANCE_SETTINGS: AppearanceSettingsDto = {
   accentColorOverride: null,
 };
 
+export const DEFAULT_COMPOSER_PREFERENCES: ComposerPreferencesDto = {
+  composerMode: ComposerMode.NORMAL,
+};
+
 export const DEFAULT_USER_SETTINGS: UserSettingsDto = {
   meetingPreferences: DEFAULT_MEETING_PREFERENCES,
   privacySettings: DEFAULT_PRIVACY_SETTINGS,
   appearance: DEFAULT_APPEARANCE_SETTINGS,
+  composerPreferences: DEFAULT_COMPOSER_PREFERENCES,
 };
 
 export interface UserDto {
@@ -90,6 +108,7 @@ export interface UpdateUserSettingsDto {
   meetingPreferences?: Partial<MeetingPreferencesDto>;
   privacySettings?: Partial<PrivacySettingsDto>;
   appearance?: Partial<AppearanceSettingsDto>;
+  composerPreferences?: Partial<ComposerPreferencesDto>;
 }
 
 export interface PublicUserDto {

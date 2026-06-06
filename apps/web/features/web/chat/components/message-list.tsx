@@ -14,6 +14,7 @@ import { useDelayedFlag } from '@/lib/use-delayed-flag';
 import { usePathname, useRouter } from '@/i18n/navigation';
 
 import { ForwardDialog } from './forward-dialog';
+import { useChatSocketContext } from './chat-socket-provider';
 import { MessageBubble } from './message-bubble';
 import { MessageListSkeleton } from './message-list-skeleton';
 import { PinnedMessagesBar } from './pinned-messages-bar';
@@ -54,6 +55,11 @@ export function MessageList({
   const query = useConversationMessages(conversationId);
   const pins = usePins(conversationId);
   const formatSize = useFormatSize();
+  const { markDelivered } = useChatSocketContext();
+
+  useEffect(() => {
+    markDelivered(conversationId);
+  }, [conversationId, markDelivered]);
   const fetchNextPage = query.fetchNextPage;
   const hasNextPage = query.hasNextPage;
   const isFetchingNextPage = query.isFetchingNextPage;
@@ -70,15 +76,6 @@ export function MessageList({
   const messages = useMemo(() => flattenMessages(query.data), [query.data]);
   const rows = useMemo(() => buildMessageRows(messages, currentUserId), [messages, currentUserId]);
   const showSkeleton = useDelayedFlag(messages.length === 0 && query.isLoading);
-
-  const lastOwnId = useMemo(() => {
-    for (let i = messages.length - 1; i >= 0; i--) {
-      if (messages[i]!.sender?.id === currentUserId) {
-        return messages[i]!.id;
-      }
-    }
-    return null;
-  }, [messages, currentUserId]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLUListElement>(null);
@@ -129,7 +126,7 @@ export function MessageList({
 
   useLayoutEffect(() => {
     const last = messages[messages.length - 1];
-    
+
     if (!last) {
       return;
     }
@@ -141,13 +138,13 @@ export function MessageList({
 
     if (isNew && last.sender?.id === currentUserId) {
       const el = scrollRef.current;
-    
+
       pinnedRef.current = true;
-    
+
       if (el) {
         el.scrollTop = el.scrollHeight;
       }
-    
+
       setShowJump(false);
     }
   }, [messages, currentUserId]);
@@ -158,9 +155,9 @@ export function MessageList({
 
   useEffect(() => {
     const el = scrollRef.current;
-    
+
     const content = contentRef.current;
-    
+
     if (!el || !content) {
       return;
     }
@@ -326,7 +323,6 @@ export function MessageList({
                   isGroupHead={row.isGroupHead}
                   isGroupTail={row.isGroupTail}
                   showSenderName={isGroup && !row.isMe}
-                  isLastOwn={row.message.id === lastOwnId}
                   canPost={canPost}
                   members={members}
                   currentUserId={currentUserId}

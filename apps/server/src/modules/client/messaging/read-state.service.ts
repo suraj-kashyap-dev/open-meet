@@ -57,6 +57,19 @@ export class ReadStateService {
     return { unread };
   }
 
+  async markDelivered(conversationId: string, userId: string): Promise<void> {
+    await this.permissions.assertConversationMember(conversationId, userId);
+
+    const deliveredAt = new Date();
+    await this.conversations.markDelivered(conversationId, userId, deliveredAt);
+
+    this.bus.emit(conversationRoom(conversationId), ChatServerEvent.DELIVERY_RECEIPT, {
+      conversationId,
+      userId,
+      lastDeliveredAt: deliveredAt.toISOString(),
+    });
+  }
+
   async summary(userId: string): Promise<UnreadSummaryDto> {
     const memberships = await this.conversations.membershipsForUser(userId);
     const byConversation: Record<string, number> = {};

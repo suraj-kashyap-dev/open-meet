@@ -113,9 +113,10 @@
     "success": "Messaggio inoltrato",
     "error": "Impossibile inoltrare il messaggio"
   },
-  "receipts": {
-    "seen": "Visto",
-    "seen-by": "Visto da {count}"
+  "ticks": {
+    "sent": "Inviato",
+    "delivered": "Consegnato",
+    "seen": "Visto"
   },
   "typing": {
     "one": "{name} sta scrivendo…",
@@ -130,6 +131,12 @@
     "uploading": "Caricamento… {percent}%",
     "failed": "Non riuscito",
     "remove-attachment": "Rimuovi allegato",
+    "md-bold": "Grassetto",
+    "md-italic": "Corsivo",
+    "md-code": "Codice",
+    "md-link": "Collegamento",
+    "md-list": "Elenco",
+    "md-quote": "Citazione",
     "max-attachments": "Puoi allegare fino a {max} file.",
     "wait-for-uploads": "Attendi il completamento dei caricamenti.",
     "upload-failed": "Caricamento non riuscito",

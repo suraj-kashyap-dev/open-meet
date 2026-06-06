@@ -113,9 +113,10 @@
     "success": "Message transféré",
     "error": "Impossible de transférer le message"
   },
-  "receipts": {
-    "seen": "Vu",
-    "seen-by": "Vu par {count}"
+  "ticks": {
+    "sent": "Envoyé",
+    "delivered": "Livré",
+    "seen": "Vu"
   },
   "typing": {
     "one": "{name} est en train d'écrire…",
@@ -130,6 +131,12 @@
     "uploading": "Téléversement… {percent}%",
     "failed": "Échec",
     "remove-attachment": "Supprimer la pièce jointe",
+    "md-bold": "Gras",
+    "md-italic": "Italique",
+    "md-code": "Code",
+    "md-link": "Lien",
+    "md-list": "Liste",
+    "md-quote": "Citation",
     "max-attachments": "Vous pouvez joindre jusqu'à {max} fichiers.",
     "wait-for-uploads": "Attendez la fin des téléversements.",
     "upload-failed": "Échec du téléversement",

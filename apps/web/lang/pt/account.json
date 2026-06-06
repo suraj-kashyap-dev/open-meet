@@ -53,6 +53,8 @@
     "localization-description": "Usado para horários, datas de reuniões e o idioma da interface.",
     "defaults-title": "Padrões de reunião",
     "defaults-description": "O que acontece quando você inicia ou entra em uma reunião.",
+    "composer-title": "Compositor de mensagens",
+    "composer-description": "Escolha como a caixa de mensagem do chat se comporta.",
     "privacy-title": "Privacidade",
     "privacy-description": "Controle o que os outros veem e como seus dados são usados.",
     "loading": "Carregando…",
@@ -109,6 +111,13 @@
       "amber": "Âmbar",
       "teal": "Turquesa"
     }
+  },
+  "composer": {
+    "mode-title": "Estilo do editor",
+    "mode-description": "Escolha o editor de mensagens de chat que prefere.",
+    "mode-normal": "Texto simples",
+    "mode-markdown": "Barra Markdown",
+    "mode-wysiwyg": "Editor rico"
   },
   "actions": {
     "reset": "Redefinir",

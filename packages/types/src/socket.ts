@@ -184,6 +184,7 @@ export const ChatClientEvent = {
   TYPING_START: 'chat:typing:start',
   TYPING_STOP: 'chat:typing:stop',
   READ: 'chat:read',
+  DELIVERED: 'chat:delivered',
   POLL_VOTE: 'chat:poll:vote',
   SET_PRESENCE: 'chat:presence:set',
 } as const;
@@ -198,6 +199,7 @@ export const ChatServerEvent = {
   TYPING: 'chat:typing',
   TYPING_STOPPED: 'chat:typing:stopped',
   READ_RECEIPT: 'chat:read:receipt',
+  DELIVERY_RECEIPT: 'chat:delivery:receipt',
   PRESENCE_UPDATE: 'chat:presence:update',
   UNREAD_UPDATE: 'chat:unread:update',
   CONVERSATION_NEW: 'chat:conversation:new',
@@ -278,6 +280,16 @@ export interface ChatReadReceiptPayload {
   lastReadAt: string;
 }
 
+export interface ChatDeliveredPayload {
+  conversationId: string;
+}
+
+export interface ChatDeliveryReceiptPayload {
+  conversationId: string;
+  userId: string;
+  lastDeliveredAt: string;
+}
+
 export interface ChatPresencePayload {
   userId: string;
   online: boolean;
@@ -328,6 +340,7 @@ export interface ChatClientToServerEvents {
   [ChatClientEvent.TYPING_START]: (payload: ChatConversationRefPayload) => void;
   [ChatClientEvent.TYPING_STOP]: (payload: ChatConversationRefPayload) => void;
   [ChatClientEvent.READ]: (payload: ChatReadPayload) => void;
+  [ChatClientEvent.DELIVERED]: (payload: ChatDeliveredPayload) => void;
   [ChatClientEvent.POLL_VOTE]: (payload: ChatPollVotePayload) => void;
   [ChatClientEvent.SET_PRESENCE]: (payload: ChatSetPresencePayload) => void;
 }
@@ -340,6 +353,7 @@ export interface ChatServerToClientEvents {
   [ChatServerEvent.TYPING]: (payload: ChatTypingPayload) => void;
   [ChatServerEvent.TYPING_STOPPED]: (payload: ChatTypingStoppedPayload) => void;
   [ChatServerEvent.READ_RECEIPT]: (payload: ChatReadReceiptPayload) => void;
+  [ChatServerEvent.DELIVERY_RECEIPT]: (payload: ChatDeliveryReceiptPayload) => void;
   [ChatServerEvent.PRESENCE_UPDATE]: (payload: ChatPresencePayload) => void;
   [ChatServerEvent.UNREAD_UPDATE]: (payload: ChatUnreadUpdatePayload) => void;
   [ChatServerEvent.CONVERSATION_NEW]: (payload: ChatConversationNewPayload) => void;

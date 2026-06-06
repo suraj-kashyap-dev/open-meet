@@ -53,6 +53,8 @@
     "localization-description": "Toplantı saatleri, tarihleri ve arayüz dili için kullanılır.",
     "defaults-title": "Toplantı varsayılanları",
     "defaults-description": "Bir toplantı başlattığınızda veya katıldığınızda ne olacağı.",
+    "composer-title": "Mesaj düzenleyici",
+    "composer-description": "Sohbet mesaj kutusunun nasıl davranacağını seçin.",
     "privacy-title": "Gizlilik",
     "privacy-description": "Diğerlerinin neleri görebileceğini ve verilerinizin nasıl kullanıldığını kontrol edin.",
     "loading": "Yükleniyor…",
@@ -109,6 +111,13 @@
       "amber": "Kehribar",
       "teal": "Petrol"
     }
+  },
+  "composer": {
+    "mode-title": "Düzenleyici stili",
+    "mode-description": "Tercih ettiğiniz sohbet mesajı düzenleyicisini seçin.",
+    "mode-normal": "Düz metin",
+    "mode-markdown": "Markdown araç çubuğu",
+    "mode-wysiwyg": "Zengin düzenleyici"
   },
   "actions": {
     "reset": "Sıfırla",

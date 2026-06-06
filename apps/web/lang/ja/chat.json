@@ -113,9 +113,10 @@
     "success": "メッセージを転送しました",
     "error": "メッセージを転送できませんでした"
   },
-  "receipts": {
-    "seen": "既読",
-    "seen-by": "{count} 人が既読"
+  "ticks": {
+    "sent": "送信済み",
+    "delivered": "配信済み",
+    "seen": "既読"
   },
   "typing": {
     "one": "{name} が入力中…",
@@ -130,6 +131,12 @@
     "uploading": "アップロード中… {percent}%",
     "failed": "失敗",
     "remove-attachment": "添付ファイルを削除",
+    "md-bold": "太字",
+    "md-italic": "斜体",
+    "md-code": "コード",
+    "md-link": "リンク",
+    "md-list": "リスト",
+    "md-quote": "引用",
     "max-attachments": "最大 {max} 個のファイルを添付できます。",
     "wait-for-uploads": "アップロードが完了するまでお待ちください。",
     "upload-failed": "アップロードに失敗しました",

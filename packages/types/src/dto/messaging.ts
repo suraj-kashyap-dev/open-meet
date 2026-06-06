@@ -69,6 +69,7 @@ export interface ConversationMemberDto {
   avatar: string | null;
   role: ConversationMemberRole;
   lastReadAt: string | null;
+  lastDeliveredAt: string | null;
   online: boolean;
   status: PresenceStatus | null;
   customText: string | null;

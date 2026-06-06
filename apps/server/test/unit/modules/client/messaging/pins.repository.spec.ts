@@ -22,10 +22,10 @@ describe('PinsRepository', () => {
   });
 
   describe('pin()', () => {
-    it('should upsert a pin keyed by conversation and message', async () => {
+    it('should upsert a per-user pin keyed by message and pinner', async () => {
       await repo.pin('c1', 'm1', 'u1');
       expect(pinnedMessage.upsert).toHaveBeenCalledWith({
-        where: { conversationId_messageId: { conversationId: 'c1', messageId: 'm1' } },
+        where: { messageId_pinnedById: { messageId: 'm1', pinnedById: 'u1' } },
         create: { conversationId: 'c1', messageId: 'm1', pinnedById: 'u1' },
         update: {},
       });
@@ -33,23 +33,23 @@ describe('PinsRepository', () => {
   });
 
   describe('unpin()', () => {
-    it('should delete the matching pin', async () => {
-      await repo.unpin('c1', 'm1');
+    it('should delete only the requesting user pin', async () => {
+      await repo.unpin('m1', 'u1');
       expect(pinnedMessage.deleteMany).toHaveBeenCalledWith({
-        where: { conversationId: 'c1', messageId: 'm1' },
+        where: { messageId: 'm1', pinnedById: 'u1' },
       });
     });
   });
 
   describe('listPinned()', () => {
-    it('should query pins newest-first and map to the nested messages', async () => {
+    it('should query the viewer pins newest-first and map to the nested messages', async () => {
       pinnedMessage.findMany.mockResolvedValue([
         { message: { id: 'm2' } },
         { message: { id: 'm1' } },
       ]);
-      const result = await repo.listPinned('c1');
+      const result = await repo.listPinned('c1', 'u1');
       expect(pinnedMessage.findMany).toHaveBeenCalledWith({
-        where: { conversationId: 'c1' },
+        where: { conversationId: 'c1', pinnedById: 'u1' },
         orderBy: { createdAt: 'desc' },
         include: { message: { include: chatMessageInclude } },
       });
@@ -57,12 +57,12 @@ describe('PinsRepository', () => {
     });
   });
 
-  describe('pinnedIdsForConversation()', () => {
-    it('should select and map pinned message ids', async () => {
+  describe('pinnedIdsForUser()', () => {
+    it('should select and map the viewer pinned message ids', async () => {
       pinnedMessage.findMany.mockResolvedValue([{ messageId: 'm1' }, { messageId: 'm2' }]);
-      const ids = await repo.pinnedIdsForConversation('c1');
+      const ids = await repo.pinnedIdsForUser('c1', 'u1');
       expect(pinnedMessage.findMany).toHaveBeenCalledWith({
-        where: { conversationId: 'c1' },
+        where: { conversationId: 'c1', pinnedById: 'u1' },
         select: { messageId: true },
       });
       expect(ids).toEqual(['m1', 'm2']);

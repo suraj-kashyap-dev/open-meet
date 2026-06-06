@@ -24,8 +24,8 @@ vi.mock('@/features/web/chat/components/reaction-picker', () => ({
   ReactionPicker: () => null,
 }));
 
-vi.mock('@/features/web/chat/components/read-receipts', () => ({
-  ReadReceipts: () => null,
+vi.mock('@/features/web/chat/components/message-ticks', () => ({
+  MessageTicks: () => null,
 }));
 
 vi.mock('@/features/web/chat/components/reply-preview', () => ({
@@ -97,7 +97,6 @@ describe('<MessageBubble />', () => {
             isGroupHead
             isGroupTail
             showSenderName={false}
-            isLastOwn={false}
             canPost={false}
             members={[]}
             currentUserId="u1"
@@ -133,7 +132,6 @@ describe('<MessageBubble />', () => {
             isGroupHead={false}
             isGroupTail={false}
             showSenderName={false}
-            isLastOwn={false}
             canPost={false}
             members={[]}
             currentUserId="u1"

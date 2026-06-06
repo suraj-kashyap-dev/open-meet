@@ -10,19 +10,19 @@ export class PinsRepository {
 
   async pin(conversationId: string, messageId: string, pinnedById: string): Promise<void> {
     await this.prisma.pinnedMessage.upsert({
-      where: { conversationId_messageId: { conversationId, messageId } },
+      where: { messageId_pinnedById: { messageId, pinnedById } },
       create: { conversationId, messageId, pinnedById },
       update: {},
     });
   }
 
-  async unpin(conversationId: string, messageId: string): Promise<void> {
-    await this.prisma.pinnedMessage.deleteMany({ where: { conversationId, messageId } });
+  async unpin(messageId: string, pinnedById: string): Promise<void> {
+    await this.prisma.pinnedMessage.deleteMany({ where: { messageId, pinnedById } });
   }
 
-  async listPinned(conversationId: string): Promise<ChatMessageWithRelations[]> {
+  async listPinned(conversationId: string, userId: string): Promise<ChatMessageWithRelations[]> {
     const rows = await this.prisma.pinnedMessage.findMany({
-      where: { conversationId },
+      where: { conversationId, pinnedById: userId },
       orderBy: { createdAt: 'desc' },
       include: { message: { include: chatMessageInclude } },
     });
@@ -30,9 +30,9 @@ export class PinsRepository {
     return rows.map((row) => row.message);
   }
 
-  async pinnedIdsForConversation(conversationId: string): Promise<string[]> {
+  async pinnedIdsForUser(conversationId: string, userId: string): Promise<string[]> {
     const rows = await this.prisma.pinnedMessage.findMany({
-      where: { conversationId },
+      where: { conversationId, pinnedById: userId },
       select: { messageId: true },
     });
 

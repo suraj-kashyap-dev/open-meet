@@ -53,6 +53,8 @@
     "localization-description": "Digunakan untuk waktu rapat, tanggal, dan bahasa antarmuka.",
     "defaults-title": "Default rapat",
     "defaults-description": "Yang terjadi saat Anda memulai atau bergabung dalam rapat.",
+    "composer-title": "Komposer pesan",
+    "composer-description": "Pilih cara kotak pesan obrolan berperilaku.",
     "privacy-title": "Privasi",
     "privacy-description": "Kendalikan apa yang dilihat orang lain dan bagaimana data Anda digunakan.",
     "loading": "Memuat…",
@@ -109,6 +111,13 @@
       "amber": "Amber",
       "teal": "Teal"
     }
+  },
+  "composer": {
+    "mode-title": "Gaya editor",
+    "mode-description": "Pilih editor pesan obrolan yang Anda sukai.",
+    "mode-normal": "Teks biasa",
+    "mode-markdown": "Bilah alat Markdown",
+    "mode-wysiwyg": "Editor kaya"
   },
   "actions": {
     "reset": "Atur ulang",

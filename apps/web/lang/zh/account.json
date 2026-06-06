@@ -53,6 +53,8 @@
     "localization-description": "用于会议时间、日期和界面语言。",
     "defaults-title": "会议默认值",
     "defaults-description": "开始或加入会议时的默认行为。",
+    "composer-title": "消息编辑器",
+    "composer-description": "选择聊天消息框的行为方式。",
     "privacy-title": "隐私",
     "privacy-description": "控制他人可见内容以及您的数据使用方式。",
     "loading": "加载中…",
@@ -109,6 +111,13 @@
       "amber": "琥珀",
       "teal": "青绿"
     }
+  },
+  "composer": {
+    "mode-title": "编辑器样式",
+    "mode-description": "选择您偏好的聊天消息编辑器。",
+    "mode-normal": "纯文本",
+    "mode-markdown": "Markdown 工具栏",
+    "mode-wysiwyg": "富文本编辑器"
   },
   "actions": {
     "reset": "重置",

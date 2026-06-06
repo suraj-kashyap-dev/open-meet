@@ -111,6 +111,13 @@ export class ConversationsRepository {
     });
   }
 
+  async markDelivered(conversationId: string, userId: string, at: Date): Promise<void> {
+    await this.prisma.conversationMember.update({
+      where: { conversationId_userId: { conversationId, userId } },
+      data: { lastDeliveredAt: at },
+    });
+  }
+
   async clearForViewer(conversationId: string, userId: string, at: Date): Promise<void> {
     await this.prisma.conversationMember.update({
       where: { conversationId_userId: { conversationId, userId } },

@@ -113,9 +113,10 @@
     "success": "Message forwarded",
     "error": "Could not forward the message"
   },
-  "receipts": {
-    "seen": "Seen",
-    "seen-by": "Seen by {count}"
+  "ticks": {
+    "sent": "Sent",
+    "delivered": "Delivered",
+    "seen": "Seen"
   },
   "typing": {
     "one": "{name} is typing…",
@@ -130,6 +131,12 @@
     "uploading": "Uploading… {percent}%",
     "failed": "Failed",
     "remove-attachment": "Remove attachment",
+    "md-bold": "Bold",
+    "md-italic": "Italic",
+    "md-code": "Code",
+    "md-link": "Link",
+    "md-list": "List",
+    "md-quote": "Quote",
     "max-attachments": "You can attach up to {max} files.",
     "wait-for-uploads": "Wait for uploads to finish.",
     "upload-failed": "Upload failed",

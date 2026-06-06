@@ -76,6 +76,7 @@ const peer: ConversationMemberDto = {
   avatar: null,
   role: 'MEMBER',
   lastReadAt: null,
+  lastDeliveredAt: null,
   online: true,
   status: 'AVAILABLE',
   customText: null,

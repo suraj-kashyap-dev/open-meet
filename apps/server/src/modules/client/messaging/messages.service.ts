@@ -88,7 +88,7 @@ export class MessagesService {
     const nextCursor = hasMore && first ? first.createdAt.toISOString() : null;
 
     const [pinnedIds, savedIds] = await Promise.all([
-      this.pins.pinnedIdsForConversation(conversationId),
+      this.pins.pinnedIdsForUser(conversationId, userId),
       this.saved.savedIdsForViewer(
         userId,
         slice.map((m) => m.id),

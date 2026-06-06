@@ -29,8 +29,11 @@ import { useBranding } from '@/components/web/branding/branding-provider';
 
 import { useChatSocketContext } from './chat-socket-provider';
 import { GifPicker } from './gif-picker';
+import { MarkdownToolbar } from './markdown-toolbar';
+import { RichInput, type RichInputHandle } from './rich-input';
 import { ReactionPicker } from './reaction-picker';
 import { ReplyPreview } from './reply-preview';
+import { useUserSettings } from '@/features/web/account/hooks/use-settings';
 import { useSendMessage } from '../hooks/use-chat';
 
 const MAX_ATTACHMENTS = 5;
@@ -65,6 +68,11 @@ export function MessageComposer({
   const send = useSendMessage(conversationId);
   const { startTyping, stopTyping } = useChatSocketContext();
   const { gifsEnabled } = useBranding();
+  const { data: settings } = useUserSettings();
+  const composerMode = settings?.composerPreferences.composerMode ?? 'NORMAL';
+  const isWysiwyg = composerMode === 'WYSIWYG';
+  const showMarkdownToolbar = composerMode === 'MARKDOWN';
+  const richRef = useRef<RichInputHandle>(null);
 
   const sendGif = (url: string) =>
     send.send({
@@ -187,6 +195,7 @@ export function MessageComposer({
     setText('');
     setPriority('NORMAL');
     setMention(null);
+    richRef.current?.clear();
     attachments.reset();
     onCancelReply();
     stopTypingNow();
@@ -225,6 +234,14 @@ export function MessageComposer({
             onCancel={onCancelReply}
           />
         </div>
+      ) : null}
+
+      {showMarkdownToolbar ? (
+        <MarkdownToolbar
+          textareaRef={textareaRef}
+          value={text}
+          onChange={(next, caret) => onType(next, caret)}
+        />
       ) : null}
 
       <form
@@ -308,67 +325,83 @@ export function MessageComposer({
         </Button>
 
         <div className="relative flex flex-1 items-end">
-          {mention && mentionCandidates.length > 0 ? (
-            <ul className="absolute bottom-full mb-1 max-h-56 w-full max-w-xs overflow-y-auto rounded-md border border-border bg-popover p-1 shadow-lg">
-              {mentionCandidates.map((m) => (
-                <li key={m.userId}>
-                  <button
-                    type="button"
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      insertMention(m);
-                    }}
-                    className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-start text-sm hover:bg-muted"
-                  >
-                    <UserAvatar user={{ name: m.name, avatar: m.avatar }} size="xs" />
-                    <span className="truncate">{m.name}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-
-          <textarea
-            ref={textareaRef}
-            value={text}
-            onChange={(e) =>
-              onType(e.target.value, e.target.selectionStart ?? e.target.value.length)
-            }
-            onKeyDown={(e) => {
-              if (
-                mention &&
-                mentionCandidates.length > 0 &&
-                (e.key === 'Enter' || e.key === 'Tab')
-              ) {
-                e.preventDefault();
-                insertMention(mentionCandidates[0]!);
-                return;
+          {isWysiwyg ? (
+            <RichInput
+              ref={richRef}
+              placeholder={t('composer.placeholder')}
+              getMentionItems={() =>
+                members
+                  .filter((m) => m.userId !== currentUserId)
+                  .map((m) => ({ id: m.userId, label: m.name, avatar: m.avatar }))
               }
-              if (e.key === 'Escape' && mention) {
-                setMention(null);
-                return;
-              }
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                submit();
-              }
-            }}
-            placeholder={t('composer.placeholder')}
-            rows={1}
-            maxLength={8000}
-            autoComplete="off"
-            className={cn(
-              'w-full resize-none rounded-md border border-border bg-input py-2 pe-9 ps-3 text-sm leading-6 outline-none',
-              'placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring',
-              'overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
-            )}
-          />
-          <div className="absolute bottom-1.5 end-1.5">
-            <ReactionPicker
-              align="end"
-              onPick={(emoji) => onType(text + emoji, text.length + emoji.length)}
+              onChange={(markdown) => onType(markdown, markdown.length)}
+              onSubmit={submit}
             />
-          </div>
+          ) : (
+            <>
+              {mention && mentionCandidates.length > 0 ? (
+                <ul className="absolute bottom-full mb-1 max-h-56 w-full max-w-xs overflow-y-auto rounded-md border border-border bg-popover p-1 shadow-lg">
+                  {mentionCandidates.map((m) => (
+                    <li key={m.userId}>
+                      <button
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          insertMention(m);
+                        }}
+                        className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-start text-sm hover:bg-muted"
+                      >
+                        <UserAvatar user={{ name: m.name, avatar: m.avatar }} size="xs" />
+                        <span className="truncate">{m.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+
+              <textarea
+                ref={textareaRef}
+                value={text}
+                onChange={(e) =>
+                  onType(e.target.value, e.target.selectionStart ?? e.target.value.length)
+                }
+                onKeyDown={(e) => {
+                  if (
+                    mention &&
+                    mentionCandidates.length > 0 &&
+                    (e.key === 'Enter' || e.key === 'Tab')
+                  ) {
+                    e.preventDefault();
+                    insertMention(mentionCandidates[0]!);
+                    return;
+                  }
+                  if (e.key === 'Escape' && mention) {
+                    setMention(null);
+                    return;
+                  }
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    submit();
+                  }
+                }}
+                placeholder={t('composer.placeholder')}
+                rows={1}
+                maxLength={8000}
+                autoComplete="off"
+                className={cn(
+                  'w-full resize-none rounded-md border border-border bg-input py-2 pe-9 ps-3 text-sm leading-6 outline-none',
+                  'placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring',
+                  'overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+                )}
+              />
+              <div className="absolute bottom-1.5 end-1.5">
+                <ReactionPicker
+                  align="end"
+                  onPick={(emoji) => onType(text + emoji, text.length + emoji.length)}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         <Button

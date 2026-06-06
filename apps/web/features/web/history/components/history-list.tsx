@@ -98,7 +98,8 @@ export function HistoryList() {
     switch (column.key) {
       case 'meeting': {
         const title =
-          item.title ?? t('default-title', { date: formatStartedAt(item.startedAt ?? item.createdAt) });
+          item.title ??
+          t('default-title', { date: formatStartedAt(item.startedAt ?? item.createdAt) });
 
         return (
           <div className="flex min-w-[260px] items-center gap-3">

@@ -8,7 +8,7 @@ import { type PinsRepository } from '@/modules/client/messaging/pins.repository'
 import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
 import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type ChatBus, conversationRoom } from '@/modules/client/messaging/chat-bus.service';
+import { type ChatBus, userRoom } from '@/modules/client/messaging/chat-bus.service';
 
 describe('PinsService', () => {
   let pins: {
@@ -46,12 +46,12 @@ describe('PinsService', () => {
   });
 
   describe('pin()', () => {
-    it('should gate on membership, persist the pin, and broadcast pinned:true', async () => {
+    it('should gate on membership, persist the pin, and broadcast pinned:true only to the pinner', async () => {
       await service.pin('m1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
       expect(pins.pin).toHaveBeenCalledWith('c1', 'm1', 'u1');
-      expect(bus.emit).toHaveBeenCalledWith(conversationRoom('c1'), ChatServerEvent.PIN_UPDATE, {
+      expect(bus.emit).toHaveBeenCalledWith(userRoom('u1'), ChatServerEvent.PIN_UPDATE, {
         conversationId: 'c1',
         messageId: 'm1',
         pinned: true,
@@ -65,11 +65,11 @@ describe('PinsService', () => {
   });
 
   describe('unpin()', () => {
-    it('should remove the pin and broadcast pinned:false', async () => {
+    it('should remove only the pinner pin and broadcast pinned:false to the pinner', async () => {
       await service.unpin('m1', 'u1');
 
-      expect(pins.unpin).toHaveBeenCalledWith('c1', 'm1');
-      expect(bus.emit).toHaveBeenCalledWith(conversationRoom('c1'), ChatServerEvent.PIN_UPDATE, {
+      expect(pins.unpin).toHaveBeenCalledWith('m1', 'u1');
+      expect(bus.emit).toHaveBeenCalledWith(userRoom('u1'), ChatServerEvent.PIN_UPDATE, {
         conversationId: 'c1',
         messageId: 'm1',
         pinned: false,
@@ -78,7 +78,7 @@ describe('PinsService', () => {
   });
 
   describe('list()', () => {
-    it('should gate on membership and serialize pinned messages with pinned=true', async () => {
+    it('should gate on membership and serialize the viewer pinned messages with pinned=true', async () => {
       const row = { id: 'm1', conversationId: 'c1' };
       pins.listPinned.mockResolvedValue([row]);
       serializer.message.mockReturnValue({ id: 'm1', pinned: true });
@@ -86,6 +86,7 @@ describe('PinsService', () => {
       const result = await service.list('c1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+      expect(pins.listPinned).toHaveBeenCalledWith('c1', 'u1');
       expect(serializer.message).toHaveBeenCalledWith(row, 'u1', {
         pinnedMessageIds: expect.any(Set),
       });

@@ -113,9 +113,10 @@
     "success": "تمت إعادة توجيه الرسالة",
     "error": "تعذّرت إعادة توجيه الرسالة"
   },
-  "receipts": {
-    "seen": "تمت المشاهدة",
-    "seen-by": "شوهد بواسطة {count}"
+  "ticks": {
+    "sent": "تم الإرسال",
+    "delivered": "تم التسليم",
+    "seen": "تمت المشاهدة"
   },
   "typing": {
     "one": "{name} يكتب…",
@@ -130,6 +131,12 @@
     "uploading": "جارٍ الرفع… {percent}%",
     "failed": "فشل",
     "remove-attachment": "إزالة المرفق",
+    "md-bold": "عريض",
+    "md-italic": "مائل",
+    "md-code": "كود",
+    "md-link": "رابط",
+    "md-list": "قائمة",
+    "md-quote": "اقتباس",
     "max-attachments": "يمكنك إرفاق ما يصل إلى {max} ملفات.",
     "wait-for-uploads": "انتظر حتى تنتهي عمليات الرفع.",
     "upload-failed": "فشل الرفع",

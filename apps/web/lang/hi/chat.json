@@ -113,9 +113,10 @@
     "success": "संदेश अग्रेषित किया गया",
     "error": "संदेश अग्रेषित नहीं किया जा सका"
   },
-  "receipts": {
-    "seen": "देखा गया",
-    "seen-by": "{count} द्वारा देखा गया"
+  "ticks": {
+    "sent": "भेजा गया",
+    "delivered": "डिलीवर हुआ",
+    "seen": "देखा गया"
   },
   "typing": {
     "one": "{name} टाइप कर रहे हैं…",
@@ -130,6 +131,12 @@
     "uploading": "अपलोड हो रहा है… {percent}%",
     "failed": "विफल",
     "remove-attachment": "अटैचमेंट हटाएं",
+    "md-bold": "बोल्ड",
+    "md-italic": "इटैलिक",
+    "md-code": "कोड",
+    "md-link": "लिंक",
+    "md-list": "सूची",
+    "md-quote": "उद्धरण",
     "max-attachments": "आप अधिकतम {max} फ़ाइलें अटैच कर सकते हैं।",
     "wait-for-uploads": "अपलोड पूरा होने की प्रतीक्षा करें।",
     "upload-failed": "अपलोड विफल",

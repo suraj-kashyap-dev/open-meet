@@ -28,6 +28,7 @@ model User {
   presence                UserPresence?
   pollVotes               PollVote[]
   pushSubscriptions       PushSubscription[]
+
   @@index([email])
   @@index([googleId])
 }
@@ -64,8 +65,16 @@ model UserSettings {
 
   accentColorOverride String?
 
+  composerMode ComposerMode @default(NORMAL)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum ComposerMode {
+  NORMAL
+  MARKDOWN
+  WYSIWYG
 }
 
 enum MeetingDefaultView {

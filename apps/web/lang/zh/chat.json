@@ -113,9 +113,10 @@
     "success": "消息已转发",
     "error": "无法转发该消息"
   },
-  "receipts": {
-    "seen": "已读",
-    "seen-by": "{count} 人已读"
+  "ticks": {
+    "sent": "已发送",
+    "delivered": "已送达",
+    "seen": "已读"
   },
   "typing": {
     "one": "{name} 正在输入…",
@@ -130,6 +131,12 @@
     "uploading": "上传中… {percent}%",
     "failed": "失败",
     "remove-attachment": "移除附件",
+    "md-bold": "粗体",
+    "md-italic": "斜体",
+    "md-code": "代码",
+    "md-link": "链接",
+    "md-list": "列表",
+    "md-quote": "引用",
     "max-attachments": "您最多可以添加 {max} 个文件。",
     "wait-for-uploads": "请等待上传完成。",
     "upload-failed": "上传失败",

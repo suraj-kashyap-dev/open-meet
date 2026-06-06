@@ -113,9 +113,10 @@
     "success": "Nachricht weitergeleitet",
     "error": "Nachricht konnte nicht weitergeleitet werden"
   },
-  "receipts": {
-    "seen": "Gesehen",
-    "seen-by": "Gesehen von {count}"
+  "ticks": {
+    "sent": "Gesendet",
+    "delivered": "Zugestellt",
+    "seen": "Gesehen"
   },
   "typing": {
     "one": "{name} schreibt…",
@@ -130,6 +131,12 @@
     "uploading": "Wird hochgeladen… {percent}%",
     "failed": "Fehlgeschlagen",
     "remove-attachment": "Anhang entfernen",
+    "md-bold": "Fett",
+    "md-italic": "Kursiv",
+    "md-code": "Code",
+    "md-link": "Link",
+    "md-list": "Liste",
+    "md-quote": "Zitat",
     "max-attachments": "Sie können bis zu {max} Dateien anhängen.",
     "wait-for-uploads": "Warten Sie, bis die Uploads abgeschlossen sind.",
     "upload-failed": "Upload fehlgeschlagen",

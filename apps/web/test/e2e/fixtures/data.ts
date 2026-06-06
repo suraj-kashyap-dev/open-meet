@@ -57,6 +57,9 @@ export const userSettings: UserSettingsDto = {
   appearance: {
     accentColorOverride: null,
   },
+  composerPreferences: {
+    composerMode: 'NORMAL',
+  },
 };
 
 export const hostMeeting: MeetingDto = {
@@ -242,6 +245,7 @@ export const dmConversation: ConversationDto = {
       avatar: null,
       role: 'MEMBER',
       lastReadAt: '2026-05-21T10:05:00.000Z',
+      lastDeliveredAt: null,
       online: true,
       status: 'AVAILABLE',
       customText: null,
@@ -254,6 +258,7 @@ export const dmConversation: ConversationDto = {
       avatar: null,
       role: 'MEMBER',
       lastReadAt: '2026-05-21T10:00:00.000Z',
+      lastDeliveredAt: null,
       online: true,
       status: 'AVAILABLE',
       customText: null,

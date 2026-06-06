@@ -53,6 +53,8 @@
     "localization-description": "Usata per orari, date delle riunioni e la lingua dell'interfaccia.",
     "defaults-title": "Impostazioni predefinite riunioni",
     "defaults-description": "Cosa succede quando avvii o partecipi a una riunione.",
+    "composer-title": "Compositore messaggi",
+    "composer-description": "Scegli come si comporta la casella dei messaggi della chat.",
     "privacy-title": "Privacy",
     "privacy-description": "Controlla cosa vedono gli altri e come vengono usati i tuoi dati.",
     "loading": "Caricamento…",
@@ -109,6 +111,13 @@
       "amber": "Ambra",
       "teal": "Verde acqua"
     }
+  },
+  "composer": {
+    "mode-title": "Stile dell'editor",
+    "mode-description": "Scegli l'editor dei messaggi di chat che preferisci.",
+    "mode-normal": "Testo normale",
+    "mode-markdown": "Barra Markdown",
+    "mode-wysiwyg": "Editor avanzato"
   },
   "actions": {
     "reset": "Reimposta",

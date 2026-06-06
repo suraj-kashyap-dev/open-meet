@@ -113,9 +113,10 @@
     "success": "Mensagem encaminhada",
     "error": "Não foi possível encaminhar a mensagem"
   },
-  "receipts": {
-    "seen": "Visto",
-    "seen-by": "Visto por {count}"
+  "ticks": {
+    "sent": "Enviado",
+    "delivered": "Entregue",
+    "seen": "Visto"
   },
   "typing": {
     "one": "{name} está digitando…",
@@ -130,6 +131,12 @@
     "uploading": "Enviando… {percent}%",
     "failed": "Falhou",
     "remove-attachment": "Remover anexo",
+    "md-bold": "Negrito",
+    "md-italic": "Itálico",
+    "md-code": "Código",
+    "md-link": "Link",
+    "md-list": "Lista",
+    "md-quote": "Citação",
     "max-attachments": "Você pode anexar até {max} arquivos.",
     "wait-for-uploads": "Aguarde a conclusão dos envios.",
     "upload-failed": "Falha no envio",

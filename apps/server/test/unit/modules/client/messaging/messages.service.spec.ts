@@ -34,7 +34,7 @@ describe('MessagesService', () => {
   let uploads: { claimForChat: ReturnType<typeof vi.fn> };
   let serializer: { message: ReturnType<typeof vi.fn> };
   let bus: { emit: ReturnType<typeof vi.fn> };
-  let pins: { pinnedIdsForConversation: ReturnType<typeof vi.fn> };
+  let pins: { pinnedIdsForUser: ReturnType<typeof vi.fn> };
   let saved: { savedIdsForViewer: ReturnType<typeof vi.fn> };
   let pushQueue: { add: ReturnType<typeof vi.fn> };
   let service: MessagesService;
@@ -61,7 +61,7 @@ describe('MessagesService', () => {
     uploads = { claimForChat: vi.fn() };
     serializer = { message: vi.fn((m) => ({ id: m.id, sender: { name: 'Alice' } })) };
     bus = { emit: vi.fn() };
-    pins = { pinnedIdsForConversation: vi.fn().mockResolvedValue([]) };
+    pins = { pinnedIdsForUser: vi.fn().mockResolvedValue([]) };
     saved = { savedIdsForViewer: vi.fn().mockResolvedValue([]) };
     pushQueue = { add: vi.fn() };
 
@@ -315,7 +315,7 @@ describe('MessagesService', () => {
     it('should attach pinned and saved flags to serialized items', async () => {
       messages.listHistory.mockResolvedValue([{ id: 'a', createdAt: new Date('2026-01-01') }]);
       await service.history('c1', 'u1', {});
-      expect(pins.pinnedIdsForConversation).toHaveBeenCalledWith('c1');
+      expect(pins.pinnedIdsForUser).toHaveBeenCalledWith('c1', 'u1');
       expect(saved.savedIdsForViewer).toHaveBeenCalledWith('u1', ['a']);
       expect(serializer.message).toHaveBeenCalledWith(
         expect.objectContaining({ id: 'a' }),

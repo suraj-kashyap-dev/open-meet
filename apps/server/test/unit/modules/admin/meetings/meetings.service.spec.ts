@@ -100,7 +100,6 @@ describe('AdminMeetingsService', () => {
     });
   });
 
-
   describe('getById()', () => {
     it('should throw when the meeting is missing', async () => {
       meetings.findById.mockResolvedValueOnce(null);

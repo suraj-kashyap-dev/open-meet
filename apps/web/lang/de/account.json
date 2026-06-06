@@ -53,6 +53,8 @@
     "localization-description": "Wird für Besprechungszeiten, Datumsangaben und die Sprache der Benutzeroberfläche verwendet.",
     "defaults-title": "Besprechungsstandards",
     "defaults-description": "Was passiert, wenn Sie eine Besprechung starten oder beitreten.",
+    "composer-title": "Nachrichteneingabe",
+    "composer-description": "Legen Sie fest, wie das Chat-Nachrichtenfeld funktioniert.",
     "privacy-title": "Datenschutz",
     "privacy-description": "Steuern Sie, was andere sehen und wie Ihre Daten verwendet werden.",
     "loading": "Wird geladen…",
@@ -109,6 +111,13 @@
       "amber": "Bernstein",
       "teal": "Petrol"
     }
+  },
+  "composer": {
+    "mode-title": "Editor-Stil",
+    "mode-description": "Wählen Sie Ihren bevorzugten Chat-Nachrichteneditor.",
+    "mode-normal": "Klartext",
+    "mode-markdown": "Markdown-Leiste",
+    "mode-wysiwyg": "Rich-Editor"
   },
   "actions": {
     "reset": "Zurücksetzen",

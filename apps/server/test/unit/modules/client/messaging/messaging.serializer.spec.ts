@@ -378,6 +378,7 @@ describe('MessagingSerializer', () => {
         avatar: 'https://cdn/a/alice.png',
         role: 'ADMIN',
         lastReadAt: '2026-01-05T00:00:00.000Z',
+        lastDeliveredAt: null,
         online: true,
         status: 'BUSY',
         customText: 'heads down',

@@ -53,6 +53,8 @@
     "localization-description": "تُستخدم لأوقات الاجتماعات والتواريخ ولغة الواجهة.",
     "defaults-title": "الإعدادات الافتراضية للاجتماعات",
     "defaults-description": "ما يحدث عند بدء اجتماع أو الانضمام إليه.",
+    "composer-title": "محرر الرسائل",
+    "composer-description": "اختر كيف يعمل مربع رسائل الدردشة.",
     "privacy-title": "الخصوصية",
     "privacy-description": "تحكّم في ما يراه الآخرون وكيفية استخدام بياناتك.",
     "loading": "جارٍ التحميل…",
@@ -109,6 +111,13 @@
       "amber": "كهرماني",
       "teal": "فيروزي"
     }
+  },
+  "composer": {
+    "mode-title": "نمط المحرر",
+    "mode-description": "اختر محرر الرسائل الذي تفضّله.",
+    "mode-normal": "نص عادي",
+    "mode-markdown": "شريط Markdown",
+    "mode-wysiwyg": "محرر غني"
   },
   "actions": {
     "reset": "إعادة تعيين",

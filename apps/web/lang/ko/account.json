@@ -53,6 +53,8 @@
     "localization-description": "회의 시간, 날짜 및 UI 언어에 사용됩니다.",
     "defaults-title": "회의 기본값",
     "defaults-description": "회의를 시작하거나 참여할 때의 기본 설정입니다.",
+    "composer-title": "메시지 입력창",
+    "composer-description": "채팅 메시지 상자의 동작 방식을 선택하세요.",
     "privacy-title": "개인정보",
     "privacy-description": "다른 사람이 볼 수 있는 항목과 데이터 사용 방법을 제어합니다.",
     "loading": "로드 중…",
@@ -109,6 +111,13 @@
       "amber": "앰버",
       "teal": "틸"
     }
+  },
+  "composer": {
+    "mode-title": "편집기 스타일",
+    "mode-description": "선호하는 채팅 메시지 편집기를 선택하세요.",
+    "mode-normal": "일반 텍스트",
+    "mode-markdown": "Markdown 도구 모음",
+    "mode-wysiwyg": "리치 편집기"
   },
   "actions": {
     "reset": "초기화",

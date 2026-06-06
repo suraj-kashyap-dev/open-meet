@@ -57,20 +57,21 @@ model Conversation {
 }
 
 model ConversationMember {
-  id             String                 @id @default(cuid())
-  conversationId String
-  conversation   Conversation           @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  userId         String
-  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role           ConversationMemberRole @default(MEMBER)
-  lastReadAt     DateTime?
-  clearedAt      DateTime?
-  removedAt      DateTime?
-  muted          Boolean                @default(false)
-  pinned         Boolean                @default(false)
-  hidden         Boolean                @default(false)
-  manualUnread   Boolean                @default(false)
-  joinedAt       DateTime               @default(now())
+  id              String                 @id @default(cuid())
+  conversationId  String
+  conversation    Conversation           @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role            ConversationMemberRole @default(MEMBER)
+  lastReadAt      DateTime?
+  lastDeliveredAt DateTime?
+  clearedAt       DateTime?
+  removedAt       DateTime?
+  muted           Boolean                @default(false)
+  pinned          Boolean                @default(false)
+  hidden          Boolean                @default(false)
+  manualUnread    Boolean                @default(false)
+  joinedAt        DateTime               @default(now())
 
   @@unique([conversationId, userId])
   @@index([userId])
@@ -78,11 +79,11 @@ model ConversationMember {
 }
 
 model ChatMessage {
-  id             String            @id @default(cuid())
+  id             String              @id @default(cuid())
   conversationId String
-  conversation   Conversation      @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversation   Conversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   senderId       String?
-  sender         User?             @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  sender         User?               @relation(fields: [senderId], references: [id], onDelete: SetNull)
   type           ChatMessageType     @default(TEXT)
   priority       ChatMessagePriority @default(NORMAL)
   content        String
@@ -124,12 +125,12 @@ model PinnedMessage {
   conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   messageId      String
   message        ChatMessage  @relation(fields: [messageId], references: [id], onDelete: Cascade)
-  pinnedById     String?
-  pinnedBy       User?        @relation(fields: [pinnedById], references: [id], onDelete: SetNull)
+  pinnedById     String
+  pinnedBy       User         @relation(fields: [pinnedById], references: [id], onDelete: Cascade)
   createdAt      DateTime     @default(now())
 
-  @@unique([conversationId, messageId])
-  @@index([conversationId])
+  @@unique([messageId, pinnedById])
+  @@index([conversationId, pinnedById])
 }
 
 model SavedMessage {

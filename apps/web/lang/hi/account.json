@@ -53,6 +53,8 @@
     "localization-description": "मीटिंग के समय, तारीखों और UI भाषा के लिए उपयोग किया जाता है।",
     "defaults-title": "मीटिंग डिफ़ॉल्ट",
     "defaults-description": "जब आप कोई मीटिंग शुरू करते या जुड़ते हैं तो क्या होता है।",
+    "composer-title": "संदेश कंपोज़र",
+    "composer-description": "चुनें कि चैट संदेश बॉक्स कैसे काम करे।",
     "privacy-title": "गोपनीयता",
     "privacy-description": "नियंत्रित करें कि दूसरे क्या देखते हैं और आपके डेटा का उपयोग कैसे होता है।",
     "loading": "लोड हो रहा है…",
@@ -109,6 +111,13 @@
       "amber": "एम्बर",
       "teal": "टील"
     }
+  },
+  "composer": {
+    "mode-title": "एडिटर शैली",
+    "mode-description": "अपनी पसंद का चैट संदेश एडिटर चुनें।",
+    "mode-normal": "सादा पाठ",
+    "mode-markdown": "Markdown टूलबार",
+    "mode-wysiwyg": "रिच एडिटर"
   },
   "actions": {
     "reset": "रीसेट",

@@ -53,6 +53,8 @@
     "localization-description": "মিটিংয়ের সময়, তারিখ এবং UI ভাষার জন্য ব্যবহৃত।",
     "defaults-title": "মিটিং ডিফল্ট",
     "defaults-description": "আপনি মিটিং শুরু বা যোগ দিলে কী ঘটবে।",
+    "composer-title": "বার্তা কম্পোজার",
+    "composer-description": "চ্যাট বার্তা বাক্স কীভাবে কাজ করবে তা বেছে নিন।",
     "privacy-title": "গোপনীয়তা",
     "privacy-description": "অন্যরা কী দেখতে পারবে এবং আপনার ডেটা কীভাবে ব্যবহার হবে তা নিয়ন্ত্রণ করুন।",
     "loading": "লোড হচ্ছে…",
@@ -109,6 +111,13 @@
       "amber": "অ্যাম্বার",
       "teal": "টিল"
     }
+  },
+  "composer": {
+    "mode-title": "এডিটর শৈলী",
+    "mode-description": "আপনার পছন্দের চ্যাট বার্তা এডিটর বেছে নিন।",
+    "mode-normal": "সাদামাটা পাঠ্য",
+    "mode-markdown": "Markdown টুলবার",
+    "mode-wysiwyg": "রিচ এডিটর"
   },
   "actions": {
     "reset": "রিসেট",

@@ -53,6 +53,8 @@
     "localization-description": "ミーティングの時刻、日付、UI 言語に使用されます。",
     "defaults-title": "ミーティングのデフォルト",
     "defaults-description": "ミーティングを開始または参加したときの動作。",
+    "composer-title": "メッセージ入力欄",
+    "composer-description": "チャットメッセージボックスの動作を選択します。",
     "privacy-title": "プライバシー",
     "privacy-description": "他のユーザーへの表示内容とデータの使用方法を管理します。",
     "loading": "読み込み中…",
@@ -109,6 +111,13 @@
       "amber": "アンバー",
       "teal": "ティール"
     }
+  },
+  "composer": {
+    "mode-title": "エディタースタイル",
+    "mode-description": "好みのチャットメッセージエディターを選択してください。",
+    "mode-normal": "プレーンテキスト",
+    "mode-markdown": "Markdown ツールバー",
+    "mode-wysiwyg": "リッチエディター"
   },
   "actions": {
     "reset": "リセット",

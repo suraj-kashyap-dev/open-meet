@@ -114,7 +114,9 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
                 </span>
               );
             case 'participantCount':
-              return <span className="block text-end tabular-nums">{meeting.participantCount}</span>;
+              return (
+                <span className="block text-end tabular-nums">{meeting.participantCount}</span>
+              );
             case 'durationMinutes':
               return (
                 <span className="block text-end tabular-nums">

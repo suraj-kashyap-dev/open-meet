@@ -31,7 +31,7 @@ import { AttachmentBlock, MessageContent, formatTime } from '@/components/shared
 import { PollCard } from './poll-card';
 import { ReactionBar } from './reaction-bar';
 import { ReactionPicker } from './reaction-picker';
-import { ReadReceipts } from './read-receipts';
+import { MessageTicks } from './message-ticks';
 import { ReplyPreview } from './reply-preview';
 
 interface MessageBubbleProps {
@@ -41,7 +41,6 @@ interface MessageBubbleProps {
   isGroupHead: boolean;
   isGroupTail: boolean;
   showSenderName: boolean;
-  isLastOwn: boolean;
   canPost: boolean;
   members: ConversationMemberDto[];
   currentUserId: string | undefined;
@@ -64,7 +63,6 @@ export function MessageBubble({
   isGroupHead,
   isGroupTail,
   showSenderName,
-  isLastOwn,
   canPost,
   members,
   currentUserId,
@@ -134,7 +132,7 @@ export function MessageBubble({
                   ? (message.sender?.name ?? t('bubble.unknown-user'))
                   : message.sender?.name}
             </span>
-            <time>{formatTime(message.sentAt)}</time>
+            {!isMe ? <time>{formatTime(message.sentAt)}</time> : null}
           </div>
         ) : null}
 
@@ -286,19 +284,22 @@ export function MessageBubble({
           renderActions()
         )}
 
+        {isMe && !deleted ? (
+          <div className="flex items-center gap-1 px-1 text-[10px] leading-none text-muted-foreground">
+            <time>{formatTime(message.sentAt)}</time>
+            <MessageTicks
+              members={members}
+              currentUserId={currentUserId}
+              messageSentAt={message.sentAt}
+            />
+          </div>
+        ) : null}
+
         <ReactionBar
           reactions={message.reactions}
           align={isMe ? 'end' : 'start'}
           onToggle={(emoji, reactedByMe) => onReact(message.id, emoji, reactedByMe)}
         />
-
-        {isMe && isLastOwn && !deleted ? (
-          <ReadReceipts
-            members={members}
-            currentUserId={currentUserId}
-            messageSentAt={message.sentAt}
-          />
-        ) : null}
       </div>
     </li>
   );

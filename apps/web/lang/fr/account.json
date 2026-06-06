@@ -53,6 +53,8 @@
     "localization-description": "Utilisée pour les heures de réunion, les dates et la langue de l'interface.",
     "defaults-title": "Paramètres par défaut des réunions",
     "defaults-description": "Ce qui se passe lorsque vous démarrez ou rejoignez une réunion.",
+    "composer-title": "Compositeur de messages",
+    "composer-description": "Choisissez le comportement de la zone de message du chat.",
     "privacy-title": "Confidentialité",
     "privacy-description": "Contrôlez ce que les autres voient et comment vos données sont utilisées.",
     "loading": "Chargement…",
@@ -109,6 +111,13 @@
       "amber": "Ambre",
       "teal": "Sarcelle"
     }
+  },
+  "composer": {
+    "mode-title": "Style de l'éditeur",
+    "mode-description": "Choisissez l'éditeur de messages de chat que vous préférez.",
+    "mode-normal": "Texte brut",
+    "mode-markdown": "Barre Markdown",
+    "mode-wysiwyg": "Éditeur enrichi"
   },
   "actions": {
     "reset": "Réinitialiser",

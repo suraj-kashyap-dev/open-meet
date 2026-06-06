@@ -113,9 +113,10 @@
     "success": "메시지가 전달됨",
     "error": "메시지를 전달할 수 없습니다"
   },
-  "receipts": {
-    "seen": "읽음",
-    "seen-by": "{count}명이 읽음"
+  "ticks": {
+    "sent": "전송됨",
+    "delivered": "전달됨",
+    "seen": "읽음"
   },
   "typing": {
     "one": "{name}님이 입력 중…",
@@ -130,6 +131,12 @@
     "uploading": "업로드 중… {percent}%",
     "failed": "실패",
     "remove-attachment": "첨부 파일 제거",
+    "md-bold": "굵게",
+    "md-italic": "기울임꼴",
+    "md-code": "코드",
+    "md-link": "링크",
+    "md-list": "목록",
+    "md-quote": "인용",
     "max-attachments": "최대 {max}개의 파일을 첨부할 수 있습니다.",
     "wait-for-uploads": "업로드가 완료될 때까지 기다리세요.",
     "upload-failed": "업로드 실패",

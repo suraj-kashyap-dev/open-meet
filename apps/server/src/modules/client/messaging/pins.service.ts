@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { ApiErrorCode, ChatServerEvent, type PinnedMessageListDto } from '@open-meet/types';
 
-import { ChatBus, conversationRoom } from './chat-bus.service';
+import { ChatBus, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
 import { MessagesRepository } from './messages.repository';
 import { MessagingSerializer } from './messaging.serializer';
@@ -21,20 +21,20 @@ export class PinsService {
   async pin(messageId: string, userId: string): Promise<{ pinned: true }> {
     const conversationId = await this.assertMessageMember(messageId, userId);
     await this.pins.pin(conversationId, messageId, userId);
-    this.broadcast(conversationId, messageId, true);
+    this.broadcast(conversationId, messageId, true, userId);
     return { pinned: true };
   }
 
   async unpin(messageId: string, userId: string): Promise<{ pinned: false }> {
     const conversationId = await this.assertMessageMember(messageId, userId);
-    await this.pins.unpin(conversationId, messageId);
-    this.broadcast(conversationId, messageId, false);
+    await this.pins.unpin(messageId, userId);
+    this.broadcast(conversationId, messageId, false, userId);
     return { pinned: false };
   }
 
   async list(conversationId: string, userId: string): Promise<PinnedMessageListDto> {
     await this.permissions.assertConversationMember(conversationId, userId);
-    const rows = await this.pins.listPinned(conversationId);
+    const rows = await this.pins.listPinned(conversationId, userId);
     const pinnedMessageIds = new Set(rows.map((r) => r.id));
 
     return { items: rows.map((r) => this.serializer.message(r, userId, { pinnedMessageIds })) };
@@ -54,8 +54,13 @@ export class PinsService {
     return meta.conversationId;
   }
 
-  private broadcast(conversationId: string, messageId: string, pinned: boolean): void {
-    this.bus.emit(conversationRoom(conversationId), ChatServerEvent.PIN_UPDATE, {
+  private broadcast(
+    conversationId: string,
+    messageId: string,
+    pinned: boolean,
+    userId: string,
+  ): void {
+    this.bus.emit(userRoom(userId), ChatServerEvent.PIN_UPDATE, {
       conversationId,
       messageId,
       pinned,

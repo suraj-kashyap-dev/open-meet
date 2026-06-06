@@ -145,6 +145,7 @@ export class MessagingSerializer {
         avatar: this.avatar(member.user.avatarKey),
         role: member.role as ConversationMemberRole,
         lastReadAt: member.lastReadAt?.toISOString() ?? null,
+        lastDeliveredAt: member.lastDeliveredAt?.toISOString() ?? null,
         online: snap?.online ?? false,
         status: (snap?.status as PresenceStatus | undefined) ?? null,
         customText: snap?.customText ?? null,

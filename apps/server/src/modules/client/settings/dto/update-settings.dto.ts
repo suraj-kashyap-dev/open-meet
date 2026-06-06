@@ -9,7 +9,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { MeetingDefaultView, ProfileVisibility } from '@open-meet/types';
+import { ComposerMode, MeetingDefaultView, ProfileVisibility } from '@open-meet/types';
 
 const ACCENT_VALUE_PATTERN = /^(indigo|blue|green|purple|rose|amber|teal|#[0-9a-fA-F]{6})$/;
 
@@ -62,6 +62,12 @@ export class AppearanceSettingsInputDto {
   accentColorOverride?: string | null;
 }
 
+export class ComposerPreferencesInputDto {
+  @IsOptional()
+  @IsEnum(ComposerMode)
+  composerMode?: ComposerMode;
+}
+
 export class UpdateUserSettingsBodyDto {
   @ApiProperty({ type: () => MeetingPreferencesInputDto, required: false })
   @IsOptional()
@@ -80,4 +86,10 @@ export class UpdateUserSettingsBodyDto {
   @ValidateNested()
   @Type(() => AppearanceSettingsInputDto)
   appearance?: AppearanceSettingsInputDto;
+
+  @ApiProperty({ type: () => ComposerPreferencesInputDto, required: false })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ComposerPreferencesInputDto)
+  composerPreferences?: ComposerPreferencesInputDto;
 }
