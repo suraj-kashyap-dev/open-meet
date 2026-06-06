@@ -186,9 +186,7 @@ export function MessageList({
     if (!el) return;
 
     pinnedRef.current = isPinned();
-    if (pinnedRef.current) {
-      setShowJump(false);
-    }
+    setShowJump(!pinnedRef.current);
 
     if (el.scrollTop < 80 && hasNextPage && !isFetchingNextPage) {
       restoringRef.current = el.scrollHeight - el.scrollTop;
