@@ -1,6 +1,7 @@
 {
   "eyebrow": "Gérer",
   "title": "Utilisateurs",
+  "subtitle": "Gérez tous ceux qui peuvent se connecter à l’espace de travail.",
   "total-count": "{count, number} au total",
   "search-placeholder": "Rechercher par nom ou e-mail",
   "refreshing": "Actualisation…",

@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Встреча",
+      "started": "Начало",
+      "duration": "Длительность",
+      "participants": "Участники",
+      "activity": "Активность",
+      "status": "Статус"
+    },
+    "actions": {
+      "open": "Открыть"
+    }
+  },
+  "users": {
+    "search": "Поиск по имени или e-mail",
+    "columns": {
+      "name": "Имя",
+      "email": "E-mail",
+      "meetingsHosted": "Проведено",
+      "meetingsAttended": "Посещено",
+      "canCreateGroups": "Может создавать группы",
+      "createdAt": "Дата регистрации",
+      "actions": "Действия"
+    },
+    "actions": {
+      "create": "Новый пользователь",
+      "invite": "Пригласить",
+      "edit": "Редактировать",
+      "toggleChat": "Переключить чат",
+      "delete": "Удалить"
+    }
+  },
+  "meetings": {
+    "search": "Поиск встреч",
+    "columns": {
+      "title": "Название",
+      "host": "Организатор",
+      "participants": "Участники",
+      "messages": "Сообщения",
+      "status": "Статус",
+      "startedAt": "Начало",
+      "actions": "Действия"
+    },
+    "filters": {
+      "status": {
+        "label": "Статус",
+        "WAITING": "Ожидание",
+        "ACTIVE": "Активна",
+        "ENDED": "Завершена"
+      }
+    },
+    "actions": {
+      "view": "Просмотр",
+      "end": "Завершить",
+      "delete": "Удалить",
+      "end-all": "Завершить все"
+    }
+  },
+  "groups": {
+    "search": "Поиск групп",
+    "columns": {
+      "name": "Название",
+      "members": "Участники",
+      "createdAt": "Создано",
+      "actions": "Действия"
+    },
+    "actions": {
+      "create": "Новая группа",
+      "edit": "Редактировать",
+      "delete": "Удалить"
+    }
+  },
+  "administrators": {
+    "search": "Поиск по имени или e-mail",
+    "columns": {
+      "name": "Имя",
+      "email": "E-mail",
+      "role": "Роль",
+      "lastLogin": "Последний вход",
+      "createdAt": "Добавлен",
+      "actions": "Действия"
+    },
+    "actions": {
+      "invite": "Пригласить",
+      "edit": "Редактировать",
+      "delete": "Удалить"
+    }
+  },
+  "roles": {
+    "search": "Поиск ролей",
+    "columns": {
+      "name": "Название",
+      "permissions": "Права",
+      "members": "Участники",
+      "system": "Системная",
+      "actions": "Действия"
+    },
+    "actions": {
+      "create": "Новая роль",
+      "edit": "Редактировать",
+      "delete": "Удалить"
+    }
+  }
+}

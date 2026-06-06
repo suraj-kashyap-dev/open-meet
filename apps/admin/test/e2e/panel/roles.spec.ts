@@ -12,6 +12,7 @@ test.describe('Admin /roles page', () => {
     await expect(page.getByText('Administrator', { exact: true })).toBeVisible();
     await expect(page.getByText('Member', { exact: true })).toBeVisible();
     await expect(page.getByText('Analyst')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Create role' })).toBeVisible();
   });
 
   test('should hide create + delete actions when the admin lacks roles.create/.delete', async ({
@@ -27,7 +28,8 @@ test.describe('Admin /roles page', () => {
     await page.goto('/en/roles');
 
     await expect(page.getByRole('heading', { name: 'Admin roles', exact: true })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Create role' })).toHaveCount(0);
+    await expect(page.getByText('Administrator', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Create role' })).toHaveCount(0);
   });
 
   test('should hide the entire Admin roles nav item when grantedSet excludes roles.view', async ({

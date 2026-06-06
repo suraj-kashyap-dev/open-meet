@@ -19,6 +19,39 @@ describe('AdminRepository', () => {
     repo = new AdminRepository({ admin } as unknown as PrismaService);
   });
 
+  describe('searchWhere()', () => {
+    it('returns an empty object when search is undefined', () => {
+      expect(repo.searchWhere(undefined)).toEqual({});
+    });
+
+    it('returns a case-insensitive OR filter for name and email', () => {
+      const w = repo.searchWhere('alice');
+      expect(w).toEqual({
+        OR: [
+          { name: { contains: 'alice', mode: 'insensitive' } },
+          { email: { contains: 'alice', mode: 'insensitive' } },
+        ],
+      });
+    });
+  });
+
+  describe('listWith()', () => {
+    it('passes skip, take, where, and orderBy to findMany', async () => {
+      const where = { name: { contains: 'alice', mode: 'insensitive' as const } };
+      const orderBy = { name: 'asc' as const };
+      await repo.listWith({ skip: 0, take: 10, where, orderBy });
+      expect(admin.findMany).toHaveBeenCalledWith({ skip: 0, take: 10, where, orderBy });
+    });
+  });
+
+  describe('countWith()', () => {
+    it('passes the where clause to count', async () => {
+      const where = { email: { contains: 'x', mode: 'insensitive' as const } };
+      await repo.countWith(where);
+      expect(admin.count).toHaveBeenCalledWith({ where });
+    });
+  });
+
   describe('findByEmail()', () => {
     it('should lowercase the email before querying', async () => {
       await repo.findByEmail('Admin@X.COM');
@@ -32,15 +65,6 @@ describe('AdminRepository', () => {
       expect(admin.update).toHaveBeenCalledWith({
         where: { id: 'a1' },
         data: { lastLoginAt: expect.any(Date) },
-      });
-    });
-  });
-
-  describe('list()', () => {
-    it('should order by creation date', async () => {
-      await repo.list();
-      expect(admin.findMany).toHaveBeenCalledWith({
-        orderBy: [{ createdAt: 'asc' }],
       });
     });
   });

@@ -2,6 +2,7 @@
   "eyebrow": "Settings",
   "title": "Administrators",
   "access-summary": "{count, plural, one {# person has} other {# people have}} access to this console.",
+  "subtitle": "Manage who has access to this console.",
   "invite-button": "Invite admin",
   "create-button": "Create admin",
   "empty": "No administrators yet.",

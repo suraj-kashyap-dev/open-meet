@@ -1,6 +1,7 @@
 {
   "eyebrow": "Moderate",
   "title": "Meetings",
+  "subtitle": "Monitor live meetings and review past sessions.",
   "total-count": "{count, number} total",
   "end-all": "End all active",
   "search-placeholder": "Search by code, title, host",

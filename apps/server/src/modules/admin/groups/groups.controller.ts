@@ -8,11 +8,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import type { AdminGroupDetailDto, AdminGroupListResponseDto } from '@open-meet/types';
+import type { AdminGroupDetailDto, AdminGroupDto, DatagridResponseDto } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
 
@@ -23,6 +24,7 @@ import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
 import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 
 import { AddGroupMembersBodyDto, CreateGroupBodyDto, UpdateGroupBodyDto } from './dto/group.dto';
+import { AdminGroupsDatagridQueryDto } from './dto/groups-datagrid-query.dto';
 import { AdminGroupsService } from './groups.service';
 
 @ApiTags('admin-groups')
@@ -32,11 +34,13 @@ import { AdminGroupsService } from './groups.service';
 export class AdminGroupsController {
   constructor(private readonly groups: AdminGroupsService) {}
 
-  @Get()
+  @Get('datagrid')
   @RequirePermissions('groups.view')
-  @ApiOperation({ summary: 'List group conversations' })
-  list(): Promise<AdminGroupListResponseDto> {
-    return this.groups.list();
+  @ApiOperation({ summary: 'Server-driven datagrid (schema + rows) for groups' })
+  datagrid(
+    @Query() query: AdminGroupsDatagridQueryDto,
+  ): Promise<DatagridResponseDto<AdminGroupDto>> {
+    return this.groups.datagrid(query);
   }
 
   @Post()

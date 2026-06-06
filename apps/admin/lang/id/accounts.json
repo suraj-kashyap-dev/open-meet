@@ -2,6 +2,7 @@
   "eyebrow": "Pengaturan",
   "title": "Administrator",
   "access-summary": "{count, plural, one {# orang memiliki} other {# orang memiliki}} akses ke konsol ini.",
+  "subtitle": "Kelola siapa yang memiliki akses ke konsol ini.",
   "invite-button": "Undang admin",
   "create-button": "Buat admin",
   "empty": "Belum ada administrator.",

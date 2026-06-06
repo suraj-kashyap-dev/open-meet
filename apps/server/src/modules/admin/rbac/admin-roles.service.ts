@@ -5,21 +5,25 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import type { AdminRoleRecord } from '@prisma/client';
+import type { AdminRoleRecord, Prisma } from '@prisma/client';
 import { I18nContext } from 'nestjs-i18n';
 
 import {
   ApiErrorCode,
   PERMISSION_TREE_ADMIN,
   PermissionType,
+  type DatagridResponseDto,
   type RoleDto,
   type RoleListResponseDto,
   expandToLeaves,
 } from '@open-meet/types';
 
+import { DatagridService, buildOrderBy, paginate } from '../../../common/datagrid';
 import { AdminPermissionResolver } from './admin-permission-resolver.service';
 import { AdminRoleRepository } from './admin-role.repository';
 import type { CreateRoleBodyDto, UpdateRoleBodyDto } from './dto/role.dto';
+import { AdminRolesDatagridQueryDto } from './dto/roles-datagrid-query.dto';
+import { ROLES_DATAGRID } from './roles.datagrid';
 
 const SELF_LOCKOUT_GUARDED_KEYS = ['roles.view', 'roles.update', 'admin-accounts.update'] as const;
 
@@ -28,7 +32,29 @@ export class AdminRolesService {
   constructor(
     private readonly roles: AdminRoleRepository,
     private readonly resolver: AdminPermissionResolver,
+    private readonly grid: DatagridService,
   ) {}
+
+  async datagrid(query: AdminRolesDatagridQueryDto): Promise<DatagridResponseDto<RoleDto>> {
+    const { skip, take } = paginate(query);
+    const search = query.search?.trim() || undefined;
+    const where = this.roles.searchWhere(search);
+    const orderBy = buildOrderBy(
+      ROLES_DATAGRID,
+      query,
+    ) as Prisma.AdminRoleRecordOrderByWithRelationInput;
+
+    const [rows, total] = await Promise.all([
+      this.roles.listWith({ skip, take, where, orderBy }),
+      this.roles.countWith(where),
+    ]);
+
+    return this.grid.build(ROLES_DATAGRID, {
+      rows: rows.map((r) => this.toDto(r, r._count.admins)),
+      total,
+      query,
+    });
+  }
 
   async list(): Promise<RoleListResponseDto> {
     const records = await this.roles.list();

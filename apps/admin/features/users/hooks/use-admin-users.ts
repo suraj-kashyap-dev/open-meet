@@ -39,6 +39,7 @@ export function useCreateAdminUser() {
     mutationFn: (body: AdminCreateUserDto) => adminUsersApi.create(body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
 }
@@ -50,6 +51,7 @@ export function useUpdateAdminUser() {
       adminUsersApi.update(input.id, input.body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
 }
@@ -60,6 +62,7 @@ export function useDeleteAdminUser() {
     mutationFn: (id: string) => adminUsersApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
 }
@@ -71,6 +74,7 @@ export function useUploadAdminUserAvatar() {
       adminUsersApi.uploadAvatar(input.id, input.file),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
 }
@@ -81,6 +85,7 @@ export function useRemoveAdminUserAvatar() {
     mutationFn: (id: string) => adminUsersApi.removeAvatar(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
 }

@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "会议",
+      "started": "开始时间",
+      "duration": "时长",
+      "participants": "参与者",
+      "activity": "动态",
+      "status": "状态"
+    },
+    "actions": {
+      "open": "打开"
+    }
+  },
+  "users": {
+    "search": "按姓名或邮箱搜索",
+    "columns": {
+      "name": "姓名",
+      "email": "邮箱",
+      "meetingsHosted": "主持",
+      "meetingsAttended": "参与",
+      "canCreateGroups": "可创建群组",
+      "createdAt": "加入时间",
+      "actions": "操作"
+    },
+    "actions": {
+      "create": "新建用户",
+      "invite": "邀请",
+      "edit": "编辑",
+      "toggleChat": "切换聊天",
+      "delete": "删除"
+    }
+  },
+  "meetings": {
+    "search": "搜索会议",
+    "columns": {
+      "title": "标题",
+      "host": "主持人",
+      "participants": "参会人数",
+      "messages": "消息",
+      "status": "状态",
+      "startedAt": "开始时间",
+      "actions": "操作"
+    },
+    "filters": {
+      "status": {
+        "label": "状态",
+        "WAITING": "等待中",
+        "ACTIVE": "进行中",
+        "ENDED": "已结束"
+      }
+    },
+    "actions": {
+      "view": "查看",
+      "end": "结束",
+      "delete": "删除",
+      "end-all": "全部结束"
+    }
+  },
+  "groups": {
+    "search": "搜索群组",
+    "columns": {
+      "name": "名称",
+      "members": "成员",
+      "createdAt": "创建时间",
+      "actions": "操作"
+    },
+    "actions": {
+      "create": "新建群组",
+      "edit": "编辑",
+      "delete": "删除"
+    }
+  },
+  "administrators": {
+    "search": "按姓名或邮箱搜索",
+    "columns": {
+      "name": "姓名",
+      "email": "邮箱",
+      "role": "角色",
+      "lastLogin": "最后登录",
+      "createdAt": "添加时间",
+      "actions": "操作"
+    },
+    "actions": {
+      "invite": "邀请",
+      "edit": "编辑",
+      "delete": "删除"
+    }
+  },
+  "roles": {
+    "search": "搜索角色",
+    "columns": {
+      "name": "名称",
+      "permissions": "权限",
+      "members": "成员",
+      "system": "系统",
+      "actions": "操作"
+    },
+    "actions": {
+      "create": "新建角色",
+      "edit": "编辑",
+      "delete": "删除"
+    }
+  }
+}

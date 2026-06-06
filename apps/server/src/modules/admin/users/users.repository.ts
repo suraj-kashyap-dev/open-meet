@@ -34,6 +34,10 @@ export class AdminUsersRepository {
     };
   }
 
+  searchWhere(search?: string): Prisma.UserWhereInput {
+    return this.whereFor(search);
+  }
+
   list({ skip, take, search }: ListParams): Promise<UserWithCounts[]> {
     return this.prisma.user.findMany({
       skip,
@@ -44,8 +48,27 @@ export class AdminUsersRepository {
     });
   }
 
+  listWith(params: {
+    skip: number;
+    take: number;
+    where: Prisma.UserWhereInput;
+    orderBy: Prisma.UserOrderByWithRelationInput;
+  }): Promise<UserWithCounts[]> {
+    return this.prisma.user.findMany({
+      skip: params.skip,
+      take: params.take,
+      where: params.where,
+      orderBy: params.orderBy,
+      include: userInclude,
+    });
+  }
+
   count(search?: string): Promise<number> {
     return this.prisma.user.count({ where: this.whereFor(search) });
+  }
+
+  countWith(where: Prisma.UserWhereInput): Promise<number> {
+    return this.prisma.user.count({ where });
   }
 
   emailTaken(email: string): Promise<User | null> {

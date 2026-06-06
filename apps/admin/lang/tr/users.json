@@ -1,6 +1,7 @@
 {
   "eyebrow": "Yönet",
   "title": "Kullanıcılar",
+  "subtitle": "Çalışma alanında oturum açabilen herkesi yönetin.",
   "total-count": "Toplam {count, number}",
   "search-placeholder": "Ada veya e-postaya göre ara",
   "refreshing": "Yenileniyor…",

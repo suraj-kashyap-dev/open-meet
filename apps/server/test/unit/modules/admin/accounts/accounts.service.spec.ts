@@ -11,6 +11,7 @@ import type { ApiEnv } from '@open-meet/config';
 
 import type { I18nService } from 'nestjs-i18n';
 
+import type { DatagridService } from '@/common/datagrid';
 import type { AdminRepository } from '@/modules/admin/admin.repository';
 import type { AdminInviteRepository } from '@/modules/admin/accounts/admin-invite.repository';
 import { AdminAccountsService } from '@/modules/admin/accounts/accounts.service';
@@ -53,10 +54,23 @@ describe('AdminAccountsService', () => {
   let storage: { publicUrl: ReturnType<typeof vi.fn> };
   let roles: Record<string, ReturnType<typeof vi.fn>>;
   let resolver: { invalidate: ReturnType<typeof vi.fn> };
+  let grid: { build: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     admins = {
-      list: vi.fn().mockResolvedValue([]),
+      searchWhere: vi.fn().mockReturnValue({ _w: true }),
+      listWith: vi.fn().mockResolvedValue([
+        {
+          id: 'a1',
+          email: 'admin@x.com',
+          name: 'Admin',
+          roleRecordId: 'role_sys_member',
+          avatarKey: null,
+          createdAt: new Date('2026-01-01T00:00:00Z'),
+          lastLoginAt: null,
+        },
+      ]),
+      countWith: vi.fn().mockResolvedValue(1),
       findByEmail: vi.fn().mockResolvedValue(null),
       findById: vi.fn().mockResolvedValue(null),
       countByRoleRecord: vi.fn().mockResolvedValue(2),
@@ -133,6 +147,7 @@ describe('AdminAccountsService', () => {
         ),
     };
     resolver = { invalidate: vi.fn() };
+    grid = { build: vi.fn().mockReturnValue({ ok: true }) };
 
     service = new AdminAccountsService(
       admins as unknown as AdminRepository,
@@ -143,7 +158,49 @@ describe('AdminAccountsService', () => {
       storage as unknown as StorageService,
       roles as unknown as AdminRoleRepository,
       resolver as unknown as AdminPermissionResolver,
+      grid as unknown as DatagridService,
     );
+  });
+
+  describe('datagrid()', () => {
+    it('clamps paging, trims search, builds an allow-listed orderBy, and delegates to grid.build', async () => {
+      const res = await service.datagrid({
+        page: 2,
+        pageSize: 5,
+        sort: 'name',
+        dir: 'asc',
+        search: '  alice ',
+      } as never);
+
+      expect(admins.searchWhere).toHaveBeenCalledWith('alice');
+      expect(admins.listWith).toHaveBeenCalledWith({
+        skip: 5,
+        take: 5,
+        where: { _w: true },
+        orderBy: { name: 'asc' },
+      });
+      expect(admins.countWith).toHaveBeenCalledWith({ _w: true });
+
+      const [def, data] = grid.build.mock.calls[0];
+      expect(def.resource).toBe('administrators');
+      expect(data.total).toBe(1);
+      expect(data.rows[0]).toMatchObject({ id: 'a1', email: 'admin@x.com' });
+      expect(res).toEqual({ ok: true });
+    });
+
+    it('ignores a non-sortable column and falls back to the default sort', async () => {
+      await service.datagrid({ sort: 'role' } as never);
+      expect(admins.listWith).toHaveBeenCalledWith(
+        expect.objectContaining({ orderBy: { createdAt: 'desc' } }),
+      );
+    });
+
+    it('resolves the role record for each row and maps it into the dto', async () => {
+      await service.datagrid({} as never);
+
+      const [, data] = grid.build.mock.calls[0];
+      expect(data.rows[0].role).toMatchObject({ id: 'role_sys_member' });
+    });
   });
 
   describe('create()', () => {

@@ -9,3 +9,4 @@ export * from './rbac';
 export * from './recording';
 export * from './config';
 export * from './push';
+export * from './datagrid';

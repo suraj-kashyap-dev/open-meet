@@ -2,6 +2,7 @@
   "eyebrow": "设置",
   "title": "管理员",
   "access-summary": "{count, plural, one {# 人拥有} other {# 人拥有}}此控制台的访问权限。",
+  "subtitle": "管理谁可以访问此控制台。",
   "invite-button": "邀请管理员",
   "create-button": "创建管理员",
   "empty": "暂无管理员。",

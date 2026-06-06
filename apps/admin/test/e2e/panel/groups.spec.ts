@@ -80,7 +80,7 @@ test.describe('Admin groups page', () => {
 
     await page
       .getByRole('row', { name: /Product launch/ })
-      .getByRole('button', { name: 'Manage members' })
+      .getByRole('button', { name: 'Edit' })
       .click();
 
     const dialog = page.getByRole('dialog');
@@ -94,7 +94,7 @@ test.describe('Admin groups page', () => {
 
     await page
       .getByRole('row', { name: /Product launch/ })
-      .getByRole('button', { name: 'Delete group' })
+      .getByRole('button', { name: 'Delete', exact: true })
       .click();
 
     const dialog = page.getByRole('dialog');

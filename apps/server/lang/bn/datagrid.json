@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "মিটিং",
+      "started": "শুরু হয়েছে",
+      "duration": "সময়কাল",
+      "participants": "অংশগ্রহণকারী",
+      "activity": "কার্যক্রম",
+      "status": "অবস্থা"
+    },
+    "actions": {
+      "open": "খুলুন"
+    }
+  },
+  "users": {
+    "search": "নাম বা ইমেইল দিয়ে খুঁজুন",
+    "columns": {
+      "name": "নাম",
+      "email": "ইমেইল",
+      "meetingsHosted": "হোস্ট করা মিটিং",
+      "meetingsAttended": "অংশগ্রহণ করা মিটিং",
+      "canCreateGroups": "গ্রুপ তৈরি করতে পারবেন",
+      "createdAt": "যোগদানের তারিখ",
+      "actions": "পদক্ষেপ"
+    },
+    "actions": {
+      "create": "নতুন ব্যবহারকারী",
+      "invite": "আমন্ত্রণ জানান",
+      "edit": "সম্পাদনা করুন",
+      "toggleChat": "চ্যাট টগল করুন",
+      "delete": "মুছুন"
+    }
+  },
+  "meetings": {
+    "search": "মিটিং খুঁজুন",
+    "columns": {
+      "title": "শিরোনাম",
+      "host": "হোস্ট",
+      "participants": "অংশগ্রহণকারী",
+      "messages": "বার্তা",
+      "status": "অবস্থা",
+      "startedAt": "শুরুর সময়",
+      "actions": "পদক্ষেপ"
+    },
+    "filters": {
+      "status": {
+        "label": "অবস্থা",
+        "WAITING": "অপেক্ষমান",
+        "ACTIVE": "সক্রিয়",
+        "ENDED": "সমাপ্ত"
+      }
+    },
+    "actions": {
+      "view": "দেখুন",
+      "end": "শেষ করুন",
+      "delete": "মুছুন",
+      "end-all": "সব শেষ করুন"
+    }
+  },
+  "groups": {
+    "search": "গ্রুপ খুঁজুন",
+    "columns": {
+      "name": "নাম",
+      "members": "সদস্য",
+      "createdAt": "তৈরির তারিখ",
+      "actions": "পদক্ষেপ"
+    },
+    "actions": {
+      "create": "নতুন গ্রুপ",
+      "edit": "সম্পাদনা করুন",
+      "delete": "মুছুন"
+    }
+  },
+  "administrators": {
+    "search": "নাম বা ইমেইল দিয়ে খুঁজুন",
+    "columns": {
+      "name": "নাম",
+      "email": "ইমেইল",
+      "role": "ভূমিকা",
+      "lastLogin": "সর্বশেষ লগইন",
+      "createdAt": "যোগ করার তারিখ",
+      "actions": "পদক্ষেপ"
+    },
+    "actions": {
+      "invite": "আমন্ত্রণ জানান",
+      "edit": "সম্পাদনা করুন",
+      "delete": "মুছুন"
+    }
+  },
+  "roles": {
+    "search": "ভূমিকা খুঁজুন",
+    "columns": {
+      "name": "নাম",
+      "permissions": "অনুমতিসমূহ",
+      "members": "সদস্য",
+      "system": "সিস্টেম",
+      "actions": "পদক্ষেপ"
+    },
+    "actions": {
+      "create": "নতুন ভূমিকা",
+      "edit": "সম্পাদনা করুন",
+      "delete": "মুছুন"
+    }
+  }
+}

@@ -8,11 +8,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import type { RoleDto, RoleListResponseDto } from '@open-meet/types';
+import type { DatagridResponseDto, RoleDto, RoleListResponseDto } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
 import { CurrentAdmin } from '../auth/decorators/current-admin.decorator';
@@ -22,6 +23,7 @@ import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 import { AdminPermissionsGuard } from './admin-permissions.guard';
 import { AdminRolesService } from './admin-roles.service';
 import { RequirePermissions } from './decorators/require-permissions.decorator';
+import { AdminRolesDatagridQueryDto } from './dto/roles-datagrid-query.dto';
 import { CreateRoleBodyDto, UpdateRoleBodyDto } from './dto/role.dto';
 
 @ApiTags('admin-roles')
@@ -36,6 +38,13 @@ export class AdminRolesController {
   @ApiOperation({ summary: 'List every admin role with member counts' })
   list(): Promise<RoleListResponseDto> {
     return this.roles.list();
+  }
+
+  @Get('datagrid')
+  @RequirePermissions('roles.view')
+  @ApiOperation({ summary: 'Server-driven datagrid (schema + rows) for roles' })
+  datagrid(@Query() query: AdminRolesDatagridQueryDto): Promise<DatagridResponseDto<RoleDto>> {
+    return this.roles.datagrid(query);
   }
 
   @Get(':id')

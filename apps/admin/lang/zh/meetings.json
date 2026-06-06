@@ -1,6 +1,7 @@
 {
   "eyebrow": "管控",
   "title": "会议",
+  "subtitle": "监控实时会议并查看过往会话。",
   "total-count": "共 {count, number} 场",
   "end-all": "结束所有活跃会议",
   "search-placeholder": "按代码、标题、主持人搜索",

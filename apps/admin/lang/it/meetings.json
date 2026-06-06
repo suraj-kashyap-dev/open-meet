@@ -1,6 +1,7 @@
 {
   "eyebrow": "Modera",
   "title": "Riunioni",
+  "subtitle": "Monitora le riunioni in diretta e rivedi le sessioni passate.",
   "total-count": "{count, number} in totale",
   "end-all": "Termina tutte le attive",
   "search-placeholder": "Cerca per codice, titolo, host",

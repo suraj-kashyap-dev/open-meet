@@ -19,6 +19,7 @@ import type { FastifyRequest } from 'fastify';
 import type {
   AdminUserDto,
   AdminUserListResponseDto,
+  DatagridResponseDto,
   UserInviteDto,
   UserInviteListResponseDto,
 } from '@open-meet/types';
@@ -32,6 +33,7 @@ import { type AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
 import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
 import { AdminListUsersQueryDto } from './dto/list-users-query.dto';
+import { AdminUsersDatagridQueryDto } from './dto/users-datagrid-query.dto';
 import { AdminCreateUserBodyDto } from './dto/create-user.dto';
 import { CreateUserInviteBodyDto } from './dto/create-user-invite.dto';
 import { AdminUpdateUserBodyDto } from './dto/update-user.dto';
@@ -53,6 +55,13 @@ export class AdminUsersController {
   @ApiOperation({ summary: 'Paginated list of users with optional search' })
   list(@Query() query: AdminListUsersQueryDto): Promise<AdminUserListResponseDto> {
     return this.users.list(query);
+  }
+
+  @Get('datagrid')
+  @RequirePermissions('users.view')
+  @ApiOperation({ summary: 'Server-driven datagrid (schema + rows) for users' })
+  datagrid(@Query() query: AdminUsersDatagridQueryDto): Promise<DatagridResponseDto<AdminUserDto>> {
+    return this.users.datagrid(query);
   }
 
   @Get('invites')

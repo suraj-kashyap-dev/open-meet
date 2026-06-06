@@ -143,7 +143,7 @@ test.describe('Admin users page', () => {
 
     const toggle = page
       .getByRole('row', { name: /Ada Lovelace/ })
-      .getByRole('switch', { name: 'Toggle chat access' });
+      .getByRole('button', { name: 'Toggle chat' });
     await expect(toggle).toBeVisible();
 
     const [request] = await Promise.all([

@@ -1,6 +1,7 @@
 {
   "eyebrow": "관리",
   "title": "사용자",
+  "subtitle": "워크스페이스에 로그인할 수 있는 모든 사용자를 관리합니다.",
   "total-count": "{count, number} 명 총",
   "search-placeholder": "이름 또는 이메일로 검색",
   "refreshing": "새로 고침 중…",

@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { DatagridService } from '@/common/datagrid';
 import type { StorageService } from '@/storage/storage.service';
 import type { AdminUsersRepository, UserWithCounts } from '@/modules/admin/users/users.repository';
 import { AdminUsersService } from '@/modules/admin/users/users.service';
@@ -37,11 +38,15 @@ describe('AdminUsersService', () => {
     put: ReturnType<typeof vi.fn>;
     delete: ReturnType<typeof vi.fn>;
   };
+  let grid: { build: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     users = {
       list: vi.fn().mockResolvedValue([makeUser()]),
       count: vi.fn().mockResolvedValue(1),
+      searchWhere: vi.fn().mockReturnValue({ _w: true }),
+      listWith: vi.fn().mockResolvedValue([makeUser()]),
+      countWith: vi.fn().mockResolvedValue(1),
       findById: vi.fn().mockResolvedValue(makeUser()),
       emailTaken: vi.fn().mockResolvedValue(null),
       emailTakenByOther: vi.fn().mockResolvedValue(null),
@@ -54,10 +59,46 @@ describe('AdminUsersService', () => {
       put: vi.fn().mockResolvedValue(undefined),
       delete: vi.fn().mockResolvedValue(undefined),
     };
+    grid = { build: vi.fn().mockReturnValue({ ok: true }) };
     service = new AdminUsersService(
       users as unknown as AdminUsersRepository,
       storage as unknown as StorageService,
+      grid as unknown as DatagridService,
     );
+  });
+
+  describe('datagrid()', () => {
+    it('clamps paging, trims search, builds an allow-listed orderBy, and maps rows to the grid', async () => {
+      const res = await service.datagrid({
+        page: 2,
+        pageSize: 10,
+        sort: 'name',
+        dir: 'asc',
+        search: '  jane ',
+      } as never);
+
+      expect(users.searchWhere).toHaveBeenCalledWith('jane');
+      expect(users.listWith).toHaveBeenCalledWith({
+        skip: 10,
+        take: 10,
+        where: { _w: true },
+        orderBy: { name: 'asc' },
+      });
+      expect(users.countWith).toHaveBeenCalledWith({ _w: true });
+
+      const [def, data] = grid.build.mock.calls[0];
+      expect(def.resource).toBe('users');
+      expect(data.total).toBe(1);
+      expect(data.rows[0]).toMatchObject({ meetingsHosted: 2, meetingsAttended: 5 });
+      expect(res).toEqual({ ok: true });
+    });
+
+    it('ignores a non-sortable column and falls back to the default sort', async () => {
+      await service.datagrid({ sort: 'actions' } as never);
+      expect(users.listWith).toHaveBeenCalledWith(
+        expect.objectContaining({ orderBy: { createdAt: 'desc' } }),
+      );
+    });
   });
 
   describe('list()', () => {

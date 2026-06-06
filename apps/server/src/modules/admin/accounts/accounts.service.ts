@@ -10,7 +10,7 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { Admin, AdminInvite, AdminRoleRecord } from '@prisma/client';
+import type { Admin, AdminInvite, AdminRoleRecord, Prisma } from '@prisma/client';
 import * as argon2 from 'argon2';
 
 import { I18nContext, I18nService } from 'nestjs-i18n';
@@ -18,7 +18,6 @@ import { I18nContext, I18nService } from 'nestjs-i18n';
 import type { ApiEnv } from '@open-meet/config';
 import {
   type AdminAccountDto,
-  type AdminAccountListResponseDto,
   type AdminAcceptInviteDto,
   type AdminCreateAccountDto,
   type AdminCreateInviteDto,
@@ -27,9 +26,11 @@ import {
   type AdminInviteLookupDto,
   AdminInviteStatus,
   type AdminUpdateAccountDto,
+  type DatagridResponseDto,
   ApiErrorCode,
 } from '@open-meet/types';
 
+import { DatagridService, buildOrderBy, paginate } from '../../../common/datagrid';
 import { renderEmail } from '../../../integrations/mail/email-layout';
 import { MailService } from '../../../integrations/mail/mail.service';
 import { StorageService } from '../../../storage/storage.service';
@@ -39,6 +40,8 @@ import { AdminPermissionResolver } from '../rbac/admin-permission-resolver.servi
 import { AdminRoleRepository } from '../rbac/admin-role.repository';
 import { SYSTEM_ADMIN_ROLE_ID, SYSTEM_MEMBER_ROLE_ID } from '../rbac/admin-rbac-seed.service';
 import { AdminInviteRepository, type AdminInviteWithInviter } from './admin-invite.repository';
+import { ADMINISTRATORS_DATAGRID } from './accounts.datagrid';
+import { AdminAccountsDatagridQueryDto } from './dto/accounts-datagrid-query.dto';
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -55,6 +58,7 @@ export class AdminAccountsService {
     private readonly storage: StorageService,
     private readonly roles: AdminRoleRepository,
     private readonly resolver: AdminPermissionResolver,
+    private readonly grid: DatagridService,
   ) {}
 
   private get lang(): string {
@@ -65,20 +69,37 @@ export class AdminAccountsService {
     return this.i18n.translate(key, { lang: this.lang, args }) as string;
   }
 
-  async list(): Promise<AdminAccountListResponseDto> {
-    const rows = await this.admins.list();
+  async datagrid(
+    query: AdminAccountsDatagridQueryDto,
+  ): Promise<DatagridResponseDto<AdminAccountDto>> {
+    const { skip, take } = paginate(query);
+    const search = query.search?.trim() || undefined;
+    const where = this.admins.searchWhere(search);
+    const orderBy = buildOrderBy(
+      ADMINISTRATORS_DATAGRID,
+      query,
+    ) as Prisma.AdminOrderByWithRelationInput;
+
+    const [rows, total] = await Promise.all([
+      this.admins.listWith({ skip, take, where, orderBy }),
+      this.admins.countWith(where),
+    ]);
+
     const roleIds = Array.from(
       new Set(rows.map((r) => r.roleRecordId).filter((id): id is string => Boolean(id))),
     );
-    const roles = await Promise.all(roleIds.map((id) => this.roles.findById(id)));
+    const roleList = await Promise.all(roleIds.map((id) => this.roles.findById(id)));
     const byId = new Map(
-      roles.filter((r): r is AdminRoleRecord => Boolean(r)).map((r) => [r.id, r]),
+      roleList.filter((r): r is AdminRoleRecord => Boolean(r)).map((r) => [r.id, r]),
     );
-    return {
-      items: rows.map((a) =>
+
+    return this.grid.build(ADMINISTRATORS_DATAGRID, {
+      rows: rows.map((a) =>
         this.toDto(a, a.roleRecordId ? (byId.get(a.roleRecordId) ?? null) : null),
       ),
-    };
+      total,
+      query,
+    });
   }
 
   async listInvites(): Promise<AdminInviteListResponseDto> {

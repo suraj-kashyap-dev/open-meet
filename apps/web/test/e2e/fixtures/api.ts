@@ -101,6 +101,8 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
           return json(200, ok(upcoming));
         case '/meetings/history':
           return json(200, ok(history));
+        case '/meetings/history/datagrid':
+          return json(200, ok(fixtures.historyDatagrid(history)));
         case '/messaging/conversations':
           return json(200, ok(conversations));
         case '/messaging/teammates':

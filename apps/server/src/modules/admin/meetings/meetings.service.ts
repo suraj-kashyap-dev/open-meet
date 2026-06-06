@@ -1,23 +1,22 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { MeetingStatus } from '@prisma/client';
+import { type Prisma, MeetingStatus } from '@prisma/client';
 
 import type {
   AdminMeetingDetailDto,
   AdminMeetingDto,
-  AdminMeetingListQuery,
-  AdminMeetingListResponseDto,
   AdminMeetingParticipantDto,
   AdminBulkEndResponseDto,
+  DatagridResponseDto,
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
+import { DatagridService, buildOrderBy, paginate } from '../../../common/datagrid';
 import { LiveKitService } from '../../../integrations/livekit/livekit.service';
 import { StorageService } from '../../../storage/storage.service';
 
 import { AdminMeetingsRepository } from './meetings.repository';
-
-const DEFAULT_PAGE_SIZE = 20;
-const MAX_PAGE_SIZE = 100;
+import { AdminMeetingsDatagridQueryDto } from './dto/meetings-datagrid-query.dto';
+import { MEETINGS_DATAGRID } from './meetings.datagrid';
 
 interface MeetingRow {
   id: string;
@@ -40,36 +39,31 @@ export class AdminMeetingsService {
     private readonly meetings: AdminMeetingsRepository,
     private readonly livekit: LiveKitService,
     private readonly storage: StorageService,
+    private readonly grid: DatagridService,
   ) {}
 
-  async list(query: AdminMeetingListQuery): Promise<AdminMeetingListResponseDto> {
-    const page = Math.max(1, query.page ?? 1);
-    const pageSize = Math.min(MAX_PAGE_SIZE, Math.max(1, query.pageSize ?? DEFAULT_PAGE_SIZE));
+  async datagrid(
+    query: AdminMeetingsDatagridQueryDto,
+  ): Promise<DatagridResponseDto<AdminMeetingDto>> {
+    const { skip, take } = paginate(query);
     const search = query.search?.trim() || undefined;
-    const status = query.status as MeetingStatus | undefined;
+    const status = query.status ? (query.status as MeetingStatus) : undefined;
+    const where = this.meetings.searchWhere(search, status);
+    const orderBy = buildOrderBy(
+      MEETINGS_DATAGRID,
+      query,
+    ) as Prisma.MeetingOrderByWithRelationInput;
 
     const [rows, total] = await Promise.all([
-      this.meetings.list({
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-        search,
-        status,
-      }),
-      this.meetings.count({ search, status }),
+      this.meetings.listWith({ skip, take, where, orderBy }),
+      this.meetings.countWith(where),
     ]);
 
-    const items = await Promise.all(
-      rows.map(async (row) => {
-        const activeParticipants =
-          row.status === MeetingStatus.ACTIVE
-            ? await this.meetings.countActiveParticipants(row.id)
-            : 0;
-
-        return this.toDto(row, activeParticipants);
-      }),
-    );
-
-    return { items, total, page, pageSize };
+    return this.grid.build(MEETINGS_DATAGRID, {
+      rows: rows.map((row) => this.toDto(row, 0)),
+      total,
+      query,
+    });
   }
 
   async getById(id: string): Promise<AdminMeetingDetailDto> {

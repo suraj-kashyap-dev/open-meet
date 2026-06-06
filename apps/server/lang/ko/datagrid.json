@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "회의",
+      "started": "시작",
+      "duration": "지속 시간",
+      "participants": "참여자",
+      "activity": "활동",
+      "status": "상태"
+    },
+    "actions": {
+      "open": "열기"
+    }
+  },
+  "users": {
+    "search": "이름 또는 이메일로 검색",
+    "columns": {
+      "name": "이름",
+      "email": "이메일",
+      "meetingsHosted": "주최",
+      "meetingsAttended": "참가",
+      "canCreateGroups": "그룹 생성 가능",
+      "createdAt": "가입일",
+      "actions": "작업"
+    },
+    "actions": {
+      "create": "새 사용자",
+      "invite": "초대",
+      "edit": "편집",
+      "toggleChat": "채팅 토글",
+      "delete": "삭제"
+    }
+  },
+  "meetings": {
+    "search": "회의 검색",
+    "columns": {
+      "title": "제목",
+      "host": "호스트",
+      "participants": "참가자",
+      "messages": "메시지",
+      "status": "상태",
+      "startedAt": "시작일시",
+      "actions": "작업"
+    },
+    "filters": {
+      "status": {
+        "label": "상태",
+        "WAITING": "대기 중",
+        "ACTIVE": "진행 중",
+        "ENDED": "종료됨"
+      }
+    },
+    "actions": {
+      "view": "보기",
+      "end": "종료",
+      "delete": "삭제",
+      "end-all": "모두 종료"
+    }
+  },
+  "groups": {
+    "search": "그룹 검색",
+    "columns": {
+      "name": "이름",
+      "members": "멤버",
+      "createdAt": "생성일",
+      "actions": "작업"
+    },
+    "actions": {
+      "create": "새 그룹",
+      "edit": "편집",
+      "delete": "삭제"
+    }
+  },
+  "administrators": {
+    "search": "이름 또는 이메일로 검색",
+    "columns": {
+      "name": "이름",
+      "email": "이메일",
+      "role": "역할",
+      "lastLogin": "최근 로그인",
+      "createdAt": "추가일",
+      "actions": "작업"
+    },
+    "actions": {
+      "invite": "초대",
+      "edit": "편집",
+      "delete": "삭제"
+    }
+  },
+  "roles": {
+    "search": "역할 검색",
+    "columns": {
+      "name": "이름",
+      "permissions": "권한",
+      "members": "멤버",
+      "system": "시스템",
+      "actions": "작업"
+    },
+    "actions": {
+      "create": "새 역할",
+      "edit": "편집",
+      "delete": "삭제"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Meeting",
+      "started": "Started",
+      "duration": "Duration",
+      "participants": "Participants",
+      "activity": "Activity",
+      "status": "Status"
+    },
+    "actions": {
+      "open": "Open"
+    }
+  },
+  "users": {
+    "search": "Search by name or email",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "meetingsHosted": "Hosted",
+      "meetingsAttended": "Attended",
+      "canCreateGroups": "Can create groups",
+      "createdAt": "Joined",
+      "actions": "Actions"
+    },
+    "actions": {
+      "create": "New user",
+      "invite": "Invite",
+      "edit": "Edit",
+      "toggleChat": "Toggle chat",
+      "delete": "Delete"
+    }
+  },
+  "meetings": {
+    "search": "Search meetings",
+    "columns": {
+      "title": "Title",
+      "host": "Host",
+      "participants": "Participants",
+      "messages": "Messages",
+      "status": "Status",
+      "startedAt": "Started",
+      "actions": "Actions"
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "WAITING": "Waiting",
+        "ACTIVE": "Active",
+        "ENDED": "Ended"
+      }
+    },
+    "actions": {
+      "view": "View",
+      "end": "End",
+      "delete": "Delete",
+      "end-all": "End all"
+    }
+  },
+  "groups": {
+    "search": "Search groups",
+    "columns": {
+      "name": "Name",
+      "members": "Members",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "actions": {
+      "create": "New group",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "administrators": {
+    "search": "Search by name or email",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "lastLogin": "Last login",
+      "createdAt": "Added",
+      "actions": "Actions"
+    },
+    "actions": {
+      "invite": "Invite",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "roles": {
+    "search": "Search roles",
+    "columns": {
+      "name": "Name",
+      "permissions": "Permissions",
+      "members": "Members",
+      "system": "System",
+      "actions": "Actions"
+    },
+    "actions": {
+      "create": "New role",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  }
+}

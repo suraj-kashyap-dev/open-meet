@@ -81,11 +81,14 @@ export function MessageList({
   }, [messages, currentUserId]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLUListElement>(null);
   const pinnedRef = useRef(true);
   const restoringRef = useRef<number | null>(null);
   const lastMarkedRef = useRef<string | null>(null);
   const highlightNonceRef = useRef(0);
   const handledJumpRef = useRef<string | null>(null);
+  const pendingJumpRef = useRef<string | null>(null);
+  const lastSeenIdRef = useRef<string | null>(null);
   const [showJump, setShowJump] = useState(false);
   const [pendingJumpId, setPendingJumpId] = useState<string | null>(null);
   const [highlighted, setHighlighted] = useState<{ id: string; nonce: number } | null>(null);
@@ -95,6 +98,16 @@ export function MessageList({
     if (!el) return true;
     return el.scrollHeight - el.scrollTop - el.clientHeight < 64;
   }, []);
+
+  const targetMessageIdRef = useRef(targetMessageId);
+  targetMessageIdRef.current = targetMessageId;
+
+  useLayoutEffect(() => {
+    pinnedRef.current = !targetMessageIdRef.current;
+    restoringRef.current = null;
+    lastSeenIdRef.current = null;
+    setShowJump(false);
+  }, [conversationId]);
 
   useLayoutEffect(() => {
     const el = scrollRef.current;
@@ -113,6 +126,53 @@ export function MessageList({
       setShowJump(true);
     }
   }, [messages.length]);
+
+  useLayoutEffect(() => {
+    const last = messages[messages.length - 1];
+    
+    if (!last) {
+      return;
+    }
+
+    const lastKey = last.clientNonce ?? last.id;
+    const isNew = lastSeenIdRef.current !== null && lastKey !== lastSeenIdRef.current;
+
+    lastSeenIdRef.current = lastKey;
+
+    if (isNew && last.sender?.id === currentUserId) {
+      const el = scrollRef.current;
+    
+      pinnedRef.current = true;
+    
+      if (el) {
+        el.scrollTop = el.scrollHeight;
+      }
+    
+      setShowJump(false);
+    }
+  }, [messages, currentUserId]);
+
+  useEffect(() => {
+    pendingJumpRef.current = pendingJumpId;
+  }, [pendingJumpId]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    
+    const content = contentRef.current;
+    
+    if (!el || !content) {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      if (pinnedRef.current && restoringRef.current === null && !pendingJumpRef.current) {
+        el.scrollTop = el.scrollHeight;
+      }
+    });
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [conversationId, rows.length === 0]);
 
   const markReadMutate = markRead.mutate;
 
@@ -155,6 +215,7 @@ export function MessageList({
     }
 
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    pinnedRef.current = false;
     highlightNonceRef.current += 1;
     setHighlighted({ id, nonce: highlightNonceRef.current });
     return true;
@@ -253,7 +314,7 @@ export function MessageList({
               {t('view.no-messages')}
             </div>
           ) : (
-            <ul className="space-y-1">
+            <ul ref={contentRef} className="space-y-1">
               {rows.map((row) => (
                 <MessageBubble
                   key={

@@ -13,20 +13,13 @@ import { adminAccountsApi } from '@/features/accounts/services/accounts';
 const KEY = 'admin-accounts' as const;
 const INVITES_KEY = 'admin-invites' as const;
 
-export function useAdminAccounts() {
-  return useQuery({
-    queryKey: [KEY],
-    queryFn: ({ signal }) => adminAccountsApi.list(signal),
-    staleTime: 30_000,
-  });
-}
-
 export function useCreateAdminAccount() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (dto: AdminCreateAccountDto) => adminAccountsApi.create(dto),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'accounts'] });
       void qc.invalidateQueries({ queryKey: [INVITES_KEY] });
     },
   });
@@ -39,6 +32,7 @@ export function useUpdateAdminAccount() {
       adminAccountsApi.update(id, dto),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'accounts'] });
     },
   });
 }
@@ -49,6 +43,7 @@ export function useDeleteAdminAccount() {
     mutationFn: (id: string) => adminAccountsApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [KEY] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'accounts'] });
     },
   });
 }

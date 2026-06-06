@@ -1,6 +1,7 @@
 {
   "eyebrow": "प्रबंधन",
   "title": "उपयोगकर्ता",
+  "subtitle": "वर्कस्पेस में साइन इन करने वाले सभी लोगों को प्रबंधित करें।",
   "total-count": "कुल {count, number}",
   "search-placeholder": "नाम या ईमेल से खोजें",
   "refreshing": "रिफ्रेश हो रहा है…",

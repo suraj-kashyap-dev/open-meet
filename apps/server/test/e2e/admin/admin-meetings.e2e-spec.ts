@@ -73,24 +73,25 @@ describe('Admin meetings (e2e)', () => {
     return { meetingId: meeting.id, hostId: host!.id, guestId: guest!.id, code };
   }
 
-  describe('GET /api/admin/meetings', () => {
+  describe('GET /api/admin/meetings/datagrid', () => {
     it('should require an admin session', async () => {
-      const res = await http(app).get('/api/admin/meetings');
+      const res = await http(app).get('/api/admin/meetings/datagrid');
       expect(res.status).toBe(401);
     });
 
-    it('should return a paginated list of meetings', async () => {
+    it('should return the datagrid schema and rows', async () => {
       await seedMeeting({ code: 'list-mtg-001' });
       const { cookie } = await loginAdmin(app, SUPER);
 
-      const res = await http(app).get('/api/admin/meetings').set('Cookie', cookie);
+      const res = await http(app).get('/api/admin/meetings/datagrid').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.data.total).toBe(1);
-      expect(res.body.data.items).toHaveLength(1);
-      expect(res.body.data.items[0].code).toBe('list-mtg-001');
-      expect(res.body.data.items[0].participantCount).toBe(2);
+      expect(res.body.data.resource).toBe('meetings');
+      expect(Array.isArray(res.body.data.columns)).toBe(true);
+      expect(res.body.data.pagination.total).toBe(1);
+      expect(res.body.data.rows).toHaveLength(1);
+      expect(res.body.data.rows[0].code).toBe('list-mtg-001');
     });
   });
 

@@ -49,13 +49,13 @@ describe('Admin groups (e2e)', () => {
     return { a: a!.id, b: b!.id };
   }
 
-  describe('GET /api/admin/groups', () => {
+  describe('GET /api/admin/groups/datagrid', () => {
     it('should require an admin session', async () => {
-      const res = await http(app).get('/api/admin/groups');
+      const res = await http(app).get('/api/admin/groups/datagrid');
       expect(res.status).toBe(401);
     });
 
-    it('should list groups for a superadmin', async () => {
+    it('should return the datagrid schema and rows for a superadmin', async () => {
       const { a, b } = await seedTwoUsers();
       const { cookie } = await loginAdmin(app, SUPER);
 
@@ -64,13 +64,15 @@ describe('Admin groups (e2e)', () => {
         .set('Cookie', cookie)
         .send({ title: 'Listed Group', memberIds: [a, b] });
 
-      const res = await http(app).get('/api/admin/groups').set('Cookie', cookie);
+      const res = await http(app).get('/api/admin/groups/datagrid').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(res.body.data.items).toHaveLength(1);
-      expect(res.body.data.items[0].title).toBe('Listed Group');
-      expect(res.body.data.items[0].memberCount).toBe(2);
+      expect(res.body.data.resource).toBe('groups');
+      expect(res.body.data.pagination.total).toBe(1);
+      expect(res.body.data.rows).toHaveLength(1);
+      expect(res.body.data.rows[0].title).toBe('Listed Group');
+      expect(res.body.data.rows[0].memberCount).toBe(2);
     });
   });
 

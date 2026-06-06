@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Rapat",
+      "started": "Dimulai",
+      "duration": "Durasi",
+      "participants": "Peserta",
+      "activity": "Aktivitas",
+      "status": "Status"
+    },
+    "actions": {
+      "open": "Buka"
+    }
+  },
+  "users": {
+    "search": "Cari berdasarkan nama atau email",
+    "columns": {
+      "name": "Nama",
+      "email": "Email",
+      "meetingsHosted": "Diselenggarakan",
+      "meetingsAttended": "Dihadiri",
+      "canCreateGroups": "Dapat membuat grup",
+      "createdAt": "Bergabung",
+      "actions": "Tindakan"
+    },
+    "actions": {
+      "create": "Pengguna baru",
+      "invite": "Undang",
+      "edit": "Ubah",
+      "toggleChat": "Aktifkan/nonaktifkan obrolan",
+      "delete": "Hapus"
+    }
+  },
+  "meetings": {
+    "search": "Cari rapat",
+    "columns": {
+      "title": "Judul",
+      "host": "Penyelenggara",
+      "participants": "Peserta",
+      "messages": "Pesan",
+      "status": "Status",
+      "startedAt": "Dimulai",
+      "actions": "Tindakan"
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "WAITING": "Menunggu",
+        "ACTIVE": "Aktif",
+        "ENDED": "Berakhir"
+      }
+    },
+    "actions": {
+      "view": "Lihat",
+      "end": "Akhiri",
+      "delete": "Hapus",
+      "end-all": "Akhiri semua"
+    }
+  },
+  "groups": {
+    "search": "Cari grup",
+    "columns": {
+      "name": "Nama",
+      "members": "Anggota",
+      "createdAt": "Dibuat",
+      "actions": "Tindakan"
+    },
+    "actions": {
+      "create": "Grup baru",
+      "edit": "Ubah",
+      "delete": "Hapus"
+    }
+  },
+  "administrators": {
+    "search": "Cari berdasarkan nama atau email",
+    "columns": {
+      "name": "Nama",
+      "email": "Email",
+      "role": "Peran",
+      "lastLogin": "Login terakhir",
+      "createdAt": "Ditambahkan",
+      "actions": "Tindakan"
+    },
+    "actions": {
+      "invite": "Undang",
+      "edit": "Ubah",
+      "delete": "Hapus"
+    }
+  },
+  "roles": {
+    "search": "Cari peran",
+    "columns": {
+      "name": "Nama",
+      "permissions": "Izin",
+      "members": "Anggota",
+      "system": "Sistem",
+      "actions": "Tindakan"
+    },
+    "actions": {
+      "create": "Peran baru",
+      "edit": "Ubah",
+      "delete": "Hapus"
+    }
+  }
+}

@@ -1,11 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import type { Admin } from '@prisma/client';
+import type { Admin, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
 export class AdminRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  searchWhere(search?: string): Prisma.AdminWhereInput {
+    if (!search) return {};
+    return {
+      OR: [
+        { name: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+      ],
+    };
+  }
+
+  listWith(params: {
+    skip: number;
+    take: number;
+    where: Prisma.AdminWhereInput;
+    orderBy: Prisma.AdminOrderByWithRelationInput;
+  }): Promise<Admin[]> {
+    return this.prisma.admin.findMany({
+      skip: params.skip,
+      take: params.take,
+      where: params.where,
+      orderBy: params.orderBy,
+    });
+  }
+
+  countWith(where: Prisma.AdminWhereInput): Promise<number> {
+    return this.prisma.admin.count({ where });
+  }
 
   findByEmail(email: string): Promise<Admin | null> {
     return this.prisma.admin.findUnique({ where: { email: email.toLowerCase() } });
@@ -20,10 +48,6 @@ export class AdminRepository {
       where: { id },
       data: { lastLoginAt: new Date() },
     });
-  }
-
-  list(): Promise<Admin[]> {
-    return this.prisma.admin.findMany({ orderBy: [{ createdAt: 'asc' }] });
   }
 
   create(data: {

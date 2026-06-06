@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Toplantı",
+      "started": "Başladı",
+      "duration": "Süre",
+      "participants": "Katılımcılar",
+      "activity": "Aktivite",
+      "status": "Durum"
+    },
+    "actions": {
+      "open": "Aç"
+    }
+  },
+  "users": {
+    "search": "Ad veya e-posta ile ara",
+    "columns": {
+      "name": "Ad",
+      "email": "E-posta",
+      "meetingsHosted": "Düzenlenen",
+      "meetingsAttended": "Katılınan",
+      "canCreateGroups": "Grup oluşturabilir",
+      "createdAt": "Katılım tarihi",
+      "actions": "İşlemler"
+    },
+    "actions": {
+      "create": "Yeni kullanıcı",
+      "invite": "Davet et",
+      "edit": "Düzenle",
+      "toggleChat": "Sohbeti aç/kapat",
+      "delete": "Sil"
+    }
+  },
+  "meetings": {
+    "search": "Toplantı ara",
+    "columns": {
+      "title": "Başlık",
+      "host": "Ev sahibi",
+      "participants": "Katılımcılar",
+      "messages": "Mesajlar",
+      "status": "Durum",
+      "startedAt": "Başlangıç",
+      "actions": "İşlemler"
+    },
+    "filters": {
+      "status": {
+        "label": "Durum",
+        "WAITING": "Bekliyor",
+        "ACTIVE": "Aktif",
+        "ENDED": "Sona erdi"
+      }
+    },
+    "actions": {
+      "view": "Görüntüle",
+      "end": "Sonlandır",
+      "delete": "Sil",
+      "end-all": "Tümünü sonlandır"
+    }
+  },
+  "groups": {
+    "search": "Grup ara",
+    "columns": {
+      "name": "Ad",
+      "members": "Üyeler",
+      "createdAt": "Oluşturulma tarihi",
+      "actions": "İşlemler"
+    },
+    "actions": {
+      "create": "Yeni grup",
+      "edit": "Düzenle",
+      "delete": "Sil"
+    }
+  },
+  "administrators": {
+    "search": "Ad veya e-posta ile ara",
+    "columns": {
+      "name": "Ad",
+      "email": "E-posta",
+      "role": "Rol",
+      "lastLogin": "Son giriş",
+      "createdAt": "Eklenme tarihi",
+      "actions": "İşlemler"
+    },
+    "actions": {
+      "invite": "Davet et",
+      "edit": "Düzenle",
+      "delete": "Sil"
+    }
+  },
+  "roles": {
+    "search": "Rol ara",
+    "columns": {
+      "name": "Ad",
+      "permissions": "İzinler",
+      "members": "Üyeler",
+      "system": "Sistem",
+      "actions": "İşlemler"
+    },
+    "actions": {
+      "create": "Yeni rol",
+      "edit": "Düzenle",
+      "delete": "Sil"
+    }
+  }
+}

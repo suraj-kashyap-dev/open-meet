@@ -1,6 +1,7 @@
 {
   "eyebrow": "モデレート",
   "title": "ミーティング",
+  "subtitle": "ライブ会議を監視し、過去のセッションを確認します。",
   "total-count": "{count, number} 件",
   "end-all": "アクティブをすべて終了",
   "search-placeholder": "コード、タイトル、ホストで検索",

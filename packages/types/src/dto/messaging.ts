@@ -284,10 +284,6 @@ export interface AdminGroupDetailDto extends AdminGroupDto {
   members: AdminGroupMemberDto[];
 }
 
-export interface AdminGroupListResponseDto {
-  items: AdminGroupDto[];
-}
-
 export interface AdminCreateGroupDto {
   title: string;
   memberIds: string[];

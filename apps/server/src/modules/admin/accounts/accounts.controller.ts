@@ -8,15 +8,16 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type {
   AdminAccountDto,
-  AdminAccountListResponseDto,
   AdminInviteDto,
   AdminInviteListResponseDto,
+  DatagridResponseDto,
 } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
@@ -30,6 +31,7 @@ import { RequirePermissions } from '../rbac/decorators/require-permissions.decor
 import { AssignRoleBodyDto } from '../rbac/dto/role.dto';
 
 import { AdminAccountsService } from './accounts.service';
+import { AdminAccountsDatagridQueryDto } from './dto/accounts-datagrid-query.dto';
 import { CreateAdminAccountDto } from './dto/create-account.dto';
 import { CreateAdminInviteDto } from './dto/create-invite.dto';
 import { UpdateAdminAccountDto } from './dto/update-account.dto';
@@ -41,11 +43,13 @@ import { UpdateAdminAccountDto } from './dto/update-account.dto';
 export class AdminAccountsController {
   constructor(private readonly accounts: AdminAccountsService) {}
 
-  @Get()
+  @Get('datagrid')
   @RequirePermissions('admin-accounts.view')
-  @ApiOperation({ summary: 'List every admin account' })
-  list(): Promise<AdminAccountListResponseDto> {
-    return this.accounts.list();
+  @ApiOperation({ summary: 'Server-driven datagrid (schema + rows) for administrators' })
+  datagrid(
+    @Query() q: AdminAccountsDatagridQueryDto,
+  ): Promise<DatagridResponseDto<AdminAccountDto>> {
+    return this.accounts.datagrid(q);
   }
 
   @Post()

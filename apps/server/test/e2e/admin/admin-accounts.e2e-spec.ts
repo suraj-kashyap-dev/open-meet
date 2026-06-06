@@ -68,9 +68,9 @@ describe('Admin accounts & invites (e2e)', () => {
       expect(res.body.data.email).toBe('direct@example.com');
       expect(res.body.data.role?.id).toBe('role_sys_member');
 
-      const list = await http(app).get('/api/admin/accounts').set('Cookie', cookie);
+      const list = await http(app).get('/api/admin/accounts/datagrid').set('Cookie', cookie);
       expect(
-        list.body.data.items.some((a: { email: string }) => a.email === 'direct@example.com'),
+        list.body.data.rows.some((a: { email: string }) => a.email === 'direct@example.com'),
       ).toBe(true);
 
       const { res: loginRes } = await loginAdmin(app, {

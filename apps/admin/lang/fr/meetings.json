@@ -1,6 +1,7 @@
 {
   "eyebrow": "Modérer",
   "title": "Réunions",
+  "subtitle": "Surveillez les réunions en direct et consultez les sessions passées.",
   "total-count": "{count, number} au total",
   "end-all": "Terminer toutes les actives",
   "search-placeholder": "Rechercher par code, titre, hôte",

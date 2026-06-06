@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "ミーティング",
+      "started": "開始日時",
+      "duration": "所要時間",
+      "participants": "参加者",
+      "activity": "アクティビティ",
+      "status": "ステータス"
+    },
+    "actions": {
+      "open": "開く"
+    }
+  },
+  "users": {
+    "search": "名前またはメールで検索",
+    "columns": {
+      "name": "名前",
+      "email": "メール",
+      "meetingsHosted": "主催",
+      "meetingsAttended": "参加",
+      "canCreateGroups": "グループ作成可",
+      "createdAt": "登録日",
+      "actions": "操作"
+    },
+    "actions": {
+      "create": "新規ユーザー",
+      "invite": "招待",
+      "edit": "編集",
+      "toggleChat": "チャット切替",
+      "delete": "削除"
+    }
+  },
+  "meetings": {
+    "search": "ミーティングを検索",
+    "columns": {
+      "title": "タイトル",
+      "host": "ホスト",
+      "participants": "参加者",
+      "messages": "メッセージ",
+      "status": "ステータス",
+      "startedAt": "開始日時",
+      "actions": "操作"
+    },
+    "filters": {
+      "status": {
+        "label": "ステータス",
+        "WAITING": "待機中",
+        "ACTIVE": "進行中",
+        "ENDED": "終了"
+      }
+    },
+    "actions": {
+      "view": "表示",
+      "end": "終了",
+      "delete": "削除",
+      "end-all": "すべて終了"
+    }
+  },
+  "groups": {
+    "search": "グループを検索",
+    "columns": {
+      "name": "名前",
+      "members": "メンバー",
+      "createdAt": "作成日",
+      "actions": "操作"
+    },
+    "actions": {
+      "create": "新規グループ",
+      "edit": "編集",
+      "delete": "削除"
+    }
+  },
+  "administrators": {
+    "search": "名前またはメールで検索",
+    "columns": {
+      "name": "名前",
+      "email": "メール",
+      "role": "ロール",
+      "lastLogin": "最終ログイン",
+      "createdAt": "追加日",
+      "actions": "操作"
+    },
+    "actions": {
+      "invite": "招待",
+      "edit": "編集",
+      "delete": "削除"
+    }
+  },
+  "roles": {
+    "search": "ロールを検索",
+    "columns": {
+      "name": "名前",
+      "permissions": "権限",
+      "members": "メンバー",
+      "system": "システム",
+      "actions": "操作"
+    },
+    "actions": {
+      "create": "新規ロール",
+      "edit": "編集",
+      "delete": "削除"
+    }
+  }
+}

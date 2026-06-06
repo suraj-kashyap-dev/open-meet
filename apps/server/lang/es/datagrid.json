@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Reunión",
+      "started": "Iniciada",
+      "duration": "Duración",
+      "participants": "Participantes",
+      "activity": "Actividad",
+      "status": "Estado"
+    },
+    "actions": {
+      "open": "Abrir"
+    }
+  },
+  "users": {
+    "search": "Buscar por nombre o correo",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "meetingsHosted": "Organizadas",
+      "meetingsAttended": "Asistidas",
+      "canCreateGroups": "Puede crear grupos",
+      "createdAt": "Registro",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "create": "Nuevo usuario",
+      "invite": "Invitar",
+      "edit": "Editar",
+      "toggleChat": "Alternar chat",
+      "delete": "Eliminar"
+    }
+  },
+  "meetings": {
+    "search": "Buscar reuniones",
+    "columns": {
+      "title": "Título",
+      "host": "Anfitrión",
+      "participants": "Participantes",
+      "messages": "Mensajes",
+      "status": "Estado",
+      "startedAt": "Iniciada",
+      "actions": "Acciones"
+    },
+    "filters": {
+      "status": {
+        "label": "Estado",
+        "WAITING": "En espera",
+        "ACTIVE": "Activa",
+        "ENDED": "Finalizada"
+      }
+    },
+    "actions": {
+      "view": "Ver",
+      "end": "Finalizar",
+      "delete": "Eliminar",
+      "end-all": "Finalizar todas"
+    }
+  },
+  "groups": {
+    "search": "Buscar grupos",
+    "columns": {
+      "name": "Nombre",
+      "members": "Miembros",
+      "createdAt": "Creado",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "create": "Nuevo grupo",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  },
+  "administrators": {
+    "search": "Buscar por nombre o correo",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "role": "Rol",
+      "lastLogin": "Último acceso",
+      "createdAt": "Agregado",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "invite": "Invitar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  },
+  "roles": {
+    "search": "Buscar roles",
+    "columns": {
+      "name": "Nombre",
+      "permissions": "Permisos",
+      "members": "Miembros",
+      "system": "Sistema",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "create": "Nuevo rol",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  }
+}

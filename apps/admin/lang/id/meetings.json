@@ -1,6 +1,7 @@
 {
   "eyebrow": "Moderasi",
   "title": "Rapat",
+  "subtitle": "Pantau rapat langsung dan tinjau sesi sebelumnya.",
   "total-count": "{count, number} total",
   "end-all": "Akhiri semua yang aktif",
   "search-placeholder": "Cari berdasarkan kode, judul, host",

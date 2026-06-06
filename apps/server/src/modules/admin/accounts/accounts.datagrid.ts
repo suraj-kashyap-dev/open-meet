@@ -1,0 +1,81 @@
+import type { DatagridDefinition } from '../../../common/datagrid';
+
+export const ADMINISTRATORS_DATAGRID: DatagridDefinition = {
+  resource: 'administrators',
+  searchable: true,
+  searchPlaceholderKey: 'datagrid.administrators.search',
+  defaultSort: { key: 'createdAt', dir: 'desc' },
+  columns: [
+    {
+      key: 'name',
+      labelKey: 'datagrid.administrators.columns.name',
+      type: 'text',
+      sortable: true,
+      sortField: 'name',
+    },
+    {
+      key: 'email',
+      labelKey: 'datagrid.administrators.columns.email',
+      type: 'text',
+      sortable: true,
+      sortField: 'email',
+    },
+    {
+      key: 'roleName',
+      field: 'role.name',
+      labelKey: 'datagrid.administrators.columns.role',
+      type: 'text',
+      sortable: false,
+    },
+    {
+      key: 'lastLogin',
+      field: 'lastLoginAt',
+      labelKey: 'datagrid.administrators.columns.lastLogin',
+      type: 'datetime',
+      sortable: true,
+      sortField: 'lastLoginAt',
+      hideBelow: 'md',
+    },
+    {
+      key: 'createdAt',
+      labelKey: 'datagrid.administrators.columns.createdAt',
+      type: 'datetime',
+      sortable: true,
+      sortField: 'createdAt',
+      hideBelow: 'sm',
+    },
+    {
+      key: 'actions',
+      labelKey: 'datagrid.administrators.columns.actions',
+      type: 'custom',
+      sortable: false,
+      align: 'right',
+    },
+  ],
+  actions: [
+    {
+      key: 'invite',
+      labelKey: 'datagrid.administrators.actions.invite',
+      icon: 'mail',
+      style: 'primary',
+      scope: 'toolbar',
+      permission: 'admin-accounts.invite',
+    },
+    {
+      key: 'edit',
+      labelKey: 'datagrid.administrators.actions.edit',
+      icon: 'pencil',
+      scope: 'row',
+      permission: 'admin-accounts.update',
+    },
+    {
+      key: 'delete',
+      labelKey: 'datagrid.administrators.actions.delete',
+      icon: 'trash',
+      style: 'danger',
+      confirm: true,
+      scope: 'row',
+      permission: 'admin-accounts.delete',
+    },
+  ],
+};

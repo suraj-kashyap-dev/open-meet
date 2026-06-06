@@ -161,20 +161,6 @@ export interface AdminMeetingDetailDto extends AdminMeetingDto {
   participants: AdminMeetingParticipantDto[];
 }
 
-export interface AdminMeetingListQuery {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  status?: 'WAITING' | 'ACTIVE' | 'ENDED';
-}
-
-export interface AdminMeetingListResponseDto {
-  items: AdminMeetingDto[];
-  total: number;
-  page: number;
-  pageSize: number;
-}
-
 export interface AdminBulkEndResponseDto {
   ended: number;
 }
@@ -208,10 +194,6 @@ export interface AdminAccountDto {
   avatar: string | null;
   createdAt: string;
   lastLoginAt: string | null;
-}
-
-export interface AdminAccountListResponseDto {
-  items: AdminAccountDto[];
 }
 
 export interface AdminUpdateAccountDto {

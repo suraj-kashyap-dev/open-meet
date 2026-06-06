@@ -2,6 +2,7 @@
   "eyebrow": "設定",
   "title": "管理者",
   "access-summary": "{count, plural, one {# 人} other {# 人}} がこのコンソールにアクセスできます。",
+  "subtitle": "このコンソールにアクセスできるユーザーを管理します。",
   "invite-button": "管理者を招待",
   "create-button": "管理者を作成",
   "empty": "まだ管理者がいません。",

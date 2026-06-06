@@ -26,6 +26,7 @@ describe('AdminGroupsRepository', () => {
   beforeEach(() => {
     conversation = {
       findMany: vi.fn().mockResolvedValue([]),
+      count: vi.fn().mockResolvedValue(0),
       findFirst: vi.fn().mockResolvedValue(sentinel),
       create: vi.fn().mockResolvedValue(sentinel),
       update: vi.fn().mockResolvedValue(sentinel),
@@ -41,14 +42,28 @@ describe('AdminGroupsRepository', () => {
     } as unknown as PrismaService);
   });
 
-  describe('list()', () => {
-    it('should filter GROUP conversations, order desc and include member counts', async () => {
-      await repo.list();
+  describe('searchWhere() / listWith() / countWith()', () => {
+    it('should scope to GROUP conversations and add a title filter when searching', () => {
+      expect(repo.searchWhere()).toEqual({ type: ConversationType.GROUP });
+      expect(repo.searchWhere('team')).toEqual({
+        type: ConversationType.GROUP,
+        title: { contains: 'team', mode: 'insensitive' },
+      });
+    });
+
+    it('should pass the prebuilt where/orderBy through with the list include', async () => {
+      const where = { type: ConversationType.GROUP };
+      await repo.listWith({ skip: 0, take: 20, where, orderBy: { createdAt: 'desc' } });
       expect(conversation.findMany).toHaveBeenCalledWith({
-        where: { type: ConversationType.GROUP },
+        skip: 0,
+        take: 20,
+        where,
         orderBy: { createdAt: 'desc' },
         include: groupListInclude,
       });
+
+      await repo.countWith(where);
+      expect(conversation.count.mock.calls[0][0].where).toBe(where);
     });
   });
 

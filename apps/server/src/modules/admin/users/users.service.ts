@@ -10,17 +10,23 @@ import {
 import { randomBytes } from 'node:crypto';
 import * as argon2 from 'argon2';
 
+import { type Prisma } from '@prisma/client';
+
 import type {
   AdminCreateUserDto,
   AdminUserDto,
   AdminUserListQuery,
   AdminUserListResponseDto,
   AdminUpdateUserDto,
+  DatagridResponseDto,
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
+import { DatagridService, buildOrderBy, paginate } from '../../../common/datagrid';
 import { StorageService } from '../../../storage/storage.service';
 import { AdminUsersRepository, type UserWithCounts } from './users.repository';
+import { AdminUsersDatagridQueryDto } from './dto/users-datagrid-query.dto';
+import { USERS_DATAGRID } from './users.datagrid';
 
 const DEFAULT_PAGE_SIZE = 20;
 const MAX_PAGE_SIZE = 100;
@@ -41,7 +47,26 @@ export class AdminUsersService {
   constructor(
     private readonly users: AdminUsersRepository,
     private readonly storage: StorageService,
+    private readonly grid: DatagridService,
   ) {}
+
+  async datagrid(query: AdminUsersDatagridQueryDto): Promise<DatagridResponseDto<AdminUserDto>> {
+    const { skip, take } = paginate(query);
+    const search = query.search?.trim() || undefined;
+    const where = this.users.searchWhere(search);
+    const orderBy = buildOrderBy(USERS_DATAGRID, query) as Prisma.UserOrderByWithRelationInput;
+
+    const [rows, total] = await Promise.all([
+      this.users.listWith({ skip, take, where, orderBy }),
+      this.users.countWith(where),
+    ]);
+
+    return this.grid.build(USERS_DATAGRID, {
+      rows: rows.map((u) => this.toDto(u)),
+      total,
+      query,
+    });
+  }
 
   async list(query: AdminUserListQuery): Promise<AdminUserListResponseDto> {
     const page = Math.max(1, query.page ?? 1);

@@ -10,7 +10,7 @@ test.describe('Web meeting history page', () => {
 
     await expect(page.getByRole('heading', { name: 'Meeting history' })).toBeVisible();
     await expect(page.getByText('Quarterly review')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Open', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Open', exact: true })).toBeVisible();
   });
 
   test('should show the empty state when there are no meetings', async ({ page }) => {

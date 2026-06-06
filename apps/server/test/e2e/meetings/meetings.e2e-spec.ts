@@ -273,4 +273,34 @@ describe('Meetings (e2e)', () => {
       expect(history.body.data.total).toBe(0);
     });
   });
+
+  describe('GET /api/meetings/history/datagrid', () => {
+    it('should return a server-driven datagrid contract', async () => {
+      const res = await http(app).get('/api/meetings/history/datagrid').set('Cookie', hostCookie);
+
+      expect(res.status).toBe(200);
+
+      const grid = res.body.data;
+      expect(grid.resource).toBe('history');
+      expect(Array.isArray(grid.columns)).toBe(true);
+      expect(grid.columns.map((c: { key: string }) => c.key)).toEqual([
+        'meeting',
+        'startedAt',
+        'durationMinutes',
+        'participants',
+        'activity',
+        'status',
+      ]);
+      expect(grid.actions.map((a: { key: string }) => a.key)).toEqual(['open']);
+      expect(grid.searchable).toBe(false);
+      expect(grid.pagination.page).toBe(1);
+      expect(Array.isArray(grid.rows)).toBe(true);
+    });
+
+    it('should reject unauthenticated requests', async () => {
+      const res = await http(app).get('/api/meetings/history/datagrid');
+
+      expect(res.status).toBe(401);
+    });
+  });
 });

@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Reunião",
+      "started": "Iniciada",
+      "duration": "Duração",
+      "participants": "Participantes",
+      "activity": "Atividade",
+      "status": "Status"
+    },
+    "actions": {
+      "open": "Abrir"
+    }
+  },
+  "users": {
+    "search": "Pesquisar por nome ou e-mail",
+    "columns": {
+      "name": "Nome",
+      "email": "E-mail",
+      "meetingsHosted": "Organizadas",
+      "meetingsAttended": "Participadas",
+      "canCreateGroups": "Pode criar grupos",
+      "createdAt": "Entrou em",
+      "actions": "Ações"
+    },
+    "actions": {
+      "create": "Novo usuário",
+      "invite": "Convidar",
+      "edit": "Editar",
+      "toggleChat": "Alternar chat",
+      "delete": "Excluir"
+    }
+  },
+  "meetings": {
+    "search": "Pesquisar reuniões",
+    "columns": {
+      "title": "Título",
+      "host": "Anfitrião",
+      "participants": "Participantes",
+      "messages": "Mensagens",
+      "status": "Status",
+      "startedAt": "Iniciada em",
+      "actions": "Ações"
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "WAITING": "Aguardando",
+        "ACTIVE": "Ativa",
+        "ENDED": "Encerrada"
+      }
+    },
+    "actions": {
+      "view": "Visualizar",
+      "end": "Encerrar",
+      "delete": "Excluir",
+      "end-all": "Encerrar todas"
+    }
+  },
+  "groups": {
+    "search": "Pesquisar grupos",
+    "columns": {
+      "name": "Nome",
+      "members": "Membros",
+      "createdAt": "Criado em",
+      "actions": "Ações"
+    },
+    "actions": {
+      "create": "Novo grupo",
+      "edit": "Editar",
+      "delete": "Excluir"
+    }
+  },
+  "administrators": {
+    "search": "Pesquisar por nome ou e-mail",
+    "columns": {
+      "name": "Nome",
+      "email": "E-mail",
+      "role": "Função",
+      "lastLogin": "Último acesso",
+      "createdAt": "Adicionado em",
+      "actions": "Ações"
+    },
+    "actions": {
+      "invite": "Convidar",
+      "edit": "Editar",
+      "delete": "Excluir"
+    }
+  },
+  "roles": {
+    "search": "Pesquisar funções",
+    "columns": {
+      "name": "Nome",
+      "permissions": "Permissões",
+      "members": "Membros",
+      "system": "Sistema",
+      "actions": "Ações"
+    },
+    "actions": {
+      "create": "Nova função",
+      "edit": "Editar",
+      "delete": "Excluir"
+    }
+  }
+}

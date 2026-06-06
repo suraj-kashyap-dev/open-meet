@@ -12,6 +12,9 @@ import { MeetingsService } from '@/modules/client/meetings/meetings.service';
 import { MeetingsRepository } from '@/modules/client/meetings/meetings.repository';
 import { WorkspaceConfigService } from '@/modules/config/workspace-config.service';
 import { MeetingBus } from '@/websocket/meeting-bus.service';
+import { DatagridService } from '@/common/datagrid';
+
+import type { MeetingHistoryItemDto } from '@open-meet/types';
 
 function meeting(
   overrides: Partial<{
@@ -58,6 +61,10 @@ describe('MeetingsService', () => {
     listActiveParticipants: ReturnType<typeof vi.fn>;
     updateTitle: ReturnType<typeof vi.fn>;
     markInviteSent: ReturnType<typeof vi.fn>;
+    listHistoryForUser: ReturnType<typeof vi.fn>;
+    countHistoryForUser: ReturnType<typeof vi.fn>;
+    countCompletedRecordingsByMeetingIds: ReturnType<typeof vi.fn>;
+    countAttachmentsForMeeting: ReturnType<typeof vi.fn>;
   };
   let workspaceConfig: {
     getConfig: ReturnType<typeof vi.fn>;
@@ -79,6 +86,10 @@ describe('MeetingsService', () => {
       listActiveParticipants: vi.fn(),
       updateTitle: vi.fn(),
       markInviteSent: vi.fn(),
+      listHistoryForUser: vi.fn(),
+      countHistoryForUser: vi.fn(),
+      countCompletedRecordingsByMeetingIds: vi.fn(),
+      countAttachmentsForMeeting: vi.fn(),
     };
 
     workspaceConfig = {
@@ -127,6 +138,21 @@ describe('MeetingsService', () => {
         { provide: AuthRepository, useValue: { createGuest: vi.fn() } },
         { provide: AuthService, useValue: { issueGuestAccessToken: vi.fn() } },
         { provide: MeetingBus, useValue: bus },
+        {
+          provide: DatagridService,
+          useValue: {
+            build: vi.fn((def: { resource: string }, data: { rows: unknown[]; total: number }) => ({
+              resource: def.resource,
+              columns: [],
+              filters: [],
+              actions: [],
+              rows: data.rows,
+              pagination: { page: 1, pageSize: 20, total: data.total, totalPages: 1 },
+              sort: null,
+              searchable: false,
+            })),
+          },
+        },
       ],
     }).compile();
 
@@ -452,6 +478,73 @@ describe('MeetingsService', () => {
       expect(bus.emit).toHaveBeenCalledWith('abcd-efgh-ijkl', 'meeting:ended', {
         endedAt: '2026-01-01T02:00:00.000Z',
       });
+    });
+  });
+
+  describe('getHistoryDatagrid', () => {
+    beforeEach(() => {
+      repo.listHistoryForUser.mockResolvedValue([
+        {
+          id: 'm1',
+          code: 'abcd-efgh-ijkl',
+          title: 'Quarterly review',
+          hostId: 'u1',
+          status: MeetingStatus.ENDED,
+          startedAt: new Date('2026-05-19T14:00:00.000Z'),
+          endedAt: new Date('2026-05-19T14:45:00.000Z'),
+          createdAt: new Date('2026-05-19T13:55:00.000Z'),
+          host: { id: 'u1', name: 'Ada Lovelace', avatarKey: null },
+          participants: [{ user: { id: 'u2', name: 'Grace Hopper', avatarKey: 'k2' } }],
+          _count: { participants: 4, messages: 12 },
+        },
+      ]);
+      repo.countHistoryForUser.mockResolvedValue(1);
+      repo.countCompletedRecordingsByMeetingIds.mockResolvedValue(new Map([['m1', 1]]));
+      repo.countAttachmentsForMeeting.mockResolvedValue(2);
+    });
+
+    it('projects history rows into a datagrid response', async () => {
+      const grid = await service.getHistoryDatagrid('u1', { page: 1, pageSize: 20 });
+
+      expect(grid.resource).toBe('history');
+      expect(grid.pagination.total).toBe(1);
+      expect(grid.rows).toHaveLength(1);
+
+      const row = grid.rows[0] as MeetingHistoryItemDto;
+      expect(row.durationMinutes).toBe(45);
+      expect(row.isHost).toBe(true);
+      expect(row.participantCount).toBe(4);
+      expect(row.messageCount).toBe(12);
+      expect(row.attachmentCount).toBe(2);
+      expect(row.recordingCount).toBe(1);
+      expect(row.participantsPreview[0].avatar).toBe('https://cdn.test/k2');
+    });
+
+    it('marks non-hosted meetings and null duration when not ended', async () => {
+      repo.listHistoryForUser.mockResolvedValue([
+        {
+          id: 'm2',
+          code: 'wxyz-wxyz-wxyz',
+          title: null,
+          hostId: 'someone-else',
+          status: MeetingStatus.ACTIVE,
+          startedAt: new Date('2026-05-19T14:00:00.000Z'),
+          endedAt: null,
+          createdAt: new Date('2026-05-19T13:55:00.000Z'),
+          host: { id: 'someone-else', name: 'Grace Hopper', avatarKey: null },
+          participants: [],
+          _count: { participants: 2, messages: 0 },
+        },
+      ]);
+      repo.countCompletedRecordingsByMeetingIds.mockResolvedValue(new Map());
+      repo.countAttachmentsForMeeting.mockResolvedValue(0);
+
+      const grid = await service.getHistoryDatagrid('u1', {});
+      const row = grid.rows[0] as MeetingHistoryItemDto;
+
+      expect(row.isHost).toBe(false);
+      expect(row.durationMinutes).toBeNull();
+      expect(row.recordingCount).toBe(0);
     });
   });
 });

@@ -1,13 +1,13 @@
 'use client';
 
-import { createColumnHelper } from '@tanstack/react-table';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
-import type { AdminUpcomingMeetingDto } from '@open-meet/types';
+import type { AdminUpcomingMeetingDto, DatagridResponseDto } from '@open-meet/types';
 
-import { DataTable } from '@open-meet/ui/data-table';
 import { cn } from '@open-meet/ui/cn';
+
+import { StaticDataGrid } from '@/components/datagrid/static-data-grid';
 
 function formatScheduled(iso: string): string {
   return new Date(iso).toLocaleString(undefined, {
@@ -65,78 +65,51 @@ function minutesUntil(iso: string): number {
   return Math.round((new Date(iso).getTime() - Date.now()) / 60_000);
 }
 
-const column = createColumnHelper<AdminUpcomingMeetingDto>();
-
 export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMeetingDto[] }) {
   const t = useTranslations('dashboard');
-  const columns = useMemo(
-    () => [
-      column.accessor('code', {
-        header: t('upcoming.columns.code'),
-        cell: (info) => <span className="font-mono text-xs">{info.getValue()}</span>,
-      }),
-      column.display({
-        id: 'title',
-        header: t('upcoming.columns.title'),
-        cell: ({ row }) => {
-          const repeats = recurrenceKey(row.original.recurrence);
 
-          return (
-            <div className="flex items-center gap-2">
-              <span className="truncate text-sm">
-                {row.original.title ??
-                  t('upcoming.untitled', { date: formatScheduled(row.original.scheduledFor) })}
-              </span>
-
-              {repeats ? (
-                <span className="inline-flex shrink-0 items-center rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                  {t(`upcoming.recurrence.${repeats}`)}
-                </span>
-              ) : null}
-            </div>
-          );
+  const data = useMemo<DatagridResponseDto<AdminUpcomingMeetingDto>>(
+    () => ({
+      resource: 'dashboard-upcoming-meetings',
+      columns: [
+        { key: 'code', label: t('upcoming.columns.code'), type: 'text', sortable: false },
+        { key: 'title', label: t('upcoming.columns.title'), type: 'custom', sortable: false },
+        { key: 'host', label: t('upcoming.columns.host'), type: 'custom', sortable: false },
+        {
+          key: 'inviteeCount',
+          label: t('upcoming.columns.invitees'),
+          type: 'number',
+          sortable: false,
+          align: 'right',
         },
-      }),
-      column.display({
-        id: 'host',
-        header: t('upcoming.columns.host'),
-        cell: ({ row }) => (
-          <div className="flex flex-col">
-            <span className="text-sm">{row.original.hostName}</span>
-            <span className="text-xs text-muted-foreground">{row.original.hostEmail}</span>
-          </div>
-        ),
-      }),
-      column.accessor('inviteeCount', {
-        header: () => <span className="block text-end">{t('upcoming.columns.invitees')}</span>,
-        cell: (info) => <span className="block text-end tabular-nums">{info.getValue()}</span>,
-      }),
-      column.accessor('durationMin', {
-        header: () => <span className="block text-end">{t('upcoming.columns.duration')}</span>,
-        cell: (info) => (
-          <span className="block text-end tabular-nums">{formatDuration(info.getValue())}</span>
-        ),
-      }),
-      column.accessor('scheduledFor', {
-        header: () => <span className="block text-end">{t('upcoming.columns.when')}</span>,
-        cell: (info) => {
-          const startsIn = minutesUntil(info.getValue());
-          const isStartingSoon = startsIn >= 0 && startsIn <= 15;
-
-          return (
-            <span
-              className={cn(
-                'block text-end text-muted-foreground',
-                isStartingSoon && 'font-medium text-accent',
-              )}
-            >
-              {formatScheduled(info.getValue())}
-            </span>
-          );
+        {
+          key: 'durationMin',
+          label: t('upcoming.columns.duration'),
+          type: 'number',
+          sortable: false,
+          align: 'right',
         },
-      }),
-    ],
-    [t],
+        {
+          key: 'scheduledFor',
+          label: t('upcoming.columns.when'),
+          type: 'datetime',
+          sortable: false,
+          align: 'right',
+        },
+      ],
+      filters: [],
+      actions: [],
+      rows: meetings,
+      pagination: {
+        page: 1,
+        pageSize: Math.max(meetings.length, 1),
+        total: meetings.length,
+        totalPages: 1,
+      },
+      sort: null,
+      searchable: false,
+    }),
+    [t, meetings],
   );
 
   return (
@@ -145,7 +118,64 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
         <h3 className="text-sm font-semibold tracking-tight">{t('upcoming.title')}</h3>
         <span className="text-xs text-muted-foreground">{meetings.length}</span>
       </header>
-      <DataTable data={meetings} columns={columns} emptyMessage={t('upcoming.empty')} />
+      <StaticDataGrid
+        data={data as unknown as DatagridResponseDto}
+        emptyMessage={t('upcoming.empty')}
+        renderCell={(column, row) => {
+          const meeting = row as unknown as AdminUpcomingMeetingDto;
+          switch (column.key) {
+            case 'code':
+              return <span className="font-mono text-xs">{meeting.code}</span>;
+            case 'title': {
+              const repeats = recurrenceKey(meeting.recurrence);
+              return (
+                <div className="flex items-center gap-2">
+                  <span className="truncate text-sm">
+                    {meeting.title ??
+                      t('upcoming.untitled', { date: formatScheduled(meeting.scheduledFor) })}
+                  </span>
+                  {repeats ? (
+                    <span className="inline-flex shrink-0 items-center rounded-full border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                      {t(`upcoming.recurrence.${repeats}`)}
+                    </span>
+                  ) : null}
+                </div>
+              );
+            }
+            case 'host':
+              return (
+                <div className="flex flex-col">
+                  <span className="text-sm">{meeting.hostName}</span>
+                  <span className="text-xs text-muted-foreground">{meeting.hostEmail}</span>
+                </div>
+              );
+            case 'inviteeCount':
+              return <span className="block text-end tabular-nums">{meeting.inviteeCount}</span>;
+            case 'durationMin':
+              return (
+                <span className="block text-end tabular-nums">
+                  {formatDuration(meeting.durationMin)}
+                </span>
+              );
+            case 'scheduledFor': {
+              const startsIn = minutesUntil(meeting.scheduledFor);
+              const isStartingSoon = startsIn >= 0 && startsIn <= 15;
+              return (
+                <span
+                  className={cn(
+                    'block text-end text-muted-foreground',
+                    isStartingSoon && 'font-medium text-accent',
+                  )}
+                >
+                  {formatScheduled(meeting.scheduledFor)}
+                </span>
+              );
+            }
+            default:
+              return undefined;
+          }
+        }}
+      />
     </section>
   );
 }

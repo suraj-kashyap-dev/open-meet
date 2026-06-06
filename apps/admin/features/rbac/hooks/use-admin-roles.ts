@@ -32,6 +32,7 @@ export function useCreateAdminRole() {
     mutationFn: (body: CreateRoleDto) => adminRolesApi.create(body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'roles'] });
     },
   });
 }
@@ -44,6 +45,7 @@ export function useUpdateAdminRole() {
     onSuccess: (_data, { id }) => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
       void qc.invalidateQueries({ queryKey: [...ADMIN_ROLES_KEY, id] });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'roles'] });
       void qc.invalidateQueries({ queryKey: ['admin', 'me'] });
     },
   });
@@ -55,6 +57,7 @@ export function useDeleteAdminRole() {
     mutationFn: (id: string) => adminRolesApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
+      void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'roles'] });
     },
   });
 }

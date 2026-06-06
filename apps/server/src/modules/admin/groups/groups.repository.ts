@@ -22,12 +22,29 @@ export type GroupListRow = Prisma.ConversationGetPayload<{ include: typeof group
 export class AdminGroupsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  list(): Promise<GroupListRow[]> {
+  searchWhere(search?: string): Prisma.ConversationWhereInput {
+    const base: Prisma.ConversationWhereInput = { type: ConversationType.GROUP };
+    if (!search) return base;
+    return { ...base, title: { contains: search, mode: 'insensitive' } };
+  }
+
+  listWith(params: {
+    skip: number;
+    take: number;
+    where: Prisma.ConversationWhereInput;
+    orderBy: Prisma.ConversationOrderByWithRelationInput;
+  }): Promise<GroupListRow[]> {
     return this.prisma.conversation.findMany({
-      where: { type: ConversationType.GROUP },
-      orderBy: { createdAt: 'desc' },
+      skip: params.skip,
+      take: params.take,
+      where: params.where,
+      orderBy: params.orderBy,
       include: groupListInclude,
     });
+  }
+
+  countWith(where: Prisma.ConversationWhereInput): Promise<number> {
+    return this.prisma.conversation.count({ where });
   }
 
   findDetail(id: string): Promise<GroupDetail | null> {

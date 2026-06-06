@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { MeetingStatus } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { DatagridService } from '@/common/datagrid';
 import type { LiveKitService } from '@/integrations/livekit/livekit.service';
 import type { StorageService } from '@/storage/storage.service';
 import type { AdminMeetingsRepository } from '@/modules/admin/meetings/meetings.repository';
@@ -29,12 +30,14 @@ describe('AdminMeetingsService', () => {
   let meetings: Record<string, ReturnType<typeof vi.fn>>;
   let livekit: { closeRoom: ReturnType<typeof vi.fn>; removeParticipant: ReturnType<typeof vi.fn> };
   let storage: { publicUrl: ReturnType<typeof vi.fn> };
+  let grid: { build: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     meetings = {
-      list: vi.fn().mockResolvedValue([makeRow()]),
-      count: vi.fn().mockResolvedValue(1),
       countActiveParticipants: vi.fn().mockResolvedValue(3),
+      searchWhere: vi.fn().mockReturnValue({ _w: true }),
+      listWith: vi.fn().mockResolvedValue([makeRow()]),
+      countWith: vi.fn().mockResolvedValue(1),
       findById: vi.fn().mockResolvedValue(makeRow()),
       markEnded: vi.fn().mockResolvedValue({ id: 'm1', code: 'abc' }),
       listActive: vi.fn().mockResolvedValue([{ id: 'm1', code: 'abc' }]),
@@ -48,32 +51,55 @@ describe('AdminMeetingsService', () => {
       removeParticipant: vi.fn().mockResolvedValue(undefined),
     };
     storage = { publicUrl: vi.fn((k: string) => `pub:${k}`) };
+    grid = { build: vi.fn().mockReturnValue({ ok: true }) };
     service = new AdminMeetingsService(
       meetings as unknown as AdminMeetingsRepository,
       livekit as unknown as LiveKitService,
       storage as unknown as StorageService,
+      grid as unknown as DatagridService,
     );
   });
 
-  describe('list()', () => {
-    it('should count active participants for ACTIVE rows and compute the duration', async () => {
-      const res = await service.list({} as never);
-      expect(meetings.countActiveParticipants).toHaveBeenCalledWith('m1');
-      expect(res.items[0]).toMatchObject({
-        activeParticipantCount: 3,
-        durationMinutes: 30,
-        participantCount: 4,
-        messageCount: 9,
+  describe('datagrid()', () => {
+    it('trims search, applies status filter, builds an allow-listed orderBy, and maps rows to the grid', async () => {
+      const res = await service.datagrid({
+        page: 2,
+        pageSize: 5,
+        sort: 'startedAt',
+        dir: 'desc',
+        search: '  meet ',
+        status: 'ACTIVE',
+      } as never);
+
+      expect(meetings.searchWhere).toHaveBeenCalledWith('meet', 'ACTIVE');
+      expect(meetings.listWith).toHaveBeenCalledWith({
+        skip: 5,
+        take: 5,
+        where: { _w: true },
+        orderBy: { startedAt: 'desc' },
       });
+      expect(meetings.countWith).toHaveBeenCalledWith({ _w: true });
+
+      const [def, data] = grid.build.mock.calls[0];
+      expect(def.resource).toBe('meetings');
+      expect(data.total).toBe(1);
+      expect(data.rows[0]).toMatchObject({ participantCount: 4, messageCount: 9 });
+      expect(res).toEqual({ ok: true });
     });
 
-    it('should skip the active-participant query for non-active rows', async () => {
-      meetings.list.mockResolvedValueOnce([makeRow({ status: MeetingStatus.ENDED })]);
-      const res = await service.list({} as never);
-      expect(meetings.countActiveParticipants).not.toHaveBeenCalled();
-      expect(res.items[0].activeParticipantCount).toBe(0);
+    it('ignores a non-sortable column and falls back to the default sort', async () => {
+      await service.datagrid({ sort: 'status' } as never);
+      expect(meetings.listWith).toHaveBeenCalledWith(
+        expect.objectContaining({ orderBy: { startedAt: 'desc' } }),
+      );
+    });
+
+    it('passes an empty search and no status when neither is provided', async () => {
+      await service.datagrid({} as never);
+      expect(meetings.searchWhere).toHaveBeenCalledWith(undefined, undefined);
     });
   });
+
 
   describe('getById()', () => {
     it('should throw when the meeting is missing', async () => {

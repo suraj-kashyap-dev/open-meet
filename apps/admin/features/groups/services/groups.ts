@@ -2,15 +2,12 @@ import type {
   AdminAddGroupMembersDto,
   AdminCreateGroupDto,
   AdminGroupDetailDto,
-  AdminGroupListResponseDto,
   AdminUpdateGroupDto,
 } from '@open-meet/types';
 
 import { api } from '@/lib/api/client';
 
 export const adminGroupsApi = {
-  list: (signal?: AbortSignal) => api.get<AdminGroupListResponseDto>('/admin/groups', { signal }),
-
   detail: (id: string, signal?: AbortSignal) =>
     api.get<AdminGroupDetailDto>(`/admin/groups/${id}`, { signal }),
 

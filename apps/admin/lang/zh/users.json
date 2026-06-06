@@ -1,6 +1,7 @@
 {
   "eyebrow": "管理",
   "title": "用户",
+  "subtitle": "管理所有可以登录工作区的人员。",
   "total-count": "{count, number} 位用户",
   "search-placeholder": "按姓名或电子邮件搜索",
   "refreshing": "正在刷新…",

@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "الاجتماع",
+      "started": "بدأ في",
+      "duration": "المدة",
+      "participants": "المشاركون",
+      "activity": "النشاط",
+      "status": "الحالة"
+    },
+    "actions": {
+      "open": "فتح"
+    }
+  },
+  "users": {
+    "search": "البحث بالاسم أو البريد الإلكتروني",
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "meetingsHosted": "الاجتماعات المُستضافة",
+      "meetingsAttended": "الاجتماعات المُحضَرة",
+      "canCreateGroups": "يمكن إنشاء مجموعات",
+      "createdAt": "تاريخ الانضمام",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "create": "مستخدم جديد",
+      "invite": "دعوة",
+      "edit": "تعديل",
+      "toggleChat": "تبديل الدردشة",
+      "delete": "حذف"
+    }
+  },
+  "meetings": {
+    "search": "البحث في الاجتماعات",
+    "columns": {
+      "title": "العنوان",
+      "host": "المضيف",
+      "participants": "المشاركون",
+      "messages": "الرسائل",
+      "status": "الحالة",
+      "startedAt": "وقت البدء",
+      "actions": "الإجراءات"
+    },
+    "filters": {
+      "status": {
+        "label": "الحالة",
+        "WAITING": "في الانتظار",
+        "ACTIVE": "نشط",
+        "ENDED": "منتهٍ"
+      }
+    },
+    "actions": {
+      "view": "عرض",
+      "end": "إنهاء",
+      "delete": "حذف",
+      "end-all": "إنهاء الكل"
+    }
+  },
+  "groups": {
+    "search": "البحث في المجموعات",
+    "columns": {
+      "name": "الاسم",
+      "members": "الأعضاء",
+      "createdAt": "تاريخ الإنشاء",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "create": "مجموعة جديدة",
+      "edit": "تعديل",
+      "delete": "حذف"
+    }
+  },
+  "administrators": {
+    "search": "البحث بالاسم أو البريد الإلكتروني",
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "lastLogin": "آخر تسجيل دخول",
+      "createdAt": "تاريخ الإضافة",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "invite": "دعوة",
+      "edit": "تعديل",
+      "delete": "حذف"
+    }
+  },
+  "roles": {
+    "search": "البحث في الأدوار",
+    "columns": {
+      "name": "الاسم",
+      "permissions": "الصلاحيات",
+      "members": "الأعضاء",
+      "system": "النظام",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "create": "دور جديد",
+      "edit": "تعديل",
+      "delete": "حذف"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "eyebrow": "Moderieren",
   "title": "Besprechungen",
+  "subtitle": "Überwachen Sie Live-Meetings und sehen Sie sich vergangene Sitzungen an.",
   "total-count": "{count, number} insgesamt",
   "end-all": "Alle aktiven beenden",
   "search-placeholder": "Nach Code, Titel, Host suchen",

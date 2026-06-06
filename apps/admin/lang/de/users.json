@@ -1,6 +1,7 @@
 {
   "eyebrow": "Verwalten",
   "title": "Benutzer",
+  "subtitle": "Verwalte alle, die sich im Workspace anmelden können.",
   "total-count": "{count, number} insgesamt",
   "search-placeholder": "Nach Name oder E-Mail suchen",
   "refreshing": "Wird aktualisiert…",

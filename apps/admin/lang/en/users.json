@@ -1,6 +1,7 @@
 {
   "eyebrow": "Manage",
   "title": "Users",
+  "subtitle": "Manage everyone who can sign in to the workspace.",
   "total-count": "{count, number} total",
   "search-placeholder": "Search by name or email",
   "refreshing": "Refreshing…",

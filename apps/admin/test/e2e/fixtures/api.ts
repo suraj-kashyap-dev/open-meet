@@ -97,22 +97,26 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
           return json(200, ok(analyticsDeep));
         case '/admin/users':
           return json(200, ok(users));
+        case '/admin/users/datagrid':
+          return json(200, ok(fixtures.usersDatagrid(users.items)));
         case '/admin/users/invites':
           return json(200, ok(userInvites));
-        case '/admin/meetings':
-          return json(200, ok(meetings));
-        case '/admin/accounts':
-          return json(200, ok(accounts));
+        case '/admin/meetings/datagrid':
+          return json(200, ok(fixtures.meetingsDatagrid(meetings.items)));
+        case '/admin/accounts/datagrid':
+          return json(200, ok(fixtures.accountsDatagrid(accounts.items)));
         case '/admin/accounts/invites':
           return json(200, ok(invites));
         case '/admin/branding':
           return json(200, ok(branding));
         case '/admin/configuration':
           return json(200, ok(configuration));
-        case '/admin/groups':
-          return json(200, ok(groups));
+        case '/admin/groups/datagrid':
+          return json(200, ok(fixtures.groupsDatagrid(groups.items)));
         case '/admin/roles':
           return json(200, ok(adminRoles));
+        case '/admin/roles/datagrid':
+          return json(200, ok(fixtures.rolesDatagrid(adminRoles.items)));
         case '/admin/permissions/catalog':
           return json(200, ok(permissionCatalog));
         default:
@@ -125,6 +129,10 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
         return found
           ? json(200, ok(found))
           : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
+      }
+
+      if (/^\/admin\/meetings\/[^/]+$/.test(path)) {
+        return json(200, ok(fixtures.meetingDetail));
       }
 
       if (/^\/admin\/groups\/[^/]+$/.test(path)) {

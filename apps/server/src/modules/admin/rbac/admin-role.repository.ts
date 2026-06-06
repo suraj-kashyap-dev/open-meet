@@ -3,9 +3,41 @@ import type { AdminRoleRecord, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
+const roleInclude = {
+  _count: { select: { admins: true } },
+} satisfies Prisma.AdminRoleRecordInclude;
+
+export type AdminRoleWithCounts = AdminRoleRecord & {
+  _count: { admins: number };
+};
+
 @Injectable()
 export class AdminRoleRepository {
   constructor(private readonly prisma: PrismaService) {}
+
+  searchWhere(search?: string): Prisma.AdminRoleRecordWhereInput {
+    if (!search) return {};
+    return { name: { contains: search, mode: 'insensitive' } };
+  }
+
+  listWith(params: {
+    skip: number;
+    take: number;
+    where: Prisma.AdminRoleRecordWhereInput;
+    orderBy: Prisma.AdminRoleRecordOrderByWithRelationInput;
+  }): Promise<AdminRoleWithCounts[]> {
+    return this.prisma.adminRoleRecord.findMany({
+      skip: params.skip,
+      take: params.take,
+      where: params.where,
+      orderBy: params.orderBy,
+      include: roleInclude,
+    });
+  }
+
+  countWith(where: Prisma.AdminRoleRecordWhereInput): Promise<number> {
+    return this.prisma.adminRoleRecord.count({ where });
+  }
 
   findById(id: string): Promise<AdminRoleRecord | null> {
     return this.prisma.adminRoleRecord.findUnique({ where: { id } });

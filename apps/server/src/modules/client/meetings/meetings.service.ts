@@ -13,13 +13,18 @@ import { randomBytes } from 'node:crypto';
 import type { ApiEnv } from '@open-meet/config';
 import { buildIcs, generateMeetingCode } from '@open-meet/utils';
 import type {
+  DatagridResponseDto,
   GuestMeetingSessionDto,
   MeetingDto,
+  MeetingHistoryItemDto,
   ParticipantDto,
   ScheduleMeetingDto,
   UpcomingMeetingDto,
 } from '@open-meet/types';
 import { ApiErrorCode, ServerEvent } from '@open-meet/types';
+
+import { DatagridService } from '../../../common/datagrid';
+import { HISTORY_DATAGRID } from './meetings.datagrid';
 
 import { MailService } from '../../../integrations/mail/mail.service';
 import type { RequestUser } from '../../../common/decorators/current-user.decorator';
@@ -62,6 +67,7 @@ export class MeetingsService {
     private readonly authUsers: AuthRepository,
     private readonly auth: AuthService,
     private readonly bus: MeetingBus,
+    private readonly datagrid: DatagridService,
   ) {}
 
   private avatarUrl(key: string | null): string | null {
@@ -632,6 +638,58 @@ export class MeetingsService {
     );
 
     return { items, total, page, pageSize };
+  }
+
+  async listHistoryItems(
+    userId: string,
+    query: { page?: number; pageSize?: number },
+  ): Promise<{ items: MeetingHistoryItemDto[]; total: number; page: number; pageSize: number }> {
+    const { items, total, page, pageSize } = await this.getHistory(userId, query);
+
+    return {
+      items: items.map(({ meeting, attachmentCount, recordingCount }) => {
+        const startedAt = meeting.startedAt;
+        const endedAt = meeting.endedAt;
+        const durationMinutes =
+          startedAt && endedAt
+            ? Math.max(0, Math.round((endedAt.getTime() - startedAt.getTime()) / 60_000))
+            : null;
+
+        return {
+          id: meeting.id,
+          code: meeting.code,
+          title: meeting.title,
+          status: meeting.status,
+          startedAt: startedAt?.toISOString() ?? null,
+          endedAt: endedAt?.toISOString() ?? null,
+          createdAt: meeting.createdAt.toISOString(),
+          durationMinutes,
+          isHost: meeting.hostId === userId,
+          hostName: meeting.host.name,
+          participantCount: meeting._count.participants,
+          participantsPreview: meeting.participants.map((p) => ({
+            id: p.user.id,
+            name: p.user.name,
+            avatar: this.avatarUrl(p.user.avatarKey),
+          })),
+          messageCount: meeting._count.messages,
+          attachmentCount,
+          recordingCount,
+        };
+      }),
+      total,
+      page,
+      pageSize,
+    };
+  }
+
+  async getHistoryDatagrid(
+    userId: string,
+    query: { page?: number; pageSize?: number },
+  ): Promise<DatagridResponseDto<MeetingHistoryItemDto>> {
+    const { items, total } = await this.listHistoryItems(userId, query);
+
+    return this.datagrid.build(HISTORY_DATAGRID, { rows: items, total, query });
   }
 
   async assertParticipant(code: string, userId: string): Promise<{ meetingId: string }> {

@@ -5,6 +5,7 @@ import type {
   ChatMessagePageDto,
   ConversationDto,
   ConversationListDto,
+  DatagridResponseDto,
   GoogleAuthStatusDto,
   LiveKitTokenResponseDto,
   MeetingDto,
@@ -121,6 +122,50 @@ export const emptyHistory: MeetingHistoryListResponseDto = {
   total: 0,
   items: [],
 };
+
+export function historyDatagrid(list: MeetingHistoryListResponseDto): DatagridResponseDto {
+  return {
+    resource: 'history',
+    columns: [
+      { key: 'meeting', label: 'Meeting', type: 'custom', sortable: false },
+      { key: 'startedAt', label: 'Started', type: 'datetime', sortable: false, hideBelow: 'sm' },
+      {
+        key: 'durationMinutes',
+        label: 'Duration',
+        type: 'number',
+        sortable: false,
+        hideBelow: 'md',
+      },
+      {
+        key: 'participants',
+        label: 'Participants',
+        type: 'custom',
+        sortable: false,
+        hideBelow: 'md',
+      },
+      {
+        key: 'activity',
+        label: 'Activity',
+        type: 'custom',
+        sortable: false,
+        align: 'right',
+        hideBelow: 'lg',
+      },
+      { key: 'status', label: 'Status', type: 'badge', sortable: false },
+    ],
+    filters: [],
+    actions: [{ key: 'open', label: 'Open', icon: 'eye', scope: 'row' }],
+    rows: list.items as unknown as Record<string, unknown>[],
+    pagination: {
+      page: list.page,
+      pageSize: list.pageSize,
+      total: list.total,
+      totalPages: Math.max(1, Math.ceil(list.total / list.pageSize)),
+    },
+    sort: { key: 'startedAt', dir: 'desc' },
+    searchable: false,
+  };
+}
 
 export const participants: ParticipantDto[] = [
   {

@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "मीटिंग",
+      "started": "शुरू हुई",
+      "duration": "अवधि",
+      "participants": "प्रतिभागी",
+      "activity": "गतिविधि",
+      "status": "स्थिति"
+    },
+    "actions": {
+      "open": "खोलें"
+    }
+  },
+  "users": {
+    "search": "नाम या ईमेल से खोजें",
+    "columns": {
+      "name": "नाम",
+      "email": "ईमेल",
+      "meetingsHosted": "होस्ट की गई मीटिंग",
+      "meetingsAttended": "भाग ली गई मीटिंग",
+      "canCreateGroups": "समूह बना सकते हैं",
+      "createdAt": "जुड़ने की तारीख",
+      "actions": "कार्रवाइयाँ"
+    },
+    "actions": {
+      "create": "नया उपयोगकर्ता",
+      "invite": "आमंत्रित करें",
+      "edit": "संपादित करें",
+      "toggleChat": "चैट टॉगल करें",
+      "delete": "हटाएं"
+    }
+  },
+  "meetings": {
+    "search": "मीटिंग खोजें",
+    "columns": {
+      "title": "शीर्षक",
+      "host": "होस्ट",
+      "participants": "प्रतिभागी",
+      "messages": "संदेश",
+      "status": "स्थिति",
+      "startedAt": "प्रारंभ समय",
+      "actions": "कार्रवाइयाँ"
+    },
+    "filters": {
+      "status": {
+        "label": "स्थिति",
+        "WAITING": "प्रतीक्षारत",
+        "ACTIVE": "सक्रिय",
+        "ENDED": "समाप्त"
+      }
+    },
+    "actions": {
+      "view": "देखें",
+      "end": "समाप्त करें",
+      "delete": "हटाएं",
+      "end-all": "सभी समाप्त करें"
+    }
+  },
+  "groups": {
+    "search": "समूह खोजें",
+    "columns": {
+      "name": "नाम",
+      "members": "सदस्य",
+      "createdAt": "बनाने की तारीख",
+      "actions": "कार्रवाइयाँ"
+    },
+    "actions": {
+      "create": "नया समूह",
+      "edit": "संपादित करें",
+      "delete": "हटाएं"
+    }
+  },
+  "administrators": {
+    "search": "नाम या ईमेल से खोजें",
+    "columns": {
+      "name": "नाम",
+      "email": "ईमेल",
+      "role": "भूमिका",
+      "lastLogin": "अंतिम लॉगिन",
+      "createdAt": "जोड़ने की तारीख",
+      "actions": "कार्रवाइयाँ"
+    },
+    "actions": {
+      "invite": "आमंत्रित करें",
+      "edit": "संपादित करें",
+      "delete": "हटाएं"
+    }
+  },
+  "roles": {
+    "search": "भूमिकाएं खोजें",
+    "columns": {
+      "name": "नाम",
+      "permissions": "अनुमतियाँ",
+      "members": "सदस्य",
+      "system": "सिस्टम",
+      "actions": "कार्रवाइयाँ"
+    },
+    "actions": {
+      "create": "नई भूमिका",
+      "edit": "संपादित करें",
+      "delete": "हटाएं"
+    }
+  }
+}

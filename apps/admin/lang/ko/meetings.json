@@ -1,6 +1,7 @@
 {
   "eyebrow": "관리",
   "title": "회의",
+  "subtitle": "실시간 회의를 모니터링하고 지난 세션을 검토하세요.",
   "total-count": "{count, number} 건 총",
   "end-all": "활성 회의 모두 종료",
   "search-placeholder": "코드, 제목, 호스트로 검색",

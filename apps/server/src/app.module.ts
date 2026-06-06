@@ -11,6 +11,7 @@ import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } fro
 import type { ApiEnv } from '@open-meet/config';
 
 import { envValidate } from './config/env.config';
+import { DatagridModule } from './common/datagrid';
 import { AppController } from './app.controller';
 import { PrismaModule } from './database/prisma.module';
 import { RedisModule } from './integrations/redis/redis.module';
@@ -76,6 +77,7 @@ import { UploadsModule } from './modules/uploads/uploads.module';
         AcceptLanguageResolver,
       ],
     }),
+    DatagridModule,
     PrismaModule,
     RedisModule,
     MailModule,

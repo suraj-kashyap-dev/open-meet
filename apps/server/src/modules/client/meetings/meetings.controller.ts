@@ -15,6 +15,7 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import type { FastifyReply } from 'fastify';
 
 import type {
+  DatagridResponseDto,
   GuestMeetingSessionDto,
   MeetingDto,
   MeetingHistoryItemDto,
@@ -67,43 +68,16 @@ export class MeetingsController {
     @Query() query: HistoryQueryDto,
     @CurrentUser() user: RequestUser,
   ): Promise<MeetingHistoryListResponseDto> {
-    const { items, total, page, pageSize } = await this.meetings.getHistory(user.id, query);
+    return this.meetings.listHistoryItems(user.id, query);
+  }
 
-    return {
-      items: items.map(({ meeting, attachmentCount, recordingCount }): MeetingHistoryItemDto => {
-        const startedAt = meeting.startedAt;
-        const endedAt = meeting.endedAt;
-        const durationMinutes =
-          startedAt && endedAt
-            ? Math.max(0, Math.round((endedAt.getTime() - startedAt.getTime()) / 60_000))
-            : null;
-
-        return {
-          id: meeting.id,
-          code: meeting.code,
-          title: meeting.title,
-          status: meeting.status,
-          startedAt: startedAt?.toISOString() ?? null,
-          endedAt: endedAt?.toISOString() ?? null,
-          createdAt: meeting.createdAt.toISOString(),
-          durationMinutes,
-          isHost: meeting.hostId === user.id,
-          hostName: meeting.host.name,
-          participantCount: meeting._count.participants,
-          participantsPreview: meeting.participants.map((p) => ({
-            id: p.user.id,
-            name: p.user.name,
-            avatar: this.meetings.resolveAvatarUrl(p.user.avatarKey),
-          })),
-          messageCount: meeting._count.messages,
-          attachmentCount,
-          recordingCount,
-        };
-      }),
-      total,
-      page,
-      pageSize,
-    };
+  @Get('history/datagrid')
+  @ApiOperation({ summary: 'Meeting history as a server-driven datagrid' })
+  async historyDatagrid(
+    @Query() query: HistoryQueryDto,
+    @CurrentUser() user: RequestUser,
+  ): Promise<DatagridResponseDto<MeetingHistoryItemDto>> {
+    return this.meetings.getHistoryDatagrid(user.id, query);
   }
 
   @Get(':code')

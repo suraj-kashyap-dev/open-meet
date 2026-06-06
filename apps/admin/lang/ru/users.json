@@ -1,6 +1,7 @@
 {
   "eyebrow": "Управление",
   "title": "Пользователи",
+  "subtitle": "Управляйте всеми, кто может входить в рабочее пространство.",
   "total-count": "{count, number} всего",
   "search-placeholder": "Поиск по имени или email",
   "refreshing": "Обновление…",

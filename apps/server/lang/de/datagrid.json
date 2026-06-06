@@ -1,0 +1,105 @@
+{
+  "history": {
+    "columns": {
+      "meeting": "Besprechung",
+      "started": "Gestartet",
+      "duration": "Dauer",
+      "participants": "Teilnehmer",
+      "activity": "Aktivität",
+      "status": "Status"
+    },
+    "actions": {
+      "open": "Öffnen"
+    }
+  },
+  "users": {
+    "search": "Nach Name oder E-Mail suchen",
+    "columns": {
+      "name": "Name",
+      "email": "E-Mail",
+      "meetingsHosted": "Organisiert",
+      "meetingsAttended": "Teilgenommen",
+      "canCreateGroups": "Kann Gruppen erstellen",
+      "createdAt": "Beigetreten",
+      "actions": "Aktionen"
+    },
+    "actions": {
+      "create": "Neuer Benutzer",
+      "invite": "Einladen",
+      "edit": "Bearbeiten",
+      "toggleChat": "Chat umschalten",
+      "delete": "Löschen"
+    }
+  },
+  "meetings": {
+    "search": "Meetings suchen",
+    "columns": {
+      "title": "Titel",
+      "host": "Gastgeber",
+      "participants": "Teilnehmer",
+      "messages": "Nachrichten",
+      "status": "Status",
+      "startedAt": "Gestartet",
+      "actions": "Aktionen"
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "WAITING": "Wartend",
+        "ACTIVE": "Aktiv",
+        "ENDED": "Beendet"
+      }
+    },
+    "actions": {
+      "view": "Ansehen",
+      "end": "Beenden",
+      "delete": "Löschen",
+      "end-all": "Alle beenden"
+    }
+  },
+  "groups": {
+    "search": "Gruppen suchen",
+    "columns": {
+      "name": "Name",
+      "members": "Mitglieder",
+      "createdAt": "Erstellt",
+      "actions": "Aktionen"
+    },
+    "actions": {
+      "create": "Neue Gruppe",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
+  },
+  "administrators": {
+    "search": "Nach Name oder E-Mail suchen",
+    "columns": {
+      "name": "Name",
+      "email": "E-Mail",
+      "role": "Rolle",
+      "lastLogin": "Letzter Login",
+      "createdAt": "Hinzugefügt",
+      "actions": "Aktionen"
+    },
+    "actions": {
+      "invite": "Einladen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
+  },
+  "roles": {
+    "search": "Rollen suchen",
+    "columns": {
+      "name": "Name",
+      "permissions": "Berechtigungen",
+      "members": "Mitglieder",
+      "system": "System",
+      "actions": "Aktionen"
+    },
+    "actions": {
+      "create": "Neue Rolle",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
+    }
+  }
+}

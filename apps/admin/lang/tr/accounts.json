@@ -2,6 +2,7 @@
   "eyebrow": "Ayarlar",
   "title": "Yöneticiler",
   "access-summary": "{count, plural, one {# kişinin} other {# kişinin}} bu konsola erişimi var.",
+  "subtitle": "Bu konsola kimin erişebileceğini yönetin.",
   "invite-button": "Yönetici davet et",
   "create-button": "Yönetici oluştur",
   "empty": "Henüz yönetici yok.",

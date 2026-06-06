@@ -3,9 +3,12 @@ import { MeetingStatus, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../../../database/prisma.service';
 
-interface ListParams {
-  skip: number;
-  take: number;
+const meetingInclude = {
+  host: { select: { id: true, name: true, email: true } },
+  _count: { select: { participants: true, messages: true } },
+} satisfies Prisma.MeetingInclude;
+
+interface MeetingFilters {
   search?: string;
   status?: MeetingStatus;
 }
@@ -14,10 +17,7 @@ interface ListParams {
 export class AdminMeetingsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  private whereFromFilters({
-    search,
-    status,
-  }: Pick<ListParams, 'search' | 'status'>): Prisma.MeetingWhereInput {
+  private whereFromFilters({ search, status }: MeetingFilters): Prisma.MeetingWhereInput {
     const where: Prisma.MeetingWhereInput = {};
 
     if (status) {
@@ -36,21 +36,27 @@ export class AdminMeetingsRepository {
     return where;
   }
 
-  list(params: ListParams) {
+  searchWhere(search?: string, status?: MeetingStatus): Prisma.MeetingWhereInput {
+    return this.whereFromFilters({ search, status });
+  }
+
+  listWith(params: {
+    skip: number;
+    take: number;
+    where: Prisma.MeetingWhereInput;
+    orderBy: Prisma.MeetingOrderByWithRelationInput;
+  }) {
     return this.prisma.meeting.findMany({
-      where: this.whereFromFilters(params),
       skip: params.skip,
       take: params.take,
-      orderBy: [{ startedAt: { sort: 'desc', nulls: 'last' } }, { createdAt: 'desc' }],
-      include: {
-        host: { select: { id: true, name: true, email: true } },
-        _count: { select: { participants: true, messages: true } },
-      },
+      where: params.where,
+      orderBy: params.orderBy,
+      include: meetingInclude,
     });
   }
 
-  count(params: Pick<ListParams, 'search' | 'status'>): Promise<number> {
-    return this.prisma.meeting.count({ where: this.whereFromFilters(params) });
+  countWith(where: Prisma.MeetingWhereInput): Promise<number> {
+    return this.prisma.meeting.count({ where });
   }
 
   countActiveParticipants(meetingId: string): Promise<number> {

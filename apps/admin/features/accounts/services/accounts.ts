@@ -1,7 +1,6 @@
 import type {
   AdminAcceptInviteDto,
   AdminAccountDto,
-  AdminAccountListResponseDto,
   AdminCreateAccountDto,
   AdminCreateInviteDto,
   AdminInviteDto,
@@ -13,9 +12,6 @@ import type {
 import { api } from '@/lib/api/client';
 
 export const adminAccountsApi = {
-  list: (signal?: AbortSignal) =>
-    api.get<AdminAccountListResponseDto>('/admin/accounts', { signal }),
-
   create: (dto: AdminCreateAccountDto) => api.post<AdminAccountDto>('/admin/accounts', dto),
 
   update: (id: string, dto: AdminUpdateAccountDto) =>

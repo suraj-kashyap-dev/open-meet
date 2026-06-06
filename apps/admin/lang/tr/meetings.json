@@ -1,6 +1,7 @@
 {
   "eyebrow": "Denetle",
   "title": "Toplantılar",
+  "subtitle": "Canlı toplantıları izleyin ve geçmiş oturumları inceleyin.",
   "total-count": "Toplam {count, number}",
   "end-all": "Tüm aktif olanları sonlandır",
   "search-placeholder": "Kod, başlık veya düzenleyene göre ara",

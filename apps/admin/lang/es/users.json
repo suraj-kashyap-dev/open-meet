@@ -1,6 +1,7 @@
 {
   "eyebrow": "Gestionar",
   "title": "Usuarios",
+  "subtitle": "Gestiona a todos los que pueden iniciar sesión en el espacio de trabajo.",
   "total-count": "{count, number} en total",
   "search-placeholder": "Buscar por nombre o correo",
   "refreshing": "Actualizando…",

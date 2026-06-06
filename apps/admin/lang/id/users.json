@@ -1,6 +1,7 @@
 {
   "eyebrow": "Kelola",
   "title": "Pengguna",
+  "subtitle": "Kelola semua orang yang dapat masuk ke ruang kerja.",
   "total-count": "{count, number} total",
   "search-placeholder": "Cari berdasarkan nama atau email",
   "refreshing": "Memperbarui…",

@@ -1,6 +1,7 @@
 {
   "eyebrow": "Gestisci",
   "title": "Utenti",
+  "subtitle": "Gestisci tutti coloro che possono accedere allo spazio di lavoro.",
   "total-count": "{count, number} in totale",
   "search-placeholder": "Cerca per nome o email",
   "refreshing": "Aggiornamento…",

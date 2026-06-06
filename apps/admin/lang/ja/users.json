@@ -1,6 +1,7 @@
 {
   "eyebrow": "管理",
   "title": "ユーザー",
+  "subtitle": "ワークスペースにサインインできるユーザーを管理します。",
   "total-count": "{count, number} 件",
   "search-placeholder": "名前またはメールアドレスで検索",
   "refreshing": "更新中…",

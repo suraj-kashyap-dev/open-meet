@@ -4,16 +4,21 @@ import {
   ApiErrorCode,
   type AdminGroupDetailDto,
   type AdminGroupDto,
-  type AdminGroupListResponseDto,
   type AdminGroupMemberDto,
+  type DatagridResponseDto,
 } from '@open-meet/types';
 
+import type { Prisma } from '@prisma/client';
+
+import { DatagridService, buildOrderBy, paginate } from '../../../common/datagrid';
 import { StorageService } from '../../../storage/storage.service';
 
 import type { AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 import { ChatPermissionsService } from '../../client/messaging/chat-permissions.service';
 
 import { AdminGroupsRepository, type GroupDetail, type GroupListRow } from './groups.repository';
+import { AdminGroupsDatagridQueryDto } from './dto/groups-datagrid-query.dto';
+import { GROUPS_DATAGRID } from './groups.datagrid';
 
 @Injectable()
 export class AdminGroupsService {
@@ -21,11 +26,29 @@ export class AdminGroupsService {
     private readonly groups: AdminGroupsRepository,
     private readonly storage: StorageService,
     private readonly permissions: ChatPermissionsService,
+    private readonly grid: DatagridService,
   ) {}
 
-  async list(): Promise<AdminGroupListResponseDto> {
-    const rows = await this.groups.list();
-    return { items: rows.map((g) => this.toDto(g)) };
+
+  async datagrid(query: AdminGroupsDatagridQueryDto): Promise<DatagridResponseDto<AdminGroupDto>> {
+    const { skip, take } = paginate(query);
+    const search = query.search?.trim() || undefined;
+    const where = this.groups.searchWhere(search);
+    const orderBy = buildOrderBy(
+      GROUPS_DATAGRID,
+      query,
+    ) as Prisma.ConversationOrderByWithRelationInput;
+
+    const [rows, total] = await Promise.all([
+      this.groups.listWith({ skip, take, where, orderBy }),
+      this.groups.countWith(where),
+    ]);
+
+    return this.grid.build(GROUPS_DATAGRID, {
+      rows: rows.map((g) => this.toDto(g)),
+      total,
+      query,
+    });
   }
 
   async create(

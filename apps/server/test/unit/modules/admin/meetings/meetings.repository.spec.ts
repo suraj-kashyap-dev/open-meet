@@ -26,20 +26,19 @@ describe('AdminMeetingsRepository', () => {
     repo = new AdminMeetingsRepository({ meeting, participant } as unknown as PrismaService);
   });
 
-  describe('list() / count() filters', () => {
-    it('should use an empty where when no filters are given', async () => {
-      await repo.list({ skip: 0, take: 10 });
-      expect(meeting.findMany.mock.calls[0][0].where).toEqual({});
+  describe('searchWhere() filters', () => {
+    it('should use an empty where when no filters are given', () => {
+      expect(repo.searchWhere()).toEqual({});
     });
 
-    it('should narrow by status when a status filter is given', async () => {
-      await repo.list({ skip: 0, take: 10, status: MeetingStatus.ACTIVE });
-      expect(meeting.findMany.mock.calls[0][0].where).toEqual({ status: MeetingStatus.ACTIVE });
+    it('should narrow by status when a status filter is given', () => {
+      expect(repo.searchWhere(undefined, MeetingStatus.ACTIVE)).toEqual({
+        status: MeetingStatus.ACTIVE,
+      });
     });
 
-    it('should build a case-insensitive OR across code/title/host when searching', async () => {
-      await repo.count({ search: 'foo' });
-      expect(meeting.count.mock.calls[0][0].where).toEqual({
+    it('should build a case-insensitive OR across code/title/host when searching', () => {
+      expect(repo.searchWhere('foo')).toEqual({
         OR: [
           { code: { contains: 'foo', mode: 'insensitive' } },
           { title: { contains: 'foo', mode: 'insensitive' } },
@@ -47,6 +46,22 @@ describe('AdminMeetingsRepository', () => {
           { host: { email: { contains: 'foo', mode: 'insensitive' } } },
         ],
       });
+    });
+  });
+
+  describe('listWith() / countWith()', () => {
+    it('should pass the prebuilt where and orderBy straight through', async () => {
+      const where = { status: MeetingStatus.ENDED };
+      await repo.listWith({ skip: 5, take: 5, where, orderBy: { startedAt: 'desc' } });
+      expect(meeting.findMany.mock.calls[0][0]).toMatchObject({
+        skip: 5,
+        take: 5,
+        where,
+        orderBy: { startedAt: 'desc' },
+      });
+
+      await repo.countWith(where);
+      expect(meeting.count.mock.calls[0][0].where).toBe(where);
     });
   });
 

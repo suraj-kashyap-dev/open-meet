@@ -1,6 +1,7 @@
 import { ConflictException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { DatagridService } from '@/common/datagrid';
 import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
 import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
 import { AdminRolesService } from '@/modules/admin/rbac/admin-roles.service';
@@ -16,7 +17,7 @@ function makeRole(overrides: Partial<Record<string, unknown>> = {}) {
     cacheRev: 1,
     createdAt: new Date('2026-05-01T00:00:00Z'),
     updatedAt: new Date('2026-05-01T00:00:00Z'),
-    _count: { admins: 0 },
+    _count: { admins: 2 },
     ...overrides,
   };
 }
@@ -24,6 +25,7 @@ function makeRole(overrides: Partial<Record<string, unknown>> = {}) {
 describe('AdminRolesService', () => {
   let repo: Record<string, ReturnType<typeof vi.fn>>;
   let resolver: { invalidate: ReturnType<typeof vi.fn> };
+  let grid: { build: ReturnType<typeof vi.fn> };
   let service: AdminRolesService;
 
   beforeEach(() => {
@@ -32,6 +34,9 @@ describe('AdminRolesService', () => {
       findById: vi.fn(),
       findByName: vi.fn(),
       findWithMemberCount: vi.fn(),
+      searchWhere: vi.fn().mockReturnValue({ _w: true }),
+      listWith: vi.fn().mockResolvedValue([makeRole()]),
+      countWith: vi.fn().mockResolvedValue(1),
       create: vi.fn(),
       update: vi.fn(),
       delete: vi.fn(),
@@ -39,10 +44,51 @@ describe('AdminRolesService', () => {
       upsertSystem: vi.fn(),
     };
     resolver = { invalidate: vi.fn() };
+    grid = { build: vi.fn().mockReturnValue({ ok: true }) };
     service = new AdminRolesService(
       repo as unknown as AdminRoleRepository,
       resolver as unknown as AdminPermissionResolver,
+      grid as unknown as DatagridService,
     );
+  });
+
+  describe('datagrid()', () => {
+    it('clamps paging, trims search, builds an allow-listed orderBy, and maps rows to the grid', async () => {
+      const res = await service.datagrid({
+        page: 2,
+        pageSize: 5,
+        sort: 'name',
+        dir: 'asc',
+        search: '  Analyst ',
+      } as never);
+
+      expect(repo.searchWhere).toHaveBeenCalledWith('Analyst');
+      expect(repo.listWith).toHaveBeenCalledWith({
+        skip: 5,
+        take: 5,
+        where: { _w: true },
+        orderBy: { name: 'asc' },
+      });
+      expect(repo.countWith).toHaveBeenCalledWith({ _w: true });
+
+      const [def, data] = grid.build.mock.calls[0];
+      expect(def.resource).toBe('roles');
+      expect(data.total).toBe(1);
+      expect(data.rows[0]).toMatchObject({ memberCount: 2, permissions: ['users.view'] });
+      expect(res).toEqual({ ok: true });
+    });
+
+    it('ignores a non-sortable column and falls back to the default sort', async () => {
+      await service.datagrid({ sort: 'actions' } as never);
+      expect(repo.listWith).toHaveBeenCalledWith(
+        expect.objectContaining({ orderBy: { name: 'asc' } }),
+      );
+    });
+
+    it('passes blank search as undefined to searchWhere', async () => {
+      await service.datagrid({ search: '   ' } as never);
+      expect(repo.searchWhere).toHaveBeenCalledWith(undefined);
+    });
   });
 
   describe('create()', () => {

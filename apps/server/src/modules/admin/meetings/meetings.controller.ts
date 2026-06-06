@@ -15,7 +15,7 @@ import type {
   AdminBulkEndResponseDto,
   AdminMeetingDetailDto,
   AdminMeetingDto,
-  AdminMeetingListResponseDto,
+  DatagridResponseDto,
 } from '@open-meet/types';
 
 import { Public } from '../../../common/decorators/public.decorator';
@@ -23,7 +23,7 @@ import { Public } from '../../../common/decorators/public.decorator';
 import { AdminAuthGuard } from '../auth/guards/admin-auth.guard';
 import { AdminPermissionsGuard } from '../rbac/admin-permissions.guard';
 import { RequirePermissions } from '../rbac/decorators/require-permissions.decorator';
-import { AdminListMeetingsQueryDto } from './dto/list-meetings-query.dto';
+import { AdminMeetingsDatagridQueryDto } from './dto/meetings-datagrid-query.dto';
 import { AdminMeetingsService } from './meetings.service';
 
 @ApiTags('admin-meetings')
@@ -33,11 +33,13 @@ import { AdminMeetingsService } from './meetings.service';
 export class AdminMeetingsController {
   constructor(private readonly meetings: AdminMeetingsService) {}
 
-  @Get()
+  @Get('datagrid')
   @RequirePermissions('meetings.view')
-  @ApiOperation({ summary: 'Paginated list of meetings with optional search + status filter' })
-  list(@Query() query: AdminListMeetingsQueryDto): Promise<AdminMeetingListResponseDto> {
-    return this.meetings.list(query);
+  @ApiOperation({ summary: 'Server-driven datagrid (schema + rows) for meetings' })
+  datagrid(
+    @Query() query: AdminMeetingsDatagridQueryDto,
+  ): Promise<DatagridResponseDto<AdminMeetingDto>> {
+    return this.meetings.datagrid(query);
   }
 
   @Post('end-all-active')
