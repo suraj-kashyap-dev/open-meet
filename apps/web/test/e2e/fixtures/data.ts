@@ -2,6 +2,7 @@ import type {
   ActivityFeedDto,
   AuthResponseDto,
   ChatMessageDto,
+  ChatMessagePageDto,
   ConversationDto,
   ConversationListDto,
   GoogleAuthStatusDto,
@@ -247,6 +248,11 @@ export const dmConversation: ConversationDto = {
 
 export const conversationList: ConversationListDto = {
   items: [dmConversation],
+};
+
+export const chatMessagePage: ChatMessagePageDto = {
+  nextCursor: null,
+  items: dmConversation.lastMessage ? [dmConversation.lastMessage] : [],
 };
 
 export const emptyConversationList: ConversationListDto = { items: [] };

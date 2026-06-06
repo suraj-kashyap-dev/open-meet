@@ -6,7 +6,6 @@ import { ThemeProvider } from 'next-themes';
 import { useState, type ReactNode } from 'react';
 
 import { UnauthorizedBridge } from '@/features/web/auth/components/unauthorized-bridge';
-import { TopProgress } from '@open-meet/ui/top-progress';
 
 import { AuthBootstrap } from './auth-bootstrap';
 import { HydrationMarker } from './hydration-marker';
@@ -42,7 +41,6 @@ export function Providers({ children }: { children: ReactNode }) {
         <AuthBootstrap />
         <PushBootstrap />
         <UnauthorizedBridge />
-        <TopProgress />
         {children}
         {process.env.APP_DEBUG == 'true' ? (
           <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />

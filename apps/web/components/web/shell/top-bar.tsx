@@ -4,6 +4,8 @@ import { AtSign, MessageSquare, Search, Star, Video } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { ActivityIndicator } from '@open-meet/ui/activity-indicator';
+
 import { useCommandPalette } from '@/components/shared/command-palette-store';
 import { PresenceStatusPicker } from '@/features/web/chat/components/presence-status-picker';
 import { usePathname } from '@/i18n/navigation';
@@ -78,6 +80,7 @@ export function TopBar() {
       </button>
 
       <div className="flex shrink-0 items-center gap-1.5">
+        <ActivityIndicator />
         <PresenceStatusPicker />
       </div>
     </header>

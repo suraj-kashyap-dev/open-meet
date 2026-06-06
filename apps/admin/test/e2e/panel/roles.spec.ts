@@ -9,7 +9,7 @@ test.describe('Admin /roles page', () => {
     await page.goto('/en/roles');
 
     await expect(page.getByRole('heading', { name: 'Admin roles', exact: true })).toBeVisible();
-    await expect(page.getByText('Administrator')).toBeVisible();
+    await expect(page.getByText('Administrator', { exact: true })).toBeVisible();
     await expect(page.getByText('Member', { exact: true })).toBeVisible();
     await expect(page.getByText('Analyst')).toBeVisible();
   });

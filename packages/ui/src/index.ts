@@ -1,4 +1,5 @@
 export * from './cn';
+export * from './activity-indicator';
 export * from './avatar';
 export * from './button';
 export * from './calendar';

@@ -60,6 +60,7 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
   const meeting = options.meeting ?? fixtures.hostMeeting;
   const participants = options.participants ?? fixtures.participants;
   const messages = options.messages ?? fixtures.messagePage;
+  const chatMessages = fixtures.chatMessagePage;
   const recordings = options.recordings ?? fixtures.recordings;
   const googleEnabled = options.googleEnabled ?? false;
   const conversations = options.conversations ?? fixtures.conversationList;
@@ -116,6 +117,10 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
           break;
       }
 
+      if (path.startsWith('/messaging/conversations/') && path.endsWith('/messages')) {
+        return json(200, ok(chatMessages));
+      }
+
       if (path.startsWith('/meetings/')) {
         if (path.endsWith('/messages')) return json(200, ok(messages));
         if (path.endsWith('/recordings')) return json(200, ok(recordings));
@@ -153,6 +158,21 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
           return json(200, ok('errorStatus' in meeting ? fixtures.hostMeeting : meeting));
         default:
           break;
+      }
+
+      if (path.startsWith('/messaging/conversations/') && path.endsWith('/messages')) {
+        const body = (request.postDataJSON() ?? {}) as { content?: string; clientNonce?: string };
+        return json(
+          200,
+          ok({
+            ...fixtures.dmConversation.lastMessage,
+            id: `sent-${body.clientNonce ?? 'msg'}`,
+            content: body.content ?? '',
+            clientNonce: body.clientNonce ?? null,
+            sender: { id: fixtures.currentUser.id, name: fixtures.currentUser.name, avatar: null },
+            sentAt: '2026-05-21T11:00:00.000Z',
+          }),
+        );
       }
 
       if (path.startsWith('/meetings/')) {
