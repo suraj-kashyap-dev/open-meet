@@ -5,7 +5,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { PrismaService } from '@/database/prisma.service';
 
-import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from './setup-app';
+import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from '../setup-app';
 
 const SUPER = {
   email: 'super@example.com',

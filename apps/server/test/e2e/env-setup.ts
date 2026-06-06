@@ -14,3 +14,6 @@ process.env.LIVEKIT_HOST ??= 'ws://localhost:7880';
 process.env.API_PUBLIC_URL ??= 'http://localhost:3002';
 process.env.FRONTEND_URL ??= 'http://localhost:3000';
 process.env.LOCAL_STORAGE_DIR ??= join(tmpdir(), 'openmeet-e2e-uploads');
+
+process.env.VAPID_PUBLIC_KEY = '';
+process.env.VAPID_PRIVATE_KEY = '';

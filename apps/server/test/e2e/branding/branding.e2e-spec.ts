@@ -1,7 +1,7 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from './setup-app';
+import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from '../setup-app';
 
 const ADMIN = {
   email: 'brand-admin@example.com',

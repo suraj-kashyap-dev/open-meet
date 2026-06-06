@@ -4,7 +4,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { PrismaService } from '@/database/prisma.service';
 
-import { createTestApp, http, registerUser, resetDb } from './setup-app';
+import { createTestApp, http, registerUser, resetDb } from '../setup-app';
 
 const hashToken = (token: string) => createHash('sha256').update(token).digest('hex');
 

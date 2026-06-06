@@ -1,7 +1,7 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { createTestApp, http, registerUser, resetDb } from './setup-app';
+import { createTestApp, http, registerUser, resetDb } from '../setup-app';
 
 describe('Recording (e2e)', () => {
   let app: NestFastifyApplication;

@@ -65,7 +65,7 @@ export function http(app: NestFastifyApplication) {
 export async function resetDb(app: NestFastifyApplication): Promise<void> {
   const prisma = app.get(PrismaService);
   await prisma.$executeRawUnsafe(
-    'TRUNCATE TABLE "Attachment","Message","Participant","MeetingInvite","Recording","PollVote","PollOption","Poll","MessageReaction","MessageMention","PinnedMessage","SavedMessage","ChatMessage","ConversationMember","Conversation","UserPresence","UserInvite","UserSettings","Meeting","User","AdminInvite","Admin","WorkspaceSettings" RESTART IDENTITY CASCADE',
+    'TRUNCATE TABLE "Attachment","Message","Participant","MeetingInvite","Recording","PollVote","PollOption","Poll","MessageReaction","MessageMention","PinnedMessage","SavedMessage","ChatMessage","ConversationMember","Conversation","UserPresence","PushSubscription","UserInvite","UserSettings","Meeting","User","AdminInvite","Admin","WorkspaceSettings" RESTART IDENTITY CASCADE',
   );
 }
 
