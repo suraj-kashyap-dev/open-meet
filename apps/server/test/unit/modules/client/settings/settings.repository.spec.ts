@@ -1,8 +1,8 @@
 import type { UserSettings } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { SettingsRepository } from '@/modules/client/settings/settings.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { SettingsRepository } from '@/modules/client/settings/repositories/settings.repository';
 
 describe('SettingsRepository', () => {
   let repo: SettingsRepository;

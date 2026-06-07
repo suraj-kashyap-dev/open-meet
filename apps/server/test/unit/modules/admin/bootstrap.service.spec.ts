@@ -3,8 +3,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AdminBootstrapService } from '@/modules/admin/bootstrap.service';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AdminBootstrapService } from '@/modules/admin/services/bootstrap.service';
 
 vi.mock('argon2', () => ({ hash: vi.fn().mockResolvedValue('HASH'), argon2id: 2 }));
 

@@ -1,10 +1,10 @@
 import { NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { SavedService } from '@/modules/client/messaging/saved.service';
-import { type SavedRepository } from '@/modules/client/messaging/saved.repository';
-import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
+import { SavedService } from '@/modules/client/messaging/services/saved.service';
+import { type SavedRepository } from '@/modules/client/messaging/repositories/saved.repository';
+import { type MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
 
 describe('SavedService', () => {

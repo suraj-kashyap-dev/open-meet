@@ -3,12 +3,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { ConversationsService } from '@/modules/client/messaging/conversations.service';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { type PresenceService } from '@/modules/client/messaging/presence.service';
+import { ConversationsService } from '@/modules/client/messaging/services/conversations.service';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import { type PresenceService } from '@/modules/client/messaging/services/presence.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type ChatBus, userRoom } from '@/modules/client/messaging/chat-bus.service';
+import { type ChatBus, userRoom } from '@/modules/client/messaging/services/chat-bus.service';
 
 function member(userId: string, overrides: Record<string, unknown> = {}) {
   return {

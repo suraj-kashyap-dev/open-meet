@@ -1,8 +1,8 @@
 import { PresenceStatus, type UserPresence } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { PresenceRepository } from '@/modules/client/messaging/presence.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { PresenceRepository } from '@/modules/client/messaging/repositories/presence.repository';
 
 describe('PresenceRepository', () => {
   let repo: PresenceRepository;

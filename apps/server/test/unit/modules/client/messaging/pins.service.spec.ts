@@ -3,12 +3,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { PinsService } from '@/modules/client/messaging/pins.service';
-import { type PinsRepository } from '@/modules/client/messaging/pins.repository';
-import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
+import { PinsService } from '@/modules/client/messaging/services/pins.service';
+import { type PinsRepository } from '@/modules/client/messaging/repositories/pins.repository';
+import { type MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type ChatBus, userRoom } from '@/modules/client/messaging/chat-bus.service';
+import { type ChatBus, userRoom } from '@/modules/client/messaging/services/chat-bus.service';
 
 describe('PinsService', () => {
   let pins: {

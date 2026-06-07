@@ -8,6 +8,7 @@ interface Props {
 
 export default async function LobbyPage({ params }: Props) {
   const { code } = await params;
+
   if (code === 'register') {
     notFound();
   }

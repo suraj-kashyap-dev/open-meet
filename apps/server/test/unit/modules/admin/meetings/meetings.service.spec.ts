@@ -3,10 +3,10 @@ import { MeetingStatus } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { DatagridService } from '@/common/datagrid';
-import type { LiveKitService } from '@/integrations/livekit/livekit.service';
-import type { StorageService } from '@/storage/storage.service';
-import type { AdminMeetingsRepository } from '@/modules/admin/meetings/meetings.repository';
-import { AdminMeetingsService } from '@/modules/admin/meetings/meetings.service';
+import type { LiveKitService } from '@/integrations/livekit/services/livekit.service';
+import type { StorageService } from '@/storage/services/storage.service';
+import type { AdminMeetingsRepository } from '@/modules/admin/meetings/repositories/meetings.repository';
+import { AdminMeetingsService } from '@/modules/admin/meetings/services/meetings.service';
 
 function makeRow(over: Record<string, unknown> = {}) {
   return {

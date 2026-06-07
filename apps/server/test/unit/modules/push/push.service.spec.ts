@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { PushService } from '@/modules/client/push/push.service';
-import { type PushRepository } from '@/modules/client/push/push.repository';
+import { PushService } from '@/modules/client/push/services/push.service';
+import { type PushRepository } from '@/modules/client/push/repositories/push.repository';
 
 const sendNotification = vi.fn();
 const setVapidDetails = vi.fn();

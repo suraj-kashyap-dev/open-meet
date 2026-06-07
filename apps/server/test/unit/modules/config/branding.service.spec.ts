@@ -1,9 +1,9 @@
 import { BadRequestException, PayloadTooLargeException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { BrandingRepository } from '@/modules/config/branding.repository';
-import { BrandingService } from '@/modules/config/branding.service';
-import type { StorageService } from '@/storage/storage.service';
+import type { BrandingRepository } from '@/modules/config/repositories/branding.repository';
+import { BrandingService } from '@/modules/config/services/branding.service';
+import type { StorageService } from '@/storage/services/storage.service';
 
 function setup() {
   const repo = {

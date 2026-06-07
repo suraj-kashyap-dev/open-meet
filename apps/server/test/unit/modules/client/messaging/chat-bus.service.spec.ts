@@ -1,7 +1,11 @@
 import type { Server } from 'socket.io';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ChatBus, conversationRoom, userRoom } from '@/modules/client/messaging/chat-bus.service';
+import {
+  ChatBus,
+  conversationRoom,
+  userRoom,
+} from '@/modules/client/messaging/services/chat-bus.service';
 
 describe('ChatBus', () => {
   let bus: ChatBus;

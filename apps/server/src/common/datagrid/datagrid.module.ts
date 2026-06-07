@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 
-import { DatagridService } from './datagrid.service';
+import { DatagridService } from './services/datagrid.service';
 
 @Global()
 @Module({

@@ -2,9 +2,9 @@ import { ConflictException, ForbiddenException, NotFoundException } from '@nestj
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { DatagridService } from '@/common/datagrid';
-import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
-import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
-import { AdminRolesService } from '@/modules/admin/rbac/admin-roles.service';
+import type { AdminPermissionResolver } from '@/modules/admin/rbac/services/admin-permission-resolver.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
+import { AdminRolesService } from '@/modules/admin/rbac/services/admin-roles.service';
 
 function makeRole(overrides: Partial<Record<string, unknown>> = {}) {
   return {

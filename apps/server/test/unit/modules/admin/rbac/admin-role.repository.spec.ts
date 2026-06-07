@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
 
 const memberCountInclude = { _count: { select: { admins: true } } };
 

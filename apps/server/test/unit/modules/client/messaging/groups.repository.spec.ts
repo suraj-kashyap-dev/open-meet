@@ -1,8 +1,8 @@
 import { ConversationMemberRole, ConversationType } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { GroupsRepository } from '@/modules/client/messaging/groups.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { GroupsRepository } from '@/modules/client/messaging/repositories/groups.repository';
 import {
   conversationInclude,
   conversationListInclude,

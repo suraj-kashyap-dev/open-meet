@@ -3,13 +3,16 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { PollsService } from '@/modules/client/messaging/polls.service';
-import { type PollsRepository } from '@/modules/client/messaging/polls.repository';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { type MessagesService } from '@/modules/client/messaging/messages.service';
+import { PollsService } from '@/modules/client/messaging/services/polls.service';
+import { type PollsRepository } from '@/modules/client/messaging/repositories/polls.repository';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import { type MessagesService } from '@/modules/client/messaging/services/messages.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type ChatBus, conversationRoom } from '@/modules/client/messaging/chat-bus.service';
+import {
+  type ChatBus,
+  conversationRoom,
+} from '@/modules/client/messaging/services/chat-bus.service';
 
 describe('PollsService', () => {
   let polls: {

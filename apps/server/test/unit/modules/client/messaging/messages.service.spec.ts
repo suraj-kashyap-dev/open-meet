@@ -3,14 +3,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { MessagesService } from '@/modules/client/messaging/messages.service';
-import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type ConversationsService } from '@/modules/client/messaging/conversations.service';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { type UploadsService } from '@/modules/uploads/uploads.service';
+import { MessagesService } from '@/modules/client/messaging/services/messages.service';
+import { type MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type ConversationsService } from '@/modules/client/messaging/services/conversations.service';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import { type UploadsService } from '@/modules/uploads/services/uploads.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type ChatBus, conversationRoom } from '@/modules/client/messaging/chat-bus.service';
+import {
+  type ChatBus,
+  conversationRoom,
+} from '@/modules/client/messaging/services/chat-bus.service';
 
 const MAX_LENGTH = 8000;
 

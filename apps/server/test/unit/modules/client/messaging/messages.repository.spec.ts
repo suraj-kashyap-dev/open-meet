@@ -1,9 +1,9 @@
 import { ChatMessagePriority, ChatMessageType, MentionKind } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
+import type { PrismaService } from '@/database/services/prisma.service';
 import { chatMessageInclude } from '@/modules/client/messaging/messaging.includes';
-import { MessagesRepository } from '@/modules/client/messaging/messages.repository';
+import { MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
 
 describe('MessagesRepository', () => {
   let repo: MessagesRepository;

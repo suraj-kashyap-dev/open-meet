@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { WorkspaceConfigRepository } from '@/modules/config/workspace-config.repository';
-import { WorkspaceConfigService } from '@/modules/config/workspace-config.service';
+import type { WorkspaceConfigRepository } from '@/modules/config/repositories/workspace-config.repository';
+import { WorkspaceConfigService } from '@/modules/config/services/workspace-config.service';
 
 function setup() {
   const repo = {

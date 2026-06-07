@@ -12,7 +12,7 @@ import { ApiErrorCode } from '@open-meet/types';
 
 import type { AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 
-import { AdminPermissionResolver } from './admin-permission-resolver.service';
+import { AdminPermissionResolver } from './services/admin-permission-resolver.service';
 import { REQUIRE_ADMIN_PERMISSIONS_KEY } from './decorators/require-permissions.decorator';
 
 @Injectable()

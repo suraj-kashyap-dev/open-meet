@@ -6,8 +6,8 @@ import {
   AdminRbacSeedService,
   SYSTEM_ADMIN_ROLE_ID,
   SYSTEM_MEMBER_ROLE_ID,
-} from '@/modules/admin/rbac/admin-rbac-seed.service';
-import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
+} from '@/modules/admin/rbac/services/admin-rbac-seed.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
 
 describe('AdminRbacSeedService', () => {
   let repo: {

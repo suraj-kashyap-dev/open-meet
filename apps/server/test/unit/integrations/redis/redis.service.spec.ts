@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { RedisService } from '@/integrations/redis/redis.service';
+import { RedisService } from '@/integrations/redis/services/redis.service';
 
 const { RedisCtor } = vi.hoisted(() => {
   const make = (): Record<string, ReturnType<typeof vi.fn>> => ({

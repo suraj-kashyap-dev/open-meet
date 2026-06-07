@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { BrandingRepository } from './branding.repository';
-import { BrandingService } from './branding.service';
-import { ConfigController } from './config.controller';
-import { WorkspaceConfigRepository } from './workspace-config.repository';
-import { WorkspaceConfigService } from './workspace-config.service';
+import { BrandingRepository } from './repositories/branding.repository';
+import { BrandingService } from './services/branding.service';
+import { ConfigController } from './controllers/config.controller';
+import { WorkspaceConfigRepository } from './repositories/workspace-config.repository';
+import { WorkspaceConfigService } from './services/workspace-config.service';
 
 @Module({
   controllers: [ConfigController],

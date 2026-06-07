@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { ChatRepository } from '@/modules/client/chat/chat.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { ChatRepository } from '@/modules/client/chat/repositories/chat.repository';
 
 const include = {
   sender: { select: { id: true, name: true, avatarKey: true } },

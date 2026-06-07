@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
+import type { PrismaService } from '@/database/services/prisma.service';
 import { chatMessageInclude } from '@/modules/client/messaging/messaging.includes';
-import { SavedRepository } from '@/modules/client/messaging/saved.repository';
+import { SavedRepository } from '@/modules/client/messaging/repositories/saved.repository';
 
 const savedInclude = {
   message: {

@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { PushDispatchService } from '@/modules/client/push/push-dispatch.service';
-import { type ConversationsService } from '@/modules/client/messaging/conversations.service';
-import { type SettingsRepository } from '@/modules/client/settings/settings.repository';
-import { type PushRepository } from '@/modules/client/push/push.repository';
-import { type PushService } from '@/modules/client/push/push.service';
-import { type ChatBus } from '@/modules/client/messaging/chat-bus.service';
+import { PushDispatchService } from '@/modules/client/push/services/push-dispatch.service';
+import { type ConversationsService } from '@/modules/client/messaging/services/conversations.service';
+import { type SettingsRepository } from '@/modules/client/settings/repositories/settings.repository';
+import { type PushRepository } from '@/modules/client/push/repositories/push.repository';
+import { type PushService } from '@/modules/client/push/services/push.service';
+import { type ChatBus } from '@/modules/client/messaging/services/chat-bus.service';
 
 describe('PushDispatchService.dispatchChatMessage', () => {
   let conversations: { membersWithMuteState: ReturnType<typeof vi.fn> };

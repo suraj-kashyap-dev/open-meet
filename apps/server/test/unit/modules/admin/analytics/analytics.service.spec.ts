@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { AdminAnalyticsRepository } from '@/modules/admin/analytics/analytics.repository';
-import { AdminAnalyticsService } from '@/modules/admin/analytics/analytics.service';
+import type { AdminAnalyticsRepository } from '@/modules/admin/analytics/repositories/analytics.repository';
+import { AdminAnalyticsService } from '@/modules/admin/analytics/services/analytics.service';
 
 describe('AdminAnalyticsService', () => {
   let service: AdminAnalyticsService;

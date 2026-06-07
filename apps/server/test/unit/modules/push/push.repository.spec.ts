@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { PushRepository } from '@/modules/client/push/push.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { PushRepository } from '@/modules/client/push/repositories/push.repository';
 
 describe('PushRepository', () => {
   let repo: PushRepository;

@@ -1,8 +1,8 @@
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { MeetingsRepository } from '@/modules/client/meetings/meetings.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { MeetingsRepository } from '@/modules/client/meetings/repositories/meetings.repository';
 
 describe('MeetingsRepository', () => {
   let repo: MeetingsRepository;

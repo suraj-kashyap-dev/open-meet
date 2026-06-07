@@ -1,7 +1,7 @@
 import type { Server } from 'socket.io';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { MeetingBus } from '@/websocket/meeting-bus.service';
+import { MeetingBus } from '@/websocket/services/meeting-bus.service';
 
 describe('MeetingBus', () => {
   let bus: MeetingBus;

@@ -1,8 +1,8 @@
 import { ConversationType } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
 import {
   chatMessageInclude,
   conversationInclude,

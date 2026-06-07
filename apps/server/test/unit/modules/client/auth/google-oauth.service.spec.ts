@@ -8,8 +8,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { GoogleOAuthService } from '@/modules/client/auth/google-oauth.service';
-import type { RedisService } from '@/integrations/redis/redis.service';
+import { GoogleOAuthService } from '@/modules/client/auth/services/google-oauth.service';
+import type { RedisService } from '@/integrations/redis/services/redis.service';
 
 function makeConfig(overrides: Record<string, string | undefined> = {}) {
   const values: Record<string, string | undefined> = {

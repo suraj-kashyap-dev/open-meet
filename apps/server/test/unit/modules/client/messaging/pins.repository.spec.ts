@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
+import type { PrismaService } from '@/database/services/prisma.service';
 import { chatMessageInclude } from '@/modules/client/messaging/messaging.includes';
-import { PinsRepository } from '@/modules/client/messaging/pins.repository';
+import { PinsRepository } from '@/modules/client/messaging/repositories/pins.repository';
 
 describe('PinsRepository', () => {
   let repo: PinsRepository;

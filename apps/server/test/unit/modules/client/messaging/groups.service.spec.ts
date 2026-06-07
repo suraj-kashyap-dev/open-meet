@@ -4,17 +4,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { GroupsService } from '@/modules/client/messaging/groups.service';
-import { type GroupsRepository } from '@/modules/client/messaging/groups.repository';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
+import { GroupsService } from '@/modules/client/messaging/services/groups.service';
+import { type GroupsRepository } from '@/modules/client/messaging/repositories/groups.repository';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type PresenceService } from '@/modules/client/messaging/presence.service';
+import { type PresenceService } from '@/modules/client/messaging/services/presence.service';
 import {
   type ChatBus,
   conversationRoom,
   userRoom,
-} from '@/modules/client/messaging/chat-bus.service';
+} from '@/modules/client/messaging/services/chat-bus.service';
 
 function member(userId: string, role: ConversationMemberRole = ConversationMemberRole.MEMBER) {
   return {

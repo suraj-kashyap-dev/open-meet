@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AdminRepository } from '@/modules/admin/admin.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AdminRepository } from '@/modules/admin/repositories/admin.repository';
 
 describe('AdminRepository', () => {
   let repo: AdminRepository;

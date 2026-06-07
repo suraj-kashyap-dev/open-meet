@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { MeetingBus } from './meeting-bus.service';
+import { MeetingBus } from './services/meeting-bus.service';
 
 @Module({
   providers: [MeetingBus],

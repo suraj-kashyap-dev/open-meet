@@ -3,11 +3,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { ReactionsService } from '@/modules/client/messaging/reactions.service';
-import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
+import { ReactionsService } from '@/modules/client/messaging/services/reactions.service';
+import { type MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type ChatBus, conversationRoom } from '@/modules/client/messaging/chat-bus.service';
+import {
+  type ChatBus,
+  conversationRoom,
+} from '@/modules/client/messaging/services/chat-bus.service';
 
 describe('ReactionsService', () => {
   let messages: {

@@ -4,9 +4,9 @@ import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { MeetingStatus, type Recording, RecordingStatus } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { MeetingsService } from '@/modules/client/meetings/meetings.service';
-import { RecordingRepository } from '@/modules/client/recording/recording.repository';
-import { RecordingService } from '@/modules/client/recording/recording.service';
+import { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
+import { RecordingRepository } from '@/modules/client/recording/repositories/recording.repository';
+import { RecordingService } from '@/modules/client/recording/services/recording.service';
 
 const startRoomCompositeEgress = vi.fn();
 const stopEgress = vi.fn();

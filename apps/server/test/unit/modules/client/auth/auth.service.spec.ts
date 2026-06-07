@@ -5,12 +5,12 @@ import { BadRequestException, ConflictException, UnauthorizedException } from '@
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 import * as argon2 from 'argon2';
 
-import { AuthService } from '@/modules/client/auth/auth.service';
-import { AuthRepository } from '@/modules/client/auth/auth.repository';
-import { AvatarsService } from '@/modules/client/auth/avatars.service';
-import { UserInviteRepository } from '@/modules/client/auth/user-invite.repository';
-import { PresenceService } from '@/modules/client/messaging/presence.service';
-import { RedisService } from '@/integrations/redis/redis.service';
+import { AuthService } from '@/modules/client/auth/services/auth.service';
+import { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
+import { AvatarsService } from '@/modules/client/auth/services/avatars.service';
+import { UserInviteRepository } from '@/modules/client/auth/repositories/user-invite.repository';
+import { PresenceService } from '@/modules/client/messaging/services/presence.service';
+import { RedisService } from '@/integrations/redis/services/redis.service';
 
 function makeUser(overrides: Partial<{ id: string; email: string; name: string }> = {}) {
   return {

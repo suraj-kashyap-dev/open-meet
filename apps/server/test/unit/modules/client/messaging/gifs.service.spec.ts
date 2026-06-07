@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { GifsService } from '@/modules/client/messaging/gifs.service';
+import { GifsService } from '@/modules/client/messaging/services/gifs.service';
 
 function makeConfig(key: string | undefined) {
   return { get: vi.fn().mockReturnValue(key) } as never;

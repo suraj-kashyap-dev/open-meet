@@ -4,11 +4,11 @@ import { Module } from '@nestjs/common';
 import { MessagingModule } from '../messaging/messaging.module';
 import { SettingsModule } from '../settings/settings.module';
 import { PUSH_QUEUE } from './push.constants';
-import { PushController } from './push.controller';
-import { PushDispatchService } from './push-dispatch.service';
+import { PushController } from './controllers/push.controller';
+import { PushDispatchService } from './services/push-dispatch.service';
 import { PushProcessor } from './push.processor';
-import { PushRepository } from './push.repository';
-import { PushService } from './push.service';
+import { PushRepository } from './repositories/push.repository';
+import { PushService } from './services/push.service';
 
 @Module({
   imports: [BullModule.registerQueue({ name: PUSH_QUEUE }), MessagingModule, SettingsModule],

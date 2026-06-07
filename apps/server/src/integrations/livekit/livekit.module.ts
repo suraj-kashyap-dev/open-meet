@@ -4,8 +4,8 @@ import { AuthModule } from '../../modules/client/auth/auth.module';
 import { MeetingsModule } from '../../modules/client/meetings/meetings.module';
 import { RecordingModule } from '../../modules/client/recording/recording.module';
 
-import { LiveKitController } from './livekit.controller';
-import { LiveKitService } from './livekit.service';
+import { LiveKitController } from './controllers/livekit.controller';
+import { LiveKitService } from './services/livekit.service';
 
 @Module({
   imports: [MeetingsModule, AuthModule, RecordingModule],

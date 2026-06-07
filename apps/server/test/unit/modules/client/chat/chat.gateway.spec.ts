@@ -8,10 +8,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ServerEvent } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import type { MeetingsService } from '@/modules/client/meetings/meetings.service';
-import type { ChatService } from '@/modules/client/chat/chat.service';
-import type { MeetingBus } from '@/websocket/meeting-bus.service';
-import { ChatGateway } from '@/modules/client/chat/chat.gateway';
+import type { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
+import type { ChatService } from '@/modules/client/chat/services/chat.service';
+import type { MeetingBus } from '@/websocket/services/meeting-bus.service';
+import { ChatGateway } from '@/modules/client/chat/gateways/chat.gateway';
 import type { SocketUser } from '@/modules/client/chat/ws-auth.util';
 
 const USER: SocketUser = { id: 'u1', email: 'a@x.com', name: 'Alice' };

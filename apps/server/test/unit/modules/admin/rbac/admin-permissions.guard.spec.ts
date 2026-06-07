@@ -6,7 +6,7 @@ import {
 import type { Reflector } from '@nestjs/core';
 import { describe, expect, it, vi } from 'vitest';
 
-import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
+import type { AdminPermissionResolver } from '@/modules/admin/rbac/services/admin-permission-resolver.service';
 import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
 
 function makeCtx(user: { id: string; roleId: string | null } | undefined): ExecutionContext {

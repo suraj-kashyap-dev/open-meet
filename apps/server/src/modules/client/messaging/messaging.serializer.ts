@@ -15,8 +15,8 @@ import {
   type ReactionSummaryDto,
 } from '@open-meet/types';
 
-import { StorageService } from '../../../storage/storage.service';
-import { UploadsService } from '../../uploads/uploads.service';
+import { StorageService } from '../../../storage/services/storage.service';
+import { UploadsService } from '../../uploads/services/uploads.service';
 
 import type {
   ChatMessageWithRelations,
@@ -24,7 +24,7 @@ import type {
   PollWithOptions,
 } from './messaging.includes';
 
-import type { PresenceSnapshot } from './presence.service';
+import type { PresenceSnapshot } from './services/presence.service';
 
 interface SenderRow {
   id: string;

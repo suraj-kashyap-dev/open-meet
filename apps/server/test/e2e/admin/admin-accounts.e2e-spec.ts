@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 import { createTestApp, http, loginAdmin, resetDb, seedAdmin } from '../setup-app';
 

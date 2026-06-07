@@ -4,14 +4,14 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 import { describe, beforeEach, it, expect, vi } from 'vitest';
 
-import { MailService } from '@/integrations/mail/mail.service';
-import { StorageService } from '@/storage/storage.service';
-import { AuthRepository } from '@/modules/client/auth/auth.repository';
-import { AuthService } from '@/modules/client/auth/auth.service';
-import { MeetingsService } from '@/modules/client/meetings/meetings.service';
-import { MeetingsRepository } from '@/modules/client/meetings/meetings.repository';
-import { WorkspaceConfigService } from '@/modules/config/workspace-config.service';
-import { MeetingBus } from '@/websocket/meeting-bus.service';
+import { MailService } from '@/integrations/mail/services/mail.service';
+import { StorageService } from '@/storage/services/storage.service';
+import { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
+import { AuthService } from '@/modules/client/auth/services/auth.service';
+import { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
+import { MeetingsRepository } from '@/modules/client/meetings/repositories/meetings.repository';
+import { WorkspaceConfigService } from '@/modules/config/services/workspace-config.service';
+import { MeetingBus } from '@/websocket/services/meeting-bus.service';
 import { DatagridService } from '@/common/datagrid';
 
 import type { MeetingHistoryItemDto } from '@open-meet/types';

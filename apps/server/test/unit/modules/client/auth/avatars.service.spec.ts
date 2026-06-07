@@ -10,9 +10,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import type { StorageService } from '@/storage/storage.service';
-import type { AuthRepository } from '@/modules/client/auth/auth.repository';
-import { AvatarsService } from '@/modules/client/auth/avatars.service';
+import type { StorageService } from '@/storage/services/storage.service';
+import type { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
+import { AvatarsService } from '@/modules/client/auth/services/avatars.service';
 
 const MAX = 1000;
 

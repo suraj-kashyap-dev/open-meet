@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { UserInviteRepository } from '@/modules/client/auth/user-invite.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { UserInviteRepository } from '@/modules/client/auth/repositories/user-invite.repository';
 
 describe('UserInviteRepository (client auth)', () => {
   let repo: UserInviteRepository;

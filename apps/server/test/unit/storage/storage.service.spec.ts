@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { StorageService } from '@/storage/storage.service';
+import { StorageService } from '@/storage/services/storage.service';
 
 async function streamToString(stream: Readable): Promise<string> {
   const chunks: Buffer[] = [];

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
-import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
+import { AdminPermissionResolver } from '@/modules/admin/rbac/services/admin-permission-resolver.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
 
 function makeRole(
   overrides: Partial<{

@@ -8,15 +8,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ChatServerEvent } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { ConversationGateway } from '@/modules/client/messaging/conversation.gateway';
-import { type ChatBus } from '@/modules/client/messaging/chat-bus.service';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { type MessagesService } from '@/modules/client/messaging/messages.service';
-import { type ReactionsService } from '@/modules/client/messaging/reactions.service';
-import { type ReadStateService } from '@/modules/client/messaging/read-state.service';
-import { type PollsService } from '@/modules/client/messaging/polls.service';
-import { type PresenceService } from '@/modules/client/messaging/presence.service';
+import { ConversationGateway } from '@/modules/client/messaging/gateways/conversation.gateway';
+import { type ChatBus } from '@/modules/client/messaging/services/chat-bus.service';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import { type MessagesService } from '@/modules/client/messaging/services/messages.service';
+import { type ReactionsService } from '@/modules/client/messaging/services/reactions.service';
+import { type ReadStateService } from '@/modules/client/messaging/services/read-state.service';
+import { type PollsService } from '@/modules/client/messaging/services/polls.service';
+import { type PresenceService } from '@/modules/client/messaging/services/presence.service';
 import type { SocketUser } from '@/modules/client/chat/ws-auth.util';
 
 const USER: SocketUser = { id: 'u1', email: 'a@x.com', name: 'Alice' };

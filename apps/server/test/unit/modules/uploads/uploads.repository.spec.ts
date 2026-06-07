@@ -1,8 +1,8 @@
 import type { Attachment } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { UploadsRepository } from '@/modules/uploads/uploads.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { UploadsRepository } from '@/modules/uploads/repositories/uploads.repository';
 
 describe('UploadsRepository', () => {
   let repo: UploadsRepository;

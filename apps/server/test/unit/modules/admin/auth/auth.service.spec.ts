@@ -6,10 +6,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import type { AdminRepository } from '@/modules/admin/admin.repository';
-import { AdminAuthService } from '@/modules/admin/auth/auth.service';
-import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
-import type { StorageService } from '@/storage/storage.service';
+import type { AdminRepository } from '@/modules/admin/repositories/admin.repository';
+import { AdminAuthService } from '@/modules/admin/auth/services/auth.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
+import type { StorageService } from '@/storage/services/storage.service';
 
 vi.mock('argon2', () => ({
   verify: vi.fn(),

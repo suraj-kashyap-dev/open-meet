@@ -1,8 +1,8 @@
 import { ConversationType } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AdminGroupsRepository } from '@/modules/admin/groups/groups.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AdminGroupsRepository } from '@/modules/admin/groups/repositories/groups.repository';
 
 const groupDetailInclude = {
   members: {

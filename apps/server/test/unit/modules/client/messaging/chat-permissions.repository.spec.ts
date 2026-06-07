@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { ChatPermissionsRepository } from '@/modules/client/messaging/chat-permissions.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { ChatPermissionsRepository } from '@/modules/client/messaging/repositories/chat-permissions.repository';
 
 describe('ChatPermissionsRepository', () => {
   let repo: ChatPermissionsRepository;

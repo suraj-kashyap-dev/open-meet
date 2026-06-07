@@ -11,9 +11,13 @@ import request from 'supertest';
 import { AppModule } from '@/app.module';
 import { GlobalExceptionFilter } from '@/common/filters/global-exception.filter';
 import { TransformInterceptor } from '@/common/interceptors/transform.interceptor';
-import { PrismaService } from '@/database/prisma.service';
-import { LiveKitService } from '@/integrations/livekit/livekit.service';
-import { MailService } from '@/integrations/mail/mail.service';
+import { PrismaService } from '@/database/services/prisma.service';
+import {
+  SYSTEM_ADMIN_ROLE_ID,
+  SYSTEM_MEMBER_ROLE_ID,
+} from '@/modules/admin/rbac/services/admin-rbac-seed.service';
+import { LiveKitService } from '@/integrations/livekit/services/livekit.service';
+import { MailService } from '@/integrations/mail/services/mail.service';
 
 const livekitStub = {
   mintToken: async () => ({
@@ -66,6 +70,12 @@ export async function resetDb(app: NestFastifyApplication): Promise<void> {
   const prisma = app.get(PrismaService);
   await prisma.$executeRawUnsafe(
     'TRUNCATE TABLE "Attachment","Message","Participant","MeetingInvite","Recording","PollVote","PollOption","Poll","MessageReaction","MessageMention","PinnedMessage","SavedMessage","ChatMessage","ConversationMember","Conversation","UserPresence","PushSubscription","UserInvite","UserSettings","Meeting","User","AdminInvite","Admin","WorkspaceSettings" RESTART IDENTITY CASCADE',
+  );
+  // The two roles seeded once at app boot (Administrator is immutable, Member is
+  // an editable fallback) must survive resets; only drop test-created custom roles
+  // so the suite is idempotent across local re-runs.
+  await prisma.$executeRawUnsafe(
+    `DELETE FROM "AdminRoleRecord" WHERE "id" NOT IN ('${SYSTEM_ADMIN_ROLE_ID}', '${SYSTEM_MEMBER_ROLE_ID}')`,
   );
 }
 

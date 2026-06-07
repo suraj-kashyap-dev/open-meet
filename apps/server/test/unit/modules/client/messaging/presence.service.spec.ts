@@ -3,11 +3,11 @@ import { PresenceStatus } from '@prisma/client';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { PresenceService } from '@/modules/client/messaging/presence.service';
-import { type PresenceRepository } from '@/modules/client/messaging/presence.repository';
-import { type ChatBus } from '@/modules/client/messaging/chat-bus.service';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type RedisService } from '@/integrations/redis/redis.service';
+import { PresenceService } from '@/modules/client/messaging/services/presence.service';
+import { type PresenceRepository } from '@/modules/client/messaging/repositories/presence.repository';
+import { type ChatBus } from '@/modules/client/messaging/services/chat-bus.service';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type RedisService } from '@/integrations/redis/services/redis.service';
 
 describe('PresenceService', () => {
   let service: PresenceService;

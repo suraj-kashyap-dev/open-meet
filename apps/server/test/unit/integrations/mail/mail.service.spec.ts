@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { MailService } from '@/integrations/mail/mail.service';
+import { MailService } from '@/integrations/mail/services/mail.service';
 
 const { sendMail } = vi.hoisted(() => ({ sendMail: vi.fn() }));
 vi.mock('nodemailer', () => ({ createTransport: vi.fn(() => ({ sendMail })) }));

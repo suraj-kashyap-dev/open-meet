@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { TeammatesService } from '@/modules/client/messaging/teammates.service';
-import { type TeammatesRepository } from '@/modules/client/messaging/teammates.repository';
-import { type PresenceService } from '@/modules/client/messaging/presence.service';
-import { type StorageService } from '@/storage/storage.service';
+import { TeammatesService } from '@/modules/client/messaging/services/teammates.service';
+import { type TeammatesRepository } from '@/modules/client/messaging/repositories/teammates.repository';
+import { type PresenceService } from '@/modules/client/messaging/services/presence.service';
+import { type StorageService } from '@/storage/services/storage.service';
 
 describe('TeammatesService', () => {
   let repo: {

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { TeammatesRepository } from '@/modules/client/messaging/teammates.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { TeammatesRepository } from '@/modules/client/messaging/repositories/teammates.repository';
 
 describe('TeammatesRepository', () => {
   let repo: TeammatesRepository;

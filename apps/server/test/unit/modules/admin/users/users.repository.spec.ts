@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AdminUsersRepository } from '@/modules/admin/users/users.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AdminUsersRepository } from '@/modules/admin/users/repositories/users.repository';
 
 const countInclude = {
   _count: { select: { hostedMeetings: true, meetings: true } },

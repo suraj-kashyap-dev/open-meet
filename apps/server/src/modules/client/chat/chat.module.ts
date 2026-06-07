@@ -7,10 +7,10 @@ import { UploadsModule } from '../../uploads/uploads.module';
 import { MeetingBusModule } from '../../../websocket/meeting-bus.module';
 import { PUSH_QUEUE } from '../push/push.constants';
 
-import { ChatGateway } from './chat.gateway';
-import { ChatHistoryController } from './chat-history.controller';
-import { ChatRepository } from './chat.repository';
-import { ChatService } from './chat.service';
+import { ChatGateway } from './gateways/chat.gateway';
+import { ChatHistoryController } from './controllers/chat-history.controller';
+import { ChatRepository } from './repositories/chat.repository';
+import { ChatService } from './services/chat.service';
 import { WsJwtGuard } from './ws-jwt.guard';
 
 @Module({

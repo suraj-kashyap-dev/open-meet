@@ -8,9 +8,12 @@ import {
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { DatagridService } from '@/common/datagrid';
-import type { StorageService } from '@/storage/storage.service';
-import type { AdminUsersRepository, UserWithCounts } from '@/modules/admin/users/users.repository';
-import { AdminUsersService } from '@/modules/admin/users/users.service';
+import type { StorageService } from '@/storage/services/storage.service';
+import type {
+  AdminUsersRepository,
+  UserWithCounts,
+} from '@/modules/admin/users/repositories/users.repository';
+import { AdminUsersService } from '@/modules/admin/users/services/users.service';
 
 vi.mock('argon2', () => ({ hash: vi.fn().mockResolvedValue('HASH'), argon2id: 2 }));
 

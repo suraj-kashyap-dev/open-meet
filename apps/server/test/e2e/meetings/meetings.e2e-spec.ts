@@ -1,5 +1,5 @@
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { createTestApp, http, registerUser, resetDb } from '../setup-app';

@@ -1,8 +1,8 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { type ChatPermissionsRepository } from '@/modules/client/messaging/chat-permissions.repository';
+import { ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import { type ChatPermissionsRepository } from '@/modules/client/messaging/repositories/chat-permissions.repository';
 
 describe('ChatPermissionsService', () => {
   let repo: {

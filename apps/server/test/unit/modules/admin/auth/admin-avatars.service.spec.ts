@@ -9,9 +9,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import type { AdminRepository } from '@/modules/admin/admin.repository';
-import { AdminAvatarsService } from '@/modules/admin/auth/admin-avatars.service';
-import type { StorageService } from '@/storage/storage.service';
+import type { AdminRepository } from '@/modules/admin/repositories/admin.repository';
+import { AdminAvatarsService } from '@/modules/admin/auth/services/admin-avatars.service';
+import type { StorageService } from '@/storage/services/storage.service';
 
 const PNG = Buffer.from('fake-png-bytes');
 

@@ -1,9 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { StorageService } from '@/storage/storage.service';
-import type { UploadsService } from '@/modules/uploads/uploads.service';
-import type { ChatRepository, MessageWithSender } from '@/modules/client/chat/chat.repository';
-import { ChatService } from '@/modules/client/chat/chat.service';
+import type { StorageService } from '@/storage/services/storage.service';
+import type { UploadsService } from '@/modules/uploads/services/uploads.service';
+import type {
+  ChatRepository,
+  MessageWithSender,
+} from '@/modules/client/chat/repositories/chat.repository';
+import { ChatService } from '@/modules/client/chat/services/chat.service';
 
 function makeMessage(over: Partial<MessageWithSender> = {}): MessageWithSender {
   return {

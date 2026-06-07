@@ -1,8 +1,8 @@
 import type { UserSettings } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { SettingsRepository } from '@/modules/client/settings/settings.repository';
-import { SettingsService } from '@/modules/client/settings/settings.service';
+import type { SettingsRepository } from '@/modules/client/settings/repositories/settings.repository';
+import { SettingsService } from '@/modules/client/settings/services/settings.service';
 
 const row = {
   userId: 'u1',

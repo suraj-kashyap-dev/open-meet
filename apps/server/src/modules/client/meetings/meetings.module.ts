@@ -5,9 +5,9 @@ import { MeetingBusModule } from '../../../websocket/meeting-bus.module';
 import { AuthModule } from '../auth/auth.module';
 import { AppConfigModule } from '../../config/config.module';
 
-import { MeetingsController } from './meetings.controller';
-import { MeetingsRepository } from './meetings.repository';
-import { MeetingsService } from './meetings.service';
+import { MeetingsController } from './controllers/meetings.controller';
+import { MeetingsRepository } from './repositories/meetings.repository';
+import { MeetingsService } from './services/meetings.service';
 
 @Module({
   imports: [MailModule, AuthModule, AppConfigModule, MeetingBusModule],

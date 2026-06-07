@@ -5,9 +5,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import type { StorageService } from '@/storage/storage.service';
-import type { UploadsRepository } from '@/modules/uploads/uploads.repository';
-import { UploadsService } from '@/modules/uploads/uploads.service';
+import type { StorageService } from '@/storage/services/storage.service';
+import type { UploadsRepository } from '@/modules/uploads/repositories/uploads.repository';
+import { UploadsService } from '@/modules/uploads/services/uploads.service';
 
 const MAX_SIZE = 1000;
 

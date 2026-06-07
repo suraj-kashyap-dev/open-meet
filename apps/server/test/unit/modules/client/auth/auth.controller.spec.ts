@@ -3,10 +3,10 @@ import { describe, expect, it } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { AuthController } from '@/modules/client/auth/auth.controller';
-import type { AuthService } from '@/modules/client/auth/auth.service';
-import type { AvatarsService } from '@/modules/client/auth/avatars.service';
-import type { GoogleOAuthService } from '@/modules/client/auth/google-oauth.service';
+import { AuthController } from '@/modules/client/auth/controllers/auth.controller';
+import type { AuthService } from '@/modules/client/auth/services/auth.service';
+import type { AvatarsService } from '@/modules/client/auth/services/avatars.service';
+import type { GoogleOAuthService } from '@/modules/client/auth/services/google-oauth.service';
 
 function makeController(isConfigured: boolean): AuthController {
   const google = { isConfigured: () => isConfigured } as unknown as GoogleOAuthService;

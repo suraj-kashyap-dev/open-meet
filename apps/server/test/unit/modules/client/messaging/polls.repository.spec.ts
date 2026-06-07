@@ -1,9 +1,9 @@
 import { ChatMessageType } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
+import type { PrismaService } from '@/database/services/prisma.service';
 import { chatMessageInclude, pollInclude } from '@/modules/client/messaging/messaging.includes';
-import { PollsRepository } from '@/modules/client/messaging/polls.repository';
+import { PollsRepository } from '@/modules/client/messaging/repositories/polls.repository';
 
 describe('PollsRepository', () => {
   let repo: PollsRepository;

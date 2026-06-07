@@ -12,13 +12,13 @@ import type { ApiEnv } from '@open-meet/config';
 import type { I18nService } from 'nestjs-i18n';
 
 import type { DatagridService } from '@/common/datagrid';
-import type { AdminRepository } from '@/modules/admin/admin.repository';
-import type { AdminInviteRepository } from '@/modules/admin/accounts/admin-invite.repository';
-import { AdminAccountsService } from '@/modules/admin/accounts/accounts.service';
-import type { AdminPermissionResolver } from '@/modules/admin/rbac/admin-permission-resolver.service';
-import type { AdminRoleRepository } from '@/modules/admin/rbac/admin-role.repository';
-import type { MailService } from '@/integrations/mail/mail.service';
-import type { StorageService } from '@/storage/storage.service';
+import type { AdminRepository } from '@/modules/admin/repositories/admin.repository';
+import type { AdminInviteRepository } from '@/modules/admin/accounts/repositories/admin-invite.repository';
+import { AdminAccountsService } from '@/modules/admin/accounts/services/accounts.service';
+import type { AdminPermissionResolver } from '@/modules/admin/rbac/services/admin-permission-resolver.service';
+import type { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
+import type { MailService } from '@/integrations/mail/services/mail.service';
+import type { StorageService } from '@/storage/services/storage.service';
 
 vi.mock('argon2', () => ({ hash: vi.fn().mockResolvedValue('HASH'), argon2id: 2 }));
 

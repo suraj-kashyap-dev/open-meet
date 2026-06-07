@@ -1,8 +1,8 @@
 import { ConversationType, MeetingStatus } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AdminAnalyticsRepository } from '@/modules/admin/analytics/analytics.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AdminAnalyticsRepository } from '@/modules/admin/analytics/repositories/analytics.repository';
 
 describe('AdminAnalyticsRepository', () => {
   let repo: AdminAnalyticsRepository;

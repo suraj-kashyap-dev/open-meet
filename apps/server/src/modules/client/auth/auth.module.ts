@@ -4,16 +4,16 @@ import { PassportModule } from '@nestjs/passport';
 
 import { MessagingModule } from '../messaging/messaging.module';
 
-import { ChatPermissionsRepository } from '../messaging/chat-permissions.repository';
+import { ChatPermissionsRepository } from '../messaging/repositories/chat-permissions.repository';
 
-import { AuthController } from './auth.controller';
-import { AuthRepository } from './auth.repository';
-import { AuthService } from './auth.service';
-import { AvatarsService } from './avatars.service';
-import { GoogleOAuthService } from './google-oauth.service';
+import { AuthController } from './controllers/auth.controller';
+import { AuthRepository } from './repositories/auth.repository';
+import { AuthService } from './services/auth.service';
+import { AvatarsService } from './services/avatars.service';
+import { GoogleOAuthService } from './services/google-oauth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { UserInviteRepository } from './user-invite.repository';
-import { UsersController } from './users.controller';
+import { UserInviteRepository } from './repositories/user-invite.repository';
+import { UsersController } from './controllers/users.controller';
 
 @Module({
   imports: [

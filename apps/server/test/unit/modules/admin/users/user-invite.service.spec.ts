@@ -1,9 +1,9 @@
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { AdminUserInviteService } from '@/modules/admin/users/user-invite.service';
-import type { AdminUserInviteRepository } from '@/modules/admin/users/user-invite.repository';
-import type { MailService } from '@/integrations/mail/mail.service';
+import { AdminUserInviteService } from '@/modules/admin/users/services/user-invite.service';
+import type { AdminUserInviteRepository } from '@/modules/admin/users/repositories/user-invite.repository';
+import type { MailService } from '@/integrations/mail/services/mail.service';
 
 describe('AdminUserInviteService', () => {
   let service: AdminUserInviteService;

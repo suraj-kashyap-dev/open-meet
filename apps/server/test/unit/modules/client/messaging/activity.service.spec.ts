@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ActivityService } from '@/modules/client/messaging/activity.service';
+import { ActivityService } from '@/modules/client/messaging/services/activity.service';
 import { type MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type PrismaService } from '@/database/prisma.service';
+import { type PrismaService } from '@/database/services/prisma.service';
 
 describe('ActivityService', () => {
   let prisma: { chatMessage: { findMany: ReturnType<typeof vi.fn> } };

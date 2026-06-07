@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { AdminPermissionResolver } from './admin-permission-resolver.service';
-import { AdminPermissionsController } from './admin-permissions.controller';
+import { AdminPermissionResolver } from './services/admin-permission-resolver.service';
+import { AdminPermissionsController } from './controllers/admin-permissions.controller';
 import { AdminPermissionsGuard } from './admin-permissions.guard';
-import { AdminRbacSeedService } from './admin-rbac-seed.service';
-import { AdminRoleRepository } from './admin-role.repository';
-import { AdminRolesController } from './admin-roles.controller';
-import { AdminRolesService } from './admin-roles.service';
+import { AdminRbacSeedService } from './services/admin-rbac-seed.service';
+import { AdminRoleRepository } from './repositories/admin-role.repository';
+import { AdminRolesController } from './controllers/admin-roles.controller';
+import { AdminRolesService } from './services/admin-roles.service';
 
 @Module({
   controllers: [AdminRolesController, AdminPermissionsController],

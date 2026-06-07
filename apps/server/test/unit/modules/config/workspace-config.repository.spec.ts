@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { WorkspaceConfigRepository } from '@/modules/config/workspace-config.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { WorkspaceConfigRepository } from '@/modules/config/repositories/workspace-config.repository';
 
 const SINGLETON_ID = 'default';
 

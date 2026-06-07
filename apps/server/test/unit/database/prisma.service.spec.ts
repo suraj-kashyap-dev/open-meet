@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { PrismaService } from '@/database/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 describe('PrismaService', () => {
   let service: PrismaService;

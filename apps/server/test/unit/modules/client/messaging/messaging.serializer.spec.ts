@@ -3,14 +3,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { MentionKind } from '@open-meet/types';
 
 import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { type StorageService } from '@/storage/storage.service';
-import { type UploadsService } from '@/modules/uploads/uploads.service';
+import { type StorageService } from '@/storage/services/storage.service';
+import { type UploadsService } from '@/modules/uploads/services/uploads.service';
 import type {
   ChatMessageWithRelations,
   ConversationWithMembers,
   PollWithOptions,
 } from '@/modules/client/messaging/messaging.includes';
-import type { PresenceSnapshot } from '@/modules/client/messaging/presence.service';
+import type { PresenceSnapshot } from '@/modules/client/messaging/services/presence.service';
 
 function baseMessage(overrides: Partial<ChatMessageWithRelations> = {}): ChatMessageWithRelations {
   return {

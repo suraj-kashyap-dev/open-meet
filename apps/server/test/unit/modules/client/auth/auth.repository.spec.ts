@@ -1,8 +1,8 @@
 import type { Prisma, User } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { AuthRepository } from '@/modules/client/auth/auth.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
 
 describe('AuthRepository', () => {
   let repo: AuthRepository;

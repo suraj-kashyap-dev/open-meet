@@ -2,11 +2,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { ReadStateService } from '@/modules/client/messaging/read-state.service';
-import { type ConversationsRepository } from '@/modules/client/messaging/conversations.repository';
-import { type MessagesRepository } from '@/modules/client/messaging/messages.repository';
-import { type ChatPermissionsService } from '@/modules/client/messaging/chat-permissions.service';
-import { conversationRoom, type ChatBus } from '@/modules/client/messaging/chat-bus.service';
+import { ReadStateService } from '@/modules/client/messaging/services/read-state.service';
+import { type ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { type MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
+import { type ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import {
+  conversationRoom,
+  type ChatBus,
+} from '@/modules/client/messaging/services/chat-bus.service';
 
 describe('ReadStateService.summary', () => {
   let repo: {

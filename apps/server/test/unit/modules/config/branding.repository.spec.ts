@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { PrismaService } from '@/database/prisma.service';
-import { BrandingRepository } from '@/modules/config/branding.repository';
+import type { PrismaService } from '@/database/services/prisma.service';
+import { BrandingRepository } from '@/modules/config/repositories/branding.repository';
 
 const SINGLETON_ID = 'default';
 
