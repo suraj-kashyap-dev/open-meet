@@ -19,7 +19,9 @@ export function buildTimeSlots(stepMinutes = 30): TimeSlot[] {
 
 export function mergeDateAndTime(date: Date, slot: TimeSlot): Date {
   const next = new Date(date);
+
   next.setHours(slot.hour, slot.minute, 0, 0);
+
   return next;
 }
 
@@ -33,7 +35,9 @@ export function isSameDay(a: Date, b: Date): boolean {
 
 export function startOfDay(date: Date): Date {
   const next = new Date(date);
+
   next.setHours(0, 0, 0, 0);
+
   return next;
 }
 
@@ -47,7 +51,10 @@ export function isSlotSelected(value: Date, slot: TimeSlot): boolean {
 
 export function nextRoundedHour(from: Date = new Date()): Date {
   const next = new Date(from);
+
   next.setMinutes(0, 0, 0);
+
   next.setHours(next.getHours() + 1);
+
   return next;
 }

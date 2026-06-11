@@ -125,6 +125,7 @@ export function isAccentPreset(value: string): value is AccentPreset {
 }
 
 const HEX_RE = /^#([0-9a-f]{6})$/i;
+
 export function isAccentHex(value: string): boolean {
   return HEX_RE.test(value);
 }

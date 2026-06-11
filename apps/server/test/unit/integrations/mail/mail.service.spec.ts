@@ -6,6 +6,7 @@ import type { ApiEnv } from '@open-meet/config';
 import { MailService } from '@/integrations/mail/services/mail.service';
 
 const { sendMail } = vi.hoisted(() => ({ sendMail: vi.fn() }));
+
 vi.mock('nodemailer', () => ({ createTransport: vi.fn(() => ({ sendMail })) }));
 
 const config = {
@@ -19,12 +20,14 @@ describe('MailService', () => {
 
   beforeEach(() => {
     sendMail.mockReset().mockResolvedValue(undefined);
+
     service = new MailService(config);
   });
 
   describe('send()', () => {
     it('should send with the configured from address and forward the message fields', async () => {
       await service.send({ to: 'a@x.com', subject: 'Hi', text: 'body', html: '<p>body</p>' });
+
       expect(sendMail).toHaveBeenCalledWith(
         expect.objectContaining({
           from: 'noreply@open-meet.test',
@@ -46,15 +49,18 @@ describe('MailService', () => {
         ics: { filename: 'invite.ics', content: 'BEGIN:VCALENDAR' },
       });
       const arg = sendMail.mock.calls[0][0];
+
       expect(arg.attachments[0]).toMatchObject({
         filename: 'invite.ics',
         content: 'BEGIN:VCALENDAR',
       });
+
       expect(arg.alternatives[0].content).toBe('BEGIN:VCALENDAR');
     });
 
     it('should rethrow when the transport fails', async () => {
       sendMail.mockRejectedValueOnce(new Error('smtp down'));
+
       await expect(service.send({ to: 'a@x.com', subject: 's', text: 't' })).rejects.toThrow(
         'smtp down',
       );

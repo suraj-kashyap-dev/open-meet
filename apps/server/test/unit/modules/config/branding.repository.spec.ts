@@ -16,12 +16,14 @@ describe('BrandingRepository', () => {
       findUnique: vi.fn().mockResolvedValue(sentinel),
       upsert: vi.fn().mockResolvedValue(sentinel),
     };
+
     repo = new BrandingRepository({ workspaceSettings } as unknown as PrismaService);
   });
 
   describe('find()', () => {
     it('should look up the singleton settings row', async () => {
       await expect(repo.find()).resolves.toBe(sentinel);
+
       expect(workspaceSettings.findUnique).toHaveBeenCalledWith({ where: { id: SINGLETON_ID } });
     });
   });
@@ -29,6 +31,7 @@ describe('BrandingRepository', () => {
   describe('setAppName()', () => {
     it('should upsert the app name on the singleton', async () => {
       await repo.setAppName('OpenMeet');
+
       expect(workspaceSettings.upsert).toHaveBeenCalledWith({
         where: { id: SINGLETON_ID },
         update: { appName: 'OpenMeet' },
@@ -40,6 +43,7 @@ describe('BrandingRepository', () => {
   describe('setLogoKey()', () => {
     it('should upsert the logo key', async () => {
       await repo.setLogoKey('logo/key');
+
       expect(workspaceSettings.upsert).toHaveBeenCalledWith({
         where: { id: SINGLETON_ID },
         update: { logoKey: 'logo/key' },
@@ -49,6 +53,7 @@ describe('BrandingRepository', () => {
 
     it('should accept a null logo key to clear it', async () => {
       await repo.setLogoKey(null);
+
       expect(workspaceSettings.upsert).toHaveBeenCalledWith({
         where: { id: SINGLETON_ID },
         update: { logoKey: null },
@@ -60,6 +65,7 @@ describe('BrandingRepository', () => {
   describe('setAccentColor()', () => {
     it('should upsert the accent color', async () => {
       await repo.setAccentColor('#ff0000');
+
       expect(workspaceSettings.upsert).toHaveBeenCalledWith({
         where: { id: SINGLETON_ID },
         update: { accentColor: '#ff0000' },

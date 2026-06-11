@@ -43,6 +43,7 @@ export function EndedView({ code }: { code: string }) {
 
   const rejoin = () => {
     nav.replace(`/${code}`);
+
     window.location.reload();
   };
 

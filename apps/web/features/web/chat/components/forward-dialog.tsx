@@ -41,7 +41,9 @@ export function ForwardDialog({
       {
         onSuccess: () => {
           toast.success(t('forward.success'));
+
           onClose();
+
           router.push(`/chat/${targetConversationId}`);
         },
         onError: (err) =>
@@ -60,6 +62,7 @@ export function ForwardDialog({
         <ul className="max-h-72 space-y-0.5 overflow-y-auto">
           {items.map((c) => {
             const display = conversationDisplay(c, user?.id);
+
             return (
               <li key={c.id}>
                 <button

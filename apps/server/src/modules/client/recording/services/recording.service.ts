@@ -41,12 +41,15 @@ export class RecordingService {
     const host = this.toHttpUrl(this.config.getOrThrow<string>('LIVEKIT_HOST'));
 
     this.egress = new EgressClient(host, apiKey, apiSecret);
+
     this.egressFilepathPrefix = this.config
       .getOrThrow<string>('RECORDING_EGRESS_FILEPATH_PREFIX')
       .replace(/\/$/, '');
+
     this.storageSubdir = this.config
       .getOrThrow<string>('RECORDING_STORAGE_SUBDIR')
       .replace(/^\/+|\/+$/g, '');
+
     this.layout = this.config.getOrThrow<string>('RECORDING_LAYOUT');
   }
 
@@ -155,18 +158,21 @@ export class RecordingService {
     }
 
     const updated = await this.recordings.markStopping(active.id);
+
     return this.toDto(updated);
   }
 
   async getActive(code: string, userId: string): Promise<RecordingDto | null> {
     const { meetingId } = await this.meetings.assertParticipant(code, userId);
     const active = await this.recordings.findRecordingForMeeting(meetingId);
+
     return active ? this.toDto(active) : null;
   }
 
   async listForMeeting(code: string, userId: string): Promise<RecordingDto[]> {
     const { meetingId } = await this.meetings.assertParticipant(code, userId);
     const list = await this.recordings.listForMeeting(meetingId);
+
     return Promise.all(list.map((r) => this.toDto(r)));
   }
 
@@ -218,6 +224,7 @@ export class RecordingService {
 
     if (!recording) {
       this.logger.warn(`Egress event for unknown recording: ${info.egressId}`);
+
       return null;
     }
 

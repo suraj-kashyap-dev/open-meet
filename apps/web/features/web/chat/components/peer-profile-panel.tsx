@@ -54,11 +54,13 @@ export function PeerProfilePanel({
   const copyEmail = async (email: string) => {
     if (!navigator.clipboard?.writeText) {
       toast.error(t('group.action-failed'));
+
       return;
     }
 
     try {
       await navigator.clipboard.writeText(email);
+
       setEmailCopied(true);
 
       if (copyResetRef.current !== null) {
@@ -67,6 +69,7 @@ export function PeerProfilePanel({
 
       copyResetRef.current = window.setTimeout(() => {
         setEmailCopied(false);
+
         copyResetRef.current = null;
       }, 1500);
     } catch {

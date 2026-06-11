@@ -44,12 +44,15 @@ describe('ConversationsService', () => {
       lastVisibleMessage: vi.fn().mockResolvedValue(null),
       unreadCount: vi.fn().mockResolvedValue(0),
     };
+
     permissions = {
       assertConversationMember: vi.fn(),
       assertDirectConversationAllowed: vi.fn(),
       assertCanDirectMessage: vi.fn(),
     };
+
     presence = { snapshot: vi.fn().mockResolvedValue(new Map()) };
+
     serializer = {
       conversation: vi.fn((conv, opts) => ({
         id: conv.id,
@@ -59,7 +62,9 @@ describe('ConversationsService', () => {
         unreadCount: opts.unreadCount,
       })),
     };
+
     bus = { emit: vi.fn() };
+
     service = new ConversationsService(
       repo as unknown as ConversationsRepository,
       permissions as unknown as ChatPermissionsService,
@@ -72,9 +77,11 @@ describe('ConversationsService', () => {
   describe('membersWithMuteState()', () => {
     it('should delegate to the repository', async () => {
       repo.membersWithMuteState.mockResolvedValue([{ userId: 'u1', muted: true }]);
+
       await expect(service.membersWithMuteState('c1')).resolves.toEqual([
         { userId: 'u1', muted: true },
       ]);
+
       expect(repo.membersWithMuteState).toHaveBeenCalledWith('c1');
     });
   });
@@ -107,9 +114,11 @@ describe('ConversationsService', () => {
         { id: 'new', createdAt: '2026-01-01', members: [member('u1')] },
         { id: 'pin', createdAt: '2026-01-01', members: [member('u1')] },
       ]);
+
       serializer.conversation.mockImplementation((conv) => {
         const lastMessageAt =
           conv.id === 'new' ? '2026-03-01' : conv.id === 'old' ? '2026-01-15' : '2026-01-10';
+
         return {
           id: conv.id,
           pinned: conv.id === 'pin',
@@ -137,17 +146,21 @@ describe('ConversationsService', () => {
   describe('getById()', () => {
     it('should gate on membership and direct-conversation access then serialize', async () => {
       const conv = { id: 'c1', createdAt: '2026-01-01', members: [member('u1')] };
+
       repo.findById.mockResolvedValue(conv);
 
       const result = await service.getById('c1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(permissions.assertDirectConversationAllowed).toHaveBeenCalledWith('c1', 'u1');
+
       expect(result.id).toBe('c1');
     });
 
     it('should throw NotFound when the conversation is missing', async () => {
       repo.findById.mockResolvedValue(null);
+
       await expect(service.getById('c1', 'u1')).rejects.toBeInstanceOf(NotFoundException);
     });
   });
@@ -159,13 +172,17 @@ describe('ConversationsService', () => {
         createdAt: '2026-01-01',
         members: [member('u1'), member('u2')],
       };
+
       repo.findDirectByKey.mockResolvedValue(existing);
 
       const result = await service.openDirect('u1', 'u2');
 
       expect(permissions.assertCanDirectMessage).toHaveBeenCalledWith('u1', 'u2');
+
       expect(repo.restoreForViewer).not.toHaveBeenCalled();
+
       expect(bus.emit).not.toHaveBeenCalled();
+
       expect(result.id).toBe('c1');
     });
 
@@ -180,6 +197,7 @@ describe('ConversationsService', () => {
         createdAt: '2026-01-01',
         members: [member('u1'), member('u2')],
       };
+
       repo.findDirectByKey.mockResolvedValueOnce(existing).mockResolvedValueOnce(restored);
 
       await service.openDirect('u1', 'u2');
@@ -188,6 +206,7 @@ describe('ConversationsService', () => {
         hidden: false,
         removedAt: null,
       });
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u1'),
         ChatServerEvent.CONVERSATION_NEW,
@@ -201,11 +220,13 @@ describe('ConversationsService', () => {
         createdAt: '2026-01-01',
         members: [member('u1', { hidden: true }), member('u2')],
       };
+
       repo.findDirectByKey.mockResolvedValue(existing);
 
       await service.openDirect('u1', 'u2');
 
       expect(repo.restoreForViewer).toHaveBeenCalled();
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u1'),
         ChatServerEvent.CONVERSATION_UPDATE,
@@ -220,21 +241,25 @@ describe('ConversationsService', () => {
         createdAt: '2026-01-01',
         members: [member('u1'), member('u2')],
       };
+
       repo.createDirect.mockResolvedValue(created);
 
       const result = await service.openDirect('u1', 'u2');
 
       expect(repo.createDirect).toHaveBeenCalledWith('u1', 'u2', 'u1:u2');
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u2'),
         ChatServerEvent.CONVERSATION_NEW,
         expect.objectContaining({ id: 'c9' }),
       );
+
       expect(result.id).toBe('c9');
     });
 
     it('should build the direct key from sorted user ids', async () => {
       repo.findDirectByKey.mockResolvedValue(null);
+
       repo.createDirect.mockResolvedValue({
         id: 'c9',
         createdAt: '2026-01-01',
@@ -252,11 +277,13 @@ describe('ConversationsService', () => {
         code: 'P2002',
         clientVersion: 'x',
       });
+
       repo.findDirectByKey.mockResolvedValueOnce(null).mockResolvedValueOnce({
         id: 'c1',
         createdAt: '2026-01-01',
         members: [member('u1'), member('u2')],
       });
+
       repo.createDirect.mockRejectedValue(conflict);
 
       const result = await service.openDirect('u1', 'u2');
@@ -266,6 +293,7 @@ describe('ConversationsService', () => {
 
     it('should rethrow non-unique creation errors', async () => {
       repo.findDirectByKey.mockResolvedValue(null);
+
       repo.createDirect.mockRejectedValue(new Error('boom'));
 
       await expect(service.openDirect('u1', 'u2')).rejects.toThrow('boom');
@@ -283,17 +311,21 @@ describe('ConversationsService', () => {
       const result = await service.clearForViewer('c1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(repo.clearForViewer).toHaveBeenCalledWith('c1', 'u1', expect.any(Date));
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u1'),
         ChatServerEvent.CONVERSATION_UPDATE,
         expect.objectContaining({ id: 'c1' }),
       );
+
       expect(result).toEqual({ ok: true });
     });
 
     it('should throw NotFound when the conversation disappears after clearing', async () => {
       repo.findById.mockResolvedValue(null);
+
       await expect(service.clearForViewer('c1', 'u1')).rejects.toBeInstanceOf(NotFoundException);
     });
   });
@@ -303,10 +335,13 @@ describe('ConversationsService', () => {
       const result = await service.deleteForViewer('c1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(repo.removeForViewer).toHaveBeenCalledWith('c1', 'u1', expect.any(Date));
+
       expect(bus.emit).toHaveBeenCalledWith(userRoom('u1'), ChatServerEvent.CONVERSATION_REMOVED, {
         conversationId: 'c1',
       });
+
       expect(result).toEqual({ ok: true });
     });
   });
@@ -321,6 +356,7 @@ describe('ConversationsService', () => {
       await service.revealOnActivity('c1', 'u1');
 
       expect(repo.findById).not.toHaveBeenCalled();
+
       expect(bus.emit).not.toHaveBeenCalled();
     });
 
@@ -329,6 +365,7 @@ describe('ConversationsService', () => {
         revivedUserIds: ['u2'],
         senderNeedsUpdate: false,
       });
+
       repo.findById.mockResolvedValue(null);
 
       await service.revealOnActivity('c1', 'u1');
@@ -341,6 +378,7 @@ describe('ConversationsService', () => {
         revivedUserIds: ['u2'],
         senderNeedsUpdate: true,
       });
+
       repo.findById.mockResolvedValue({
         id: 'c1',
         createdAt: '2026-01-01',
@@ -354,6 +392,7 @@ describe('ConversationsService', () => {
         ChatServerEvent.CONVERSATION_NEW,
         expect.objectContaining({ id: 'c1' }),
       );
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u1'),
         ChatServerEvent.CONVERSATION_UPDATE,
@@ -367,6 +406,7 @@ describe('ConversationsService', () => {
       repo.listForUser.mockResolvedValue([
         { id: 'c1', createdAt: '2026-01-01', members: [member('u1', { manualUnread: true })] },
       ]);
+
       repo.unreadCount.mockResolvedValue(0);
 
       const result = await service.list('u1');
@@ -378,6 +418,7 @@ describe('ConversationsService', () => {
       repo.listForUser.mockResolvedValue([
         { id: 'c1', createdAt: '2026-01-01', members: [member('u1')] },
       ]);
+
       repo.unreadCount.mockResolvedValue(5);
 
       const result = await service.list('u1');

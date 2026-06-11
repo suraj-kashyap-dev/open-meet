@@ -65,11 +65,13 @@ function buildSaved(id: string, content: string, conversationId: string): SavedM
     sentAt: '2026-05-31T10:00:00.000Z',
     clientNonce: null,
   };
+
   return { message, conversationId, conversationTitle: 'Grace Hopper' };
 }
 
 function renderPanel() {
   const onOpenChange = vi.fn();
+
   render(
     <NextIntlClientProvider locale="en" messages={messages}>
       <StarredMessagesPanel
@@ -81,12 +83,14 @@ function renderPanel() {
       />
     </NextIntlClientProvider>,
   );
+
   return { onOpenChange };
 }
 
 describe('<StarredMessagesPanel />', () => {
   beforeEach(() => {
     push.mockReset();
+
     saveMutate.mockReset();
   });
 
@@ -95,9 +99,11 @@ describe('<StarredMessagesPanel />', () => {
       buildSaved('m1', 'Budget is approved', 'c1'),
       buildSaved('m2', 'Other chat note', 'c2'),
     ];
+
     renderPanel();
 
     expect(screen.getByText('Budget is approved')).toBeInTheDocument();
+
     expect(screen.queryByText('Other chat note')).not.toBeInTheDocument();
   });
 
@@ -108,11 +114,13 @@ describe('<StarredMessagesPanel />', () => {
     fireEvent.click(screen.getByText('Budget is approved'));
 
     expect(onOpenChange).toHaveBeenCalledWith(false);
+
     expect(push).toHaveBeenCalledWith('/chat/c1?m=m1');
   });
 
   it('unstars a message from its row action', () => {
     savedItems = [buildSaved('m1', 'Budget is approved', 'c1')];
+
     renderPanel();
 
     fireEvent.click(screen.getByRole('button', { name: 'Unstar' }));
@@ -122,6 +130,7 @@ describe('<StarredMessagesPanel />', () => {
 
   it('shows the empty state when this chat has no starred messages', () => {
     savedItems = [buildSaved('m2', 'Other chat note', 'c2')];
+
     renderPanel();
 
     expect(screen.getByText('No starred messages in this chat yet.')).toBeInTheDocument();

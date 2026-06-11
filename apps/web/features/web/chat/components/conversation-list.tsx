@@ -56,6 +56,7 @@ export function ConversationList() {
 
     for (const [userId, entry] of seeded) {
       const prev = tracked[userId];
+
       if (
         prev?.online === entry.online &&
         prev.status === entry.status &&
@@ -76,7 +77,10 @@ export function ConversationList() {
   const visibleChats = all.filter((c) => !c.hidden);
   const scope = hiddenMode ? hiddenChats : visibleChats;
   const items = scope.filter((c) => {
-    if (!filter.trim()) return true;
+    if (!filter.trim()) {
+      return true;
+    }
+
     return conversationDisplay(c, user?.id).title.toLowerCase().includes(filter.toLowerCase());
   });
 

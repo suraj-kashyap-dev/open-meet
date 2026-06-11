@@ -31,7 +31,9 @@ describe('Admin groups (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
@@ -46,12 +48,14 @@ describe('Admin groups (e2e)', () => {
       password: 'member-b-pass',
       name: 'Member B',
     });
+
     return { a: a!.id, b: b!.id };
   }
 
   describe('GET /api/admin/groups/datagrid', () => {
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/groups/datagrid');
+
       expect(res.status).toBe(401);
     });
 
@@ -67,11 +71,17 @@ describe('Admin groups (e2e)', () => {
       const res = await http(app).get('/api/admin/groups/datagrid').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.resource).toBe('groups');
+
       expect(res.body.data.pagination.total).toBe(1);
+
       expect(res.body.data.rows).toHaveLength(1);
+
       expect(res.body.data.rows[0].title).toBe('Listed Group');
+
       expect(res.body.data.rows[0].memberCount).toBe(2);
     });
   });
@@ -81,6 +91,7 @@ describe('Admin groups (e2e)', () => {
       const res = await http(app)
         .post('/api/admin/groups')
         .send({ title: 'No Auth', memberIds: ['x'] });
+
       expect(res.status).toBe(401);
     });
 
@@ -94,6 +105,7 @@ describe('Admin groups (e2e)', () => {
         .send({ title: 'Forbidden Group', memberIds: [a, b] });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
@@ -107,9 +119,13 @@ describe('Admin groups (e2e)', () => {
         .send({ title: 'Created Group', memberIds: [a, b] });
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.title).toBe('Created Group');
+
       expect(res.body.data.members).toHaveLength(2);
+
       expect(res.body.data.id).toBeTruthy();
 
       const prisma = app.get(PrismaService);
@@ -117,8 +133,11 @@ describe('Admin groups (e2e)', () => {
         where: { id: res.body.data.id },
         include: { members: true },
       });
+
       expect(persisted).not.toBeNull();
+
       expect(persisted!.type).toBe('GROUP');
+
       expect(persisted!.members).toHaveLength(2);
     });
   });
@@ -138,7 +157,9 @@ describe('Admin groups (e2e)', () => {
         .set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.id).toBe(created.body.data.id);
+
       expect(res.body.data.members).toHaveLength(2);
     });
 
@@ -147,6 +168,7 @@ describe('Admin groups (e2e)', () => {
       const res = await http(app).get('/api/admin/groups/does-not-exist').set('Cookie', cookie);
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('NOT_FOUND');
     });
   });
@@ -167,6 +189,7 @@ describe('Admin groups (e2e)', () => {
         .send({ title: 'New Name' });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.title).toBe('New Name');
     });
 
@@ -203,6 +226,7 @@ describe('Admin groups (e2e)', () => {
         .send({ userIds: [c!.id] });
 
       expect(added.status).toBe(201);
+
       expect(added.body.data.members).toHaveLength(3);
 
       const removed = await http(app)
@@ -210,9 +234,11 @@ describe('Admin groups (e2e)', () => {
         .set('Cookie', cookie);
 
       expect(removed.status).toBe(200);
+
       expect(removed.body.data.removed).toBe(true);
 
       const detail = await http(app).get(`/api/admin/groups/${groupId}`).set('Cookie', cookie);
+
       expect(detail.body.data.members).toHaveLength(2);
     });
   });
@@ -231,16 +257,19 @@ describe('Admin groups (e2e)', () => {
       const res = await http(app).delete(`/api/admin/groups/${groupId}`).set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.deleted).toBe(true);
 
       const prisma = app.get(PrismaService);
       const persisted = await prisma.conversation.findUnique({ where: { id: groupId } });
+
       expect(persisted).toBeNull();
     });
 
     it('should 404 when deleting an unknown group', async () => {
       const { cookie } = await loginAdmin(app, SUPER);
       const res = await http(app).delete('/api/admin/groups/does-not-exist').set('Cookie', cookie);
+
       expect(res.status).toBe(404);
     });
   });

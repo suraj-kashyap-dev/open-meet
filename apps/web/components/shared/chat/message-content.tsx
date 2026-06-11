@@ -60,6 +60,7 @@ export function MessageContent({
       }
 
       const isMe = currentUserId !== undefined && url === currentUserId;
+
       return (
         <span
           className={cn(

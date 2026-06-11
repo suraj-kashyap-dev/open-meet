@@ -91,7 +91,9 @@ function foldLine(line: string): string {
   while (i < line.length) {
     const size = i === 0 ? 75 : 74;
     const chunk = line.slice(i, i + size);
+
     chunks.push(i === 0 ? chunk : ' ' + chunk);
+
     i += size;
   }
 

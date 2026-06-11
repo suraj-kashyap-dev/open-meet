@@ -25,6 +25,7 @@ export function MessageTicks({
     others.length > 0 &&
     others.every((m) => {
       const at = pick(m);
+
       return at !== null && new Date(at).getTime() >= sentMs;
     });
 

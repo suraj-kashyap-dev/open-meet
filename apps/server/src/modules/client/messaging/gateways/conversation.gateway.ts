@@ -95,9 +95,11 @@ export class ConversationGateway
       client.data.user = { id: payload.sub, email: payload.email, name: payload.name };
 
       const userId = payload.sub;
+
       await client.join(userRoom(userId));
 
       const conversationIds = await this.conversations.conversationIdsForUser(userId);
+
       await Promise.all(conversationIds.map((id) => client.join(conversationRoom(id))));
 
       if (await this.presence.connect(userId)) {
@@ -105,6 +107,7 @@ export class ConversationGateway
       }
     } catch (err) {
       this.logger.warn(`Chat WS rejected: ${(err as Error).message}`);
+
       client.disconnect(true);
     }
   }
@@ -118,6 +121,7 @@ export class ConversationGateway
 
     if (await this.presence.disconnect(user.id)) {
       const conversationIds = await this.conversations.conversationIdsForUser(user.id);
+
       await this.broadcastPresence(user.id, conversationIds);
     }
   }
@@ -146,7 +150,9 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.permissions.assertConversationMember(body.conversationId, user.id);
+
       await client.join(conversationRoom(body.conversationId));
+
       return { joined: true };
     });
   }
@@ -157,6 +163,7 @@ export class ConversationGateway
     @MessageBody() body: ChatConversationRefPayload,
   ): Promise<{ left: true }> {
     await client.leave(conversationRoom(body.conversationId));
+
     return { left: true };
   }
 
@@ -177,6 +184,7 @@ export class ConversationGateway
         priority: body.priority,
         clientNonce: body.clientNonce,
       });
+
       return { delivered: true };
     });
   }
@@ -190,6 +198,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.messages.edit(body.messageId, user.id, body.content);
+
       return { ok: true };
     });
   }
@@ -203,6 +212,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.messages.remove(body.messageId, user.id);
+
       return { ok: true };
     });
   }
@@ -216,6 +226,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.reactions.add(body.messageId, user.id, body.emoji);
+
       return { ok: true };
     });
   }
@@ -229,6 +240,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.reactions.remove(body.messageId, user.id, body.emoji);
+
       return { ok: true };
     });
   }
@@ -275,6 +287,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.readState.markRead(body.conversationId, user.id, body.messageId);
+
       return { ok: true };
     });
   }
@@ -288,6 +301,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.readState.markDelivered(body.conversationId, user.id);
+
       return { ok: true };
     });
   }
@@ -301,6 +315,7 @@ export class ConversationGateway
 
     return this.guard(async () => {
       await this.polls.vote(body.pollId, user.id, body.optionIds);
+
       return { ok: true };
     });
   }
@@ -315,7 +330,9 @@ export class ConversationGateway
     return this.guard(async () => {
       await this.presence.setStatus(user.id, body.status, body.customText ?? null);
       const conversationIds = await this.conversations.conversationIdsForUser(user.id);
+
       await this.broadcastPresence(user.id, conversationIds);
+
       return { ok: true };
     });
   }
@@ -340,6 +357,7 @@ export class ConversationGateway
 
       if (err instanceof HttpException) {
         const response = err.getResponse();
+
         throw new WsException(
           typeof response === 'object' ? (response as object) : { message: String(response) },
         );

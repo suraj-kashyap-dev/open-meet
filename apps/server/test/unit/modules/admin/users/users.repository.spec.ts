@@ -21,12 +21,14 @@ describe('AdminUsersRepository', () => {
       update: vi.fn().mockResolvedValue({ id: 'u1' }),
       delete: vi.fn().mockResolvedValue({ id: 'u1' }),
     };
+
     repo = new AdminUsersRepository({ user } as unknown as PrismaService);
   });
 
   describe('list()', () => {
     it('should use an empty where and include meeting counts when no search is given', async () => {
       await repo.list({ skip: 5, take: 10 });
+
       expect(user.findMany).toHaveBeenCalledWith({
         skip: 5,
         take: 10,
@@ -40,6 +42,7 @@ describe('AdminUsersRepository', () => {
   describe('count()', () => {
     it('should build a case-insensitive OR on name and email when searching', async () => {
       await repo.count('jane');
+
       expect(user.count).toHaveBeenCalledWith({
         where: {
           OR: [
@@ -54,6 +57,7 @@ describe('AdminUsersRepository', () => {
   describe('emailTakenByOther()', () => {
     it('should lowercase the email and exclude the current user', async () => {
       await repo.emailTakenByOther('Foo@Bar.com', 'u1');
+
       expect(user.findFirst).toHaveBeenCalledWith({
         where: { email: 'foo@bar.com', NOT: { id: 'u1' } },
       });
@@ -63,6 +67,7 @@ describe('AdminUsersRepository', () => {
   describe('emailTaken()', () => {
     it('should look the email up lowercased', async () => {
       await repo.emailTaken('Foo@Bar.com');
+
       expect(user.findUnique).toHaveBeenCalledWith({ where: { email: 'foo@bar.com' } });
     });
   });
@@ -70,6 +75,7 @@ describe('AdminUsersRepository', () => {
   describe('create()', () => {
     it('should lowercase the email, verify it, and include counts', async () => {
       await repo.create({ name: 'Jane', email: 'NEW@X.com', passwordHash: 'HASH' });
+
       expect(user.create).toHaveBeenCalledWith({
         data: {
           name: 'Jane',
@@ -89,6 +95,7 @@ describe('AdminUsersRepository', () => {
   describe('findById()', () => {
     it('should include meeting counts', async () => {
       await repo.findById('u1');
+
       expect(user.findUnique).toHaveBeenCalledWith({ where: { id: 'u1' }, include: countInclude });
     });
   });
@@ -96,6 +103,7 @@ describe('AdminUsersRepository', () => {
   describe('delete()', () => {
     it('should remove the user by id', async () => {
       await repo.delete('u1');
+
       expect(user.delete).toHaveBeenCalledWith({ where: { id: 'u1' } });
     });
   });

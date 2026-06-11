@@ -19,6 +19,7 @@ describe('GifsService', () => {
       const result = await service.search('cats');
 
       expect(result).toEqual({ items: [] });
+
       expect(fetchSpy).not.toHaveBeenCalled();
     });
 
@@ -31,7 +32,9 @@ describe('GifsService', () => {
       await service.search(undefined);
 
       const url = fetchSpy.mock.calls[0]?.[0] as string;
+
       expect(url).toContain('q=trending');
+
       expect(url).toContain('key=k');
     });
 
@@ -44,6 +47,7 @@ describe('GifsService', () => {
       await service.search('   ');
 
       const url = fetchSpy.mock.calls[0]?.[0] as string;
+
       expect(url).toContain('q=trending');
     });
 

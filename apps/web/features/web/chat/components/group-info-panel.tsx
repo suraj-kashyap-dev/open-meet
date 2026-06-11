@@ -46,7 +46,10 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   const adminCount = conversation.members.filter((m) => m.role === 'ADMIN').length;
 
   const sortedMembers = [...conversation.members].sort((a, b) => {
-    if (a.role === b.role) return a.name.localeCompare(b.name);
+    if (a.role === b.role) {
+      return a.name.localeCompare(b.name);
+    }
+
     return a.role === 'ADMIN' ? -1 : 1;
   });
 
@@ -58,6 +61,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   const promote = async (member: ConversationMemberDto) => {
     try {
       await setRole.mutateAsync({ userId: member.userId, role: 'ADMIN' });
+
       toast.success(t('group.promoted'));
     } catch (err) {
       handleApiError(err, t('group.action-failed'));
@@ -67,6 +71,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   const demote = async (member: ConversationMemberDto) => {
     try {
       await setRole.mutateAsync({ userId: member.userId, role: 'MEMBER' });
+
       toast.success(t('group.demoted'));
     } catch (err) {
       handleApiError(err, t('group.action-failed'));
@@ -74,9 +79,13 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   };
 
   const kick = async (member: ConversationMemberDto) => {
-    if (!window.confirm(t('group.remove-member-confirm', { name: member.name }))) return;
+    if (!window.confirm(t('group.remove-member-confirm', { name: member.name }))) {
+      return;
+    }
+
     try {
       await removeMember.mutateAsync(member.userId);
+
       toast.success(t('group.removed'));
     } catch (err) {
       handleApiError(err, t('group.action-failed'));
@@ -84,15 +93,25 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   };
 
   const leave = async () => {
-    if (!currentUserId) return;
-    if (isLastAdmin) {
-      toast.error(t('group.last-admin-warning'));
+    if (!currentUserId) {
       return;
     }
-    if (!window.confirm(t('group.leave-confirm'))) return;
+
+    if (isLastAdmin) {
+      toast.error(t('group.last-admin-warning'));
+
+      return;
+    }
+
+    if (!window.confirm(t('group.leave-confirm'))) {
+      return;
+    }
+
     try {
       await removeMember.mutateAsync(currentUserId);
+
       toast.success(t('group.left'));
+
       router.push('/chat');
     } catch (err) {
       handleApiError(err, t('group.action-failed'));
@@ -100,10 +119,15 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   };
 
   const destroy = async () => {
-    if (!window.confirm(t('group.delete-confirm'))) return;
+    if (!window.confirm(t('group.delete-confirm'))) {
+      return;
+    }
+
     try {
       await deleteGroup.mutateAsync(conversation.id);
+
       toast.success(t('group.deleted'));
+
       router.push('/chat');
     } catch (err) {
       handleApiError(err, t('group.action-failed'));

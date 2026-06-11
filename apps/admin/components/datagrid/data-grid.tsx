@@ -23,9 +23,16 @@ export function DataGrid({ resource, ...rest }: DataGridProps) {
   const { data, isLoading, search, setSearch, filters, setFilter, page, setPage, toggleSort } =
     useDatagrid(resource);
   const { data: me } = useCurrentAdminMe();
+
   const can = (permission: string) => {
-    if (!me) return false;
-    if (me.role?.permissionType === 'ALL') return true;
+    if (!me) {
+      return false;
+    }
+
+    if (me.role?.permissionType === 'ALL') {
+      return true;
+    }
+
     return me.grantedSet.includes(permission as never);
   };
 

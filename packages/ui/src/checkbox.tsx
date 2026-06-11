@@ -18,6 +18,7 @@ interface CheckboxProps extends Omit<
 export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
   ({ className, checked = false, onCheckedChange, disabled, ...props }, ref) => {
     const state = checked === 'indeterminate' ? 'indeterminate' : checked ? 'checked' : 'unchecked';
+
     return (
       <button
         ref={ref}

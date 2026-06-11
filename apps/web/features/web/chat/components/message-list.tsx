@@ -92,32 +92,46 @@ export function MessageList({
 
   const isPinned = useCallback(() => {
     const el = scrollRef.current;
-    if (!el) return true;
+
+    if (!el) {
+      return true;
+    }
+
     return el.scrollHeight - el.scrollTop - el.clientHeight < 64;
   }, []);
 
   const targetMessageIdRef = useRef(targetMessageId);
+
   targetMessageIdRef.current = targetMessageId;
 
   useLayoutEffect(() => {
     pinnedRef.current = !targetMessageIdRef.current;
+
     restoringRef.current = null;
+
     lastSeenIdRef.current = null;
+
     setShowJump(false);
   }, [conversationId]);
 
   useLayoutEffect(() => {
     const el = scrollRef.current;
-    if (!el) return;
+
+    if (!el) {
+      return;
+    }
 
     if (restoringRef.current !== null) {
       el.scrollTop = el.scrollHeight - restoringRef.current;
+
       restoringRef.current = null;
+
       return;
     }
 
     if (pinnedRef.current) {
       el.scrollTop = el.scrollHeight;
+
       setShowJump(false);
     } else {
       setShowJump(true);
@@ -167,7 +181,9 @@ export function MessageList({
         el.scrollTop = el.scrollHeight;
       }
     });
+
     observer.observe(content);
+
     return () => observer.disconnect();
   }, [conversationId, rows.length === 0]);
 
@@ -175,30 +191,49 @@ export function MessageList({
 
   useEffect(() => {
     const last = messages[messages.length - 1];
-    if (!last || !pinnedRef.current) return;
-    if (last.id === lastMarkedRef.current) return;
+
+    if (!last || !pinnedRef.current) {
+      return;
+    }
+
+    if (last.id === lastMarkedRef.current) {
+      return;
+    }
+
     lastMarkedRef.current = last.id;
+
     markReadMutate(undefined);
   }, [messages, markReadMutate]);
 
   const onScroll = () => {
     const el = scrollRef.current;
-    if (!el) return;
+
+    if (!el) {
+      return;
+    }
 
     pinnedRef.current = isPinned();
+
     setShowJump(!pinnedRef.current);
 
     if (el.scrollTop < 80 && hasNextPage && !isFetchingNextPage) {
       restoringRef.current = el.scrollHeight - el.scrollTop;
+
       void fetchNextPage();
     }
   };
 
   const scrollToBottom = () => {
     const el = scrollRef.current;
-    if (!el) return;
+
+    if (!el) {
+      return;
+    }
+
     el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+
     pinnedRef.current = true;
+
     setShowJump(false);
   };
 
@@ -210,9 +245,13 @@ export function MessageList({
     }
 
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
     pinnedRef.current = false;
+
     highlightNonceRef.current += 1;
+
     setHighlighted({ id, nonce: highlightNonceRef.current });
+
     return true;
   }, []);
 
@@ -222,6 +261,7 @@ export function MessageList({
     }
 
     const timeout = window.setTimeout(() => setHighlighted(null), 1200);
+
     return () => window.clearTimeout(timeout);
   }, [highlighted]);
 
@@ -232,11 +272,13 @@ export function MessageList({
 
     if (revealMessage(pendingJumpId)) {
       setPendingJumpId(null);
+
       return;
     }
 
     if (!hasNextPage && !isFetchingNextPage) {
       setPendingJumpId(null);
+
       return;
     }
 
@@ -251,7 +293,9 @@ export function MessageList({
     }
 
     pinnedRef.current = false;
+
     setShowJump(true);
+
     void fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage, pendingJumpId, revealMessage]);
 
@@ -269,12 +313,15 @@ export function MessageList({
     }
 
     const key = `${conversationId}:${targetMessageId}`;
+
     if (handledJumpRef.current === key) {
       return;
     }
 
     handledJumpRef.current = key;
+
     setPendingJumpId(targetMessageId);
+
     router.replace(pathname);
   }, [conversationId, targetMessageId, query.isLoading, router, pathname]);
 

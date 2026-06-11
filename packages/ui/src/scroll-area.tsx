@@ -40,4 +40,5 @@ const ScrollBar = forwardRef<
     <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ));
+
 ScrollBar.displayName = 'ScrollBar';

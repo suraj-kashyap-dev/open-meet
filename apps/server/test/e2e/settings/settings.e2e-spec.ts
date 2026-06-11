@@ -21,6 +21,7 @@ describe('Settings (e2e)', () => {
       email: 'settings@example.com',
       password: 'secretpass1',
     });
+
     cookie = user.cookie;
   });
 
@@ -29,10 +30,15 @@ describe('Settings (e2e)', () => {
       const res = await http(app).get('/api/auth/me/settings').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.meetingPreferences).toBeDefined();
+
       expect(res.body.data.privacySettings).toBeDefined();
+
       expect(res.body.data.appearance).toBeDefined();
+
       expect(typeof res.body.data.meetingPreferences.enableNotifications).toBe('boolean');
     });
 
@@ -40,7 +46,9 @@ describe('Settings (e2e)', () => {
       const res = await http(app).get('/api/auth/me/settings');
 
       expect(res.status).toBe(401);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });
@@ -56,10 +64,13 @@ describe('Settings (e2e)', () => {
         .send({ meetingPreferences: { enableNotifications: !initial } });
 
       expect(patched.status).toBe(200);
+
       expect(patched.body.success).toBe(true);
+
       expect(patched.body.data.meetingPreferences.enableNotifications).toBe(!initial);
 
       const after = await http(app).get('/api/auth/me/settings').set('Cookie', cookie);
+
       expect(after.body.data.meetingPreferences.enableNotifications).toBe(!initial);
     });
 
@@ -70,6 +81,7 @@ describe('Settings (e2e)', () => {
         .send({ privacySettings: { profileVisibility: 'PUBLIC' } });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.privacySettings.profileVisibility).toBe('PUBLIC');
     });
 
@@ -80,7 +92,9 @@ describe('Settings (e2e)', () => {
         .send({ appearance: { accentColorOverride: 'not-a-color' } });
 
       expect(res.status).toBe(400);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('VALIDATION_FAILED');
     });
 
@@ -90,6 +104,7 @@ describe('Settings (e2e)', () => {
         .send({ meetingPreferences: { enableNotifications: false } });
 
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });

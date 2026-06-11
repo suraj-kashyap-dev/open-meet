@@ -91,9 +91,11 @@ export function MessageBubble({
 
   const saveEdit = () => {
     const next = draft.trim();
+
     if (next.length > 0 && next !== message.content) {
       onEdit(message.id, next);
     }
+
     setEditing(false);
   };
 
@@ -211,10 +213,13 @@ export function MessageBubble({
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
+
                     saveEdit();
                   }
+
                   if (e.key === 'Escape') {
                     setEditing(false);
+
                     setDraft(message.content);
                   }
                 }}
@@ -229,6 +234,7 @@ export function MessageBubble({
                   className="hover:text-foreground"
                   onClick={() => {
                     setEditing(false);
+
                     setDraft(message.content);
                   }}
                 >

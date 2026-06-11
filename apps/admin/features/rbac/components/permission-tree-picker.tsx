@@ -37,8 +37,13 @@ export function PermissionTreePicker({ tree, value, onChange, disabled = false }
   const setOpen = (key: string, open: boolean) =>
     setOpenKeys((prev) => {
       const next = new Set(prev);
-      if (open) next.add(key);
-      else next.delete(key);
+
+      if (open) {
+        next.add(key);
+      } else {
+        next.delete(key);
+      }
+
       return next;
     });
 

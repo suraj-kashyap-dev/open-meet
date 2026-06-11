@@ -77,6 +77,7 @@ export function DateTimePicker({ id, value, onChange, minuteStep = 30 }: DateTim
 
   const onTimeSelect = (slot: TimeSlot) => {
     onChange(mergeDateAndTime(value, slot));
+
     setOpen(false);
   };
 

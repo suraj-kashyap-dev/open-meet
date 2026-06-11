@@ -83,6 +83,7 @@ export function ConversationHeader({
     clearConversation.mutate(conversation.id, {
       onSuccess: () => {
         setConfirmAction(null);
+
         toast.success(t('header.clear-confirmed'));
       },
       onError: (err) => handleApiError(err, t('group.action-failed')),
@@ -93,7 +94,9 @@ export function ConversationHeader({
     deleteConversation.mutate(conversation.id, {
       onSuccess: () => {
         setConfirmAction(null);
+
         router.push('/chat');
+
         toast.success(t('header.delete-confirmed'));
       },
       onError: (err) => handleApiError(err, t('group.action-failed')),

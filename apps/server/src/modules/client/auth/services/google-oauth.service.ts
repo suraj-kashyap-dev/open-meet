@@ -58,6 +58,7 @@ export class GoogleOAuthService {
   isConfigured(): boolean {
     const clientId = this.config.get<string>('GOOGLE_OAUTH_CLIENT_ID');
     const clientSecret = this.config.get<string>('GOOGLE_OAUTH_CLIENT_SECRET');
+
     return Boolean(clientId && clientSecret);
   }
 
@@ -178,6 +179,7 @@ export class GoogleOAuthService {
 
     if (!response.ok) {
       const text = await safeText(response);
+
       this.logger.warn(`Google token exchange failed (${response.status}): ${text}`);
       throw new UnauthorizedException({
         code: ApiErrorCode.TOKEN_INVALID,
@@ -205,6 +207,7 @@ export class GoogleOAuthService {
 
     if (!response.ok) {
       const text = await safeText(response);
+
       this.logger.warn(`Google userinfo fetch failed (${response.status}): ${text}`);
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,

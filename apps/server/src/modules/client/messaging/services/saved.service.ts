@@ -18,12 +18,15 @@ export class SavedService {
 
   async save(messageId: string, userId: string): Promise<{ saved: true }> {
     await this.assertMessageMember(messageId, userId);
+
     await this.saved.save(userId, messageId);
+
     return { saved: true };
   }
 
   async unsave(messageId: string, userId: string): Promise<{ saved: false }> {
     await this.saved.unsave(userId, messageId);
+
     return { saved: false };
   }
 

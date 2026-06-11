@@ -32,10 +32,13 @@ export function EndAllActiveDialog({ open, activeCount, onClose }: Props) {
 
     try {
       const { ended } = await bulkEnd.mutateAsync();
+
       toast.success(t('success', { count: ended }));
+
       onClose();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('error');
+
       toast.error(message);
     } finally {
       setBusy(false);

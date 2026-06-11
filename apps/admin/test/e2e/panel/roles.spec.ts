@@ -6,12 +6,17 @@ import { currentAdminMe } from '../fixtures/data';
 test.describe('Admin /roles page', () => {
   test('should list every role with its member count', async ({ page }) => {
     await mockAdminApi(page);
+
     await page.goto('/en/roles');
 
     await expect(page.getByRole('heading', { name: 'Admin roles', exact: true })).toBeVisible();
+
     await expect(page.getByText('Administrator', { exact: true })).toBeVisible();
+
     await expect(page.getByText('Member', { exact: true })).toBeVisible();
+
     await expect(page.getByText('Analyst')).toBeVisible();
+
     await expect(page.getByRole('button', { name: 'Create role' })).toBeVisible();
   });
 
@@ -25,10 +30,13 @@ test.describe('Admin /roles page', () => {
         grantedSet: ['roles.view'],
       },
     });
+
     await page.goto('/en/roles');
 
     await expect(page.getByRole('heading', { name: 'Admin roles', exact: true })).toBeVisible();
+
     await expect(page.getByText('Administrator', { exact: true })).toBeVisible();
+
     await expect(page.getByRole('button', { name: 'Create role' })).toHaveCount(0);
   });
 
@@ -42,6 +50,7 @@ test.describe('Admin /roles page', () => {
         grantedSet: ['users.view'],
       },
     });
+
     await page.goto('/en/users');
 
     await expect(page.getByRole('link', { name: 'Admin roles' })).toHaveCount(0);

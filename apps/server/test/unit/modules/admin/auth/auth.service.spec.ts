@@ -49,7 +49,9 @@ describe('AdminAuthService', () => {
 
   beforeEach(() => {
     vi.mocked(argon2.verify).mockReset().mockResolvedValue(true);
+
     vi.mocked(argon2.hash).mockClear().mockResolvedValue('NEW_HASH');
+
     admins = {
       findByEmail: vi.fn().mockResolvedValue(adminRow),
       findById: vi.fn().mockResolvedValue(adminRow),
@@ -58,13 +60,17 @@ describe('AdminAuthService', () => {
         .fn()
         .mockImplementation((id, data) => Promise.resolve({ ...adminRow, id, ...data })),
     };
+
     jwt = { signAsync: vi.fn().mockResolvedValue('signed.jwt') };
+
     storage = { publicUrl: vi.fn((key: string) => `https://cdn.example/${key}`) };
+
     roles = { findById: vi.fn().mockResolvedValue(adminRole) };
     const config = {
       getOrThrow: (k: string) =>
         ({ ADMIN_JWT_ACCESS_EXPIRY: '2h', ADMIN_JWT_ACCESS_SECRET: 'secret' })[k],
     } as unknown as ConfigService<ApiEnv, true>;
+
     service = new AdminAuthService(
       admins as unknown as AdminRepository,
       jwt as unknown as JwtService,
@@ -77,6 +83,7 @@ describe('AdminAuthService', () => {
   describe('login()', () => {
     it('should reject an unknown email', async () => {
       admins.findByEmail.mockResolvedValueOnce(null);
+
       await expect(service.login({ email: 'x', password: 'p' })).rejects.toBeInstanceOf(
         UnauthorizedException,
       );
@@ -84,6 +91,7 @@ describe('AdminAuthService', () => {
 
     it('should reject a wrong password', async () => {
       vi.mocked(argon2.verify).mockResolvedValueOnce(false);
+
       await expect(service.login({ email: 'x', password: 'p' })).rejects.toBeInstanceOf(
         UnauthorizedException,
       );
@@ -91,13 +99,18 @@ describe('AdminAuthService', () => {
 
     it('should stamp last login, sign a token, and return the parsed TTL on success', async () => {
       const { admin, tokens } = await service.login({ email: 'admin@x.com', password: 'p' });
+
       expect(admins.touchLastLogin).toHaveBeenCalledWith('a1');
+
       expect(jwt.signAsync).toHaveBeenCalledWith(
         { sub: 'a1', email: 'admin@x.com', roleId: 'role_sys_admin' },
         { secret: 'secret', expiresIn: 7200 },
       );
+
       expect(tokens).toEqual({ accessToken: 'signed.jwt', accessTtlMs: 7_200_000 });
+
       expect(admin.id).toBe('a1');
+
       expect(admin.role?.id).toBe('role_sys_admin');
     });
   });
@@ -105,17 +118,20 @@ describe('AdminAuthService', () => {
   describe('getAdminDtoById()', () => {
     it('should throw when the admin no longer exists', async () => {
       admins.findById.mockResolvedValueOnce(null);
+
       await expect(service.getAdminDtoById('a1')).rejects.toBeInstanceOf(UnauthorizedException);
     });
 
     it('should resolve the avatar key to a public URL', async () => {
       admins.findById.mockResolvedValueOnce({ ...adminRow, avatarKey: 'avatars/admins/a1/x.png' });
       const dto = await service.getAdminDtoById('a1');
+
       expect(dto.avatar).toBe('https://cdn.example/avatars/admins/a1/x.png');
     });
 
     it('should return a null avatar when no key is set', async () => {
       const dto = await service.getAdminDtoById('a1');
+
       expect(dto.avatar).toBeNull();
     });
   });
@@ -123,7 +139,9 @@ describe('AdminAuthService', () => {
   describe('updateProfile()', () => {
     it('should trim and persist the new name', async () => {
       const dto = await service.updateProfile('a1', { name: '  New Name  ' });
+
       expect(admins.update).toHaveBeenCalledWith('a1', { name: 'New Name' });
+
       expect(dto.name).toBe('New Name');
     });
 
@@ -135,6 +153,7 @@ describe('AdminAuthService', () => {
 
     it('should not hit the repository when there is nothing to change', async () => {
       await service.updateProfile('a1', {});
+
       expect(admins.update).not.toHaveBeenCalled();
     });
   });
@@ -142,20 +161,25 @@ describe('AdminAuthService', () => {
   describe('changePassword()', () => {
     it('should reject when the current password is wrong', async () => {
       vi.mocked(argon2.verify).mockResolvedValueOnce(false);
+
       await expect(
         service.changePassword('a1', { currentPassword: 'bad', newPassword: 'password1' }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(admins.update).not.toHaveBeenCalled();
     });
 
     it('should hash and persist the new password when the current one matches', async () => {
       await service.changePassword('a1', { currentPassword: 'hash', newPassword: 'password1' });
+
       expect(argon2.hash).toHaveBeenCalledWith('password1', { type: argon2.argon2id });
+
       expect(admins.update).toHaveBeenCalledWith('a1', { passwordHash: 'NEW_HASH' });
     });
 
     it('should throw when the admin no longer exists', async () => {
       admins.findById.mockResolvedValueOnce(null);
+
       await expect(
         service.changePassword('a1', { currentPassword: 'hash', newPassword: 'password1' }),
       ).rejects.toBeInstanceOf(UnauthorizedException);

@@ -47,9 +47,11 @@ describe('LiveKitService', () => {
       get: (key: string) => env[key],
       getOrThrow: (key: string) => {
         const v = env[key];
+
         if (v === undefined) {
           throw new Error(`Missing ${key}`);
         }
+
         return v;
       },
     };
@@ -82,6 +84,7 @@ describe('LiveKitService', () => {
   describe('mintToken()', () => {
     it('should throw NotFound for an unknown meeting code', async () => {
       meetings.findRawByCode.mockResolvedValue(null);
+
       await expect(
         service.mintToken({ meetingCode: 'missing', userId: 'u1', name: 'Ada' }),
       ).rejects.toBeInstanceOf(NotFoundException);
@@ -93,6 +96,7 @@ describe('LiveKitService', () => {
         hostId: 'u1',
         status: MeetingStatus.ENDED,
       });
+
       await expect(
         service.mintToken({ meetingCode: 'abcd', userId: 'u1', name: 'Ada' }),
       ).rejects.toBeInstanceOf(ForbiddenException);
@@ -109,9 +113,13 @@ describe('LiveKitService', () => {
         userId: 'u1',
         name: 'Ada',
       });
+
       expect(result.room).toBe('abcd-efgh-ijkl');
+
       expect(result.identity).toBe('u1');
+
       expect(result.token.split('.').length).toBe(3);
+
       expect(meetings.assertWithinDurationLimit).toHaveBeenCalledWith('abcd-efgh-ijkl');
     });
 
@@ -126,6 +134,7 @@ describe('LiveKitService', () => {
         userId: 'u1',
         name: 'Ada',
       });
+
       expect(result.url).toBe('ws://localhost:7880');
     });
 
@@ -139,9 +148,11 @@ describe('LiveKitService', () => {
         get: (key: string) => fallbackEnv[key],
         getOrThrow: (key: string) => {
           const v = fallbackEnv[key];
+
           if (v === undefined) {
             throw new Error(`Missing ${key}`);
           }
+
           return v;
         },
       } as unknown as ConstructorParameters<typeof LiveKitService>[0];
@@ -164,6 +175,7 @@ describe('LiveKitService', () => {
         userId: 'u1',
         name: 'Ada',
       });
+
       expect(result.url).toBe('ws://livekit:7880');
     });
   });

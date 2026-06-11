@@ -50,6 +50,7 @@ export function MarkdownToolbar({
 
     requestAnimationFrame(() => {
       el?.focus();
+
       el?.setSelectionRange(caret, caret);
     });
   };

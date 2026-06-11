@@ -6,6 +6,7 @@ export function notificationsPermission(): NotificationPermission {
   if (!notificationsSupported()) {
     return 'denied';
   }
+
   return Notification.permission;
 }
 
@@ -13,9 +14,11 @@ export async function ensureNotificationPermission(): Promise<NotificationPermis
   if (!notificationsSupported()) {
     return 'denied';
   }
+
   if (Notification.permission === 'granted' || Notification.permission === 'denied') {
     return Notification.permission;
   }
+
   try {
     return await Notification.requestPermission();
   } catch {
@@ -50,8 +53,11 @@ export function notify(title: string, opts: NotifyOptions = {}): void {
 
     notification.onclick = (event) => {
       event.preventDefault();
+
       window.focus();
+
       opts.onClick?.();
+
       notification.close();
     };
   } catch {}

@@ -25,10 +25,12 @@ describe('MessagesRepository', () => {
       findMany: vi.fn().mockResolvedValue([]),
       update: vi.fn().mockResolvedValue({ id: 'm1' }),
     };
+
     messageReaction = {
       upsert: vi.fn().mockResolvedValue({}),
       deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
     };
+
     repo = new MessagesRepository({
       chatMessage,
       messageReaction,
@@ -38,6 +40,7 @@ describe('MessagesRepository', () => {
   describe('create()', () => {
     it('should apply defaults for optional fields when not supplied', async () => {
       await repo.create({ conversationId: 'c1', senderId: 'u1', content: 'hi' });
+
       expect(chatMessage.create).toHaveBeenCalledWith({
         data: {
           conversationId: 'c1',
@@ -61,6 +64,7 @@ describe('MessagesRepository', () => {
         priority: ChatMessagePriority.URGENT,
         mentions: [{ kind: MentionKind.USER, mentionedUserId: 'bob' }],
       });
+
       expect(chatMessage.create).toHaveBeenCalledWith({
         data: {
           conversationId: 'c1',
@@ -80,6 +84,7 @@ describe('MessagesRepository', () => {
     it('should omit the mentions key when the mentions array is empty', async () => {
       await repo.create({ conversationId: 'c1', senderId: 'u1', content: 'hi', mentions: [] });
       const arg = chatMessage.create.mock.calls[0][0];
+
       expect(arg.data).not.toHaveProperty('mentions');
     });
   });
@@ -87,6 +92,7 @@ describe('MessagesRepository', () => {
   describe('findById()', () => {
     it('should query a message by id with relations', async () => {
       await repo.findById('m1');
+
       expect(chatMessage.findUnique).toHaveBeenCalledWith({
         where: { id: 'm1' },
         include: chatMessageInclude,
@@ -97,6 +103,7 @@ describe('MessagesRepository', () => {
   describe('findMeta()', () => {
     it('should select only meta fields', async () => {
       await repo.findMeta('m1');
+
       expect(chatMessage.findUnique).toHaveBeenCalledWith({
         where: { id: 'm1' },
         select: {
@@ -113,6 +120,7 @@ describe('MessagesRepository', () => {
   describe('listReplies()', () => {
     it('should list replies ordered ascending with relations', async () => {
       await repo.listReplies('p1');
+
       expect(chatMessage.findMany).toHaveBeenCalledWith({
         where: { parentId: 'p1' },
         orderBy: { createdAt: 'asc' },
@@ -124,7 +132,9 @@ describe('MessagesRepository', () => {
   describe('bumpReplyCount()', () => {
     it('should increment replyCount and set lastReplyAt', async () => {
       const at = new Date('2026-01-01T00:00:00Z');
+
       await repo.bumpReplyCount('p1', at);
+
       expect(chatMessage.update).toHaveBeenCalledWith({
         where: { id: 'p1' },
         data: { replyCount: { increment: 1 }, lastReplyAt: at },
@@ -136,11 +146,13 @@ describe('MessagesRepository', () => {
     it('should reverse the descending page so callers get ascending order', async () => {
       chatMessage.findMany.mockResolvedValue([{ id: 'm3' }, { id: 'm2' }, { id: 'm1' }]);
       const rows = await repo.listHistory({ conversationId: 'c1', clearedAt: null, limit: 30 });
+
       expect(rows).toEqual([{ id: 'm1' }, { id: 'm2' }, { id: 'm3' }]);
     });
 
     it('should omit the createdAt filter when neither clearedAt nor cursor are set', async () => {
       await repo.listHistory({ conversationId: 'c1', clearedAt: null, limit: 30 });
+
       expect(chatMessage.findMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1' },
         orderBy: { createdAt: 'desc' },
@@ -152,7 +164,9 @@ describe('MessagesRepository', () => {
     it('should combine clearedAt lower-bound and cursor upper-bound into createdAt', async () => {
       const clearedAt = new Date('2026-01-01T00:00:00Z');
       const cursor = '2026-02-01T00:00:00.000Z';
+
       await repo.listHistory({ conversationId: 'c1', clearedAt, cursor, limit: 10 });
+
       expect(chatMessage.findMany).toHaveBeenCalledWith({
         where: {
           conversationId: 'c1',
@@ -171,10 +185,15 @@ describe('MessagesRepository', () => {
         { kind: MentionKind.USER, mentionedUserId: 'bob' },
       ]);
       const arg = chatMessage.update.mock.calls[0][0];
+
       expect(arg.where).toEqual({ id: 'm1' });
+
       expect(arg.include).toBe(chatMessageInclude);
+
       expect(arg.data.content).toBe('edited');
+
       expect(arg.data.editedAt).toBeInstanceOf(Date);
+
       expect(arg.data.mentions).toEqual({
         deleteMany: {},
         create: [{ kind: MentionKind.USER, mentionedUserId: 'bob' }],
@@ -186,9 +205,13 @@ describe('MessagesRepository', () => {
     it('should set deletedAt and blank the content', async () => {
       await repo.softDelete('m1');
       const arg = chatMessage.update.mock.calls[0][0];
+
       expect(arg.where).toEqual({ id: 'm1' });
+
       expect(arg.include).toBe(chatMessageInclude);
+
       expect(arg.data.content).toBe('');
+
       expect(arg.data.deletedAt).toBeInstanceOf(Date);
     });
   });
@@ -196,6 +219,7 @@ describe('MessagesRepository', () => {
   describe('addReaction()', () => {
     it('should upsert a reaction keyed by message, user and emoji', async () => {
       await repo.addReaction('m1', 'u1', '👍');
+
       expect(messageReaction.upsert).toHaveBeenCalledWith({
         where: { messageId_userId_emoji: { messageId: 'm1', userId: 'u1', emoji: '👍' } },
         create: { messageId: 'm1', userId: 'u1', emoji: '👍' },
@@ -207,6 +231,7 @@ describe('MessagesRepository', () => {
   describe('removeReaction()', () => {
     it('should delete the matching reaction', async () => {
       await repo.removeReaction('m1', 'u1', '👍');
+
       expect(messageReaction.deleteMany).toHaveBeenCalledWith({
         where: { messageId: 'm1', userId: 'u1', emoji: '👍' },
       });

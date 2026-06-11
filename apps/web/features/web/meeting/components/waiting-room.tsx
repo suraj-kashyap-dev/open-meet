@@ -44,7 +44,9 @@ export function WaitingRoom({ code, displayName, authToken, onAdmitted }: Props)
 
     const sendKnock = () => {
       knockSentRef.current = true;
+
       socket.emit(ClientEvent.MEETING_KNOCK, { meetingCode: code });
+
       setStatus((prev) => (prev === 'awaiting-host' ? 'awaiting-host' : 'waiting'));
     };
 
@@ -71,7 +73,9 @@ export function WaitingRoom({ code, displayName, authToken, onAdmitted }: Props)
         }
 
         toast.success(t('waiting.toast-admitted'));
+
         onAdmitted();
+
         return;
       }
 
@@ -80,12 +84,16 @@ export function WaitingRoom({ code, displayName, authToken, onAdmitted }: Props)
         payload.reason === KnockDenyReason.HOST_LEFT
       ) {
         setStatus('awaiting-host');
+
         scheduleRetry();
+
         return;
       }
 
       setStatus('denied');
+
       toast.error(t('waiting.toast-declined'));
+
       setTimeout(() => router.replace('/'), 1800);
     };
 
@@ -100,10 +108,12 @@ export function WaitingRoom({ code, displayName, authToken, onAdmitted }: Props)
     return () => {
       if (retryTimerRef.current) {
         clearTimeout(retryTimerRef.current);
+
         retryTimerRef.current = null;
       }
 
       socket.off('connect', sendKnock);
+
       socket.off(ServerEvent.KNOCK_RESOLVED, onResolved);
 
       if (!admittedRef.current && knockSentRef.current && socket.connected) {

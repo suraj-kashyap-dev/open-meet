@@ -16,12 +16,14 @@ describe('WorkspaceConfigRepository', () => {
       findUnique: vi.fn().mockResolvedValue(sentinel),
       upsert: vi.fn().mockResolvedValue(sentinel),
     };
+
     repo = new WorkspaceConfigRepository({ workspaceSettings } as unknown as PrismaService);
   });
 
   describe('find()', () => {
     it('should look up the singleton settings row', async () => {
       await expect(repo.find()).resolves.toBe(sentinel);
+
       expect(workspaceSettings.findUnique).toHaveBeenCalledWith({ where: { id: SINGLETON_ID } });
     });
   });
@@ -33,7 +35,9 @@ describe('WorkspaceConfigRepository', () => {
         allowGuestJoin: true,
         maxMeetingMinutes: 60,
       };
+
       await expect(repo.update(data)).resolves.toBe(sentinel);
+
       expect(workspaceSettings.upsert).toHaveBeenCalledWith({
         where: { id: SINGLETON_ID },
         update: data,
@@ -43,6 +47,7 @@ describe('WorkspaceConfigRepository', () => {
 
     it('should pass a partial update through unchanged', async () => {
       await repo.update({ allowGuestJoin: false });
+
       expect(workspaceSettings.upsert).toHaveBeenCalledWith({
         where: { id: SINGLETON_ID },
         update: { allowGuestJoin: false },

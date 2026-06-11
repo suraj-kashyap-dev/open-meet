@@ -23,6 +23,7 @@ export class StorageService {
     const rootDir = config.getOrThrow<string>('LOCAL_STORAGE_DIR');
 
     this.provider = new LocalStorageProvider(rootDir, config.getOrThrow<string>('API_PUBLIC_URL'));
+
     this.logger.log(`Storage: local dir="${rootDir}"`);
   }
 

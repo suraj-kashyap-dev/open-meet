@@ -16,7 +16,10 @@ export class AdminRoleRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   searchWhere(search?: string): Prisma.AdminRoleRecordWhereInput {
-    if (!search) return {};
+    if (!search) {
+      return {};
+    }
+
     return { name: { contains: search, mode: 'insensitive' } };
   }
 

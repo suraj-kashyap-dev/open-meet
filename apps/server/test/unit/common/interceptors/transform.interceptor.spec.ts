@@ -17,6 +17,7 @@ describe('TransformInterceptor', () => {
 
   beforeEach(() => {
     getAllAndOverride = vi.fn().mockReturnValue(undefined);
+
     interceptor = new TransformInterceptor({ getAllAndOverride } as unknown as Reflector);
   });
 
@@ -24,7 +25,9 @@ describe('TransformInterceptor', () => {
     it('should wrap handler output in the success envelope with a timestamp', async () => {
       const next: CallHandler = { handle: () => of({ id: 'x' }) };
       const result = await firstValueFrom(interceptor.intercept(context, next));
+
       expect(result).toMatchObject({ success: true, data: { id: 'x' } });
+
       expect(typeof (result as { meta: { timestamp: string } }).meta.timestamp).toBe('string');
     });
 
@@ -32,6 +35,7 @@ describe('TransformInterceptor', () => {
       getAllAndOverride.mockReturnValueOnce(true);
       const next: CallHandler = { handle: () => of('raw-stream') };
       const result = await firstValueFrom(interceptor.intercept(context, next));
+
       expect(result).toBe('raw-stream');
     });
   });

@@ -4,9 +4,12 @@ import { afterEach } from 'vitest';
 
 afterEach(() => {
   cleanup();
+
   if (typeof document !== 'undefined') {
     document.body.style.pointerEvents = '';
+
     document.body.removeAttribute('aria-hidden');
+
     document
       .querySelectorAll(
         '[data-radix-portal],[data-radix-popper-content-wrapper],[role="dialog"],[role="menu"]',
@@ -25,8 +28,11 @@ if (typeof globalThis.ResizeObserver === 'undefined') {
 
 if (typeof Element !== 'undefined') {
   Element.prototype.scrollIntoView ??= () => {};
+
   Element.prototype.hasPointerCapture ??= () => false;
+
   Element.prototype.setPointerCapture ??= () => {};
+
   Element.prototype.releasePointerCapture ??= () => {};
 }
 
@@ -38,8 +44,11 @@ if (typeof window !== 'undefined' && typeof window.PointerEvent === 'undefined')
 
     constructor(type: string, params: PointerEventInit = {}) {
       super(type, params);
+
       this.pointerId = params.pointerId;
+
       this.pointerType = params.pointerType;
+
       this.isPrimary = params.isPrimary;
     }
   }

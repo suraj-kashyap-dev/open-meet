@@ -18,6 +18,7 @@ export function useAdminBranding() {
 
 export function useUpdateBrandingName() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: UpdateBrandingInput) => adminBrandingApi.updateName(input),
     onSuccess: (data: AdminBrandingDto) => {
@@ -28,6 +29,7 @@ export function useUpdateBrandingName() {
 
 export function useUpdateBranding() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: UpdateBrandingInput) => adminBrandingApi.update(input),
     onSuccess: (data: AdminBrandingDto) => {
@@ -38,6 +40,7 @@ export function useUpdateBranding() {
 
 export function useUploadBrandingLogo() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (file: File) => adminBrandingApi.uploadLogo(file),
     onSuccess: (data: AdminBrandingDto) => {
@@ -48,6 +51,7 @@ export function useUploadBrandingLogo() {
 
 export function useRemoveBrandingLogo() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: () => adminBrandingApi.removeLogo(),
     onSuccess: (data: AdminBrandingDto) => {

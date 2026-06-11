@@ -76,11 +76,13 @@ export class AdminGroupsService {
     }
 
     const group = await this.groups.create(trimmed, admin.id, unique);
+
     return this.toDetailDto(group);
   }
 
   async detail(id: string): Promise<AdminGroupDetailDto> {
     const group = await this.require(id);
+
     return this.toDetailDto(group);
   }
 
@@ -99,19 +101,25 @@ export class AdminGroupsService {
   async addMembers(id: string, userIds: string[]): Promise<AdminGroupDetailDto> {
     await this.require(id);
     const unique = [...new Set(userIds)];
+
     await this.groups.addMembers(id, unique);
+
     return this.detail(id);
   }
 
   async removeMember(id: string, userId: string): Promise<{ removed: true }> {
     await this.require(id);
+
     await this.groups.removeMember(id, userId);
+
     return { removed: true };
   }
 
   async remove(id: string): Promise<{ deleted: true }> {
     await this.require(id);
+
     await this.groups.delete(id);
+
     return { deleted: true };
   }
 

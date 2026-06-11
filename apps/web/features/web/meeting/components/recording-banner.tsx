@@ -28,8 +28,10 @@ export function RecordingBanner() {
     }
 
     const tick = () => setNow(Date.now());
+
     tick();
     const id = window.setInterval(tick, 1000);
+
     return () => window.clearInterval(id);
   }, [active]);
 

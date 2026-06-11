@@ -42,9 +42,11 @@ export class AdminBrandingController {
     if (dto.appName !== undefined) {
       await this.branding.updateAppName(dto.appName);
     }
+
     if (dto.accentColor !== undefined) {
       await this.branding.updateAccentColor(dto.accentColor);
     }
+
     return this.branding.getBranding();
   }
 

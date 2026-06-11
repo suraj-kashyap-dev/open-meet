@@ -90,6 +90,7 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
 
   const onFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
+
     event.target.value = '';
 
     if (!file) {
@@ -98,28 +99,36 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
 
     if (!AVATAR_MIMES.includes(file.type)) {
       toast.error(t('avatar.invalid-type'));
+
       return;
     }
 
     if (file.size > AVATAR_MAX_BYTES) {
       toast.error(t('avatar.too-large', { mb: AVATAR_MAX_MB }));
+
       return;
     }
 
     setAvatarFile(file);
+
     setAvatarRemoved(false);
+
     setAvatarPreview(URL.createObjectURL(file));
   };
 
   const onStageRemove = (): void => {
     setAvatarFile(null);
+
     setAvatarPreview(null);
+
     setAvatarRemoved(true);
   };
 
   const clearStagedAvatar = (): void => {
     setAvatarFile(null);
+
     setAvatarPreview(null);
+
     setAvatarRemoved(false);
   };
 
@@ -140,6 +149,7 @@ export function ProfileAccountForm({ admin }: { admin: AdminDto }) {
       }
 
       clearStagedAvatar();
+
       toast.success(t('account.success'));
     } catch (err) {
       toast.error(messageFromError(err, t('account.error')));

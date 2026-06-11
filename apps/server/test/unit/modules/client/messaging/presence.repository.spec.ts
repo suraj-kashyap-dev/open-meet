@@ -20,12 +20,14 @@ describe('PresenceRepository', () => {
       findUnique: vi.fn().mockResolvedValue(sentinel),
       findMany: vi.fn().mockResolvedValue([sentinel]),
     };
+
     repo = new PresenceRepository({ userPresence } as unknown as PrismaService);
   });
 
   describe('upsert()', () => {
     it('should create or update presence with status and custom text', async () => {
       await repo.upsert('u1', PresenceStatus.AVAILABLE, 'busy');
+
       expect(userPresence.upsert).toHaveBeenCalledWith({
         where: { userId: 'u1' },
         create: { userId: 'u1', status: PresenceStatus.AVAILABLE, customText: 'busy' },
@@ -37,6 +39,7 @@ describe('PresenceRepository', () => {
   describe('find()', () => {
     it('should query presence by userId', async () => {
       await repo.find('u1');
+
       expect(userPresence.findUnique).toHaveBeenCalledWith({ where: { userId: 'u1' } });
     });
   });
@@ -44,15 +47,19 @@ describe('PresenceRepository', () => {
   describe('findMany()', () => {
     it('should resolve to an empty array without querying for no ids', async () => {
       const result = await repo.findMany([]);
+
       expect(result).toEqual([]);
+
       expect(userPresence.findMany).not.toHaveBeenCalled();
     });
 
     it('should query presence for the given userIds', async () => {
       const result = await repo.findMany(['u1', 'u2']);
+
       expect(userPresence.findMany).toHaveBeenCalledWith({
         where: { userId: { in: ['u1', 'u2'] } },
       });
+
       expect(result).toEqual([sentinel]);
     });
   });

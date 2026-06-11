@@ -28,10 +28,12 @@ export function useAdminRole(id: string | null) {
 
 export function useCreateAdminRole() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (body: CreateRoleDto) => adminRolesApi.create(body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'roles'] });
     },
   });
@@ -39,13 +41,17 @@ export function useCreateAdminRole() {
 
 export function useUpdateAdminRole() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: ({ id, body }: { id: string; body: UpdateRoleDto }) =>
       adminRolesApi.update(id, body),
     onSuccess: (_data, { id }) => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
+
       void qc.invalidateQueries({ queryKey: [...ADMIN_ROLES_KEY, id] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'roles'] });
+
       void qc.invalidateQueries({ queryKey: ['admin', 'me'] });
     },
   });
@@ -53,10 +59,12 @@ export function useUpdateAdminRole() {
 
 export function useDeleteAdminRole() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminRolesApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ADMIN_ROLES_KEY });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'roles'] });
     },
   });

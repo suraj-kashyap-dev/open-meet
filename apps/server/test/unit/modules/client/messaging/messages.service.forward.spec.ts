@@ -41,14 +41,19 @@ describe('MessagesService.forward()', () => {
       findById: vi.fn(async (id: string) => (id === 'm1' ? source : created)),
       create: vi.fn().mockResolvedValue(created),
     };
+
     conversations = { touch: vi.fn() };
+
     conversationsService = { revealOnActivity: vi.fn() };
+
     permissions = {
       assertConversationMember: vi.fn(),
       assertCanPost: vi.fn(),
       assertDirectConversationAllowed: vi.fn(),
     };
+
     serializer = { message: vi.fn().mockReturnValue({ id: 'm2', content: 'hello there' }) };
+
     bus = { emit: vi.fn() };
 
     const config = { getOrThrow: () => 8000 };
@@ -72,11 +77,15 @@ describe('MessagesService.forward()', () => {
     await service.forward('m1', 'u1', 'c2');
 
     expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
     expect(permissions.assertCanPost).toHaveBeenCalledWith('c2', 'u1');
+
     expect(messages.create).toHaveBeenCalledWith(
       expect.objectContaining({ conversationId: 'c2', senderId: 'u1', content: 'hello there' }),
     );
+
     expect(conversations.touch).toHaveBeenCalledWith('c2', created.createdAt);
+
     expect(bus.emit).toHaveBeenCalledWith(
       conversationRoom('c2'),
       ChatServerEvent.MESSAGE_NEW,
@@ -86,6 +95,7 @@ describe('MessagesService.forward()', () => {
 
   it('should reject forwarding a missing message', async () => {
     messages.findById.mockResolvedValue(null);
+
     await expect(service.forward('mX', 'u1', 'c2')).rejects.toBeInstanceOf(NotFoundException);
   });
 
@@ -93,6 +103,7 @@ describe('MessagesService.forward()', () => {
     messages.findById.mockImplementation(async (id: string) =>
       id === 'm1' ? { ...source, content: '   ' } : created,
     );
+
     await expect(service.forward('m1', 'u1', 'c2')).rejects.toBeInstanceOf(BadRequestException);
   });
 });

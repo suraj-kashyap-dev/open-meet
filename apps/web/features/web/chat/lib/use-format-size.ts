@@ -11,8 +11,15 @@ export function useFormatSize(): (bytes: number) => string {
   return useCallback(
     (bytes: number) => {
       const s = byteSize(bytes);
-      if (s.unit === 'B') return t('size-bytes', { bytes: s.bytes });
-      if (s.unit === 'KB') return t('size-kb', { kb: s.kb });
+
+      if (s.unit === 'B') {
+        return t('size-bytes', { bytes: s.bytes });
+      }
+
+      if (s.unit === 'KB') {
+        return t('size-kb', { kb: s.kb });
+      }
+
       return t('size-mb', { mb: s.mb });
     },
     [t],

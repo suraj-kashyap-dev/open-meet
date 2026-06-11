@@ -56,6 +56,7 @@ export class AdminAuthService {
     await this.admins.touchLastLogin(admin.id);
     const tokens = await this.issueTokens(admin.id, admin.email, admin.roleRecordId);
     const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
+
     return { admin: this.toDto({ ...admin, lastLoginAt: new Date() }, role), tokens };
   }
 
@@ -70,18 +71,22 @@ export class AdminAuthService {
     }
 
     const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
+
     return this.toDto(admin, role);
   }
 
   async getMe(id: string): Promise<AdminMeResponseDto> {
     const admin = await this.admins.findById(id);
+
     if (!admin) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'Admin not found',
       });
     }
+
     const role = admin.roleRecordId ? await this.roles.findById(admin.roleRecordId) : null;
+
     return {
       admin: this.toDto(admin, role),
       role: role ? { id: role.id, name: role.name, permissionType: role.permissionType } : null,
@@ -111,6 +116,7 @@ export class AdminAuthService {
 
     const updated = await this.admins.update(id, data);
     const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+
     return this.toDto(updated, role);
   }
 
@@ -134,6 +140,7 @@ export class AdminAuthService {
     }
 
     const passwordHash = await argon2.hash(dto.newPassword, { type: argon2.argon2id });
+
     await this.admins.update(id, { passwordHash });
   }
 
@@ -149,6 +156,7 @@ export class AdminAuthService {
       secret: this.config.getOrThrow<string>('ADMIN_JWT_ACCESS_SECRET'),
       expiresIn: Math.floor(accessTtlMs / 1000),
     });
+
     return { accessToken, accessTtlMs };
   }
 
@@ -196,6 +204,7 @@ export class AdminAuthService {
       h: 3_600_000,
       d: 86_400_000,
     };
+
     return n * (mult[unit] ?? 0);
   }
 }

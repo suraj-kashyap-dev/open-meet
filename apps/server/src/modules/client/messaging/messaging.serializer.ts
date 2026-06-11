@@ -96,7 +96,9 @@ export class MessagingSerializer {
 
     for (const r of rows) {
       const userIds = byEmoji.get(r.emoji) ?? [];
+
       userIds.push(r.userId);
+
       byEmoji.set(r.emoji, userIds);
     }
 
@@ -139,6 +141,7 @@ export class MessagingSerializer {
   ): ConversationDto {
     const members: ConversationMemberDto[] = c.members.map((member) => {
       const snap = opts.presence.get(member.userId);
+
       return {
         userId: member.userId,
         name: member.user.name,

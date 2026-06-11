@@ -111,17 +111,21 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
   useEffect(() => {
     const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+
     document.addEventListener('fullscreenchange', onChange);
+
     return () => document.removeEventListener('fullscreenchange', onChange);
   }, []);
 
   useEffect(() => {
     if (!activeRecording) {
       setRecordingElapsed('00:00');
+
       return;
     }
 
     const startedAtMs = new Date(activeRecording.startedAt).getTime();
+
     const tick = () => {
       const diff = Math.max(0, Date.now() - startedAtMs);
       const total = Math.floor(diff / 1000);
@@ -136,6 +140,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
     tick();
     const id = window.setInterval(tick, 1000);
+
     return () => window.clearInterval(id);
   }, [activeRecording]);
 
@@ -146,11 +151,14 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
     const onBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
+
       event.returnValue = '';
+
       return '';
     };
 
     window.addEventListener('beforeunload', onBeforeUnload);
+
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [leaving]);
 
@@ -240,14 +248,17 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
     }
 
     setRecordingBusy(true);
+
     setRecordingConfirmOpen(false);
 
     try {
       const started = await recordingApi.start(code, authToken);
+
       setActiveRecording(started);
     } catch (err) {
       const message =
         err instanceof ApiClientError ? err.message : t('toast.start-recording-error');
+
       toast.error(message);
     } finally {
       setRecordingBusy(false);
@@ -263,12 +274,15 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
     try {
       await recordingApi.stop(code, authToken);
+
       setActiveRecording(null);
+
       toast.success(t('toast.recording-saved'), {
         description: t('toast.recording-saved-description'),
       });
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('toast.stop-recording-error');
+
       toast.error(message);
     } finally {
       setRecordingBusy(false);
@@ -287,6 +301,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
     }
 
     lastReactionAtRef.current = now;
+
     socket.emit(ClientEvent.REACTION_SEND, { meetingCode: code, emoji });
   };
 
@@ -318,12 +333,15 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
 
   const confirmEndForAll = async () => {
     setLeaving(true);
+
     try {
       await endMeeting.mutateAsync(code);
+
       await room.disconnect();
     } catch (err) {
       setLeaving(false);
       const message = err instanceof ApiClientError ? err.message : t('toast.end-meeting-error');
+
       toast.error(message);
     }
   };
@@ -370,6 +388,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
             <EmojiPicker
               onEmojiClick={(data: EmojiClickData) => {
                 sendReaction(data.emoji);
+
                 setReactionPickerOpen(false);
               }}
               emojiStyle={EmojiStyle.TWITTER}
@@ -473,6 +492,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
                     disabled={recordingBusy}
                     onSelect={(event) => {
                       event.preventDefault();
+
                       setRecordingConfirmOpen(true);
                     }}
                     className="gap-2"
@@ -510,6 +530,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
                     disabled={recordingBusy}
                     onSelect={(event) => {
                       event.preventDefault();
+
                       void stopRecording();
                     }}
                     className="gap-2"
@@ -543,6 +564,7 @@ export function MeetingControls({ code, socket, hostId, authToken }: Props) {
             <DropdownMenuItem
               onSelect={(event) => {
                 event.preventDefault();
+
                 setInfoOpen(true);
               }}
               className="gap-2"

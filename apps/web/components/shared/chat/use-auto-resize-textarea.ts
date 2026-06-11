@@ -17,6 +17,7 @@ export function useAutoResizeTextarea(
 
     el.style.height = 'auto';
     const max = maxRows * 24 + 16;
+
     el.style.height = `${Math.min(el.scrollHeight, max)}px`;
   }, [maxRows]);
 

@@ -42,6 +42,7 @@ export function StarredMessagesPanel({
 
   const openMessage = (messageId: string) => {
     onOpenChange(false);
+
     router.push(`/chat/${conversationId}?m=${messageId}`);
   };
 

@@ -44,6 +44,7 @@ export async function createTestApp(): Promise<NestFastifyApplication> {
   const app = moduleRef.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
 
   app.setGlobalPrefix('api');
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -52,13 +53,19 @@ export async function createTestApp(): Promise<NestFastifyApplication> {
       transformOptions: { enableImplicitConversion: true },
     }),
   );
+
   app.useGlobalFilters(new GlobalExceptionFilter());
+
   app.useGlobalInterceptors(new TransformInterceptor(app.get(Reflector)));
+
   await app.register(fastifyCookie, { secret: process.env.JWT_ACCESS_SECRET });
+
   await app.register(fastifyMultipart, { limits: { fileSize: 25 * 1024 * 1024, files: 1 } });
 
   await app.init();
+
   await app.getHttpAdapter().getInstance().ready();
+
   return app;
 }
 
@@ -68,9 +75,11 @@ export function http(app: NestFastifyApplication) {
 
 export async function resetDb(app: NestFastifyApplication): Promise<void> {
   const prisma = app.get(PrismaService);
+
   await prisma.$executeRawUnsafe(
     'TRUNCATE TABLE "Attachment","Message","Participant","MeetingInvite","Recording","PollVote","PollOption","Poll","MessageReaction","MessageMention","PinnedMessage","SavedMessage","ChatMessage","ConversationMember","Conversation","UserPresence","PushSubscription","UserInvite","UserSettings","Meeting","User","AdminInvite","Admin","WorkspaceSettings" RESTART IDENTITY CASCADE',
   );
+
   // The two roles seeded once at app boot (Administrator is immutable, Member is
   // an editable fallback) must survive resets; only drop test-created custom roles
   // so the suite is idempotent across local re-runs.
@@ -81,6 +90,7 @@ export async function resetDb(app: NestFastifyApplication): Promise<void> {
 
 export function cookieHeader(setCookie: string[] | string | undefined): string {
   const arr = Array.isArray(setCookie) ? setCookie : setCookie ? [setCookie] : [];
+
   return arr.map((c) => c.split(';')[0]).join('; ');
 }
 
@@ -131,6 +141,7 @@ export async function seedAdmin(
 ): Promise<void> {
   const prisma = app.get(PrismaService);
   const passwordHash = await argon2.hash(creds.password, { type: argon2.argon2id });
+
   await prisma.admin.create({
     data: {
       email: creds.email.toLowerCase(),
@@ -148,5 +159,6 @@ export async function loginAdmin(
   const res = await http(app)
     .post('/api/admin/auth/login')
     .send({ email: creds.email, password: creds.password });
+
   return { res, cookie: cookieHeader(res.headers['set-cookie']) };
 }

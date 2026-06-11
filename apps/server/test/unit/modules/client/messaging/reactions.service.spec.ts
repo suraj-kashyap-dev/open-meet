@@ -37,14 +37,18 @@ describe('ReactionsService', () => {
       addReaction: vi.fn(),
       removeReaction: vi.fn(),
     };
+
     permissions = {
       assertCanPost: vi.fn(),
       assertConversationMember: vi.fn(),
     };
+
     serializer = {
       message: vi.fn().mockReturnValue({ id: 'm1', reactions: [{ emoji: '👍', count: 1 }] }),
     };
+
     bus = { emit: vi.fn() };
+
     service = new ReactionsService(
       messages as unknown as MessagesRepository,
       permissions as unknown as ChatPermissionsService,
@@ -58,12 +62,15 @@ describe('ReactionsService', () => {
       const result = await service.add('m1', 'u1', '👍');
 
       expect(permissions.assertCanPost).toHaveBeenCalledWith('c1', 'u1');
+
       expect(messages.addReaction).toHaveBeenCalledWith('m1', 'u1', '👍');
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.REACTION_UPDATED,
         { conversationId: 'c1', messageId: 'm1', reactions: [{ emoji: '👍', count: 1 }] },
       );
+
       expect(result).toEqual({ id: 'm1', reactions: [{ emoji: '👍', count: 1 }] });
     });
 
@@ -75,6 +82,7 @@ describe('ReactionsService', () => {
 
     it('should reject an empty emoji', async () => {
       await expect(service.add('m1', 'u1', '   ')).rejects.toBeInstanceOf(BadRequestException);
+
       expect(messages.addReaction).not.toHaveBeenCalled();
     });
 
@@ -86,16 +94,19 @@ describe('ReactionsService', () => {
 
     it('should reject when the message does not exist', async () => {
       messages.findMeta.mockResolvedValue(null);
+
       await expect(service.add('m1', 'u1', '👍')).rejects.toBeInstanceOf(NotFoundException);
     });
 
     it('should reject when the message has been deleted', async () => {
       messages.findMeta.mockResolvedValue({ ...meta, deletedAt: new Date() });
+
       await expect(service.add('m1', 'u1', '👍')).rejects.toBeInstanceOf(NotFoundException);
     });
 
     it('should reject when the full message cannot be loaded for broadcast', async () => {
       messages.findById.mockResolvedValue(null);
+
       await expect(service.add('m1', 'u1', '👍')).rejects.toBeInstanceOf(NotFoundException);
     });
   });
@@ -105,7 +116,9 @@ describe('ReactionsService', () => {
       await service.remove('m1', 'u1', '👍');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(messages.removeReaction).toHaveBeenCalledWith('m1', 'u1', '👍');
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.REACTION_UPDATED,
@@ -115,6 +128,7 @@ describe('ReactionsService', () => {
 
     it('should reject when the message does not exist', async () => {
       messages.findMeta.mockResolvedValue(null);
+
       await expect(service.remove('m1', 'u1', '👍')).rejects.toBeInstanceOf(NotFoundException);
     });
   });

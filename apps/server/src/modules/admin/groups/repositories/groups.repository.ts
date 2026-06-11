@@ -24,7 +24,11 @@ export class AdminGroupsRepository {
 
   searchWhere(search?: string): Prisma.ConversationWhereInput {
     const base: Prisma.ConversationWhereInput = { type: ConversationType.GROUP };
-    if (!search) return base;
+
+    if (!search) {
+      return base;
+    }
+
     return { ...base, title: { contains: search, mode: 'insensitive' } };
   }
 

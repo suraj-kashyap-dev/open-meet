@@ -37,36 +37,45 @@ describe('PresenceService', () => {
       'chat:presence:online': new Map(),
       'chat:presence:last-seen': new Map(),
     };
+
     repo = {
       upsert: vi.fn(),
       findMany: vi.fn().mockResolvedValue([]),
     };
+
     bus = {
       emit: vi.fn(),
       roomHasSockets: vi.fn().mockResolvedValue(true),
       disconnectRoom: vi.fn().mockResolvedValue(0),
     };
+
     conversations = {
       conversationIdsForUser: vi.fn().mockResolvedValue([]),
     };
+
     redis = {
       client: {
         hincrby: async (key, field, amount) => {
           const next = Number(hashes[key]?.get(field) ?? 0) + amount;
+
           hashes[key]?.set(field, String(next));
+
           return next;
         },
         hdel: async (key, ...fields) => {
           let deleted = 0;
+
           for (const field of fields) {
             if (hashes[key]?.delete(field)) {
               deleted += 1;
             }
           }
+
           return deleted;
         },
         hset: async (key, field, value) => {
           hashes[key]?.set(field, value);
+
           return 1;
         },
         hget: async (key, field) => hashes[key]?.get(field) ?? null,
@@ -94,21 +103,29 @@ describe('PresenceService', () => {
     const online = await service.areOnline(['u1']);
 
     expect(online).toEqual(new Set(['u1']));
+
     expect(bus.roomHasSockets).toHaveBeenCalledWith('user:u1');
+
     expect(bus.emit).not.toHaveBeenCalled();
   });
 
   it('should force stale online counts offline when no chat socket remains', async () => {
     hashes['chat:presence:online'].set('u1', '1');
+
     bus.roomHasSockets.mockResolvedValue(false);
+
     conversations.conversationIdsForUser.mockResolvedValue(['c1', 'c2']);
 
     const online = await service.areOnline(['u1']);
 
     expect(online).toEqual(new Set());
+
     expect(hashes['chat:presence:online'].has('u1')).toBe(false);
+
     expect(hashes['chat:presence:last-seen'].has('u1')).toBe(true);
+
     expect(bus.emit).toHaveBeenCalledTimes(2);
+
     expect(bus.emit).toHaveBeenNthCalledWith(
       1,
       'conversation:c1',

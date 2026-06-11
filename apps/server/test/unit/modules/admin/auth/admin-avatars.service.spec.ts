@@ -25,6 +25,7 @@ describe('AdminAvatarsService', () => {
       findById: vi.fn().mockResolvedValue({ id: 'a1', avatarKey: null }),
       update: vi.fn().mockResolvedValue({ id: 'a1' }),
     };
+
     storage = {
       put: vi.fn().mockResolvedValue(undefined),
       delete: vi.fn().mockResolvedValue(undefined),
@@ -33,6 +34,7 @@ describe('AdminAvatarsService', () => {
       ApiEnv,
       true
     >;
+
     service = new AdminAvatarsService(
       storage as unknown as StorageService,
       admins as unknown as AdminRepository,
@@ -49,6 +51,7 @@ describe('AdminAvatarsService', () => {
 
     it('should reject a file larger than the max size', async () => {
       const huge = Buffer.alloc(6 * 1024 * 1024);
+
       await expect(
         service.upload({ adminId: 'a1', buffer: huge, mime: 'image/png' }),
       ).rejects.toBeInstanceOf(PayloadTooLargeException);
@@ -62,6 +65,7 @@ describe('AdminAvatarsService', () => {
 
     it('should throw when the admin no longer exists', async () => {
       admins.findById.mockResolvedValueOnce(null);
+
       await expect(
         service.upload({ adminId: 'a1', buffer: PNG, mime: 'image/png' }),
       ).rejects.toBeInstanceOf(UnauthorizedException);
@@ -71,13 +75,17 @@ describe('AdminAvatarsService', () => {
       await service.upload({ adminId: 'a1', buffer: PNG, mime: 'image/png' });
 
       const putArg = storage.put.mock.calls[0][0];
+
       expect(putArg.key).toMatch(/^avatars\/admins\/a1\/[a-f0-9]{24}\.png$/);
+
       expect(admins.update).toHaveBeenCalledWith('a1', { avatarKey: putArg.key });
     });
 
     it('should delete the previous avatar when replacing one', async () => {
       admins.findById.mockResolvedValueOnce({ id: 'a1', avatarKey: 'avatars/admins/a1/old.png' });
+
       await service.upload({ adminId: 'a1', buffer: PNG, mime: 'image/png' });
+
       expect(storage.delete).toHaveBeenCalledWith('avatars/admins/a1/old.png');
     });
   });
@@ -85,14 +93,19 @@ describe('AdminAvatarsService', () => {
   describe('remove()', () => {
     it('should be a no-op when there is no avatar', async () => {
       await service.remove('a1');
+
       expect(admins.update).not.toHaveBeenCalled();
+
       expect(storage.delete).not.toHaveBeenCalled();
     });
 
     it('should clear the key and delete the stored file', async () => {
       admins.findById.mockResolvedValueOnce({ id: 'a1', avatarKey: 'avatars/admins/a1/x.png' });
+
       await service.remove('a1');
+
       expect(admins.update).toHaveBeenCalledWith('a1', { avatarKey: null });
+
       expect(storage.delete).toHaveBeenCalledWith('avatars/admins/a1/x.png');
     });
   });

@@ -31,11 +31,13 @@ export class ChatService {
     }
 
     const refreshed = await this.chat.findById(message.id);
+
     return this.toDto(refreshed ?? message);
   }
 
   async history(meetingId: string): Promise<MessageDto[]> {
     const messages = await this.chat.listForMeeting(meetingId);
+
     return messages.map((m) => this.toDto(m));
   }
 

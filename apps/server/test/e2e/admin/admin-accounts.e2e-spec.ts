@@ -36,12 +36,15 @@ describe('Admin accounts & invites (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
   async function seedInvite(overrides: Record<string, unknown> = {}): Promise<void> {
     const prisma = app.get(PrismaService);
+
     await prisma.adminInvite.create({
       data: {
         email: 'invitee@example.com',
@@ -64,11 +67,15 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: 'direct@example.com', name: 'Direct Admin', password: 'direct-pass-1' });
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.email).toBe('direct@example.com');
+
       expect(res.body.data.role?.id).toBe('role_sys_member');
 
       const list = await http(app).get('/api/admin/accounts/datagrid').set('Cookie', cookie);
+
       expect(
         list.body.data.rows.some((a: { email: string }) => a.email === 'direct@example.com'),
       ).toBe(true);
@@ -77,6 +84,7 @@ describe('Admin accounts & invites (e2e)', () => {
         email: 'direct@example.com',
         password: 'direct-pass-1',
       });
+
       expect(loginRes.status).toBe(200);
     });
 
@@ -91,6 +99,7 @@ describe('Admin accounts & invites (e2e)', () => {
       });
 
       expect(res.status).toBe(201);
+
       expect(res.body.data.role?.id).toBe('role_sys_admin');
     });
 
@@ -103,6 +112,7 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: 'direct@example.com', name: 'Direct Admin', password: 'direct-pass-1' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
@@ -134,6 +144,7 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: REGULAR.email, name: 'Dup', password: 'dup-pass-12' });
 
       expect(res.status).toBe(409);
+
       expect(res.body.error.code).toBe('EMAIL_TAKEN');
     });
   });
@@ -148,13 +159,19 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: 'new@example.com', name: 'New Admin' });
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.email).toBe('new@example.com');
+
       expect(res.body.data.status).toBe('PENDING');
 
       const list = await http(app).get('/api/admin/accounts/invites').set('Cookie', cookie);
+
       expect(list.status).toBe(200);
+
       expect(list.body.data.items).toHaveLength(1);
+
       expect(list.body.data.items[0].email).toBe('new@example.com');
     });
 
@@ -167,6 +184,7 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: 'new@example.com', name: 'New Admin' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
@@ -188,7 +206,9 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: 'new@example.com', name: 'New Admin' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
+
       expect(res.body.error.message).toBe('ليس لديك الصلاحية لتنفيذ هذا الإجراء');
     });
 
@@ -201,6 +221,7 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ email: REGULAR.email, name: 'Dup' });
 
       expect(res.status).toBe(409);
+
       expect(res.body.error.code).toBe('EMAIL_TAKEN');
     });
   });
@@ -212,12 +233,15 @@ describe('Admin accounts & invites (e2e)', () => {
       const res = await http(app).get(`/api/admin/invite/${RAW_TOKEN}`);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.email).toBe('invitee@example.com');
+
       expect(res.body.data.role?.id).toBe('role_sys_member');
     });
 
     it('should 404 an unknown token', async () => {
       const res = await http(app).get('/api/admin/invite/does-not-exist');
+
       expect(res.status).toBe(404);
     });
 
@@ -229,15 +253,18 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ token: RAW_TOKEN, password: 'invitee-pass-1' });
 
       expect(accept.status).toBe(200);
+
       expect(accept.body.data.email).toBe('invitee@example.com');
 
       const lookup = await http(app).get(`/api/admin/invite/${RAW_TOKEN}`);
+
       expect(lookup.status).toBe(404);
 
       const { res } = await loginAdmin(app, {
         email: 'invitee@example.com',
         password: 'invitee-pass-1',
       });
+
       expect(res.status).toBe(200);
     });
 
@@ -249,6 +276,7 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ token: RAW_TOKEN, password: 'invitee-pass-1' });
 
       expect(res.status).toBe(400);
+
       expect(res.body.error.code).toBe('TOKEN_INVALID');
     });
   });
@@ -265,6 +293,7 @@ describe('Admin accounts & invites (e2e)', () => {
         .send({ name: 'Renamed' });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.name).toBe('Renamed');
     });
 

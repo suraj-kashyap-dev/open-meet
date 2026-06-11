@@ -16,6 +16,7 @@ export default async function AcceptInvitePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
   setRequestLocale(locale);
   const t = await getTranslations('accept-invite');
 

@@ -132,12 +132,15 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!socket) {
       setConnection('offline');
+
       return;
     }
 
     const onConnect = () => {
       setConnection('connected');
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+
       void qc.invalidateQueries({ queryKey: presenceMeKey });
     };
 
@@ -150,6 +153,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       qc.setQueryData<MessagesData>(chatKeys.messages(message.conversationId), (data) =>
         upsertMessage(data, message),
       );
+
       qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
         applyIncoming(list, message, !isMine && !isActive),
       );
@@ -261,23 +265,31 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
 
     const onConversationNew = (conversation: ConversationDto) => {
       socket.emit(ChatClientEvent.CONVERSATION_JOIN, { conversationId: conversation.id });
+
       setConversationUnread(conversation.id, conversation.unreadCount);
+
       void qc.invalidateQueries({ queryKey: chatKeys.messages(conversation.id) });
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     };
 
     const onConversationUpdate = (conversation: ConversationDto) => {
       setConversationUnread(conversation.id, conversation.unreadCount);
+
       void qc.invalidateQueries({ queryKey: chatKeys.messages(conversation.id) });
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     };
 
     const onConversationRemoved = ({ conversationId }: { conversationId: string }) => {
       clearUnread(conversationId);
+
       qc.removeQueries({ queryKey: chatKeys.messages(conversationId) });
+
       qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
         removeConversation(list, conversationId),
       );
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     };
 
@@ -291,42 +303,73 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
       qc.setQueryData<MessagesData>(chatKeys.messages(conversationId), (data) =>
         patchMessage(data, messageId, { pinned }),
       );
+
       void qc.invalidateQueries({ queryKey: chatKeys.pins(conversationId) });
     };
 
     socket.on('connect', onConnect);
+
     socket.on('disconnect', onDisconnect);
+
     socket.on(ChatServerEvent.MESSAGE_NEW, onMessageNew);
+
     socket.on(ChatServerEvent.MESSAGE_EDITED, onMessageEdited);
+
     socket.on(ChatServerEvent.MESSAGE_DELETED, onMessageDeleted);
+
     socket.on(ChatServerEvent.REACTION_UPDATED, onReaction);
+
     socket.on(ChatServerEvent.TYPING, onTyping);
+
     socket.on(ChatServerEvent.TYPING_STOPPED, onTypingStopped);
+
     socket.on(ChatServerEvent.READ_RECEIPT, onReadReceipt);
+
     socket.on(ChatServerEvent.DELIVERY_RECEIPT, onDeliveryReceipt);
+
     socket.on(ChatServerEvent.PRESENCE_UPDATE, onPresence);
+
     socket.on(ChatServerEvent.CONVERSATION_NEW, onConversationNew);
+
     socket.on(ChatServerEvent.CONVERSATION_UPDATE, onConversationUpdate);
+
     socket.on(ChatServerEvent.CONVERSATION_REMOVED, onConversationRemoved);
+
     socket.on(ChatServerEvent.POLL_UPDATE, onPollUpdate);
+
     socket.on(ChatServerEvent.PIN_UPDATE, onPinUpdate);
 
     return () => {
       socket.off('connect', onConnect);
+
       socket.off('disconnect', onDisconnect);
+
       socket.off(ChatServerEvent.MESSAGE_NEW, onMessageNew);
+
       socket.off(ChatServerEvent.MESSAGE_EDITED, onMessageEdited);
+
       socket.off(ChatServerEvent.MESSAGE_DELETED, onMessageDeleted);
+
       socket.off(ChatServerEvent.REACTION_UPDATED, onReaction);
+
       socket.off(ChatServerEvent.TYPING, onTyping);
+
       socket.off(ChatServerEvent.TYPING_STOPPED, onTypingStopped);
+
       socket.off(ChatServerEvent.READ_RECEIPT, onReadReceipt);
+
       socket.off(ChatServerEvent.DELIVERY_RECEIPT, onDeliveryReceipt);
+
       socket.off(ChatServerEvent.PRESENCE_UPDATE, onPresence);
+
       socket.off(ChatServerEvent.CONVERSATION_NEW, onConversationNew);
+
       socket.off(ChatServerEvent.CONVERSATION_UPDATE, onConversationUpdate);
+
       socket.off(ChatServerEvent.CONVERSATION_REMOVED, onConversationRemoved);
+
       socket.off(ChatServerEvent.POLL_UPDATE, onPollUpdate);
+
       socket.off(ChatServerEvent.PIN_UPDATE, onPinUpdate);
     };
   }, [

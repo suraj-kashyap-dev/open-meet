@@ -23,6 +23,7 @@ export class LocalStorageProvider implements StorageProvider {
 
   constructor(rootDir: string, apiPublicUrl: string) {
     this.rootDir = resolve(rootDir);
+
     this.apiPublicUrl = apiPublicUrl.replace(/\/$/, '');
   }
 
@@ -53,9 +54,11 @@ export class LocalStorageProvider implements StorageProvider {
     const dir = target.substring(0, target.lastIndexOf(sep));
 
     await mkdir(dir, { recursive: true });
+
     await writeFile(target, buffer);
 
     this.logger.debug(`Wrote ${buffer.length} bytes to ${target} (${mime})`);
+
     return { url: `/api/uploads/files/${key}` };
   }
 
@@ -125,6 +128,7 @@ export class LocalStorageProvider implements StorageProvider {
   async delete(key: string): Promise<void> {
     try {
       const target = this.resolveKey(key);
+
       await unlink(target);
     } catch (err) {
       const code = (err as NodeJS.ErrnoException).code;

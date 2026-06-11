@@ -37,7 +37,9 @@ export default function AdminGroupsPage() {
 
     try {
       await del.mutateAsync(deleting.id);
+
       toast.success(t('detail.delete-success'));
+
       setDeleting(null);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('detail.delete-error'));

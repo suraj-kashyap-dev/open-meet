@@ -28,9 +28,13 @@ describe('SavedService', () => {
 
   beforeEach(() => {
     saved = { save: vi.fn(), unsave: vi.fn(), listSaved: vi.fn() };
+
     messages = { findMeta: vi.fn().mockResolvedValue(meta) };
+
     permissions = { assertConversationMember: vi.fn() };
+
     serializer = { message: vi.fn() };
+
     service = new SavedService(
       saved as unknown as SavedRepository,
       messages as unknown as MessagesRepository,
@@ -44,12 +48,15 @@ describe('SavedService', () => {
       const result = await service.save('m1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(saved.save).toHaveBeenCalledWith('u1', 'm1');
+
       expect(result).toEqual({ saved: true });
     });
 
     it('should reject when the message does not exist', async () => {
       messages.findMeta.mockResolvedValue(null);
+
       await expect(service.save('mX', 'u1')).rejects.toBeInstanceOf(NotFoundException);
     });
   });
@@ -57,7 +64,9 @@ describe('SavedService', () => {
   describe('unsave()', () => {
     it('should remove the saved row', async () => {
       const result = await service.unsave('m1', 'u1');
+
       expect(saved.unsave).toHaveBeenCalledWith('u1', 'm1');
+
       expect(result).toEqual({ saved: false });
     });
   });
@@ -73,6 +82,7 @@ describe('SavedService', () => {
           },
         },
       ]);
+
       serializer.message.mockReturnValue({ id: 'm1', saved: true });
 
       const result = await service.list('u1');

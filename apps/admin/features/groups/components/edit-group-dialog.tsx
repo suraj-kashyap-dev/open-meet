@@ -45,6 +45,7 @@ export function EditGroupDialog({ group, onClose }: Props) {
   useEffect(() => {
     if (detail.data) {
       setTitle(detail.data.title);
+
       setMemberIds(detail.data.members.map((member) => member.userId));
     }
   }, [detail.data]);
@@ -62,6 +63,7 @@ export function EditGroupDialog({ group, onClose }: Props) {
 
     if (!titleDirty && !memberDirty) {
       onClose();
+
       return;
     }
 
@@ -79,6 +81,7 @@ export function EditGroupDialog({ group, onClose }: Props) {
       }
 
       toast.success(t('detail.rename-success'));
+
       onClose();
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('detail.request-error'));

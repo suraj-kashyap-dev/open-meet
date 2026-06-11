@@ -15,6 +15,7 @@ import { useSaved } from '../hooks/use-chat';
 
 function dayKey(iso: string): string {
   const d = new Date(iso);
+
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 }
 
@@ -27,11 +28,13 @@ function formatDateSeparator(
   const target = dayKey(iso);
   const now = new Date();
   const yesterday = new Date();
+
   yesterday.setDate(now.getDate() - 1);
 
   if (target === dayKey(now.toISOString())) {
     return todayLabel;
   }
+
   if (target === dayKey(yesterday.toISOString())) {
     return yesterdayLabel;
   }
@@ -51,6 +54,7 @@ function groupByDay(
   for (const item of items) {
     const key = dayKey(item.message.sentAt);
     const last = groups[groups.length - 1];
+
     if (last && last.key === key) {
       last.items.push(item);
     } else {

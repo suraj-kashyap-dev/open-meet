@@ -62,6 +62,7 @@ export function ConversationListItem({
 
   const hide = () => {
     setState({ hidden: true });
+
     toast(t('list.hide-confirmed'), {
       action: {
         label: t('list.hide-undo'),

@@ -38,13 +38,16 @@ for (const relRoot of LANG_ROOTS) {
   }
 
   rootsChecked += 1;
+
   console.log(relRoot);
 
   const locales = listLocales(root);
 
   if (!locales.includes(BASE_LOCALE)) {
     console.log(`  ✗  no "${BASE_LOCALE}" base directory found\n`);
+
     problemCount += 1;
+
     process.exitCode = 1;
     continue;
   }
@@ -64,13 +67,17 @@ for (const relRoot of LANG_ROOTS) {
 
     for (const file of baseNamespaces.filter((f) => !localeNamespaces.includes(f))) {
       console.log(`  ✗  ${locale}/${file} - MISSING file (exists in "${BASE_LOCALE}")`);
+
       problemCount += 1;
+
       process.exitCode = 1;
     }
 
     for (const file of localeNamespaces.filter((f) => !baseNamespaces.includes(f))) {
       console.log(`  ✗  ${locale}/${file} - EXTRA file (no "${BASE_LOCALE}" counterpart)`);
+
       problemCount += 1;
+
       process.exitCode = 1;
     }
 
@@ -82,13 +89,18 @@ for (const relRoot of LANG_ROOTS) {
 
       if (base.error) {
         console.log(`  ✗  ${BASE_LOCALE}/${file} - invalid JSON: ${base.error}`);
+
         problemCount += 1;
+
         process.exitCode = 1;
         continue;
       }
+
       if (target.error) {
         console.log(`  ✗  ${locale}/${file} - invalid JSON: ${target.error}`);
+
         problemCount += 1;
+
         process.exitCode = 1;
         continue;
       }
@@ -99,10 +111,13 @@ for (const relRoot of LANG_ROOTS) {
         console.log(`  ✓  ${locale}/${file}`);
       } else {
         console.log(`  ✗  ${locale}/${file}`);
+
         for (const problem of problems) {
           console.log(`        · ${problem}`);
         }
+
         problemCount += problems.length;
+
         process.exitCode = 1;
       }
     }
@@ -113,9 +128,11 @@ for (const relRoot of LANG_ROOTS) {
 
 if (process.exitCode === 1) {
   console.log(`✖  Translations are OUT OF SYNC - ${problemCount} problem(s) found.`);
+
   console.log(
     `   English ("${BASE_LOCALE}") is the source of truth: every other locale must have the same`,
   );
+
   console.log(
     `   namespace files, with identical keys, nesting, and key order. Fix the entries listed above.\n`,
   );

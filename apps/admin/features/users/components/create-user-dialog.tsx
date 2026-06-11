@@ -153,7 +153,9 @@ export function CreateUserDialog({
 
     try {
       await create.mutateAsync(body);
+
       toast.success(t('success', { email: body.email }));
+
       onOpenChange(false);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('error'));

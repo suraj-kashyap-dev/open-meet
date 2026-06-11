@@ -64,6 +64,7 @@ export function EditAdminDialog({ admin, onClose }: Props) {
   });
 
   const { reset } = form;
+
   useEffect(() => {
     if (admin) {
       reset({ name: admin.name, roleId: admin.role?.id ?? DEFAULT_ROLE_ID });
@@ -77,10 +78,13 @@ export function EditAdminDialog({ admin, onClose }: Props) {
 
     try {
       await update.mutateAsync({ id: admin.id, dto: values });
+
       toast.success(t('edit-dialog.success', { name: values.name }));
+
       onClose();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('edit-dialog.error');
+
       toast.error(message);
     }
   });

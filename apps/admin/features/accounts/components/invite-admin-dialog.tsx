@@ -66,17 +66,22 @@ export function InviteAdminDialog({ open, onClose }: Props) {
   const onSubmit = form.handleSubmit(async (values) => {
     try {
       await invite.mutateAsync(values);
+
       toast.success(t('invite-dialog.success', { email: values.email }));
+
       form.reset();
+
       onClose();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('invite-dialog.error');
+
       toast.error(message);
     }
   });
 
   const close = () => {
     form.reset();
+
     onClose();
   };
 

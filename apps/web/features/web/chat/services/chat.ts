@@ -29,6 +29,7 @@ function query(params: Record<string, string | number | undefined>): string {
   }
 
   const str = search.toString();
+
   return str ? `?${str}` : '';
 }
 

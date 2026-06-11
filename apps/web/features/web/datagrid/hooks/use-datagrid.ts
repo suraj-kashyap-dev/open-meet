@@ -47,19 +47,23 @@ export function useDatagrid(path: string, options?: { enabled?: boolean }): Data
 
   const setSearch = (value: string) => {
     setSearchValue(value);
+
     setPage(1);
   };
 
   const setFilter = (key: string, value: string) => {
     setFilters((current) => {
       const next = { ...current };
+
       if (value) {
         next[key] = value;
       } else {
         delete next[key];
       }
+
       return next;
     });
+
     setPage(1);
   };
 
@@ -68,8 +72,10 @@ export function useDatagrid(path: string, options?: { enabled?: boolean }): Data
       if (current?.key !== key) {
         return { key, dir: 'asc' };
       }
+
       return current.dir === 'asc' ? { key, dir: 'desc' } : null;
     });
+
     setPage(1);
   };
 

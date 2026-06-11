@@ -110,6 +110,7 @@ export class AdminAccountsService {
 
   async listInvites(): Promise<AdminInviteListResponseDto> {
     const rows = await this.invites.listPending();
+
     return { items: rows.map((i) => this.toInviteDto(i)) };
   }
 
@@ -145,6 +146,7 @@ export class AdminAccountsService {
     await this.invites.deleteByEmail(email);
 
     const role = await this.roles.findById(roleId);
+
     return this.toDto(created, role);
   }
 
@@ -184,6 +186,7 @@ export class AdminAccountsService {
     await this.sendInviteEmail({ email, name, token, expiresAt });
 
     const role = await this.roles.findById(roleId);
+
     return this.toInviteDto({
       ...invite,
       invitedBy: null,
@@ -210,6 +213,7 @@ export class AdminAccountsService {
     await this.sendInviteEmail({ email: updated.email, name: updated.name, token, expiresAt });
 
     const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+
     return this.toInviteDto({
       ...updated,
       invitedBy: null,
@@ -230,6 +234,7 @@ export class AdminAccountsService {
     }
 
     await this.invites.delete(id);
+
     return { deleted: true };
   }
 
@@ -270,6 +275,7 @@ export class AdminAccountsService {
     await this.invites.delete(invite.id);
 
     const role = await this.roles.findById(roleId);
+
     return this.toDto(created, role);
   }
 
@@ -299,6 +305,7 @@ export class AdminAccountsService {
     }
 
     let updated: Admin = target;
+
     if (Object.keys(data).length > 0) {
       updated = await this.admins.update(id, data);
     }
@@ -306,6 +313,7 @@ export class AdminAccountsService {
     if (dto.roleId !== undefined && dto.roleId !== target.roleRecordId) {
       if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID && dto.roleId !== SYSTEM_ADMIN_ROLE_ID) {
         const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
+
         if (remaining <= 1) {
           throw new ForbiddenException({
             code: ApiErrorCode.FORBIDDEN,
@@ -313,10 +321,12 @@ export class AdminAccountsService {
           });
         }
       }
+
       updated = await this.assignRoleInternal(id, dto.roleId);
     }
 
     const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+
     return this.toDto(updated, role);
   }
 
@@ -349,11 +359,13 @@ export class AdminAccountsService {
     }
 
     await this.admins.delete(targetId);
+
     return { deleted: true };
   }
 
   async assignRole(targetId: string, roleId: string): Promise<AdminAccountDto> {
     const target = await this.admins.findById(targetId);
+
     if (!target) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
@@ -363,6 +375,7 @@ export class AdminAccountsService {
 
     if (target.roleRecordId === SYSTEM_ADMIN_ROLE_ID && roleId !== SYSTEM_ADMIN_ROLE_ID) {
       const remaining = await this.admins.countByRoleRecord(SYSTEM_ADMIN_ROLE_ID);
+
       if (remaining <= 1) {
         throw new ForbiddenException({
           code: ApiErrorCode.FORBIDDEN,
@@ -373,31 +386,41 @@ export class AdminAccountsService {
 
     const updated = await this.assignRoleInternal(targetId, roleId);
     const role = updated.roleRecordId ? await this.roles.findById(updated.roleRecordId) : null;
+
     return this.toDto(updated, role);
   }
 
   private async assignRoleInternal(adminId: string, roleId: string): Promise<Admin> {
     const role = await this.roles.findById(roleId);
+
     if (!role) {
       throw new NotFoundException({
         code: ApiErrorCode.ROLE_NOT_FOUND,
         message: this.t('errors.role-not-found'),
       });
     }
+
     const updated = await this.admins.updateRoleRecord(adminId, roleId);
+
     this.resolver.invalidate(roleId);
+
     return updated;
   }
 
   private async resolveRoleIdOrDefault(roleId: string | undefined): Promise<string> {
-    if (!roleId) return SYSTEM_MEMBER_ROLE_ID;
+    if (!roleId) {
+      return SYSTEM_MEMBER_ROLE_ID;
+    }
+
     const role = await this.roles.findById(roleId);
+
     if (!role) {
       throw new NotFoundException({
         code: ApiErrorCode.ROLE_NOT_FOUND,
         message: this.t('errors.role-not-found'),
       });
     }
+
     return role.id;
   }
 
@@ -423,6 +446,7 @@ export class AdminAccountsService {
 
   private generateToken(): { token: string; tokenHash: string } {
     const token = randomBytes(32).toString('base64url');
+
     return { token, tokenHash: this.hashToken(token) };
   }
 

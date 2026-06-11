@@ -72,6 +72,7 @@ export class MessagesService {
     options: { cursor?: string; limit?: number },
   ): Promise<ChatMessagePageDto> {
     const membership = await this.permissions.assertConversationMember(conversationId, userId);
+
     await this.permissions.assertDirectConversationAllowed(conversationId, userId);
 
     const limit = Math.min(100, Math.max(1, options.limit ?? 50));
@@ -107,6 +108,7 @@ export class MessagesService {
 
   async send(input: SendMessageInput): Promise<ChatMessageDto> {
     await this.permissions.assertCanPost(input.conversationId, input.senderId);
+
     await this.permissions.assertDirectConversationAllowed(input.conversationId, input.senderId);
 
     const content = (input.content ?? '').trim();
@@ -151,6 +153,7 @@ export class MessagesService {
     }
 
     const full = (await this.messages.findById(created.id)) ?? created;
+
     await this.conversationRepo.touch(input.conversationId, full.createdAt);
 
     if (input.parentId) {
@@ -179,6 +182,7 @@ export class MessagesService {
       senderId: viewerId,
       senderName: dto.sender?.name ?? '',
     };
+
     void this.pushQueue.add(PushJob.CHAT_MESSAGE, job, {
       removeOnComplete: true,
       removeOnFail: 50,
@@ -210,6 +214,7 @@ export class MessagesService {
     const dto = this.serializer.message(updated, userId);
 
     this.bus.emit(conversationRoom(meta.conversationId), ChatServerEvent.MESSAGE_EDITED, dto);
+
     return dto;
   }
 
@@ -228,7 +233,9 @@ export class MessagesService {
     }
 
     await this.permissions.assertConversationMember(source.conversationId, userId);
+
     await this.permissions.assertCanPost(targetConversationId, userId);
+
     await this.permissions.assertDirectConversationAllowed(targetConversationId, userId);
 
     const content = source.content.trim();
@@ -248,7 +255,9 @@ export class MessagesService {
     });
 
     const full = (await this.messages.findById(created.id)) ?? created;
+
     await this.conversationRepo.touch(targetConversationId, full.createdAt);
+
     await this.conversations.revealOnActivity(targetConversationId, userId);
 
     return this.broadcastNew(full, userId);
@@ -264,6 +273,7 @@ export class MessagesService {
       conversationId: meta.conversationId,
       messageId: meta.id,
     });
+
     return dto;
   }
 

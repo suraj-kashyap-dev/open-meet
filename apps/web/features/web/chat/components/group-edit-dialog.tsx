@@ -37,19 +37,26 @@ export function GroupEditDialog({
   useEffect(() => {
     if (open) {
       setTitle(conversation.title ?? '');
+
       setDescription(conversation.description ?? '');
     }
   }, [open, conversation.title, conversation.description]);
 
   const submit = async () => {
     const trimmedTitle = title.trim();
-    if (trimmedTitle.length === 0) return;
+
+    if (trimmedTitle.length === 0) {
+      return;
+    }
+
     try {
       await update.mutateAsync({
         title: trimmedTitle,
         description: description.trim() || null,
       });
+
       toast.success(t('group.edit-saved'));
+
       onOpenChange(false);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('group.action-failed'));

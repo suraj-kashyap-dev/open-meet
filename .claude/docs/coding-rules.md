@@ -16,6 +16,21 @@
   - trailing commas
   - `printWidth: 100`
 
+## Code Formatting Style
+
+Write code in the repo's spacious style. Do this for new code and when editing existing files:
+
+- Always brace guard clauses; never use single-line `if` returns.
+  - Wrong: `if (!el) return;`
+  - Right:
+    ```ts
+    if (!el) {
+      return;
+    }
+    ```
+- Separate sequential statements inside a function/effect body with blank lines for breathing room — after a leading `const`, before a `return`, and between consecutive assignments or calls. Do not pack statements together.
+- Group `useEffect`/`useLayoutEffect` blocks together rather than interleaving them between variable declarations.
+
 ## Naming Conventions
 
 - Files and folders are predominantly kebab-case.

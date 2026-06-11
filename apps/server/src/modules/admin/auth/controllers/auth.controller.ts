@@ -58,7 +58,9 @@ export class AdminAuthController {
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<AdminLoginResponseDto> {
     const { admin, tokens } = await this.auth.login(dto);
+
     this.setAuthCookie(res, tokens);
+
     return { admin };
   }
 
@@ -68,6 +70,7 @@ export class AdminAuthController {
   @ApiOperation({ summary: 'Clear admin session cookie' })
   logout(@Res({ passthrough: true }) res: FastifyReply): { loggedOut: true } {
     res.clearCookie(ADMIN_ACCESS_COOKIE, { path: '/' });
+
     return { loggedOut: true };
   }
 
@@ -99,6 +102,7 @@ export class AdminAuthController {
     @Body() dto: ChangeAdminPasswordDto,
   ): Promise<{ changed: true }> {
     await this.auth.changePassword(admin.id, dto);
+
     return { changed: true };
   }
 
@@ -127,11 +131,13 @@ export class AdminAuthController {
     }
 
     const buffer = await part.toBuffer();
+
     await this.avatars.upload({
       adminId: admin.id,
       buffer,
       mime: part.mimetype || 'application/octet-stream',
     });
+
     return this.auth.getAdminDtoById(admin.id);
   }
 
@@ -142,6 +148,7 @@ export class AdminAuthController {
   @ApiOperation({ summary: "Remove the authenticated admin's avatar" })
   async deleteAvatar(@CurrentAdmin() admin: AdminRequestUser): Promise<AdminDto> {
     await this.avatars.remove(admin.id);
+
     return this.auth.getAdminDtoById(admin.id);
   }
 

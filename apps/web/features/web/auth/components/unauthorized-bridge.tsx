@@ -55,6 +55,7 @@ export function UnauthorizedBridge() {
       } catch {}
 
       qc.setQueryData(ME_KEY, null);
+
       useChatStore.getState().reset();
 
       const isGuestMeetingPath =
@@ -72,7 +73,9 @@ export function UnauthorizedBridge() {
       }
 
       redirectingRef.current = true;
+
       toast.error('Your session expired - please sign in again.');
+
       window.location.replace(browserLoginHref(currentClientPath()));
     };
 

@@ -93,11 +93,15 @@ describe('<PinnedMessagesBar />', () => {
     renderBar();
 
     expect(screen.getByText('1/3')).toBeInTheDocument();
+
     expect(screen.getByText('Grace')).toBeInTheDocument();
+
     expect(screen.getByText('Bring the projector')).toBeInTheDocument();
 
     const segments = screen.getAllByTestId('pin-segment');
+
     expect(segments).toHaveLength(3);
+
     expect(segments[0]).toHaveAttribute('data-active', 'true');
   });
 
@@ -115,12 +119,15 @@ describe('<PinnedMessagesBar />', () => {
     const cycle = screen.getByRole('button', { name: 'Pinned: Bring the projector' });
 
     fireEvent.click(cycle);
+
     expect(onOpenMessage).toHaveBeenLastCalledWith('m3');
 
     expect(screen.getByText('2/3')).toBeInTheDocument();
+
     expect(screen.getByText('Share the venue map')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: 'Pinned: Share the venue map' }));
+
     expect(onOpenMessage).toHaveBeenLastCalledWith('m2');
   });
 
@@ -130,16 +137,21 @@ describe('<PinnedMessagesBar />', () => {
     fireEvent.click(screen.getByRole('button', { name: 'View all pinned messages' }));
 
     const panel = screen.getByTestId('pinned-panel');
+
     expect(within(panel).getByText('Budget is approved')).toBeInTheDocument();
+
     expect(within(panel).getByText('Share the venue map')).toBeInTheDocument();
 
     fireEvent.click(within(panel).getByText('Budget is approved'));
+
     expect(onOpenMessage).toHaveBeenLastCalledWith('m1');
 
     fireEvent.click(screen.getByRole('button', { name: 'View all pinned messages' }));
     const reopened = screen.getByTestId('pinned-panel');
     const unpinButtons = within(reopened).getAllByRole('button', { name: 'Unpin' });
+
     fireEvent.click(unpinButtons[0]!);
+
     expect(onUnpin).toHaveBeenCalledWith('m3');
   });
 
@@ -147,9 +159,11 @@ describe('<PinnedMessagesBar />', () => {
     renderBar({ items: [buildMessage('m1', 'Only pin', 'Ada')] });
 
     expect(screen.queryByText('1/1')).not.toBeInTheDocument();
+
     expect(
       screen.queryByRole('button', { name: 'View all pinned messages' }),
     ).not.toBeInTheDocument();
+
     expect(screen.getByText('Only pin')).toBeInTheDocument();
   });
 });

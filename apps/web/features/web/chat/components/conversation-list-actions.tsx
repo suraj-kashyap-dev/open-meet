@@ -31,6 +31,7 @@ export function ConversationListActions() {
   const startMeeting = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
+
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       toast.error(

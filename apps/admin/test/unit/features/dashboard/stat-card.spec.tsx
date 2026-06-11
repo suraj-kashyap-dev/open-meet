@@ -9,6 +9,7 @@ describe('<StatCard />', () => {
     render(<StatCard label="Active meetings" value={42} icon={Activity} />);
 
     expect(screen.getByText('Active meetings')).toBeInTheDocument();
+
     expect(screen.getByText('42')).toBeInTheDocument();
   });
 

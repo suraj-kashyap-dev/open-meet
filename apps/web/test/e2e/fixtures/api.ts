@@ -124,10 +124,21 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
       }
 
       if (path.startsWith('/meetings/')) {
-        if (path.endsWith('/messages')) return json(200, ok(messages));
-        if (path.endsWith('/recordings')) return json(200, ok(recordings));
-        if (path.endsWith('/participants')) return json(200, ok(participants));
-        if (BARE_MEETING.test(path)) return meetingResponse();
+        if (path.endsWith('/messages')) {
+          return json(200, ok(messages));
+        }
+
+        if (path.endsWith('/recordings')) {
+          return json(200, ok(recordings));
+        }
+
+        if (path.endsWith('/participants')) {
+          return json(200, ok(participants));
+        }
+
+        if (BARE_MEETING.test(path)) {
+          return meetingResponse();
+        }
       }
 
       if (path.startsWith('/auth/invite/')) {
@@ -145,6 +156,7 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
           if (options.authenticateOnLogin) {
             me = fixtures.currentUser;
           }
+
           return json(200, ok(fixtures.authResponse));
         case '/messaging/conversations/direct':
           return json(200, ok(fixtures.dmConversation));
@@ -164,6 +176,7 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
 
       if (path.startsWith('/messaging/conversations/') && path.endsWith('/messages')) {
         const body = (request.postDataJSON() ?? {}) as { content?: string; clientNonce?: string };
+
         return json(
           200,
           ok({
@@ -178,15 +191,28 @@ export async function mockWebApi(page: Page, options: WebApiMockOptions = {}): P
       }
 
       if (path.startsWith('/meetings/')) {
-        if (path.endsWith('/join')) return json(200, ok(fixtures.joinResponse));
-        if (path.endsWith('/leave')) return json(200, ok(null));
-        if (path.endsWith('/end')) return meetingResponse();
+        if (path.endsWith('/join')) {
+          return json(200, ok(fixtures.joinResponse));
+        }
+
+        if (path.endsWith('/leave')) {
+          return json(200, ok(null));
+        }
+
+        if (path.endsWith('/end')) {
+          return meetingResponse();
+        }
       }
     }
 
     if (method === 'PATCH') {
-      if (path === '/auth/me') return json(200, ok(me));
-      if (BARE_MEETING.test(path)) return meetingResponse();
+      if (path === '/auth/me') {
+        return json(200, ok(me));
+      }
+
+      if (BARE_MEETING.test(path)) {
+        return meetingResponse();
+      }
     }
 
     if (method === 'DELETE' && path === '/auth/me/avatar') {
@@ -216,6 +242,7 @@ export async function mockChatSocket(page: Page): Promise<void> {
       if (data.startsWith('40')) {
         const rest = data.slice(2);
         const namespace = rest.startsWith('/') ? rest.split(',')[0] : '';
+
         ws.send(`40${namespace ? `${namespace},` : ''}{"sid":"mock-sio"}`);
       }
     });

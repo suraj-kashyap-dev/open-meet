@@ -77,6 +77,7 @@ export class ConversationsController {
   @Get('presence/me')
   async presenceMe(@CurrentUser() user: RequestUser): Promise<UserPresenceDto> {
     const snap = await this.presence.forUser(user.id);
+
     return {
       userId: user.id,
       online: snap.online,

@@ -11,6 +11,7 @@ const { RedisCtor } = vi.hoisted(() => {
     quit: vi.fn().mockResolvedValue('OK'),
     duplicate: vi.fn(() => make()),
   });
+
   return { RedisCtor: vi.fn(() => make()) };
 });
 
@@ -27,12 +28,14 @@ describe('RedisService', () => {
 
   beforeEach(() => {
     RedisCtor.mockClear();
+
     service = new RedisService(config);
   });
 
   describe('constructor', () => {
     it('should connect a single client from REDIS_URL', () => {
       expect(RedisCtor).toHaveBeenCalledTimes(1);
+
       expect(RedisCtor).toHaveBeenCalledWith('redis://localhost:6379', expect.any(Object));
     });
   });
@@ -44,8 +47,11 @@ describe('RedisService', () => {
       const second = service.pubSubPair();
 
       expect(first.pub).not.toBe(first.sub);
+
       expect(second.pub).toBe(first.pub);
+
       expect(second.sub).toBe(first.sub);
+
       expect(client.duplicate).toHaveBeenCalledTimes(2);
     });
   });
@@ -54,9 +60,13 @@ describe('RedisService', () => {
     it('should quit the client and the pub/sub pair', async () => {
       const client = service.client as unknown as FakeClient;
       const { pub, sub } = service.pubSubPair();
+
       await service.onModuleDestroy();
+
       expect(client.quit).toHaveBeenCalled();
+
       expect((pub as unknown as FakeClient).quit).toHaveBeenCalled();
+
       expect((sub as unknown as FakeClient).quit).toHaveBeenCalled();
     });
   });

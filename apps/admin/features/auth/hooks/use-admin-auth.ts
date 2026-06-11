@@ -31,23 +31,33 @@ export function useCurrentAdminMe() {
 
 export function useCurrentAdmin() {
   const { data, ...rest } = useCurrentAdminMe();
+
   return { ...rest, data: data?.admin ?? null };
 }
 
 export function useCan(key: AdminPermissionKey): boolean {
   const { data } = useCurrentAdminMe();
-  if (!data) return false;
-  if (data.role?.permissionType === 'ALL') return true;
+
+  if (!data) {
+    return false;
+  }
+
+  if (data.role?.permissionType === 'ALL') {
+    return true;
+  }
+
   return data.grantedSet.includes(key);
 }
 
 export function useAdminLogin() {
   const router = useRouter();
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: adminAuthApi.login,
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ADMIN_ME_KEY });
+
       router.replace('/');
     },
   });
@@ -56,11 +66,14 @@ export function useAdminLogin() {
 export function useAdminLogout() {
   const router = useRouter();
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: adminAuthApi.logout,
     onSettled: () => {
       qc.setQueryData(ADMIN_ME_KEY, null);
+
       qc.removeQueries({ queryKey: ['admin'] });
+
       router.replace('/login');
     },
   });
@@ -71,12 +84,14 @@ function onAdminUpdated(qc: ReturnType<typeof useQueryClient>) {
     qc.setQueryData<AdminMeResponseDto | null>(ADMIN_ME_KEY, (current) =>
       current ? { ...current, admin } : current,
     );
+
     void qc.invalidateQueries({ queryKey: ['admin-accounts'] });
   };
 }
 
 export function useUpdateAdminProfile() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: adminAuthApi.updateMe,
     onSuccess: onAdminUpdated(qc),
@@ -91,6 +106,7 @@ export function useChangeAdminPassword() {
 
 export function useUploadAdminAvatar() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (file: File) => adminAuthApi.uploadAvatar(file),
     onSuccess: onAdminUpdated(qc),
@@ -99,6 +115,7 @@ export function useUploadAdminAvatar() {
 
 export function useRemoveAdminAvatar() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: () => adminAuthApi.deleteAvatar(),
     onSuccess: onAdminUpdated(qc),

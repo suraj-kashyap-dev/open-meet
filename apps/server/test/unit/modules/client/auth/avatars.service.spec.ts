@@ -31,11 +31,13 @@ describe('AvatarsService', () => {
       publicUrl: vi.fn((k: string) => `pub:${k}`),
       delete: vi.fn().mockResolvedValue(undefined),
     };
+
     users = {
       findById: vi.fn().mockResolvedValue({ id: 'u1', avatarKey: null } as User),
       update: vi.fn().mockResolvedValue({ id: 'u1' } as User),
     };
     const config = { get: () => MAX } as unknown as ConfigService<ApiEnv, true>;
+
     service = new AvatarsService(
       storage as unknown as StorageService,
       users as unknown as AuthRepository,
@@ -65,6 +67,7 @@ describe('AvatarsService', () => {
 
     it('should reject when the user does not exist', async () => {
       users.findById.mockResolvedValueOnce(null);
+
       await expect(upload()).rejects.toBeInstanceOf(UnauthorizedException);
     });
 
@@ -74,16 +77,21 @@ describe('AvatarsService', () => {
         buffer: Buffer.from('img'),
         mime: 'image/jpeg',
       });
+
       expect(key).toMatch(/^avatars\/u1\/[a-f0-9]{24}\.jpg$/);
+
       expect(storage.put).toHaveBeenCalledWith(
         expect.objectContaining({ key, mime: 'image/jpeg' }),
       );
+
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: key });
     });
 
     it('should delete the previous avatar when it is replaced', async () => {
       users.findById.mockResolvedValueOnce({ id: 'u1', avatarKey: 'avatars/u1/old.png' } as User);
+
       await service.upload({ userId: 'u1', buffer: Buffer.from('img'), mime: 'image/png' });
+
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/old.png');
     });
   });
@@ -91,15 +99,21 @@ describe('AvatarsService', () => {
   describe('remove()', () => {
     it('should be a no-op when the user has no avatar', async () => {
       users.findById.mockResolvedValueOnce({ id: 'u1', avatarKey: null } as User);
+
       await service.remove('u1');
+
       expect(users.update).not.toHaveBeenCalled();
+
       expect(storage.delete).not.toHaveBeenCalled();
     });
 
     it('should clear avatarKey and delete the stored file', async () => {
       users.findById.mockResolvedValueOnce({ id: 'u1', avatarKey: 'avatars/u1/old.png' } as User);
+
       await service.remove('u1');
+
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: null });
+
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/old.png');
     });
   });
@@ -107,6 +121,7 @@ describe('AvatarsService', () => {
   describe('resolveUrl()', () => {
     it('should return null for no key and a public url otherwise', () => {
       expect(service.resolveUrl(null)).toBeNull();
+
       expect(service.resolveUrl('avatars/u1/x.png')).toBe('pub:avatars/u1/x.png');
     });
   });

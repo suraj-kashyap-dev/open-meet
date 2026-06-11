@@ -37,11 +37,17 @@ describe('PollsService', () => {
       setVotes: vi.fn(),
       findWithOptions: vi.fn().mockResolvedValue({ id: 'p1' }),
     };
+
     conversations = { touch: vi.fn() };
+
     permissions = { assertCanPost: vi.fn() };
+
     messages = { broadcastNew: vi.fn().mockResolvedValue({ id: 'm1' }) };
+
     serializer = { poll: vi.fn().mockReturnValue({ id: 'p1', options: [] }) };
+
     bus = { emit: vi.fn() };
+
     service = new PollsService(
       polls as unknown as PollsRepository,
       conversations as unknown as ConversationsRepository,
@@ -59,6 +65,7 @@ describe('PollsService', () => {
       const result = await service.create('c1', 'u1', validDto);
 
       expect(permissions.assertCanPost).toHaveBeenCalledWith('c1', 'u1');
+
       expect(polls.createPollMessage).toHaveBeenCalledWith({
         conversationId: 'c1',
         senderId: 'u1',
@@ -66,11 +73,14 @@ describe('PollsService', () => {
         options: ['Pizza', 'Sushi'],
         multiple: false,
       });
+
       expect(conversations.touch).toHaveBeenCalledWith('c1', expect.any(Date));
+
       expect(messages.broadcastNew).toHaveBeenCalledWith(
         { id: 'm1', createdAt: expect.any(Date) },
         'u1',
       );
+
       expect(result).toEqual({ id: 'm1' });
     });
 
@@ -98,6 +108,7 @@ describe('PollsService', () => {
       await expect(
         service.create('c1', 'u1', { question: '   ', options: ['a', 'b'] }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(polls.createPollMessage).not.toHaveBeenCalled();
     });
 
@@ -109,6 +120,7 @@ describe('PollsService', () => {
 
     it('should reject more than ten options', async () => {
       const options = Array.from({ length: 11 }, (_, i) => `opt${i}`);
+
       await expect(service.create('c1', 'u1', { question: 'Q?', options })).rejects.toBeInstanceOf(
         BadRequestException,
       );
@@ -137,13 +149,17 @@ describe('PollsService', () => {
       const result = await service.vote('p1', 'u1', ['o1']);
 
       expect(permissions.assertCanPost).toHaveBeenCalledWith('c1', 'u1');
+
       expect(polls.setVotes).toHaveBeenCalledWith('p1', 'u1', ['o1']);
+
       expect(serializer.poll).toHaveBeenCalledWith({ id: 'p1' }, 'u1');
+
       expect(bus.emit).toHaveBeenCalledWith(conversationRoom('c1'), ChatServerEvent.POLL_UPDATE, {
         conversationId: 'c1',
         messageId: 'm1',
         poll: { id: 'p1', options: [] },
       });
+
       expect(result).toEqual({ id: 'p1', options: [] });
     });
 
@@ -155,11 +171,13 @@ describe('PollsService', () => {
 
     it('should reject when the poll does not exist', async () => {
       polls.findContext.mockResolvedValue(null);
+
       await expect(service.vote('p1', 'u1', ['o1'])).rejects.toBeInstanceOf(NotFoundException);
     });
 
     it('should reject voting on a closed poll', async () => {
       polls.findContext.mockResolvedValue({ ...context, closedAt: new Date() });
+
       await expect(service.vote('p1', 'u1', ['o1'])).rejects.toBeInstanceOf(ForbiddenException);
     });
 
@@ -183,12 +201,15 @@ describe('PollsService', () => {
 
     it('should reject options that are not part of the poll', async () => {
       polls.optionIdsForPoll.mockResolvedValue(['o1']);
+
       await expect(service.vote('p1', 'u1', ['oX'])).rejects.toBeInstanceOf(BadRequestException);
+
       expect(polls.setVotes).not.toHaveBeenCalled();
     });
 
     it('should reject when the poll cannot be reloaded after voting', async () => {
       polls.findWithOptions.mockResolvedValue(null);
+
       await expect(service.vote('p1', 'u1', ['o1'])).rejects.toBeInstanceOf(NotFoundException);
     });
   });

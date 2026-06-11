@@ -27,6 +27,7 @@ describe('ChatPermissionsService', () => {
       getDirectPeer: vi.fn().mockResolvedValue(null),
       getConversationMeta: vi.fn(),
     };
+
     service = new ChatPermissionsService(repo as unknown as ChatPermissionsRepository);
   });
 
@@ -39,6 +40,7 @@ describe('ChatPermissionsService', () => {
 
     it('should reject when the target does not exist', async () => {
       repo.findUserBasics.mockResolvedValue(null);
+
       await expect(service.assertCanDirectMessage('u1', 'u2')).rejects.toBeInstanceOf(
         NotFoundException,
       );
@@ -46,6 +48,7 @@ describe('ChatPermissionsService', () => {
 
     it('should allow messaging any existing user (chat is open)', async () => {
       repo.findUserBasics.mockResolvedValue(enabled('u2'));
+
       await expect(service.assertCanDirectMessage('u1', 'u2')).resolves.toBeUndefined();
     });
   });
@@ -82,6 +85,7 @@ describe('ChatPermissionsService', () => {
   describe('assertConversationMember()', () => {
     it('should throw when the user is not a member', async () => {
       repo.getMembership.mockResolvedValue(null);
+
       await expect(service.assertConversationMember('c1', 'u1')).rejects.toBeInstanceOf(
         NotFoundException,
       );
@@ -89,7 +93,9 @@ describe('ChatPermissionsService', () => {
 
     it('should return the membership when present', async () => {
       const membership = { id: 'm1', conversationId: 'c1', userId: 'u1' };
+
       repo.getMembership.mockResolvedValue(membership);
+
       await expect(service.assertConversationMember('c1', 'u1')).resolves.toBe(membership);
     });
   });
@@ -97,12 +103,15 @@ describe('ChatPermissionsService', () => {
   describe('assertCanPost()', () => {
     it('should reject a non-member', async () => {
       repo.getMembership.mockResolvedValue(null);
+
       await expect(service.assertCanPost('c1', 'u1')).rejects.toBeInstanceOf(NotFoundException);
     });
 
     it('should allow any member to post (chat is open)', async () => {
       const membership = { id: 'm1', conversationId: 'c1', userId: 'u1' };
+
       repo.getMembership.mockResolvedValue(membership);
+
       await expect(service.assertCanPost('c1', 'u1')).resolves.toBe(membership);
     });
   });

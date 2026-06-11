@@ -110,6 +110,7 @@ export class AdminMeetingsService {
 
     if (row.status !== MeetingStatus.ENDED) {
       await this.meetings.markEnded(id);
+
       await this.safeCloseRoom(row.code);
     }
 
@@ -173,6 +174,7 @@ export class AdminMeetingsService {
     }
 
     await this.meetings.markParticipantLeft(meetingId, userId);
+
     await this.safeRemoveParticipant(row.code, userId);
 
     return { kicked: true };

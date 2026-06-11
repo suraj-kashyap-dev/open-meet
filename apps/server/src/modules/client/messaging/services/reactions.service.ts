@@ -19,18 +19,22 @@ export class ReactionsService {
   async add(messageId: string, userId: string, emoji: string): Promise<ChatMessageDto> {
     const value = this.normalizeEmoji(emoji);
     const meta = await this.requireMessage(messageId);
+
     await this.permissions.assertCanPost(meta.conversationId, userId);
 
     await this.messages.addReaction(messageId, userId, value);
+
     return this.broadcast(messageId, userId);
   }
 
   async remove(messageId: string, userId: string, emoji: string): Promise<ChatMessageDto> {
     const value = this.normalizeEmoji(emoji);
     const meta = await this.requireMessage(messageId);
+
     await this.permissions.assertConversationMember(meta.conversationId, userId);
 
     await this.messages.removeReaction(messageId, userId, value);
+
     return this.broadcast(messageId, userId);
   }
 

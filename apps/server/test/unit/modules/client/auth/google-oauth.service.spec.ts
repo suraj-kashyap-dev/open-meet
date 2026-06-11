@@ -23,7 +23,11 @@ function makeConfig(overrides: Record<string, string | undefined> = {}) {
     get: (key: string) => values[key],
     getOrThrow: (key: string) => {
       const v = values[key];
-      if (!v) throw new Error(`Missing config ${key}`);
+
+      if (!v) {
+        throw new Error(`Missing config ${key}`);
+      }
+
       return v;
     },
   } as unknown as ConfigService<ApiEnv, true>;
@@ -31,12 +35,14 @@ function makeConfig(overrides: Record<string, string | undefined> = {}) {
 
 function makeRedis() {
   const store = new Map<string, string>();
+
   return {
     store,
     service: {
       client: {
         set: async (k: string, v: string) => {
           store.set(k, v);
+
           return 'OK';
         },
         del: async (k: string) => (store.delete(k) ? 1 : 0),
@@ -51,12 +57,14 @@ describe('GoogleOAuthService', () => {
 
   afterEach(() => {
     globalThis.fetch = originalFetch;
+
     vi.restoreAllMocks();
   });
 
   describe('isConfigured()', () => {
     it('should return true when the client id and secret are present', () => {
       const svc = new GoogleOAuthService(makeConfig(), makeRedis().service);
+
       expect(svc.isConfigured()).toBe(true);
     });
 
@@ -65,6 +73,7 @@ describe('GoogleOAuthService', () => {
         makeConfig({ GOOGLE_OAUTH_CLIENT_ID: undefined }),
         makeRedis().service,
       );
+
       expect(svc.isConfigured()).toBe(false);
     });
 
@@ -73,6 +82,7 @@ describe('GoogleOAuthService', () => {
         makeConfig({ GOOGLE_OAUTH_CLIENT_SECRET: undefined }),
         makeRedis().service,
       );
+
       expect(svc.isConfigured()).toBe(false);
     });
   });
@@ -86,14 +96,21 @@ describe('GoogleOAuthService', () => {
       const parsed = new URL(url);
 
       expect(parsed.origin + parsed.pathname).toBe('https://accounts.google.com/o/oauth2/v2/auth');
+
       expect(parsed.searchParams.get('client_id')).toBe('client-id');
+
       expect(parsed.searchParams.get('response_type')).toBe('code');
+
       expect(parsed.searchParams.get('redirect_uri')).toBe(
         'http://localhost:3002/api/auth/google/callback',
       );
+
       expect(parsed.searchParams.get('scope')).toBe('openid email profile');
+
       expect(parsed.searchParams.get('state')).toBe(state);
+
       expect(state).toMatch(/^[a-f0-9]{48}$/);
+
       expect(redis.store.has(`auth:oauth:google:state:${state}`)).toBe(true);
     });
 
@@ -102,6 +119,7 @@ describe('GoogleOAuthService', () => {
         makeConfig({ GOOGLE_OAUTH_CLIENT_ID: undefined }),
         makeRedis().service,
       );
+
       await expect(svc.buildAuthorizationUrl()).rejects.toBeInstanceOf(ServiceUnavailableException);
     });
   });
@@ -109,6 +127,7 @@ describe('GoogleOAuthService', () => {
   describe('consumeState()', () => {
     it('should delete a valid state from Redis', async () => {
       const redis = makeRedis();
+
       redis.store.set('auth:oauth:google:state:abc', '1');
       const svc = new GoogleOAuthService(makeConfig(), redis.service);
 
@@ -119,6 +138,7 @@ describe('GoogleOAuthService', () => {
 
     it('should reject an unknown state', async () => {
       const svc = new GoogleOAuthService(makeConfig(), makeRedis().service);
+
       await expect(svc.consumeState('does-not-exist')).rejects.toBeInstanceOf(
         UnauthorizedException,
       );
@@ -126,6 +146,7 @@ describe('GoogleOAuthService', () => {
 
     it('should reject an empty state', async () => {
       const svc = new GoogleOAuthService(makeConfig(), makeRedis().service);
+
       await expect(svc.consumeState(undefined)).rejects.toBeInstanceOf(BadRequestException);
     });
   });
@@ -208,9 +229,11 @@ describe('GoogleOAuthService', () => {
     it('should reject empty codes without hitting the network', async () => {
       const svc = new GoogleOAuthService(makeConfig(), makeRedis().service);
       const fetchSpy = vi.fn();
+
       globalThis.fetch = fetchSpy as unknown as typeof fetch;
 
       await expect(svc.exchangeCodeForProfile('')).rejects.toBeInstanceOf(BadRequestException);
+
       expect(fetchSpy).not.toHaveBeenCalled();
     });
   });

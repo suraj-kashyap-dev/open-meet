@@ -46,22 +46,32 @@ export function NewGroupDialog({
 
   const reset = () => {
     setTitle('');
+
     setDescription('');
+
     setSearch('');
+
     setPicked({});
   };
 
   const submit = async () => {
     const trimmedTitle = title.trim();
-    if (trimmedTitle.length === 0) return;
+
+    if (trimmedTitle.length === 0) {
+      return;
+    }
+
     try {
       const conv = await create.mutateAsync({
         title: trimmedTitle,
         description: description.trim() || null,
         memberIds: pickedList.map((m) => m.id),
       });
+
       reset();
+
       onOpenChange(false);
+
       router.push(`/chat/${conv.id}`);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('group.create-failed'));
@@ -72,7 +82,10 @@ export function NewGroupDialog({
     <Dialog
       open={open}
       onOpenChange={(next) => {
-        if (!next) reset();
+        if (!next) {
+          reset();
+        }
+
         onOpenChange(next);
       }}
     >
@@ -119,12 +132,15 @@ export function NewGroupDialog({
               picked={picked}
               onPick={(member) => {
                 setPicked((prev) => ({ ...prev, [member.id]: member }));
+
                 setSearch('');
               }}
               onRemove={(userId) =>
                 setPicked((prev) => {
                   const next = { ...prev };
+
                   delete next[userId];
+
                   return next;
                 })
               }

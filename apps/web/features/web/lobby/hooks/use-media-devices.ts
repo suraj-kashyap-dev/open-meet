@@ -48,7 +48,9 @@ export function useMediaDevices(): UseMediaDevicesResult {
 
   const stop = useCallback(() => {
     streamRef.current?.getTracks().forEach((t) => t.stop());
+
     streamRef.current = null;
+
     setStream(null);
   }, []);
 

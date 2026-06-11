@@ -8,10 +8,12 @@ export function useDelayedFlag(active: boolean, delay = 300): boolean {
   useEffect(() => {
     if (!active) {
       setShown(false);
+
       return;
     }
 
     const id = window.setTimeout(() => setShown(true), delay);
+
     return () => window.clearTimeout(id);
   }, [active, delay]);
 

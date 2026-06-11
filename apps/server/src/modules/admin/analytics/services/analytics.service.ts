@@ -97,6 +97,7 @@ export class AdminAnalyticsService {
       m.startedAt && m.endedAt
         ? Math.max(0, Math.round((m.endedAt.getTime() - m.startedAt.getTime()) / 60_000))
         : null;
+
     return {
       id: m.id,
       code: m.code,
@@ -128,6 +129,7 @@ export class AdminAnalyticsService {
 
     for (let t = start.getTime(); t <= end.getTime(); t += DAY_MS) {
       const date = this.toIsoDay(new Date(t));
+
       series.push({ date, count: buckets.get(date) ?? 0 });
     }
 
@@ -136,7 +138,9 @@ export class AdminAnalyticsService {
 
   private startOfDay(d: Date): Date {
     const out = new Date(d);
+
     out.setUTCHours(0, 0, 0, 0);
+
     return out;
   }
 

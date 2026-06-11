@@ -26,6 +26,7 @@ describe('SettingsRepository', () => {
   describe('findByUserId()', () => {
     it('should query settings by userId', async () => {
       await repo.findByUserId('u1');
+
       expect(userSettings.findUnique).toHaveBeenCalledWith({ where: { userId: 'u1' } });
     });
   });
@@ -45,6 +46,7 @@ describe('SettingsRepository', () => {
   describe('update()', () => {
     it('should upsert, merging userId into the create branch and using the data as the update', async () => {
       await repo.update('u1', { defaultMicMuted: true });
+
       expect(userSettings.upsert).toHaveBeenCalledWith({
         where: { userId: 'u1' },
         create: { defaultMicMuted: true, userId: 'u1' },

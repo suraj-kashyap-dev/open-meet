@@ -31,7 +31,9 @@ describe('Admin meetings (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
@@ -76,6 +78,7 @@ describe('Admin meetings (e2e)', () => {
   describe('GET /api/admin/meetings/datagrid', () => {
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/meetings/datagrid');
+
       expect(res.status).toBe(401);
     });
 
@@ -86,11 +89,17 @@ describe('Admin meetings (e2e)', () => {
       const res = await http(app).get('/api/admin/meetings/datagrid').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.resource).toBe('meetings');
+
       expect(Array.isArray(res.body.data.columns)).toBe(true);
+
       expect(res.body.data.pagination.total).toBe(1);
+
       expect(res.body.data.rows).toHaveLength(1);
+
       expect(res.body.data.rows[0].code).toBe('list-mtg-001');
     });
   });
@@ -103,8 +112,11 @@ describe('Admin meetings (e2e)', () => {
       const res = await http(app).get(`/api/admin/meetings/${meetingId}`).set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.id).toBe(meetingId);
+
       expect(res.body.data.participants).toHaveLength(2);
+
       expect(res.body.data.participantCount).toBe(2);
     });
 
@@ -113,6 +125,7 @@ describe('Admin meetings (e2e)', () => {
       const res = await http(app).get('/api/admin/meetings/does-not-exist').set('Cookie', cookie);
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('MEETING_NOT_FOUND');
     });
   });
@@ -127,6 +140,7 @@ describe('Admin meetings (e2e)', () => {
         .set('Cookie', cookie);
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
@@ -139,11 +153,14 @@ describe('Admin meetings (e2e)', () => {
         .set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.status).toBe('ENDED');
 
       const prisma = app.get(PrismaService);
       const persisted = await prisma.meeting.findUnique({ where: { id: meetingId } });
+
       expect(persisted!.status).toBe('ENDED');
+
       expect(persisted!.endedAt).not.toBeNull();
     });
 
@@ -152,6 +169,7 @@ describe('Admin meetings (e2e)', () => {
       const res = await http(app)
         .post('/api/admin/meetings/does-not-exist/end')
         .set('Cookie', cookie);
+
       expect(res.status).toBe(404);
     });
   });
@@ -159,16 +177,19 @@ describe('Admin meetings (e2e)', () => {
   describe('POST /api/admin/meetings/end-all-active', () => {
     it('should end every active meeting', async () => {
       await seedMeeting({ code: 'bulk-active-1', status: 'ACTIVE' });
+
       await seedMeeting({ code: 'bulk-active-2', status: 'ACTIVE' });
       const { cookie } = await loginAdmin(app, SUPER);
 
       const res = await http(app).post('/api/admin/meetings/end-all-active').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.ended).toBe(2);
 
       const prisma = app.get(PrismaService);
       const active = await prisma.meeting.count({ where: { status: 'ACTIVE' } });
+
       expect(active).toBe(0);
     });
   });
@@ -183,12 +204,14 @@ describe('Admin meetings (e2e)', () => {
         .set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.kicked).toBe(true);
 
       const prisma = app.get(PrismaService);
       const participant = await prisma.participant.findUnique({
         where: { meetingId_userId: { meetingId, userId: guestId } },
       });
+
       expect(participant!.leftAt).not.toBeNull();
     });
 
@@ -201,6 +224,7 @@ describe('Admin meetings (e2e)', () => {
         .set('Cookie', cookie);
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('NOT_FOUND');
     });
   });
@@ -213,12 +237,15 @@ describe('Admin meetings (e2e)', () => {
       const res = await http(app).delete(`/api/admin/meetings/${meetingId}`).set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.deleted).toBe(true);
 
       const prisma = app.get(PrismaService);
       const persisted = await prisma.meeting.findUnique({ where: { id: meetingId } });
+
       expect(persisted).toBeNull();
       const participants = await prisma.participant.count({ where: { meetingId } });
+
       expect(participants).toBe(0);
     });
 
@@ -227,6 +254,7 @@ describe('Admin meetings (e2e)', () => {
       const res = await http(app)
         .delete('/api/admin/meetings/does-not-exist')
         .set('Cookie', cookie);
+
       expect(res.status).toBe(404);
     });
   });

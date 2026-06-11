@@ -16,14 +16,17 @@ export function PushBootstrap() {
     if (!user || !enabled || !pushSupported()) {
       return;
     }
+
     if (Notification.permission !== 'granted') {
       return;
     }
 
     let cancelled = false;
+
     void (async () => {
       try {
         await registerServiceWorker();
+
         if (!cancelled) {
           await subscribeToPush();
         }

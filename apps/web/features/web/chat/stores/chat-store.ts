@@ -89,6 +89,7 @@ export const useChatStore = create<ChatStoreState>((set) => ({
       }
 
       const next = { ...state.unreadByConversation };
+
       delete next[conversationId];
 
       return { unreadByConversation: next, totalUnread: sum(next) };
@@ -119,6 +120,7 @@ export const useChatStore = create<ChatStoreState>((set) => ({
       }
 
       const nextConv = { ...conv };
+
       delete nextConv[userId];
 
       return {

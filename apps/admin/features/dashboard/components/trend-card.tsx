@@ -11,6 +11,7 @@ interface Props {
 
 function formatDay(iso: string): string {
   const d = new Date(iso);
+
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
@@ -30,6 +31,7 @@ export function TrendCard({ title, series }: Props) {
       <div className="mt-6 flex h-32 items-end gap-1.5">
         {series.map((point) => {
           const heightPct = (point.count / max) * 100;
+
           return (
             <div
               key={point.date}

@@ -38,6 +38,7 @@ export function ReactionPicker({
         <EmojiPicker
           onEmojiClick={(data: { emoji: string }) => {
             onPick(data.emoji);
+
             setOpen(false);
           }}
           lazyLoadEmojis

@@ -28,6 +28,7 @@ describe('Branding & public config (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, ADMIN);
   });
 
@@ -36,8 +37,11 @@ describe('Branding & public config (e2e)', () => {
       const res = await http(app).get('/api/config/public');
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.appName).toBe('Open Meet');
+
       expect(res.body.data.logoUrl).toBeNull();
     });
   });
@@ -58,9 +62,11 @@ describe('Branding & public config (e2e)', () => {
         .send({ appName: 'Acme Meet' });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.appName).toBe('Acme Meet');
 
       const pub = await http(app).get('/api/config/public');
+
       expect(pub.body.data.appName).toBe('Acme Meet');
     });
 
@@ -86,9 +92,11 @@ describe('Branding & public config (e2e)', () => {
         .attach('file', PNG_1x1, { filename: 'logo.png', contentType: 'image/png' });
 
       expect(res.status).toBe(201);
+
       expect(res.body.data.logoUrl).toMatch(/\/api\/uploads\/public\/branding\/logo_/);
 
       const pub = await http(app).get('/api/config/public');
+
       expect(pub.body.data.logoUrl).toBe(res.body.data.logoUrl);
     });
 
@@ -119,6 +127,7 @@ describe('Branding & public config (e2e)', () => {
       const res = await http(app).delete('/api/admin/branding/logo').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.logoUrl).toBeNull();
     });
   });
@@ -130,6 +139,7 @@ describe('Branding & public config (e2e)', () => {
       const res = await http(app).get('/api/admin/configuration').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data).toMatchObject({
         defaultMeetingTitle: 'Untitled meeting',
         allowGuestJoin: true,
@@ -139,6 +149,7 @@ describe('Branding & public config (e2e)', () => {
 
     it('should require authentication', async () => {
       const res = await http(app).get('/api/admin/configuration');
+
       expect(res.status).toBe(401);
     });
   });
@@ -154,6 +165,7 @@ describe('Branding & public config (e2e)', () => {
       });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data).toMatchObject({
         defaultMeetingTitle: 'Department Sync',
         allowGuestJoin: false,
@@ -161,6 +173,7 @@ describe('Branding & public config (e2e)', () => {
       });
 
       const reread = await http(app).get('/api/admin/configuration').set('Cookie', cookie);
+
       expect(reread.body.data.defaultMeetingTitle).toBe('Department Sync');
     });
 
@@ -173,6 +186,7 @@ describe('Branding & public config (e2e)', () => {
         .send({ maxMeetingMinutes: null });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.maxMeetingMinutes).toBeNull();
     });
 

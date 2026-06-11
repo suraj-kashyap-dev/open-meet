@@ -18,12 +18,14 @@ describe('JwtAuthGuard', () => {
 
   beforeEach(() => {
     reflector = { getAllAndOverride: vi.fn().mockReturnValue(false) };
+
     guard = new JwtAuthGuard(reflector as unknown as Reflector);
   });
 
   describe('canActivate()', () => {
     it('should allow @Public routes without authentication', () => {
       reflector.getAllAndOverride.mockReturnValueOnce(true);
+
       expect(guard.canActivate(ctx('/api/meetings'))).toBe(true);
     });
 
@@ -43,6 +45,7 @@ describe('JwtAuthGuard', () => {
       expect(() => guard.handleRequest(null, null, null, ctx('/api/meetings/abc/join'))).toThrow(
         UnauthorizedException,
       );
+
       expect(() =>
         guard.handleRequest(new Error('x'), { id: 'u1' }, null, ctx('/api/meetings/abc/join')),
       ).toThrow(UnauthorizedException);

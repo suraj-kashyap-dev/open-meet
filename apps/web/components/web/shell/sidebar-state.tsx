@@ -42,13 +42,16 @@ export function ShellSidebarProvider({ children }: { children: ReactNode }) {
 
     const syncViewport = () => {
       setIsDesktop(media.matches);
+
       if (media.matches) {
         setMobileOpenState(false);
       }
     };
 
     syncViewport();
+
     media.addEventListener('change', syncViewport);
+
     return () => media.removeEventListener('change', syncViewport);
   }, []);
 
@@ -66,6 +69,7 @@ export function ShellSidebarProvider({ children }: { children: ReactNode }) {
   const openSidebar = () => {
     if (isDesktop) {
       setDesktopExpandedState(true);
+
       return;
     }
 
@@ -75,6 +79,7 @@ export function ShellSidebarProvider({ children }: { children: ReactNode }) {
   const closeSidebar = () => {
     if (isDesktop) {
       setDesktopExpandedState(false);
+
       return;
     }
 
@@ -84,6 +89,7 @@ export function ShellSidebarProvider({ children }: { children: ReactNode }) {
   const toggleSidebar = () => {
     if (isDesktop) {
       setDesktopExpandedState((current) => !current);
+
       return;
     }
 

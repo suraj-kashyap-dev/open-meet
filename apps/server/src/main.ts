@@ -30,11 +30,13 @@ async function bootstrap(): Promise<void> {
   await app.register(fastifyCookie, { secret: cookieSecret });
 
   const uploadMaxSize = config.getOrThrow<number>('UPLOAD_MAX_SIZE_BYTES');
+
   await app.register(fastifyMultipart, {
     limits: { fileSize: uploadMaxSize, files: 1 },
   });
 
   const fastifyInstance = app.getHttpAdapter().getInstance();
+
   fastifyInstance.addContentTypeParser(
     'application/webhook+json',
     { parseAs: 'string' },

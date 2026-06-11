@@ -78,6 +78,7 @@ export class AdminRolesController {
   @ApiOperation({ summary: 'Delete an admin role (must have zero members)' })
   async remove(@Param('id') id: string): Promise<{ deleted: true }> {
     await this.roles.remove(id);
+
     return { deleted: true };
   }
 }

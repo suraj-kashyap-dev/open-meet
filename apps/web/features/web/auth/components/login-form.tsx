@@ -33,7 +33,9 @@ export function LoginForm() {
   useEffect(() => {
     const error = searchParams.get('error');
 
-    if (!error || oauthErrorShown.current) return;
+    if (!error || oauthErrorShown.current) {
+      return;
+    }
 
     oauthErrorShown.current = true;
 

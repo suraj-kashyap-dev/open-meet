@@ -64,6 +64,7 @@ describe('AdminUserInviteService', () => {
         createdAt: new Date('2026-06-01T00:00:00Z'),
       }),
     };
+
     mail = { send: vi.fn().mockResolvedValue(undefined) };
 
     service = new AdminUserInviteService(
@@ -79,21 +80,27 @@ describe('AdminUserInviteService', () => {
 
   it('should list every pending invite', async () => {
     const res = await service.list();
+
     expect(res.items).toHaveLength(2);
+
     expect(res.items.map((i) => i.email)).toEqual(['one@x.com', 'two@x.com']);
   });
 
   it('should create an invite and send the email', async () => {
     const res = await service.create('a1', { email: 'New@x.com', name: 'New' });
+
     expect(invites.upsertByEmail).toHaveBeenCalledWith(
       expect.objectContaining({ email: 'new@x.com', name: 'New', invitedById: 'a1' }),
     );
+
     expect(mail.send).toHaveBeenCalled();
+
     expect(res.email).toBe('one@x.com');
   });
 
   it('should reject creating an invite for an existing account', async () => {
     invites.userExistsByEmail.mockResolvedValueOnce(true);
+
     await expect(service.create('a1', { email: 'one@x.com', name: 'One' })).rejects.toBeInstanceOf(
       ConflictException,
     );
@@ -101,16 +108,19 @@ describe('AdminUserInviteService', () => {
 
   it('should throw when resending a missing invite', async () => {
     invites.findById.mockResolvedValueOnce(null);
+
     await expect(service.resend('nope')).rejects.toBeInstanceOf(NotFoundException);
   });
 
   it('should throw when revoking a missing invite', async () => {
     invites.findById.mockResolvedValueOnce(null);
+
     await expect(service.revoke('nope')).rejects.toBeInstanceOf(NotFoundException);
   });
 
   it('should revoke an existing invite', async () => {
     await expect(service.revoke('i1')).resolves.toEqual({ deleted: true });
+
     expect(invites.delete).toHaveBeenCalledWith('i1');
   });
 });

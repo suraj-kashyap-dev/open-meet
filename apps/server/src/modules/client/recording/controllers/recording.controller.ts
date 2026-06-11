@@ -54,13 +54,17 @@ function parseRange(
 
   if (!hasStart) {
     const suffix = Number(rawEnd);
+
     start = Math.max(0, totalSize - suffix);
+
     end = totalSize - 1;
   } else if (!hasEnd) {
     start = Number(rawStart);
+
     end = totalSize - 1;
   } else {
     start = Number(rawStart);
+
     end = Number(rawEnd);
   }
 
@@ -153,9 +157,13 @@ export class RecordingController {
     const disposition = download === '1' ? 'attachment' : 'inline';
 
     res.header('Content-Type', mime);
+
     res.header('Accept-Ranges', 'bytes');
+
     res.header('Cache-Control', 'private, max-age=3600');
+
     res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+
     res.header('Content-Disposition', `${disposition}; filename="${filename}"`);
 
     const parsed = parseRange(rangeHeader, totalSize);
@@ -172,6 +180,7 @@ export class RecordingController {
       }
 
       res.header('Content-Length', String(full.size));
+
       return res.send(full.stream);
     }
 
@@ -180,13 +189,18 @@ export class RecordingController {
 
     if (!slice) {
       res.status(416);
+
       res.header('Content-Range', `bytes */${totalSize}`);
+
       return res.send('Requested range not satisfiable');
     }
 
     res.status(206);
+
     res.header('Content-Length', String(slice.size));
+
     res.header('Content-Range', `bytes ${slice.start}-${slice.end}/${slice.totalSize}`);
+
     return res.send(slice.stream);
   }
 }

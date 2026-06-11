@@ -17,21 +17,35 @@ export class AdminPermissionResolver {
 
   async resolve(roleId: string): Promise<ResolvedRole | null> {
     const role = await this.roles.findById(roleId);
-    if (!role) return null;
+
+    if (!role) {
+      return null;
+    }
+
     const cached = this.cache.get(roleId);
-    if (cached && cached.rev === role.cacheRev) return cached;
+
+    if (cached && cached.rev === role.cacheRev) {
+      return cached;
+    }
+
     const resolved: ResolvedRole = {
       rev: role.cacheRev,
       permissionType: role.permissionType,
       granted: new Set(role.permissions),
     };
+
     this.cache.set(roleId, resolved);
+
     return resolved;
   }
 
   async isSuper(roleId: string | null): Promise<boolean> {
-    if (!roleId) return false;
+    if (!roleId) {
+      return false;
+    }
+
     const resolved = await this.resolve(roleId);
+
     return resolved?.permissionType === 'ALL';
   }
 

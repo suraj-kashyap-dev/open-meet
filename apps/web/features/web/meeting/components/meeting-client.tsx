@@ -54,15 +54,18 @@ export function MeetingClient({ code }: { code: string }) {
 
   useEffect(() => {
     const onMount = useActiveMeeting.getState();
+
     if (onMount.session?.code === code && !onMount.ended) {
       onMount.maximize();
     }
 
     return () => {
       const onUnmount = useActiveMeeting.getState();
+
       if (onUnmount.session?.code === code && !onUnmount.ended) {
         onUnmount.minimize();
       }
+
       if (onUnmount.ended?.code === code) {
         onUnmount.clearEnded();
       }
@@ -91,12 +94,16 @@ export function MeetingClient({ code }: { code: string }) {
     } catch (err) {
       if (err instanceof ApiClientError && err.statusCode === 401 && guestSession) {
         clearGuestSession(code);
+
         router.replace(`/${code}/lobby`);
+
         return;
       }
 
       const message = err instanceof ApiClientError ? err.message : t('toast.join-meeting-error');
+
       setError(message);
+
       toast.error(message);
     }
   }, [code, guestSession, joinPrefs, router, startSession, t, viewer]);
@@ -134,7 +141,9 @@ export function MeetingClient({ code }: { code: string }) {
         }
 
         const message = err instanceof ApiClientError ? err.message : t('toast.load-meeting-error');
+
         setError(message);
+
         toast.error(message);
 
         if (err instanceof ApiClientError && err.code === 'MEETING_NOT_FOUND') {
@@ -162,6 +171,7 @@ export function MeetingClient({ code }: { code: string }) {
 
   const onGuestAdmitted = useCallback(() => {
     setGuestStage('admitted');
+
     void proceedToRoom();
   }, [proceedToRoom]);
 

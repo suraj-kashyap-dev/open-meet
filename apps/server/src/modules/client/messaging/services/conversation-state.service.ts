@@ -20,12 +20,25 @@ export class ConversationStateService {
     await this.permissions.assertConversationMember(conversationId, userId);
 
     const data: ConversationStateDto = {};
-    if (state.muted !== undefined) data.muted = state.muted;
-    if (state.pinned !== undefined) data.pinned = state.pinned;
-    if (state.hidden !== undefined) data.hidden = state.hidden;
-    if (state.manualUnread !== undefined) data.manualUnread = state.manualUnread;
+
+    if (state.muted !== undefined) {
+      data.muted = state.muted;
+    }
+
+    if (state.pinned !== undefined) {
+      data.pinned = state.pinned;
+    }
+
+    if (state.hidden !== undefined) {
+      data.hidden = state.hidden;
+    }
+
+    if (state.manualUnread !== undefined) {
+      data.manualUnread = state.manualUnread;
+    }
 
     await this.conversations.updateMemberFlags(conversationId, userId, data);
+
     return { ok: true };
   }
 }

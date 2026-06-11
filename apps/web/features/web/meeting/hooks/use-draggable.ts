@@ -80,6 +80,7 @@ export function useDraggable({ size, value, onChange, margin = 16 }: DraggableOp
     };
 
     window.addEventListener('resize', onResize);
+
     return () => window.removeEventListener('resize', onResize);
   }, [value, size, margin, onChange]);
 
@@ -91,12 +92,14 @@ export function useDraggable({ size, value, onChange, margin = 16 }: DraggableOp
 
       event.preventDefault();
       const start = value ?? { x: 0, y: 0 };
+
       origin.current = {
         pointerX: event.clientX,
         pointerY: event.clientY,
         posX: start.x,
         posY: start.y,
       };
+
       setDragging(true);
     },
     [value],
@@ -109,6 +112,7 @@ export function useDraggable({ size, value, onChange, margin = 16 }: DraggableOp
 
     const onMove = (event: PointerEvent) => {
       const o = origin.current;
+
       if (!o) {
         return;
       }
@@ -130,13 +134,17 @@ export function useDraggable({ size, value, onChange, margin = 16 }: DraggableOp
 
     const onUp = () => {
       origin.current = null;
+
       setDragging(false);
     };
 
     window.addEventListener('pointermove', onMove);
+
     window.addEventListener('pointerup', onUp);
+
     return () => {
       window.removeEventListener('pointermove', onMove);
+
       window.removeEventListener('pointerup', onUp);
     };
   }, [dragging, size, margin, onChange]);

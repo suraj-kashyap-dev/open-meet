@@ -19,6 +19,7 @@ export function useChatSocket(enabled: boolean): ChatSocket | null {
   useEffect(() => {
     if (!enabled) {
       setSocket(null);
+
       return;
     }
 
@@ -32,6 +33,7 @@ export function useChatSocket(enabled: boolean): ChatSocket | null {
 
     return () => {
       next.disconnect();
+
       setSocket(null);
     };
   }, [enabled]);

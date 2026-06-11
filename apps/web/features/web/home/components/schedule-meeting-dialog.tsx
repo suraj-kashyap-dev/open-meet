@@ -89,12 +89,19 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
   const reset = () => {
     setTitle('');
+
     setStartAt(nextRoundedHour());
+
     setDurationMin(30);
+
     setRecurrence('none');
+
     setInvitees([]);
+
     setInviteeInput('');
+
     setResult(null);
+
     setCopied(false);
   };
 
@@ -125,6 +132,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       }
 
       seen.add(key);
+
       next.push(email);
     }
 
@@ -149,6 +157,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
         }
 
         e.preventDefault();
+
         return;
       }
 
@@ -163,6 +172,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
     if (e.key === 'Backspace' && inviteeInput.length === 0 && invitees.length > 0) {
       e.preventDefault();
+
       removeInviteeAt(invitees.length - 1);
     }
   };
@@ -208,11 +218,13 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
     if (Number.isNaN(startAt.getTime())) {
       toast.error(t('toast.valid-datetime'));
+
       return;
     }
 
     if (startAt.getTime() < Date.now() - 60_000) {
       toast.error(t('toast.future-datetime'));
+
       return;
     }
 
@@ -225,6 +237,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       }
 
       finalInvitees = dedupeEmails([...invitees, pending]);
+
       setInviteeInput('');
     }
 
@@ -250,6 +263,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
       }
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('toast.schedule-error');
+
       toast.error(message);
     }
   };
@@ -261,8 +275,11 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
 
     try {
       await navigator.clipboard.writeText(`${window.location.origin}/${result.code}`);
+
       setCopied(true);
+
       toast.success(t('toast.link-copied'));
+
       window.setTimeout(() => setCopied(false), 1500);
     } catch {
       toast.error(t('toast.link-copy-error'));
@@ -296,6 +313,7 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
             onCopyLink={onCopyLink}
             onSchedule={() => {
               setResult(null);
+
               setCopied(false);
             }}
             onClose={() => handleOpenChange(false)}
@@ -579,6 +597,7 @@ function dedupeEmails(list: string[]): string[] {
     }
 
     seen.add(key);
+
     out.push(email);
   }
 

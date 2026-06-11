@@ -118,7 +118,9 @@ describe('<MessageBubble />', () => {
     const item = screen.getByText('Jump target').closest('li');
 
     expect(item).toHaveAttribute('data-mid', 'm1');
+
     expect(item?.querySelector('.chat-jump-target-end')).not.toBeNull();
+
     expect(item?.querySelector('.chat-jump-surface')).not.toBeNull();
   });
 

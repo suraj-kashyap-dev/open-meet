@@ -52,12 +52,14 @@ export class PushDispatchService {
     const candidates = members
       .filter((m) => m.userId !== job.senderId && !m.muted)
       .map((m) => m.userId);
+
     if (candidates.length === 0) {
       return;
     }
 
     const disabled = await this.settings.disabledNotificationUserIds(candidates);
     const recipients = candidates.filter((id) => !disabled.has(id));
+
     if (recipients.length === 0) {
       return;
     }
@@ -73,6 +75,7 @@ export class PushDispatchService {
         if (await this.bus.roomHasSockets(userRoom(userId))) {
           return;
         }
+
         const lang = languages.get(userId) ?? 'en';
         const payload: PushPayloadDto = {
           kind: 'chat',
@@ -82,6 +85,7 @@ export class PushDispatchService {
           tag: `chat:${job.conversationId}`,
           conversationId: job.conversationId,
         };
+
         await this.push.sendToUser(userId, payload);
       }),
     );
@@ -97,6 +101,7 @@ export class PushDispatchService {
     }
 
     const disabled = await this.settings.disabledNotificationUserIds([job.hostUserId]);
+
     if (disabled.has(job.hostUserId)) {
       return;
     }
@@ -113,6 +118,7 @@ export class PushDispatchService {
       tag: `knock:${job.meetingCode}`,
       meetingCode: job.meetingCode,
     };
+
     await this.push.sendToUser(job.hostUserId, payload);
   }
 }

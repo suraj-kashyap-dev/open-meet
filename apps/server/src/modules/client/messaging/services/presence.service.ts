@@ -30,6 +30,7 @@ export class PresenceService {
 
   async connect(userId: string): Promise<boolean> {
     const count = await this.redis.client.hincrby(ONLINE_KEY, userId, 1);
+
     return count === 1;
   }
 
@@ -38,7 +39,9 @@ export class PresenceService {
 
     if (count <= 0) {
       await this.redis.client.hdel(ONLINE_KEY, userId);
+
       await this.redis.client.hset(LAST_SEEN_KEY, userId, new Date().toISOString());
+
       return true;
     }
 
@@ -56,6 +59,7 @@ export class PresenceService {
       customText: null,
       lastSeen,
     };
+
     for (const id of conversationIds) {
       this.bus.emit(conversationRoom(id), ChatServerEvent.PRESENCE_UPDATE, payload);
     }
@@ -67,6 +71,7 @@ export class PresenceService {
 
   async isOnline(userId: string): Promise<boolean> {
     const online = await this.areOnline([userId]);
+
     return online.has(userId);
   }
 
@@ -92,13 +97,17 @@ export class PresenceService {
 
   async snapshot(userIds: string[]): Promise<Map<string, PresenceSnapshot>> {
     const list = await this.snapshotList(userIds);
+
     return new Map(userIds.map((id, i) => [id, list[i]!]));
   }
 
   private async markOffline(userId: string): Promise<string> {
     const lastSeen = new Date().toISOString();
+
     await this.redis.client.hdel(ONLINE_KEY, userId);
+
     await this.redis.client.hset(LAST_SEEN_KEY, userId, lastSeen);
+
     return lastSeen;
   }
 

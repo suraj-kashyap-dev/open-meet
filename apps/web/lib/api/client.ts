@@ -10,6 +10,7 @@ export class ApiClientError extends Error {
     public readonly details?: unknown,
   ) {
     super(message);
+
     this.name = 'ApiClientError';
   }
 }
@@ -48,6 +49,7 @@ async function request<TData>(path: string, options: RequestOptions = {}): Promi
   });
 
   const contentType = res.headers.get('content-type') ?? '';
+
   if (!contentType.includes('application/json')) {
     if (res.status === 401) {
       emitUnauthorized(path);
@@ -81,6 +83,7 @@ function emitUnauthorized(path: string): void {
   if (typeof window === 'undefined') {
     return;
   }
+
   window.dispatchEvent(new CustomEvent(UNAUTHORIZED_EVENT, { detail: { path } }));
 }
 

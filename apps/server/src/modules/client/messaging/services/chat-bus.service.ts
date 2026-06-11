@@ -14,6 +14,7 @@ export class ChatBus {
   emit(room: string, event: string, payload: unknown): void {
     if (!this.server) {
       this.logger.warn(`emit("${event}") dropped - chat socket server not attached yet`);
+
       return;
     }
 
@@ -34,6 +35,7 @@ export class ChatBus {
     }
 
     const sockets = await this.server.in(room).fetchSockets();
+
     return sockets.length > 0;
   }
 
@@ -43,7 +45,9 @@ export class ChatBus {
     }
 
     const sockets = await this.server.in(room).fetchSockets();
+
     await Promise.all(sockets.map((socket) => socket.disconnect(true)));
+
     return sockets.length;
   }
 }

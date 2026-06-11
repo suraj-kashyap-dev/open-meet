@@ -18,21 +18,27 @@ describe('PollsRepository', () => {
       create: vi.fn().mockResolvedValue({ id: 'm1' }),
       findUnique: vi.fn().mockResolvedValue({ id: 'm1' }),
     };
+
     poll = {
       create: vi.fn().mockResolvedValue({ id: 'p1' }),
       findUnique: vi.fn().mockResolvedValue(null),
     };
+
     pollOption = { findMany: vi.fn().mockResolvedValue([]) };
+
     pollVote = {
       deleteMany: vi.fn().mockReturnValue('delete-op'),
       createMany: vi.fn().mockReturnValue('create-op'),
     };
+
     $transaction = vi.fn(async (arg: unknown) => {
       if (typeof arg === 'function') {
         return (arg as (tx: unknown) => unknown)({ chatMessage, poll });
       }
+
       return arg;
     });
+
     repo = new PollsRepository({
       chatMessage,
       poll,
@@ -60,6 +66,7 @@ describe('PollsRepository', () => {
           type: ChatMessageType.POLL,
         },
       });
+
       expect(poll.create).toHaveBeenCalledWith({
         data: {
           messageId: 'm1',
@@ -73,10 +80,12 @@ describe('PollsRepository', () => {
           },
         },
       });
+
       expect(chatMessage.findUnique).toHaveBeenCalledWith({
         where: { id: 'm1' },
         include: chatMessageInclude,
       });
+
       expect(result).toEqual({ id: 'm1' });
     });
   });
@@ -85,6 +94,7 @@ describe('PollsRepository', () => {
     it('should return null when the poll is missing', async () => {
       poll.findUnique.mockResolvedValue(null);
       const result = await repo.findContext('p1');
+
       expect(poll.findUnique).toHaveBeenCalledWith({
         where: { id: 'p1' },
         select: {
@@ -95,6 +105,7 @@ describe('PollsRepository', () => {
           message: { select: { conversationId: true } },
         },
       });
+
       expect(result).toBeNull();
     });
 
@@ -107,6 +118,7 @@ describe('PollsRepository', () => {
         message: { conversationId: 'c1' },
       });
       const result = await repo.findContext('p1');
+
       expect(result).toEqual({
         id: 'p1',
         multiple: false,
@@ -121,10 +133,12 @@ describe('PollsRepository', () => {
     it('should select and map option ids', async () => {
       pollOption.findMany.mockResolvedValue([{ id: 'o1' }, { id: 'o2' }]);
       const ids = await repo.optionIdsForPoll('p1');
+
       expect(pollOption.findMany).toHaveBeenCalledWith({
         where: { pollId: 'p1' },
         select: { id: true },
       });
+
       expect(ids).toEqual(['o1', 'o2']);
     });
   });
@@ -132,13 +146,16 @@ describe('PollsRepository', () => {
   describe('setVotes()', () => {
     it('should clear prior votes then insert the new ones in one transaction', async () => {
       await repo.setVotes('p1', 'u1', ['o1', 'o2']);
+
       expect(pollVote.deleteMany).toHaveBeenCalledWith({ where: { pollId: 'p1', userId: 'u1' } });
+
       expect(pollVote.createMany).toHaveBeenCalledWith({
         data: [
           { pollOptionId: 'o1', pollId: 'p1', userId: 'u1' },
           { pollOptionId: 'o2', pollId: 'p1', userId: 'u1' },
         ],
       });
+
       expect($transaction).toHaveBeenCalledWith(['delete-op', 'create-op']);
     });
   });
@@ -146,6 +163,7 @@ describe('PollsRepository', () => {
   describe('findWithOptions()', () => {
     it('should query the poll with options include', async () => {
       await repo.findWithOptions('p1');
+
       expect(poll.findUnique).toHaveBeenCalledWith({ where: { id: 'p1' }, include: pollInclude });
     });
   });

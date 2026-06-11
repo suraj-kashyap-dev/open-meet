@@ -18,6 +18,7 @@ async function main(): Promise<void> {
 
   try {
     await runSeeders(prisma, only.length > 0 ? only : undefined);
+
     console.info('Seeding complete.');
   } finally {
     await prisma.$disconnect();
@@ -26,5 +27,6 @@ async function main(): Promise<void> {
 
 main().catch((err) => {
   console.error('Seeding failed:', err instanceof Error ? err.message : err);
+
   process.exitCode = 1;
 });

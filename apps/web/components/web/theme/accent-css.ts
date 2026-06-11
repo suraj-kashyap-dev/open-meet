@@ -6,9 +6,11 @@ export function resolveAccentTokens(value: string, mode: 'light' | 'dark'): Acce
   if (isAccentPreset(value)) {
     return ACCENT_PALETTE[value][mode];
   }
+
   if (isAccentHex(value)) {
     return deriveAccent(value, mode);
   }
+
   return ACCENT_PALETTE.indigo[mode];
 }
 
@@ -24,5 +26,6 @@ function declarations(tokens: AccentTokens): string {
 export function buildAccentCss(value: string): string {
   const light = declarations(resolveAccentTokens(value, 'light'));
   const dark = declarations(resolveAccentTokens(value, 'dark'));
+
   return `:root{${light}}.dark{${dark}}`;
 }

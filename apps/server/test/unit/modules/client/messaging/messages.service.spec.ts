@@ -54,18 +54,27 @@ describe('MessagesService', () => {
       updateContent: vi.fn(),
       softDelete: vi.fn(),
     };
+
     conversationRepo = { touch: vi.fn() };
+
     conversationsService = { revealOnActivity: vi.fn() };
+
     permissions = {
       assertConversationMember: vi.fn().mockResolvedValue({ clearedAt: null }),
       assertDirectConversationAllowed: vi.fn(),
       assertCanPost: vi.fn(),
     };
+
     uploads = { claimForChat: vi.fn() };
+
     serializer = { message: vi.fn((m) => ({ id: m.id, sender: { name: 'Alice' } })) };
+
     bus = { emit: vi.fn() };
+
     pins = { pinnedIdsForUser: vi.fn().mockResolvedValue([]) };
+
     saved = { savedIdsForViewer: vi.fn().mockResolvedValue([]) };
+
     pushQueue = { add: vi.fn() };
 
     const config = { getOrThrow: () => MAX_LENGTH };
@@ -90,6 +99,7 @@ describe('MessagesService', () => {
       await expect(
         service.send({ conversationId: 'c1', senderId: 'u1', content: '   ' }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(messages.create).not.toHaveBeenCalled();
     });
 
@@ -97,12 +107,15 @@ describe('MessagesService', () => {
       await expect(
         service.send({ conversationId: 'c1', senderId: 'u1', content: 'x'.repeat(MAX_LENGTH + 1) }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(messages.create).not.toHaveBeenCalled();
     });
 
     it('should check post and direct-conversation permissions', async () => {
       await service.send({ conversationId: 'c1', senderId: 'u1', content: 'hi' });
+
       expect(permissions.assertCanPost).toHaveBeenCalledWith('c1', 'u1');
+
       expect(permissions.assertDirectConversationAllowed).toHaveBeenCalledWith('c1', 'u1');
     });
 
@@ -117,13 +130,17 @@ describe('MessagesService', () => {
           parentId: null,
         }),
       );
+
       expect(conversationRepo.touch).toHaveBeenCalledWith('c1', createdRow.createdAt);
+
       expect(conversationsService.revealOnActivity).toHaveBeenCalledWith('c1', 'u1');
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.MESSAGE_NEW,
         expect.objectContaining({ id: 'm9', clientNonce: null }),
       );
+
       expect(dto).toMatchObject({ id: 'm9' });
     });
 
@@ -134,6 +151,7 @@ describe('MessagesService', () => {
         content: 'hi',
         clientNonce: 'nonce-1',
       });
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.MESSAGE_NEW,
@@ -147,6 +165,7 @@ describe('MessagesService', () => {
         senderId: 'u1',
         content: 'hey [@Bob](u2) and @everyone',
       });
+
       expect(messages.create).toHaveBeenCalledWith(
         expect.objectContaining({
           mentions: [
@@ -164,11 +183,13 @@ describe('MessagesService', () => {
         content: '',
         attachmentIds: ['a1', 'a2'],
       });
+
       expect(uploads.claimForChat).toHaveBeenCalledWith(['a1', 'a2'], 'u1', 'm9');
     });
 
     it('should validate the parent belongs to the same conversation', async () => {
       messages.findMeta.mockResolvedValue({ id: 'p1', conversationId: 'other' });
+
       await expect(
         service.send({ conversationId: 'c1', senderId: 'u1', content: 'hi', parentId: 'p1' }),
       ).rejects.toBeInstanceOf(BadRequestException);
@@ -176,12 +197,15 @@ describe('MessagesService', () => {
 
     it('should bump the parent reply count when replying', async () => {
       messages.findMeta.mockResolvedValue({ id: 'p1', conversationId: 'c1' });
+
       await service.send({ conversationId: 'c1', senderId: 'u1', content: 'hi', parentId: 'p1' });
+
       expect(messages.bumpReplyCount).toHaveBeenCalledWith('p1', createdRow.createdAt);
     });
 
     it('should enqueue a push job after broadcasting', async () => {
       await service.send({ conversationId: 'c1', senderId: 'u1', content: 'hi' });
+
       expect(pushQueue.add).toHaveBeenCalledWith(
         'chat-message',
         expect.objectContaining({ conversationId: 'c1', senderId: 'u1', senderName: 'Alice' }),
@@ -198,6 +222,7 @@ describe('MessagesService', () => {
         senderId: 'u1',
         deletedAt: null,
       });
+
       messages.updateContent.mockResolvedValue({ id: 'm1', conversationId: 'c1' });
     });
 
@@ -213,6 +238,7 @@ describe('MessagesService', () => {
 
     it('should reject when the message does not exist', async () => {
       messages.findMeta.mockResolvedValue(null);
+
       await expect(service.edit('m1', 'u1', 'hi')).rejects.toBeInstanceOf(NotFoundException);
     });
 
@@ -223,6 +249,7 @@ describe('MessagesService', () => {
         senderId: 'u1',
         deletedAt: new Date(),
       });
+
       await expect(service.edit('m1', 'u1', 'hi')).rejects.toBeInstanceOf(NotFoundException);
     });
 
@@ -233,12 +260,15 @@ describe('MessagesService', () => {
         senderId: 'other',
         deletedAt: null,
       });
+
       await expect(service.edit('m1', 'u1', 'hi')).rejects.toBeInstanceOf(ForbiddenException);
     });
 
     it('should update content and broadcast the edited event', async () => {
       await service.edit('m1', 'u1', '  updated  ');
+
       expect(messages.updateContent).toHaveBeenCalledWith('m1', 'updated', expect.any(Array));
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.MESSAGE_EDITED,
@@ -255,6 +285,7 @@ describe('MessagesService', () => {
         senderId: 'u1',
         deletedAt: null,
       });
+
       messages.softDelete.mockResolvedValue({ id: 'm1', conversationId: 'c1' });
     });
 
@@ -265,12 +296,15 @@ describe('MessagesService', () => {
         senderId: 'other',
         deletedAt: null,
       });
+
       await expect(service.remove('m1', 'u1')).rejects.toBeInstanceOf(ForbiddenException);
     });
 
     it('should soft delete and broadcast the deleted event with ids only', async () => {
       await service.remove('m1', 'u1');
+
       expect(messages.softDelete).toHaveBeenCalledWith('m1');
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.MESSAGE_DELETED,
@@ -285,12 +319,15 @@ describe('MessagesService', () => {
   describe('history()', () => {
     it('should assert membership and direct-conversation access', async () => {
       await service.history('c1', 'u1', {});
+
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(permissions.assertDirectConversationAllowed).toHaveBeenCalledWith('c1', 'u1');
     });
 
     it('should clamp the limit and request one extra row', async () => {
       await service.history('c1', 'u1', { limit: 999 });
+
       expect(messages.listHistory).toHaveBeenCalledWith(expect.objectContaining({ limit: 101 }));
     });
 
@@ -300,7 +337,9 @@ describe('MessagesService', () => {
         { id: 'b', createdAt: new Date('2026-01-02') },
       ]);
       const page = await service.history('c1', 'u1', { limit: 50 });
+
       expect(page.nextCursor).toBeNull();
+
       expect(page.items).toHaveLength(2);
     });
 
@@ -309,17 +348,24 @@ describe('MessagesService', () => {
         id: `m${i}`,
         createdAt: new Date(2026, 0, i + 1),
       }));
+
       messages.listHistory.mockResolvedValue(rows);
       const page = await service.history('c1', 'u1', { limit: 2 });
+
       expect(page.items).toHaveLength(2);
+
       expect(page.nextCursor).toBe(rows[1].createdAt.toISOString());
     });
 
     it('should attach pinned and saved flags to serialized items', async () => {
       messages.listHistory.mockResolvedValue([{ id: 'a', createdAt: new Date('2026-01-01') }]);
+
       await service.history('c1', 'u1', {});
+
       expect(pins.pinnedIdsForUser).toHaveBeenCalledWith('c1', 'u1');
+
       expect(saved.savedIdsForViewer).toHaveBeenCalledWith('u1', ['a']);
+
       expect(serializer.message).toHaveBeenCalledWith(
         expect.objectContaining({ id: 'a' }),
         'u1',

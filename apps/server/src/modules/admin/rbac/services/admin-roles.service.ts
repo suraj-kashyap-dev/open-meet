@@ -58,21 +58,32 @@ export class AdminRolesService {
 
   async list(): Promise<RoleListResponseDto> {
     const records = await this.roles.list();
+
     return { items: records.map((r) => this.toDto(r, r._count.admins)) };
   }
 
   async get(id: string): Promise<RoleDto> {
     const record = await this.roles.findWithMemberCount(id);
-    if (!record) throw this.notFound();
+
+    if (!record) {
+      throw this.notFound();
+    }
+
     return this.toDto(record, record._count.admins);
   }
 
   async create(dto: CreateRoleBodyDto): Promise<RoleDto> {
     const name = dto.name.trim();
-    if (!name) throw this.badRequest('name-empty', 'Name cannot be empty');
+
+    if (!name) {
+      throw this.badRequest('name-empty', 'Name cannot be empty');
+    }
 
     const existing = await this.roles.findByName(name);
-    if (existing) throw this.nameTaken();
+
+    if (existing) {
+      throw this.nameTaken();
+    }
 
     const permissionType = dto.permissionType ?? PermissionType.CUSTOM;
     const permissions =
@@ -84,6 +95,7 @@ export class AdminRolesService {
       permissionType,
       permissions,
     });
+
     return this.toDto(created, 0);
   }
 
@@ -93,34 +105,60 @@ export class AdminRolesService {
     currentAdminRoleId: string | null,
   ): Promise<RoleDto> {
     const existing = await this.roles.findWithMemberCount(id);
-    if (!existing) throw this.notFound();
-    if (existing.isSystem) throw this.systemLocked();
+
+    if (!existing) {
+      throw this.notFound();
+    }
+
+    if (existing.isSystem) {
+      throw this.systemLocked();
+    }
 
     const data: Parameters<AdminRoleRepository['update']>[1] = {};
+
     if (dto.name !== undefined) {
       const name = dto.name.trim();
-      if (!name) throw this.badRequest('name-empty', 'Name cannot be empty');
+
+      if (!name) {
+        throw this.badRequest('name-empty', 'Name cannot be empty');
+      }
+
       if (name !== existing.name) {
         const clash = await this.roles.findByName(name);
-        if (clash && clash.id !== id) throw this.nameTaken();
+
+        if (clash && clash.id !== id) {
+          throw this.nameTaken();
+        }
+
         data.name = name;
       }
     }
-    if (dto.description !== undefined) data.description = dto.description;
+
+    if (dto.description !== undefined) {
+      data.description = dto.description;
+    }
 
     const nextType = dto.permissionType ?? existing.permissionType;
-    if (dto.permissionType !== undefined) data.permissionType = dto.permissionType;
+
+    if (dto.permissionType !== undefined) {
+      data.permissionType = dto.permissionType;
+    }
+
     const nextPerms =
       dto.permissions !== undefined || dto.permissionType !== undefined
         ? nextType === PermissionType.ALL
           ? []
           : this.normalizePermissions(dto.permissions ?? existing.permissions)
         : undefined;
-    if (nextPerms !== undefined) data.permissions = nextPerms;
+
+    if (nextPerms !== undefined) {
+      data.permissions = nextPerms;
+    }
 
     if (currentAdminRoleId === id && nextType === PermissionType.CUSTOM) {
       const effective = nextPerms ?? existing.permissions;
       const missing = SELF_LOCKOUT_GUARDED_KEYS.filter((k) => !effective.includes(k));
+
       if (missing.length > 0) {
         throw new ForbiddenException({
           code: ApiErrorCode.FORBIDDEN,
@@ -131,14 +169,23 @@ export class AdminRolesService {
     }
 
     const updated = await this.roles.update(id, data);
+
     this.resolver.invalidate(id);
+
     return this.toDto(updated, existing._count.admins);
   }
 
   async remove(id: string): Promise<void> {
     const existing = await this.roles.findWithMemberCount(id);
-    if (!existing) throw this.notFound();
-    if (existing.isSystem) throw this.systemLocked();
+
+    if (!existing) {
+      throw this.notFound();
+    }
+
+    if (existing.isSystem) {
+      throw this.systemLocked();
+    }
+
     if (existing._count.admins > 0) {
       throw new ConflictException({
         code: ApiErrorCode.ROLE_HAS_MEMBERS,
@@ -148,7 +195,9 @@ export class AdminRolesService {
         details: { adminCount: existing._count.admins },
       });
     }
+
     await this.roles.delete(id);
+
     this.resolver.invalidate(id);
   }
 

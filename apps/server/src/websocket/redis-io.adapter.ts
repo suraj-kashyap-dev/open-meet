@@ -15,6 +15,7 @@ export class RedisIoAdapter extends IoAdapter {
     super(app);
     const redisService = app.get(RedisService);
     const { pub, sub } = redisService.pubSubPair();
+
     this.redisAdapter = createAdapter(pub as Redis, sub as Redis);
   }
 

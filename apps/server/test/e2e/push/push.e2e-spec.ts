@@ -21,7 +21,9 @@ describe('Push (e2e)', () => {
   beforeEach(async () => {
     await resetDb(app);
     const user = await registerUser(app, { email: 'pusher@example.com', password: 'secretpass1' });
+
     cookie = user.cookie;
+
     userId = user.user!.id;
   });
 
@@ -39,7 +41,9 @@ describe('Push (e2e)', () => {
       const res = await http(app).get('/api/push/vapid-public-key');
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.publicKey).toBe('');
     });
   });
@@ -49,6 +53,7 @@ describe('Push (e2e)', () => {
       const res = await http(app).post('/api/push/subscribe').set('Cookie', cookie).send(validBody);
 
       expect(res.status).toBe(204);
+
       expect(await countSubscriptions()).toBe(1);
     });
 
@@ -60,6 +65,7 @@ describe('Push (e2e)', () => {
         .send({ ...validBody, keys: { p256dh: 'new-p256dh', auth: 'new-auth' } });
 
       expect(second.status).toBe(204);
+
       expect(await countSubscriptions()).toBe(1);
     });
 
@@ -70,7 +76,9 @@ describe('Push (e2e)', () => {
         .send({ endpoint: 'https://push.example.com/sub/no-keys' });
 
       expect(res.status).toBe(400);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('VALIDATION_FAILED');
     });
 
@@ -78,7 +86,9 @@ describe('Push (e2e)', () => {
       const res = await http(app).post('/api/push/subscribe').send(validBody);
 
       expect(res.status).toBe(401);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });
@@ -86,6 +96,7 @@ describe('Push (e2e)', () => {
   describe('POST /api/push/unsubscribe', () => {
     it('should remove a previously stored subscription', async () => {
       await http(app).post('/api/push/subscribe').set('Cookie', cookie).send(validBody);
+
       expect(await countSubscriptions()).toBe(1);
 
       const res = await http(app)
@@ -94,6 +105,7 @@ describe('Push (e2e)', () => {
         .send({ endpoint: validBody.endpoint });
 
       expect(res.status).toBe(204);
+
       expect(await countSubscriptions()).toBe(0);
     });
 
@@ -103,6 +115,7 @@ describe('Push (e2e)', () => {
         .send({ endpoint: validBody.endpoint });
 
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });

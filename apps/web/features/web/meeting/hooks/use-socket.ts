@@ -33,6 +33,7 @@ export function useMeetingSocket(
 
     return () => {
       next.disconnect();
+
       setSocket(null);
     };
   }, [authToken, enabled]);

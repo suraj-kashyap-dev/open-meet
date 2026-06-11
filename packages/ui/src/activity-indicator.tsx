@@ -23,32 +23,41 @@ export function ActivityIndicator({ className }: { className?: string }) {
     const clearShow = () => {
       if (showTimerRef.current !== null) {
         window.clearTimeout(showTimerRef.current);
+
         showTimerRef.current = null;
       }
     };
+
     const clearHide = () => {
       if (hideTimerRef.current !== null) {
         window.clearTimeout(hideTimerRef.current);
+
         hideTimerRef.current = null;
       }
     };
 
     if (pending) {
       clearHide();
+
       if (!visible && showTimerRef.current === null) {
         showTimerRef.current = window.setTimeout(() => {
           shownAtRef.current = Date.now();
+
           setVisible(true);
+
           showTimerRef.current = null;
         }, SHOW_DELAY_MS);
       }
     } else {
       clearShow();
+
       if (visible && hideTimerRef.current === null) {
         const elapsed = Date.now() - shownAtRef.current;
         const remaining = Math.max(0, MIN_VISIBLE_MS - elapsed);
+
         hideTimerRef.current = window.setTimeout(() => {
           setVisible(false);
+
           hideTimerRef.current = null;
         }, remaining);
       }
@@ -57,8 +66,13 @@ export function ActivityIndicator({ className }: { className?: string }) {
 
   useEffect(
     () => () => {
-      if (showTimerRef.current !== null) window.clearTimeout(showTimerRef.current);
-      if (hideTimerRef.current !== null) window.clearTimeout(hideTimerRef.current);
+      if (showTimerRef.current !== null) {
+        window.clearTimeout(showTimerRef.current);
+      }
+
+      if (hideTimerRef.current !== null) {
+        window.clearTimeout(hideTimerRef.current);
+      }
     },
     [],
   );

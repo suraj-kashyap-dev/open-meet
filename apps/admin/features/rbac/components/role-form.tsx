@@ -55,6 +55,7 @@ export function RoleForm({ id, initial, systemLocked = false, onSubmit }: Props)
       id={id}
       onSubmit={(e) => {
         e.preventDefault();
+
         handleSubmit();
       }}
       className="space-y-6"

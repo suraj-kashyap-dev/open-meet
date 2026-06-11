@@ -92,6 +92,7 @@ export function RecentMeetingsTable({ meetings }: { meetings: RecentMeetingDto[]
         emptyMessage={t('recent.empty')}
         renderCell={(column, row) => {
           const meeting = row as unknown as RecentMeetingDto;
+
           switch (column.key) {
             case 'code':
               return <span className="font-mono text-xs">{meeting.code}</span>;

@@ -6,15 +6,19 @@ import { currentAdminMe } from '../fixtures/data';
 test.describe('Admin dashboard page', () => {
   test('should render the overview heading and stats', async ({ page }) => {
     await mockAdminApi(page);
+
     await page.goto('/en');
 
     await expect(page.getByRole('heading', { name: 'Console', exact: true })).toBeVisible();
+
     await expect(page.getByText('Total registered accounts')).toBeVisible();
+
     await expect(page.getByText('128', { exact: true })).toBeVisible();
   });
 
   test('should surface group totals', async ({ page }) => {
     await mockAdminApi(page);
+
     await page.goto('/en');
 
     await expect(page.getByText('Group conversations created')).toBeVisible();
@@ -22,9 +26,11 @@ test.describe('Admin dashboard page', () => {
 
   test('should show the recent meetings table', async ({ page }) => {
     await mockAdminApi(page);
+
     await page.goto('/en');
 
     await expect(page.getByRole('heading', { name: 'Recent meetings' })).toBeVisible();
+
     await expect(page.getByText('abcd-efgh-ijkl')).toBeVisible();
   });
 
@@ -36,11 +42,15 @@ test.describe('Admin dashboard page', () => {
         grantedSet: ['analytics.view', 'analytics.view-deep'],
       },
     });
+
     await page.goto('/en/analytics');
 
     await expect(page.getByRole('heading', { name: 'Analytics', exact: true })).toBeVisible();
+
     await expect(page.getByText('Avg meeting length', { exact: true })).toBeVisible();
+
     await expect(page.getByText('Top hosts', { exact: true })).toBeVisible();
+
     await expect(page.getByText('Grace Hopper').first()).toBeVisible();
   });
 
@@ -52,9 +62,11 @@ test.describe('Admin dashboard page', () => {
         grantedSet: ['analytics.view'],
       },
     });
+
     await page.goto('/en/analytics');
 
     await expect(page.getByRole('heading', { name: 'Analytics', exact: true })).toBeVisible();
+
     await expect(page.getByText('Avg meeting length', { exact: true })).toHaveCount(0);
   });
 });

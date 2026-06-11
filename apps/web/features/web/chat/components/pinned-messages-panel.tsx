@@ -109,6 +109,7 @@ export function PinnedMessagesPanel({
                       type="button"
                       onClick={() => {
                         onOpenMessage(message.id);
+
                         setOpen(false);
                       }}
                       className="min-w-0 flex-1 rounded-xl px-2.5 py-2 text-start transition-colors hover:bg-muted/50"

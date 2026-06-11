@@ -84,6 +84,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
     }
 
     const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+
     return distanceFromBottom < 48;
   }, []);
 
@@ -122,6 +123,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
     };
 
     el.addEventListener('scroll', onScroll, { passive: true });
+
     return () => el.removeEventListener('scroll', onScroll);
   }, [isPinnedToBottom]);
 
@@ -134,6 +136,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
 
     if (attachments.hasUploading) {
       toast.message(t('toast.wait-for-uploads'));
+
       return;
     }
 
@@ -142,6 +145,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
     }
 
     setSending(true);
+
     socket.emit(ClientEvent.CHAT_SEND, {
       meetingCode: code,
       content,
@@ -149,13 +153,16 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
     });
 
     attachments.reset();
+
     setText('');
+
     setSending(false);
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
+
       void send();
     }
   };
@@ -279,6 +286,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
             size="icon"
             onClick={() => {
               scrollToBottom();
+
               setShowJumpToBottom(false);
             }}
             aria-label={t('chat.jump-to-latest')}
@@ -303,6 +311,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+
           void send();
         }}
         className="flex items-end gap-2 border-t border-border px-3 py-3"
@@ -315,6 +324,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
           className="sr-only"
           onChange={(e) => {
             attachments.stageFiles(e.target.files);
+
             e.target.value = '';
           }}
         />
@@ -327,6 +337,7 @@ export function ChatPanel({ code, socket, authToken, onClose }: Props) {
           className="sr-only"
           onChange={(e) => {
             attachments.stageFiles(e.target.files);
+
             e.target.value = '';
           }}
         />

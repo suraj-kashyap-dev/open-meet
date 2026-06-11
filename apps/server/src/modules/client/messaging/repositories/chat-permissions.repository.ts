@@ -42,11 +42,15 @@ export class ChatPermissionsRepository {
         conversation: { members: { some: { userId: userBId } } },
       },
     });
+
     return count > 0;
   }
 
   async haveSharedSurface(viewerId: string, targetId: string): Promise<boolean> {
-    if (viewerId === targetId) return true;
+    if (viewerId === targetId) {
+      return true;
+    }
+
     return this.shareConversation(viewerId, targetId);
   }
 
@@ -100,6 +104,7 @@ export class ChatPermissionsRepository {
       where: { id: userId },
       select: { canCreateGroups: true },
     });
+
     return row?.canCreateGroups ?? false;
   }
 
@@ -110,7 +115,11 @@ export class ChatPermissionsRepository {
       where: { id: conversationId },
       select: { type: true, members: { where: { role: 'ADMIN' }, select: { userId: true } } },
     });
-    if (!conv) return null;
+
+    if (!conv) {
+      return null;
+    }
+
     return { type: conv.type, adminCount: conv.members.length };
   }
 }

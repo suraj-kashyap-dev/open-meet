@@ -29,7 +29,9 @@ describe('Admin configuration (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
@@ -40,9 +42,13 @@ describe('Admin configuration (e2e)', () => {
       const res = await http(app).get('/api/admin/configuration').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(typeof res.body.data.defaultMeetingTitle).toBe('string');
+
       expect(typeof res.body.data.allowGuestJoin).toBe('boolean');
+
       expect(res.body.data).toHaveProperty('maxMeetingMinutes');
     });
 
@@ -52,11 +58,13 @@ describe('Admin configuration (e2e)', () => {
       const res = await http(app).get('/api/admin/configuration').set('Cookie', cookie);
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/configuration');
+
       expect(res.status).toBe(401);
     });
   });
@@ -72,14 +80,21 @@ describe('Admin configuration (e2e)', () => {
       });
 
       expect(patch.status).toBe(200);
+
       expect(patch.body.data.defaultMeetingTitle).toBe('Daily Standup');
+
       expect(patch.body.data.allowGuestJoin).toBe(false);
+
       expect(patch.body.data.maxMeetingMinutes).toBe(90);
 
       const get = await http(app).get('/api/admin/configuration').set('Cookie', cookie);
+
       expect(get.status).toBe(200);
+
       expect(get.body.data.defaultMeetingTitle).toBe('Daily Standup');
+
       expect(get.body.data.allowGuestJoin).toBe(false);
+
       expect(get.body.data.maxMeetingMinutes).toBe(90);
     });
 
@@ -103,6 +118,7 @@ describe('Admin configuration (e2e)', () => {
         .send({ defaultMeetingTitle: 'Nope' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 

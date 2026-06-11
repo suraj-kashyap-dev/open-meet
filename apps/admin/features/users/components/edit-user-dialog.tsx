@@ -166,9 +166,13 @@ export function EditUserDialog({ user, onClose }: Props) {
   useEffect(() => {
     if (user) {
       reset(defaultsFor(user));
+
       setCanCreateGroups(user.canCreateGroups ?? true);
+
       setAvatarFile(null);
+
       setAvatarPreview(null);
+
       setAvatarRemoved(false);
     }
   }, [user, reset]);
@@ -205,6 +209,7 @@ export function EditUserDialog({ user, onClose }: Props) {
 
   const onFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
+
     event.target.value = '';
 
     if (!file) {
@@ -213,22 +218,28 @@ export function EditUserDialog({ user, onClose }: Props) {
 
     if (!AVATAR_MIMES.includes(file.type)) {
       toast.error(tAvatar('invalid-type'));
+
       return;
     }
 
     if (file.size > AVATAR_MAX_BYTES) {
       toast.error(tAvatar('too-large', { mb: AVATAR_MAX_MB }));
+
       return;
     }
 
     setAvatarFile(file);
+
     setAvatarRemoved(false);
+
     setAvatarPreview(URL.createObjectURL(file));
   };
 
   const onStageRemove = (): void => {
     setAvatarFile(null);
+
     setAvatarPreview(null);
+
     setAvatarRemoved(true);
   };
 
@@ -271,6 +282,7 @@ export function EditUserDialog({ user, onClose }: Props) {
 
     if (!hasProfileChanges && !avatarDirty) {
       onClose();
+
       return;
     }
 
@@ -286,6 +298,7 @@ export function EditUserDialog({ user, onClose }: Props) {
       }
 
       toast.success(t('success'));
+
       onClose();
     } catch (err) {
       toast.error(messageFromError(err, t('error')));

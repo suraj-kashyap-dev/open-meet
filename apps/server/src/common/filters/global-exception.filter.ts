@@ -58,7 +58,9 @@ export class GlobalExceptionFilter implements ExceptionFilter {
           message = r.message;
         } else if (Array.isArray(r.message)) {
           message = 'Validation failed';
+
           code = ApiErrorCode.VALIDATION_FAILED;
+
           details = r.message;
         }
 

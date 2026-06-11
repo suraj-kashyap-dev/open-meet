@@ -76,6 +76,7 @@ export function Table({
             ) : (
               rows.map((row, i) => {
                 const id = getRowId(row, i);
+
                 return (
                   <Row
                     key={id}

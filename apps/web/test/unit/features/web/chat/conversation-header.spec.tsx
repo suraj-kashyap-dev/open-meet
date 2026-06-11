@@ -184,14 +184,19 @@ function renderHeader() {
 describe('<ConversationHeader />', () => {
   beforeEach(() => {
     push.mockReset();
+
     toggleInfo.mockReset();
+
     clearMutate.mockReset();
+
     deleteMutate.mockReset();
+
     createPollMutate.mockReset();
 
     clearMutate.mockImplementation((_conversationId, options) => {
       options?.onSuccess?.();
     });
+
     deleteMutate.mockImplementation((_conversationId, options) => {
       options?.onSuccess?.();
     });
@@ -201,11 +206,13 @@ describe('<ConversationHeader />', () => {
     renderHeader();
 
     fireEvent.pointerDown(screen.getByRole('button', { name: 'More actions' }), { button: 0 });
+
     fireEvent.click(await screen.findByText('Clear chat'));
 
     expect(clearMutate).not.toHaveBeenCalled();
 
     const dialog = await screen.findByRole('dialog', { name: 'Clear chat?' });
+
     fireEvent.click(within(dialog).getByRole('button', { name: 'Clear chat' }));
 
     expect(clearMutate).toHaveBeenCalledWith('c1', expect.any(Object));
@@ -223,14 +230,17 @@ describe('<ConversationHeader />', () => {
     renderHeader();
 
     fireEvent.pointerDown(screen.getByRole('button', { name: 'More actions' }), { button: 0 });
+
     fireEvent.click(await screen.findByText('Delete chat'));
 
     expect(deleteMutate).not.toHaveBeenCalled();
 
     const dialog = await screen.findByRole('dialog', { name: 'Delete chat?' });
+
     fireEvent.click(within(dialog).getByRole('button', { name: 'Delete chat' }));
 
     expect(deleteMutate).toHaveBeenCalledWith('c1', expect.any(Object));
+
     expect(push).toHaveBeenCalledWith('/chat');
   });
 });

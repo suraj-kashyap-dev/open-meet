@@ -18,6 +18,7 @@ export function useWorkspaceConfig() {
 
 export function useUpdateWorkspaceConfig() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: UpdateWorkspaceConfigInput) => adminConfigurationApi.update(input),
     onSuccess: (data: WorkspaceConfigDto) => {

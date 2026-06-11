@@ -11,7 +11,9 @@ describe('ConversationStateService', () => {
 
   beforeEach(() => {
     repo = { updateMemberFlags: vi.fn() };
+
     permissions = { assertConversationMember: vi.fn() };
+
     service = new ConversationStateService(
       repo as unknown as ConversationsRepository,
       permissions as unknown as ChatPermissionsService,
@@ -22,16 +24,19 @@ describe('ConversationStateService', () => {
     await service.setState('c1', 'u1', { muted: true, pinned: true });
 
     expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
     expect(repo.updateMemberFlags).toHaveBeenCalledWith('c1', 'u1', { muted: true, pinned: true });
   });
 
   it('should pass through a hide flag', async () => {
     await service.setState('c1', 'u1', { hidden: true });
+
     expect(repo.updateMemberFlags).toHaveBeenCalledWith('c1', 'u1', { hidden: true });
   });
 
   it('should pass through manualUnread', async () => {
     await service.setState('c1', 'u1', { manualUnread: true });
+
     expect(repo.updateMemberFlags).toHaveBeenCalledWith('c1', 'u1', { manualUnread: true });
   });
 });

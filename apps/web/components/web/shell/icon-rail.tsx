@@ -51,6 +51,7 @@ export function IconRail() {
       <ul className="flex w-full flex-1 flex-col gap-1 px-1.5">
         {ITEMS.map(({ href, icon: Icon, key, badge }) => {
           const active = isRailActive(pathname, href);
+
           return (
             <li key={href}>
               <Link

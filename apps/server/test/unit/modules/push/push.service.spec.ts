@@ -34,7 +34,9 @@ describe('PushService', () => {
 
   beforeEach(() => {
     sendNotification.mockReset();
+
     setVapidDetails.mockReset();
+
     repo = {
       findManyByUserId: vi.fn(),
       deleteByEndpoints: vi.fn().mockResolvedValue(undefined),
@@ -50,11 +52,13 @@ describe('PushService', () => {
       { endpoint: 'e1', p256dh: 'a', auth: 'b' },
       { endpoint: 'e2', p256dh: 'c', auth: 'd' },
     ]);
+
     sendNotification.mockResolvedValue(undefined);
 
     await service().sendToUser('u1', payload);
 
     expect(sendNotification).toHaveBeenCalledTimes(2);
+
     expect(repo.deleteByEndpoints).not.toHaveBeenCalled();
   });
 
@@ -64,9 +68,16 @@ describe('PushService', () => {
       { endpoint: 'gone-404', p256dh: 'c', auth: 'd' },
       { endpoint: 'ok', p256dh: 'e', auth: 'f' },
     ]);
+
     sendNotification.mockImplementation((sub: { endpoint: string }) => {
-      if (sub.endpoint === 'gone-410') return Promise.reject({ statusCode: 410 });
-      if (sub.endpoint === 'gone-404') return Promise.reject({ statusCode: 404 });
+      if (sub.endpoint === 'gone-410') {
+        return Promise.reject({ statusCode: 410 });
+      }
+
+      if (sub.endpoint === 'gone-404') {
+        return Promise.reject({ statusCode: 404 });
+      }
+
       return Promise.resolve(undefined);
     });
 
@@ -74,11 +85,13 @@ describe('PushService', () => {
 
     expect(repo.deleteByEndpoints).toHaveBeenCalledTimes(1);
     const pruned = repo.deleteByEndpoints.mock.calls[0]![0] as string[];
+
     expect(pruned.sort()).toEqual(['gone-404', 'gone-410']);
   });
 
   it('does not prune on transient (non-404/410) errors', async () => {
     repo.findManyByUserId.mockResolvedValue([{ endpoint: 'e1', p256dh: 'a', auth: 'b' }]);
+
     sendNotification.mockRejectedValue({ statusCode: 500 });
 
     await service().sendToUser('u1', payload);
@@ -96,11 +109,13 @@ describe('PushService', () => {
 
   it('is disabled (no send) when VAPID keys are not configured', async () => {
     const svc = service(false);
+
     expect(svc.isEnabled()).toBe(false);
 
     await svc.sendToUser('u1', payload);
 
     expect(repo.findManyByUserId).not.toHaveBeenCalled();
+
     expect(sendNotification).not.toHaveBeenCalled();
   });
 });

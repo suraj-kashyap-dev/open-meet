@@ -6,5 +6,6 @@ export default async function AdminRoleDetailRoute({
   params: Promise<{ roleId: string }>;
 }) {
   const { roleId } = await params;
+
   return <RoleDetailPage roleId={roleId} />;
 }

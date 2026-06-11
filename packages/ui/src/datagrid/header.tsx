@@ -22,6 +22,7 @@ function SortIcon({ active, dir }: { active: boolean; dir: 'asc' | 'desc' }) {
   if (!active) {
     return <ChevronsUpDown className="h-3 w-3 opacity-50" />;
   }
+
   return dir === 'asc' ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />;
 }
 

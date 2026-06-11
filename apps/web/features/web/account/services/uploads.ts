@@ -13,10 +13,13 @@ export function uploadAttachment(file: File, options: UploadOptions = {}): Promi
   return new Promise((resolve, reject) => {
     const url = `${env.NEXT_PUBLIC_API_URL}/api/uploads`;
     const form = new FormData();
+
     form.append('file', file, file.name);
 
     const xhr = new XMLHttpRequest();
+
     xhr.open('POST', url);
+
     xhr.withCredentials = true;
 
     if (options.authToken) {
@@ -38,6 +41,7 @@ export function uploadAttachment(file: File, options: UploadOptions = {}): Promi
         reject(
           new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
         );
+
         return;
       }
 
@@ -47,6 +51,7 @@ export function uploadAttachment(file: File, options: UploadOptions = {}): Promi
         body = JSON.parse(xhr.responseText);
       } catch {
         reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
+
         return;
       }
 
@@ -58,6 +63,7 @@ export function uploadAttachment(file: File, options: UploadOptions = {}): Promi
 
       if (!envelope.success || !envelope.data) {
         const err = envelope.error;
+
         reject(
           new ApiClientError(
             err?.code ?? 'UPLOAD_FAILED',
@@ -65,6 +71,7 @@ export function uploadAttachment(file: File, options: UploadOptions = {}): Promi
             err?.message ?? 'Upload failed',
           ),
         );
+
         return;
       }
 

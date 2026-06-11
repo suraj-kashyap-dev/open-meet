@@ -113,6 +113,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
 
     return () => {
       controller.abort();
+
       resetRecording();
     };
   }, [authToken, code, setActiveRecording, resetRecording]);
@@ -126,41 +127,55 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
 
     socket.on(ServerEvent.CHAT_MESSAGE, (msg: ChatMessagePayload) => {
       addMessage(msg);
+
       if (msg.sender.id !== viewer?.id) {
         messageSound.play();
+
         notification.notify(msg.sender.name || t('toast.new-message'), {
           body: msg.content,
           tag: `chat-${code}`,
         });
       }
     });
+
     socket.on(ServerEvent.REACTION_RECEIVED, (r: ReactionReceivedPayload) => {
       pushReaction(r.emoji, r.senderName);
+
       if (r.senderId !== viewer?.id) {
         reactionSound.play();
       }
     });
+
     socket.on(ServerEvent.HAND_RAISED, (h: HandRaisedPayload) => {
       raiseHand(h.userId, h.name);
+
       toast.message(t('toast.hand-raised', { name: h.name }));
     });
+
     socket.on(ServerEvent.HAND_LOWERED, (h: HandLoweredPayload) => {
       lowerHand(h.userId);
     });
+
     socket.on(ServerEvent.MEETING_ENDED, (_payload: MeetingEndedPayload) => {
       toast.message(t('toast.host-ended'));
+
       void room.disconnect();
     });
+
     socket.on(ServerEvent.RECORDING_STARTED, (payload: RecordingStartedPayload) => {
       setActiveRecording(payload.recording);
+
       recordingSound.play();
       const starter = payload.recording.startedByName ?? t('toast.default-host');
+
       toast.message(t('toast.recording-started', { name: starter }), {
         description: t('toast.recording-started-description'),
       });
     });
+
     socket.on(ServerEvent.RECORDING_STOPPED, (payload: RecordingStoppedPayload) => {
       setActiveRecording(null);
+
       if (payload.recording.status === 'COMPLETED') {
         toast.success(t('toast.recording-stopped'));
       } else if (payload.recording.status === 'FAILED') {
@@ -174,12 +189,19 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
 
     return () => {
       socket.off(ServerEvent.CHAT_MESSAGE);
+
       socket.off(ServerEvent.REACTION_RECEIVED);
+
       socket.off(ServerEvent.HAND_RAISED);
+
       socket.off(ServerEvent.HAND_LOWERED);
+
       socket.off(ServerEvent.MEETING_ENDED);
+
       socket.off(ServerEvent.RECORDING_STARTED);
+
       socket.off(ServerEvent.RECORDING_STOPPED);
+
       socket.emit(ClientEvent.MEETING_LEAVE, { meetingCode: code });
     };
   }, [
@@ -203,6 +225,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
     if (!room) {
       return;
     }
+
     settledAt.current = Date.now() + 1200;
 
     const onConnected = () => {
@@ -210,6 +233,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
         joinSound.play();
       }
     };
+
     const onDisconnected = () => {
       if (Date.now() >= settledAt.current) {
         leaveSound.play();
@@ -217,10 +241,12 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
     };
 
     room.on(RoomEvent.ParticipantConnected, onConnected);
+
     room.on(RoomEvent.ParticipantDisconnected, onDisconnected);
 
     return () => {
       room.off(RoomEvent.ParticipantConnected, onConnected);
+
       room.off(RoomEvent.ParticipantDisconnected, onDisconnected);
     };
   }, [room, joinSound, leaveSound]);

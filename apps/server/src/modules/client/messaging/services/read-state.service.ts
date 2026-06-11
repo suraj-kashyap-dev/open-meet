@@ -15,6 +15,7 @@ function laterDate(left: Date | null, right: Date | null): Date | null {
   if (!right) {
     return left;
   }
+
   return left > right ? left : right;
 }
 
@@ -45,6 +46,7 @@ export class ReadStateService {
     }
 
     readAt = laterDate(readAt, membership.clearedAt ?? null) ?? readAt;
+
     await this.conversations.markRead(conversationId, userId, readAt);
 
     this.bus.emit(conversationRoom(conversationId), ChatServerEvent.READ_RECEIPT, {
@@ -54,6 +56,7 @@ export class ReadStateService {
     });
 
     const unread = await this.conversations.unreadCount(conversationId, userId, readAt);
+
     return { unread };
   }
 
@@ -61,6 +64,7 @@ export class ReadStateService {
     await this.permissions.assertConversationMember(conversationId, userId);
 
     const deliveredAt = new Date();
+
     await this.conversations.markDelivered(conversationId, userId, deliveredAt);
 
     this.bus.emit(conversationRoom(conversationId), ChatServerEvent.DELIVERY_RECEIPT, {
@@ -86,6 +90,7 @@ export class ReadStateService {
 
         if (count > 0) {
           byConversation[m.conversationId] = count;
+
           total += count;
         }
       }),

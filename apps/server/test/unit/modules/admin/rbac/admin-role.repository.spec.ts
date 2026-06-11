@@ -21,13 +21,16 @@ describe('AdminRoleRepository', () => {
       delete: vi.fn().mockResolvedValue(sentinel),
       upsert: vi.fn().mockResolvedValue(sentinel),
     };
+
     admin = { count: vi.fn().mockResolvedValue(3) };
+
     repo = new AdminRoleRepository({ adminRoleRecord, admin } as unknown as PrismaService);
   });
 
   describe('findById()', () => {
     it('should query by id', async () => {
       await repo.findById('role1');
+
       expect(adminRoleRecord.findUnique).toHaveBeenCalledWith({ where: { id: 'role1' } });
     });
   });
@@ -35,6 +38,7 @@ describe('AdminRoleRepository', () => {
   describe('findByName()', () => {
     it('should query by name', async () => {
       await repo.findByName('Administrator');
+
       expect(adminRoleRecord.findUnique).toHaveBeenCalledWith({
         where: { name: 'Administrator' },
       });
@@ -44,6 +48,7 @@ describe('AdminRoleRepository', () => {
   describe('list()', () => {
     it('should order system-first then by name and include member counts', async () => {
       await repo.list();
+
       expect(adminRoleRecord.findMany).toHaveBeenCalledWith({
         orderBy: [{ isSystem: 'desc' }, { name: 'asc' }],
         include: memberCountInclude,
@@ -54,6 +59,7 @@ describe('AdminRoleRepository', () => {
   describe('findWithMemberCount()', () => {
     it('should query by id and include member counts', async () => {
       await repo.findWithMemberCount('role1');
+
       expect(adminRoleRecord.findUnique).toHaveBeenCalledWith({
         where: { id: 'role1' },
         include: memberCountInclude,
@@ -69,7 +75,9 @@ describe('AdminRoleRepository', () => {
         permissionType: 'CUSTOM' as const,
         permissions: ['users.read'],
       };
+
       await repo.create(data);
+
       expect(adminRoleRecord.create).toHaveBeenCalledWith({ data });
     });
   });
@@ -77,6 +85,7 @@ describe('AdminRoleRepository', () => {
   describe('update()', () => {
     it('should bump the cache revision', async () => {
       await repo.update('role1', { name: 'New' });
+
       expect(adminRoleRecord.update).toHaveBeenCalledWith({
         where: { id: 'role1' },
         data: { name: 'New', cacheRev: { increment: 1 } },
@@ -87,6 +96,7 @@ describe('AdminRoleRepository', () => {
   describe('delete()', () => {
     it('should delete by id', async () => {
       await repo.delete('role1');
+
       expect(adminRoleRecord.delete).toHaveBeenCalledWith({ where: { id: 'role1' } });
     });
   });
@@ -94,6 +104,7 @@ describe('AdminRoleRepository', () => {
   describe('countAdminsForRole()', () => {
     it('should count admins by role record id', async () => {
       await expect(repo.countAdminsForRole('role1')).resolves.toBe(3);
+
       expect(admin.count).toHaveBeenCalledWith({ where: { roleRecordId: 'role1' } });
     });
   });
@@ -107,7 +118,9 @@ describe('AdminRoleRepository', () => {
         permissionType: 'ALL' as const,
         defaultPermissions: ['a', 'b'] as const,
       };
+
       await repo.upsertSystem(input);
+
       expect(adminRoleRecord.upsert).toHaveBeenCalledWith({
         where: { id: 'sys' },
         create: {
@@ -136,7 +149,9 @@ describe('AdminRoleRepository', () => {
         permissionType: 'CUSTOM' as const,
         defaultPermissions: ['x'] as const,
       };
+
       await repo.ensureDefault(input);
+
       expect(adminRoleRecord.upsert).toHaveBeenCalledWith({
         where: { id: 'def' },
         create: {

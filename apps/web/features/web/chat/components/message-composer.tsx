@@ -92,8 +92,15 @@ export function MessageComposer({
 
   const formatSize = (bytes: number): string => {
     const s = byteSize(bytes);
-    if (s.unit === 'B') return t('size-bytes', { bytes: s.bytes });
-    if (s.unit === 'KB') return t('size-kb', { kb: s.kb });
+
+    if (s.unit === 'B') {
+      return t('size-bytes', { bytes: s.bytes });
+    }
+
+    if (s.unit === 'KB') {
+      return t('size-kb', { kb: s.kb });
+    }
+
     return t('size-mb', { mb: s.mb });
   };
 
@@ -115,16 +122,20 @@ export function MessageComposer({
   const stopTypingNow = () => {
     if (typingTimer.current) {
       clearTimeout(typingTimer.current);
+
       typingTimer.current = null;
     }
+
     if (typingActive.current) {
       typingActive.current = false;
+
       stopTyping(conversationId);
     }
   };
 
   const detectMention = (value: string, caret: number) => {
     const match = MENTION_BEFORE_CARET.exec(value.slice(0, caret));
+
     if (match) {
       setMention({ query: match[1] ?? '', start: caret - (match[1]?.length ?? 0) - 1 });
     } else {
@@ -134,21 +145,25 @@ export function MessageComposer({
 
   const onType = (value: string, caret: number) => {
     setText(value);
+
     detectMention(value, caret);
 
     if (value.length === 0) {
       stopTypingNow();
+
       return;
     }
 
     if (!typingActive.current) {
       typingActive.current = true;
+
       startTyping(conversationId);
     }
 
     if (typingTimer.current) {
       clearTimeout(typingTimer.current);
     }
+
     typingTimer.current = setTimeout(stopTypingNow, TYPING_TIMEOUT);
   };
 
@@ -160,14 +175,19 @@ export function MessageComposer({
     const caret = textareaRef.current?.selectionStart ?? text.length;
     const token = `[@${member.name}](${member.userId}) `;
     const next = text.slice(0, mention.start) + token + text.slice(caret);
+
     setText(next);
+
     setMention(null);
 
     requestAnimationFrame(() => {
       const el = textareaRef.current;
+
       if (el) {
         const pos = mention.start + token.length;
+
         el.focus();
+
         el.setSelectionRange(pos, pos);
       }
     });
@@ -178,6 +198,7 @@ export function MessageComposer({
 
     if (attachments.hasUploading) {
       toast.message(t('composer.wait-for-uploads'));
+
       return;
     }
 
@@ -193,12 +214,19 @@ export function MessageComposer({
     });
 
     setText('');
+
     setPriority('NORMAL');
+
     setMention(null);
+
     richRef.current?.clear();
+
     attachments.reset();
+
     onCancelReply();
+
     stopTypingNow();
+
     onSent();
   };
 
@@ -247,6 +275,7 @@ export function MessageComposer({
       <form
         onSubmit={(e) => {
           e.preventDefault();
+
           submit();
         }}
         className="flex items-end gap-2 px-3 py-3"
@@ -259,6 +288,7 @@ export function MessageComposer({
           className="sr-only"
           onChange={(e) => {
             attachments.stageFiles(e.target.files);
+
             e.target.value = '';
           }}
         />
@@ -270,6 +300,7 @@ export function MessageComposer({
           className="sr-only"
           onChange={(e) => {
             attachments.stageFiles(e.target.files);
+
             e.target.value = '';
           }}
         />
@@ -347,6 +378,7 @@ export function MessageComposer({
                         type="button"
                         onMouseDown={(e) => {
                           e.preventDefault();
+
                           insertMention(m);
                         }}
                         className="flex w-full items-center gap-2 rounded px-2 py-1.5 text-start text-sm hover:bg-muted"
@@ -372,15 +404,21 @@ export function MessageComposer({
                     (e.key === 'Enter' || e.key === 'Tab')
                   ) {
                     e.preventDefault();
+
                     insertMention(mentionCandidates[0]!);
+
                     return;
                   }
+
                   if (e.key === 'Escape' && mention) {
                     setMention(null);
+
                     return;
                   }
+
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
+
                     submit();
                   }
                 }}

@@ -66,6 +66,7 @@ export function PasswordForm() {
       });
 
       reset({ currentPassword: '', newPassword: '', confirmPassword: '' });
+
       toast.success(t('toast.password-changed'));
     } catch (err) {
       toast.error(messageFromError(err, t('toast.password-change-failed')));

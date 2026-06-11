@@ -35,10 +35,12 @@ export function useAdminUser(id: string) {
 
 export function useCreateAdminUser() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (body: AdminCreateUserDto) => adminUsersApi.create(body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
@@ -46,11 +48,13 @@ export function useCreateAdminUser() {
 
 export function useUpdateAdminUser() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: { id: string; body: AdminUpdateUserDto }) =>
       adminUsersApi.update(input.id, input.body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
@@ -58,10 +62,12 @@ export function useUpdateAdminUser() {
 
 export function useDeleteAdminUser() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminUsersApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
@@ -69,11 +75,13 @@ export function useDeleteAdminUser() {
 
 export function useUploadAdminUserAvatar() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: { id: string; file: File }) =>
       adminUsersApi.uploadAvatar(input.id, input.file),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
@@ -81,10 +89,12 @@ export function useUploadAdminUserAvatar() {
 
 export function useRemoveAdminUserAvatar() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminUsersApi.removeAvatar(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [ADMIN_USERS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'users'] });
     },
   });
@@ -100,6 +110,7 @@ export function useUserInvites() {
 
 export function useInviteUser() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (body: AdminCreateUserInviteDto) => adminUsersApi.invite(body),
     onSuccess: () => void qc.invalidateQueries({ queryKey: [USER_INVITES_KEY] }),
@@ -108,6 +119,7 @@ export function useInviteUser() {
 
 export function useResendUserInvite() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminUsersApi.resendInvite(id),
     onSuccess: () => void qc.invalidateQueries({ queryKey: [USER_INVITES_KEY] }),
@@ -116,6 +128,7 @@ export function useResendUserInvite() {
 
 export function useRevokeUserInvite() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminUsersApi.revokeInvite(id),
     onSuccess: () => void qc.invalidateQueries({ queryKey: [USER_INVITES_KEY] }),

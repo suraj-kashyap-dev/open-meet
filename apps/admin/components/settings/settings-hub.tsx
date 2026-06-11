@@ -105,6 +105,7 @@ export function SettingsHub() {
             <div className="grid divide-y divide-border sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-3 lg:divide-x">
               {section.cards.map((card) => {
                 const Icon = card.icon;
+
                 return (
                   <Link
                     key={card.href}

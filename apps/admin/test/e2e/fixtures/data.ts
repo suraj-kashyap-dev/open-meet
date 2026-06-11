@@ -25,7 +25,9 @@ function dailySeries(days: number): { date: string; count: number }[] {
 
   for (let i = days - 1; i >= 0; i -= 1) {
     const d = new Date('2026-05-20T00:00:00.000Z');
+
     d.setUTCDate(d.getUTCDate() - i);
+
     out.push({ date: d.toISOString().slice(0, 10), count: (i * 3) % 11 });
   }
 

@@ -21,6 +21,7 @@ export class PushService {
     const subject = config.get('VAPID_SUBJECT', { infer: true });
 
     this.enabled = Boolean(publicKey && privateKey);
+
     if (this.enabled) {
       webpush.setVapidDetails(subject ?? 'mailto:admin@open-meet.local', publicKey!, privateKey!);
     } else {
@@ -52,6 +53,7 @@ export class PushService {
     }
 
     const subscriptions = await this.repository.findManyByUserId(userId);
+
     if (subscriptions.length === 0) {
       return;
     }
@@ -68,6 +70,7 @@ export class PushService {
           );
         } catch (error) {
           const statusCode = (error as { statusCode?: number }).statusCode;
+
           if (statusCode === 404 || statusCode === 410) {
             expired.push(sub.endpoint);
           } else {

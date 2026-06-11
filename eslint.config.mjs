@@ -35,13 +35,19 @@ export default tseslint.config(
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
       'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+      curly: ['error', 'all'],
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: '*', next: 'return' },
+        { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+        { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+        { blankLine: 'always', prev: 'expression', next: 'expression' },
+        { blankLine: 'always', prev: 'block-like', next: '*' },
+        { blankLine: 'always', prev: '*', next: 'block-like' },
+      ],
     },
   },
   {
-    // NestJS DI: constructor-injected classes + DTOs in @Body/@Query must keep
-    // RUNTIME class references - `emitDecoratorMetadata` writes them into
-    // `design:paramtypes` and ValidationPipe calls `plainToInstance` at runtime.
-    // The consistent-type-imports rule would erase them; disable for backend src.
     files: ['apps/server/src/**/*.ts'],
     rules: {
       '@typescript-eslint/consistent-type-imports': 'off',

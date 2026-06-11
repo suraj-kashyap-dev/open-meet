@@ -6,6 +6,7 @@ interface Props {
 
 export default async function HistoryDetailPage({ params }: Props) {
   const { code } = await params;
+
   return (
     <div className="mx-auto w-full max-w-7xl">
       <HistoryDetail code={code} />

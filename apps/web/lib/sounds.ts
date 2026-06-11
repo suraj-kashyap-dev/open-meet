@@ -38,6 +38,7 @@ async function tryLoadFile(ctx: AudioContext, name: SoundName): Promise<AudioBuf
 
     if (!res.ok) {
       fileCache.set(name, null);
+
       return null;
     }
 
@@ -79,9 +80,13 @@ interface ToneSpec {
 function playSynth(ctx: AudioContext, tones: ToneSpec[], volume: number): void {
   const now = ctx.currentTime;
   const filter = ctx.createBiquadFilter();
+
   filter.type = 'lowpass';
+
   filter.frequency.value = 3500;
+
   filter.Q.value = 0.6;
+
   filter.connect(ctx.destination);
 
   for (const tone of tones) {
@@ -101,12 +106,17 @@ function playSynth(ctx: AudioContext, tones: ToneSpec[], volume: number): void {
     const env = ctx.createGain();
     const attack = 0.008;
     const release = tone.duration - attack;
+
     env.gain.setValueAtTime(0, now + tone.startOffset);
+
     env.gain.linearRampToValueAtTime(volume, now + tone.startOffset + attack);
+
     env.gain.exponentialRampToValueAtTime(0.0001, now + tone.startOffset + attack + release);
 
     osc.connect(env).connect(filter);
+
     osc.start(now + tone.startOffset);
+
     osc.stop(now + tone.startOffset + tone.duration + 0.02);
   }
 }

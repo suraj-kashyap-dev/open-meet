@@ -44,6 +44,7 @@ export function LobbyClient({ code }: { code: string }) {
   useEffect(() => {
     if (error instanceof ApiClientError && error.code === 'MEETING_NOT_FOUND') {
       toast.error(t('toast.meeting-not-found'));
+
       nav.replace('/');
     }
   }, [error, nav, t]);
@@ -52,11 +53,14 @@ export function LobbyClient({ code }: { code: string }) {
     if (appliedDefaults.current || !settings || !media.stream) {
       return;
     }
+
     appliedDefaults.current = true;
     const prefs = settings.meetingPreferences;
+
     if (prefs.defaultMicMuted) {
       void media.setMicEnabled(false);
     }
+
     if (prefs.defaultCameraOff) {
       void media.setCameraEnabled(false);
     }
@@ -71,8 +75,11 @@ export function LobbyClient({ code }: { code: string }) {
 
     try {
       await navigator.clipboard.writeText(url);
+
       setCopied(true);
+
       toast.success(t('toast.link-copied'));
+
       setTimeout(() => setCopied(false), 1800);
     } catch {
       toast.error(t('toast.link-copy-failed'));
@@ -90,6 +97,7 @@ export function LobbyClient({ code }: { code: string }) {
       try {
         if (guestSession && guestSession.user.name !== trimmed) {
           clearGuestSession(code);
+
           setGuestSession(null);
         }
 
@@ -101,7 +109,9 @@ export function LobbyClient({ code }: { code: string }) {
         setGuestSession(next);
       } catch (err) {
         const message = err instanceof ApiClientError ? err.message : 'Could not join meeting';
+
         toast.error(message);
+
         return;
       }
     }
@@ -110,7 +120,9 @@ export function LobbyClient({ code }: { code: string }) {
       micEnabled: media.micEnabled,
       cameraEnabled: media.cameraEnabled,
     });
+
     media.stop();
+
     nav.push(`/${code}`);
   };
 
@@ -280,17 +292,20 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
+
       inputRef.current.select();
     }
   }, [isEditing]);
 
   const openEditor = () => {
     setDraft(title ?? '');
+
     setIsEditing(true);
   };
 
   const cancel = () => {
     setIsEditing(false);
+
     setDraft('');
   };
 
@@ -300,16 +315,21 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
 
     if (next === (title ?? null)) {
       cancel();
+
       return;
     }
 
     try {
       await update.mutateAsync({ title: next });
+
       setIsEditing(false);
+
       setDraft('');
+
       toast.success(t('toast.title-updated'));
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('toast.title-update-failed');
+
       toast.error(message);
     }
   };
@@ -317,12 +337,15 @@ function EditableTitle({ code, title, canEdit }: EditableTitleProps) {
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
+
       void save();
+
       return;
     }
 
     if (e.key === 'Escape') {
       e.preventDefault();
+
       cancel();
     }
   };

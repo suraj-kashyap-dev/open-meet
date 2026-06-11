@@ -38,7 +38,9 @@ describe('Messaging / persistent chat (e2e)', () => {
     });
 
     alice = { id: a.user!.id, cookie: a.cookie };
+
     bob = { id: b.user!.id, cookie: b.cookie };
+
     outsider = { id: c.user!.id, cookie: c.cookie };
   });
 
@@ -83,12 +85,17 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await openDirect(alice.cookie, bob.id);
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.meta.timestamp).toBeTruthy();
+
       expect(res.body.data.type).toBe('DIRECT');
 
       const memberIds = (res.body.data.members as { userId: string }[]).map((m) => m.userId);
+
       expect(memberIds).toContain(alice.id);
+
       expect(memberIds).toContain(bob.id);
     });
 
@@ -97,6 +104,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const second = await openDirect(alice.cookie, bob.id);
 
       expect(second.status).toBe(201);
+
       expect(second.body.data.id).toBe(first.body.data.id);
     });
 
@@ -111,7 +119,9 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await openDirect(alice.cookie, outsider.id);
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.type).toBe('DIRECT');
     });
 
@@ -119,7 +129,9 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await openDirect(alice.cookie, alice.id);
 
       expect(res.status).toBe(400);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('VALIDATION_FAILED');
     });
 
@@ -129,7 +141,9 @@ describe('Messaging / persistent chat (e2e)', () => {
         .send({ targetUserId: bob.id });
 
       expect(res.status).toBe(401);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });
@@ -139,19 +153,29 @@ describe('Messaging / persistent chat (e2e)', () => {
       const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
 
       const sent = await sendMessage(alice.cookie, conversationId, 'Hello Bob');
+
       expect(sent.status).toBe(201);
+
       expect(sent.body.success).toBe(true);
+
       expect(sent.body.data.content).toBe('Hello Bob');
+
       expect(sent.body.data.sender.id).toBe(alice.id);
 
       const aliceView = await history(alice.cookie, conversationId);
+
       expect(aliceView.status).toBe(200);
+
       expect(aliceView.body.data.items).toHaveLength(1);
+
       expect(aliceView.body.data.items[0].content).toBe('Hello Bob');
 
       const bobView = await history(bob.cookie, conversationId);
+
       expect(bobView.status).toBe(200);
+
       expect(bobView.body.data.items).toHaveLength(1);
+
       expect(bobView.body.data.items[0].id).toBe(sent.body.data.id);
     });
 
@@ -159,13 +183,16 @@ describe('Messaging / persistent chat (e2e)', () => {
       const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
 
       await sendMessage(alice.cookie, conversationId, 'Hi from Alice');
+
       await sendMessage(bob.cookie, conversationId, 'Hi from Bob');
 
       const items = (await history(alice.cookie, conversationId)).body.data.items as {
         content: string;
         sender: { id: string };
       }[];
+
       expect(items).toHaveLength(2);
+
       expect(items.map((m) => m.content)).toEqual(['Hi from Alice', 'Hi from Bob']);
     });
 
@@ -174,6 +201,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await sendMessage(alice.cookie, conversationId, '   ');
 
       expect(res.status).toBe(400);
+
       expect(res.body.error.code).toBe('VALIDATION_FAILED');
     });
 
@@ -182,6 +210,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await sendMessage(outsider.cookie, conversationId, 'sneaking in');
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('CONVERSATION_NOT_FOUND');
     });
 
@@ -192,6 +221,7 @@ describe('Messaging / persistent chat (e2e)', () => {
         .send({ content: 'no cookie' });
 
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });
@@ -202,6 +232,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await history(outsider.cookie, conversationId);
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('CONVERSATION_NOT_FOUND');
     });
   });
@@ -209,13 +240,16 @@ describe('Messaging / persistent chat (e2e)', () => {
   describe('GET /api/messaging/conversations', () => {
     it('should list the DM for a participant after it is opened', async () => {
       const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
+
       await sendMessage(alice.cookie, conversationId, 'first message');
 
       const res = await http(app).get('/api/messaging/conversations').set('Cookie', bob.cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
       const ids = (res.body.data.items as { id: string }[]).map((c) => c.id);
+
       expect(ids).toContain(conversationId);
     });
 
@@ -223,6 +257,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await http(app).get('/api/messaging/conversations');
 
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });
@@ -230,33 +265,46 @@ describe('Messaging / persistent chat (e2e)', () => {
   describe('POST /api/messaging/conversations/:id/clear', () => {
     it('should clear history only for the caller and only show later messages afterwards', async () => {
       const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
+
       await sendMessage(alice.cookie, conversationId, 'Before clear');
+
       await sendMessage(bob.cookie, conversationId, 'Still before clear');
 
       const cleared = await clearConversation(alice.cookie, conversationId);
+
       expect(cleared.status).toBe(201);
+
       expect(cleared.body.success).toBe(true);
+
       expect(cleared.body.data.ok).toBe(true);
 
       const aliceAfterClear = await history(alice.cookie, conversationId);
+
       expect(aliceAfterClear.status).toBe(200);
+
       expect(aliceAfterClear.body.data.items).toHaveLength(0);
 
       const bobAfterClear = await history(bob.cookie, conversationId);
+
       expect(bobAfterClear.status).toBe(200);
+
       expect(bobAfterClear.body.data.items).toHaveLength(2);
 
       const aliceList = await listConversations(alice.cookie);
       const aliceConversation = (
         aliceList.body.data.items as { id: string; lastMessage: unknown; unreadCount: number }[]
       ).find((conversation) => conversation.id === conversationId);
+
       expect(aliceConversation).toBeDefined();
+
       expect(aliceConversation!.lastMessage).toBeNull();
+
       expect(aliceConversation!.unreadCount).toBe(0);
 
       await sendMessage(bob.cookie, conversationId, 'After clear');
 
       const aliceAfterNewMessage = await history(alice.cookie, conversationId);
+
       expect(
         (aliceAfterNewMessage.body.data.items as { content: string }[]).map(
           (message) => message.content,
@@ -268,27 +316,35 @@ describe('Messaging / persistent chat (e2e)', () => {
   describe('POST /api/messaging/conversations/:id/delete', () => {
     it('should remove the chat only for the caller and revive it on later activity', async () => {
       const conversationId = (await openDirect(alice.cookie, bob.id)).body.data.id;
+
       await sendMessage(alice.cookie, conversationId, 'Before delete');
 
       const deleted = await deleteConversation(alice.cookie, conversationId);
+
       expect(deleted.status).toBe(201);
+
       expect(deleted.body.success).toBe(true);
+
       expect(deleted.body.data.ok).toBe(true);
 
       const aliceListAfterDelete = await listConversations(alice.cookie);
       const aliceIds = (aliceListAfterDelete.body.data.items as { id: string }[]).map(
         (conversation) => conversation.id,
       );
+
       expect(aliceIds).not.toContain(conversationId);
 
       const bobList = await listConversations(bob.cookie);
       const bobIds = (bobList.body.data.items as { id: string }[]).map(
         (conversation) => conversation.id,
       );
+
       expect(bobIds).toContain(conversationId);
 
       const aliceHistoryAfterDelete = await history(alice.cookie, conversationId);
+
       expect(aliceHistoryAfterDelete.status).toBe(200);
+
       expect(aliceHistoryAfterDelete.body.data.items).toHaveLength(0);
 
       await sendMessage(bob.cookie, conversationId, 'After delete');
@@ -300,10 +356,13 @@ describe('Messaging / persistent chat (e2e)', () => {
           lastMessage: { content: string } | null;
         }[]
       ).find((conversation) => conversation.id === conversationId);
+
       expect(revived).toBeDefined();
+
       expect(revived!.lastMessage?.content).toBe('After delete');
 
       const aliceHistoryAfterRevive = await history(alice.cookie, conversationId);
+
       expect(
         (aliceHistoryAfterRevive.body.data.items as { content: string }[]).map(
           (message) => message.content,
@@ -318,8 +377,11 @@ describe('Messaging / persistent chat (e2e)', () => {
 
       expect(res.status).toBe(200);
       const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
+
       expect(ids).toContain(bob.id);
+
       expect(ids).toContain(outsider.id);
+
       expect(ids).not.toContain(alice.id);
     });
 
@@ -330,7 +392,9 @@ describe('Messaging / persistent chat (e2e)', () => {
 
       expect(res.status).toBe(200);
       const ids = (res.body.data.items as { id: string }[]).map((t) => t.id);
+
       expect(ids).toContain(bob.id);
+
       expect(ids).not.toContain(outsider.id);
     });
 
@@ -338,6 +402,7 @@ describe('Messaging / persistent chat (e2e)', () => {
       const res = await http(app).get('/api/messaging/teammates');
 
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });
@@ -354,6 +419,7 @@ describe('Messaging / persistent chat (e2e)', () => {
         .send({ emoji: '👍' });
 
       expect(reacted.status).toBe(201);
+
       expect(reacted.body.success).toBe(true);
       const summary = (
         reacted.body.data.reactions as {
@@ -362,8 +428,11 @@ describe('Messaging / persistent chat (e2e)', () => {
           userIds: string[];
         }[]
       ).find((r) => r.emoji === '👍');
+
       expect(summary).toBeDefined();
+
       expect(summary!.count).toBe(1);
+
       expect(summary!.userIds).toContain(bob.id);
 
       const items = (await history(alice.cookie, conversationId)).body.data.items as {
@@ -371,6 +440,7 @@ describe('Messaging / persistent chat (e2e)', () => {
         reactions: { emoji: string; count: number }[];
       }[];
       const stored = items.find((m) => m.id === messageId);
+
       expect(stored!.reactions.find((r) => r.emoji === '👍')!.count).toBe(1);
     });
 
@@ -383,6 +453,7 @@ describe('Messaging / persistent chat (e2e)', () => {
         .send({ emoji: '👍' });
 
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });

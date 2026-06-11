@@ -123,11 +123,14 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
         emptyMessage={t('upcoming.empty')}
         renderCell={(column, row) => {
           const meeting = row as unknown as AdminUpcomingMeetingDto;
+
           switch (column.key) {
             case 'code':
               return <span className="font-mono text-xs">{meeting.code}</span>;
+
             case 'title': {
               const repeats = recurrenceKey(meeting.recurrence);
+
               return (
                 <div className="flex items-center gap-2">
                   <span className="truncate text-sm">
@@ -142,6 +145,7 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
                 </div>
               );
             }
+
             case 'host':
               return (
                 <div className="flex flex-col">
@@ -157,9 +161,11 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
                   {formatDuration(meeting.durationMin)}
                 </span>
               );
+
             case 'scheduledFor': {
               const startsIn = minutesUntil(meeting.scheduledFor);
               const isStartingSoon = startsIn >= 0 && startsIn <= 15;
+
               return (
                 <span
                   className={cn(
@@ -171,6 +177,7 @@ export function UpcomingMeetingsTable({ meetings }: { meetings: AdminUpcomingMee
                 </span>
               );
             }
+
             default:
               return undefined;
           }

@@ -153,6 +153,7 @@ export class MeetingsController {
   @ApiOperation({ summary: 'Download .ics calendar file for a scheduled meeting' })
   async ics(@Param('code') code: string, @Res() reply: FastifyReply): Promise<void> {
     const { filename, content } = await this.meetings.getIcs(code);
+
     void reply.header('Content-Disposition', `attachment; filename="${filename}"`).send(content);
   }
 }

@@ -23,15 +23,21 @@ export function Spotlight({ className }: SpotlightProps) {
 
   useEffect(() => {
     const el = ref.current;
+
     if (!el) {
       return;
     }
+
     const onMove = (e: MouseEvent) => {
       const rect = el.getBoundingClientRect();
+
       x.set(e.clientX - rect.left);
+
       y.set(e.clientY - rect.top);
     };
+
     el.addEventListener('mousemove', onMove);
+
     return () => {
       el.removeEventListener('mousemove', onMove);
     };

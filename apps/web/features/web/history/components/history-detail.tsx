@@ -462,6 +462,7 @@ export function HistoryDetail({ code }: { code: string }) {
 
     for (const m of messages) {
       senders.set(m.sender.id, m.sender);
+
       attachments += m.attachments?.length ?? 0;
     }
 
@@ -490,8 +491,11 @@ export function HistoryDetail({ code }: { code: string }) {
 
     try {
       await navigator.clipboard.writeText(meeting.code);
+
       setCopied(true);
+
       toast.success(t('toast.copied'));
+
       setTimeout(() => setCopied(false), 1500);
     } catch {
       toast.error(t('toast.copy-failed'));

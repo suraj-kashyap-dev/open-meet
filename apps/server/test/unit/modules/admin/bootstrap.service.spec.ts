@@ -23,18 +23,22 @@ describe('AdminBootstrapService', () => {
         })[k],
       get: () => 'test',
     } as unknown as ConfigService<ApiEnv, true>;
+
     service = new AdminBootstrapService({ admin } as unknown as PrismaService, config);
   });
 
   describe('onModuleInit()', () => {
     it('should do nothing when an admin already exists', async () => {
       admin.count.mockResolvedValueOnce(1);
+
       await service.onModuleInit();
+
       expect(admin.create).not.toHaveBeenCalled();
     });
 
     it('should create a lowercased admin linked to the Administrator role when none exist', async () => {
       await service.onModuleInit();
+
       expect(admin.create).toHaveBeenCalledWith({
         data: {
           email: 'root@x.com',

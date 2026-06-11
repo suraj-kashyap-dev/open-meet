@@ -17,12 +17,16 @@ describe('PushDispatchService.dispatchChatMessage', () => {
 
   beforeEach(() => {
     conversations = { membersWithMuteState: vi.fn() };
+
     settings = { disabledNotificationUserIds: vi.fn().mockResolvedValue(new Set()) };
+
     pushRepo = { userLanguages: vi.fn().mockResolvedValue(new Map()) };
+
     push = {
       isEnabled: vi.fn().mockReturnValue(true),
       sendToUser: vi.fn().mockResolvedValue(undefined),
     };
+
     bus = { roomHasSockets: vi.fn().mockResolvedValue(false) };
 
     service = new PushDispatchService(
@@ -47,11 +51,13 @@ describe('PushDispatchService.dispatchChatMessage', () => {
     await service.dispatchChatMessage(job);
 
     expect(push.sendToUser).toHaveBeenCalledTimes(1);
+
     expect(push.sendToUser).toHaveBeenCalledWith('bob', expect.objectContaining({ kind: 'chat' }));
   });
 
   it('does not push to an online recipient (has live socket)', async () => {
     conversations.membersWithMuteState.mockResolvedValue([{ userId: 'bob', muted: false }]);
+
     bus.roomHasSockets.mockResolvedValue(true);
 
     await service.dispatchChatMessage(job);
@@ -69,6 +75,7 @@ describe('PushDispatchService.dispatchChatMessage', () => {
 
   it('does not push to a recipient who disabled notifications', async () => {
     conversations.membersWithMuteState.mockResolvedValue([{ userId: 'bob', muted: false }]);
+
     settings.disabledNotificationUserIds.mockResolvedValue(new Set(['bob']));
 
     await service.dispatchChatMessage(job);
@@ -82,6 +89,7 @@ describe('PushDispatchService.dispatchChatMessage', () => {
     await service.dispatchChatMessage(job);
 
     expect(conversations.membersWithMuteState).not.toHaveBeenCalled();
+
     expect(push.sendToUser).not.toHaveBeenCalled();
   });
 });

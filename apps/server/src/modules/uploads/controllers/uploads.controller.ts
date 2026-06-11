@@ -69,12 +69,15 @@ function parseRange(
 
   if (!hasStart) {
     start = Math.max(0, totalSize - Number(rawEnd));
+
     end = totalSize - 1;
   } else if (!hasEnd) {
     start = Number(rawStart);
+
     end = totalSize - 1;
   } else {
     start = Number(rawStart);
+
     end = Number(rawEnd);
   }
 
@@ -173,10 +176,15 @@ export class UploadsController {
     const filename = key.split('/').pop() || 'file';
 
     res.header('Content-Type', mime);
+
     res.header('Accept-Ranges', 'bytes');
+
     res.header('Cache-Control', 'private, max-age=3600');
+
     res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+
     res.header('X-Content-Type-Options', 'nosniff');
+
     res.header(
       'Content-Disposition',
       `${inline ? 'inline' : 'attachment'}; filename="${filename}"`,
@@ -193,6 +201,7 @@ export class UploadsController {
       }
 
       res.header('Content-Length', String(full.size));
+
       return res.send(full.stream);
     }
 
@@ -201,13 +210,18 @@ export class UploadsController {
 
     if (!slice) {
       res.status(416);
+
       res.header('Content-Range', `bytes */${totalSize}`);
+
       return res.send('Requested range not satisfiable');
     }
 
     res.status(206);
+
     res.header('Content-Length', String(slice.size));
+
     res.header('Content-Range', `bytes ${slice.start}-${slice.end}/${slice.totalSize}`);
+
     return res.send(slice.stream);
   }
 }

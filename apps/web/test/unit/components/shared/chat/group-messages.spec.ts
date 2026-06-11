@@ -7,6 +7,7 @@ function msg(id: string, senderId: string | null, sentAt: string): GroupableMess
 }
 
 const BASE = '2026-05-27T10:00:00.000Z';
+
 function plusSeconds(seconds: number): string {
   return new Date(new Date(BASE).getTime() + seconds * 1000).toISOString();
 }
@@ -20,6 +21,7 @@ describe('buildMessageRows()', () => {
     const rows = buildMessageRows([msg('m1', 'u2', BASE)], 'u1');
 
     expect(rows).toHaveLength(1);
+
     expect(rows[0]).toMatchObject({ key: 'm1', isMe: false, isGroupHead: true, isGroupTail: true });
   });
 
@@ -39,6 +41,7 @@ describe('buildMessageRows()', () => {
     const rows = buildMessageRows([msg('m1', 'u2', BASE), msg('m2', 'u2', plusSeconds(30))], 'u1');
 
     expect(rows[0]).toMatchObject({ isGroupHead: true, isGroupTail: false });
+
     expect(rows[1]).toMatchObject({ isGroupHead: false, isGroupTail: true });
   });
 
@@ -46,6 +49,7 @@ describe('buildMessageRows()', () => {
     const rows = buildMessageRows([msg('m1', 'u2', BASE), msg('m2', 'u2', plusSeconds(180))], 'u1');
 
     expect(rows[0]).toMatchObject({ isGroupHead: true, isGroupTail: true });
+
     expect(rows[1]).toMatchObject({ isGroupHead: true, isGroupTail: true });
   });
 
@@ -53,6 +57,7 @@ describe('buildMessageRows()', () => {
     const rows = buildMessageRows([msg('m1', 'u2', BASE), msg('m2', 'u3', plusSeconds(10))], 'u1');
 
     expect(rows[0]).toMatchObject({ isGroupHead: true, isGroupTail: true });
+
     expect(rows[1]).toMatchObject({ isGroupHead: true, isGroupTail: true });
   });
 
@@ -60,6 +65,7 @@ describe('buildMessageRows()', () => {
     const rows = buildMessageRows([msg('m1', null, BASE), msg('m2', null, plusSeconds(10))], 'u1');
 
     expect(rows[0]).toMatchObject({ isMe: false, isGroupHead: true, isGroupTail: true });
+
     expect(rows[1]).toMatchObject({ isMe: false, isGroupHead: true, isGroupTail: true });
   });
 });

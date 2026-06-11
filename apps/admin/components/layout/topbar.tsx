@@ -36,6 +36,7 @@ function deriveCrumbs(pathname: string): Crumb[] {
   }
 
   const hub = matchSettingsHubRoute(pathname);
+
   if (hub) {
     const crumbs: Crumb[] = [
       { labelKey: 'topbar.root', href: '/' },
@@ -43,9 +44,11 @@ function deriveCrumbs(pathname: string): Crumb[] {
       { labelKey: hub.labelKey, href: hub.href },
     ];
     const tail = pathname.slice(hub.href.length).split('/').filter(Boolean);
+
     for (const segment of tail) {
       crumbs.push({ label: decodeURIComponent(segment) });
     }
+
     return crumbs;
   }
 
@@ -68,6 +71,7 @@ function deriveCrumbs(pathname: string): Crumb[] {
   }
 
   const segments = pathname.split('/').filter(Boolean);
+
   return segments.map((segment) => ({ label: segment }));
 }
 
@@ -140,6 +144,7 @@ export function Topbar({
             'truncate',
             isLast ? 'font-medium text-foreground' : 'text-muted-foreground',
           );
+
           return (
             <span
               key={`${crumb.labelKey ?? crumb.label}-${index}`}
@@ -199,6 +204,7 @@ export function Topbar({
               <DropdownMenuItem
                 onSelect={(e) => {
                   e.preventDefault();
+
                   logout.mutate();
                 }}
                 className="text-destructive focus:text-destructive"

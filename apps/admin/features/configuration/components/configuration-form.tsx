@@ -66,6 +66,7 @@ export function ConfigurationForm() {
         maxMeetingMinutes:
           values.maxMeetingMinutes === '' ? null : Number(values.maxMeetingMinutes),
       });
+
       toast.success(t('form.saved'));
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('form.error'));

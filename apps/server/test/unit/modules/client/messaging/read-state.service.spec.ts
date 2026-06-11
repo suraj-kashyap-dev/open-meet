@@ -23,6 +23,7 @@ describe('ReadStateService.summary', () => {
       membershipsForUser: vi.fn(),
       unreadCount: vi.fn(),
     };
+
     service = new ReadStateService(
       repo as unknown as ConversationsRepository,
       {} as unknown as MessagesRepository,
@@ -35,11 +36,13 @@ describe('ReadStateService.summary', () => {
     repo.membershipsForUser.mockResolvedValue([
       { conversationId: 'c1', lastReadAt: null, clearedAt: null, manualUnread: true },
     ]);
+
     repo.unreadCount.mockResolvedValue(0);
 
     const summary = await service.summary('u1');
 
     expect(summary.byConversation).toEqual({ c1: 1 });
+
     expect(summary.total).toBe(1);
   });
 
@@ -48,11 +51,13 @@ describe('ReadStateService.summary', () => {
       { conversationId: 'c1', lastReadAt: null, clearedAt: null, manualUnread: false },
       { conversationId: 'c2', lastReadAt: null, clearedAt: null, manualUnread: false },
     ]);
+
     repo.unreadCount.mockImplementation((id: string) => Promise.resolve(id === 'c1' ? 3 : 0));
 
     const summary = await service.summary('u1');
 
     expect(summary.byConversation).toEqual({ c1: 3 });
+
     expect(summary.total).toBe(3);
   });
 
@@ -60,6 +65,7 @@ describe('ReadStateService.summary', () => {
     repo.membershipsForUser.mockResolvedValue([
       { conversationId: 'c1', lastReadAt: null, clearedAt: null, manualUnread: true },
     ]);
+
     repo.unreadCount.mockResolvedValue(4);
 
     const summary = await service.summary('u1');
@@ -86,12 +92,17 @@ describe('ReadStateService.markDelivered', () => {
     await service.markDelivered('c1', 'u1');
 
     expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
     expect(conversations.markDelivered).toHaveBeenCalledWith('c1', 'u1', expect.any(Date));
 
     const [room, event, payload] = bus.emit.mock.calls[0];
+
     expect(room).toBe(conversationRoom('c1'));
+
     expect(event).toBe(ChatServerEvent.DELIVERY_RECEIPT);
+
     expect(payload).toMatchObject({ conversationId: 'c1', userId: 'u1' });
+
     expect(typeof payload.lastDeliveredAt).toBe('string');
   });
 });

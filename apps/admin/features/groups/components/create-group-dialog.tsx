@@ -33,6 +33,7 @@ export function CreateGroupDialog({
 
   const reset = () => {
     setTitle('');
+
     setMemberIds([]);
   };
 
@@ -43,8 +44,11 @@ export function CreateGroupDialog({
 
     try {
       await create.mutateAsync({ title: title.trim(), memberIds });
+
       toast.success(t('create.success'));
+
       reset();
+
       onOpenChange(false);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('create.error'));
@@ -55,7 +59,10 @@ export function CreateGroupDialog({
     <Dialog
       open={open}
       onOpenChange={(next) => {
-        if (!next) reset();
+        if (!next) {
+          reset();
+        }
+
         onOpenChange(next);
       }}
     >

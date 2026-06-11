@@ -32,14 +32,19 @@ export function NewChatDraft() {
       if (!recipient) {
         throw new Error('no-recipient');
       }
+
       const conversationId =
         recipient.conversationId ?? (await chatApi.openDirect(recipient.id)).id;
+
       await chatApi.send(conversationId, { content, clientNonce: crypto.randomUUID() });
+
       return conversationId;
     },
     onSuccess: (conversationId) => {
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+
       void qc.invalidateQueries({ queryKey: chatKeys.messages(conversationId) });
+
       router.replace(`/chat/${conversationId}`);
     },
     onError: (err) => {
@@ -49,9 +54,11 @@ export function NewChatDraft() {
 
   const submit = () => {
     const content = draft.trim();
+
     if (!recipient || content.length === 0 || startChat.isPending) {
       return;
     }
+
     startChat.mutate(content);
   };
 
@@ -110,6 +117,7 @@ export function NewChatDraft() {
                         disabled={teammate.chatDisabled || !teammate.allowDirectMessages}
                         onClick={() => {
                           setRecipient(teammate);
+
                           setSearch('');
                         }}
                         className="flex w-full items-center gap-3 rounded-md px-2 py-2 text-start transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
@@ -158,6 +166,7 @@ export function NewChatDraft() {
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
+
                 submit();
               }
             }}

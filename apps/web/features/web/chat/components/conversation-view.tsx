@@ -35,8 +35,11 @@ export function ConversationView({ conversationId }: { conversationId: string })
 
   useEffect(() => {
     setActive(conversationId);
+
     joinConversation(conversationId);
+
     setReplyingTo(null);
+
     return () => setActive(null);
   }, [conversationId, setActive, joinConversation]);
 

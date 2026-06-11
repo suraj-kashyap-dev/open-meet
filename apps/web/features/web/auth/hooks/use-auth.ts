@@ -27,9 +27,11 @@ function readCachedMe(): UserMeResponseDto | null {
     }
 
     const parsed = JSON.parse(raw) as UserMeResponseDto | UserDto;
+
     if ('user' in parsed && 'canCreateGroups' in parsed) {
       return parsed as UserMeResponseDto;
     }
+
     return { user: parsed as UserDto, canCreateGroups: false };
   } catch {
     return null;
@@ -56,6 +58,7 @@ function meFromUser(user: UserDto | null): UserMeResponseDto | null {
 
 export function useAuthBootstrap(): void {
   const qc = useQueryClient();
+
   useEffect(() => {
     const cached = readCachedMe();
 
@@ -98,6 +101,7 @@ export function useCurrentUserMe() {
 
 export function useCurrentUser() {
   const { data, ...rest } = useCurrentUserMe();
+
   return { ...rest, data: data?.user ?? null };
 }
 
@@ -123,9 +127,13 @@ export function useLogin(redirectTo: string = '/') {
     mutationFn: authApi.login,
     onSuccess: (data) => {
       const me = meFromUser(data.user);
+
       writeCachedMe(me);
+
       qc.setQueryData(ME_KEY, me);
+
       void qc.invalidateQueries({ queryKey: ME_KEY });
+
       router.replace(redirectTo);
     },
   });
@@ -150,9 +158,13 @@ export function useAcceptInvite(redirectTo: string = '/') {
     mutationFn: authApi.acceptInvite,
     onSuccess: (data) => {
       const me = meFromUser(data.user);
+
       writeCachedMe(me);
+
       qc.setQueryData(ME_KEY, me);
+
       void qc.invalidateQueries({ queryKey: ME_KEY });
+
       router.replace(redirectTo);
     },
   });
@@ -166,7 +178,9 @@ export function useUpdateProfile() {
     onSuccess: (user) => {
       qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
         const next = current ? { ...current, user } : meFromUser(user);
+
         writeCachedMe(next);
+
         return next;
       });
     },
@@ -181,7 +195,9 @@ export function useUploadAvatar() {
     onSuccess: (user) => {
       qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
         const next = current ? { ...current, user } : meFromUser(user);
+
         writeCachedMe(next);
+
         return next;
       });
     },
@@ -196,7 +212,9 @@ export function useDeleteAvatar() {
     onSuccess: (user) => {
       qc.setQueryData<UserMeResponseDto | null>(ME_KEY, (current) => {
         const next = current ? { ...current, user } : meFromUser(user);
+
         writeCachedMe(next);
+
         return next;
       });
     },
@@ -212,9 +230,13 @@ export function useChangePassword() {
     mutationFn: authApi.changePassword,
     onSuccess: () => {
       writeCachedMe(null);
+
       qc.setQueryData(ME_KEY, null);
+
       useChatStore.getState().reset();
+
       qc.clear();
+
       router.replace({ pathname: '/login', query: { password: 'changed' } });
     },
   });
@@ -229,9 +251,13 @@ export function useLogout() {
     mutationFn: authApi.logout,
     onSettled: () => {
       writeCachedMe(null);
+
       qc.setQueryData(ME_KEY, null);
+
       useChatStore.getState().reset();
+
       qc.clear();
+
       router.replace('/login');
     },
   });

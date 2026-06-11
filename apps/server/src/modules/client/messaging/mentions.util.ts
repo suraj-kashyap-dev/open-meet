@@ -14,8 +14,10 @@ export function parseMentions(content: string): ParsedMention[] {
 
   for (const match of content.matchAll(USER_MENTION)) {
     const userId = match[1];
+
     if (userId && !seen.has(userId)) {
       seen.add(userId);
+
       mentions.push({ kind: MentionKind.USER, userId });
     }
   }

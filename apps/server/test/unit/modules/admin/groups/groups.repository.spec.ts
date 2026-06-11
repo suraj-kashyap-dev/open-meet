@@ -32,10 +32,12 @@ describe('AdminGroupsRepository', () => {
       update: vi.fn().mockResolvedValue(sentinel),
       delete: vi.fn().mockResolvedValue(sentinel),
     };
+
     conversationMember = {
       createMany: vi.fn().mockResolvedValue({ count: 2 }),
       deleteMany: vi.fn().mockResolvedValue({ count: 1 }),
     };
+
     repo = new AdminGroupsRepository({
       conversation,
       conversationMember,
@@ -45,6 +47,7 @@ describe('AdminGroupsRepository', () => {
   describe('searchWhere() / listWith() / countWith()', () => {
     it('should scope to GROUP conversations and add a title filter when searching', () => {
       expect(repo.searchWhere()).toEqual({ type: ConversationType.GROUP });
+
       expect(repo.searchWhere('team')).toEqual({
         type: ConversationType.GROUP,
         title: { contains: 'team', mode: 'insensitive' },
@@ -53,7 +56,9 @@ describe('AdminGroupsRepository', () => {
 
     it('should pass the prebuilt where/orderBy through with the list include', async () => {
       const where = { type: ConversationType.GROUP };
+
       await repo.listWith({ skip: 0, take: 20, where, orderBy: { createdAt: 'desc' } });
+
       expect(conversation.findMany).toHaveBeenCalledWith({
         skip: 0,
         take: 20,
@@ -63,6 +68,7 @@ describe('AdminGroupsRepository', () => {
       });
 
       await repo.countWith(where);
+
       expect(conversation.count.mock.calls[0][0].where).toBe(where);
     });
   });
@@ -70,6 +76,7 @@ describe('AdminGroupsRepository', () => {
   describe('findDetail()', () => {
     it('should scope to a GROUP by id with the detail include', async () => {
       await repo.findDetail('g1');
+
       expect(conversation.findFirst).toHaveBeenCalledWith({
         where: { id: 'g1', type: ConversationType.GROUP },
         include: groupDetailInclude,
@@ -80,6 +87,7 @@ describe('AdminGroupsRepository', () => {
   describe('create()', () => {
     it('should create a GROUP with nested members and the detail include', async () => {
       await expect(repo.create('Team', 'admin1', ['u1', 'u2'])).resolves.toBe(sentinel);
+
       expect(conversation.create).toHaveBeenCalledWith({
         data: {
           type: ConversationType.GROUP,
@@ -93,6 +101,7 @@ describe('AdminGroupsRepository', () => {
 
     it('should create with no nested members when the list is empty', async () => {
       await repo.create('Empty', 'admin1', []);
+
       expect(conversation.create).toHaveBeenCalledWith({
         data: {
           type: ConversationType.GROUP,
@@ -108,6 +117,7 @@ describe('AdminGroupsRepository', () => {
   describe('update()', () => {
     it('should update the title and return the detail include', async () => {
       await repo.update('g1', 'Renamed');
+
       expect(conversation.update).toHaveBeenCalledWith({
         where: { id: 'g1' },
         data: { title: 'Renamed' },
@@ -119,6 +129,7 @@ describe('AdminGroupsRepository', () => {
   describe('addMembers()', () => {
     it('should createMany members skipping duplicates', async () => {
       await repo.addMembers('g1', ['u1', 'u2']);
+
       expect(conversationMember.createMany).toHaveBeenCalledWith({
         data: [
           { conversationId: 'g1', userId: 'u1' },
@@ -132,6 +143,7 @@ describe('AdminGroupsRepository', () => {
   describe('removeMember()', () => {
     it('should deleteMany the membership by conversation and user', async () => {
       await repo.removeMember('g1', 'u1');
+
       expect(conversationMember.deleteMany).toHaveBeenCalledWith({
         where: { conversationId: 'g1', userId: 'u1' },
       });
@@ -141,6 +153,7 @@ describe('AdminGroupsRepository', () => {
   describe('delete()', () => {
     it('should delete the conversation by id', async () => {
       await repo.delete('g1');
+
       expect(conversation.delete).toHaveBeenCalledWith({ where: { id: 'g1' } });
     });
   });

@@ -48,6 +48,7 @@ export function PinnedMessagesBar({
 
   const cycle = () => {
     onOpenMessage(active.id);
+
     if (multiple) {
       setActiveIndex((clampedIndex + 1) % items.length);
     }

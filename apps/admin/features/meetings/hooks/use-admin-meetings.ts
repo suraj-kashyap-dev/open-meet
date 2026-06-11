@@ -18,12 +18,15 @@ export function useAdminMeetingDetail(id: string | null) {
 
 function invalidateAll(qc: ReturnType<typeof useQueryClient>) {
   void qc.invalidateQueries({ queryKey: [KEY] });
+
   void qc.invalidateQueries({ queryKey: [DETAIL_KEY] });
+
   void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'meetings'] });
 }
 
 export function useForceEndMeeting() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminMeetingsApi.forceEnd(id),
     onSuccess: () => invalidateAll(qc),
@@ -32,6 +35,7 @@ export function useForceEndMeeting() {
 
 export function useBulkEndActiveMeetings() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: () => adminMeetingsApi.bulkEndActive(),
     onSuccess: () => invalidateAll(qc),
@@ -40,6 +44,7 @@ export function useBulkEndActiveMeetings() {
 
 export function useDeleteAdminMeeting() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminMeetingsApi.remove(id),
     onSuccess: () => invalidateAll(qc),
@@ -48,6 +53,7 @@ export function useDeleteAdminMeeting() {
 
 export function useKickParticipant() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: { meetingId: string; userId: string }) =>
       adminMeetingsApi.kick(input.meetingId, input.userId),

@@ -65,6 +65,7 @@ export function Dashboard() {
 
     try {
       const meeting = await createMeeting.mutateAsync({});
+
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       setIntent(null);
@@ -82,10 +83,12 @@ export function Dashboard() {
 
     if (!trimmed) {
       toast.error(t('toast.enter-code'));
+
       return;
     }
 
     setIntent('join');
+
     nav.push(`/${trimmed}/lobby`);
   };
 
@@ -720,11 +723,14 @@ function RowCopyButton({ code }: { code: string }) {
 
   const onCopy = async (e: React.MouseEvent) => {
     e.preventDefault();
+
     e.stopPropagation();
 
     try {
       await navigator.clipboard.writeText(`${window.location.origin}/${code}`);
+
       setCopied(true);
+
       toast.success(t('recent.copy-link'));
 
       window.setTimeout(() => {
@@ -759,6 +765,7 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
   const onCopyCode = async () => {
     try {
       await navigator.clipboard.writeText(item.code);
+
       toast.success(t('recent.code-copied'));
     } catch {
       toast.error(t('recent.code-copy-error'));
@@ -768,6 +775,7 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
   const onCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(buildUrl());
+
       toast.success(t('recent.copy-link'));
     } catch {
       toast.error(t('recent.copy-link-error'));
@@ -781,6 +789,7 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
         await navigator.share({ title: item.title ?? t('recent.share-fallback-title'), text, url });
+
         return;
       } catch (err) {
         if ((err as DOMException)?.name === 'AbortError') {
@@ -791,6 +800,7 @@ function RowMoreMenu({ item }: { item: MeetingHistoryItemDto }) {
 
     try {
       await navigator.clipboard.writeText(`${text}: ${url}`);
+
       toast.success(t('recent.invite-copied'));
     } catch {
       toast.error(t('recent.share-error'));

@@ -47,6 +47,7 @@ export function GifPicker({ onPick }: { onPick: (url: string) => void }) {
                 type="button"
                 onClick={() => {
                   onPick(g.url);
+
                   setOpen(false);
                 }}
                 className="overflow-hidden rounded"

@@ -242,7 +242,9 @@ export function useMarkRead(conversationId: string) {
     mutationFn: (messageId?: string) => chatApi.markRead(conversationId, messageId),
     onSuccess: () => {
       clearUnread(conversationId);
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+
       void qc.invalidateQueries({ queryKey: ['chat', 'unread'] });
     },
   });
@@ -272,6 +274,7 @@ export function useTogglePin(conversationId: string) {
       qc.setQueryData<MessagesData>(chatKeys.messages(conversationId), (data) =>
         patchMessage(data, messageId, { pinned: !pinned }),
       );
+
       void qc.invalidateQueries({ queryKey: chatKeys.pins(conversationId) });
     },
   });
@@ -293,6 +296,7 @@ export function useToggleSave(conversationId: string) {
       qc.setQueryData<MessagesData>(chatKeys.messages(conversationId), (data) =>
         patchMessage(data, messageId, { saved: !saved }),
       );
+
       void qc.invalidateQueries({ queryKey: chatKeys.saved() });
     },
   });
@@ -313,6 +317,7 @@ export function useForwardMessage() {
       qc.setQueryData<MessagesData>(chatKeys.messages(message.conversationId), (data) =>
         upsertMessage(data, message),
       );
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
   });
@@ -348,7 +353,10 @@ export function useConversationState() {
     }) => chatApi.setState(conversationId, state),
     onSuccess: (_res, { conversationId, state }) => {
       qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) => {
-        if (!list) return list;
+        if (!list) {
+          return list;
+        }
+
         const items = list.items.map((c) =>
           c.id === conversationId
             ? {
@@ -359,9 +367,12 @@ export function useConversationState() {
               }
             : c,
         );
+
         return { items };
       });
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+
       if (state.manualUnread !== undefined) {
         void qc.invalidateQueries({ queryKey: ['chat', 'unread'] });
       }
@@ -377,8 +388,11 @@ export function useClearConversation() {
     mutationFn: (conversationId: string) => chatApi.clearConversation(conversationId),
     onSuccess: (_res, conversationId) => {
       qc.setQueryData<MessagesData>(chatKeys.messages(conversationId), emptyMessagesData);
+
       clearUnread(conversationId);
+
       void qc.invalidateQueries({ queryKey: chatKeys.messages(conversationId) });
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
   });
@@ -392,12 +406,15 @@ export function useDeleteConversation() {
     mutationFn: (conversationId: string) => chatApi.deleteConversation(conversationId),
     onSuccess: (_res, conversationId) => {
       clearUnread(conversationId);
+
       qc.removeQueries({ queryKey: chatKeys.messages(conversationId) });
+
       qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
         list
           ? { items: list.items.filter((conversation) => conversation.id !== conversationId) }
           : list,
       );
+
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },
   });
@@ -432,6 +449,7 @@ export function usePresenceMe() {
 
 export function useCreateGroup() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (body: { title: string; description?: string | null; memberIds: string[] }) =>
       chatApi.createGroup(body),
@@ -443,6 +461,7 @@ export function useCreateGroup() {
 
 export function useUpdateGroup(conversationId: string) {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (body: { title?: string; description?: string | null }) =>
       chatApi.updateGroup(conversationId, body),
@@ -454,6 +473,7 @@ export function useUpdateGroup(conversationId: string) {
 
 export function useAddGroupMembers(conversationId: string) {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (userIds: string[]) => chatApi.addGroupMembers(conversationId, userIds),
     onSuccess: () => {
@@ -464,6 +484,7 @@ export function useAddGroupMembers(conversationId: string) {
 
 export function useRemoveGroupMember(conversationId: string) {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (userId: string) => chatApi.removeGroupMember(conversationId, userId),
     onSuccess: () => {
@@ -474,6 +495,7 @@ export function useRemoveGroupMember(conversationId: string) {
 
 export function useSetGroupMemberRole(conversationId: string) {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: ({ userId, role }: { userId: string; role: 'ADMIN' | 'MEMBER' }) =>
       chatApi.setGroupMemberRole(conversationId, userId, role),
@@ -485,6 +507,7 @@ export function useSetGroupMemberRole(conversationId: string) {
 
 export function useDeleteGroup() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (conversationId: string) => chatApi.deleteGroup(conversationId),
     onSuccess: () => {

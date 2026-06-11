@@ -21,6 +21,7 @@ export class ZodValidationPipe<TSchema extends ZodSchema> implements PipeTransfo
           })),
         });
       }
+
       throw err;
     }
   }

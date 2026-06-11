@@ -20,7 +20,9 @@ function uploadAvatar(id: string, file: File): Promise<AdminUserDto> {
     form.append('file', file, file.name);
 
     const xhr = new XMLHttpRequest();
+
     xhr.open('POST', url);
+
     xhr.withCredentials = true;
 
     xhr.onload = () => {
@@ -30,6 +32,7 @@ function uploadAvatar(id: string, file: File): Promise<AdminUserDto> {
         reject(
           new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
         );
+
         return;
       }
 
@@ -39,6 +42,7 @@ function uploadAvatar(id: string, file: File): Promise<AdminUserDto> {
         body = JSON.parse(xhr.responseText);
       } catch {
         reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
+
         return;
       }
 
@@ -50,6 +54,7 @@ function uploadAvatar(id: string, file: File): Promise<AdminUserDto> {
 
       if (!envelope.success || !envelope.data) {
         const err = envelope.error;
+
         reject(
           new ApiClientError(
             err?.code ?? 'UPLOAD_FAILED',
@@ -57,6 +62,7 @@ function uploadAvatar(id: string, file: File): Promise<AdminUserDto> {
             err?.message ?? 'Upload failed',
           ),
         );
+
         return;
       }
 
@@ -83,6 +89,7 @@ function toQueryString(params: Record<string, string | number | undefined>): str
   }
 
   const str = search.toString();
+
   return str ? `?${str}` : '';
 }
 

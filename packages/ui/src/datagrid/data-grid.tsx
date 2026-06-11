@@ -81,6 +81,7 @@ export function DataGridView({
           actions={bulkActions}
           onAction={(key) => {
             onBulkAction?.(key, [...selection.selected]);
+
             selection.clear();
           }}
         />

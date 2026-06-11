@@ -40,6 +40,7 @@ export function MeetingTopBar({ code, canEdit }: Props) {
 
   const openRename = () => {
     setDraft(title ?? '');
+
     setRenameOpen(true);
   };
 
@@ -49,15 +50,19 @@ export function MeetingTopBar({ code, canEdit }: Props) {
 
     if (next === (title ?? null)) {
       setRenameOpen(false);
+
       return;
     }
 
     try {
       await updateMeeting.mutateAsync({ title: next });
+
       setRenameOpen(false);
+
       toast.success(t('toast.title-updated'));
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('toast.update-title-error');
+
       toast.error(message);
     }
   };
@@ -138,6 +143,7 @@ export function MeetingTopBar({ code, canEdit }: Props) {
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
+
                   void submit();
                 }
               }}

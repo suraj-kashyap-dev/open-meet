@@ -69,6 +69,7 @@ export class AuthService {
 
   async lookupUserInvite(token: string): Promise<UserInviteLookupDto> {
     const invite = await this.requireValidUserInvite(token);
+
     return {
       email: invite.email,
       name: invite.name,
@@ -82,6 +83,7 @@ export class AuthService {
     const invite = await this.requireValidUserInvite(dto.token);
 
     const existing = await this.users.findByEmail(invite.email);
+
     if (existing) {
       await this.userInvites.delete(invite.id);
       throw new ConflictException({
@@ -99,10 +101,12 @@ export class AuthService {
       language: dto.language?.trim() || undefined,
       bio: dto.bio?.trim() || null,
     });
+
     await this.userInvites.delete(invite.id);
 
     await this.presence.resetStatus(user.id);
     const tokens = await this.issueTokens(user.id, user.email, user.name);
+
     return { user: this.avatars.toUserDto(user), tokens };
   }
 
@@ -128,15 +132,24 @@ export class AuthService {
 
   async login(dto: LoginDto): Promise<{ user: UserDto; tokens: IssuedTokens }> {
     const user = await this.users.findByEmail(dto.email);
-    if (!user) throw this.invalidCredentials();
 
-    if (!user.passwordHash) throw this.invalidCredentials();
+    if (!user) {
+      throw this.invalidCredentials();
+    }
+
+    if (!user.passwordHash) {
+      throw this.invalidCredentials();
+    }
 
     const valid = await argon2.verify(user.passwordHash, dto.password);
-    if (!valid) throw this.invalidCredentials();
+
+    if (!valid) {
+      throw this.invalidCredentials();
+    }
 
     await this.presence.resetStatus(user.id);
     const tokens = await this.issueTokens(user.id, user.email, user.name);
+
     return { user: this.avatars.toUserDto(user), tokens };
   }
 
@@ -168,11 +181,13 @@ export class AuthService {
 
     await this.presence.resetStatus(user.id);
     const tokens = await this.issueTokens(user.id, user.email, user.name);
+
     return { user: this.avatars.toUserDto(user), tokens };
   }
 
   async refresh(refreshToken: string): Promise<IssuedTokens> {
     let payload: RefreshTokenPayload;
+
     try {
       payload = await this.jwt.verifyAsync<RefreshTokenPayload>(refreshToken, {
         secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
@@ -186,6 +201,7 @@ export class AuthService {
 
     const key = this.refreshKey(payload.sub, payload.jti);
     const stored = await this.redis.client.get(key);
+
     if (!stored) {
       throw new UnauthorizedException({
         code: ApiErrorCode.TOKEN_INVALID,
@@ -204,6 +220,7 @@ export class AuthService {
     await this.redis.client.del(key);
 
     const user = await this.users.findById(payload.sub);
+
     if (!user) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
@@ -216,18 +233,23 @@ export class AuthService {
 
   async logout(refreshToken: string | undefined, userId?: string): Promise<void> {
     let presenceTarget: string | undefined = userId;
+
     if (refreshToken) {
       try {
         const payload = await this.jwt.verifyAsync<RefreshTokenPayload>(refreshToken, {
           secret: this.config.getOrThrow<string>('JWT_REFRESH_SECRET'),
         });
+
         await this.redis.client.del(this.refreshKey(payload.sub, payload.jti));
+
         presenceTarget = presenceTarget ?? payload.sub;
       } catch {}
     }
+
     if (presenceTarget) {
       try {
         const disconnectedSockets = await this.presence.disconnectSockets(presenceTarget);
+
         if (disconnectedSockets === 0) {
           await this.presence.forceOffline(presenceTarget);
         }
@@ -241,23 +263,27 @@ export class AuthService {
 
   async getUserDtoById(id: string): Promise<UserDto> {
     const user = await this.users.findById(id);
+
     if (!user) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
       });
     }
+
     return this.avatars.toUserDto(user);
   }
 
   async getMe(id: string): Promise<UserMeResponseDto> {
     const user = await this.users.findById(id);
+
     if (!user) {
       throw new UnauthorizedException({
         code: ApiErrorCode.UNAUTHORIZED,
         message: 'User not found',
       });
     }
+
     return {
       user: this.avatars.toUserDto(user),
       canCreateGroups: user.canCreateGroups,
@@ -296,6 +322,7 @@ export class AuthService {
     haveSharedSurface: () => Promise<boolean>,
   ): Promise<import('@open-meet/types').PublicUserDto> {
     const row = await this.users.findByIdWithSettings(targetId);
+
     if (!row) {
       throw new NotFoundException({
         code: ApiErrorCode.NOT_FOUND,
@@ -368,6 +395,7 @@ export class AuthService {
 
     if (input.bio !== undefined) {
       const trimmed = input.bio?.trim();
+
       data.bio = trimmed && trimmed.length > 0 ? trimmed : null;
     }
 
@@ -462,8 +490,11 @@ export class AuthService {
 
   private async revokeAllForUser(userId: string): Promise<void> {
     const stream = this.redis.client.scanStream({ match: `auth:refresh:${userId}:*` });
+
     for await (const keys of stream) {
-      if (keys.length) await this.redis.client.del(keys);
+      if (keys.length) {
+        await this.redis.client.del(keys);
+      }
     }
   }
 
@@ -476,10 +507,15 @@ export class AuthService {
 
   private parseTtlMs(ttl: string): number {
     const match = /^(\d+)([smhd])$/.exec(ttl);
-    if (!match || !match[1] || !match[2]) return 0;
+
+    if (!match || !match[1] || !match[2]) {
+      return 0;
+    }
+
     const n = parseInt(match[1], 10);
     const unit = match[2];
     const mult: Record<string, number> = { s: 1000, m: 60_000, h: 3_600_000, d: 86_400_000 };
+
     return n * (mult[unit] ?? 0);
   }
 }

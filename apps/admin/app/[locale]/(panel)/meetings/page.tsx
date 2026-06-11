@@ -37,6 +37,7 @@ export default function AdminMeetingsPage() {
             if (column.key !== 'status') {
               return undefined;
             }
+
             const status = String(row.status ?? '').toLowerCase();
             const tone =
               status === 'active'
@@ -44,6 +45,7 @@ export default function AdminMeetingsPage() {
                 : status === 'waiting'
                   ? 'bg-amber-500/10 text-amber-500'
                   : 'bg-muted text-muted-foreground';
+
             return (
               <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${tone}`}>
                 {t(`status.${status}`)}

@@ -39,6 +39,7 @@ export class AdminUserInviteService {
 
   async list(): Promise<UserInviteListResponseDto> {
     const rows = await this.invites.listPending();
+
     return { items: rows.map((i) => this.toDto(i)) };
   }
 
@@ -68,6 +69,7 @@ export class AdminUserInviteService {
     });
 
     await this.sendInviteEmail({ email, name, token, expiresAt });
+
     return this.toDto(invite);
   }
 
@@ -86,6 +88,7 @@ export class AdminUserInviteService {
     const updated = await this.invites.refreshToken(id, tokenHash, expiresAt);
 
     await this.sendInviteEmail({ email: updated.email, name: updated.name, token, expiresAt });
+
     return this.toDto(updated);
   }
 
@@ -100,11 +103,13 @@ export class AdminUserInviteService {
     }
 
     await this.invites.delete(id);
+
     return { deleted: true };
   }
 
   private generateToken(): { token: string; tokenHash: string } {
     const token = randomBytes(32).toString('base64url');
+
     return { token, tokenHash: createHash('sha256').update(token).digest('hex') };
   }
 

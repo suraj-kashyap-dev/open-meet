@@ -31,13 +31,16 @@ describe('Admin users (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
   describe('GET /api/admin/users', () => {
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/users');
+
       expect(res.status).toBe(401);
     });
 
@@ -47,16 +50,22 @@ describe('Admin users (e2e)', () => {
         password: 'alice-pass-1',
         name: 'Alice',
       });
+
       await registerUser(app, { email: 'bob@example.com', password: 'bob-pass-1', name: 'Bob' });
 
       const { cookie } = await loginAdmin(app, SUPER);
       const res = await http(app).get('/api/admin/users').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.total).toBe(2);
+
       expect(res.body.data.items).toHaveLength(2);
+
       expect(res.body.data.page).toBe(1);
+
       expect(
         res.body.data.items.some((u: { email: string }) => u.email === 'alice@example.com'),
       ).toBe(true);
@@ -67,6 +76,7 @@ describe('Admin users (e2e)', () => {
       const res = await http(app).get('/api/admin/users').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.items).toEqual([]);
     });
   });
@@ -76,6 +86,7 @@ describe('Admin users (e2e)', () => {
       const res = await http(app)
         .post('/api/admin/users')
         .send({ name: 'New', email: 'new@example.com', password: 'newpass-12' });
+
       expect(res.status).toBe(401);
     });
 
@@ -87,6 +98,7 @@ describe('Admin users (e2e)', () => {
         .send({ name: 'New', email: 'new@example.com', password: 'newpass-12' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
@@ -99,13 +111,18 @@ describe('Admin users (e2e)', () => {
       });
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.email).toBe('created@example.com');
+
       expect(res.body.data.name).toBe('Created User');
+
       expect(res.body.data.id).toBeTruthy();
 
       const prisma = app.get(PrismaService);
       const persisted = await prisma.user.findUnique({ where: { email: 'created@example.com' } });
+
       expect(persisted).not.toBeNull();
     });
 
@@ -120,6 +137,7 @@ describe('Admin users (e2e)', () => {
       });
 
       expect(res.status).toBe(409);
+
       expect(res.body.error.code).toBe('EMAIL_TAKEN');
     });
 
@@ -130,6 +148,7 @@ describe('Admin users (e2e)', () => {
         email: 'short@example.com',
         password: 'short',
       });
+
       expect(res.status).toBe(400);
     });
   });
@@ -146,7 +165,9 @@ describe('Admin users (e2e)', () => {
       const res = await http(app).get(`/api/admin/users/${user!.id}`).set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.id).toBe(user!.id);
+
       expect(res.body.data.email).toBe('single@example.com');
     });
 
@@ -155,6 +176,7 @@ describe('Admin users (e2e)', () => {
       const res = await http(app).get('/api/admin/users/does-not-exist').set('Cookie', cookie);
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('NOT_FOUND');
     });
   });
@@ -174,6 +196,7 @@ describe('Admin users (e2e)', () => {
         .send({ name: 'After' });
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.name).toBe('After');
     });
 
@@ -200,16 +223,19 @@ describe('Admin users (e2e)', () => {
       const res = await http(app).delete(`/api/admin/users/${user!.id}`).set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.deleted).toBe(true);
 
       const prisma = app.get(PrismaService);
       const persisted = await prisma.user.findUnique({ where: { id: user!.id } });
+
       expect(persisted).toBeNull();
     });
 
     it('should 404 when deleting an unknown user', async () => {
       const { cookie } = await loginAdmin(app, SUPER);
       const res = await http(app).delete('/api/admin/users/does-not-exist').set('Cookie', cookie);
+
       expect(res.status).toBe(404);
     });
   });
@@ -224,10 +250,13 @@ describe('Admin users (e2e)', () => {
         .send({ email: 'invitee@example.com', name: 'Invitee' });
 
       expect(create.status).toBe(201);
+
       expect(create.body.data.email).toBe('invitee@example.com');
 
       const list = await http(app).get('/api/admin/users/invites').set('Cookie', cookie);
+
       expect(list.status).toBe(200);
+
       expect(
         list.body.data.items.some((i: { email: string }) => i.email === 'invitee@example.com'),
       ).toBe(true);
@@ -241,6 +270,7 @@ describe('Admin users (e2e)', () => {
         .send({ email: 'invitee@example.com', name: 'Invitee' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
   });

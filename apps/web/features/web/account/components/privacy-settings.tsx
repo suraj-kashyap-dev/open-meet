@@ -76,6 +76,7 @@ export function PrivacySettings({ settings }: { settings: UserSettingsDto | unde
   const onSubmit = handleSubmit(async (v) => {
     try {
       await updateSettings.mutateAsync({ privacySettings: v });
+
       toast.success(t('toast.privacy-updated'));
     } catch (err) {
       toast.error(messageFromError(err, t('toast.privacy-update-failed')));

@@ -40,6 +40,7 @@ function writeAll(next: Record<string, GuestMeetingSession>): void {
   try {
     if (Object.keys(next).length === 0) {
       window.localStorage.removeItem(STORAGE_KEY);
+
       return;
     }
 
@@ -49,6 +50,7 @@ function writeAll(next: Record<string, GuestMeetingSession>): void {
 
 function isExpired(expiresAt: string): boolean {
   const time = Date.parse(expiresAt);
+
   return Number.isNaN(time) || time <= Date.now();
 }
 
@@ -62,7 +64,9 @@ export function getGuestSession(code: string): GuestMeetingSession | null {
 
   if (isExpired(session.expiresAt)) {
     delete all[code];
+
     writeAll(all);
+
     return null;
   }
 
@@ -75,14 +79,19 @@ export function saveGuestSession(
 ): GuestMeetingSession {
   const next: GuestMeetingSession = { ...session, meetingCode: code };
   const all = readAll();
+
   all[code] = next;
+
   writeAll(all);
+
   return next;
 }
 
 export function clearGuestSession(code: string): void {
   const all = readAll();
+
   delete all[code];
+
   writeAll(all);
 }
 

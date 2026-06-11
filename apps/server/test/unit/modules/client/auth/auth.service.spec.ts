@@ -58,27 +58,32 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     redisStore = new Map();
+
     repo = {
       findByEmail: vi.fn(),
       findById: vi.fn(),
       create: vi.fn(),
       createInvited: vi.fn(),
     };
+
     userInvites = {
       findByTokenHash: vi.fn(),
       delete: vi.fn(),
     };
+
     jwt = {
       signAsync: vi
         .fn()
         .mockImplementation(async (payload: object) => `signed.${JSON.stringify(payload)}`),
       verifyAsync: vi.fn(),
     };
+
     redis = {
       client: {
         get: async (k) => redisStore.get(k) ?? null,
         set: async (k, v) => {
           redisStore.set(k, v);
+
           return 'OK';
         },
         del: async (k) => (redisStore.delete(k) ? 1 : 0),
@@ -97,10 +102,15 @@ describe('AuthService', () => {
           JWT_REFRESH_EXPIRY: '7d',
         };
         const val = env[key];
-        if (val === undefined) throw new Error(`Missing ${key}`);
+
+        if (val === undefined) {
+          throw new Error(`Missing ${key}`);
+        }
+
         return val;
       },
     };
+
     presence = {
       forceOffline: vi.fn(),
       resetStatus: vi.fn(),
@@ -162,7 +172,9 @@ describe('AuthService', () => {
 
     it('should create a verified account, consume the invite, and issue tokens', async () => {
       userInvites.findByTokenHash.mockResolvedValue(pendingInvite());
+
       repo.findByEmail.mockResolvedValue(null);
+
       repo.createInvited.mockImplementation(
         async (data: { passwordHash: string; email: string; name: string }) =>
           makeUser({ email: data.email, name: data.name }),
@@ -171,10 +183,14 @@ describe('AuthService', () => {
       const result = await service.acceptUserInvite({ token: 'raw', password: 'secretpass1' });
 
       expect(result.user.email).toBe('ada@example.com');
+
       expect(result.tokens.accessToken).toContain('signed.');
+
       expect(userInvites.delete).toHaveBeenCalledWith('inv1');
+
       expect(presence.resetStatus).toHaveBeenCalledWith('u1');
       const created = repo.createInvited.mock.calls[0]?.[0] as { passwordHash: string };
+
       expect(await argon2.verify(created.passwordHash, 'secretpass1')).toBe(true);
     });
 
@@ -190,6 +206,7 @@ describe('AuthService', () => {
 
     it('should reject when an account with the email already exists', async () => {
       userInvites.findByTokenHash.mockResolvedValue(pendingInvite());
+
       repo.findByEmail.mockResolvedValue(makeUser());
 
       await expect(
@@ -201,20 +218,26 @@ describe('AuthService', () => {
   describe('login()', () => {
     it('should return tokens on valid credentials', async () => {
       const hash = await argon2.hash('secretpass1', { type: argon2.argon2id });
+
       repo.findByEmail.mockResolvedValue(makeUser({ id: 'u1' }));
+
       (repo.findByEmail as ReturnType<typeof vi.fn>).mockResolvedValue({
         ...makeUser(),
         passwordHash: hash,
       });
 
       const result = await service.login({ email: 'ada@example.com', password: 'secretpass1' });
+
       expect(result.user.id).toBe('u1');
+
       expect(presence.resetStatus).toHaveBeenCalledWith('u1');
     });
 
     it('should reject a wrong password', async () => {
       const hash = await argon2.hash('other', { type: argon2.argon2id });
+
       repo.findByEmail.mockResolvedValue({ ...makeUser(), passwordHash: hash });
+
       await expect(
         service.login({ email: 'ada@example.com', password: 'wrong' }),
       ).rejects.toBeInstanceOf(UnauthorizedException);
@@ -222,6 +245,7 @@ describe('AuthService', () => {
 
     it('should reject an unknown email', async () => {
       repo.findByEmail.mockResolvedValue(null);
+
       await expect(
         service.login({ email: 'ghost@example.com', password: 'x' }),
       ).rejects.toBeInstanceOf(UnauthorizedException);
@@ -231,6 +255,7 @@ describe('AuthService', () => {
   describe('refresh()', () => {
     it('should reject an unknown or revoked refresh token', async () => {
       jwt.verifyAsync.mockResolvedValue({ sub: 'u1', jti: 'jti1' });
+
       await expect(service.refresh('rt')).rejects.toBeInstanceOf(UnauthorizedException);
     });
   });
@@ -238,12 +263,15 @@ describe('AuthService', () => {
   describe('logout()', () => {
     it('should disconnect chat sockets, mark the user offline, and reset status', async () => {
       jwt.verifyAsync.mockResolvedValue({ sub: 'u1', jti: 'jti1' });
+
       redisStore.set('refresh:u1:jti1', 'hashed');
 
       await service.logout('refresh-token', 'u1');
 
       expect(presence.disconnectSockets).toHaveBeenCalledWith('u1');
+
       expect(presence.forceOffline).toHaveBeenCalledWith('u1');
+
       expect(presence.resetStatus).toHaveBeenCalledWith('u1');
     });
 
@@ -253,7 +281,9 @@ describe('AuthService', () => {
       await service.logout(undefined, 'u1');
 
       expect(presence.disconnectSockets).toHaveBeenCalledWith('u1');
+
       expect(presence.forceOffline).not.toHaveBeenCalled();
+
       expect(presence.resetStatus).toHaveBeenCalledWith('u1');
     });
   });

@@ -99,6 +99,7 @@ export class MeetingsService {
         .filter((part) => part.length > 0)
         .map((part) => {
           const [key, value = ''] = part.split('=');
+
           return [key.toUpperCase(), value.toUpperCase()];
         }),
     );
@@ -189,6 +190,7 @@ export class MeetingsService {
       }
 
       dates.push(occurrence);
+
       emitted += 1;
     }
 
@@ -208,6 +210,7 @@ export class MeetingsService {
     }
 
     const candidate = value as Record<string, unknown>;
+
     return typeof candidate.recurrenceSeriesId === 'string';
   }
 
@@ -260,6 +263,7 @@ export class MeetingsService {
     }
 
     const workspace = await this.workspaceConfig.getConfig();
+
     return workspace.defaultMeetingTitle.trim() || 'Untitled meeting';
   }
 
@@ -271,6 +275,7 @@ export class MeetingsService {
     }
 
     clearTimeout(timer);
+
     this.maxDurationTimers.delete(code);
   }
 
@@ -287,11 +292,13 @@ export class MeetingsService {
 
     if (remainingMs <= 0) {
       void this.end(input.code, { id: input.hostId });
+
       return;
     }
 
     const timer = setTimeout(() => {
       this.maxDurationTimers.delete(input.code);
+
       void this.end(input.code, { id: input.hostId });
     }, remainingMs);
 
@@ -310,6 +317,7 @@ export class MeetingsService {
   }): Promise<void> {
     if (meeting.status === MeetingStatus.ENDED) {
       this.clearMaxDurationTimer(meeting.code);
+
       return;
     }
 
@@ -322,6 +330,7 @@ export class MeetingsService {
 
     if (maxMeetingMinutes == null) {
       this.clearMaxDurationTimer(meeting.code);
+
       return;
     }
 
@@ -356,6 +365,7 @@ export class MeetingsService {
   async create(hostId: string, title: string | undefined): Promise<MeetingDto> {
     const resolvedTitle = await this.resolveMeetingTitle(title);
     let attempt = 0;
+
     while (attempt < 5) {
       const code = generateMeetingCode((n) => new Uint8Array(randomBytes(n)));
 
@@ -365,12 +375,14 @@ export class MeetingsService {
           hostId,
           title: resolvedTitle,
         });
+
         return this.toDto(meeting);
       } catch (err) {
         if (this.isUniqueViolation(err)) {
           attempt += 1;
           continue;
         }
+
         throw err;
       }
     }
@@ -383,12 +395,14 @@ export class MeetingsService {
 
   async getByCode(code: string): Promise<MeetingDto> {
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
       });
     }
+
     return this.toDto(meeting);
   }
 
@@ -462,6 +476,7 @@ export class MeetingsService {
     this.assertMeetingScope(code, user);
 
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
@@ -480,6 +495,7 @@ export class MeetingsService {
 
     const participant = await this.meetings.upsertParticipant(meeting.id, user.id);
     let resolved = meeting;
+
     if (meeting.status === MeetingStatus.WAITING) {
       resolved = await this.meetings.markStarted(meeting.id);
     }
@@ -496,9 +512,11 @@ export class MeetingsService {
     this.assertMeetingScope(code, user);
 
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       return;
     }
+
     await this.meetings.markParticipantLeft(meeting.id, user.id);
   }
 
@@ -510,18 +528,21 @@ export class MeetingsService {
     this.assertMeetingScope(code, requester);
 
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
       });
     }
+
     if (meeting.hostId !== requester.id) {
       throw new ForbiddenException({
         code: ApiErrorCode.MEETING_FORBIDDEN,
         message: 'Only the host can rename this meeting',
       });
     }
+
     if (meeting.status === MeetingStatus.ENDED) {
       throw new ForbiddenException({
         code: ApiErrorCode.MEETING_ENDED,
@@ -537,6 +558,7 @@ export class MeetingsService {
     }
 
     const updated = await this.meetings.updateTitle(meeting.id, nextTitle);
+
     return this.toDto(updated);
   }
 
@@ -544,26 +566,33 @@ export class MeetingsService {
     this.assertMeetingScope(code, requester);
 
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
       });
     }
+
     if (meeting.hostId !== requester.id) {
       throw new ForbiddenException({
         code: ApiErrorCode.MEETING_FORBIDDEN,
         message: 'Only the host can end this meeting',
       });
     }
+
     this.clearMaxDurationTimer(code);
+
     if (meeting.status === MeetingStatus.ENDED) {
       return this.toDto(meeting);
     }
+
     const ended = await this.meetings.markEnded(meeting.id);
+
     this.bus.emit(ended.code, ServerEvent.MEETING_ENDED, {
       endedAt: ended.endedAt?.toISOString() ?? new Date().toISOString(),
     });
+
     return this.toDto(ended);
   }
 
@@ -571,21 +600,26 @@ export class MeetingsService {
     this.assertMeetingScope(code, user);
 
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
         message: `Meeting "${code}" does not exist`,
       });
     }
+
     const participants = await this.meetings.listActiveParticipants(meeting.id);
+
     return participants.map((p) => this.toParticipantDto(p));
   }
 
   async isHost(code: string, userId: string): Promise<boolean> {
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       return false;
     }
+
     return meeting.hostId === userId;
   }
 
@@ -722,9 +756,11 @@ export class MeetingsService {
     code: string,
   ): Promise<{ id: string; hostId: string; status: MeetingStatus } | null> {
     const meeting = await this.meetings.findByCode(code);
+
     if (!meeting) {
       return null;
     }
+
     return {
       id: meeting.id,
       hostId: meeting.hostId,
@@ -736,9 +772,11 @@ export class MeetingsService {
     meetingId: string,
   ): Promise<{ id: string; code: string; hostId: string; status: MeetingStatus } | null> {
     const meeting = await this.meetings.findById(meetingId);
+
     if (!meeting) {
       return null;
     }
+
     return {
       id: meeting.id,
       code: meeting.code,
@@ -932,6 +970,7 @@ export class MeetingsService {
 
   private joinUrl(code: string): string {
     const base = this.config.getOrThrow<string>('FRONTEND_URL').replace(/\/$/, '');
+
     return `${base}/${code}/lobby`;
   }
 
@@ -975,6 +1014,7 @@ export class MeetingsService {
           html: this.inviteHtml({ ctx, when, joinUrl }),
           ics: { filename: `${ctx.code}.ics`, content: ics },
         });
+
         await this.meetings.markInviteSent(invite.id);
       } catch (err) {
         this.logger.warn(
@@ -1044,7 +1084,9 @@ export class MeetingsService {
     if (typeof err !== 'object' || err === null) {
       return false;
     }
+
     const e = err as { code?: string };
+
     return e.code === 'P2002';
   }
 }
@@ -1065,6 +1107,7 @@ function uniqueEmails(input: string[]): string[] {
     }
 
     seen.add(normalized);
+
     out.push(normalized);
   }
 
@@ -1076,6 +1119,7 @@ function parseUntilDate(value: string): Date | null {
 
   if (compact) {
     const [, year, month, day, hours = '0', minutes = '0', seconds = '0'] = compact;
+
     return new Date(
       Date.UTC(
         Number(year),
@@ -1089,11 +1133,13 @@ function parseUntilDate(value: string): Date | null {
   }
 
   const parsed = new Date(value);
+
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
 function extractEmail(value: string): string {
   const match = value.match(/<([^>]+)>/);
+
   return match ? match[1]! : value;
 }
 

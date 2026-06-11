@@ -47,6 +47,7 @@ async function serverRequest<TData>(
   });
 
   const contentType = res.headers.get('content-type') ?? '';
+
   if (!contentType.includes('application/json')) {
     throw new ApiClientError('INVALID_RESPONSE', res.status, `Unexpected response: ${res.status}`);
   }
@@ -55,6 +56,7 @@ async function serverRequest<TData>(
 
   if (!res.ok || !json.success) {
     const errBody = (json as ApiError).error;
+
     throw new ApiClientError(
       errBody?.code ?? 'UNKNOWN',
       errBody?.statusCode ?? res.status,

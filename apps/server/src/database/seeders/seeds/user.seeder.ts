@@ -18,15 +18,19 @@ export const userSeeder: Seeder = {
         where: { email: data.email },
         select: { id: true },
       });
+
       if (existing) {
         skipped += 1;
         continue;
       }
+
       await prisma.user.create({ data });
+
       created += 1;
     }
 
     const note = created > 0 ? ` Login with any seeded email + password "${SEED_PASSWORD}".` : '';
+
     return `${created} created, ${skipped} skipped (already existed).${note}`;
   },
 };

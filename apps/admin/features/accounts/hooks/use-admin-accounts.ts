@@ -15,11 +15,14 @@ const INVITES_KEY = 'admin-invites' as const;
 
 export function useCreateAdminAccount() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (dto: AdminCreateAccountDto) => adminAccountsApi.create(dto),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'accounts'] });
+
       void qc.invalidateQueries({ queryKey: [INVITES_KEY] });
     },
   });
@@ -27,11 +30,13 @@ export function useCreateAdminAccount() {
 
 export function useUpdateAdminAccount() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: ({ id, dto }: { id: string; dto: AdminUpdateAccountDto }) =>
       adminAccountsApi.update(id, dto),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'accounts'] });
     },
   });
@@ -39,10 +44,12 @@ export function useUpdateAdminAccount() {
 
 export function useDeleteAdminAccount() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminAccountsApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'accounts'] });
     },
   });
@@ -58,6 +65,7 @@ export function useAdminInvites() {
 
 export function useCreateAdminInvite() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (dto: AdminCreateInviteDto) => adminAccountsApi.createInvite(dto),
     onSuccess: () => {
@@ -68,6 +76,7 @@ export function useCreateAdminInvite() {
 
 export function useResendAdminInvite() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminAccountsApi.resendInvite(id),
     onSuccess: () => {
@@ -78,6 +87,7 @@ export function useResendAdminInvite() {
 
 export function useRevokeAdminInvite() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminAccountsApi.revokeInvite(id),
     onSuccess: () => {

@@ -19,8 +19,11 @@ describe('TeammatesService', () => {
       search: vi.fn(),
       directConversationIds: vi.fn().mockResolvedValue(new Map()),
     };
+
     presence = { snapshot: vi.fn().mockResolvedValue(new Map()) };
+
     storage = { publicUrl: vi.fn((key: string) => `https://cdn/${key}`) };
+
     service = new TeammatesService(
       repo as unknown as TeammatesRepository,
       presence as unknown as PresenceService,
@@ -48,15 +51,19 @@ describe('TeammatesService', () => {
           allowDirectMessages: true,
         },
       ]);
+
       presence.snapshot.mockResolvedValue(
         new Map([['u2', { online: true, status: 'busy', lastSeen: null }]]),
       );
+
       repo.directConversationIds.mockResolvedValue(new Map([['u2', 'c9']]));
 
       const result = await service.search('u1');
 
       expect(presence.snapshot).toHaveBeenCalledWith(['u2']);
+
       expect(repo.directConversationIds).toHaveBeenCalledWith('u1', ['u2']);
+
       expect(result.items).toEqual([
         {
           id: 'u2',
@@ -88,6 +95,7 @@ describe('TeammatesService', () => {
       const result = await service.search('u1');
 
       expect(storage.publicUrl).not.toHaveBeenCalled();
+
       expect(result.items[0]).toMatchObject({
         avatar: null,
         online: false,

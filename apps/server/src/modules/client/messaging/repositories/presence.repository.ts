@@ -23,6 +23,7 @@ export class PresenceRepository {
     if (userIds.length === 0) {
       return Promise.resolve([]);
     }
+
     return this.prisma.userPresence.findMany({ where: { userId: { in: userIds } } });
   }
 }

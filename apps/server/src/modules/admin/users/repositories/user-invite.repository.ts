@@ -11,6 +11,7 @@ export class AdminUserInviteRepository {
 
   async userExistsByEmail(email: string): Promise<boolean> {
     const count = await this.prisma.user.count({ where: { email: email.toLowerCase() } });
+
     return count > 0;
   }
 

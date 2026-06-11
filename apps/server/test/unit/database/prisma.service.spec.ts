@@ -7,13 +7,16 @@ describe('PrismaService', () => {
 
   beforeEach(() => {
     service = new PrismaService();
+
     service.$connect = vi.fn().mockResolvedValue(undefined);
+
     service.$disconnect = vi.fn().mockResolvedValue(undefined);
   });
 
   describe('onModuleInit()', () => {
     it('should connect on init', async () => {
       await service.onModuleInit();
+
       expect(service.$connect).toHaveBeenCalledTimes(1);
     });
   });
@@ -21,6 +24,7 @@ describe('PrismaService', () => {
   describe('onModuleDestroy()', () => {
     it('should disconnect on destroy', async () => {
       await service.onModuleDestroy();
+
       expect(service.$disconnect).toHaveBeenCalledTimes(1);
     });
   });

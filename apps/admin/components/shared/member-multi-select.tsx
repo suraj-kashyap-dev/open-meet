@@ -78,6 +78,7 @@ export function MemberMultiSelect({
           existing.avatar !== user.avatar
         ) {
           next[user.id] = user;
+
           changed = true;
         }
       }
@@ -98,6 +99,7 @@ export function MemberMultiSelect({
     };
 
     document.addEventListener('mousedown', onPointerDown);
+
     return () => document.removeEventListener('mousedown', onPointerDown);
   }, [open]);
 
@@ -125,6 +127,7 @@ export function MemberMultiSelect({
           value={search}
           onChange={(event) => {
             setSearch(event.target.value);
+
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}

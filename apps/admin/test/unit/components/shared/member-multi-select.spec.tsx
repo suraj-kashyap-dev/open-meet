@@ -34,6 +34,7 @@ function renderSelect(props?: Partial<Parameters<typeof MemberMultiSelect>[0]>) 
 describe('<MemberMultiSelect />', () => {
   beforeEach(() => {
     useAdminUsers.mockReset();
+
     useAdminUsers.mockReturnValue({
       data: { items: USERS, total: USERS.length },
       isFetching: false,
@@ -45,7 +46,9 @@ describe('<MemberMultiSelect />', () => {
       renderSelect();
 
       expect(screen.getByPlaceholderText('Search people')).toBeInTheDocument();
+
       expect(screen.queryByText('Ada Lovelace')).not.toBeInTheDocument();
+
       expect(screen.queryByText('Alan Turing')).not.toBeInTheDocument();
     });
   });
@@ -57,6 +60,7 @@ describe('<MemberMultiSelect />', () => {
       fireEvent.focus(screen.getByPlaceholderText('Search people'));
 
       expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
+
       expect(screen.getByText('Alan Turing')).toBeInTheDocument();
     });
 
@@ -64,6 +68,7 @@ describe('<MemberMultiSelect />', () => {
       const { onSelectedIdsChange } = renderSelect();
 
       fireEvent.focus(screen.getByPlaceholderText('Search people'));
+
       fireEvent.click(await screen.findByText('Ada Lovelace'));
 
       expect(onSelectedIdsChange).toHaveBeenCalledWith(['u-1']);
@@ -78,6 +83,7 @@ describe('<MemberMultiSelect />', () => {
       });
 
       expect(screen.getByText('Ada Lovelace')).toBeInTheDocument();
+
       expect(screen.getByText('ada@example.com')).toBeInTheDocument();
     });
 

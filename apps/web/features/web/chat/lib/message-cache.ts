@@ -37,6 +37,7 @@ export function upsertMessage(
 
       if (sameNonce || m.id === message.id) {
         replaced = true;
+
         return message;
       }
 

@@ -44,6 +44,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
         message: 'Invalid token payload',
       });
     }
+
     return {
       id: payload.sub,
       email: payload.email,

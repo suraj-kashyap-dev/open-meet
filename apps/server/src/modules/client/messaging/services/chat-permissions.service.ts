@@ -68,19 +68,23 @@ export class ChatPermissionsService {
 
   async assertGroupAdmin(conversationId: string, userId: string): Promise<ConversationMember> {
     const meta = await this.repo.getConversationMeta(conversationId);
+
     if (!meta || meta.type !== 'GROUP') {
       throw new NotFoundException({
         code: ApiErrorCode.CONVERSATION_NOT_FOUND,
         message: 'Group not found.',
       });
     }
+
     const membership = await this.assertConversationMember(conversationId, userId);
+
     if (membership.role !== 'ADMIN') {
       throw new ForbiddenException({
         code: ApiErrorCode.NOT_GROUP_ADMIN,
         message: 'Only a group admin can perform this action.',
       });
     }
+
     return membership;
   }
 
@@ -91,14 +95,18 @@ export class ChatPermissionsService {
   ): Promise<{ membership: ConversationMember; isAdmin: boolean }> {
     if (actorId === targetId) {
       const membership = await this.assertConversationMember(conversationId, actorId);
+
       return { membership, isAdmin: membership.role === 'ADMIN' };
     }
+
     const membership = await this.assertGroupAdmin(conversationId, actorId);
+
     return { membership, isAdmin: true };
   }
 
   async groupAdminCount(conversationId: string): Promise<number> {
     const meta = await this.repo.getConversationMeta(conversationId);
+
     return meta?.adminCount ?? 0;
   }
 }

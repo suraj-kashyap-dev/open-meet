@@ -41,7 +41,9 @@ describe('MessagingSerializer', () => {
 
   beforeEach(() => {
     storage = { publicUrl: vi.fn((key: string) => `https://cdn/${key}`) };
+
     uploads = { toDto: vi.fn((a: { id: string }) => ({ id: a.id, url: `url/${a.id}` })) };
+
     serializer = new MessagingSerializer(
       storage as unknown as StorageService,
       uploads as unknown as UploadsService,
@@ -51,6 +53,7 @@ describe('MessagingSerializer', () => {
   describe('avatar()', () => {
     it('should return null for a null key', () => {
       expect(serializer.avatar(null)).toBeNull();
+
       expect(storage.publicUrl).not.toHaveBeenCalled();
     });
 
@@ -100,6 +103,7 @@ describe('MessagingSerializer', () => {
 
     it('should mark reactedByMe when the viewer is among the reactors', () => {
       const result = serializer.reactions([{ emoji: '👍', userId: 'viewer' }], 'viewer');
+
       expect(result[0]?.reactedByMe).toBe(true);
     });
 
@@ -129,6 +133,7 @@ describe('MessagingSerializer', () => {
       const dto = serializer.poll(poll, 'viewer');
 
       expect(dto.totalVotes).toBe(3);
+
       expect(dto.options[0]).toEqual({
         id: 'o1',
         text: 'Pizza',
@@ -136,6 +141,7 @@ describe('MessagingSerializer', () => {
         voteCount: 2,
         votedByMe: true,
       });
+
       expect(dto.options[1]?.votedByMe).toBe(false);
     });
 
@@ -190,8 +196,11 @@ describe('MessagingSerializer', () => {
       );
 
       expect(dto.content).toBe('');
+
       expect(dto.attachments).toEqual([]);
+
       expect(dto.deletedAt).toBe('2026-01-02T00:00:00.000Z');
+
       expect(uploads.toDto).not.toHaveBeenCalled();
     });
 
@@ -202,6 +211,7 @@ describe('MessagingSerializer', () => {
       );
 
       expect(uploads.toDto).toHaveBeenCalledTimes(2);
+
       expect(dto.attachments).toEqual([
         { id: 'a1', url: 'url/a1' },
         { id: 'a2', url: 'url/a2' },
@@ -221,6 +231,7 @@ describe('MessagingSerializer', () => {
       );
 
       expect(dto.mentionedUserIds).toEqual(['u1']);
+
       expect(dto.mentionsEveryone).toBe(true);
     });
 
@@ -261,7 +272,9 @@ describe('MessagingSerializer', () => {
       );
 
       expect(dto.parent?.content).toBe('');
+
       expect(dto.parent?.deletedAt).toBe('2026-01-03T00:00:00.000Z');
+
       expect(dto.parent?.sender).toBeNull();
     });
 
@@ -272,6 +285,7 @@ describe('MessagingSerializer', () => {
       });
 
       expect(dto.pinned).toBe(true);
+
       expect(dto.saved).toBe(true);
     });
 
@@ -280,6 +294,7 @@ describe('MessagingSerializer', () => {
         baseMessage({ editedAt: new Date('2026-01-04T00:00:00.000Z') }),
         'viewer',
       );
+
       expect(dto.editedAt).toBe('2026-01-04T00:00:00.000Z');
     });
 
@@ -298,6 +313,7 @@ describe('MessagingSerializer', () => {
       );
 
       expect(dto.poll?.id).toBe('p1');
+
       expect(dto.poll?.options[0]?.votedByMe).toBe(true);
     });
   });
@@ -397,6 +413,7 @@ describe('MessagingSerializer', () => {
       });
 
       const bob = dto.members.find((m) => m.userId === 'u2');
+
       expect(bob).toMatchObject({
         online: false,
         status: null,
@@ -417,6 +434,7 @@ describe('MessagingSerializer', () => {
       });
 
       expect(dto.lastMessage?.id).toBe('m1');
+
       expect(dto.lastMessageAt).toBe('2026-01-07T00:00:00.000Z');
     });
 
@@ -430,8 +448,11 @@ describe('MessagingSerializer', () => {
       });
 
       expect(dto.youAreAdmin).toBe(false);
+
       expect(dto.muted).toBe(false);
+
       expect(dto.pinned).toBe(false);
+
       expect(dto.hidden).toBe(false);
     });
   });

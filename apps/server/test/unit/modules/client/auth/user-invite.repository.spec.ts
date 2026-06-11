@@ -14,12 +14,14 @@ describe('UserInviteRepository (client auth)', () => {
       findUnique: vi.fn().mockResolvedValue(sentinel),
       delete: vi.fn().mockResolvedValue(sentinel),
     };
+
     repo = new UserInviteRepository({ userInvite } as unknown as PrismaService);
   });
 
   describe('findByTokenHash()', () => {
     it('should query by token hash', async () => {
       await expect(repo.findByTokenHash('hash')).resolves.toBe(sentinel);
+
       expect(userInvite.findUnique).toHaveBeenCalledWith({ where: { tokenHash: 'hash' } });
     });
   });
@@ -27,6 +29,7 @@ describe('UserInviteRepository (client auth)', () => {
   describe('delete()', () => {
     it('should delete by id and resolve void', async () => {
       await expect(repo.delete('inv1')).resolves.toBeUndefined();
+
       expect(userInvite.delete).toHaveBeenCalledWith({ where: { id: 'inv1' } });
     });
   });

@@ -107,8 +107,11 @@ function renderPanel() {
 describe('<PeerProfilePanel />', () => {
   beforeEach(() => {
     writeText.mockReset().mockResolvedValue(undefined);
+
     toastError.mockReset();
+
     setInfoOpen.mockReset();
+
     usePublicUserMock.mockReset().mockReturnValue({
       data: publicUser,
       isLoading: false,
@@ -130,6 +133,7 @@ describe('<PeerProfilePanel />', () => {
     await waitFor(() => {
       expect(writeText).toHaveBeenCalledWith('ada@example.com');
     });
+
     expect(toastError).not.toHaveBeenCalled();
   });
 });

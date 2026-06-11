@@ -15,8 +15,14 @@ const TITLE_MAX = 80;
 const DESCRIPTION_MAX = 280;
 
 function laterDate(left: Date | null, right: Date | null): Date | null {
-  if (!left) return right;
-  if (!right) return left;
+  if (!left) {
+    return right;
+  }
+
+  if (!right) {
+    return left;
+  }
+
   return left > right ? left : right;
 }
 
@@ -53,8 +59,10 @@ export class GroupsService {
     });
 
     const dto = await this.toDto(conversation.id, creatorId);
+
     for (const m of conversation.members) {
       const perViewer = m.userId === creatorId ? dto : await this.toDto(conversation.id, m.userId);
+
       this.bus.emit(userRoom(m.userId), ChatServerEvent.CONVERSATION_NEW, perViewer);
     }
 
@@ -69,9 +77,14 @@ export class GroupsService {
     await this.permissions.assertGroupAdmin(conversationId, actorId);
 
     const data: { title?: string; description?: string | null } = {};
-    if (body.title !== undefined) data.title = this.requireTitle(body.title);
-    if (body.description !== undefined)
+
+    if (body.title !== undefined) {
+      data.title = this.requireTitle(body.title);
+    }
+
+    if (body.description !== undefined) {
       data.description = this.normalizeDescription(body.description);
+    }
 
     if (Object.keys(data).length > 0) {
       await this.repo.update(conversationId, data);
@@ -99,10 +112,13 @@ export class GroupsService {
     await this.repo.addMembers(conversationId, invitable);
 
     const updatedDto = await this.broadcastUpdate(conversationId, actorId);
+
     for (const userId of invitable) {
       const perViewer = await this.toDto(conversationId, userId);
+
       this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_NEW, perViewer);
     }
+
     return updatedDto;
   }
 
@@ -115,8 +131,10 @@ export class GroupsService {
 
     if (membership.role === ConversationMemberRole.ADMIN && actorId === targetUserId) {
       const admins = await this.permissions.groupAdminCount(conversationId);
+
       if (admins <= 1) {
         const members = await this.repo.memberUserIds(conversationId);
+
         if (members.length > 1) {
           throw new BadRequestException({
             code: ApiErrorCode.LAST_ADMIN,
@@ -146,6 +164,7 @@ export class GroupsService {
     if (role === ConversationMemberRole.MEMBER) {
       const admins = await this.permissions.groupAdminCount(conversationId);
       const target = await this.permissions.assertConversationMember(conversationId, targetUserId);
+
       if (target.role === ConversationMemberRole.ADMIN && admins <= 1) {
         throw new BadRequestException({
           code: ApiErrorCode.LAST_ADMIN,
@@ -155,13 +174,16 @@ export class GroupsService {
     }
 
     await this.repo.setMemberRole(conversationId, targetUserId, role);
+
     return this.broadcastUpdate(conversationId, actorId);
   }
 
   async delete(conversationId: string, actorId: string): Promise<void> {
     await this.permissions.assertGroupAdmin(conversationId, actorId);
     const members = await this.repo.memberUserIds(conversationId);
+
     await this.repo.delete(conversationId);
+
     for (const userId of members) {
       this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_REMOVED, {
         conversationId,
@@ -171,30 +193,41 @@ export class GroupsService {
 
   private requireTitle(raw: string): string {
     const title = raw.trim();
+
     if (title.length < TITLE_MIN || title.length > TITLE_MAX) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: `Group name must be ${TITLE_MIN}–${TITLE_MAX} characters.`,
       });
     }
+
     return title;
   }
 
   private normalizeDescription(raw: string | null | undefined): string | null {
-    if (raw === null || raw === undefined) return null;
+    if (raw === null || raw === undefined) {
+      return null;
+    }
+
     const trimmed = raw.trim();
-    if (trimmed.length === 0) return null;
+
+    if (trimmed.length === 0) {
+      return null;
+    }
+
     if (trimmed.length > DESCRIPTION_MAX) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: `Description must be ${DESCRIPTION_MAX} characters or fewer.`,
       });
     }
+
     return trimmed;
   }
 
   private async toDto(conversationId: string, viewerId: string): Promise<ConversationDto> {
     const conv = await this.repo.findWithMembers(conversationId);
+
     if (!conv) {
       throw new NotFoundException({
         code: ApiErrorCode.CONVERSATION_NOT_FOUND,
@@ -235,8 +268,10 @@ export class GroupsService {
     for (const userId of members) {
       const perViewer =
         userId === actorViewerId ? actorDto : await this.toDto(conversationId, userId);
+
       this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_UPDATE, perViewer);
     }
+
     this.bus.emit(conversationRoom(conversationId), ChatServerEvent.CONVERSATION_UPDATE, actorDto);
 
     return actorDto;

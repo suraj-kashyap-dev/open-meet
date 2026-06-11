@@ -61,6 +61,7 @@ export const RichInput = forwardRef<
 >(({ placeholder, getMentionItems, onChange, onSubmit }, ref) => {
   const t = useTranslations('chat');
   const submitRef = useRef(onSubmit);
+
   submitRef.current = onSubmit;
 
   const editor = useEditor({
@@ -83,9 +84,12 @@ export const RichInput = forwardRef<
       handleKeyDown: (_view, event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
           event.preventDefault();
+
           submitRef.current();
+
           return true;
         }
+
         return false;
       },
     },
@@ -161,6 +165,7 @@ export const RichInput = forwardRef<
           label={t('composer.md-link')}
           onClick={() => {
             const href = window.prompt(t('composer.md-link')) ?? '';
+
             if (href) {
               run((c) => c.toggleLink({ href }));
             }

@@ -24,8 +24,14 @@ function isUniqueViolation(err: unknown): boolean {
 }
 
 function laterDate(left: Date | null, right: Date | null): Date | null {
-  if (!left) return right;
-  if (!right) return left;
+  if (!left) {
+    return right;
+  }
+
+  if (!right) {
+    return left;
+  }
+
   return left > right ? left : right;
 }
 
@@ -73,6 +79,7 @@ export class ConversationsService {
 
   async getById(conversationId: string, userId: string): Promise<ConversationDto> {
     await this.permissions.assertConversationMember(conversationId, userId);
+
     await this.permissions.assertDirectConversationAllowed(conversationId, userId);
     const conversation = await this.repo.findById(conversationId);
 
@@ -102,6 +109,7 @@ export class ConversationsService {
           hidden: false,
           removedAt: null,
         });
+
         existing = (await this.repo.findDirectByKey(key)) ?? existing;
       }
 
@@ -133,6 +141,7 @@ export class ConversationsService {
     }
 
     const targetDto = await this.toDto(conversation, targetId);
+
     this.bus.emit(userRoom(targetId), ChatServerEvent.CONVERSATION_NEW, targetDto);
 
     return this.toDto(conversation, actorId);
@@ -142,9 +151,11 @@ export class ConversationsService {
     await this.permissions.assertConversationMember(conversationId, userId);
 
     const at = new Date();
+
     await this.repo.clearForViewer(conversationId, userId, at);
 
     const conversation = await this.repo.findById(conversationId);
+
     if (!conversation) {
       throw new NotFoundException({
         code: ApiErrorCode.CONVERSATION_NOT_FOUND,
@@ -153,6 +164,7 @@ export class ConversationsService {
     }
 
     const dto = await this.toDto(conversation, userId);
+
     this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_UPDATE, dto);
 
     return { ok: true };
@@ -162,6 +174,7 @@ export class ConversationsService {
     await this.permissions.assertConversationMember(conversationId, userId);
 
     await this.repo.removeForViewer(conversationId, userId, new Date());
+
     this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_REMOVED, { conversationId });
 
     return { ok: true };
@@ -178,6 +191,7 @@ export class ConversationsService {
     }
 
     const conversation = await this.repo.findById(conversationId);
+
     if (!conversation) {
       return;
     }
@@ -187,11 +201,13 @@ export class ConversationsService {
 
     for (const userId of revivedUserIds) {
       const dto = await this.toDtoWithPresence(conversation, userId, presence);
+
       this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_NEW, dto);
     }
 
     if (senderNeedsUpdate) {
       const dto = await this.toDtoWithPresence(conversation, senderId, presence);
+
       this.bus.emit(userRoom(senderId), ChatServerEvent.CONVERSATION_UPDATE, dto);
     }
   }
@@ -202,6 +218,7 @@ export class ConversationsService {
   ): Promise<ConversationDto> {
     const memberIds = conversation.members.map((m) => m.userId);
     const presence = await this.presence.snapshot(memberIds);
+
     return this.toDtoWithPresence(conversation, viewerId, presence);
   }
 

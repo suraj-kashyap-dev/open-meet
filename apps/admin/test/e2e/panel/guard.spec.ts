@@ -15,6 +15,7 @@ test.describe('Admin auth guard', () => {
   for (const route of PANEL_ROUTES) {
     test(`should redirect an unauthenticated visitor from ${route} to login`, async ({ page }) => {
       await mockAdminApi(page, { me: null });
+
       await page.goto(route);
 
       await expect(page).toHaveURL(/\/en\/login$/);
@@ -23,6 +24,7 @@ test.describe('Admin auth guard', () => {
 
   test('should redirect an authenticated admin away from the login page', async ({ page }) => {
     await mockAdminApi(page);
+
     await page.goto('/en/login');
 
     await expect(page).toHaveURL(/\/en$/);
@@ -30,9 +32,11 @@ test.describe('Admin auth guard', () => {
 
   test('should keep an unauthenticated visitor on the login page', async ({ page }) => {
     await mockAdminApi(page, { me: null });
+
     await page.goto('/en/login');
 
     await expect(page).toHaveURL(/\/en\/login$/);
+
     await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
   });
 });

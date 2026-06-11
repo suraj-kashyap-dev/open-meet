@@ -20,7 +20,9 @@ describe('ShellSidebarProvider', () => {
 
   beforeEach(() => {
     container = document.createElement('div');
+
     document.body.appendChild(container);
+
     window.localStorage.clear();
 
     vi.stubGlobal(
@@ -35,12 +37,15 @@ describe('ShellSidebarProvider', () => {
 
   afterEach(() => {
     root?.unmount();
+
     container.remove();
+
     vi.unstubAllGlobals();
   });
 
   it('should use the persisted desktop state on the first client render', () => {
     window.localStorage.setItem('open-meet:web-shell-sidebar-expanded', '0');
+
     root = createRoot(container);
 
     expect(() => {

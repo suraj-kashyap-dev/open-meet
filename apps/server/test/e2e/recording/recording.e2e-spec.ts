@@ -18,8 +18,10 @@ describe('Recording (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     hostCookie = (await registerUser(app, { email: 'host@example.com', password: 'secretpass1' }))
       .cookie;
+
     code = (await http(app).post('/api/meetings').set('Cookie', hostCookie).send({})).body.data
       .code;
   });
@@ -33,7 +35,9 @@ describe('Recording (e2e)', () => {
       const res = await http(app)
         .post(`/api/meetings/${code}/recording/start`)
         .set('Cookie', guest.cookie);
+
       expect(res.status).toBe(403);
+
       expect(res.body.success).toBe(false);
     });
 
@@ -41,12 +45,15 @@ describe('Recording (e2e)', () => {
       const res = await http(app)
         .post(`/api/meetings/${code}/recording/start`)
         .set('Cookie', hostCookie);
+
       expect(res.status).toBe(400);
+
       expect(res.body.success).toBe(false);
     });
 
     it('should require authentication', async () => {
       const res = await http(app).post(`/api/meetings/${code}/recording/start`);
+
       expect(res.status).toBe(401);
     });
   });

@@ -36,6 +36,7 @@ const MentionList = forwardRef<
 
   const pick = (index: number) => {
     const item = items[index];
+
     if (item) {
       command({ id: item.id, label: item.label });
     }
@@ -46,18 +47,25 @@ const MentionList = forwardRef<
       if (items.length === 0) {
         return false;
       }
+
       if (event.key === 'ArrowUp') {
         setSelected((s) => (s + items.length - 1) % items.length);
+
         return true;
       }
+
       if (event.key === 'ArrowDown') {
         setSelected((s) => (s + 1) % items.length);
+
         return true;
       }
+
       if (event.key === 'Enter' || event.key === 'Tab') {
         pick(selected);
+
         return true;
       }
+
       return false;
     },
   }));
@@ -74,6 +82,7 @@ const MentionList = forwardRef<
             type="button"
             onMouseDown={(e) => {
               e.preventDefault();
+
               pick(index);
             }}
             className={cn(
@@ -89,6 +98,7 @@ const MentionList = forwardRef<
     </ul>
   );
 });
+
 MentionList.displayName = 'MentionList';
 
 export function createMentionSuggestion(
@@ -106,8 +116,10 @@ export function createMentionSuggestion(
 
       const place = (rect: (() => DOMRect | null) | null | undefined) => {
         const box = rect?.();
+
         if (popup && box) {
           popup.style.left = `${box.left}px`;
+
           popup.style.top = `${box.bottom + 4}px`;
         }
       };
@@ -115,28 +127,40 @@ export function createMentionSuggestion(
       return {
         onStart: (props) => {
           component = new ReactRenderer(MentionList, { props, editor: props.editor });
+
           popup = document.createElement('div');
+
           popup.style.position = 'fixed';
+
           popup.style.zIndex = '60';
+
           popup.appendChild(component.element);
+
           document.body.appendChild(popup);
+
           place(props.clientRect);
         },
         onUpdate: (props) => {
           component?.updateProps(props);
+
           place(props.clientRect);
         },
         onKeyDown: (props) => {
           if (props.event.key === 'Escape') {
             popup?.remove();
+
             return true;
           }
+
           return component?.ref?.onKeyDown(props.event) ?? false;
         },
         onExit: () => {
           popup?.remove();
+
           popup = null;
+
           component?.destroy();
+
           component = null;
         },
       };

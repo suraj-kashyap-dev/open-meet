@@ -57,7 +57,9 @@ export function BrandingForm() {
   const onSubmit = form.handleSubmit(async (values) => {
     try {
       await updateName.mutateAsync({ appName: values.appName });
+
       toast.success(t('form.name-saved'));
+
       router.refresh();
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('form.error'));
@@ -66,6 +68,7 @@ export function BrandingForm() {
 
   const onLogoChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     e.target.value = '';
 
     if (!file) {
@@ -74,17 +77,21 @@ export function BrandingForm() {
 
     if (!LOGO_MIMES.includes(file.type)) {
       toast.error(t('form.logo-invalid-type'));
+
       return;
     }
 
     if (file.size > LOGO_MAX_BYTES) {
       toast.error(t('form.logo-too-large'));
+
       return;
     }
 
     try {
       await uploadLogo.mutateAsync(file);
+
       toast.success(t('form.logo-saved'));
+
       router.refresh();
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('form.error'));
@@ -94,7 +101,9 @@ export function BrandingForm() {
   const onRemoveLogo = async () => {
     try {
       await removeLogo.mutateAsync();
+
       toast.success(t('form.logo-removed'));
+
       router.refresh();
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('form.error'));
@@ -104,7 +113,9 @@ export function BrandingForm() {
   const onAccentChange = async (next: string) => {
     try {
       await updateBranding.mutateAsync({ accentColor: next });
+
       toast.success(t('form.accent-saved'));
+
       router.refresh();
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('form.error'));

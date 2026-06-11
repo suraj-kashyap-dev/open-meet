@@ -22,6 +22,7 @@ describe('DatagridService', () => {
 
   beforeEach(() => {
     i18n = { translate: vi.fn((key: string, opts: { lang: string }) => `${key}@${opts.lang}`) };
+
     service = new DatagridService(i18n as unknown as I18nService);
   });
 
@@ -35,8 +36,11 @@ describe('DatagridService', () => {
     const res = service.build(DEF, { rows: [{ id: '1' }], total: 1, query: {} });
 
     expect(res.columns[0].label).toBe('datagrid.widgets.columns.name@fr');
+
     expect(res.actions[0].label).toBe('datagrid.widgets.actions.edit@fr');
+
     expect(res.searchPlaceholder).toBe('datagrid.widgets.search@fr');
+
     expect(i18n.translate).toHaveBeenCalledWith('datagrid.widgets.columns.name', { lang: 'fr' });
   });
 
@@ -55,7 +59,9 @@ describe('DatagridService', () => {
     const res = service.build(DEF, { rows, total: 7, query: { page: 1, pageSize: 5 } });
 
     expect(res.rows).toEqual(rows);
+
     expect(res.resource).toBe('widgets');
+
     expect(res.pagination).toEqual({ page: 1, pageSize: 5, total: 7, totalPages: 2 });
   });
 });

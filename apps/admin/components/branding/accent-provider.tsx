@@ -12,9 +12,11 @@ function resolveTokens(value: string, mode: 'light' | 'dark'): AccentTokens {
   if (isAccentPreset(value)) {
     return ACCENT_PALETTE[value][mode];
   }
+
   if (isAccentHex(value)) {
     return deriveAccent(value, mode);
   }
+
   return ACCENT_PALETTE.indigo[mode];
 }
 
@@ -27,9 +29,13 @@ export function AccentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const tokens = resolveTokens(choice, mode);
     const r = document.documentElement.style;
+
     r.setProperty('--accent', tokens.accent);
+
     r.setProperty('--accent-foreground', tokens.accentForeground);
+
     r.setProperty('--ring', tokens.ring);
+
     r.setProperty('--hero-glow', tokens.heroGlow);
   }, [choice, mode]);
 

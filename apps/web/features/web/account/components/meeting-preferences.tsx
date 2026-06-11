@@ -76,6 +76,7 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
   const onSubmit = handleSubmit(async (v) => {
     try {
       await updateSettings.mutateAsync({ meetingPreferences: v });
+
       toast.success(t('toast.preferences-updated'));
     } catch (err) {
       toast.error(messageFromError(err, t('toast.preferences-update-failed')));
@@ -163,16 +164,22 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
             if (c) {
               if (!notificationsSupported()) {
                 toast.error(t('toast.notifications-unsupported'));
+
                 return;
               }
+
               const permission = await ensureNotificationPermission();
+
               if (permission !== 'granted') {
                 toast.error(t('toast.notifications-denied'));
+
                 return;
               }
+
               if (pushSupported()) {
                 try {
                   await registerServiceWorker();
+
                   await subscribeToPush();
                 } catch {
                   toast.error(t('toast.push-subscribe-failed'));
@@ -181,6 +188,7 @@ export function MeetingPreferences({ settings }: { settings: UserSettingsDto | u
             } else if (pushSupported()) {
               await unsubscribeFromPush().catch(() => undefined);
             }
+
             setValue('enableNotifications', c, { shouldDirty: true });
           }}
         />

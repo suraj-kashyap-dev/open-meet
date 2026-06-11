@@ -37,6 +37,7 @@ export class PushController {
     @Req() req: { headers: Record<string, string | string[] | undefined> },
   ): Promise<void> {
     const ua = req.headers['user-agent'];
+
     await this.push.subscribe({
       userId: user.id,
       endpoint: body.endpoint,

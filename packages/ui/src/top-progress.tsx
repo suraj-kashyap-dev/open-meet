@@ -61,6 +61,7 @@ export function TopProgress() {
     function finish() {
       if (intervalRef.current !== null) {
         window.clearInterval(intervalRef.current);
+
         intervalRef.current = null;
       }
 
@@ -68,6 +69,7 @@ export function TopProgress() {
 
       completeRef.current = window.setTimeout(() => {
         setProgress(0);
+
         completeRef.current = null;
       }, 240);
     }

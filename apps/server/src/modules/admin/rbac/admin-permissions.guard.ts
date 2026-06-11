@@ -27,10 +27,14 @@ export class AdminPermissionsGuard implements CanActivate {
       REQUIRE_ADMIN_PERMISSIONS_KEY,
       [context.getHandler(), context.getClass()],
     );
-    if (!required || required.length === 0) return true;
+
+    if (!required || required.length === 0) {
+      return true;
+    }
 
     const req = context.switchToHttp().getRequest<{ user?: AdminRequestUser }>();
     const user = req.user;
+
     if (!user) {
       throw new InternalServerErrorException({
         code: ApiErrorCode.UNAUTHORIZED,
@@ -43,12 +47,20 @@ export class AdminPermissionsGuard implements CanActivate {
     }
 
     const resolved = await this.resolver.resolve(user.roleId);
-    if (!resolved) throw new ForbiddenException(this.denial());
 
-    if (resolved.permissionType === 'ALL') return true;
+    if (!resolved) {
+      throw new ForbiddenException(this.denial());
+    }
+
+    if (resolved.permissionType === 'ALL') {
+      return true;
+    }
 
     const missing = required.filter((key) => !resolved.granted.has(key));
-    if (missing.length > 0) throw new ForbiddenException(this.denial());
+
+    if (missing.length > 0) {
+      throw new ForbiddenException(this.denial());
+    }
 
     return true;
   }

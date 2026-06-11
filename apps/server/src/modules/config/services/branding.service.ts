@@ -46,13 +46,16 @@ export class BrandingService {
 
   async updateAccentColor(rawAccent: string): Promise<AdminBrandingDto> {
     const accent = rawAccent.trim();
+
     if (!ACCENT_PATTERN.test(accent)) {
       throw new BadRequestException({
         code: ApiErrorCode.VALIDATION_FAILED,
         message: 'accentColor must be a preset slug or a #RRGGBB hex',
       });
     }
+
     await this.repo.setAccentColor(accent);
+
     return this.getBranding();
   }
 
@@ -107,6 +110,7 @@ export class BrandingService {
     const key = `branding/logo_${randomBytes(12).toString('hex')}.${ext}`;
 
     await this.storage.put({ key, buffer, mime });
+
     await this.repo.setLogoKey(key);
 
     if (previous?.logoKey && previous.logoKey !== key) {
@@ -121,6 +125,7 @@ export class BrandingService {
 
     if (previous?.logoKey) {
       await this.repo.setLogoKey(null);
+
       await this.storage.delete(previous.logoKey).catch(() => undefined);
     }
 

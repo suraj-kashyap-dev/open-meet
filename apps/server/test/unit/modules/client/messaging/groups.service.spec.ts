@@ -53,6 +53,7 @@ describe('GroupsService', () => {
       delete: vi.fn(),
       findWithMembers: vi.fn().mockResolvedValue(groupConv),
     };
+
     permissions = {
       assertCanCreateGroup: vi.fn(),
       filterEligibleTargets: vi.fn(async (_actor: string, ids: string[]) => ids),
@@ -61,15 +62,20 @@ describe('GroupsService', () => {
       groupAdminCount: vi.fn(),
       assertConversationMember: vi.fn(),
     };
+
     conversations = {
       lastVisibleMessage: vi.fn().mockResolvedValue(null),
       unreadCount: vi.fn().mockResolvedValue(0),
     };
+
     serializer = {
       conversation: vi.fn((conv, opts) => ({ id: conv.id, unreadCount: opts.unreadCount })),
     };
+
     presence = { snapshot: vi.fn().mockResolvedValue(new Map()) };
+
     bus = { emit: vi.fn() };
+
     service = new GroupsService(
       repo as unknown as GroupsRepository,
       permissions as unknown as ChatPermissionsService,
@@ -94,23 +100,28 @@ describe('GroupsService', () => {
       });
 
       expect(permissions.assertCanCreateGroup).toHaveBeenCalledWith('creator');
+
       expect(repo.pickInvitableUsers).toHaveBeenCalledWith(['u2']);
+
       expect(repo.create).toHaveBeenCalledWith({
         creatorId: 'creator',
         title: 'Team',
         description: 'hi',
         memberIds: ['u2'],
       });
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('creator'),
         ChatServerEvent.CONVERSATION_NEW,
         expect.any(Object),
       );
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u2'),
         ChatServerEvent.CONVERSATION_NEW,
         expect.any(Object),
       );
+
       expect(result.id).toBe('c1');
     });
 
@@ -118,6 +129,7 @@ describe('GroupsService', () => {
       await expect(
         service.create('creator', { title: '   ', memberIds: [] }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(repo.create).not.toHaveBeenCalled();
     });
 
@@ -147,12 +159,15 @@ describe('GroupsService', () => {
       const result = await service.update('c1', 'creator', { title: ' New ', description: ' d ' });
 
       expect(permissions.assertGroupAdmin).toHaveBeenCalledWith('c1', 'creator');
+
       expect(repo.update).toHaveBeenCalledWith('c1', { title: 'New', description: 'd' });
+
       expect(bus.emit).toHaveBeenCalledWith(
         conversationRoom('c1'),
         ChatServerEvent.CONVERSATION_UPDATE,
         expect.any(Object),
       );
+
       expect(result.id).toBe('c1');
     });
 
@@ -172,13 +187,17 @@ describe('GroupsService', () => {
   describe('addMembers()', () => {
     it('should add only new eligible members and notify them', async () => {
       repo.memberUserIds.mockResolvedValue(['creator', 'u2']);
+
       repo.pickInvitableUsers.mockResolvedValue(['u3']);
+
       permissions.filterEligibleTargets.mockResolvedValue(['u3']);
 
       await service.addMembers('c1', 'creator', ['u2', 'u3', 'u3']);
 
       expect(repo.pickInvitableUsers).toHaveBeenCalledWith(['u3']);
+
       expect(repo.addMembers).toHaveBeenCalledWith('c1', ['u3']);
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u3'),
         ChatServerEvent.CONVERSATION_NEW,
@@ -188,6 +207,7 @@ describe('GroupsService', () => {
 
     it('should short-circuit without writing when no one is invitable', async () => {
       repo.pickInvitableUsers.mockResolvedValue([]);
+
       permissions.filterEligibleTargets.mockResolvedValue([]);
 
       await service.addMembers('c1', 'creator', ['u2']);
@@ -205,6 +225,7 @@ describe('GroupsService', () => {
       await service.removeMember('c1', 'creator', 'u2');
 
       expect(repo.removeMember).toHaveBeenCalledWith('c1', 'u2');
+
       expect(bus.emit).toHaveBeenCalledWith(userRoom('u2'), ChatServerEvent.CONVERSATION_REMOVED, {
         conversationId: 'c1',
       });
@@ -214,12 +235,15 @@ describe('GroupsService', () => {
       permissions.assertGroupAdminOrSelf.mockResolvedValue({
         membership: { role: ConversationMemberRole.ADMIN },
       });
+
       permissions.groupAdminCount.mockResolvedValue(1);
+
       repo.memberUserIds.mockResolvedValue(['creator', 'u2']);
 
       await expect(service.removeMember('c1', 'creator', 'creator')).rejects.toBeInstanceOf(
         BadRequestException,
       );
+
       expect(repo.removeMember).not.toHaveBeenCalled();
     });
 
@@ -227,7 +251,9 @@ describe('GroupsService', () => {
       permissions.assertGroupAdminOrSelf.mockResolvedValue({
         membership: { role: ConversationMemberRole.ADMIN },
       });
+
       permissions.groupAdminCount.mockResolvedValue(1);
+
       repo.memberUserIds.mockResolvedValue(['creator']);
 
       await service.removeMember('c1', 'creator', 'creator');
@@ -245,6 +271,7 @@ describe('GroupsService', () => {
 
     it('should block demoting the only admin', async () => {
       permissions.groupAdminCount.mockResolvedValue(1);
+
       permissions.assertConversationMember.mockResolvedValue({
         role: ConversationMemberRole.ADMIN,
       });
@@ -252,11 +279,13 @@ describe('GroupsService', () => {
       await expect(
         service.updateMemberRole('c1', 'creator', 'creator', ConversationMemberRole.MEMBER),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(repo.setMemberRole).not.toHaveBeenCalled();
     });
 
     it('should allow demotion when another admin exists', async () => {
       permissions.groupAdminCount.mockResolvedValue(2);
+
       permissions.assertConversationMember.mockResolvedValue({
         role: ConversationMemberRole.ADMIN,
       });
@@ -274,7 +303,9 @@ describe('GroupsService', () => {
       await service.delete('c1', 'creator');
 
       expect(permissions.assertGroupAdmin).toHaveBeenCalledWith('c1', 'creator');
+
       expect(repo.delete).toHaveBeenCalledWith('c1');
+
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('creator'),
         ChatServerEvent.CONVERSATION_REMOVED,
@@ -282,6 +313,7 @@ describe('GroupsService', () => {
           conversationId: 'c1',
         },
       );
+
       expect(bus.emit).toHaveBeenCalledWith(userRoom('u2'), ChatServerEvent.CONVERSATION_REMOVED, {
         conversationId: 'c1',
       });

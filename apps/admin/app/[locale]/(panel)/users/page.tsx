@@ -42,7 +42,9 @@ export default function AdminUsersPage() {
             if (column.key !== 'name') {
               return undefined;
             }
+
             const user = row as unknown as AdminUserDto;
+
             return (
               <div className="flex items-center gap-3">
                 <UserAvatar user={user} size="md" />
@@ -61,6 +63,7 @@ export default function AdminUsersPage() {
               setDeleting(row as unknown as AdminUserDto);
             } else if (key === 'toggle-chat' && row) {
               const user = row as unknown as AdminUserDto;
+
               updateUser.mutate({ id: user.id, body: { chatDisabled: !user.chatDisabled } });
             }
           }}

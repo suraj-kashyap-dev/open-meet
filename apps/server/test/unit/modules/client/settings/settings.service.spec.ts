@@ -27,15 +27,20 @@ describe('SettingsService', () => {
       ensureForUser: vi.fn().mockResolvedValue(row),
       update: vi.fn().mockResolvedValue(row),
     };
+
     service = new SettingsService(repo as unknown as SettingsRepository);
   });
 
   describe('getForUser()', () => {
     it('should ensure a row exists and return the grouped settings DTO', async () => {
       const dto = await service.getForUser('u1');
+
       expect(repo.ensureForUser).toHaveBeenCalledWith('u1');
+
       expect(dto.meetingPreferences.defaultMicMuted).toBe(true);
+
       expect(dto.privacySettings.profileVisibility).toBe('public');
+
       expect(dto.composerPreferences.composerMode).toBe('MARKDOWN');
     });
   });
@@ -46,6 +51,7 @@ describe('SettingsService', () => {
         meetingPreferences: { defaultMicMuted: false, defaultView: undefined },
         privacySettings: { shareUsageData: true },
       } as never);
+
       expect(repo.update).toHaveBeenCalledWith('u1', {
         defaultMicMuted: false,
         shareUsageData: true,
@@ -54,12 +60,15 @@ describe('SettingsService', () => {
 
     it('should fall back to ensureForUser without writing when no concrete fields are given', async () => {
       await service.update('u1', { meetingPreferences: { defaultView: undefined } } as never);
+
       expect(repo.update).not.toHaveBeenCalled();
+
       expect(repo.ensureForUser).toHaveBeenCalledWith('u1');
     });
 
     it('should flatten the composer preference', async () => {
       await service.update('u1', { composerPreferences: { composerMode: 'WYSIWYG' } } as never);
+
       expect(repo.update).toHaveBeenCalledWith('u1', { composerMode: 'WYSIWYG' });
     });
   });

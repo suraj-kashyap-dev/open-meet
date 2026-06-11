@@ -46,12 +46,16 @@ describe('AdminMeetingsService', () => {
       findParticipant: vi.fn().mockResolvedValue({ id: 'p1' }),
       markParticipantLeft: vi.fn().mockResolvedValue({ count: 1 }),
     };
+
     livekit = {
       closeRoom: vi.fn().mockResolvedValue(undefined),
       removeParticipant: vi.fn().mockResolvedValue(undefined),
     };
+
     storage = { publicUrl: vi.fn((k: string) => `pub:${k}`) };
+
     grid = { build: vi.fn().mockReturnValue({ ok: true }) };
+
     service = new AdminMeetingsService(
       meetings as unknown as AdminMeetingsRepository,
       livekit as unknown as LiveKitService,
@@ -72,23 +76,30 @@ describe('AdminMeetingsService', () => {
       } as never);
 
       expect(meetings.searchWhere).toHaveBeenCalledWith('meet', 'ACTIVE');
+
       expect(meetings.listWith).toHaveBeenCalledWith({
         skip: 5,
         take: 5,
         where: { _w: true },
         orderBy: { startedAt: 'desc' },
       });
+
       expect(meetings.countWith).toHaveBeenCalledWith({ _w: true });
 
       const [def, data] = grid.build.mock.calls[0];
+
       expect(def.resource).toBe('meetings');
+
       expect(data.total).toBe(1);
+
       expect(data.rows[0]).toMatchObject({ participantCount: 4, messageCount: 9 });
+
       expect(res).toEqual({ ok: true });
     });
 
     it('ignores a non-sortable column and falls back to the default sort', async () => {
       await service.datagrid({ sort: 'status' } as never);
+
       expect(meetings.listWith).toHaveBeenCalledWith(
         expect.objectContaining({ orderBy: { startedAt: 'desc' } }),
       );
@@ -96,6 +107,7 @@ describe('AdminMeetingsService', () => {
 
     it('passes an empty search and no status when neither is provided', async () => {
       await service.datagrid({} as never);
+
       expect(meetings.searchWhere).toHaveBeenCalledWith(undefined, undefined);
     });
   });
@@ -103,6 +115,7 @@ describe('AdminMeetingsService', () => {
   describe('getById()', () => {
     it('should throw when the meeting is missing', async () => {
       meetings.findById.mockResolvedValueOnce(null);
+
       await expect(service.getById('nope')).rejects.toBeInstanceOf(NotFoundException);
     });
 
@@ -133,8 +146,11 @@ describe('AdminMeetingsService', () => {
       const res = await service.getById('m1');
 
       expect(res.participants).toHaveLength(2);
+
       expect(res.participants.map((p) => p.userId)).toEqual(['u1', 'u2']);
+
       expect(res.participantCount).toBe(2);
+
       expect(res.activeParticipantCount).toBe(3);
     });
   });
@@ -142,14 +158,19 @@ describe('AdminMeetingsService', () => {
   describe('forceEnd()', () => {
     it('should end an active meeting and close the LiveKit room', async () => {
       await service.forceEnd('m1');
+
       expect(meetings.markEnded).toHaveBeenCalledWith('m1');
+
       expect(livekit.closeRoom).toHaveBeenCalledWith('abc');
     });
 
     it('should not touch the room when the meeting already ended', async () => {
       meetings.findById.mockResolvedValue(makeRow({ status: MeetingStatus.ENDED }));
+
       await service.forceEnd('m1');
+
       expect(meetings.markEnded).not.toHaveBeenCalled();
+
       expect(livekit.closeRoom).not.toHaveBeenCalled();
     });
   });
@@ -157,9 +178,13 @@ describe('AdminMeetingsService', () => {
   describe('bulkEndActive()', () => {
     it('should end all active meetings and close each room', async () => {
       const res = await service.bulkEndActive();
+
       expect(res).toEqual({ ended: 2 });
+
       expect(livekit.closeRoom).toHaveBeenCalledWith('abc');
+
       expect(meetings.listActive).toHaveBeenCalled();
+
       expect(meetings.markAllActiveEnded).toHaveBeenCalled();
     });
   });
@@ -167,12 +192,15 @@ describe('AdminMeetingsService', () => {
   describe('kickParticipant()', () => {
     it('should mark the participant left and remove them from LiveKit', async () => {
       await expect(service.kickParticipant('m1', 'u9')).resolves.toEqual({ kicked: true });
+
       expect(meetings.markParticipantLeft).toHaveBeenCalledWith('m1', 'u9');
+
       expect(livekit.removeParticipant).toHaveBeenCalledWith('abc', 'u9');
     });
 
     it('should throw when the participant is not in the meeting', async () => {
       meetings.findParticipant.mockResolvedValueOnce(null);
+
       await expect(service.kickParticipant('m1', 'u9')).rejects.toBeInstanceOf(NotFoundException);
     });
   });

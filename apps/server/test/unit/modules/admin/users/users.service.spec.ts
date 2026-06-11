@@ -57,12 +57,15 @@ describe('AdminUsersService', () => {
       update: vi.fn().mockResolvedValue(makeUser()),
       delete: vi.fn().mockResolvedValue(makeUser()),
     };
+
     storage = {
       publicUrl: vi.fn((k: string) => `pub:${k}`),
       put: vi.fn().mockResolvedValue(undefined),
       delete: vi.fn().mockResolvedValue(undefined),
     };
+
     grid = { build: vi.fn().mockReturnValue({ ok: true }) };
+
     service = new AdminUsersService(
       users as unknown as AdminUsersRepository,
       storage as unknown as StorageService,
@@ -81,23 +84,30 @@ describe('AdminUsersService', () => {
       } as never);
 
       expect(users.searchWhere).toHaveBeenCalledWith('jane');
+
       expect(users.listWith).toHaveBeenCalledWith({
         skip: 10,
         take: 10,
         where: { _w: true },
         orderBy: { name: 'asc' },
       });
+
       expect(users.countWith).toHaveBeenCalledWith({ _w: true });
 
       const [def, data] = grid.build.mock.calls[0];
+
       expect(def.resource).toBe('users');
+
       expect(data.total).toBe(1);
+
       expect(data.rows[0]).toMatchObject({ meetingsHosted: 2, meetingsAttended: 5 });
+
       expect(res).toEqual({ ok: true });
     });
 
     it('ignores a non-sortable column and falls back to the default sort', async () => {
       await service.datagrid({ sort: 'actions' } as never);
+
       expect(users.listWith).toHaveBeenCalledWith(
         expect.objectContaining({ orderBy: { createdAt: 'desc' } }),
       );
@@ -107,18 +117,22 @@ describe('AdminUsersService', () => {
   describe('list()', () => {
     it('should clamp paging, trim the search, and return meeting counts in the DTO', async () => {
       const res = await service.list({ page: 0, pageSize: 999, search: '  jane ' } as never);
+
       expect(users.list).toHaveBeenCalledWith({
         skip: 0,
         take: 100,
         search: 'jane',
       });
+
       expect(res).toMatchObject({ total: 1, page: 1, pageSize: 100 });
+
       expect(res.items[0]).toMatchObject({ meetingsHosted: 2, meetingsAttended: 5 });
     });
 
     it('should resolve a stored avatar to a public url', async () => {
       users.list.mockResolvedValueOnce([makeUser({ avatarKey: 'avatars/u1/a.png' })]);
       const res = await service.list({} as never);
+
       expect(res.items[0].avatar).toBe('pub:avatars/u1/a.png');
     });
   });
@@ -126,6 +140,7 @@ describe('AdminUsersService', () => {
   describe('create()', () => {
     it('should reject an email already used by an existing account', async () => {
       users.emailTaken.mockResolvedValueOnce({ id: 'other' });
+
       await expect(
         service.create({
           name: 'Jane',
@@ -133,6 +148,7 @@ describe('AdminUsersService', () => {
           password: 'changeme',
         } as never),
       ).rejects.toBeInstanceOf(ConflictException);
+
       expect(users.create).not.toHaveBeenCalled();
     });
 
@@ -144,6 +160,7 @@ describe('AdminUsersService', () => {
       } as never);
 
       expect(users.emailTaken).toHaveBeenCalledWith('new@x.com');
+
       expect(users.create).toHaveBeenCalledWith({
         name: 'Jane',
         email: 'new@x.com',
@@ -153,6 +170,7 @@ describe('AdminUsersService', () => {
         bio: null,
         canCreateGroups: undefined,
       });
+
       expect(res).toMatchObject({ id: 'u1' });
     });
   });
@@ -160,6 +178,7 @@ describe('AdminUsersService', () => {
   describe('getById()', () => {
     it('should throw when the user is missing', async () => {
       users.findById.mockResolvedValueOnce(null);
+
       await expect(service.getById('nope')).rejects.toBeInstanceOf(NotFoundException);
     });
   });
@@ -167,6 +186,7 @@ describe('AdminUsersService', () => {
   describe('update()', () => {
     it('should reject an email already used by another account', async () => {
       users.emailTakenByOther.mockResolvedValueOnce({ id: 'other' });
+
       await expect(service.update('u1', { email: 'taken@x.com' } as never)).rejects.toBeInstanceOf(
         ConflictException,
       );
@@ -180,6 +200,7 @@ describe('AdminUsersService', () => {
         bio: '   ',
         newPassword: 'changeme',
       } as never);
+
       expect(users.update).toHaveBeenCalledWith('u1', {
         name: 'New',
         email: 'new@x.com',
@@ -191,6 +212,7 @@ describe('AdminUsersService', () => {
 
     it('should set the per-user canCreateGroups flag', async () => {
       await service.update('u1', { canCreateGroups: false } as never);
+
       expect(users.update).toHaveBeenCalledWith('u1', { canCreateGroups: false });
     });
   });
@@ -198,10 +220,13 @@ describe('AdminUsersService', () => {
   describe('delete()', () => {
     it('should throw when missing and remove the user otherwise', async () => {
       users.findById.mockResolvedValueOnce(null);
+
       await expect(service.delete('nope')).rejects.toBeInstanceOf(NotFoundException);
 
       users.findById.mockResolvedValueOnce(makeUser());
+
       await expect(service.delete('u1')).resolves.toEqual({ deleted: true });
+
       expect(users.delete).toHaveBeenCalledWith('u1');
     });
   });
@@ -215,6 +240,7 @@ describe('AdminUsersService', () => {
 
     it('should reject a file over the size limit', async () => {
       const tooBig = Buffer.alloc(5 * 1024 * 1024 + 1);
+
       await expect(service.uploadAvatar('u1', tooBig, 'image/png')).rejects.toBeInstanceOf(
         PayloadTooLargeException,
       );
@@ -228,6 +254,7 @@ describe('AdminUsersService', () => {
 
     it('should throw when the user is missing', async () => {
       users.findById.mockResolvedValueOnce(null);
+
       await expect(
         service.uploadAvatar('nope', Buffer.from('x'), 'image/png'),
       ).rejects.toBeInstanceOf(NotFoundException);
@@ -243,10 +270,15 @@ describe('AdminUsersService', () => {
         buffer: Buffer;
         mime: string;
       };
+
       expect(putArg.key).toMatch(/^avatars\/u1\/[0-9a-f]+\.png$/);
+
       expect(putArg.mime).toBe('image/png');
+
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: putArg.key });
+
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/old.png');
+
       expect(res).toMatchObject({ id: 'u1' });
     });
 
@@ -262,6 +294,7 @@ describe('AdminUsersService', () => {
   describe('removeAvatar()', () => {
     it('should throw when the user is missing', async () => {
       users.findById.mockResolvedValueOnce(null);
+
       await expect(service.removeAvatar('nope')).rejects.toBeInstanceOf(NotFoundException);
     });
 
@@ -271,6 +304,7 @@ describe('AdminUsersService', () => {
       await service.removeAvatar('u1');
 
       expect(users.update).not.toHaveBeenCalled();
+
       expect(storage.delete).not.toHaveBeenCalled();
     });
 
@@ -280,6 +314,7 @@ describe('AdminUsersService', () => {
       await service.removeAvatar('u1');
 
       expect(users.update).toHaveBeenCalledWith('u1', { avatarKey: null });
+
       expect(storage.delete).toHaveBeenCalledWith('avatars/u1/a.png');
     });
   });

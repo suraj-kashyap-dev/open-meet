@@ -21,9 +21,13 @@ export function AccentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const tokens = resolveAccentTokens(choice, mode);
     const r = document.documentElement.style;
+
     r.setProperty('--accent', tokens.accent);
+
     r.setProperty('--accent-foreground', tokens.accentForeground);
+
     r.setProperty('--ring', tokens.ring);
+
     r.setProperty('--hero-glow', tokens.heroGlow);
   }, [choice, mode]);
 

@@ -21,6 +21,7 @@ export function useNotification(): { notify: (title: string, opts?: NotifyOption
       if (!enabled) {
         return;
       }
+
       notify(title, opts);
     },
     [enabled],

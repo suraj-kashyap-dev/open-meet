@@ -18,10 +18,12 @@ export function useAdminGroup(id: string | null) {
 
 export function useCreateGroup() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (body: AdminCreateGroupDto) => adminGroupsApi.create(body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'groups'] });
     },
   });
@@ -29,11 +31,13 @@ export function useCreateGroup() {
 
 export function useUpdateGroup() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: { id: string; body: AdminUpdateGroupDto }) =>
       adminGroupsApi.update(input.id, input.body),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'groups'] });
     },
   });
@@ -41,10 +45,12 @@ export function useUpdateGroup() {
 
 export function useDeleteGroup() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (id: string) => adminGroupsApi.remove(id),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'groups'] });
     },
   });
@@ -52,11 +58,13 @@ export function useDeleteGroup() {
 
 export function useAddGroupMembers() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: { id: string; userIds: string[] }) =>
       adminGroupsApi.addMembers(input.id, { userIds: input.userIds }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'groups'] });
     },
   });
@@ -64,11 +72,13 @@ export function useAddGroupMembers() {
 
 export function useRemoveGroupMember() {
   const qc = useQueryClient();
+
   return useMutation({
     mutationFn: (input: { id: string; userId: string }) =>
       adminGroupsApi.removeMember(input.id, input.userId),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'groups'] });
     },
   });
@@ -94,6 +104,7 @@ export function useSyncGroupMembers() {
     },
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
+
       void qc.invalidateQueries({ queryKey: ['admin-datagrid', 'groups'] });
     },
   });

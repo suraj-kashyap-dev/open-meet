@@ -15,10 +15,12 @@ export class SettingsRepository {
     if (userIds.length === 0) {
       return new Set();
     }
+
     const rows = await this.prisma.userSettings.findMany({
       where: { userId: { in: userIds }, enableNotifications: false },
       select: { userId: true },
     });
+
     return new Set(rows.map((r) => r.userId));
   }
 

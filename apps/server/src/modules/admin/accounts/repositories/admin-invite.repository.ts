@@ -21,6 +21,7 @@ export class AdminInviteRepository {
     expiresAt: Date;
   }): Promise<AdminInvite> {
     const { email, name, roleRecordId, tokenHash, invitedById, expiresAt } = data;
+
     return this.prisma.adminInvite.upsert({
       where: { email },
       create: { email, name, roleRecordId, tokenHash, invitedById, expiresAt },

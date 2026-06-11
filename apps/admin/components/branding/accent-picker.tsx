@@ -29,6 +29,7 @@ export function AccentPicker({
         {ACCENT_PRESETS.map((preset) => {
           const tokens = ACCENT_PALETTE[preset].light;
           const selected = isPreset && value === preset;
+
           return (
             <button
               key={preset}
@@ -89,7 +90,9 @@ export function AccentPicker({
           <button
             type="button"
             onClick={() => {
-              if (isAccentHex(hexDraft)) onChange(hexDraft);
+              if (isAccentHex(hexDraft)) {
+                onChange(hexDraft);
+              }
             }}
             disabled={disabled || !isAccentHex(hexDraft) || hexDraft === value}
             className="rounded-md bg-accent px-3 py-1.5 text-xs font-medium text-accent-foreground disabled:opacity-50"

@@ -38,7 +38,9 @@ export const useMeetingStore = create<MeetingState>((set) => ({
   lowerHand: (userId) => {
     set((s) => {
       const next = { ...s.raisedHands };
+
       delete next[userId];
+
       return { raisedHands: next };
     });
   },
@@ -48,7 +50,9 @@ export const useMeetingStore = create<MeetingState>((set) => ({
   removePresence: (userId) => {
     set((s) => {
       const next = { ...s.presence };
+
       delete next[userId];
+
       return { presence: next };
     });
   },

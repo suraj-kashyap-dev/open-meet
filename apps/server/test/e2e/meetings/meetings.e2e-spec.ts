@@ -19,6 +19,7 @@ describe('Meetings (e2e)', () => {
   beforeEach(async () => {
     await resetDb(app);
     const host = await registerUser(app, { email: 'host@example.com', password: 'secretpass1' });
+
     hostCookie = host.cookie;
   });
 
@@ -32,10 +33,15 @@ describe('Meetings (e2e)', () => {
   describe('POST /api/meetings', () => {
     it('should create a WAITING meeting owned by the caller with a valid code', async () => {
       const res = await createMeeting(hostCookie, 'Weekly sync');
+
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.status).toBe('WAITING');
+
       expect(res.body.data.title).toBe('Weekly sync');
+
       expect(res.body.data.code).toMatch(/^[a-z2-9]{4}-[a-z2-9]{4}-[a-z2-9]{4}$/);
     });
 
@@ -54,11 +60,13 @@ describe('Meetings (e2e)', () => {
         .send({ title: '   ' });
 
       expect(res.status).toBe(201);
+
       expect(res.body.data.title).toBe('Department Sync');
     });
 
     it('should require authentication', async () => {
       const res = await http(app).post('/api/meetings').send({});
+
       expect(res.status).toBe(401);
     });
   });
@@ -79,7 +87,9 @@ describe('Meetings (e2e)', () => {
       });
 
       expect(res.status).toBe(201);
+
       expect(res.body.data.title).toBe('Department Sync');
+
       expect(res.body.data.scheduledFor).toBe('2099-06-01T10:00:00.000Z');
     });
 
@@ -99,6 +109,7 @@ describe('Meetings (e2e)', () => {
       });
 
       expect(res.status).toBe(201);
+
       expect(res.body.data.durationMin).toBe(20);
     });
 
@@ -116,12 +127,15 @@ describe('Meetings (e2e)', () => {
         });
 
       expect(scheduled.status).toBe(201);
+
       expect(scheduled.body.data.recurrence).toBe(recurrence);
 
       const upcoming = await http(app).get('/api/meetings/upcoming').set('Cookie', hostCookie);
 
       expect(upcoming.status).toBe(200);
+
       expect(upcoming.body.data).toHaveLength(3);
+
       expect(upcoming.body.data.map((item: { scheduledFor: string }) => item.scheduledFor)).toEqual(
         ['2099-06-01T10:00:00.000Z', '2099-06-08T10:00:00.000Z', '2099-06-15T10:00:00.000Z'],
       );
@@ -133,13 +147,17 @@ describe('Meetings (e2e)', () => {
       const created = await createMeeting();
       const code = created.body.data.code;
       const res = await http(app).get(`/api/meetings/${code}`);
+
       expect(res.status).toBe(200);
+
       expect(res.body.data.code).toBe(code);
     });
 
     it('should 404 an unknown code', async () => {
       const res = await http(app).get('/api/meetings/zzzz-zzzz-zzzz');
+
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('MEETING_NOT_FOUND');
     });
   });
@@ -153,7 +171,9 @@ describe('Meetings (e2e)', () => {
         .send({ name: 'External guest' });
 
       expect(guestSession.status).toBe(200);
+
       expect(guestSession.body.data.user.name).toBe('External guest');
+
       expect(typeof guestSession.body.data.token).toBe('string');
 
       const joinRes = await http(app)
@@ -161,7 +181,9 @@ describe('Meetings (e2e)', () => {
         .set('Authorization', `Bearer ${guestSession.body.data.token}`);
 
       expect(joinRes.status).toBe(200);
+
       expect(joinRes.body.success).toBe(true);
+
       expect(joinRes.body.data.participant.name).toBe('External guest');
     });
 
@@ -180,6 +202,7 @@ describe('Meetings (e2e)', () => {
         .send({ name: 'Blocked guest' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
   });
@@ -195,9 +218,11 @@ describe('Meetings (e2e)', () => {
       const joinRes = await http(app)
         .post(`/api/meetings/${code}/join`)
         .set('Cookie', guest.cookie);
+
       expect(joinRes.body.success).toBe(true);
 
       const after = await http(app).get(`/api/meetings/${code}`).set('Cookie', hostCookie);
+
       expect(after.body.data.status).toBe('ACTIVE');
     });
 
@@ -211,10 +236,13 @@ describe('Meetings (e2e)', () => {
       const forbidden = await http(app)
         .post(`/api/meetings/${code}/end`)
         .set('Cookie', guest.cookie);
+
       expect(forbidden.status).toBe(403);
 
       const ended = await http(app).post(`/api/meetings/${code}/end`).set('Cookie', hostCookie);
+
       expect(ended.body.success).toBe(true);
+
       expect(ended.body.data.status).toBe('ENDED');
     });
 
@@ -245,9 +273,11 @@ describe('Meetings (e2e)', () => {
         .set('Cookie', guest.cookie);
 
       expect(joinRes.status).toBe(403);
+
       expect(joinRes.body.error.code).toBe('MEETING_ENDED');
 
       const meeting = await prisma.meeting.findUnique({ where: { code } });
+
       expect(meeting?.status).toBe('ENDED');
     });
   });
@@ -269,7 +299,9 @@ describe('Meetings (e2e)', () => {
       const history = await http(app).get('/api/meetings/history').set('Cookie', hostCookie);
 
       expect(history.status).toBe(200);
+
       expect(history.body.data.items).toEqual([]);
+
       expect(history.body.data.total).toBe(0);
     });
   });
@@ -281,8 +313,11 @@ describe('Meetings (e2e)', () => {
       expect(res.status).toBe(200);
 
       const grid = res.body.data;
+
       expect(grid.resource).toBe('history');
+
       expect(Array.isArray(grid.columns)).toBe(true);
+
       expect(grid.columns.map((c: { key: string }) => c.key)).toEqual([
         'meeting',
         'startedAt',
@@ -291,9 +326,13 @@ describe('Meetings (e2e)', () => {
         'activity',
         'status',
       ]);
+
       expect(grid.actions.map((a: { key: string }) => a.key)).toEqual(['open']);
+
       expect(grid.searchable).toBe(false);
+
       expect(grid.pagination.page).toBe(1);
+
       expect(Array.isArray(grid.rows)).toBe(true);
     });
 

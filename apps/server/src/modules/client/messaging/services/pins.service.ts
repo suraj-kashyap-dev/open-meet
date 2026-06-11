@@ -20,15 +20,21 @@ export class PinsService {
 
   async pin(messageId: string, userId: string): Promise<{ pinned: true }> {
     const conversationId = await this.assertMessageMember(messageId, userId);
+
     await this.pins.pin(conversationId, messageId, userId);
+
     this.broadcast(conversationId, messageId, true, userId);
+
     return { pinned: true };
   }
 
   async unpin(messageId: string, userId: string): Promise<{ pinned: false }> {
     const conversationId = await this.assertMessageMember(messageId, userId);
+
     await this.pins.unpin(messageId, userId);
+
     this.broadcast(conversationId, messageId, false, userId);
+
     return { pinned: false };
   }
 
@@ -51,6 +57,7 @@ export class PinsService {
     }
 
     await this.permissions.assertConversationMember(meta.conversationId, userId);
+
     return meta.conversationId;
   }
 

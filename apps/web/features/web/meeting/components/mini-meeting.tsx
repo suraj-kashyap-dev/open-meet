@@ -59,6 +59,7 @@ export function MiniMeeting({ code, meeting }: Props) {
 
   const featured = useMemo(() => {
     const screen = tracks.find((tr) => tr.source === Track.Source.ScreenShare);
+
     if (screen) {
       return screen;
     }
@@ -73,6 +74,7 @@ export function MiniMeeting({ code, meeting }: Props) {
 
   const expand = () => {
     maximize();
+
     router.push(`/${code}`);
   };
 

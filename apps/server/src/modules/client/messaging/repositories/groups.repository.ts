@@ -44,11 +44,15 @@ export class GroupsRepository {
   }
 
   async pickInvitableUsers(userIds: string[]): Promise<string[]> {
-    if (userIds.length === 0) return [];
+    if (userIds.length === 0) {
+      return [];
+    }
+
     const rows = await this.prisma.user.findMany({
       where: { id: { in: userIds }, chatDisabled: false },
       select: { id: true },
     });
+
     return rows.map((r) => r.id);
   }
 
@@ -68,7 +72,10 @@ export class GroupsRepository {
   }
 
   async addMembers(id: string, userIds: string[]): Promise<void> {
-    if (userIds.length === 0) return;
+    if (userIds.length === 0) {
+      return;
+    }
+
     await this.prisma.conversationMember.createMany({
       data: userIds.map((userId) => ({
         conversationId: id,
@@ -112,6 +119,7 @@ export class GroupsRepository {
       where: { conversationId: id },
       select: { userId: true },
     });
+
     return rows.map((r) => r.userId);
   }
 }

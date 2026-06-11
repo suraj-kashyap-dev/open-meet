@@ -34,6 +34,7 @@ describe('ChatService', () => {
       listForMeeting: vi.fn().mockResolvedValue([]),
       listMeetingHistory: vi.fn().mockResolvedValue([]),
     };
+
     uploads = {
       claim: vi.fn().mockResolvedValue(undefined),
       toDto: vi.fn((a: { id: string }) => ({
@@ -45,7 +46,9 @@ describe('ChatService', () => {
         height: null,
       })),
     };
+
     storage = { publicUrl: vi.fn((key: string) => `pub:${key}`) };
+
     service = new ChatService(
       chat as unknown as ChatRepository,
       uploads as unknown as UploadsService,
@@ -56,12 +59,15 @@ describe('ChatService', () => {
   describe('send()', () => {
     it('should persist the message and claim attachments when present', async () => {
       await service.send({ meetingId: 'm1', senderId: 'u1', content: 'hi', attachmentIds: ['a1'] });
+
       expect(chat.create).toHaveBeenCalledWith({ meetingId: 'm1', senderId: 'u1', content: 'hi' });
+
       expect(uploads.claim).toHaveBeenCalledWith(['a1'], 'u1', 'msg1');
     });
 
     it('should not claim attachments when none are given', async () => {
       await service.send({ meetingId: 'm1', senderId: 'u1', content: 'hi' });
+
       expect(uploads.claim).not.toHaveBeenCalled();
     });
   });
@@ -75,7 +81,9 @@ describe('ChatService', () => {
         content: 'hi',
         attachmentIds: ['a1'],
       });
+
       expect(dto.sender.avatar).toBe('pub:avatars/u1/x.png');
+
       expect(dto.attachments).toEqual([
         { id: 'a1', url: 'u', mime: 'm', size: 1, width: null, height: null },
       ]);
@@ -86,6 +94,7 @@ describe('ChatService', () => {
         makeMessage({ sender: { id: 'u1', name: 'A', avatarKey: null } }),
       );
       const dto = await service.send({ meetingId: 'm1', senderId: 'u1', content: 'hi' });
+
       expect(dto.sender.avatar).toBeNull();
     });
   });
@@ -97,20 +106,25 @@ describe('ChatService', () => {
         makeMessage({ id: 'b', sentAt: new Date('2026-05-01T11:00:00Z') }),
         makeMessage({ id: 'c', sentAt: new Date('2026-05-01T12:00:00Z') }),
       ];
+
       chat.listMeetingHistory.mockResolvedValueOnce(rows);
       const page = await service.pagedHistory('m1', { limit: 2 });
+
       expect(chat.listMeetingHistory).toHaveBeenCalledWith({
         meetingId: 'm1',
         cursor: undefined,
         limit: 3,
       });
+
       expect(page.items.map((m) => m.id)).toEqual(['b', 'c']);
+
       expect(page.nextCursor).toBe('2026-05-01T11:00:00.000Z');
     });
 
     it('should return a null cursor when no more rows remain', async () => {
       chat.listMeetingHistory.mockResolvedValueOnce([makeMessage({ id: 'a' })]);
       const page = await service.pagedHistory('m1', { limit: 50 });
+
       expect(page.nextCursor).toBeNull();
     });
   });

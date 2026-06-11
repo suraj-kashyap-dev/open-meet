@@ -15,6 +15,7 @@ export function GoogleSignInButton({ label = 'Continue with Google' }: Props) {
 
   const onClick = (): void => {
     setPending(true);
+
     window.location.href = `${env.NEXT_PUBLIC_API_URL}/api/auth/google`;
   };
 

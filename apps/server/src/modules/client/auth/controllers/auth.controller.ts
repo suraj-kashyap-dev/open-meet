@@ -85,7 +85,9 @@ export class AuthController {
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<AuthResponseDto> {
     const { user, tokens } = await this.auth.acceptUserInvite(dto);
+
     this.setAuthCookies(res, tokens);
+
     return { user };
   }
 
@@ -99,7 +101,9 @@ export class AuthController {
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<AuthResponseDto> {
     const { user, tokens } = await this.auth.login(dto);
+
     this.setAuthCookies(res, tokens);
+
     return { user };
   }
 
@@ -112,14 +116,18 @@ export class AuthController {
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<{ refreshed: true }> {
     const refresh = req.cookies?.[REFRESH_COOKIE];
+
     if (!refresh) {
       throw new UnauthorizedException({
         code: ApiErrorCode.TOKEN_INVALID,
         message: 'No refresh token present',
       });
     }
+
     const tokens = await this.auth.refresh(refresh);
+
     this.setAuthCookies(res, tokens);
+
     return { refreshed: true };
   }
 
@@ -164,18 +172,23 @@ export class AuthController {
 
     if (error) {
       this.logger.warn(`Google OAuth callback returned error: ${error}`);
+
       await res.redirect(this.frontendErrorUrl(frontendUrl, 'google_denied'), HttpStatus.FOUND);
+
       return;
     }
 
     if (!state || !cookieState || state !== cookieState) {
       this.logger.warn('Google OAuth state mismatch between query and cookie');
+
       await res.redirect(this.frontendErrorUrl(frontendUrl, 'state_mismatch'), HttpStatus.FOUND);
+
       return;
     }
 
     if (!code) {
       await res.redirect(this.frontendErrorUrl(frontendUrl, 'missing_code'), HttpStatus.FOUND);
+
       return;
     }
 
@@ -183,10 +196,13 @@ export class AuthController {
       await this.google.consumeState(state);
       const profile = await this.google.exchangeCodeForProfile(code);
       const { tokens } = await this.auth.loginWithGoogle(profile);
+
       this.setAuthCookies(res, tokens);
     } catch (err) {
       this.logger.warn(`Google OAuth login failed: ${(err as Error).message}`);
+
       await res.redirect(this.frontendErrorUrl(frontendUrl, 'login_failed'), HttpStatus.FOUND);
+
       return;
     }
 
@@ -202,7 +218,9 @@ export class AuthController {
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<{ loggedOut: true }> {
     await this.auth.logout(req.cookies?.[REFRESH_COOKIE], user.id);
+
     this.clearAuthCookies(res);
+
     return { loggedOut: true };
   }
 
@@ -232,6 +250,7 @@ export class AuthController {
     const result = await this.auth.changePassword(user.id, dto);
 
     this.clearAuthCookies(res);
+
     return result;
   }
 
@@ -279,6 +298,7 @@ export class AuthController {
 
   private setAuthCookies(res: FastifyReply, tokens: IssuedTokens): void {
     const isProd = process.env.NODE_ENV === 'production';
+
     res.setCookie(ACCESS_COOKIE, tokens.accessToken, {
       httpOnly: true,
       secure: isProd,
@@ -286,6 +306,7 @@ export class AuthController {
       path: '/',
       maxAge: Math.floor(tokens.accessTtlMs / 1000),
     });
+
     res.setCookie(REFRESH_COOKIE, tokens.refreshToken, {
       httpOnly: true,
       secure: isProd,
@@ -297,12 +318,15 @@ export class AuthController {
 
   private clearAuthCookies(res: FastifyReply): void {
     res.clearCookie(ACCESS_COOKIE, { path: '/' });
+
     res.clearCookie(REFRESH_COOKIE, { path: '/api/auth' });
   }
 
   private frontendErrorUrl(frontendUrl: string, reason: string): string {
     const target = new URL('/login', frontendUrl);
+
     target.searchParams.set('error', reason);
+
     return target.toString();
   }
 }

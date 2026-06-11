@@ -10,11 +10,13 @@ describe('ZodValidationPipe', () => {
   describe('transform()', () => {
     it('should return the parsed value when valid', () => {
       const pipe = new ZodValidationPipe(schema);
+
       expect(pipe.transform({ name: 'a', age: 3 })).toEqual({ name: 'a', age: 3 });
     });
 
     it('should throw a BadRequest with flattened issues on a ZodError', () => {
       const pipe = new ZodValidationPipe(schema);
+
       try {
         pipe.transform({ name: 1, age: 'x' });
         throw new Error('should have thrown');
@@ -24,7 +26,9 @@ describe('ZodValidationPipe', () => {
           code: string;
           issues: Array<{ path: string; message: string }>;
         };
+
         expect(body.code).toBe('VALIDATION_FAILED');
+
         expect(body.issues.map((i) => i.path).sort()).toEqual(['age', 'name']);
       }
     });
@@ -36,6 +40,7 @@ describe('ZodValidationPipe', () => {
         },
       } as unknown as ZodSchema;
       const pipe = new ZodValidationPipe(exploding);
+
       expect(() => pipe.transform({})).toThrow('boom');
     });
   });

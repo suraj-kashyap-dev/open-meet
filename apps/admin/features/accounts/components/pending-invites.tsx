@@ -36,8 +36,10 @@ export function PendingInvites() {
 
   const onResend = async (invite: AdminInviteDto) => {
     setBusyId(invite.id);
+
     try {
       await resend.mutateAsync(invite.id);
+
       toast.success(t('pending.resend-success', { email: invite.email }));
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('pending.resend-error'));
@@ -48,8 +50,10 @@ export function PendingInvites() {
 
   const onRevoke = async (invite: AdminInviteDto) => {
     setBusyId(invite.id);
+
     try {
       await revoke.mutateAsync(invite.id);
+
       toast.success(t('pending.revoke-success', { email: invite.email }));
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('pending.revoke-error'));

@@ -4,6 +4,7 @@ self.addEventListener('push', (event) => {
   }
 
   let payload;
+
   try {
     payload = event.data.json();
   } catch {
@@ -34,9 +35,11 @@ self.addEventListener('notificationclick', (event) => {
           return client.focus();
         }
       }
+
       if (self.clients.openWindow) {
         return self.clients.openWindow(target);
       }
+
       return undefined;
     }),
   );

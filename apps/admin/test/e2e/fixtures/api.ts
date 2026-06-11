@@ -124,8 +124,10 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       }
 
       const roleMatch = /^\/admin\/roles\/([^/]+)$/.exec(path);
+
       if (roleMatch) {
         const found = adminRoles.items.find((r) => r.id === roleMatch[1]);
+
         return found
           ? json(200, ok(found))
           : json(404, err('ROLE_NOT_FOUND', 'Role not found', 404));
@@ -140,8 +142,10 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       }
 
       const userMatch = /^\/admin\/users\/([^/]+)$/.exec(path);
+
       if (userMatch) {
         const found = users.items.find((u) => u.id === userMatch[1]) ?? users.items[0];
+
         return found ? json(200, ok(found)) : json(404, err('NOT_FOUND', 'User not found', 404));
       }
     }
@@ -150,9 +154,11 @@ export async function mockAdminApi(page: Page, options: AdminApiMockOptions = {}
       if (path === '/admin/groups') {
         return json(200, ok(groupDetail));
       }
+
       if (path === '/admin/users/invite') {
         return json(200, ok(fixtures.userInvites.items[0]));
       }
+
       if (path === '/admin/users') {
         return json(200, ok(users.items[0]));
       }

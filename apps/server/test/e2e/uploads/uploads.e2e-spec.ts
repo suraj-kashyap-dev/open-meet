@@ -17,6 +17,7 @@ describe('Uploads (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     cookie = (await registerUser(app, { email: 'uploader@example.com', password: 'secretpass1' }))
       .cookie;
   });
@@ -32,9 +33,13 @@ describe('Uploads (e2e)', () => {
         });
 
       expect(res.status).toBe(201);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.mime).toBe('image/png');
+
       expect(res.body.data.size).toBe('fake-png-bytes'.length);
+
       expect(res.body.data.url).toContain('/api/uploads/public/');
     });
 
@@ -42,6 +47,7 @@ describe('Uploads (e2e)', () => {
       const res = await http(app)
         .post('/api/uploads')
         .attach('file', Buffer.from('x'), { filename: 'x.png', contentType: 'image/png' });
+
       expect(res.status).toBe(401);
     });
 
@@ -50,7 +56,9 @@ describe('Uploads (e2e)', () => {
         .post('/api/uploads')
         .set('Cookie', cookie)
         .send({ not: 'multipart' });
+
       expect(res.status).toBe(400);
+
       expect(res.body.error.code).toBe('VALIDATION_FAILED');
     });
   });
@@ -69,7 +77,9 @@ describe('Uploads (e2e)', () => {
       const res = await http(app).get(path);
 
       expect(res.status).toBe(200);
+
       expect(res.headers['content-type']).toContain('image/png');
+
       expect(res.headers['x-content-type-options']).toBe('nosniff');
     });
   });

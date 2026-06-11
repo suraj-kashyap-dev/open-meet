@@ -9,7 +9,9 @@ describe('AdminAnalyticsService', () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
+
     vi.setSystemTime(new Date('2026-05-15T12:00:00Z'));
+
     stats = {
       countUsers: vi.fn().mockResolvedValue(10),
       countMeetings: vi.fn().mockResolvedValue(7),
@@ -25,6 +27,7 @@ describe('AdminAnalyticsService', () => {
       peakConcurrencyByHour: vi.fn().mockResolvedValue([]),
       dailyActiveUsers: vi.fn().mockResolvedValue([]),
     };
+
     service = new AdminAnalyticsService(stats as unknown as AdminAnalyticsRepository);
   });
 
@@ -46,9 +49,12 @@ describe('AdminAnalyticsService', () => {
         messagesLast24h: 33,
         groups: 4,
       });
+
       expect(res.trends.signups).toHaveLength(15);
       const may10 = res.trends.signups.find((p) => p.date === '2026-05-10');
+
       expect(may10?.count).toBe(5);
+
       expect(res.trends.signups.find((p) => p.date === '2026-05-11')?.count).toBe(0);
     });
   });
@@ -58,11 +64,14 @@ describe('AdminAnalyticsService', () => {
       stats.topHosts.mockResolvedValueOnce([
         { id: 'h1', name: 'H', email: 'h@x.com', hosted: BigInt(3), totalMinutes: 42.7 },
       ]);
+
       stats.peakConcurrencyByHour.mockResolvedValueOnce([{ hour: 9, count: BigInt(6) }]);
       const res = await service.deep();
 
       expect(res.averageMeetingMinutes).toBe(12);
+
       expect(res.totalCompletedMeetings).toBe(4);
+
       expect(res.topHosts[0]).toEqual({
         id: 'h1',
         name: 'H',
@@ -70,8 +79,11 @@ describe('AdminAnalyticsService', () => {
         hostedCount: 3,
         totalDurationMinutes: 43,
       });
+
       expect(res.peakConcurrencyByHour).toHaveLength(24);
+
       expect(res.peakConcurrencyByHour[9]).toEqual({ hour: 9, count: 6 });
+
       expect(res.peakConcurrencyByHour[0]).toEqual({ hour: 0, count: 0 });
     });
   });

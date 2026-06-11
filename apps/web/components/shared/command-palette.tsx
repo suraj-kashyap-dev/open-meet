@@ -98,7 +98,9 @@ export function CommandPalette() {
       }
 
       e.preventDefault();
+
       e.stopPropagation();
+
       toggle();
     };
 
@@ -111,11 +113,13 @@ export function CommandPalette() {
 
   const closePalette = () => {
     setOpen(false);
+
     setQuery('');
   };
 
   const runAction = (fn: () => void | Promise<void>) => {
     closePalette();
+
     void fn();
   };
 
@@ -130,10 +134,12 @@ export function CommandPalette() {
   const onCreateMeeting = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
+
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message =
         err instanceof ApiClientError ? err.message : t('command.create-meeting-error');
+
       toast.error(message);
     }
   };
@@ -143,6 +149,7 @@ export function CommandPalette() {
 
     if (!trimmed) {
       toast.error(t('command.join-code-required'));
+
       return;
     }
 

@@ -24,6 +24,7 @@ describe('WsJwtGuard', () => {
   beforeEach(() => {
     verifyAsync = vi.fn().mockResolvedValue({ sub: 'u1', email: 'a@x.com', name: 'Alice' });
     const config = { getOrThrow: () => 'secret' } as unknown as ConfigService<ApiEnv, true>;
+
     guard = new WsJwtGuard({ verifyAsync } as unknown as JwtService, config);
   });
 
@@ -33,12 +34,15 @@ describe('WsJwtGuard', () => {
         data: { user: { id: 'u1' } },
         handshake: { auth: {}, headers: {} },
       } as never;
+
       await expect(guard.canActivate(contextWith(socket))).resolves.toBe(true);
+
       expect(verifyAsync).not.toHaveBeenCalled();
     });
 
     it('should reject when no token is supplied', async () => {
       const socket = { data: {}, handshake: { auth: {}, headers: {} } } as never;
+
       await expect(guard.canActivate(contextWith(socket))).rejects.toBeInstanceOf(WsException);
     });
 
@@ -47,7 +51,9 @@ describe('WsJwtGuard', () => {
         data: {} as Record<string, unknown>,
         handshake: { auth: { token: 'tok' }, headers: {} },
       };
+
       await expect(guard.canActivate(contextWith(socket as never))).resolves.toBe(true);
+
       expect(socket.data.user).toEqual({
         id: 'u1',
         email: 'a@x.com',
@@ -60,6 +66,7 @@ describe('WsJwtGuard', () => {
     it('should reject when verification fails', async () => {
       verifyAsync.mockRejectedValueOnce(new Error('bad sig'));
       const socket = { data: {}, handshake: { auth: { token: 'tok' }, headers: {} } } as never;
+
       await expect(guard.canActivate(contextWith(socket))).rejects.toBeInstanceOf(WsException);
     });
   });

@@ -95,6 +95,7 @@ function ImageViewer({
 
   const reset = useCallback(() => {
     setScale(1);
+
     setOffset({ x: 0, y: 0 });
   }, []);
 
@@ -104,9 +105,11 @@ function ImageViewer({
         MAX_SCALE,
         Math.max(MIN_SCALE, Math.round((current + delta) * 100) / 100),
       );
+
       if (next === MIN_SCALE) {
         setOffset({ x: 0, y: 0 });
       }
+
       return next;
     });
   }, []);
@@ -114,16 +117,19 @@ function ImageViewer({
   // Non-passive wheel listener so we can zoom instead of scrolling the page.
   useEffect(() => {
     const stage = stageRef.current;
+
     if (!stage) {
       return;
     }
 
     const onWheel = (event: WheelEvent) => {
       event.preventDefault();
+
       zoomBy(event.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP);
     };
 
     stage.addEventListener('wheel', onWheel, { passive: false });
+
     return () => stage.removeEventListener('wheel', onWheel);
   }, [zoomBy]);
 
@@ -131,15 +137,19 @@ function ImageViewer({
     if (scale === MIN_SCALE) {
       return;
     }
+
     event.currentTarget.setPointerCapture(event.pointerId);
+
     dragRef.current = { x: event.clientX, y: event.clientY, ox: offset.x, oy: offset.y };
   };
 
   const onPointerMove = (event: React.PointerEvent) => {
     const drag = dragRef.current;
+
     if (!drag) {
       return;
     }
+
     setOffset({ x: drag.ox + (event.clientX - drag.x), y: drag.oy + (event.clientY - drag.y) });
   };
 
@@ -147,6 +157,7 @@ function ImageViewer({
     if (dragRef.current) {
       event.currentTarget.releasePointerCapture?.(event.pointerId);
     }
+
     dragRef.current = null;
   };
 
@@ -308,6 +319,7 @@ function PdfViewer({ src, label, onClose }: { src: string; label: string; onClos
     let created: string | undefined;
 
     setObjectUrl(null);
+
     setFailed(false);
 
     fetch(src, { credentials: 'include' })

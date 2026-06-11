@@ -40,10 +40,13 @@ export default function AdministratorsPage() {
 
     try {
       await remove.mutateAsync(deleting.id);
+
       toast.success(t('delete-dialog.success', { name: deleting.name }));
+
       setDeleting(null);
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('delete-dialog.error');
+
       toast.error(message);
     }
   };

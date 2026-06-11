@@ -11,7 +11,9 @@ describe('ActivityService', () => {
 
   beforeEach(() => {
     prisma = { chatMessage: { findMany: vi.fn() } };
+
     serializer = { message: vi.fn((row) => ({ id: row.id })) };
+
     service = new ActivityService(
       prisma as unknown as PrismaService,
       serializer as unknown as MessagingSerializer,
@@ -25,6 +27,7 @@ describe('ActivityService', () => {
       await service.feed('u1');
 
       const arg = prisma.chatMessage.findMany.mock.calls[0]?.[0];
+
       expect(arg).toMatchObject({
         where: { deletedAt: null, mentions: { some: { mentionedUserId: 'u1' } } },
         orderBy: { createdAt: 'desc' },
@@ -45,6 +48,7 @@ describe('ActivityService', () => {
         expect.objectContaining({ id: 'm1' }),
         'u1',
       );
+
       expect(result.items).toEqual([
         { message: { id: 'm1' }, conversationId: 'c1', conversationTitle: 'General' },
         { message: { id: 'm2' }, conversationId: 'c2', conversationTitle: null },

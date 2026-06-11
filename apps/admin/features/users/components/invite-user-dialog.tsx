@@ -33,6 +33,7 @@ export function InviteUserDialog({
 
   const reset = () => {
     setName('');
+
     setEmail('');
   };
 
@@ -43,8 +44,11 @@ export function InviteUserDialog({
 
     try {
       await invite.mutateAsync({ name: name.trim(), email: email.trim() });
+
       toast.success(t('invite.success', { email: email.trim() }));
+
       reset();
+
       onOpenChange(false);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('invite.error'));
@@ -55,7 +59,10 @@ export function InviteUserDialog({
     <Dialog
       open={open}
       onOpenChange={(next) => {
-        if (!next) reset();
+        if (!next) {
+          reset();
+        }
+
         onOpenChange(next);
       }}
     >

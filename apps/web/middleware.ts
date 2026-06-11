@@ -14,7 +14,9 @@ export default function middleware(request: NextRequest) {
 
   if (segments.length === 1 && isLocale(segments[0])) {
     const url = request.nextUrl.clone();
+
     url.pathname = `/${segments[0]}/chat`;
+
     return NextResponse.redirect(url);
   }
 

@@ -51,8 +51,11 @@ export function KnockNotifier({ socket, code }: Props) {
 
         return [...prev, payload];
       });
+
       toast.message(t('knock.toast-asking', { name: payload.name }));
+
       knockSound.play();
+
       notification.notify(t('knock.notify-title', { name: payload.name }), {
         body: t('knock.notify-body'),
         tag: `knock-${code}`,
@@ -65,10 +68,12 @@ export function KnockNotifier({ socket, code }: Props) {
     };
 
     socket.on(ServerEvent.KNOCK_REQUESTED, onRequested);
+
     socket.on(ServerEvent.KNOCK_CANCELLED, onCancelled);
 
     return () => {
       socket.off(ServerEvent.KNOCK_REQUESTED, onRequested);
+
       socket.off(ServerEvent.KNOCK_CANCELLED, onCancelled);
     };
   }, [socket, code, knockSound, notification, setParticipantsOpen, t]);
@@ -83,6 +88,7 @@ export function KnockNotifier({ socket, code }: Props) {
       userId,
       admit,
     });
+
     setPending((prev) => prev.filter((p) => p.userId !== userId));
   };
 

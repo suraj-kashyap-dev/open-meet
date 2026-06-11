@@ -33,15 +33,18 @@ describe('GroupsRepository', () => {
       update: vi.fn().mockResolvedValue({ id: 'c1' }),
       delete: vi.fn().mockResolvedValue({ id: 'c1' }),
     };
+
     conversationMember = {
       createMany: vi.fn().mockResolvedValue({ count: 0 }),
       deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
       update: vi.fn().mockResolvedValue({}),
       findMany: vi.fn().mockResolvedValue([]),
     };
+
     user = {
       findMany: vi.fn().mockResolvedValue([]),
     };
+
     repo = new GroupsRepository({
       conversation,
       conversationMember,
@@ -57,6 +60,7 @@ describe('GroupsRepository', () => {
         description: 'desc',
         memberIds: ['creator', 'm1', 'm2'],
       });
+
       expect(conversation.create).toHaveBeenCalledWith({
         data: {
           type: ConversationType.GROUP,
@@ -78,17 +82,21 @@ describe('GroupsRepository', () => {
   describe('pickInvitableUsers()', () => {
     it('should return an empty array without querying when no ids are given', async () => {
       const result = await repo.pickInvitableUsers([]);
+
       expect(result).toEqual([]);
+
       expect(user.findMany).not.toHaveBeenCalled();
     });
 
     it('should query chat-enabled users and map to ids', async () => {
       user.findMany.mockResolvedValue([{ id: 'a' }, { id: 'b' }]);
       const result = await repo.pickInvitableUsers(['a', 'b', 'c']);
+
       expect(user.findMany).toHaveBeenCalledWith({
         where: { id: { in: ['a', 'b', 'c'] }, chatDisabled: false },
         select: { id: true },
       });
+
       expect(result).toEqual(['a', 'b']);
     });
   });
@@ -96,6 +104,7 @@ describe('GroupsRepository', () => {
   describe('findById()', () => {
     it('should query the conversation by id', async () => {
       await repo.findById('c1');
+
       expect(conversation.findUnique).toHaveBeenCalledWith({ where: { id: 'c1' } });
     });
   });
@@ -103,6 +112,7 @@ describe('GroupsRepository', () => {
   describe('update()', () => {
     it('should update the conversation fields with members include', async () => {
       await repo.update('c1', { title: 'New', description: null });
+
       expect(conversation.update).toHaveBeenCalledWith({
         where: { id: 'c1' },
         data: { title: 'New', description: null },
@@ -114,11 +124,13 @@ describe('GroupsRepository', () => {
   describe('addMembers()', () => {
     it('should short-circuit when no ids are given', async () => {
       await repo.addMembers('c1', []);
+
       expect(conversationMember.createMany).not.toHaveBeenCalled();
     });
 
     it('should create member rows skipping duplicates', async () => {
       await repo.addMembers('c1', ['m1', 'm2']);
+
       expect(conversationMember.createMany).toHaveBeenCalledWith({
         data: [
           { conversationId: 'c1', userId: 'm1', role: ConversationMemberRole.MEMBER },
@@ -132,6 +144,7 @@ describe('GroupsRepository', () => {
   describe('removeMember()', () => {
     it('should delete the membership row', async () => {
       await repo.removeMember('c1', 'm1');
+
       expect(conversationMember.deleteMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1', userId: 'm1' },
       });
@@ -141,6 +154,7 @@ describe('GroupsRepository', () => {
   describe('setMemberRole()', () => {
     it('should update the membership role', async () => {
       await repo.setMemberRole('c1', 'm1', ConversationMemberRole.ADMIN);
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'm1' } },
         data: { role: ConversationMemberRole.ADMIN },
@@ -151,6 +165,7 @@ describe('GroupsRepository', () => {
   describe('delete()', () => {
     it('should delete the conversation', async () => {
       await repo.delete('c1');
+
       expect(conversation.delete).toHaveBeenCalledWith({ where: { id: 'c1' } });
     });
   });
@@ -158,6 +173,7 @@ describe('GroupsRepository', () => {
   describe('findWithMembers()', () => {
     it('should query the conversation with the list include', async () => {
       await repo.findWithMembers('c1');
+
       expect(conversation.findUnique).toHaveBeenCalledWith({
         where: { id: 'c1' },
         include: conversationListInclude,
@@ -169,10 +185,12 @@ describe('GroupsRepository', () => {
     it('should select and map member userIds', async () => {
       conversationMember.findMany.mockResolvedValue([{ userId: 'a' }, { userId: 'b' }]);
       const ids = await repo.memberUserIds('c1');
+
       expect(conversationMember.findMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1' },
         select: { userId: true },
       });
+
       expect(ids).toEqual(['a', 'b']);
     });
   });

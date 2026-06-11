@@ -39,6 +39,7 @@ export class LiveKitService {
     const apiSecret = this.config.getOrThrow<string>('LIVEKIT_API_SECRET');
 
     this.webhookReceiver = new WebhookReceiver(apiKey, apiSecret);
+
     this.roomService = new RoomServiceClient(
       this.toHttpUrl(this.config.getOrThrow<string>('LIVEKIT_HOST')),
       apiKey,
@@ -75,6 +76,7 @@ export class LiveKitService {
     await this.meetings.assertWithinDurationLimit(input.meetingCode);
 
     const meeting = await this.meetings.findRawByCode(input.meetingCode);
+
     if (!meeting) {
       throw new NotFoundException({
         code: ApiErrorCode.MEETING_NOT_FOUND,
@@ -101,6 +103,7 @@ export class LiveKitService {
 
     if (isHost) {
       grant.roomAdmin = true;
+
       grant.roomCreate = true;
     }
 
@@ -189,6 +192,7 @@ export class LiveKitService {
 
     if (!info) {
       this.logger.warn(`Egress webhook had no egressInfo payload: ${event.event}`);
+
       return;
     }
 

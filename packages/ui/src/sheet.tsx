@@ -25,6 +25,7 @@ const SheetOverlay = forwardRef<
     {...props}
   />
 ));
+
 SheetOverlay.displayName = 'SheetOverlay';
 
 const sheetVariants = cva(

@@ -32,6 +32,7 @@ function makeServer() {
     }),
     in: () => ({ fetchSockets: () => Promise.resolve(hostSockets) }),
   } as unknown as Server;
+
   return {
     server,
     emits,
@@ -60,6 +61,7 @@ function makeClient(
       emit: (event: string, payload: unknown) => toEmits.push({ room, event, payload }),
     }),
   };
+
   return { client, emits, toEmits };
 }
 
@@ -72,6 +74,7 @@ describe('ChatGateway', () => {
 
   beforeEach(() => {
     chat = { send: vi.fn().mockResolvedValue({ id: 'msg1', content: 'hi' }) };
+
     meetings = {
       join: vi.fn().mockResolvedValue({
         meeting: { id: 'm1', code: 'abc', hostId: 'h1' },
@@ -80,12 +83,14 @@ describe('ChatGateway', () => {
       leave: vi.fn().mockResolvedValue(undefined),
       findRawByCode: vi.fn().mockResolvedValue({ id: 'm1', code: 'abc', hostId: 'h2' }),
     };
+
     jwt = {
       verifyAsync: vi.fn().mockResolvedValue({ sub: 'u1', email: 'a@x.com', name: 'Alice' }),
     };
     const config = { getOrThrow: () => 'secret' } as unknown as ConfigService<ApiEnv, true>;
     const bus = { attach: vi.fn() } as unknown as MeetingBus;
     const pushQueue = { add: vi.fn() } as unknown as Queue;
+
     gateway = new ChatGateway(
       chat as unknown as ChatService,
       meetings as unknown as MeetingsService,
@@ -94,14 +99,18 @@ describe('ChatGateway', () => {
       bus,
       pushQueue,
     );
+
     srv = makeServer();
+
     gateway.server = srv.server;
   });
 
   describe('handleConnection()', () => {
     it('should authenticate and attach the user from the token', async () => {
       const { client } = makeClient(undefined, { auth: { token: 'tok' }, headers: {} });
+
       await gateway.handleConnection(client as never);
+
       expect(client.data.user).toEqual({
         id: 'u1',
         email: 'a@x.com',
@@ -109,12 +118,15 @@ describe('ChatGateway', () => {
         isGuest: false,
         guestMeetingCode: null,
       });
+
       expect(client.disconnect).not.toHaveBeenCalled();
     });
 
     it('should disconnect when no token is present', async () => {
       const { client } = makeClient(undefined, { auth: {}, headers: {} });
+
       await gateway.handleConnection(client as never);
+
       expect(client.disconnect).toHaveBeenCalledWith(true);
     });
   });
@@ -122,6 +134,7 @@ describe('ChatGateway', () => {
   describe('requireUser (auth on handlers)', () => {
     it('should reject an unauthenticated socket', async () => {
       const { client } = makeClient(undefined);
+
       await expect(
         gateway.onReaction(client as never, { meetingCode: 'abc', emoji: '👍' }),
       ).rejects.toBeInstanceOf(WsException);
@@ -131,9 +144,13 @@ describe('ChatGateway', () => {
   describe('onJoin()', () => {
     it('should join the meeting room and notify others for a non-host', async () => {
       const { client, toEmits } = makeClient(USER);
+
       await gateway.onJoin(client as never, { meetingCode: 'abc' });
+
       expect(client.join).toHaveBeenCalledWith('abc');
+
       expect(client.join).not.toHaveBeenCalledWith('host:abc');
+
       expect(toEmits).toContainEqual({
         room: 'abc',
         event: ServerEvent.PARTICIPANT_JOINED,
@@ -147,8 +164,11 @@ describe('ChatGateway', () => {
         participant: { id: 'p1' },
       });
       const { client } = makeClient(USER);
+
       await gateway.onJoin(client as never, { meetingCode: 'abc' });
+
       expect(client.join).toHaveBeenCalledWith('abc');
+
       expect(client.join).toHaveBeenCalledWith('host:abc');
     });
   });
@@ -156,9 +176,13 @@ describe('ChatGateway', () => {
   describe('onLeave()', () => {
     it('should leave the room and broadcast PARTICIPANT_LEFT', async () => {
       const { client } = makeClient(USER);
+
       await gateway.onLeave(client as never, { meetingCode: 'abc' });
+
       expect(meetings.leave).toHaveBeenCalledWith('abc', USER);
+
       expect(client.leave).toHaveBeenCalledWith('abc');
+
       expect(srv.emits).toContainEqual({
         room: 'abc',
         event: ServerEvent.PARTICIPANT_LEFT,
@@ -170,15 +194,18 @@ describe('ChatGateway', () => {
   describe('onChatSend()', () => {
     it('should reject an empty message with no attachments', async () => {
       const { client } = makeClient(USER);
+
       await expect(
         gateway.onChatSend(client as never, { meetingCode: 'abc', content: '   ' }),
       ).rejects.toBeInstanceOf(WsException);
+
       expect(chat.send).not.toHaveBeenCalled();
     });
 
     it('should reject when the meeting is unknown', async () => {
       meetings.findRawByCode.mockResolvedValueOnce(null);
       const { client } = makeClient(USER);
+
       await expect(
         gateway.onChatSend(client as never, { meetingCode: 'abc', content: 'hi' }),
       ).rejects.toBeInstanceOf(WsException);
@@ -186,17 +213,20 @@ describe('ChatGateway', () => {
 
     it('should persist and broadcast a valid message', async () => {
       const { client } = makeClient(USER);
+
       await gateway.onChatSend(client as never, {
         meetingCode: 'abc',
         content: ' hi ',
         attachmentIds: ['a1'],
       });
+
       expect(chat.send).toHaveBeenCalledWith({
         meetingId: 'm1',
         senderId: 'u1',
         content: 'hi',
         attachmentIds: ['a1'],
       });
+
       expect(srv.emits).toContainEqual({
         room: 'abc',
         event: ServerEvent.CHAT_MESSAGE,
@@ -208,7 +238,9 @@ describe('ChatGateway', () => {
   describe('onReaction()', () => {
     it('should broadcast the reaction to the room', async () => {
       const { client } = makeClient(USER);
+
       await gateway.onReaction(client as never, { meetingCode: 'abc', emoji: '🎉' });
+
       expect(srv.emits).toContainEqual({
         room: 'abc',
         event: ServerEvent.REACTION_RECEIVED,
@@ -218,6 +250,7 @@ describe('ChatGateway', () => {
 
     it('should reject a guest token targeting a different meeting code', async () => {
       const { client } = makeClient(GUEST_USER);
+
       await expect(
         gateway.onReaction(client as never, { meetingCode: 'abc', emoji: '🎉' }),
       ).rejects.toBeInstanceOf(WsException);
@@ -228,14 +261,18 @@ describe('ChatGateway', () => {
     it('should immediately deny the knock when no host is present', async () => {
       srv.setHostPresent(false);
       const { client, emits } = makeClient(USER);
+
       await gateway.onKnock(client as never, { meetingCode: 'abc' });
+
       expect(emits.some((e) => e.event === ServerEvent.KNOCK_RESOLVED)).toBe(true);
     });
 
     it('should notify the host room when a host is present', async () => {
       srv.setHostPresent(true);
       const { client } = makeClient(USER);
+
       await gateway.onKnock(client as never, { meetingCode: 'abc' });
+
       expect(
         srv.emits.some((e) => e.room === 'host:abc' && e.event === ServerEvent.KNOCK_REQUESTED),
       ).toBe(true);
@@ -244,6 +281,7 @@ describe('ChatGateway', () => {
     it('should reject a knock from the host themselves', async () => {
       meetings.findRawByCode.mockResolvedValueOnce({ id: 'm1', code: 'abc', hostId: 'u1' });
       const { client } = makeClient(USER);
+
       await expect(gateway.onKnock(client as never, { meetingCode: 'abc' })).rejects.toBeInstanceOf(
         WsException,
       );
@@ -253,6 +291,7 @@ describe('ChatGateway', () => {
   describe('onKnockRespond()', () => {
     it('should reject a non-host responder', async () => {
       const { client } = makeClient(USER);
+
       await expect(
         gateway.onKnockRespond(client as never, { meetingCode: 'abc', userId: 'u9', admit: true }),
       ).rejects.toBeInstanceOf(WsException);
@@ -262,7 +301,9 @@ describe('ChatGateway', () => {
   describe('onHandRaise()', () => {
     it('should broadcast HAND_RAISED to the room', async () => {
       const { client } = makeClient(USER);
+
       await gateway.onHandRaise(client as never, { meetingCode: 'abc' });
+
       expect(srv.emits).toContainEqual({
         room: 'abc',
         event: ServerEvent.HAND_RAISED,

@@ -81,17 +81,22 @@ export function CreateAdminDialog({ open, onClose }: Props) {
   const onSubmit = form.handleSubmit(async ({ confirmPassword: _confirm, ...values }) => {
     try {
       await create.mutateAsync(values);
+
       toast.success(t('create-dialog.success', { name: values.name }));
+
       form.reset();
+
       onClose();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('create-dialog.error');
+
       toast.error(message);
     }
   });
 
   const close = () => {
     form.reset();
+
     onClose();
   };
 

@@ -37,11 +37,15 @@ export function DeleteUserDialog({ user, onClose, onDeleted }: Props) {
 
     try {
       await del.mutateAsync(user.id);
+
       toast.success(t('success', { email: user.email }));
+
       onClose();
+
       onDeleted?.();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('error');
+
       toast.error(message);
     }
   };

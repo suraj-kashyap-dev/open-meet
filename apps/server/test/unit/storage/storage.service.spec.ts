@@ -11,9 +11,11 @@ import { StorageService } from '@/storage/services/storage.service';
 
 async function streamToString(stream: Readable): Promise<string> {
   const chunks: Buffer[] = [];
+
   for await (const chunk of stream) {
     chunks.push(chunk as Buffer);
   }
+
   return Buffer.concat(chunks).toString('utf8');
 }
 
@@ -26,6 +28,7 @@ describe('StorageService', () => {
     const config = {
       getOrThrow: (k: string) => ({ LOCAL_STORAGE_DIR: dir, API_PUBLIC_URL: 'http://api' })[k],
     } as unknown as ConfigService<ApiEnv, true>;
+
     service = new StorageService(config);
   });
 
@@ -45,9 +48,13 @@ describe('StorageService', () => {
     it('should round-trip a stored object and remove it on delete', async () => {
       await service.put({ key: 'a/f.txt', buffer: Buffer.from('hello'), mime: 'text/plain' });
       const read = await service.read('a/f.txt');
+
       expect(read).not.toBeNull();
+
       expect(await streamToString(read!.stream)).toBe('hello');
+
       await service.delete('a/f.txt');
+
       await expect(service.read('a/f.txt')).resolves.toBeNull();
     });
   });

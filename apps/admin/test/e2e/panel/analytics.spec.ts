@@ -8,9 +8,11 @@ test.describe('Admin /analytics page', () => {
     page,
   }) => {
     await mockAdminApi(page);
+
     await page.goto('/en/analytics');
 
     await expect(page.getByRole('heading', { name: 'Analytics', level: 1 })).toBeVisible();
+
     await expect(page.getByText('Avg meeting length')).toBeVisible();
   });
 
@@ -22,9 +24,11 @@ test.describe('Admin /analytics page', () => {
         grantedSet: ['analytics.view'],
       },
     });
+
     await page.goto('/en/analytics');
 
     await expect(page.getByRole('heading', { name: 'Analytics', level: 1 })).toBeVisible();
+
     await expect(page.getByText('Avg meeting length')).toHaveCount(0);
   });
 
@@ -38,6 +42,7 @@ test.describe('Admin /analytics page', () => {
         grantedSet: ['users.view'],
       },
     });
+
     await page.goto('/en/users');
 
     await expect(page.getByRole('link', { name: 'Analytics' })).toHaveCount(0);

@@ -37,10 +37,13 @@ export function EndMeetingDialog({ meeting, onClose }: Props) {
 
     try {
       await forceEnd.mutateAsync(meeting.id);
+
       toast.success(t('success', { code: meeting.code }));
+
       onClose();
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('error');
+
       toast.error(message);
     } finally {
       setBusy(false);

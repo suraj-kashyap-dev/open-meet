@@ -18,11 +18,13 @@ describe('AdminMeetingsRepository', () => {
       updateMany: vi.fn().mockResolvedValue({ count: 3 }),
       delete: vi.fn().mockResolvedValue({ id: 'm1' }),
     };
+
     participant = {
       count: vi.fn().mockResolvedValue(2),
       findUnique: vi.fn().mockResolvedValue(null),
       updateMany: vi.fn().mockResolvedValue({ count: 1 }),
     };
+
     repo = new AdminMeetingsRepository({ meeting, participant } as unknown as PrismaService);
   });
 
@@ -52,7 +54,9 @@ describe('AdminMeetingsRepository', () => {
   describe('listWith() / countWith()', () => {
     it('should pass the prebuilt where and orderBy straight through', async () => {
       const where = { status: MeetingStatus.ENDED };
+
       await repo.listWith({ skip: 5, take: 5, where, orderBy: { startedAt: 'desc' } });
+
       expect(meeting.findMany.mock.calls[0][0]).toMatchObject({
         skip: 5,
         take: 5,
@@ -61,6 +65,7 @@ describe('AdminMeetingsRepository', () => {
       });
 
       await repo.countWith(where);
+
       expect(meeting.count.mock.calls[0][0].where).toBe(where);
     });
   });
@@ -68,6 +73,7 @@ describe('AdminMeetingsRepository', () => {
   describe('countActiveParticipants()', () => {
     it('should ignore participants who have left', async () => {
       await expect(repo.countActiveParticipants('m1')).resolves.toBe(2);
+
       expect(participant.count).toHaveBeenCalledWith({ where: { meetingId: 'm1', leftAt: null } });
     });
   });
@@ -75,6 +81,7 @@ describe('AdminMeetingsRepository', () => {
   describe('listActive()', () => {
     it('should select only the id and code of ACTIVE meetings', async () => {
       await repo.listActive();
+
       expect(meeting.findMany).toHaveBeenCalledWith({
         where: { status: MeetingStatus.ACTIVE },
         select: { id: true, code: true },
@@ -85,6 +92,7 @@ describe('AdminMeetingsRepository', () => {
   describe('markAllActiveEnded()', () => {
     it('should end every active meeting and return the affected count', async () => {
       await expect(repo.markAllActiveEnded()).resolves.toBe(3);
+
       expect(meeting.updateMany).toHaveBeenCalledWith({
         where: { status: MeetingStatus.ACTIVE },
         data: { status: MeetingStatus.ENDED, endedAt: expect.any(Date) },

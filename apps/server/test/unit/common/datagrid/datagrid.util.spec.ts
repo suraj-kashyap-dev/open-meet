@@ -70,6 +70,7 @@ describe('paginate()', () => {
 
   it('clamps below 1 and above the max page size', () => {
     expect(paginate({ page: 0, pageSize: 0 })).toEqual({ page: 1, pageSize: 1, skip: 0, take: 1 });
+
     expect(paginate({ pageSize: 5000 }).pageSize).toBe(100);
   });
 });
@@ -126,20 +127,28 @@ describe('buildDatagrid()', () => {
       label: 't:datagrid.widgets.columns.name',
       sortable: true,
     });
+
     expect(result.filters[0].label).toBe('t:datagrid.widgets.filters.status');
+
     expect(result.filters[0].options?.[0]).toEqual({
       value: 'ACTIVE',
       label: 't:datagrid.widgets.filters.status.active',
     });
+
     expect(result.actions[1]).toMatchObject({ key: 'delete', style: 'danger', confirm: true });
   });
 
   it('computes pagination meta and echoes resource + sort + rows', () => {
     expect(result.resource).toBe('widgets');
+
     expect(result.rows).toEqual(rows);
+
     expect(result.sort).toEqual({ key: 'name', dir: 'asc' });
+
     expect(result.pagination).toEqual({ page: 2, pageSize: 20, total: 42, totalPages: 3 });
+
     expect(result.searchable).toBe(true);
+
     expect(result.searchPlaceholder).toBe('t:datagrid.widgets.search');
   });
 

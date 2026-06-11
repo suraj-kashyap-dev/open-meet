@@ -14,6 +14,7 @@ export function GuestGuard({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (isAuthed) {
       const param = new URLSearchParams(window.location.search).get(REDIRECT_PARAM);
+
       router.replace(resolveRedirect(param));
     }
   }, [isAuthed, router]);

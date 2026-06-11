@@ -13,6 +13,7 @@ import {
 describe('flattenLeaves()', () => {
   it('should yield every leaf as a dot-key when given a nested tree', () => {
     const tree = { a: { b: null, c: { d: null } }, e: null } as const;
+
     expect(flattenLeaves(tree)).toEqual(['a.b', 'a.c.d', 'e']);
   });
 
@@ -66,6 +67,7 @@ describe('expandToLeaves()', () => {
 
   it('should deduplicate when both a parent and one of its leaves are selected', () => {
     const result = expandToLeaves(['analytics', 'analytics.view'], PERMISSION_TREE_ADMIN);
+
     expect(result).toEqual(['analytics.view', 'analytics.view-deep']);
   });
 
@@ -89,6 +91,7 @@ describe('unknownKeys()', () => {
 describe('buildCatalogTree()', () => {
   it('should yield a recursive DTO with i18n label keys (parents use ._self)', () => {
     const tree = { a: { b: null }, c: null } as const;
+
     expect(buildCatalogTree(tree, 'rbac.permissions')).toEqual([
       {
         key: 'a',

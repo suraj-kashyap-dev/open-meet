@@ -64,6 +64,7 @@ export function RoleDetailPage({ roleId }: Props) {
           onSubmit={async (input) => {
             try {
               await update.mutateAsync({ id: role.id, body: input });
+
               toast.success(t('edit.success'));
             } catch (err) {
               toast.error(err instanceof ApiClientError ? err.message : t('edit.error'));

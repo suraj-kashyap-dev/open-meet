@@ -13,6 +13,7 @@ export function useSound(name: SoundName): { play: () => void } {
     if (!enabled) {
       return;
     }
+
     void playSound(name);
   }, [enabled, name]);
 

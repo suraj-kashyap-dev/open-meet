@@ -55,6 +55,7 @@ export function ComposerPreferences({ settings }: { settings: UserSettingsDto | 
   const onSubmit = handleSubmit(async (v) => {
     try {
       await updateSettings.mutateAsync({ composerPreferences: v });
+
       toast.success(t('toast.preferences-updated'));
     } catch (err) {
       toast.error(

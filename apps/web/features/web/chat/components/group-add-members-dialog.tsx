@@ -45,15 +45,22 @@ export function GroupAddMembersDialog({
 
   const reset = () => {
     setSearch('');
+
     setPicked({});
   };
 
   const submit = async () => {
-    if (pickedList.length === 0) return;
+    if (pickedList.length === 0) {
+      return;
+    }
+
     try {
       await add.mutateAsync(pickedList.map((m) => m.id));
+
       toast.success(t('group.members-added'));
+
       reset();
+
       onOpenChange(false);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('group.action-failed'));
@@ -64,7 +71,10 @@ export function GroupAddMembersDialog({
     <Dialog
       open={open}
       onOpenChange={(next) => {
-        if (!next) reset();
+        if (!next) {
+          reset();
+        }
+
         onOpenChange(next);
       }}
     >
@@ -82,12 +92,15 @@ export function GroupAddMembersDialog({
             picked={picked}
             onPick={(member) => {
               setPicked((prev) => ({ ...prev, [member.id]: member }));
+
               setSearch('');
             }}
             onRemove={(userId) =>
               setPicked((prev) => {
                 const next = { ...prev };
+
                 delete next[userId];
+
                 return next;
               })
             }

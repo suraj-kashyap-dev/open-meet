@@ -53,10 +53,12 @@ export class SettingsService {
 
     if (Object.keys(data).length === 0) {
       const row = await this.repo.ensureForUser(userId);
+
       return this.toDto(row);
     }
 
     const updated = await this.repo.update(userId, data);
+
     return this.toDto(updated);
   }
 

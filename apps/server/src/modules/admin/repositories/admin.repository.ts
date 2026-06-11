@@ -8,7 +8,10 @@ export class AdminRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   searchWhere(search?: string): Prisma.AdminWhereInput {
-    if (!search) return {};
+    if (!search) {
+      return {};
+    }
+
     return {
       OR: [
         { name: { contains: search, mode: 'insensitive' } },

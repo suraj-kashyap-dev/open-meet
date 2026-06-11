@@ -40,6 +40,7 @@ export function AvatarUploader({ user }: { user: UserDto }) {
 
   const onFileChange = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = event.target.files?.[0];
+
     event.target.value = '';
 
     if (!file) {
@@ -48,6 +49,7 @@ export function AvatarUploader({ user }: { user: UserDto }) {
 
     if (!AVATAR_MIMES.includes(file.type)) {
       toast.error(t('validation.avatar-invalid-type'));
+
       return;
     }
 
@@ -55,11 +57,13 @@ export function AvatarUploader({ user }: { user: UserDto }) {
       toast.error(
         t('validation.avatar-too-large', { mb: Math.round(AVATAR_MAX_BYTES / 1024 / 1024) }),
       );
+
       return;
     }
 
     try {
       await uploadAvatar.mutateAsync(file);
+
       toast.success(t('toast.avatar-updated'));
     } catch (err) {
       toast.error(messageFromError(err, t('toast.avatar-upload-failed')));
@@ -69,6 +73,7 @@ export function AvatarUploader({ user }: { user: UserDto }) {
   const onRemove = async (): Promise<void> => {
     try {
       await deleteAvatar.mutateAsync();
+
       toast.success(t('toast.avatar-removed'));
     } catch (err) {
       toast.error(messageFromError(err, t('toast.avatar-remove-failed')));

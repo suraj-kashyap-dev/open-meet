@@ -13,6 +13,7 @@ async function seedInvite(
   opts: { email: string; name?: string; token: string; expiresInMs?: number },
 ): Promise<void> {
   const prisma = app.get(PrismaService);
+
   await prisma.userInvite.create({
     data: {
       email: opts.email.toLowerCase(),
@@ -45,9 +46,13 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/invite/tok-ada');
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.email).toBe('ada@example.com');
+
       expect(res.body.data.name).toBe('Ada Lovelace');
+
       expect(res.body.data.expiresAt).toBeTypeOf('string');
     });
 
@@ -55,7 +60,9 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/invite/does-not-exist');
 
       expect(res.status).toBe(404);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('INVITE_INVALID');
     });
   });
@@ -69,16 +76,21 @@ describe('Auth (e2e)', () => {
         .send({ token: 'tok-accept', password: 'secretpass1' });
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(res.body.data.user.email).toBe('ada@example.com');
 
       const setCookie = res.headers['set-cookie'] as unknown as string[];
+
       expect(setCookie.join(';')).toContain('access_token=');
+
       expect(setCookie.some((c) => /httponly/i.test(c))).toBe(true);
 
       const login = await http(app)
         .post('/api/auth/login')
         .send({ email: 'ada@example.com', password: 'secretpass1' });
+
       expect(login.status).toBe(200);
     });
 
@@ -88,12 +100,15 @@ describe('Auth (e2e)', () => {
       const first = await http(app)
         .post('/api/auth/invite/accept')
         .send({ token: 'tok-once', password: 'secretpass1' });
+
       expect(first.status).toBe(200);
 
       const second = await http(app)
         .post('/api/auth/invite/accept')
         .send({ token: 'tok-once', password: 'secretpass1' });
+
       expect(second.status).toBe(404);
+
       expect(second.body.error.code).toBe('INVITE_INVALID');
     });
 
@@ -105,7 +120,9 @@ describe('Auth (e2e)', () => {
         .send({ token: 'tok-short', password: 'x' });
 
       expect(res.status).toBe(400);
+
       expect(res.body.success).toBe(false);
+
       expect(res.body.error.code).toBe('VALIDATION_FAILED');
     });
   });
@@ -118,6 +135,7 @@ describe('Auth (e2e)', () => {
         .send({ email: 'ada@example.com', password: 'wrong-password' });
 
       expect(res.status).toBe(401);
+
       expect(res.body.success).toBe(false);
     });
   });
@@ -131,13 +149,17 @@ describe('Auth (e2e)', () => {
       const res = await http(app).get('/api/auth/me').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.user.email).toBe('ada@example.com');
+
       expect(typeof res.body.data.canCreateGroups).toBe('boolean');
     });
 
     it('should return 401 without authentication', async () => {
       const res = await http(app).get('/api/auth/me');
+
       expect(res.status).toBe(401);
+
       expect(res.body.error.code).toBe('UNAUTHORIZED');
     });
   });

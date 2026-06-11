@@ -19,6 +19,7 @@ export function flatten(value: JsonObject, prefix = ''): Entry[] {
 
     if (isPlainObject(child)) {
       entries.push({ path, kind: 'object' });
+
       entries.push(...flatten(child, path));
     } else {
       entries.push({ path, kind: 'value' });
@@ -53,11 +54,13 @@ export function diffShapes(base: Entry[], target: Entry[], baseLocale: string): 
       `missing ${missing.length} key(s) present in "${baseLocale}":\n${indent(missing.join('\n'))}`,
     );
   }
+
   if (extra.length) {
     problems.push(
       `${extra.length} extra key(s) not present in "${baseLocale}":\n${indent(extra.join('\n'))}`,
     );
   }
+
   if (reshaped.length) {
     problems.push(
       `${reshaped.length} key(s) with a different shape (object vs value):\n${indent(reshaped.join('\n'))}`,

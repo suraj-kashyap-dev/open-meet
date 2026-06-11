@@ -16,6 +16,7 @@ describe('AdminAuthGuard', () => {
 
     it('should throw Unauthorized when there is no admin or an error', () => {
       expect(() => guard.handleRequest(null, null)).toThrow(UnauthorizedException);
+
       expect(() => guard.handleRequest(new Error('x'), null)).toThrow(UnauthorizedException);
     });
   });

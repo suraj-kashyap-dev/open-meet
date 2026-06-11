@@ -32,10 +32,15 @@ describe('PinsService', () => {
 
   beforeEach(() => {
     pins = { pin: vi.fn(), unpin: vi.fn(), listPinned: vi.fn() };
+
     messages = { findMeta: vi.fn().mockResolvedValue(meta) };
+
     permissions = { assertConversationMember: vi.fn() };
+
     serializer = { message: vi.fn() };
+
     bus = { emit: vi.fn() };
+
     service = new PinsService(
       pins as unknown as PinsRepository,
       messages as unknown as MessagesRepository,
@@ -50,7 +55,9 @@ describe('PinsService', () => {
       await service.pin('m1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(pins.pin).toHaveBeenCalledWith('c1', 'm1', 'u1');
+
       expect(bus.emit).toHaveBeenCalledWith(userRoom('u1'), ChatServerEvent.PIN_UPDATE, {
         conversationId: 'c1',
         messageId: 'm1',
@@ -60,6 +67,7 @@ describe('PinsService', () => {
 
     it('should reject when the message does not exist', async () => {
       messages.findMeta.mockResolvedValue(null);
+
       await expect(service.pin('mX', 'u1')).rejects.toBeInstanceOf(NotFoundException);
     });
   });
@@ -69,6 +77,7 @@ describe('PinsService', () => {
       await service.unpin('m1', 'u1');
 
       expect(pins.unpin).toHaveBeenCalledWith('m1', 'u1');
+
       expect(bus.emit).toHaveBeenCalledWith(userRoom('u1'), ChatServerEvent.PIN_UPDATE, {
         conversationId: 'c1',
         messageId: 'm1',
@@ -80,16 +89,21 @@ describe('PinsService', () => {
   describe('list()', () => {
     it('should gate on membership and serialize the viewer pinned messages with pinned=true', async () => {
       const row = { id: 'm1', conversationId: 'c1' };
+
       pins.listPinned.mockResolvedValue([row]);
+
       serializer.message.mockReturnValue({ id: 'm1', pinned: true });
 
       const result = await service.list('c1', 'u1');
 
       expect(permissions.assertConversationMember).toHaveBeenCalledWith('c1', 'u1');
+
       expect(pins.listPinned).toHaveBeenCalledWith('c1', 'u1');
+
       expect(serializer.message).toHaveBeenCalledWith(row, 'u1', {
         pinnedMessageIds: expect.any(Set),
       });
+
       expect(result).toEqual({ items: [{ id: 'm1', pinned: true }] });
     });
   });

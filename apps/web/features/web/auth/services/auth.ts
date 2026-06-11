@@ -25,7 +25,9 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
     form.append('file', file, file.name);
 
     const xhr = new XMLHttpRequest();
+
     xhr.open('POST', url);
+
     xhr.withCredentials = true;
 
     if (options.onProgress) {
@@ -43,6 +45,7 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
         reject(
           new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
         );
+
         return;
       }
 
@@ -52,6 +55,7 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
         body = JSON.parse(xhr.responseText);
       } catch {
         reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
+
         return;
       }
 
@@ -63,6 +67,7 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
 
       if (!envelope.success || !envelope.data) {
         const err = envelope.error;
+
         reject(
           new ApiClientError(
             err?.code ?? 'UPLOAD_FAILED',
@@ -70,6 +75,7 @@ function uploadAvatar(file: File, options: UploadAvatarOptions = {}): Promise<Us
             err?.message ?? 'Upload failed',
           ),
         );
+
         return;
       }
 

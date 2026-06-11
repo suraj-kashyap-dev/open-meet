@@ -59,7 +59,9 @@ describe('UploadsService', () => {
 
       expect(storage.put).toHaveBeenCalledTimes(1);
       const putArg = storage.put.mock.calls[0][0] as { key: string; mime: string };
+
       expect(putArg.key).toMatch(/^attachments\/u1\/[a-f0-9]{24}\.png$/);
+
       expect(putArg.mime).toBe('image/png');
 
       expect(dto).toEqual({
@@ -81,6 +83,7 @@ describe('UploadsService', () => {
       });
 
       const putArg = storage.put.mock.calls[0][0] as { key: string };
+
       expect(putArg.key).toMatch(/\.gz$/);
     });
 
@@ -88,6 +91,7 @@ describe('UploadsService', () => {
       await expect(
         service.upload({ uploaderId: 'u1', filename: 'f', buffer: Buffer.alloc(0), mime: 'x' }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(storage.put).not.toHaveBeenCalled();
     });
 
@@ -100,6 +104,7 @@ describe('UploadsService', () => {
           mime: 'application/octet-stream',
         }),
       ).rejects.toBeInstanceOf(PayloadTooLargeException);
+
       expect(storage.put).not.toHaveBeenCalled();
     });
   });
@@ -107,11 +112,13 @@ describe('UploadsService', () => {
   describe('claim', () => {
     it('delegates to the repository when ids are present', async () => {
       await service.claim(['a', 'b'], 'u1', 'm1');
+
       expect(repo.claim).toHaveBeenCalledWith(['a', 'b'], 'u1', 'm1');
     });
 
     it('is a no-op when no ids are given', async () => {
       await service.claim([], 'u1', 'm1');
+
       expect(repo.claim).not.toHaveBeenCalled();
     });
   });

@@ -37,8 +37,11 @@ export function AudioMeter({ stream, active, className }: Props) {
     const ctx = new Ctor();
     const source = ctx.createMediaStreamSource(new MediaStream([track]));
     const analyser = ctx.createAnalyser();
+
     analyser.fftSize = 256;
+
     analyser.smoothingTimeConstant = 0.6;
+
     source.connect(analyser);
     const buf = new Uint8Array(analyser.frequencyBinCount);
 
@@ -82,6 +85,7 @@ export function AudioMeter({ stream, active, className }: Props) {
       {Array.from({ length: BAR_COUNT }).map((_, i) => {
         const isOn = active && i < lit;
         const h = 4 + i * 3;
+
         return (
           <span
             key={i}

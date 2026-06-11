@@ -46,8 +46,11 @@ export const SETTINGS_HUB_ROUTES: SettingsHubRoute[] = [
 
 export function matchSettingsHubRoute(pathname: string): SettingsHubRoute | null {
   for (const route of SETTINGS_HUB_ROUTES) {
-    if (pathname === route.href || pathname.startsWith(`${route.href}/`)) return route;
+    if (pathname === route.href || pathname.startsWith(`${route.href}/`)) {
+      return route;
+    }
   }
+
   return null;
 }
 
@@ -104,7 +107,10 @@ export function isActive(pathname: string, href: string): boolean {
 }
 
 export function isItemActive(pathname: string, item: NavItem): boolean {
-  if (isActive(pathname, item.href)) return true;
+  if (isActive(pathname, item.href)) {
+    return true;
+  }
+
   return (item.activeFor ?? []).some(
     (href) => pathname === href || pathname.startsWith(`${href}/`),
   );

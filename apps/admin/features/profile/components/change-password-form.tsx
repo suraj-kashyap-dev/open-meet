@@ -55,10 +55,13 @@ export function ChangePasswordForm() {
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
       });
+
       reset();
+
       toast.success(t('password.success'));
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('password.error');
+
       toast.error(message);
     }
   });

@@ -25,11 +25,13 @@ export function useRowSelection(visibleIds: string[], resetKey: string): RowSele
   const toggleOne = (id: string) =>
     setSelected((current) => {
       const next = new Set(current);
+
       if (next.has(id)) {
         next.delete(id);
       } else {
         next.add(id);
       }
+
       return next;
     });
 

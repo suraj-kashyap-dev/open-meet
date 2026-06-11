@@ -36,7 +36,9 @@ export function PollComposer({
 
   const reset = () => {
     setQuestion('');
+
     setOptions(['', '']);
+
     setMultiple(false);
   };
 
@@ -49,6 +51,7 @@ export function PollComposer({
     }
 
     onCreate({ question: question.trim(), options: trimmedOptions, multiple });
+
     reset();
   };
 
@@ -59,6 +62,7 @@ export function PollComposer({
         if (!next) {
           reset();
         }
+
         onOpenChange(next);
       }}
     >

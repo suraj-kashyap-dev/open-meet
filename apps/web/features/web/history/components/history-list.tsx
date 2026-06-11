@@ -84,8 +84,11 @@ export function HistoryList() {
       if (item.isHost) {
         acc.hosted += 1;
       }
+
       acc.participants += item.participantCount;
+
       acc.durationMin += item.durationMinutes ?? 0;
+
       acc.messages += item.messageCount;
     }
 
@@ -125,6 +128,7 @@ export function HistoryList() {
           </div>
         );
       }
+
       case 'startedAt':
         return (
           <span className="whitespace-nowrap text-sm text-muted-foreground">
@@ -137,6 +141,7 @@ export function HistoryList() {
             {formatDuration(item.durationMinutes)}
           </span>
         );
+
       case 'participants': {
         const displayedAvatars = item.participantsPreview.slice(0, 4);
         const extra = Math.max(0, item.participantCount - displayedAvatars.length);
@@ -166,6 +171,7 @@ export function HistoryList() {
           </div>
         );
       }
+
       case 'activity':
         return (
           <div className="flex items-center justify-end gap-3 text-xs text-muted-foreground">

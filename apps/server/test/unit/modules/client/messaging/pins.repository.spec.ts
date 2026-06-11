@@ -18,12 +18,14 @@ describe('PinsRepository', () => {
       deleteMany: vi.fn().mockResolvedValue({ count: 0 }),
       findMany: vi.fn().mockResolvedValue([]),
     };
+
     repo = new PinsRepository({ pinnedMessage } as unknown as PrismaService);
   });
 
   describe('pin()', () => {
     it('should upsert a per-user pin keyed by message and pinner', async () => {
       await repo.pin('c1', 'm1', 'u1');
+
       expect(pinnedMessage.upsert).toHaveBeenCalledWith({
         where: { messageId_pinnedById: { messageId: 'm1', pinnedById: 'u1' } },
         create: { conversationId: 'c1', messageId: 'm1', pinnedById: 'u1' },
@@ -35,6 +37,7 @@ describe('PinsRepository', () => {
   describe('unpin()', () => {
     it('should delete only the requesting user pin', async () => {
       await repo.unpin('m1', 'u1');
+
       expect(pinnedMessage.deleteMany).toHaveBeenCalledWith({
         where: { messageId: 'm1', pinnedById: 'u1' },
       });
@@ -48,11 +51,13 @@ describe('PinsRepository', () => {
         { message: { id: 'm1' } },
       ]);
       const result = await repo.listPinned('c1', 'u1');
+
       expect(pinnedMessage.findMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1', pinnedById: 'u1' },
         orderBy: { createdAt: 'desc' },
         include: { message: { include: chatMessageInclude } },
       });
+
       expect(result).toEqual([{ id: 'm2' }, { id: 'm1' }]);
     });
   });
@@ -61,10 +66,12 @@ describe('PinsRepository', () => {
     it('should select and map the viewer pinned message ids', async () => {
       pinnedMessage.findMany.mockResolvedValue([{ messageId: 'm1' }, { messageId: 'm2' }]);
       const ids = await repo.pinnedIdsForUser('c1', 'u1');
+
       expect(pinnedMessage.findMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1', pinnedById: 'u1' },
         select: { messageId: true },
       });
+
       expect(ids).toEqual(['m1', 'm2']);
     });
   });

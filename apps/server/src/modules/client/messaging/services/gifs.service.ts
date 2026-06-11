@@ -47,6 +47,7 @@ export class GifsService {
           const gif = r.media_formats?.gif;
           const tiny = r.media_formats?.tinygif;
           const main = gif ?? tiny;
+
           return {
             id: r.id,
             url: main?.url ?? '',
@@ -60,6 +61,7 @@ export class GifsService {
       return { items };
     } catch (err) {
       this.logger.warn(`Tenor search failed: ${(err as Error).message}`);
+
       return { items: [] };
     }
   }

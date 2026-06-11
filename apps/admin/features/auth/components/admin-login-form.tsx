@@ -46,6 +46,7 @@ export function AdminLoginForm() {
       await login.mutateAsync(values);
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('validation.generic');
+
       toast.error(message);
     }
   });

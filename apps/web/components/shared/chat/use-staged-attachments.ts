@@ -48,6 +48,7 @@ export function useStagedAttachments(
 
   const [staged, setStaged] = useState<StagedAttachment[]>([]);
   const stagedRef = useRef(staged);
+
   stagedRef.current = staged;
 
   const stageFiles = useCallback(
@@ -60,6 +61,7 @@ export function useStagedAttachments(
 
       if (available <= 0) {
         onCapacityExceeded?.(max);
+
         return;
       }
 
@@ -81,6 +83,7 @@ export function useStagedAttachments(
             authToken,
             onProgress: (loaded, total) => {
               const pct = total > 0 ? (loaded / total) * 100 : 0;
+
               setStaged((prev) =>
                 prev.map((s) => (s.id === item.id ? { ...s, progress: pct } : s)),
               );
@@ -98,9 +101,11 @@ export function useStagedAttachments(
             : err instanceof ApiClientError
               ? err.message
               : 'Upload failed';
+
           setStaged((prev) =>
             prev.map((s) => (s.id === item.id ? { ...s, status: 'failed', error: message } : s)),
           );
+
           onUploadError?.(message);
         }
       });
@@ -127,6 +132,7 @@ export function useStagedAttachments(
           URL.revokeObjectURL(s.previewUrl);
         }
       });
+
       return [];
     });
   }, []);

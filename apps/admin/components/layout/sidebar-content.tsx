@@ -262,7 +262,10 @@ function filterNav(
   sections: NavSection[],
   me: ReturnType<typeof useCurrentAdminMe>['data'],
 ): NavSection[] {
-  if (!me) return sections;
+  if (!me) {
+    return sections;
+  }
+
   const bypass = me.role?.permissionType === 'ALL';
   const granted = me.grantedSet;
   const can = (key: string | undefined): boolean => !key || bypass || granted.includes(key);
@@ -271,12 +274,20 @@ function filterNav(
     .map((section) => {
       const items = section.items
         .map((item: NavItem) => {
-          if (!can(item.permission)) return null;
-          if (!item.children?.length) return item;
+          if (!can(item.permission)) {
+            return null;
+          }
+
+          if (!item.children?.length) {
+            return item;
+          }
+
           const children = item.children.filter((c) => can(c.permission));
+
           return { ...item, children };
         })
         .filter((item): item is NavItem => item !== null);
+
       return { ...section, items };
     })
     .filter((section) => section.items.length > 0);

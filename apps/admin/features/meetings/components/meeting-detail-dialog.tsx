@@ -51,9 +51,11 @@ export function MeetingDetailDialog({ meetingId, onClose }: Props) {
 
     try {
       await kick.mutateAsync({ meetingId: data.id, userId });
+
       toast.success(t('kick-success', { name }));
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('kick-error', { name });
+
       toast.error(message);
     } finally {
       setKicking(null);

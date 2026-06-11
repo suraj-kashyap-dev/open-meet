@@ -23,7 +23,9 @@ export const adminAuthApi = {
 
   uploadAvatar: (file: File) => {
     const form = new FormData();
+
     form.append('file', file, file.name);
+
     return api.upload<AdminDto>('/admin/auth/me/avatar', form);
   },
 

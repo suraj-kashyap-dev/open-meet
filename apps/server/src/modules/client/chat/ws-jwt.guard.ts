@@ -26,6 +26,7 @@ export class WsJwtGuard implements CanActivate {
     }
 
     const token = extractAccessTokenFromSocket(socket);
+
     if (!token) {
       throw new WsException('Unauthenticated');
     }
@@ -38,6 +39,7 @@ export class WsJwtGuard implements CanActivate {
         guest?: boolean;
         guestMeetingCode?: string;
       }>(token, { secret: this.config.getOrThrow<string>('JWT_ACCESS_SECRET') });
+
       socket.data.user = {
         id: payload.sub,
         email: payload.email,
@@ -45,6 +47,7 @@ export class WsJwtGuard implements CanActivate {
         isGuest: payload.guest === true,
         guestMeetingCode: payload.guestMeetingCode ?? null,
       };
+
       return true;
     } catch (err) {
       this.logger.warn(`WS auth failed: ${(err as Error).message}`);

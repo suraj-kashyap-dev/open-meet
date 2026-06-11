@@ -104,6 +104,7 @@ function pickPeakHour(series: AdminConcurrencyPointDto[]): string {
   for (const p of series) {
     if (p.count > peak) {
       peak = p.count;
+
       hour = p.hour;
     }
   }

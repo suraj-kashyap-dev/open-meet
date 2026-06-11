@@ -81,6 +81,7 @@ function valueAtPath(row: Record<string, unknown>, path: string): unknown {
     if (acc && typeof acc === 'object') {
       return (acc as Record<string, unknown>)[key];
     }
+
     return undefined;
   }, row);
 }
@@ -91,6 +92,7 @@ function projectRow<TRow>(def: DatagridDefinition, row: TRow): TRow {
 
   for (const col of def.columns) {
     const field = col.field ?? col.key;
+
     if (field !== col.key) {
       record[col.key] = valueAtPath(source, field);
     }

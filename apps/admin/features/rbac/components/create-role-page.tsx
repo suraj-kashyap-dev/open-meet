@@ -48,9 +48,12 @@ export function CreateRolePage() {
         id="role-form"
         onSubmit={async (input) => {
           const body = input as CreateRoleDto;
+
           try {
             const role = await create.mutateAsync(body);
+
             toast.success(t('create.success'));
+
             router.replace(`/roles/${role.id}`);
           } catch (err) {
             toast.error(err instanceof ApiClientError ? err.message : t('create.error'));

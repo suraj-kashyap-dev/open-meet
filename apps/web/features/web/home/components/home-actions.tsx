@@ -25,9 +25,11 @@ export function HomeActions() {
   const onCreate = async () => {
     try {
       const meeting = await createMeeting.mutateAsync({});
+
       nav.push(`/${meeting.code}/lobby`);
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('toast.create-error');
+
       toast.error(message);
     }
   };
@@ -35,10 +37,13 @@ export function HomeActions() {
   const onJoin = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = code.trim().toLowerCase();
+
     if (!trimmed) {
       toast.error(t('toast.enter-code'));
+
       return;
     }
+
     nav.push(`/${trimmed}/lobby`);
   };
 

@@ -29,10 +29,15 @@ export function RolesListPage() {
   const [deleting, setDeleting] = useState<RoleDto | null>(null);
 
   const onConfirmDelete = async () => {
-    if (!deleting) return;
+    if (!deleting) {
+      return;
+    }
+
     try {
       await remove.mutateAsync(deleting.id);
+
       toast.success(t('delete.success', { name: deleting.name }));
+
       setDeleting(null);
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('delete.error'));
@@ -43,6 +48,7 @@ export function RolesListPage() {
     if (column.key === 'permissions') {
       return String((row.permissions as string[] | undefined)?.length ?? 0);
     }
+
     if (column.key === 'system') {
       return (
         <span className="inline-flex rounded-full bg-muted px-2 py-0.5 text-xs font-medium">
@@ -50,6 +56,7 @@ export function RolesListPage() {
         </span>
       );
     }
+
     return undefined;
   };
 

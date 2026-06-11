@@ -11,7 +11,9 @@ function uploadLogo(file: File): Promise<AdminBrandingDto> {
     form.append('file', file, file.name);
 
     const xhr = new XMLHttpRequest();
+
     xhr.open('POST', url);
+
     xhr.withCredentials = true;
 
     xhr.onload = () => {
@@ -21,6 +23,7 @@ function uploadLogo(file: File): Promise<AdminBrandingDto> {
         reject(
           new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
         );
+
         return;
       }
 
@@ -30,6 +33,7 @@ function uploadLogo(file: File): Promise<AdminBrandingDto> {
         body = JSON.parse(xhr.responseText);
       } catch {
         reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
+
         return;
       }
 
@@ -41,6 +45,7 @@ function uploadLogo(file: File): Promise<AdminBrandingDto> {
 
       if (!envelope.success || !envelope.data) {
         const err = envelope.error;
+
         reject(
           new ApiClientError(
             err?.code ?? 'UPLOAD_FAILED',
@@ -48,6 +53,7 @@ function uploadLogo(file: File): Promise<AdminBrandingDto> {
             err?.message ?? 'Upload failed',
           ),
         );
+
         return;
       }
 

@@ -22,7 +22,9 @@ export function ConversationInfoPanel({
     return <GroupInfoPanel conversation={conversation} currentUserId={currentUserId} />;
   }
 
-  if (!display.peer) return null;
+  if (!display.peer) {
+    return null;
+  }
 
   return <PeerProfilePanel peer={display.peer} locale={locale} />;
 }

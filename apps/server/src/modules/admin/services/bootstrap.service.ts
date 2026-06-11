@@ -37,6 +37,7 @@ export class AdminBootstrapService implements OnModuleInit {
         'Refusing to seed the default admin in production with the built-in password. ' +
           'Set DEFAULT_ADMIN_PASSWORD to a strong value and restart.',
       );
+
       return;
     }
 

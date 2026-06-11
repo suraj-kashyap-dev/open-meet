@@ -45,6 +45,7 @@ export class PushRepository {
     if (endpoints.length === 0) {
       return;
     }
+
     await this.prisma.pushSubscription.deleteMany({ where: { endpoint: { in: endpoints } } });
   }
 
@@ -52,10 +53,12 @@ export class PushRepository {
     if (userIds.length === 0) {
       return new Map();
     }
+
     const rows = await this.prisma.user.findMany({
       where: { id: { in: userIds } },
       select: { id: true, language: true },
     });
+
     return new Map(rows.map((r) => [r.id, r.language]));
   }
 }

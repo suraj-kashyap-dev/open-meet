@@ -34,15 +34,18 @@ describe('ConversationsRepository', () => {
       create: vi.fn().mockResolvedValue({ id: 'c1' }),
       update: vi.fn().mockResolvedValue({ id: 'c1' }),
     };
+
     conversationMember = {
       findMany: vi.fn().mockResolvedValue([]),
       update: vi.fn().mockResolvedValue({}),
       updateMany: vi.fn().mockResolvedValue({ count: 0 }),
     };
+
     chatMessage = {
       count: vi.fn().mockResolvedValue(3),
       findFirst: vi.fn().mockResolvedValue(null),
     };
+
     repo = new ConversationsRepository({
       conversation,
       conversationMember,
@@ -53,6 +56,7 @@ describe('ConversationsRepository', () => {
   describe('listForUser()', () => {
     it('should query active memberships for direct and group conversations ordered by recency', async () => {
       await repo.listForUser('u1');
+
       expect(conversation.findMany).toHaveBeenCalledWith({
         where: {
           members: { some: { userId: 'u1', removedAt: null } },
@@ -67,6 +71,7 @@ describe('ConversationsRepository', () => {
   describe('findById()', () => {
     it('should query a conversation by id with members include', async () => {
       await repo.findById('c1');
+
       expect(conversation.findUnique).toHaveBeenCalledWith({
         where: { id: 'c1' },
         include: conversationInclude,
@@ -77,6 +82,7 @@ describe('ConversationsRepository', () => {
   describe('findDirectByKey()', () => {
     it('should query a conversation by directKey with members include', async () => {
       await repo.findDirectByKey('a:b');
+
       expect(conversation.findUnique).toHaveBeenCalledWith({
         where: { directKey: 'a:b' },
         include: conversationInclude,
@@ -87,6 +93,7 @@ describe('ConversationsRepository', () => {
   describe('createDirect()', () => {
     it('should create a direct conversation with both members', async () => {
       await repo.createDirect('a', 'b', 'a:b');
+
       expect(conversation.create).toHaveBeenCalledWith({
         data: {
           type: ConversationType.DIRECT,
@@ -102,10 +109,12 @@ describe('ConversationsRepository', () => {
     it('should select userIds for the conversation and map to a string array', async () => {
       conversationMember.findMany.mockResolvedValue([{ userId: 'a' }, { userId: 'b' }]);
       const ids = await repo.memberUserIds('c1');
+
       expect(conversationMember.findMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1' },
         select: { userId: true },
       });
+
       expect(ids).toEqual(['a', 'b']);
     });
   });
@@ -113,12 +122,15 @@ describe('ConversationsRepository', () => {
   describe('membersWithMuteState()', () => {
     it('should select active members with mute state', async () => {
       const rows = [{ userId: 'a', muted: true }];
+
       conversationMember.findMany.mockResolvedValue(rows);
       const result = await repo.membersWithMuteState('c1');
+
       expect(conversationMember.findMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1', removedAt: null },
         select: { userId: true, muted: true },
       });
+
       expect(result).toBe(rows);
     });
   });
@@ -130,10 +142,12 @@ describe('ConversationsRepository', () => {
         { conversationId: 'c2' },
       ]);
       const ids = await repo.conversationIdsForUser('u1');
+
       expect(conversationMember.findMany).toHaveBeenCalledWith({
         where: { userId: 'u1' },
         select: { conversationId: true },
       });
+
       expect(ids).toEqual(['c1', 'c2']);
     });
   });
@@ -141,6 +155,7 @@ describe('ConversationsRepository', () => {
   describe('membershipsForUser()', () => {
     it('should select read-state fields for active memberships', async () => {
       await repo.membershipsForUser('u1');
+
       expect(conversationMember.findMany).toHaveBeenCalledWith({
         where: { userId: 'u1', removedAt: null },
         select: {
@@ -156,7 +171,9 @@ describe('ConversationsRepository', () => {
   describe('touch()', () => {
     it('should update lastMessageAt', async () => {
       const at = new Date('2026-01-01T00:00:00Z');
+
       await repo.touch('c1', at);
+
       expect(conversation.update).toHaveBeenCalledWith({
         where: { id: 'c1' },
         data: { lastMessageAt: at },
@@ -167,7 +184,9 @@ describe('ConversationsRepository', () => {
   describe('markRead()', () => {
     it('should set lastReadAt and clear manualUnread', async () => {
       const at = new Date('2026-01-01T00:00:00Z');
+
       await repo.markRead('c1', 'u1', at);
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'u1' } },
         data: { lastReadAt: at, manualUnread: false },
@@ -178,7 +197,9 @@ describe('ConversationsRepository', () => {
   describe('clearForViewer()', () => {
     it('should set clearedAt, lastReadAt and reset manualUnread', async () => {
       const at = new Date('2026-01-01T00:00:00Z');
+
       await repo.clearForViewer('c1', 'u1', at);
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'u1' } },
         data: { clearedAt: at, lastReadAt: at, manualUnread: false },
@@ -189,7 +210,9 @@ describe('ConversationsRepository', () => {
   describe('removeForViewer()', () => {
     it('should mark the membership removed and reset visibility flags', async () => {
       const at = new Date('2026-01-01T00:00:00Z');
+
       await repo.removeForViewer('c1', 'u1', at);
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'u1' } },
         data: {
@@ -206,6 +229,7 @@ describe('ConversationsRepository', () => {
   describe('restoreForViewer()', () => {
     it('should forward the supplied restore data', async () => {
       await repo.restoreForViewer('c1', 'u1', { hidden: false, removedAt: null });
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'u1' } },
         data: { hidden: false, removedAt: null },
@@ -226,14 +250,17 @@ describe('ConversationsRepository', () => {
         where: { conversationId: 'c1' },
         select: { userId: true, hidden: true, removedAt: true },
       });
+
       expect(conversationMember.updateMany).toHaveBeenCalledWith({
         where: { conversationId: 'c1', removedAt: { not: null } },
         data: { removedAt: null },
       });
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'u1' } },
         data: { hidden: false, removedAt: null },
       });
+
       expect(result).toEqual({ revivedUserIds: ['u2'], senderNeedsUpdate: true });
     });
 
@@ -245,7 +272,9 @@ describe('ConversationsRepository', () => {
       const result = await repo.activityVisibilityChanges('c1', 'u1');
 
       expect(conversationMember.updateMany).not.toHaveBeenCalled();
+
       expect(conversationMember.update).not.toHaveBeenCalled();
+
       expect(result).toEqual({ revivedUserIds: [], senderNeedsUpdate: false });
     });
 
@@ -263,6 +292,7 @@ describe('ConversationsRepository', () => {
   describe('updateMemberFlags()', () => {
     it('should forward the flag data to the membership update', async () => {
       await repo.updateMemberFlags('c1', 'u1', { muted: true, pinned: false });
+
       expect(conversationMember.update).toHaveBeenCalledWith({
         where: { conversationId_userId: { conversationId: 'c1', userId: 'u1' } },
         data: { muted: true, pinned: false },
@@ -274,6 +304,7 @@ describe('ConversationsRepository', () => {
     it('should count non-self, non-deleted messages after the cursor when provided', async () => {
       const after = new Date('2026-01-01T00:00:00Z');
       const count = await repo.unreadCount('c1', 'u1', after);
+
       expect(chatMessage.count).toHaveBeenCalledWith({
         where: {
           conversationId: 'c1',
@@ -282,11 +313,13 @@ describe('ConversationsRepository', () => {
           createdAt: { gt: after },
         },
       });
+
       expect(count).toBe(3);
     });
 
     it('should omit the createdAt filter when no cursor is given', async () => {
       await repo.unreadCount('c1', 'u1', null);
+
       expect(chatMessage.count).toHaveBeenCalledWith({
         where: { conversationId: 'c1', deletedAt: null, senderId: { not: 'u1' } },
       });
@@ -296,7 +329,9 @@ describe('ConversationsRepository', () => {
   describe('lastVisibleMessage()', () => {
     it('should find the newest message after clearedAt with relations', async () => {
       const clearedAt = new Date('2026-01-01T00:00:00Z');
+
       await repo.lastVisibleMessage('c1', clearedAt);
+
       expect(chatMessage.findFirst).toHaveBeenCalledWith({
         where: { conversationId: 'c1', createdAt: { gt: clearedAt } },
         orderBy: { createdAt: 'desc' },
@@ -306,6 +341,7 @@ describe('ConversationsRepository', () => {
 
     it('should omit the createdAt filter when clearedAt is null', async () => {
       await repo.lastVisibleMessage('c1', null);
+
       expect(chatMessage.findFirst).toHaveBeenCalledWith({
         where: { conversationId: 'c1' },
         orderBy: { createdAt: 'desc' },

@@ -64,11 +64,13 @@ describe('BrandingService', () => {
       const result = await ctx.service.updateAppName('  Acme  ');
 
       expect(ctx.repo.setAppName).toHaveBeenCalledWith('Acme');
+
       expect(result.appName).toBe('Acme');
     });
 
     it('should reject a name that is empty after trimming', async () => {
       await expect(ctx.service.updateAppName('   ')).rejects.toBeInstanceOf(BadRequestException);
+
       expect(ctx.repo.setAppName).not.toHaveBeenCalled();
     });
 
@@ -76,6 +78,7 @@ describe('BrandingService', () => {
       await expect(ctx.service.updateAppName('a'.repeat(61))).rejects.toBeInstanceOf(
         BadRequestException,
       );
+
       expect(ctx.repo.setAppName).not.toHaveBeenCalled();
     });
   });
@@ -85,6 +88,7 @@ describe('BrandingService', () => {
       await expect(
         ctx.service.setLogo({ buffer: Buffer.from('x'), mime: 'image/svg+xml' }),
       ).rejects.toBeInstanceOf(BadRequestException);
+
       expect(ctx.storage.put).not.toHaveBeenCalled();
     });
 
@@ -108,8 +112,11 @@ describe('BrandingService', () => {
       await ctx.service.setLogo({ buffer: Buffer.from('png-bytes'), mime: 'image/png' });
 
       const putKey = ctx.storage.put.mock.calls[0]?.[0]?.key as string;
+
       expect(putKey).toMatch(/^branding\/logo_[0-9a-f]+\.png$/);
+
       expect(ctx.repo.setLogoKey).toHaveBeenCalledWith(putKey);
+
       expect(ctx.storage.delete).toHaveBeenCalledWith('branding/old.png');
     });
 
@@ -133,6 +140,7 @@ describe('BrandingService', () => {
       await ctx.service.clearLogo();
 
       expect(ctx.repo.setLogoKey).toHaveBeenCalledWith(null);
+
       expect(ctx.storage.delete).toHaveBeenCalledWith('branding/old.png');
     });
 
@@ -142,6 +150,7 @@ describe('BrandingService', () => {
       await ctx.service.clearLogo();
 
       expect(ctx.repo.setLogoKey).not.toHaveBeenCalled();
+
       expect(ctx.storage.delete).not.toHaveBeenCalled();
     });
   });

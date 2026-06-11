@@ -29,7 +29,9 @@ describe('Admin analytics (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
@@ -40,15 +42,25 @@ describe('Admin analytics (e2e)', () => {
       const res = await http(app).get('/api/admin/analytics/overview').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(typeof res.body.data.totals.users).toBe('number');
+
       expect(typeof res.body.data.totals.meetings).toBe('number');
+
       expect(typeof res.body.data.totals.activeMeetings).toBe('number');
+
       expect(typeof res.body.data.totals.messagesLast24h).toBe('number');
+
       expect(typeof res.body.data.totals.groups).toBe('number');
+
       expect(Array.isArray(res.body.data.trends.signups)).toBe(true);
+
       expect(Array.isArray(res.body.data.trends.meetings)).toBe(true);
+
       expect(Array.isArray(res.body.data.recentMeetings)).toBe(true);
+
       expect(Array.isArray(res.body.data.upcomingMeetings)).toBe(true);
     });
 
@@ -58,11 +70,13 @@ describe('Admin analytics (e2e)', () => {
       const res = await http(app).get('/api/admin/analytics/overview').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(typeof res.body.data.totals.users).toBe('number');
     });
 
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/analytics/overview');
+
       expect(res.status).toBe(401);
     });
   });
@@ -74,11 +88,17 @@ describe('Admin analytics (e2e)', () => {
       const res = await http(app).get('/api/admin/analytics/deep').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(typeof res.body.data.averageMeetingMinutes).toBe('number');
+
       expect(typeof res.body.data.totalCompletedMeetings).toBe('number');
+
       expect(Array.isArray(res.body.data.topHosts)).toBe(true);
+
       expect(Array.isArray(res.body.data.peakConcurrencyByHour)).toBe(true);
+
       expect(res.body.data.peakConcurrencyByHour).toHaveLength(24);
+
       expect(Array.isArray(res.body.data.dailyActiveUsers)).toBe(true);
     });
 
@@ -88,11 +108,13 @@ describe('Admin analytics (e2e)', () => {
       const res = await http(app).get('/api/admin/analytics/deep').set('Cookie', cookie);
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/analytics/deep');
+
       expect(res.status).toBe(401);
     });
   });

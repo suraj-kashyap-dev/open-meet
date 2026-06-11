@@ -62,10 +62,13 @@ export function useHistoryRecordings(code: string | undefined) {
     staleTime: 10_000,
     refetchInterval: (query) => {
       const list = query.state.data as RecordingDto[] | undefined;
+
       if (!list || list.length === 0) {
         return false;
       }
+
       const stillRunning = list.some((r) => r.status === 'RECORDING' || r.status === 'STOPPING');
+
       return stillRunning ? 5_000 : false;
     },
   });

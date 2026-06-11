@@ -14,10 +14,12 @@ const stopEgress = vi.fn();
 vi.mock('livekit-server-sdk', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const actual = await importOriginal<typeof import('livekit-server-sdk')>();
+
   class FakeEgressClient {
     startRoomCompositeEgress = startRoomCompositeEgress;
     stopEgress = stopEgress;
   }
+
   return { ...actual, EgressClient: FakeEgressClient };
 });
 
@@ -65,6 +67,7 @@ describe('RecordingService', () => {
 
   beforeEach(async () => {
     startRoomCompositeEgress.mockReset();
+
     stopEgress.mockReset();
 
     repo = {
@@ -80,6 +83,7 @@ describe('RecordingService', () => {
       markFailed: vi.fn(),
       findStarterName: vi.fn().mockResolvedValue({ name: 'Alice' }),
     };
+
     meetings = {
       findRawByCode: vi.fn(),
       findRawByMeetingId: vi.fn(),
@@ -96,6 +100,7 @@ describe('RecordingService', () => {
           RECORDING_STORAGE_SUBDIR: 'recordings',
           RECORDING_LAYOUT: 'grid',
         };
+
         return map[key]!;
       },
     };
@@ -119,9 +124,11 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
+
       await expect(service.start('abcd-efgh-ijkl', 'u2')).rejects.toBeInstanceOf(
         ForbiddenException,
       );
+
       expect(startRoomCompositeEgress).not.toHaveBeenCalled();
     });
 
@@ -131,6 +138,7 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.WAITING,
       });
+
       await expect(service.start('abcd-efgh-ijkl', 'u1')).rejects.toBeInstanceOf(
         BadRequestException,
       );
@@ -142,6 +150,7 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
+
       repo.findRecordingForMeeting.mockResolvedValue(record());
 
       await expect(service.start('abcd-efgh-ijkl', 'u1')).rejects.toThrow(/already in progress/i);
@@ -153,8 +162,11 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
+
       repo.findRecordingForMeeting.mockResolvedValue(null);
+
       startRoomCompositeEgress.mockResolvedValue({ egressId: 'eg-1' });
+
       repo.create.mockImplementation(async (data) =>
         record({ egressId: data.egressId, storageKey: data.storageKey }),
       );
@@ -163,9 +175,13 @@ describe('RecordingService', () => {
 
       expect(startRoomCompositeEgress).toHaveBeenCalledTimes(1);
       const [room, output, opts] = startRoomCompositeEgress.mock.calls[0]!;
+
       expect(room).toBe('abcd-efgh-ijkl');
+
       expect(output.filepath).toMatch(/^\/out\/recordings\//);
+
       expect(output.filepath).toMatch(/\.mp4$/);
+
       expect(opts.layout).toBe('grid');
 
       expect(repo.create).toHaveBeenCalledWith(
@@ -177,6 +193,7 @@ describe('RecordingService', () => {
       );
 
       expect(dto.status).toBe('RECORDING');
+
       expect(dto.startedByName).toBe('Alice');
     });
   });
@@ -188,6 +205,7 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
+
       await expect(service.stop('abcd-efgh-ijkl', 'u2')).rejects.toBeInstanceOf(ForbiddenException);
     });
 
@@ -197,6 +215,7 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
+
       repo.findActiveForMeeting.mockResolvedValue(null);
 
       await expect(service.stop('abcd-efgh-ijkl', 'u1')).rejects.toBeInstanceOf(
@@ -211,14 +230,19 @@ describe('RecordingService', () => {
         status: MeetingStatus.ACTIVE,
       });
       const active = record();
+
       repo.findActiveForMeeting.mockResolvedValue(active);
+
       stopEgress.mockResolvedValue({});
+
       repo.markStopping.mockResolvedValue(record({ status: RecordingStatus.STOPPING }));
 
       const dto = await service.stop('abcd-efgh-ijkl', 'u1');
 
       expect(stopEgress).toHaveBeenCalledWith('eg-1');
+
       expect(repo.markStopping).toHaveBeenCalledWith('r1');
+
       expect(dto.status).toBe('STOPPING');
     });
 
@@ -228,11 +252,15 @@ describe('RecordingService', () => {
         hostId: 'u1',
         status: MeetingStatus.ACTIVE,
       });
+
       repo.findActiveForMeeting.mockResolvedValue(record());
+
       stopEgress.mockRejectedValue(new Error('boom'));
+
       repo.markStopping.mockResolvedValue(record({ status: RecordingStatus.STOPPING }));
 
       const dto = await service.stop('abcd-efgh-ijkl', 'u1');
+
       expect(dto.status).toBe('STOPPING');
     });
   });
@@ -240,6 +268,7 @@ describe('RecordingService', () => {
   describe('handleEgressEvent()', () => {
     it('should complete the recording on egress_ended with COMPLETE status', async () => {
       repo.findByEgressId.mockResolvedValue(record());
+
       repo.markCompleted.mockResolvedValue(
         record({
           status: RecordingStatus.COMPLETED,
@@ -268,6 +297,7 @@ describe('RecordingService', () => {
       });
 
       expect(result?.status).toBe(RecordingStatus.COMPLETED);
+
       expect(repo.markCompleted).toHaveBeenCalledWith(
         'eg-1',
         expect.objectContaining({
@@ -280,6 +310,7 @@ describe('RecordingService', () => {
 
     it('should mark failed on egress_ended with FAILED status', async () => {
       repo.findByEgressId.mockResolvedValue(record());
+
       repo.markFailed.mockResolvedValue(record({ status: RecordingStatus.FAILED }));
 
       const result = await service.handleEgressEvent({
@@ -293,6 +324,7 @@ describe('RecordingService', () => {
       });
 
       expect(result?.status).toBe(RecordingStatus.FAILED);
+
       expect(repo.markFailed).toHaveBeenCalledWith(
         'eg-1',
         expect.objectContaining({ error: 'compositor crashed' }),
@@ -301,6 +333,7 @@ describe('RecordingService', () => {
 
     it('should return the existing record without a DB write on egress_started', async () => {
       const existing = record();
+
       repo.findByEgressId.mockResolvedValue(existing);
 
       const result = await service.handleEgressEvent({
@@ -309,7 +342,9 @@ describe('RecordingService', () => {
       });
 
       expect(result).toBe(existing);
+
       expect(repo.markCompleted).not.toHaveBeenCalled();
+
       expect(repo.markFailed).not.toHaveBeenCalled();
     });
 

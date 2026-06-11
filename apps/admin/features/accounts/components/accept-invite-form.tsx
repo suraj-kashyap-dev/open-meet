@@ -61,10 +61,13 @@ export function AcceptInviteForm() {
   const onSubmit = handleSubmit(async (values) => {
     try {
       await adminAccountsApi.acceptInvite({ token, password: values.password });
+
       toast.success(t('toast.activated'));
+
       router.replace('/login');
     } catch (err) {
       const message = err instanceof ApiClientError ? err.message : t('errors.activate-failed');
+
       toast.error(message);
     }
   });
@@ -84,6 +87,7 @@ export function AcceptInviteForm() {
   if (lookup.isError || !lookup.data) {
     const message =
       lookup.error instanceof ApiClientError ? lookup.error.message : t('errors.invalid');
+
     return <InviteError message={message} />;
   }
 

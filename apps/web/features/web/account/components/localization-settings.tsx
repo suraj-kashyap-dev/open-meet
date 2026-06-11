@@ -112,6 +112,7 @@ export function LocalizationSettings({ user }: { user: UserDto }) {
   const onSubmit = handleSubmit(async (values) => {
     try {
       await updateProfile.mutateAsync(values);
+
       toast.success(t('toast.localization-updated'));
 
       if (values.language !== locale) {

@@ -29,7 +29,9 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
 
   beforeEach(async () => {
     await resetDb(app);
+
     await seedAdmin(app, SUPER);
+
     await seedAdmin(app, REGULAR);
   });
 
@@ -40,20 +42,27 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
       const res = await http(app).get('/api/admin/roles').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.success).toBe(true);
+
       expect(Array.isArray(res.body.data.items)).toBe(true);
 
       const ids = res.body.data.items.map((r: { id: string }) => r.id);
+
       expect(ids).toContain('role_sys_admin');
+
       expect(ids).toContain('role_sys_member');
 
       const adminRole = res.body.data.items.find((r: { id: string }) => r.id === 'role_sys_admin');
+
       expect(adminRole.isSystem).toBe(true);
+
       expect(adminRole.permissionType).toBe('ALL');
     });
 
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/roles');
+
       expect(res.status).toBe(401);
     });
   });
@@ -65,7 +74,9 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
       const res = await http(app).get('/api/admin/roles/role_sys_member').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(res.body.data.id).toBe('role_sys_member');
+
       expect(res.body.data.permissionType).toBe('CUSTOM');
     });
 
@@ -75,6 +86,7 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
       const res = await http(app).get('/api/admin/roles/does-not-exist').set('Cookie', cookie);
 
       expect(res.status).toBe(404);
+
       expect(res.body.error.code).toBe('ROLE_NOT_FOUND');
     });
   });
@@ -86,18 +98,25 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
       const res = await http(app).get('/api/admin/permissions/catalog').set('Cookie', cookie);
 
       expect(res.status).toBe(200);
+
       expect(Array.isArray(res.body.data.tree)).toBe(true);
+
       expect(Array.isArray(res.body.data.keys)).toBe(true);
+
       expect(res.body.data.keys).toContain('roles.view');
+
       expect(res.body.data.keys).toContain('analytics.view-deep');
 
       const topKeys = res.body.data.tree.map((n: { key: string }) => n.key);
+
       expect(topKeys).toContain('roles');
+
       expect(topKeys).toContain('analytics');
     });
 
     it('should require an admin session', async () => {
       const res = await http(app).get('/api/admin/permissions/catalog');
+
       expect(res.status).toBe(401);
     });
   });
@@ -117,17 +136,25 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
         });
 
       expect(res.status).toBe(201);
+
       expect(res.body.data.name).toBe('Support Lead');
+
       expect(res.body.data.isSystem).toBe(false);
+
       expect(res.body.data.permissionType).toBe('CUSTOM');
+
       expect(res.body.data.permissions).toContain('users.view');
+
       expect(res.body.data.permissions).toContain('analytics.view');
+
       expect(res.body.data.memberCount).toBe(0);
 
       const created = await http(app)
         .get(`/api/admin/roles/${res.body.data.id}`)
         .set('Cookie', cookie);
+
       expect(created.status).toBe(200);
+
       expect(created.body.data.name).toBe('Support Lead');
     });
 
@@ -140,6 +167,7 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
         .send({ name: 'Nope', permissionType: 'CUSTOM', permissions: [] });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('FORBIDDEN');
     });
 
@@ -173,6 +201,7 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
         .send({ description: 'changed' });
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('ROLE_IS_SYSTEM');
     });
 
@@ -182,6 +211,7 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
       const res = await http(app).delete('/api/admin/roles/role_sys_admin').set('Cookie', cookie);
 
       expect(res.status).toBe(403);
+
       expect(res.body.error.code).toBe('ROLE_IS_SYSTEM');
     });
   });
@@ -194,6 +224,7 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
         .post('/api/admin/roles')
         .set('Cookie', cookie)
         .send({ name: 'Temp Role', permissionType: 'CUSTOM', permissions: ['users.view'] });
+
       expect(created.status).toBe(201);
       const id = created.body.data.id;
 
@@ -201,14 +232,19 @@ describe('Admin RBAC roles & permissions (e2e)', () => {
         .patch(`/api/admin/roles/${id}`)
         .set('Cookie', cookie)
         .send({ name: 'Temp Renamed' });
+
       expect(renamed.status).toBe(200);
+
       expect(renamed.body.data.name).toBe('Temp Renamed');
 
       const removed = await http(app).delete(`/api/admin/roles/${id}`).set('Cookie', cookie);
+
       expect(removed.status).toBe(200);
+
       expect(removed.body.data.deleted).toBe(true);
 
       const gone = await http(app).get(`/api/admin/roles/${id}`).set('Cookie', cookie);
+
       expect(gone.status).toBe(404);
     });
   });

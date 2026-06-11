@@ -18,6 +18,7 @@ describe('AdminInviteRepository', () => {
       delete: vi.fn().mockResolvedValue(sentinel),
       deleteMany: vi.fn().mockResolvedValue({ count: 1 }),
     };
+
     repo = new AdminInviteRepository({ adminInvite } as unknown as PrismaService);
   });
 
@@ -32,7 +33,9 @@ describe('AdminInviteRepository', () => {
         invitedById: 'admin1',
         expiresAt,
       };
+
       await expect(repo.upsertByEmail(input)).resolves.toBe(sentinel);
+
       expect(adminInvite.upsert).toHaveBeenCalledWith({
         where: { email: 'a@x.com' },
         create: {
@@ -57,6 +60,7 @@ describe('AdminInviteRepository', () => {
   describe('findById()', () => {
     it('should query by id', async () => {
       await repo.findById('inv1');
+
       expect(adminInvite.findUnique).toHaveBeenCalledWith({ where: { id: 'inv1' } });
     });
   });
@@ -64,6 +68,7 @@ describe('AdminInviteRepository', () => {
   describe('findByTokenHash()', () => {
     it('should query by token hash', async () => {
       await repo.findByTokenHash('hash');
+
       expect(adminInvite.findUnique).toHaveBeenCalledWith({ where: { tokenHash: 'hash' } });
     });
   });
@@ -71,6 +76,7 @@ describe('AdminInviteRepository', () => {
   describe('listPending()', () => {
     it('should order by createdAt desc and include inviter and role', async () => {
       await repo.listPending();
+
       expect(adminInvite.findMany).toHaveBeenCalledWith({
         orderBy: { createdAt: 'desc' },
         include: {
@@ -84,7 +90,9 @@ describe('AdminInviteRepository', () => {
   describe('refreshToken()', () => {
     it('should update token hash and expiry', async () => {
       const expiresAt = new Date('2026-02-01T00:00:00Z');
+
       await repo.refreshToken('inv1', 'newhash', expiresAt);
+
       expect(adminInvite.update).toHaveBeenCalledWith({
         where: { id: 'inv1' },
         data: { tokenHash: 'newhash', expiresAt },
@@ -95,6 +103,7 @@ describe('AdminInviteRepository', () => {
   describe('delete()', () => {
     it('should delete by id', async () => {
       await repo.delete('inv1');
+
       expect(adminInvite.delete).toHaveBeenCalledWith({ where: { id: 'inv1' } });
     });
   });
@@ -102,6 +111,7 @@ describe('AdminInviteRepository', () => {
   describe('deleteByEmail()', () => {
     it('should deleteMany by email and resolve void', async () => {
       await expect(repo.deleteByEmail('a@x.com')).resolves.toBeUndefined();
+
       expect(adminInvite.deleteMany).toHaveBeenCalledWith({ where: { email: 'a@x.com' } });
     });
   });

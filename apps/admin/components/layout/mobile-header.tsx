@@ -64,6 +64,7 @@ export function MobileHeader() {
               <DropdownMenuItem
                 onSelect={(e) => {
                   e.preventDefault();
+
                   logout.mutate();
                 }}
                 className="text-destructive focus:text-destructive"

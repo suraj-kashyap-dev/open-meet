@@ -25,7 +25,9 @@ function useDialogHistory(
 
     const frame = window.requestAnimationFrame(() => {
       const state = window.history.state as Record<string, unknown> | null;
+
       window.history.pushState({ ...state, __omDialogId: id }, '');
+
       pushed = true;
     });
 
@@ -37,6 +39,7 @@ function useDialogHistory(
 
     return () => {
       window.cancelAnimationFrame(frame);
+
       window.removeEventListener('popstate', onPopState);
 
       const state = window.history.state as { __omDialogId?: string } | null;

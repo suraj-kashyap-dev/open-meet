@@ -170,6 +170,7 @@ export class AdminUsersService {
 
     if (dto.bio !== undefined) {
       const trimmed = dto.bio?.trim();
+
       data.bio = trimmed && trimmed.length > 0 ? trimmed : null;
     }
 
@@ -186,6 +187,7 @@ export class AdminUsersService {
     }
 
     const updated = await this.users.update(id, data);
+
     return this.toDto(updated);
   }
 
@@ -200,6 +202,7 @@ export class AdminUsersService {
     }
 
     await this.users.delete(id);
+
     return { deleted: true };
   }
 
