@@ -17,7 +17,10 @@
     "meet": "Rapat",
     "activity": "Aktivitas",
     "saved": "Berbintang",
-    "history": "Riwayat"
+    "history": "Riwayat",
+    "show": "Tampilkan bilah sisi",
+    "hide": "Sembunyikan bilah sisi",
+    "backdrop": "Tutup bilah sisi"
   },
   "command": {
     "placeholder": "Ketik perintah atau kode rapat…",

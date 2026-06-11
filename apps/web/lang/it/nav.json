@@ -17,7 +17,10 @@
     "meet": "Riunione",
     "activity": "Attività",
     "saved": "Speciali",
-    "history": "Cronologia"
+    "history": "Cronologia",
+    "show": "Mostra barra laterale",
+    "hide": "Nascondi barra laterale",
+    "backdrop": "Chiudi barra laterale"
   },
   "command": {
     "placeholder": "Digita un comando o un codice riunione…",

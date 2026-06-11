@@ -17,7 +17,10 @@
     "meet": "会议",
     "activity": "动态",
     "saved": "已标星",
-    "history": "历史"
+    "history": "历史",
+    "show": "显示侧边栏",
+    "hide": "隐藏侧边栏",
+    "backdrop": "关闭侧边栏"
   },
   "command": {
     "placeholder": "输入命令或会议码…",

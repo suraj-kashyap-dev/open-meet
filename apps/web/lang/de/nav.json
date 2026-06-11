@@ -17,7 +17,10 @@
     "meet": "Meet",
     "activity": "Aktivität",
     "saved": "Markiert",
-    "history": "Verlauf"
+    "history": "Verlauf",
+    "show": "Seitenleiste einblenden",
+    "hide": "Seitenleiste ausblenden",
+    "backdrop": "Seitenleiste schließen"
   },
   "command": {
     "placeholder": "Befehl oder Besprechungscode eingeben…",

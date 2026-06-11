@@ -17,7 +17,10 @@
     "meet": "ミート",
     "activity": "アクティビティ",
     "saved": "スター付き",
-    "history": "履歴"
+    "history": "履歴",
+    "show": "サイドバーを表示",
+    "hide": "サイドバーを非表示",
+    "backdrop": "サイドバーを閉じる"
   },
   "command": {
     "placeholder": "コマンドまたはミーティングコードを入力…",

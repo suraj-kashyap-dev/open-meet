@@ -17,7 +17,10 @@
     "meet": "Réunion",
     "activity": "Activité",
     "saved": "Suivis",
-    "history": "Historique"
+    "history": "Historique",
+    "show": "Afficher la barre latérale",
+    "hide": "Masquer la barre latérale",
+    "backdrop": "Fermer la barre latérale"
   },
   "command": {
     "placeholder": "Tapez une commande ou un code de réunion…",

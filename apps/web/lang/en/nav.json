@@ -17,7 +17,10 @@
     "meet": "Meet",
     "activity": "Activity",
     "saved": "Starred",
-    "history": "History"
+    "history": "History",
+    "show": "Show sidebar",
+    "hide": "Hide sidebar",
+    "backdrop": "Close sidebar"
   },
   "command": {
     "placeholder": "Type a command or meeting code…",

@@ -39,12 +39,12 @@ test.describe('Web app shell', () => {
     ).toBeVisible();
   });
 
-  test('should open the command palette from the top-bar search', async ({ page }) => {
+  test('should open the command palette with the keyboard shortcut', async ({ page }) => {
     await mockWebApi(page);
 
     await page.goto('/en/chat');
 
-    await page.getByRole('button', { name: 'Search' }).click();
+    await page.keyboard.press('ControlOrMeta+KeyK');
 
     const dialog = page.getByRole('dialog');
 
@@ -64,7 +64,7 @@ test.describe('Web app shell', () => {
 
     await page.goto('/en/chat');
 
-    await page.getByRole('button', { name: 'Search' }).click();
+    await page.keyboard.press('ControlOrMeta+KeyK');
 
     const dialog = page.getByRole('dialog');
 

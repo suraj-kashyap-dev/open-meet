@@ -1,14 +1,16 @@
 'use client';
 
-import { AtSign, MessageSquare, Search, Star, Video } from 'lucide-react';
+import { AtSign, MessageSquare, PanelLeft, Star, Video } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { ActivityIndicator } from '@open-meet/ui/activity-indicator';
 
-import { useCommandPalette } from '@/components/shared/command-palette-store';
 import { PresenceStatusPicker } from '@/features/web/chat/components/presence-status-picker';
 import { usePathname } from '@/i18n/navigation';
+
+import { useShellSidebar } from './sidebar-state';
+import { UserMenu } from './user-menu';
 
 interface PageInfo {
   icon: LucideIcon;
@@ -49,12 +51,27 @@ function usePageInfo(pathname: string): PageInfo | null {
 
 export function TopBar() {
   const t = useTranslations('nav');
-  const setOpen = useCommandPalette((s) => s.setOpen);
   const pathname = usePathname();
   const page = usePageInfo(pathname);
+  const { isDesktop, desktopExpanded, mobileOpen, openSidebar } = useShellSidebar();
+
+  const sidebarVisible = isDesktop ? desktopExpanded : mobileOpen;
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-4 border-b border-border bg-background/80 px-4 backdrop-blur-xl">
+      {!sidebarVisible ? (
+        <button
+          type="button"
+          onClick={openSidebar}
+          aria-label={t('rail.show')}
+          aria-expanded={false}
+          data-testid="sidebar-toggle"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border bg-muted/40 text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <PanelLeft className="h-4 w-4" />
+        </button>
+      ) : null}
+
       {page ? (
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent ring-1 ring-accent/20">
@@ -69,19 +86,10 @@ export function TopBar() {
         <div className="flex-1" />
       )}
 
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label={t('search-placeholder')}
-        className="flex h-9 shrink-0 items-center gap-2 rounded-full border border-border bg-muted/40 px-3 text-sm text-muted-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring sm:w-64"
-      >
-        <Search className="h-4 w-4 shrink-0" />
-        <span className="hidden sm:inline">{t('search-placeholder')}</span>
-      </button>
-
       <div className="flex shrink-0 items-center gap-1.5">
         <ActivityIndicator />
         <PresenceStatusPicker />
+        <UserMenu appearance="icon" className="ms-1" />
       </div>
     </header>
   );

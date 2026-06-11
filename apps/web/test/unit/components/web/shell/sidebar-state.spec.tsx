@@ -1,8 +1,22 @@
+import { act, renderHook } from '@testing-library/react';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ShellSidebarProvider, useShellSidebar } from '@/components/web/shell/sidebar-state';
+
+const STORAGE_KEY = 'open-meet:web-shell-sidebar-expanded';
+
+function mockMatchMedia(matches: boolean) {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockReturnValue({
+      matches,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }),
+  );
+}
 
 function AssertCollapsedFromStorage() {
   const { desktopExpanded } = useShellSidebar();
@@ -25,14 +39,7 @@ describe('ShellSidebarProvider', () => {
 
     window.localStorage.clear();
 
-    vi.stubGlobal(
-      'matchMedia',
-      vi.fn().mockReturnValue({
-        matches: true,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      }),
-    );
+    mockMatchMedia(true);
   });
 
   afterEach(() => {
@@ -44,7 +51,7 @@ describe('ShellSidebarProvider', () => {
   });
 
   it('should use the persisted desktop state on the first client render', () => {
-    window.localStorage.setItem('open-meet:web-shell-sidebar-expanded', '0');
+    window.localStorage.setItem(STORAGE_KEY, '0');
 
     root = createRoot(container);
 
@@ -57,5 +64,49 @@ describe('ShellSidebarProvider', () => {
         );
       });
     }).not.toThrow();
+  });
+
+  it('should toggle and persist the desktop expanded state', () => {
+    mockMatchMedia(true);
+
+    const { result } = renderHook(() => useShellSidebar(), { wrapper: ShellSidebarProvider });
+
+    expect(result.current.isDesktop).toBe(true);
+
+    expect(result.current.desktopExpanded).toBe(true);
+
+    act(() => result.current.toggleSidebar());
+
+    expect(result.current.desktopExpanded).toBe(false);
+
+    expect(result.current.mobileOpen).toBe(false);
+
+    expect(window.localStorage.getItem(STORAGE_KEY)).toBe('0');
+
+    act(() => result.current.openSidebar());
+
+    expect(result.current.desktopExpanded).toBe(true);
+
+    expect(window.localStorage.getItem(STORAGE_KEY)).toBe('1');
+  });
+
+  it('should toggle the mobile overlay without changing the desktop state', () => {
+    mockMatchMedia(false);
+
+    const { result } = renderHook(() => useShellSidebar(), { wrapper: ShellSidebarProvider });
+
+    expect(result.current.isDesktop).toBe(false);
+
+    expect(result.current.mobileOpen).toBe(false);
+
+    act(() => result.current.toggleSidebar());
+
+    expect(result.current.mobileOpen).toBe(true);
+
+    expect(result.current.desktopExpanded).toBe(true);
+
+    act(() => result.current.closeSidebar());
+
+    expect(result.current.mobileOpen).toBe(false);
   });
 });
