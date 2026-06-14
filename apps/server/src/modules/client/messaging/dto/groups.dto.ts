@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -7,9 +8,12 @@ import {
   IsString,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 
 import { ConversationMemberRole } from '@open-meet/types';
+
+import { ShareHistoryInputDto } from '../../../../common/dto/share-history.dto';
 
 const TITLE_MIN = 1;
 const TITLE_MAX = 80;
@@ -52,6 +56,11 @@ export class AddGroupMembersBodyDto {
   @ArrayMaxSize(MEMBER_LIMIT)
   @IsString({ each: true })
   userIds!: string[];
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ShareHistoryInputDto)
+  history?: ShareHistoryInputDto;
 }
 
 export class UpdateGroupMemberRoleBodyDto {

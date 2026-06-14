@@ -12,6 +12,7 @@ import type {
   PinnedMessageListDto,
   PublicUserDto,
   SavedMessageListDto,
+  ShareHistoryDto,
   TeammateListDto,
   UserPresenceDto,
 } from '@open-meet/types';
@@ -475,7 +476,8 @@ export function useAddGroupMembers(conversationId: string) {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (userIds: string[]) => chatApi.addGroupMembers(conversationId, userIds),
+    mutationFn: (input: { userIds: string[]; history?: ShareHistoryDto }) =>
+      chatApi.addGroupMembers(conversationId, input.userIds, input.history),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },

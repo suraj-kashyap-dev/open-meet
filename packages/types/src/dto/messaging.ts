@@ -33,6 +33,18 @@ export const MentionKind = {
 } as const;
 export type MentionKind = (typeof MentionKind)[keyof typeof MentionKind];
 
+export const ShareHistoryMode = {
+  NONE: 'NONE',
+  DAYS: 'DAYS',
+  ALL: 'ALL',
+} as const;
+export type ShareHistoryMode = (typeof ShareHistoryMode)[keyof typeof ShareHistoryMode];
+
+export interface ShareHistoryDto {
+  mode: ShareHistoryMode;
+  days?: number;
+}
+
 export const PresenceStatus = {
   AVAILABLE: 'AVAILABLE',
   BUSY: 'BUSY',
@@ -160,6 +172,7 @@ export interface UpdateGroupBodyDto {
 
 export interface AddGroupMembersBodyDto {
   userIds: string[];
+  history?: ShareHistoryDto;
 }
 
 export interface UpdateGroupMemberRoleBodyDto {
@@ -296,6 +309,7 @@ export interface AdminUpdateGroupDto {
 
 export interface AdminAddGroupMembersDto {
   userIds: string[];
+  history?: ShareHistoryDto;
 }
 
 export const UserInviteStatus = {

@@ -1,7 +1,14 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { ConversationMemberRole } from '@prisma/client';
 
-import { ApiErrorCode, ChatServerEvent, type ConversationDto } from '@open-meet/types';
+import {
+  ApiErrorCode,
+  ChatServerEvent,
+  type ConversationDto,
+  type ShareHistoryDto,
+} from '@open-meet/types';
+
+import { laterDate, resolveHistoryCutoff } from '../../../../common/util/history.util';
 
 import { ChatBus, conversationRoom, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
@@ -13,18 +20,6 @@ import { PresenceService } from './presence.service';
 const TITLE_MIN = 1;
 const TITLE_MAX = 80;
 const DESCRIPTION_MAX = 280;
-
-function laterDate(left: Date | null, right: Date | null): Date | null {
-  if (!left) {
-    return right;
-  }
-
-  if (!right) {
-    return left;
-  }
-
-  return left > right ? left : right;
-}
 
 @Injectable()
 export class GroupsService {
@@ -97,6 +92,7 @@ export class GroupsService {
     conversationId: string,
     actorId: string,
     userIds: string[],
+    history?: ShareHistoryDto,
   ): Promise<ConversationDto> {
     await this.permissions.assertGroupAdmin(conversationId, actorId);
 
@@ -109,7 +105,9 @@ export class GroupsService {
       return this.toDto(conversationId, actorId);
     }
 
-    await this.repo.addMembers(conversationId, invitable);
+    const historyVisibleFrom = resolveHistoryCutoff(history, new Date());
+
+    await this.repo.addMembers(conversationId, invitable, historyVisibleFrom);
 
     const updatedDto = await this.broadcastUpdate(conversationId, actorId);
 

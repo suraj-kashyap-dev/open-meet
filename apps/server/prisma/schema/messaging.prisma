@@ -57,21 +57,22 @@ model Conversation {
 }
 
 model ConversationMember {
-  id              String                 @id @default(cuid())
-  conversationId  String
-  conversation    Conversation           @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  userId          String
-  user            User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role            ConversationMemberRole @default(MEMBER)
-  lastReadAt      DateTime?
-  lastDeliveredAt DateTime?
-  clearedAt       DateTime?
-  removedAt       DateTime?
-  muted           Boolean                @default(false)
-  pinned          Boolean                @default(false)
-  hidden          Boolean                @default(false)
-  manualUnread    Boolean                @default(false)
-  joinedAt        DateTime               @default(now())
+  id                 String                 @id @default(cuid())
+  conversationId     String
+  conversation       Conversation           @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId             String
+  user               User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role               ConversationMemberRole @default(MEMBER)
+  lastReadAt         DateTime?
+  lastDeliveredAt    DateTime?
+  clearedAt          DateTime?
+  historyVisibleFrom DateTime?
+  removedAt          DateTime?
+  muted              Boolean                @default(false)
+  pinned             Boolean                @default(false)
+  hidden             Boolean                @default(false)
+  manualUnread       Boolean                @default(false)
+  joinedAt           DateTime               @default(now())
 
   @@unique([conversationId, userId])
   @@index([userId])

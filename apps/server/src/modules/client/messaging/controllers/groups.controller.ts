@@ -43,7 +43,7 @@ export class GroupsController {
     @Param('id') id: string,
     @Body() body: AddGroupMembersBodyDto,
   ) {
-    return this.groups.addMembers(id, user.id, body.userIds);
+    return this.groups.addMembers(id, user.id, body.userIds, body.history);
   }
 
   @Delete(':id/members/:userId')

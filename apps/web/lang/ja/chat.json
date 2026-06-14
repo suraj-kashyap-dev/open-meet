@@ -198,6 +198,11 @@
     "add-members": "メンバーを追加",
     "add-members-title": "メンバーを追加",
     "add-members-subtitle": "このグループにさらにメンバーを招待します。",
+    "history-label": "新しいメンバー向けのチャット履歴",
+    "history-none": "チャット履歴を含めない",
+    "history-days": "直近{days}日間を含める",
+    "history-all": "すべてのチャット履歴を含める",
+    "history-hint": "新しいメンバーがこのグループの過去のメッセージをどこまで見られるかを選択します。",
     "save": "保存",
     "action-failed": "問題が発生しました",
     "groups-disabled": "グループ作成は管理者により無効化されています。"

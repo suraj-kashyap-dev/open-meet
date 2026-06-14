@@ -198,6 +198,11 @@
     "add-members": "Aggiungi membri",
     "add-members-title": "Aggiungi membri",
     "add-members-subtitle": "Invita altre persone in questo gruppo.",
+    "history-label": "Cronologia chat per i nuovi membri",
+    "history-none": "Non includere la cronologia chat",
+    "history-days": "Includi gli ultimi {days} giorni",
+    "history-all": "Includi tutta la cronologia chat",
+    "history-hint": "Scegli quanti messaggi passati di questo gruppo possono vedere i nuovi membri.",
     "save": "Salva",
     "action-failed": "Qualcosa è andato storto",
     "groups-disabled": "La creazione di gruppi è disabilitata dall'amministratore."

@@ -31,7 +31,12 @@
     "no-users": "未找到用户。",
     "add-confirm": "添加",
     "empty": "暂无成员。",
-    "remove": "移除成员"
+    "remove": "移除成员",
+    "history-label": "已添加成员的聊天记录",
+    "history-none": "不包含聊天记录",
+    "history-days": "包含最近 {days} 天",
+    "history-all": "包含全部聊天记录",
+    "history-hint": "适用于您现在添加的成员。"
   },
   "detail": {
     "rename-submit": "Save changes",

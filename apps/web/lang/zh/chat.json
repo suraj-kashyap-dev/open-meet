@@ -198,6 +198,11 @@
     "add-members": "添加成员",
     "add-members-title": "添加成员",
     "add-members-subtitle": "邀请更多人加入此群组。",
+    "history-label": "新成员的聊天记录",
+    "history-none": "不包含聊天记录",
+    "history-days": "包含最近 {days} 天",
+    "history-all": "包含全部聊天记录",
+    "history-hint": "选择新成员可以查看此群组多少过往消息。",
     "save": "保存",
     "action-failed": "出了点问题",
     "groups-disabled": "管理员当前已禁用群组创建。"

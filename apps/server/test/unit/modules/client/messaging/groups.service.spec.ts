@@ -2,7 +2,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { ConversationMemberRole } from '@prisma/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ChatServerEvent } from '@open-meet/types';
+import { ChatServerEvent, ShareHistoryMode } from '@open-meet/types';
 
 import { GroupsService } from '@/modules/client/messaging/services/groups.service';
 import { type GroupsRepository } from '@/modules/client/messaging/repositories/groups.repository';
@@ -196,13 +196,61 @@ describe('GroupsService', () => {
 
       expect(repo.pickInvitableUsers).toHaveBeenCalledWith(['u3']);
 
-      expect(repo.addMembers).toHaveBeenCalledWith('c1', ['u3']);
+      expect(repo.addMembers).toHaveBeenCalledWith('c1', ['u3'], null);
 
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('u3'),
         ChatServerEvent.CONVERSATION_NEW,
         expect.any(Object),
       );
+    });
+
+    it('should default to full history (null cutoff) when no choice is given', async () => {
+      repo.memberUserIds.mockResolvedValue(['creator']);
+
+      repo.pickInvitableUsers.mockResolvedValue(['u3']);
+
+      permissions.filterEligibleTargets.mockResolvedValue(['u3']);
+
+      await service.addMembers('c1', 'creator', ['u3']);
+
+      expect(repo.addMembers).toHaveBeenCalledWith('c1', ['u3'], null);
+    });
+
+    it('should stamp a join-time cutoff when history is not shared', async () => {
+      repo.memberUserIds.mockResolvedValue(['creator']);
+
+      repo.pickInvitableUsers.mockResolvedValue(['u3']);
+
+      permissions.filterEligibleTargets.mockResolvedValue(['u3']);
+
+      const before = Date.now();
+
+      await service.addMembers('c1', 'creator', ['u3'], { mode: ShareHistoryMode.NONE });
+
+      const cutoff = repo.addMembers.mock.calls[0][2] as Date;
+
+      expect(cutoff).toBeInstanceOf(Date);
+
+      expect(cutoff.getTime()).toBeGreaterThanOrEqual(before);
+    });
+
+    it('should stamp a back-dated cutoff when sharing the last N days', async () => {
+      repo.memberUserIds.mockResolvedValue(['creator']);
+
+      repo.pickInvitableUsers.mockResolvedValue(['u3']);
+
+      permissions.filterEligibleTargets.mockResolvedValue(['u3']);
+
+      await service.addMembers('c1', 'creator', ['u3'], {
+        mode: ShareHistoryMode.DAYS,
+        days: 7,
+      });
+
+      const cutoff = repo.addMembers.mock.calls[0][2] as Date;
+      const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+
+      expect(Date.now() - cutoff.getTime()).toBeGreaterThanOrEqual(sevenDaysMs - 1000);
     });
 
     it('should short-circuit without writing when no one is invitable', async () => {

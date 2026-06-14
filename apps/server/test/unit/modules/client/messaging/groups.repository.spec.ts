@@ -123,18 +123,46 @@ describe('GroupsRepository', () => {
 
   describe('addMembers()', () => {
     it('should short-circuit when no ids are given', async () => {
-      await repo.addMembers('c1', []);
+      await repo.addMembers('c1', [], null);
 
       expect(conversationMember.createMany).not.toHaveBeenCalled();
     });
 
     it('should create member rows skipping duplicates', async () => {
-      await repo.addMembers('c1', ['m1', 'm2']);
+      await repo.addMembers('c1', ['m1', 'm2'], null);
 
       expect(conversationMember.createMany).toHaveBeenCalledWith({
         data: [
-          { conversationId: 'c1', userId: 'm1', role: ConversationMemberRole.MEMBER },
-          { conversationId: 'c1', userId: 'm2', role: ConversationMemberRole.MEMBER },
+          {
+            conversationId: 'c1',
+            userId: 'm1',
+            role: ConversationMemberRole.MEMBER,
+            historyVisibleFrom: null,
+          },
+          {
+            conversationId: 'c1',
+            userId: 'm2',
+            role: ConversationMemberRole.MEMBER,
+            historyVisibleFrom: null,
+          },
+        ],
+        skipDuplicates: true,
+      });
+    });
+
+    it('should stamp the history cutoff on each created row', async () => {
+      const cutoff = new Date('2026-01-01T00:00:00.000Z');
+
+      await repo.addMembers('c1', ['m1'], cutoff);
+
+      expect(conversationMember.createMany).toHaveBeenCalledWith({
+        data: [
+          {
+            conversationId: 'c1',
+            userId: 'm1',
+            role: ConversationMemberRole.MEMBER,
+            historyVisibleFrom: cutoff,
+          },
         ],
         skipDuplicates: true,
       });

@@ -331,6 +331,35 @@ describe('MessagesService', () => {
       expect(messages.listHistory).toHaveBeenCalledWith(expect.objectContaining({ limit: 101 }));
     });
 
+    it('should floor history at the later of clearedAt and historyVisibleFrom', async () => {
+      const cleared = new Date('2026-01-01T00:00:00.000Z');
+      const visibleFrom = new Date('2026-03-01T00:00:00.000Z');
+
+      permissions.assertConversationMember.mockResolvedValue({
+        clearedAt: cleared,
+        historyVisibleFrom: visibleFrom,
+      });
+
+      await service.history('c1', 'u1', {});
+
+      expect(messages.listHistory).toHaveBeenCalledWith(
+        expect.objectContaining({ clearedAt: visibleFrom }),
+      );
+    });
+
+    it('should leave history unbounded when both cutoffs are absent', async () => {
+      permissions.assertConversationMember.mockResolvedValue({
+        clearedAt: null,
+        historyVisibleFrom: null,
+      });
+
+      await service.history('c1', 'u1', {});
+
+      expect(messages.listHistory).toHaveBeenCalledWith(
+        expect.objectContaining({ clearedAt: null }),
+      );
+    });
+
     it('should return all rows with a null cursor when there is no next page', async () => {
       messages.listHistory.mockResolvedValue([
         { id: 'a', createdAt: new Date('2026-01-01') },

@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
-import type { ConversationDto } from '@open-meet/types';
+import type { ConversationDto, ShareHistoryDto } from '@open-meet/types';
+import { ShareHistoryMode } from '@open-meet/types';
 import { Button } from '@open-meet/ui/button';
 import {
   Dialog,
@@ -15,11 +16,33 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@open-meet/ui/dialog';
+import { Label } from '@open-meet/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@open-meet/ui/select';
 
 import { ApiClientError } from '@/lib/api/client';
 
 import { useAddGroupMembers, useTeammates } from '../hooks/use-chat';
 import { GroupMemberPicker } from './group-member-picker';
+
+type HistoryChoice = 'none' | '7' | '30' | 'all';
+
+function toShareHistory(choice: HistoryChoice): ShareHistoryDto {
+  if (choice === 'all') {
+    return { mode: ShareHistoryMode.ALL };
+  }
+
+  if (choice === 'none') {
+    return { mode: ShareHistoryMode.NONE };
+  }
+
+  return { mode: ShareHistoryMode.DAYS, days: Number(choice) };
+}
 
 export function GroupAddMembersDialog({
   open,
@@ -34,6 +57,7 @@ export function GroupAddMembersDialog({
   const add = useAddGroupMembers(conversation.id);
 
   const [search, setSearch] = useState('');
+  const [history, setHistory] = useState<HistoryChoice>('none');
   const [picked, setPicked] = useState<
     Record<string, { id: string; name: string; avatar: string | null }>
   >({});
@@ -46,6 +70,8 @@ export function GroupAddMembersDialog({
   const reset = () => {
     setSearch('');
 
+    setHistory('none');
+
     setPicked({});
   };
 
@@ -55,7 +81,10 @@ export function GroupAddMembersDialog({
     }
 
     try {
-      await add.mutateAsync(pickedList.map((m) => m.id));
+      await add.mutateAsync({
+        userIds: pickedList.map((m) => m.id),
+        history: toShareHistory(history),
+      });
 
       toast.success(t('group.members-added'));
 
@@ -110,6 +139,22 @@ export function GroupAddMembersDialog({
             isLoading={teammates.isLoading}
             autoFocus
           />
+
+          <div className="space-y-1.5">
+            <Label htmlFor="add-members-history">{t('group.history-label')}</Label>
+            <Select value={history} onValueChange={(value) => setHistory(value as HistoryChoice)}>
+              <SelectTrigger id="add-members-history">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">{t('group.history-none')}</SelectItem>
+                <SelectItem value="7">{t('group.history-days', { days: 7 })}</SelectItem>
+                <SelectItem value="30">{t('group.history-days', { days: 30 })}</SelectItem>
+                <SelectItem value="all">{t('group.history-all')}</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">{t('group.history-hint')}</p>
+          </div>
         </div>
 
         <DialogFooter>

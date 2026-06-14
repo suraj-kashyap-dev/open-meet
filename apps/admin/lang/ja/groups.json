@@ -31,7 +31,12 @@
     "no-users": "ユーザーが見つかりません。",
     "add-confirm": "追加",
     "empty": "まだメンバーがいません。",
-    "remove": "メンバーを削除"
+    "remove": "メンバーを削除",
+    "history-label": "追加したメンバー向けのチャット履歴",
+    "history-none": "チャット履歴を含めない",
+    "history-days": "直近{days}日間を含める",
+    "history-all": "すべてのチャット履歴を含める",
+    "history-hint": "今追加するメンバーに適用されます。"
   },
   "detail": {
     "rename-submit": "Save changes",

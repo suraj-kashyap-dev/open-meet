@@ -71,7 +71,7 @@ export class GroupsRepository {
     });
   }
 
-  async addMembers(id: string, userIds: string[]): Promise<void> {
+  async addMembers(id: string, userIds: string[], historyVisibleFrom: Date | null): Promise<void> {
     if (userIds.length === 0) {
       return;
     }
@@ -81,6 +81,7 @@ export class GroupsRepository {
         conversationId: id,
         userId,
         role: ConversationMemberRole.MEMBER,
+        historyVisibleFrom,
       })),
       skipDuplicates: true,
     });

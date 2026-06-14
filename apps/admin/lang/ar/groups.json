@@ -31,7 +31,12 @@
     "no-users": "لم يتم العثور على مستخدمين.",
     "add-confirm": "إضافة",
     "empty": "لا يوجد أعضاء بعد.",
-    "remove": "إزالة العضو"
+    "remove": "إزالة العضو",
+    "history-label": "سجل المحادثة للأعضاء المُضافين",
+    "history-none": "عدم تضمين سجل المحادثة",
+    "history-days": "تضمين آخر {days} يوم",
+    "history-all": "تضمين سجل المحادثة كاملاً",
+    "history-hint": "ينطبق على الأعضاء الذين تضيفهم الآن."
   },
   "detail": {
     "rename-submit": "Save changes",

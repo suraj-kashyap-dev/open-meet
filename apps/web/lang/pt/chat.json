@@ -198,6 +198,11 @@
     "add-members": "Adicionar membros",
     "add-members-title": "Adicionar membros",
     "add-members-subtitle": "Convide mais pessoas para este grupo.",
+    "history-label": "Histórico de chat para novos membros",
+    "history-none": "Não incluir histórico de chat",
+    "history-days": "Incluir os últimos {days} dias",
+    "history-all": "Incluir todo o histórico de chat",
+    "history-hint": "Escolha quantas mensagens anteriores deste grupo os novos membros podem ver.",
     "save": "Salvar",
     "action-failed": "Algo deu errado",
     "groups-disabled": "Criação de grupos desativada pelo administrador."

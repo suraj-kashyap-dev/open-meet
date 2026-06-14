@@ -198,6 +198,11 @@
     "add-members": "Add members",
     "add-members-title": "Add members",
     "add-members-subtitle": "Invite more people to this group.",
+    "history-label": "Chat history for new members",
+    "history-none": "Don't include chat history",
+    "history-days": "Include the last {days} days",
+    "history-all": "Include all chat history",
+    "history-hint": "Choose how much of this group's past messages new members can see.",
     "save": "Save",
     "action-failed": "Something went wrong",
     "groups-disabled": "Group creation is currently disabled by the workspace admin."

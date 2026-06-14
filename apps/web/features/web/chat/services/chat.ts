@@ -12,6 +12,7 @@ import type {
   PublicUserDto,
   SavedMessageListDto,
   SendChatMessageDto,
+  ShareHistoryDto,
   TeammateListDto,
   UnreadSummaryDto,
   UserPresenceDto,
@@ -65,8 +66,8 @@ export const chatApi = {
   updateGroup: (id: string, body: { title?: string; description?: string | null }) =>
     api.patch<ConversationDto>(`/messaging/groups/${id}`, body),
 
-  addGroupMembers: (id: string, userIds: string[]) =>
-    api.post<ConversationDto>(`/messaging/groups/${id}/members`, { userIds }),
+  addGroupMembers: (id: string, userIds: string[], history?: ShareHistoryDto) =>
+    api.post<ConversationDto>(`/messaging/groups/${id}/members`, { userIds, history }),
 
   removeGroupMember: (id: string, userId: string) =>
     api.delete<void>(`/messaging/groups/${id}/members/${userId}`),

@@ -6,11 +6,13 @@ import {
   type AdminGroupDto,
   type AdminGroupMemberDto,
   type DatagridResponseDto,
+  type ShareHistoryDto,
 } from '@open-meet/types';
 
 import type { Prisma } from '@prisma/client';
 
 import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
+import { resolveHistoryCutoff } from '../../../../common/util/history.util';
 import { StorageService } from '../../../../storage/services/storage.service';
 
 import type { AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy';
@@ -98,11 +100,16 @@ export class AdminGroupsService {
     return this.toDetailDto(await this.groups.update(id, trimmed));
   }
 
-  async addMembers(id: string, userIds: string[]): Promise<AdminGroupDetailDto> {
+  async addMembers(
+    id: string,
+    userIds: string[],
+    history?: ShareHistoryDto,
+  ): Promise<AdminGroupDetailDto> {
     await this.require(id);
     const unique = [...new Set(userIds)];
+    const historyVisibleFrom = resolveHistoryCutoff(history, new Date());
 
-    await this.groups.addMembers(id, unique);
+    await this.groups.addMembers(id, unique, historyVisibleFrom);
 
     return this.detail(id);
   }

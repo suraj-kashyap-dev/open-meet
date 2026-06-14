@@ -31,7 +31,12 @@
     "no-users": "Tidak ada pengguna yang ditemukan.",
     "add-confirm": "Tambah",
     "empty": "Belum ada anggota.",
-    "remove": "Hapus anggota"
+    "remove": "Hapus anggota",
+    "history-label": "Riwayat obrolan untuk anggota yang ditambahkan",
+    "history-none": "Jangan sertakan riwayat obrolan",
+    "history-days": "Sertakan {days} hari terakhir",
+    "history-all": "Sertakan semua riwayat obrolan",
+    "history-hint": "Berlaku untuk anggota yang Anda tambahkan sekarang."
   },
   "detail": {
     "rename-submit": "Save changes",

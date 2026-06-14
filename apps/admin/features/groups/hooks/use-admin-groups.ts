@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { AdminCreateGroupDto, AdminUpdateGroupDto } from '@open-meet/types';
+import type { AdminCreateGroupDto, AdminUpdateGroupDto, ShareHistoryDto } from '@open-meet/types';
 
 import { adminGroupsApi } from '@/features/groups/services/groups';
 
@@ -60,8 +60,8 @@ export function useAddGroupMembers() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (input: { id: string; userIds: string[] }) =>
-      adminGroupsApi.addMembers(input.id, { userIds: input.userIds }),
+    mutationFn: (input: { id: string; userIds: string[]; history?: ShareHistoryDto }) =>
+      adminGroupsApi.addMembers(input.id, { userIds: input.userIds, history: input.history }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: [GROUPS_KEY] });
 
@@ -88,7 +88,12 @@ export function useSyncGroupMembers() {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: async (input: { id: string; currentUserIds: string[]; nextUserIds: string[] }) => {
+    mutationFn: async (input: {
+      id: string;
+      currentUserIds: string[];
+      nextUserIds: string[];
+      history?: ShareHistoryDto;
+    }) => {
       const nextUserIds = [...new Set(input.nextUserIds)];
       const nextUserSet = new Set(nextUserIds);
       const currentUserSet = new Set(input.currentUserIds);
@@ -97,7 +102,7 @@ export function useSyncGroupMembers() {
       const toRemove = input.currentUserIds.filter((userId) => !nextUserSet.has(userId));
 
       if (toAdd.length > 0) {
-        await adminGroupsApi.addMembers(input.id, { userIds: toAdd });
+        await adminGroupsApi.addMembers(input.id, { userIds: toAdd, history: input.history });
       }
 
       await Promise.all(toRemove.map((userId) => adminGroupsApi.removeMember(input.id, userId)));

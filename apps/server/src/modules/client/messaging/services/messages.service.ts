@@ -17,6 +17,7 @@ import {
   type ChatMessagePriority,
 } from '@open-meet/types';
 
+import { laterDate } from '../../../../common/util/history.util';
 import { UploadsService } from '../../../uploads/services/uploads.service';
 
 import { ChatBus, conversationRoom } from './chat-bus.service';
@@ -76,9 +77,10 @@ export class MessagesService {
     await this.permissions.assertDirectConversationAllowed(conversationId, userId);
 
     const limit = Math.min(100, Math.max(1, options.limit ?? 50));
+    const floor = laterDate(membership.clearedAt ?? null, membership.historyVisibleFrom ?? null);
     const rows = await this.messages.listHistory({
       conversationId,
-      clearedAt: membership.clearedAt ?? null,
+      clearedAt: floor,
       cursor: options.cursor,
       limit: limit + 1,
     });

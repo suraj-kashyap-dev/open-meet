@@ -198,6 +198,11 @@
     "add-members": "구성원 추가",
     "add-members-title": "구성원 추가",
     "add-members-subtitle": "이 그룹에 더 많은 사람을 초대하세요.",
+    "history-label": "새 구성원을 위한 채팅 기록",
+    "history-none": "채팅 기록을 포함하지 않음",
+    "history-days": "최근 {days}일 포함",
+    "history-all": "모든 채팅 기록 포함",
+    "history-hint": "새 구성원이 이 그룹의 지난 메시지를 얼마나 볼 수 있는지 선택하세요.",
     "save": "저장",
     "action-failed": "문제가 발생했습니다",
     "groups-disabled": "그룹 생성이 관리자에 의해 비활성화되었습니다."

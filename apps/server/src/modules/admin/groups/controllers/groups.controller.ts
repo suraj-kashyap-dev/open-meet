@@ -74,7 +74,7 @@ export class AdminGroupsController {
     @Param('id') id: string,
     @Body() dto: AddGroupMembersBodyDto,
   ): Promise<AdminGroupDetailDto> {
-    return this.groups.addMembers(id, dto.userIds);
+    return this.groups.addMembers(id, dto.userIds, dto.history);
   }
 
   @Delete(':id/members/:userId')

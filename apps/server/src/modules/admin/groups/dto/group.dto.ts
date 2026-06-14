@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -6,7 +7,10 @@ import {
   IsString,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
+
+import { ShareHistoryInputDto } from '../../../../common/dto/share-history.dto';
 
 export class CreateGroupBodyDto {
   @IsString()
@@ -35,4 +39,9 @@ export class AddGroupMembersBodyDto {
   @ArrayMaxSize(500)
   @IsString({ each: true })
   userIds!: string[];
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ShareHistoryInputDto)
+  history?: ShareHistoryInputDto;
 }

@@ -198,6 +198,11 @@
     "add-members": "Tambah anggota",
     "add-members-title": "Tambah anggota",
     "add-members-subtitle": "Undang lebih banyak orang ke grup ini.",
+    "history-label": "Riwayat obrolan untuk anggota baru",
+    "history-none": "Jangan sertakan riwayat obrolan",
+    "history-days": "Sertakan {days} hari terakhir",
+    "history-all": "Sertakan semua riwayat obrolan",
+    "history-hint": "Pilih seberapa banyak pesan lama grup ini yang dapat dilihat anggota baru.",
     "save": "Simpan",
     "action-failed": "Terjadi kesalahan",
     "groups-disabled": "Pembuatan grup dinonaktifkan oleh admin."

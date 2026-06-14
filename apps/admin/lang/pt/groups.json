@@ -31,7 +31,12 @@
     "no-users": "Nenhum usuário encontrado.",
     "add-confirm": "Adicionar",
     "empty": "Nenhum membro ainda.",
-    "remove": "Remover membro"
+    "remove": "Remover membro",
+    "history-label": "Histórico de chat para os membros adicionados",
+    "history-none": "Não incluir histórico de chat",
+    "history-days": "Incluir os últimos {days} dias",
+    "history-all": "Incluir todo o histórico de chat",
+    "history-hint": "Aplica-se aos membros que você adicionar agora."
   },
   "detail": {
     "rename-submit": "Save changes",

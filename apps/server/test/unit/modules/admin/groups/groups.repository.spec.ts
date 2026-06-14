@@ -128,13 +128,24 @@ describe('AdminGroupsRepository', () => {
 
   describe('addMembers()', () => {
     it('should createMany members skipping duplicates', async () => {
-      await repo.addMembers('g1', ['u1', 'u2']);
+      await repo.addMembers('g1', ['u1', 'u2'], null);
 
       expect(conversationMember.createMany).toHaveBeenCalledWith({
         data: [
-          { conversationId: 'g1', userId: 'u1' },
-          { conversationId: 'g1', userId: 'u2' },
+          { conversationId: 'g1', userId: 'u1', historyVisibleFrom: null },
+          { conversationId: 'g1', userId: 'u2', historyVisibleFrom: null },
         ],
+        skipDuplicates: true,
+      });
+    });
+
+    it('should stamp the history cutoff on each created row', async () => {
+      const cutoff = new Date('2026-01-01T00:00:00.000Z');
+
+      await repo.addMembers('g1', ['u1'], cutoff);
+
+      expect(conversationMember.createMany).toHaveBeenCalledWith({
+        data: [{ conversationId: 'g1', userId: 'u1', historyVisibleFrom: cutoff }],
         skipDuplicates: true,
       });
     });

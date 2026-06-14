@@ -80,9 +80,9 @@ export class AdminGroupsRepository {
     });
   }
 
-  async addMembers(id: string, userIds: string[]): Promise<void> {
+  async addMembers(id: string, userIds: string[], historyVisibleFrom: Date | null): Promise<void> {
     await this.prisma.conversationMember.createMany({
-      data: userIds.map((userId) => ({ conversationId: id, userId })),
+      data: userIds.map((userId) => ({ conversationId: id, userId, historyVisibleFrom })),
       skipDuplicates: true,
     });
   }
