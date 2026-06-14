@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { Meeting, MeetingInvite, Participant, Prisma, User } from '@prisma/client';
 import { MeetingStatus, ParticipantRole } from '@prisma/client';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 export type ParticipantWithUser = Participant & {
   user: Pick<User, 'id' | 'name' | 'avatarKey'>;

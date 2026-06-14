@@ -12,8 +12,8 @@ import { randomBytes } from 'node:crypto';
 import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { StorageService } from '../../../../storage/services/storage.service';
-import { AdminRepository } from '../../repositories/admin.repository';
+import { StorageService } from '@/storage/services/storage.service';
+import { AdminRepository } from '@/modules/admin/core/repositories/admin.repository';
 
 const ALLOWED_AVATAR_MIMES: Record<string, string> = {
   'image/png': 'png',

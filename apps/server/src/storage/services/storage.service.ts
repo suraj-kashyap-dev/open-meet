@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { LocalStorageProvider } from '../providers/local-storage.provider';
+import { LocalStorageProvider } from '@/storage/providers/local-storage.provider';
 import type {
   PutInput,
   PutResult,
@@ -11,7 +11,7 @@ import type {
   ReadRangeResult,
   ReadResult,
   StorageProvider,
-} from '../providers/storage-provider.interface';
+} from '@/storage/providers/storage-provider.interface';
 
 @Injectable()
 export class StorageService {

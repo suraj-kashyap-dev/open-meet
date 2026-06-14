@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { WorkspaceSettings } from '@prisma/client';
 
-import { PrismaService } from '../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 const SINGLETON_ID = 'default';
 

@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { ChatMessagePriority, ChatMessageType, type MentionKind } from '@prisma/client';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
-import { chatMessageInclude, type ChatMessageWithRelations } from '../messaging.includes';
+import {
+  chatMessageInclude,
+  type ChatMessageWithRelations,
+} from '@/modules/client/messaging/messaging.includes';
 
 export interface ChatMessageMeta {
   id: string;

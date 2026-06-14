@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import type { UpdateWorkspaceConfigInput, WorkspaceConfigDto } from '@open-meet/types';
 
-import { WorkspaceConfigRepository } from '../repositories/workspace-config.repository';
+import { WorkspaceConfigRepository } from '@/modules/config/repositories/workspace-config.repository';
 
 const DEFAULTS: WorkspaceConfigDto = {
   defaultMeetingTitle: 'Untitled meeting',

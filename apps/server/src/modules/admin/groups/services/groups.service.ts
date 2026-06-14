@@ -11,19 +11,19 @@ import {
 
 import type { Prisma } from '@prisma/client';
 
-import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
-import { resolveHistoryCutoff } from '../../../../common/util/history.util';
-import { StorageService } from '../../../../storage/services/storage.service';
+import { DatagridService, buildOrderBy, paginate } from '@/common/datagrid';
+import { resolveHistoryCutoff } from '@/common/util/history.util';
+import { StorageService } from '@/storage/services/storage.service';
 
-import type { AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy';
+import type { AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
 
 import {
   AdminGroupsRepository,
   type GroupDetail,
   type GroupListRow,
-} from '../repositories/groups.repository';
-import { AdminGroupsDatagridQueryDto } from '../dto/groups-datagrid-query.dto';
-import { GROUPS_DATAGRID } from '../groups.datagrid';
+} from '@/modules/admin/groups/repositories/groups.repository';
+import { AdminGroupsDatagridQueryDto } from '@/modules/admin/groups/dto/groups-datagrid-query.dto';
+import { GROUPS_DATAGRID } from '@/modules/admin/groups/groups.datagrid';
 
 @Injectable()
 export class AdminGroupsService {

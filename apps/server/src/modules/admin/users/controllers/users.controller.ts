@@ -25,20 +25,20 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { Public } from '../../../../common/decorators/public.decorator';
+import { Public } from '@/common/decorators/public.decorator';
 
-import { CurrentAdmin } from '../../auth/decorators/current-admin.decorator';
-import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
-import { type AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy';
-import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
-import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
-import { AdminListUsersQueryDto } from '../dto/list-users-query.dto';
-import { AdminUsersDatagridQueryDto } from '../dto/users-datagrid-query.dto';
-import { AdminCreateUserBodyDto } from '../dto/create-user.dto';
-import { CreateUserInviteBodyDto } from '../dto/create-user-invite.dto';
-import { AdminUpdateUserBodyDto } from '../dto/update-user.dto';
-import { AdminUserInviteService } from '../services/user-invite.service';
-import { AdminUsersService } from '../services/users.service';
+import { CurrentAdmin } from '@/modules/admin/auth/decorators/current-admin.decorator';
+import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
+import { type AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
+import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
+import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
+import { AdminListUsersQueryDto } from '@/modules/admin/users/dto/list-users-query.dto';
+import { AdminUsersDatagridQueryDto } from '@/modules/admin/users/dto/users-datagrid-query.dto';
+import { AdminCreateUserBodyDto } from '@/modules/admin/users/dto/create-user.dto';
+import { CreateUserInviteBodyDto } from '@/modules/admin/users/dto/create-user-invite.dto';
+import { AdminUpdateUserBodyDto } from '@/modules/admin/users/dto/update-user.dto';
+import { AdminUserInviteService } from '@/modules/admin/users/services/user-invite.service';
+import { AdminUsersService } from '@/modules/admin/users/services/users.service';
 
 @ApiTags('admin-users')
 @Controller('admin/users')

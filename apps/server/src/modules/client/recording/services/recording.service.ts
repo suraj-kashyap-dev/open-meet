@@ -18,8 +18,8 @@ import type { ApiEnv } from '@open-meet/config';
 import type { RecordingDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { MeetingsService } from '../../meetings/services/meetings.service';
-import { RecordingRepository } from '../repositories/recording.repository';
+import { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
+import { RecordingRepository } from '@/modules/client/recording/repositories/recording.repository';
 
 const NS_PER_MS = 1_000_000n;
 

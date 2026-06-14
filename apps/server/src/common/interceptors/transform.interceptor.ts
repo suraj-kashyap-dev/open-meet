@@ -8,7 +8,7 @@ import { Reflector } from '@nestjs/core';
 import { map, type Observable } from 'rxjs';
 
 import type { ApiSuccess } from '@open-meet/types';
-import { SKIP_TRANSFORM_KEY } from '../decorators/skip-transform.decorator';
+import { SKIP_TRANSFORM_KEY } from '@/common/decorators/skip-transform.decorator';
 
 @Injectable()
 export class TransformInterceptor<T = unknown> implements NestInterceptor<T, ApiSuccess<T> | T> {

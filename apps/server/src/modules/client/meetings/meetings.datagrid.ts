@@ -1,4 +1,4 @@
-import type { DatagridDefinition } from '../../../common/datagrid';
+import type { DatagridDefinition } from '@/common/datagrid';
 
 export const HISTORY_DATAGRID: DatagridDefinition = {
   resource: 'history',

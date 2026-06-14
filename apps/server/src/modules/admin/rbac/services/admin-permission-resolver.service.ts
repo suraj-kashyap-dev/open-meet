@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { PermissionType } from '@prisma/client';
 
-import { AdminRoleRepository } from '../repositories/admin-role.repository';
+import { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
 
 interface ResolvedRole {
   rev: number;

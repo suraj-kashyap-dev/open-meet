@@ -16,9 +16,9 @@ import {
 } from '@nestjs/websockets';
 import type { Server, Socket } from 'socket.io';
 
-import { MeetingBus } from '../../../../websocket/services/meeting-bus.service';
-import { PUSH_QUEUE, PushJob } from '../../push/push.constants';
-import type { KnockJob } from '../../push/services/push-dispatch.service';
+import { MeetingBus } from '@/websocket/services/meeting-bus.service';
+import { PUSH_QUEUE, PushJob } from '@/modules/client/push/push.constants';
+import type { KnockJob } from '@/modules/client/push/services/push-dispatch.service';
 
 import {
   ClientEvent,
@@ -36,16 +36,16 @@ import {
 } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { ChatService } from '../services/chat.service';
-import { MeetingsService } from '../../meetings/services/meetings.service';
+import { ChatService } from '@/modules/client/chat/services/chat.service';
+import { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
 import {
   JoinRoomGatewayDto,
   KnockRespondGatewayDto,
   ReactionGatewayDto,
   SendMessageGatewayDto,
-} from '../dto/send-message.dto';
-import { WsJwtGuard } from '../ws-jwt.guard';
-import { extractAccessTokenFromSocket, type SocketUser } from '../ws-auth.util';
+} from '@/modules/client/chat/dto/send-message.dto';
+import { WsJwtGuard } from '@/modules/client/chat/ws-jwt.guard';
+import { extractAccessTokenFromSocket, type SocketUser } from '@/modules/client/chat/ws-auth.util';
 
 type AuthSocket = Socket & { data: { user?: SocketUser } };
 

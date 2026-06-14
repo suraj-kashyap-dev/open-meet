@@ -30,19 +30,16 @@ import {
   type UserMeResponseDto,
 } from '@open-meet/types';
 
-import {
-  CurrentUser,
-  type RequestUser,
-} from '../../../../common/decorators/current-user.decorator';
-import { Public } from '../../../../common/decorators/public.decorator';
+import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
+import { Public } from '@/common/decorators/public.decorator';
 
-import { AuthService, type IssuedTokens } from '../services/auth.service';
-import { AvatarsService } from '../services/avatars.service';
-import { AcceptUserInviteDto } from '../dto/accept-user-invite.dto';
-import { ChangePasswordDto } from '../dto/change-password.dto';
-import { GoogleOAuthService } from '../services/google-oauth.service';
-import { LoginDto } from '../dto/login.dto';
-import { UpdateProfileDto } from '../dto/update-profile.dto';
+import { AuthService, type IssuedTokens } from '@/modules/client/auth/services/auth.service';
+import { AvatarsService } from '@/modules/client/auth/services/avatars.service';
+import { AcceptUserInviteDto } from '@/modules/client/auth/dto/accept-user-invite.dto';
+import { ChangePasswordDto } from '@/modules/client/auth/dto/change-password.dto';
+import { GoogleOAuthService } from '@/modules/client/auth/services/google-oauth.service';
+import { LoginDto } from '@/modules/client/auth/dto/login.dto';
+import { UpdateProfileDto } from '@/modules/client/auth/dto/update-profile.dto';
 
 const ACCESS_COOKIE = 'access_token';
 const REFRESH_COOKIE = 'refresh_token';

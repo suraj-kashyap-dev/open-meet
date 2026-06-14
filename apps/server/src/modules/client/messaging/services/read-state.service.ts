@@ -4,8 +4,8 @@ import { ChatServerEvent, type UnreadSummaryDto } from '@open-meet/types';
 
 import { ChatBus, conversationRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
-import { MessagesRepository } from '../repositories/messages.repository';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
 
 function laterDate(left: Date | null, right: Date | null): Date | null {
   if (!left) {

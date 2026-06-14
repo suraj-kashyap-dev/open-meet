@@ -8,7 +8,7 @@ import type { ConversationMember } from '@prisma/client';
 
 import { ApiErrorCode } from '@open-meet/types';
 
-import { ChatPermissionsRepository } from '../repositories/chat-permissions.repository';
+import { ChatPermissionsRepository } from '@/modules/client/messaging/repositories/chat-permissions.repository';
 
 @Injectable()
 export class ChatPermissionsService {

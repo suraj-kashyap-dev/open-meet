@@ -4,8 +4,8 @@ import { AuthGuard } from '@nestjs/passport';
 
 import { ApiErrorCode } from '@open-meet/types';
 
-import { IS_PUBLIC_KEY } from '../../../../common/decorators/public.decorator';
-import type { RequestUser } from '../../../../common/decorators/current-user.decorator';
+import { IS_PUBLIC_KEY } from '@/common/decorators/public.decorator';
+import type { RequestUser } from '@/common/decorators/current-user.decorator';
 
 function isAllowedGuestPath(rawPath: string | undefined): boolean {
   if (!rawPath) {

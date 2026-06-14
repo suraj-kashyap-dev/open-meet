@@ -12,7 +12,7 @@ import type { ApiEnv } from '@open-meet/config';
 import type { I18nService } from 'nestjs-i18n';
 
 import type { DatagridService } from '@/common/datagrid';
-import type { AdminRepository } from '@/modules/admin/repositories/admin.repository';
+import type { AdminRepository } from '@/modules/admin/core/repositories/admin.repository';
 import type { AdminInviteRepository } from '@/modules/admin/accounts/repositories/admin-invite.repository';
 import { AdminAccountsService } from '@/modules/admin/accounts/services/accounts.service';
 import type { AdminPermissionResolver } from '@/modules/admin/rbac/services/admin-permission-resolver.service';

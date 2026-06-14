@@ -17,21 +17,24 @@ import {
   type ChatMessagePriority,
 } from '@open-meet/types';
 
-import { laterDate } from '../../../../common/util/history.util';
-import { UploadsService } from '../../../uploads/services/uploads.service';
+import { laterDate } from '@/common/util/history.util';
+import { UploadsService } from '@/modules/uploads/services/uploads.service';
 
 import { ChatBus, conversationRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
 import { ConversationsService } from './conversations.service';
-import type { ChatMessageWithRelations } from '../messaging.includes';
-import { MessagesRepository, type MentionInput } from '../repositories/messages.repository';
-import { MessagingSerializer } from '../messaging.serializer';
-import { parseMentions } from '../mentions.util';
-import { PinsRepository } from '../repositories/pins.repository';
-import { SavedRepository } from '../repositories/saved.repository';
-import { PUSH_QUEUE, PushJob } from '../../push/push.constants';
-import type { ChatMessageJob } from '../../push/services/push-dispatch.service';
+import type { ChatMessageWithRelations } from '@/modules/client/messaging/messaging.includes';
+import {
+  MessagesRepository,
+  type MentionInput,
+} from '@/modules/client/messaging/repositories/messages.repository';
+import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
+import { parseMentions } from '@/modules/client/messaging/mentions.util';
+import { PinsRepository } from '@/modules/client/messaging/repositories/pins.repository';
+import { SavedRepository } from '@/modules/client/messaging/repositories/saved.repository';
+import { PUSH_QUEUE, PushJob } from '@/modules/client/push/push.constants';
+import type { ChatMessageJob } from '@/modules/client/push/services/push-dispatch.service';
 
 export interface SendMessageInput {
   conversationId: string;

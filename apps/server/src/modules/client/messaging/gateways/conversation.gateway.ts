@@ -30,17 +30,21 @@ import {
   type ChatSetPresencePayload,
 } from '@open-meet/types';
 
-import { extractAccessTokenFromSocket, type SocketUser } from '../../chat/ws-auth.util';
-import { WsJwtGuard } from '../../chat/ws-jwt.guard';
+import { extractAccessTokenFromSocket, type SocketUser } from '@/modules/client/chat/ws-auth.util';
+import { WsJwtGuard } from '@/modules/client/chat/ws-jwt.guard';
 
-import { ChatBus, conversationRoom, userRoom } from '../services/chat-bus.service';
-import { ChatPermissionsService } from '../services/chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
-import { MessagesService } from '../services/messages.service';
-import { PollsService } from '../services/polls.service';
-import { PresenceService } from '../services/presence.service';
-import { ReactionsService } from '../services/reactions.service';
-import { ReadStateService } from '../services/read-state.service';
+import {
+  ChatBus,
+  conversationRoom,
+  userRoom,
+} from '@/modules/client/messaging/services/chat-bus.service';
+import { ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { MessagesService } from '@/modules/client/messaging/services/messages.service';
+import { PollsService } from '@/modules/client/messaging/services/polls.service';
+import { PresenceService } from '@/modules/client/messaging/services/presence.service';
+import { ReactionsService } from '@/modules/client/messaging/services/reactions.service';
+import { ReadStateService } from '@/modules/client/messaging/services/read-state.service';
 
 type AuthSocket = Socket & { data: { user?: SocketUser } };
 

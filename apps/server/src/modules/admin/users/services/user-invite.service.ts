@@ -17,12 +17,12 @@ import {
   type UserInviteListResponseDto,
 } from '@open-meet/types';
 
-import { renderEmail } from '../../../../integrations/mail/email-layout';
-import { MailService } from '../../../../integrations/mail/services/mail.service';
+import { renderEmail } from '@/integrations/mail/email-layout';
+import { MailService } from '@/integrations/mail/services/mail.service';
 
 import type { UserInvite } from '@prisma/client';
 
-import { AdminUserInviteRepository } from '../repositories/user-invite.repository';
+import { AdminUserInviteRepository } from '@/modules/admin/users/repositories/user-invite.repository';
 
 @Injectable()
 export class AdminUserInviteService {

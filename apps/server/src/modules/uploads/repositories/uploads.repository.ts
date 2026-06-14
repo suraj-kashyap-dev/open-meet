@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { Attachment } from '@prisma/client';
 
-import { PrismaService } from '../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 export interface CreateAttachmentInput {
   uploaderId: string;

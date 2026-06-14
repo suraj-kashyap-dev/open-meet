@@ -3,8 +3,8 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { PublicConfigDto } from '@open-meet/types';
 
-import { Public } from '../../../common/decorators/public.decorator';
-import { BrandingService } from '../services/branding.service';
+import { Public } from '@/common/decorators/public.decorator';
+import { BrandingService } from '@/modules/config/services/branding.service';
 
 @ApiTags('config')
 @Controller('config')

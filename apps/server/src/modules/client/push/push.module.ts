@@ -1,8 +1,8 @@
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 
-import { MessagingModule } from '../messaging/messaging.module';
-import { SettingsModule } from '../settings/settings.module';
+import { MessagingModule } from '@/modules/client/messaging/messaging.module';
+import { SettingsModule } from '@/modules/client/settings/settings.module';
 import { PUSH_QUEUE } from './push.constants';
 import { PushController } from './controllers/push.controller';
 import { PushDispatchService } from './services/push-dispatch.service';

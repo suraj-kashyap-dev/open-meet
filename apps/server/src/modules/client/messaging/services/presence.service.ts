@@ -3,11 +3,11 @@ import { PresenceStatus } from '@prisma/client';
 
 import { ChatServerEvent } from '@open-meet/types';
 
-import { RedisService } from '../../../../integrations/redis/services/redis.service';
+import { RedisService } from '@/integrations/redis/services/redis.service';
 
 import { ChatBus, conversationRoom, userRoom } from './chat-bus.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
-import { PresenceRepository } from '../repositories/presence.repository';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { PresenceRepository } from '@/modules/client/messaging/repositories/presence.repository';
 
 const ONLINE_KEY = 'chat:presence:online';
 const LAST_SEEN_KEY = 'chat:presence:last-seen';

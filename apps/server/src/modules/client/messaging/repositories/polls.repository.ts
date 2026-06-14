@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ChatMessageType } from '@prisma/client';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 import {
   chatMessageInclude,
   pollInclude,
   type ChatMessageWithRelations,
   type PollWithOptions,
-} from '../messaging.includes';
+} from '@/modules/client/messaging/messaging.includes';
 
 export interface PollContext {
   id: string;

@@ -24,17 +24,14 @@ import type {
   UpcomingMeetingDto,
 } from '@open-meet/types';
 
-import {
-  CurrentUser,
-  type RequestUser,
-} from '../../../../common/decorators/current-user.decorator';
-import { Public } from '../../../../common/decorators/public.decorator';
-import { CreateMeetingDto } from '../dto/create-meeting.dto';
-import { CreateGuestSessionDto } from '../dto/create-guest-session.dto';
-import { HistoryQueryDto } from '../dto/history-query.dto';
-import { ScheduleMeetingApiDto } from '../dto/schedule-meeting.dto';
-import { UpdateMeetingDto } from '../dto/update-meeting.dto';
-import { MeetingsService } from '../services/meetings.service';
+import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
+import { Public } from '@/common/decorators/public.decorator';
+import { CreateMeetingDto } from '@/modules/client/meetings/dto/create-meeting.dto';
+import { CreateGuestSessionDto } from '@/modules/client/meetings/dto/create-guest-session.dto';
+import { HistoryQueryDto } from '@/modules/client/meetings/dto/history-query.dto';
+import { ScheduleMeetingApiDto } from '@/modules/client/meetings/dto/schedule-meeting.dto';
+import { UpdateMeetingDto } from '@/modules/client/meetings/dto/update-meeting.dto';
+import { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
 
 @ApiTags('meetings')
 @Controller('meetings')

@@ -8,13 +8,13 @@ import {
   type ShareHistoryDto,
 } from '@open-meet/types';
 
-import { laterDate, resolveHistoryCutoff } from '../../../../common/util/history.util';
+import { laterDate, resolveHistoryCutoff } from '@/common/util/history.util';
 
 import { ChatBus, conversationRoom, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
-import { GroupsRepository } from '../repositories/groups.repository';
-import { MessagingSerializer } from '../messaging.serializer';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import { GroupsRepository } from '@/modules/client/messaging/repositories/groups.repository';
+import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
 import { PresenceService } from './presence.service';
 
 const TITLE_MIN = 1;

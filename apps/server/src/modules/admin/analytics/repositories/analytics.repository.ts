@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConversationType, MeetingStatus, Prisma } from '@prisma/client';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 interface DailyRow {
   day: Date;

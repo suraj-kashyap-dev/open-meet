@@ -1,18 +1,15 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import {
-  CurrentUser,
-  type RequestUser,
-} from '../../../../common/decorators/current-user.decorator';
+import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
 
 import {
   AddGroupMembersBodyDto,
   CreateGroupBodyDto,
   UpdateGroupBodyDto,
   UpdateGroupMemberRoleBodyDto,
-} from '../dto/groups.dto';
-import { GroupsService } from '../services/groups.service';
+} from '@/modules/client/messaging/dto/groups.dto';
+import { GroupsService } from '@/modules/client/messaging/services/groups.service';
 
 @ApiTags('messaging-groups')
 @Controller('messaging/groups')

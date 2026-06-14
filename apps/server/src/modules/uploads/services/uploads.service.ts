@@ -6,8 +6,8 @@ import type { Attachment } from '@prisma/client';
 import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode, type AttachmentDto } from '@open-meet/types';
 
-import { StorageService } from '../../../storage/services/storage.service';
-import { UploadsRepository } from '../repositories/uploads.repository';
+import { StorageService } from '@/storage/services/storage.service';
+import { UploadsRepository } from '@/modules/uploads/repositories/uploads.repository';
 
 const MIME_EXTENSIONS: Record<string, string> = {
   'image/png': 'png',

@@ -3,10 +3,10 @@ import { Prisma } from '@prisma/client';
 
 import type { ActivityFeedDto } from '@open-meet/types';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
-import { chatMessageInclude } from '../messaging.includes';
-import { MessagingSerializer } from '../messaging.serializer';
+import { chatMessageInclude } from '@/modules/client/messaging/messaging.includes';
+import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
 
 const activityInclude = {
   ...chatMessageInclude,

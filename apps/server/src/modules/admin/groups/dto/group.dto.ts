@@ -10,7 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { ShareHistoryInputDto } from '../../../../common/dto/share-history.dto';
+import { ShareHistoryInputDto } from '@/common/dto/share-history.dto';
 
 export class CreateGroupBodyDto {
   @IsString()

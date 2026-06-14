@@ -13,7 +13,7 @@ import {
 
 import { ConversationMemberRole } from '@open-meet/types';
 
-import { ShareHistoryInputDto } from '../../../../common/dto/share-history.dto';
+import { ShareHistoryInputDto } from '@/common/dto/share-history.dto';
 
 const TITLE_MIN = 1;
 const TITLE_MAX = 80;

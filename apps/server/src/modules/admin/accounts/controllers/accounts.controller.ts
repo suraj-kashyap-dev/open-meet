@@ -20,21 +20,21 @@ import type {
   DatagridResponseDto,
 } from '@open-meet/types';
 
-import { Public } from '../../../../common/decorators/public.decorator';
+import { Public } from '@/common/decorators/public.decorator';
 
-import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
-import { CurrentAdmin } from '../../auth/decorators/current-admin.decorator';
-import { type AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy';
-import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
-import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
+import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
+import { CurrentAdmin } from '@/modules/admin/auth/decorators/current-admin.decorator';
+import { type AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
+import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
+import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
 
-import { AssignRoleBodyDto } from '../../rbac/dto/role.dto';
+import { AssignRoleBodyDto } from '@/modules/admin/rbac/dto/role.dto';
 
-import { AdminAccountsService } from '../services/accounts.service';
-import { AdminAccountsDatagridQueryDto } from '../dto/accounts-datagrid-query.dto';
-import { CreateAdminAccountDto } from '../dto/create-account.dto';
-import { CreateAdminInviteDto } from '../dto/create-invite.dto';
-import { UpdateAdminAccountDto } from '../dto/update-account.dto';
+import { AdminAccountsService } from '@/modules/admin/accounts/services/accounts.service';
+import { AdminAccountsDatagridQueryDto } from '@/modules/admin/accounts/dto/accounts-datagrid-query.dto';
+import { CreateAdminAccountDto } from '@/modules/admin/accounts/dto/create-account.dto';
+import { CreateAdminInviteDto } from '@/modules/admin/accounts/dto/create-invite.dto';
+import { UpdateAdminAccountDto } from '@/modules/admin/accounts/dto/update-account.dto';
 
 @ApiTags('admin-accounts')
 @Controller('admin/accounts')

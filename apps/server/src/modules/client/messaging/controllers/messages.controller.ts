@@ -1,15 +1,16 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 
-import {
-  CurrentUser,
-  type RequestUser,
-} from '../../../../common/decorators/current-user.decorator';
+import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
 
-import { EditMessageBodyDto, ForwardMessageBodyDto, ReactionBodyDto } from '../dto/messaging.dto';
-import { MessagesService } from '../services/messages.service';
-import { PinsService } from '../services/pins.service';
-import { ReactionsService } from '../services/reactions.service';
-import { SavedService } from '../services/saved.service';
+import {
+  EditMessageBodyDto,
+  ForwardMessageBodyDto,
+  ReactionBodyDto,
+} from '@/modules/client/messaging/dto/messaging.dto';
+import { MessagesService } from '@/modules/client/messaging/services/messages.service';
+import { PinsService } from '@/modules/client/messaging/services/pins.service';
+import { ReactionsService } from '@/modules/client/messaging/services/reactions.service';
+import { SavedService } from '@/modules/client/messaging/services/saved.service';
 
 @Controller('messaging/messages')
 export class MessagesController {

@@ -9,7 +9,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import type { AdminRepository } from '@/modules/admin/repositories/admin.repository';
+import type { AdminRepository } from '@/modules/admin/core/repositories/admin.repository';
 import { AdminAvatarsService } from '@/modules/admin/auth/services/admin-avatars.service';
 import type { StorageService } from '@/storage/services/storage.service';
 

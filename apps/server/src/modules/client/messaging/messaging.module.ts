@@ -2,9 +2,9 @@ import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-import { UploadsModule } from '../../uploads/uploads.module';
-import { WsJwtGuard } from '../chat/ws-jwt.guard';
-import { PUSH_QUEUE } from '../push/push.constants';
+import { UploadsModule } from '@/modules/uploads/uploads.module';
+import { WsJwtGuard } from '@/modules/client/chat/ws-jwt.guard';
+import { PUSH_QUEUE } from '@/modules/client/push/push.constants';
 
 import { ActivityService } from './services/activity.service';
 import { ChatBus } from './services/chat-bus.service';

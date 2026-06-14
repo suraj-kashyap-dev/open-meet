@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import type { ConversationStateDto } from '@open-meet/types';
 
 import { ChatPermissionsService } from './chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
 
 @Injectable()
 export class ConversationStateService {

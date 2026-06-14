@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MeetingStatus, Prisma } from '@prisma/client';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 const meetingInclude = {
   host: { select: { id: true, name: true, email: true } },

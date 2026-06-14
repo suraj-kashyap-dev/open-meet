@@ -11,7 +11,7 @@ import { randomBytes } from 'node:crypto';
 import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { RedisService } from '../../../../integrations/redis/services/redis.service';
+import { RedisService } from '@/integrations/redis/services/redis.service';
 
 const AUTH_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth';
 const TOKEN_ENDPOINT = 'https://oauth2.googleapis.com/token';

@@ -3,12 +3,12 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { AdminDeepAnalyticsDto, AdminStatsOverviewDto } from '@open-meet/types';
 
-import { Public } from '../../../../common/decorators/public.decorator';
+import { Public } from '@/common/decorators/public.decorator';
 
-import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
-import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
-import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
-import { AdminAnalyticsService } from '../services/analytics.service';
+import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
+import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
+import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
+import { AdminAnalyticsService } from '@/modules/admin/analytics/services/analytics.service';
 
 @ApiTags('admin-analytics')
 @Controller('admin/analytics')

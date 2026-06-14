@@ -3,8 +3,8 @@ import { I18nContext, I18nService } from 'nestjs-i18n';
 
 import type { DatagridResponseDto } from '@open-meet/types';
 
-import type { DatagridDefinition } from '../datagrid-definition';
-import { buildDatagrid, type DatagridQueryInput } from '../datagrid.util';
+import type { DatagridDefinition } from '@/common/datagrid/datagrid-definition';
+import { buildDatagrid, type DatagridQueryInput } from '@/common/datagrid/datagrid.util';
 
 @Injectable()
 export class DatagridService {

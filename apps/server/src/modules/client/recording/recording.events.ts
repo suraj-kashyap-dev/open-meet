@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import type { RecordingDto } from '@open-meet/types';
 import { ServerEvent } from '@open-meet/types';
 
-import { MeetingBus } from '../../../websocket/services/meeting-bus.service';
+import { MeetingBus } from '@/websocket/services/meeting-bus.service';
 
 @Injectable()
 export class RecordingEvents {

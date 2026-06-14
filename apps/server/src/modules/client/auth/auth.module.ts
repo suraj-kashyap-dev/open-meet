@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { MessagingModule } from '../messaging/messaging.module';
+import { MessagingModule } from '@/modules/client/messaging/messaging.module';
 
-import { ChatPermissionsRepository } from '../messaging/repositories/chat-permissions.repository';
+import { ChatPermissionsRepository } from '@/modules/client/messaging/repositories/chat-permissions.repository';
 
 import { AuthController } from './controllers/auth.controller';
 import { AuthRepository } from './repositories/auth.repository';

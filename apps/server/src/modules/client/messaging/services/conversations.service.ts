@@ -10,9 +10,12 @@ import {
 
 import { ChatBus, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
-import type { ChatMessageWithRelations, ConversationWithMembers } from '../messaging.includes';
-import { MessagingSerializer } from '../messaging.serializer';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
+import type {
+  ChatMessageWithRelations,
+  ConversationWithMembers,
+} from '@/modules/client/messaging/messaging.includes';
+import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
 import { PresenceService } from './presence.service';
 
 function directKeyFor(userAId: string, userBId: string): string {

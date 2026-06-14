@@ -15,18 +15,12 @@ import { DatagridModule } from './common/datagrid';
 import { AppController } from './app.controller';
 import { PrismaModule } from './database/prisma.module';
 import { RedisModule } from './integrations/redis/redis.module';
-import { AuthModule } from './modules/client/auth/auth.module';
 import { JwtAuthGuard } from './modules/client/auth/guards/jwt-auth.guard';
-import { SettingsModule } from './modules/client/settings/settings.module';
-import { MeetingsModule } from './modules/client/meetings/meetings.module';
+import { ClientModule } from './modules/client/client.module';
 import { LiveKitModule } from './integrations/livekit/livekit.module';
 import { MailModule } from './integrations/mail/mail.module';
-import { ChatModule } from './modules/client/chat/chat.module';
-import { MessagingModule } from './modules/client/messaging/messaging.module';
-import { RecordingModule } from './modules/client/recording/recording.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AppConfigModule } from './modules/config/config.module';
-import { PushModule } from './modules/client/push/push.module';
 import { StorageModule } from './storage/storage.module';
 import { UploadsModule } from './modules/uploads/uploads.module';
 
@@ -81,15 +75,9 @@ import { UploadsModule } from './modules/uploads/uploads.module';
     PrismaModule,
     RedisModule,
     MailModule,
-    AuthModule,
-    SettingsModule,
-    MeetingsModule,
     LiveKitModule,
-    ChatModule,
-    MessagingModule,
-    RecordingModule,
     AppConfigModule,
-    PushModule,
+    ClientModule,
     AdminModule,
     StorageModule,
     UploadsModule,

@@ -3,10 +3,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { AdminAccountDto, AdminInviteLookupDto } from '@open-meet/types';
 
-import { Public } from '../../../../common/decorators/public.decorator';
+import { Public } from '@/common/decorators/public.decorator';
 
-import { AdminAccountsService } from '../services/accounts.service';
-import { AcceptAdminInviteDto } from '../dto/accept-invite.dto';
+import { AdminAccountsService } from '@/modules/admin/accounts/services/accounts.service';
+import { AcceptAdminInviteDto } from '@/modules/admin/accounts/dto/accept-invite.dto';
 
 @ApiTags('admin-invites')
 @Controller('admin/invite')

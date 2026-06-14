@@ -6,14 +6,14 @@ import {
   type ConversationMember,
 } from '@prisma/client';
 
-import { PrismaService } from '../../../../database/services/prisma.service';
+import { PrismaService } from '@/database/services/prisma.service';
 
 import {
   conversationInclude,
   conversationListInclude,
   type ConversationListRow,
   type ConversationWithMembers,
-} from '../messaging.includes';
+} from '@/modules/client/messaging/messaging.includes';
 
 @Injectable()
 export class GroupsRepository {

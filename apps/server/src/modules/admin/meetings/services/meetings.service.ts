@@ -10,13 +10,13 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
-import { LiveKitService } from '../../../../integrations/livekit/services/livekit.service';
-import { StorageService } from '../../../../storage/services/storage.service';
+import { DatagridService, buildOrderBy, paginate } from '@/common/datagrid';
+import { LiveKitService } from '@/integrations/livekit/services/livekit.service';
+import { StorageService } from '@/storage/services/storage.service';
 
-import { AdminMeetingsRepository } from '../repositories/meetings.repository';
-import { AdminMeetingsDatagridQueryDto } from '../dto/meetings-datagrid-query.dto';
-import { MEETINGS_DATAGRID } from '../meetings.datagrid';
+import { AdminMeetingsRepository } from '@/modules/admin/meetings/repositories/meetings.repository';
+import { AdminMeetingsDatagridQueryDto } from '@/modules/admin/meetings/dto/meetings-datagrid-query.dto';
+import { MEETINGS_DATAGRID } from '@/modules/admin/meetings/meetings.datagrid';
 
 interface MeetingRow {
   id: string;

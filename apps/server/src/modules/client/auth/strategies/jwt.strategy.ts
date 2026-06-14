@@ -7,7 +7,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode } from '@open-meet/types';
 
-import type { RequestUser } from '../../../../common/decorators/current-user.decorator';
+import type { RequestUser } from '@/common/decorators/current-user.decorator';
 
 interface JwtPayload {
   sub: string;

@@ -15,10 +15,10 @@ import {
 
 import { ChatBus, conversationRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import { ConversationsRepository } from '../repositories/conversations.repository';
+import { ConversationsRepository } from '@/modules/client/messaging/repositories/conversations.repository';
 import { MessagesService } from './messages.service';
-import { MessagingSerializer } from '../messaging.serializer';
-import { PollsRepository } from '../repositories/polls.repository';
+import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
+import { PollsRepository } from '@/modules/client/messaging/repositories/polls.repository';
 
 const MAX_OPTIONS = 10;
 

@@ -5,8 +5,8 @@ import { randomBytes } from 'node:crypto';
 import type { ApiEnv } from '@open-meet/config';
 import { ApiErrorCode, type AdminBrandingDto, type PublicConfigDto } from '@open-meet/types';
 
-import { StorageService } from '../../../storage/services/storage.service';
-import { BrandingRepository } from '../repositories/branding.repository';
+import { StorageService } from '@/storage/services/storage.service';
+import { BrandingRepository } from '@/modules/config/repositories/branding.repository';
 
 const DEFAULT_APP_NAME = 'Open Meet';
 const APP_NAME_MAX = 60;

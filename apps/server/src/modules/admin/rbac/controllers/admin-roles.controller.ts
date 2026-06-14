@@ -15,16 +15,16 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { DatagridResponseDto, RoleDto, RoleListResponseDto } from '@open-meet/types';
 
-import { Public } from '../../../../common/decorators/public.decorator';
-import { CurrentAdmin } from '../../auth/decorators/current-admin.decorator';
-import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
-import { type AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy';
+import { Public } from '@/common/decorators/public.decorator';
+import { CurrentAdmin } from '@/modules/admin/auth/decorators/current-admin.decorator';
+import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
+import { type AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
 
-import { AdminPermissionsGuard } from '../admin-permissions.guard';
-import { AdminRolesService } from '../services/admin-roles.service';
-import { RequirePermissions } from '../decorators/require-permissions.decorator';
-import { AdminRolesDatagridQueryDto } from '../dto/roles-datagrid-query.dto';
-import { CreateRoleBodyDto, UpdateRoleBodyDto } from '../dto/role.dto';
+import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
+import { AdminRolesService } from '@/modules/admin/rbac/services/admin-roles.service';
+import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
+import { AdminRolesDatagridQueryDto } from '@/modules/admin/rbac/dto/roles-datagrid-query.dto';
+import { CreateRoleBodyDto, UpdateRoleBodyDto } from '@/modules/admin/rbac/dto/role.dto';
 
 @ApiTags('admin-roles')
 @Controller('admin/roles')
