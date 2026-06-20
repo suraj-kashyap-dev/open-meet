@@ -7,6 +7,7 @@ import type { UserDto, UserMeResponseDto } from '@open-meet/types';
 
 import { authApi } from '@/features/web/auth/services/auth';
 import { useChatStore } from '@/features/web/chat/stores';
+import { clearCachedAccentChoice } from '@/components/web/theme/accent-cache';
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
@@ -87,6 +88,8 @@ export function useCurrentUserMe() {
       } catch (err) {
         if (err instanceof ApiClientError && err.statusCode === 401) {
           writeCachedMe(null);
+
+          clearCachedAccentChoice();
 
           return null;
         }
@@ -231,6 +234,8 @@ export function useChangePassword() {
     onSuccess: () => {
       writeCachedMe(null);
 
+      clearCachedAccentChoice();
+
       qc.setQueryData(ME_KEY, null);
 
       useChatStore.getState().reset();
@@ -251,6 +256,8 @@ export function useLogout() {
     mutationFn: authApi.logout,
     onSettled: () => {
       writeCachedMe(null);
+
+      clearCachedAccentChoice();
 
       qc.setQueryData(ME_KEY, null);
 

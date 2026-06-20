@@ -6,13 +6,22 @@ import type { AdminBrandingDto, UpdateBrandingInput } from '@open-meet/types';
 
 import { adminBrandingApi } from '@/features/branding/services/branding';
 
-const KEY = 'admin-branding' as const;
+const KEY = ['admin-branding'] as const;
 
-export function useAdminBranding() {
+interface UseAdminBrandingOptions {
+  enabled?: boolean;
+  initialData?: AdminBrandingDto;
+}
+
+export function useAdminBranding(options: UseAdminBrandingOptions = {}) {
+  const { enabled = true, initialData } = options;
+
   return useQuery({
-    queryKey: [KEY],
+    queryKey: KEY,
     queryFn: ({ signal }) => adminBrandingApi.get(signal),
     staleTime: 30_000,
+    enabled,
+    initialData,
   });
 }
 
@@ -22,7 +31,7 @@ export function useUpdateBrandingName() {
   return useMutation({
     mutationFn: (input: UpdateBrandingInput) => adminBrandingApi.updateName(input),
     onSuccess: (data: AdminBrandingDto) => {
-      qc.setQueryData([KEY], data);
+      qc.setQueryData(KEY, data);
     },
   });
 }
@@ -33,7 +42,7 @@ export function useUpdateBranding() {
   return useMutation({
     mutationFn: (input: UpdateBrandingInput) => adminBrandingApi.update(input),
     onSuccess: (data: AdminBrandingDto) => {
-      qc.setQueryData([KEY], data);
+      qc.setQueryData(KEY, data);
     },
   });
 }
@@ -44,7 +53,7 @@ export function useUploadBrandingLogo() {
   return useMutation({
     mutationFn: (file: File) => adminBrandingApi.uploadLogo(file),
     onSuccess: (data: AdminBrandingDto) => {
-      qc.setQueryData([KEY], data);
+      qc.setQueryData(KEY, data);
     },
   });
 }
@@ -55,7 +64,7 @@ export function useRemoveBrandingLogo() {
   return useMutation({
     mutationFn: () => adminBrandingApi.removeLogo(),
     onSuccess: (data: AdminBrandingDto) => {
-      qc.setQueryData([KEY], data);
+      qc.setQueryData(KEY, data);
     },
   });
 }

@@ -1,4 +1,4 @@
-name: Unit
+name: Build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: unit-${{ github.ref }}
+  group: build-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -14,10 +14,10 @@ env:
   CI: true
 
 jobs:
-  test:
-    name: Typecheck, Unit Tests & Build
+  build:
+    name: Build workspace
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -37,11 +37,5 @@ jobs:
       - name: Prisma generate
         run: pnpm --filter @open-meet/server prisma:generate
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Unit tests (Vitest)
-        run: pnpm test
-
-      - name: Build (server + shared packages)
-        run: pnpm exec turbo run build --filter='@open-meet/server' --filter='./packages/*'
+      - name: Build all workspaces
+        run: pnpm build

@@ -14,6 +14,8 @@ test.describe('Admin dashboard page', () => {
     await expect(page.getByText('Total registered accounts')).toBeVisible();
 
     await expect(page.getByText('128', { exact: true })).toBeVisible();
+
+    await expect(page.getByText('New signups', { exact: true })).toBeVisible();
   });
 
   test('should surface group totals', async ({ page }) => {

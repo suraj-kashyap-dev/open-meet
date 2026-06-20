@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 
-import { Logo } from '@open-meet/ui/logo';
-
+import { AppLogo } from '@/components/branding/app-logo';
 import { AcceptInviteForm } from '@/features/accounts/components/accept-invite-form';
 
 export const metadata: Metadata = {
@@ -24,7 +23,7 @@ export default async function AcceptInvitePage({
     <main className="flex min-h-screen items-center justify-center bg-muted/40 px-4 py-12">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
-          <Logo className="h-7 w-7" />
+          <AppLogo className="h-7 w-7" />
           <span>Open Meet</span>
         </div>
 

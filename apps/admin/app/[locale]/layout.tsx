@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
@@ -9,15 +8,8 @@ import { Toaster } from '@open-meet/ui/sonner';
 
 import { isRtl, routing } from '@/i18n/routing';
 import { getBranding } from '@/lib/branding';
-import { BrandingProvider } from '@/components/branding/provider';
 import { Providers } from '@/providers';
 import '../globals.css';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const { appName } = await getBranding();
@@ -55,23 +47,16 @@ export default async function RootLayout({
   const branding = await getBranding();
 
   return (
-    <html
-      lang={locale}
-      dir={isRtl(locale) ? 'rtl' : 'ltr'}
-      className={inter.variable}
-      suppressHydrationWarning
-    >
+    <html lang={locale} dir={isRtl(locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         suppressHydrationWarning
       >
         <NextIntlClientProvider>
-          <BrandingProvider value={branding}>
-            <Providers>
-              {children}
-              <Toaster position="bottom-right" />
-            </Providers>
-          </BrandingProvider>
+          <Providers initialBranding={branding}>
+            {children}
+            <Toaster position="bottom-right" />
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

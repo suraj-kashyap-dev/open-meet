@@ -2,7 +2,7 @@
 
 import { AlertTriangle, Camera, Loader2, Paperclip, Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@open-meet/ui/button';
@@ -89,6 +89,14 @@ export function MessageComposer({
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const typingActive = useRef(false);
   const typingTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!canPost || isWysiwyg) {
+      return;
+    }
+
+    textareaRef.current?.focus();
+  }, [canPost, conversationId, isWysiwyg, textareaRef]);
 
   const formatSize = (bytes: number): string => {
     const s = byteSize(bytes);
@@ -360,6 +368,7 @@ export function MessageComposer({
             <RichInput
               ref={richRef}
               placeholder={t('composer.placeholder')}
+              autoFocusToken={conversationId}
               getMentionItems={() =>
                 members
                   .filter((m) => m.userId !== currentUserId)

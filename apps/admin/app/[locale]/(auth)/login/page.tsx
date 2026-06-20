@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-import { Logo } from '@open-meet/ui/logo';
-
+import { AppLogo } from '@/components/branding/app-logo';
 import { LanguageSwitcher } from '@/components/shared/language-switcher';
 import { AdminGuestGuard } from '@/features/auth/components/admin-guest-guard';
 import { AdminLoginForm } from '@/features/auth/components/admin-login-form';
@@ -28,7 +27,7 @@ export default async function AdminLoginPage({ params }: { params: Promise<{ loc
 
         <div className="w-full max-w-sm">
           <div className="mb-8 flex items-center gap-2 text-sm font-semibold tracking-tight">
-            <Logo className="h-7 w-7" />
+            <AppLogo className="h-7 w-7" />
             <span>Open Meet</span>
           </div>
 

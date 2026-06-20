@@ -41,3 +41,5 @@ coverage/
 # Claude Code local settings
 .claude/settings.json
 .claude/settings*
+.codex/settings.json
+.codex/settings.local.json

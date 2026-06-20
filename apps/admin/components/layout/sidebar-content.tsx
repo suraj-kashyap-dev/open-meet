@@ -3,10 +3,10 @@
 import { ChevronRight, ExternalLink } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { Logo } from '@open-meet/ui/logo';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-meet/ui/tooltip';
 import { cn } from '@open-meet/ui/cn';
 
+import { AppLogo } from '@/components/branding/app-logo';
 import { Link, usePathname } from '@/i18n/navigation';
 import { isRtl } from '@/i18n/routing';
 import { env } from '@/lib/env';
@@ -50,7 +50,7 @@ export function SidebarContent({ onNavigate, collapsed = false }: Props) {
                 className="h-8 w-8 shrink-0 rounded-md object-contain"
               />
             ) : (
-              <Logo className="h-8 w-8 shrink-0" />
+              <AppLogo className="h-8 w-8 shrink-0" title={appName} />
             )}
             {!collapsed ? (
               <span className="flex min-w-0 flex-col leading-none">

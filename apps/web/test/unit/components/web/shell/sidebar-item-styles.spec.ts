@@ -8,16 +8,18 @@ import {
 } from '@/components/web/shell/sidebar-item-styles';
 
 describe('sidebar item styles', () => {
-  it('should give active expanded items the same selected-card treatment as chat rows', () => {
-    expect(getSidebarNavItemClass(true)).toContain('border-border/70');
+  it('should give active expanded items the accent treatment', () => {
+    expect(getSidebarNavItemClass(true)).toContain('border-accent/20');
 
-    expect(getSidebarNavItemClass(true)).toContain('bg-muted/80');
+    expect(getSidebarNavItemClass(true)).toContain('bg-accent/10');
+
+    expect(getSidebarNavItemClass(true)).toContain('text-accent');
 
     expect(getSidebarNavItemClass(true)).toContain('shadow-sm');
 
-    expect(getSidebarNavLabelClass(true)).toContain('text-foreground');
+    expect(getSidebarNavLabelClass(true)).toContain('text-accent');
 
-    expect(getSidebarNavIconClass(true)).toContain('bg-background');
+    expect(getSidebarNavIconClass(true)).toContain('bg-accent/15');
   });
 
   it('should keep inactive expanded items on the softer hover treatment', () => {
@@ -28,10 +30,12 @@ describe('sidebar item styles', () => {
     expect(getSidebarNavIconClass(false)).toContain('bg-muted/70');
   });
 
-  it('should apply the same card-like active state to collapsed rail items', () => {
-    expect(getSidebarCollapsedNavItemClass(true)).toContain('border-border/70');
+  it('should apply the same accent active state to collapsed rail items', () => {
+    expect(getSidebarCollapsedNavItemClass(true)).toContain('border-accent/20');
 
-    expect(getSidebarCollapsedNavItemClass(true)).toContain('bg-muted/80');
+    expect(getSidebarCollapsedNavItemClass(true)).toContain('bg-accent/10');
+
+    expect(getSidebarCollapsedNavItemClass(true)).toContain('text-accent');
 
     expect(getSidebarCollapsedNavItemClass(true)).toContain('shadow-sm');
   });

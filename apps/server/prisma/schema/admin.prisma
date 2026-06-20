@@ -43,8 +43,6 @@ model WorkspaceSettings {
   allowGuestJoin      Boolean  @default(true)
   maxMeetingMinutes   Int?
   banner              String?
-  // Brand accent (CSS var driver). Either a preset slug ("indigo", "blue",
-  // "green", "purple", "rose", "amber", "teal") or a `#RRGGBB` hex.
   accentColor         String   @default("indigo")
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt

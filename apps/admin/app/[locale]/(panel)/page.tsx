@@ -5,7 +5,9 @@ import { CalendarRange, MessageSquare, MessagesSquare, Radio, Users } from 'luci
 import { useTranslations } from 'next-intl';
 
 import { RecentMeetingsTable } from '@/features/dashboard/components/recent-meetings-table';
+import { OverviewMixCard } from '@/features/dashboard/components/overview-mix-card';
 import { StatCard } from '@/features/dashboard/components/stat-card';
+import { TrendCard } from '@/features/dashboard/components/trend-card';
 import { UpcomingMeetingsTable } from '@/features/dashboard/components/upcoming-meetings-table';
 import { adminAnalyticsApi } from '@/features/analytics/services/analytics';
 
@@ -34,7 +36,7 @@ export default function AdminOverviewPage() {
   }
 
   return (
-    <main className="w-full space-y-6 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <main className="w-full space-y-8 px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <header className="space-y-1">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           {t('eyebrow')}
@@ -42,37 +44,53 @@ export default function AdminOverviewPage() {
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{t('title')}</h1>
       </header>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <StatCard
+          hint={t('stats.users-hint')}
+          icon={Users}
           label={t('stats.users')}
           value={data.totals.users.toLocaleString()}
-          icon={Users}
-          hint={t('stats.users-hint')}
         />
         <StatCard
+          hint={t('stats.meetings-hint')}
+          icon={CalendarRange}
           label={t('stats.meetings')}
           value={data.totals.meetings.toLocaleString()}
-          icon={CalendarRange}
-          hint={t('stats.meetings-hint')}
         />
         <StatCard
+          hint={t('stats.active-now-hint')}
+          icon={Radio}
           label={t('stats.active-now')}
           value={data.totals.activeMeetings.toLocaleString()}
-          icon={Radio}
-          hint={t('stats.active-now-hint')}
         />
         <StatCard
+          hint={t('stats.messages-24h-hint')}
+          icon={MessageSquare}
           label={t('stats.messages-24h')}
           value={data.totals.messagesLast24h.toLocaleString()}
-          icon={MessageSquare}
-          hint={t('stats.messages-24h-hint')}
         />
         <StatCard
+          hint={t('stats.groups-hint')}
+          icon={MessagesSquare}
           label={t('stats.groups')}
           value={data.totals.groups.toLocaleString()}
-          icon={MessagesSquare}
-          hint={t('stats.groups-hint')}
         />
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <OverviewMixCard
+          activeLabel={t('stats.active-now')}
+          activeValue={data.totals.activeMeetings}
+          segments={[
+            { label: t('stats.users'), value: data.totals.users },
+            { label: t('stats.meetings'), value: data.totals.meetings },
+            { label: t('stats.messages-24h'), value: data.totals.messagesLast24h },
+            { label: t('stats.groups'), value: data.totals.groups },
+            { label: t('stats.active-now'), value: data.totals.activeMeetings },
+          ]}
+          title={t('eyebrow')}
+        />
+        <TrendCard series={data.trends.meetings} title={t('trends.meetings')} tone="success" />
       </section>
 
       <UpcomingMeetingsTable meetings={data.upcomingMeetings} />

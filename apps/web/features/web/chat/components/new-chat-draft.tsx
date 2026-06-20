@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, MessagesSquare, Search, Send, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { cn } from '@open-meet/ui/cn';
@@ -25,7 +25,19 @@ export function NewChatDraft() {
   const [search, setSearch] = useState('');
   const [recipient, setRecipient] = useState<TeammateDto | null>(null);
   const [draft, setDraft] = useState('');
+  const recipientInputRef = useRef<HTMLInputElement>(null);
+  const draftInputRef = useRef<HTMLTextAreaElement>(null);
   const teammates = useTeammates(recipient ? '' : search);
+
+  useEffect(() => {
+    if (recipient) {
+      draftInputRef.current?.focus();
+
+      return;
+    }
+
+    recipientInputRef.current?.focus();
+  }, [recipient]);
 
   const startChat = useMutation({
     mutationFn: async (content: string) => {
@@ -97,11 +109,11 @@ export function NewChatDraft() {
           <div className="relative flex-1">
             <Search className="absolute start-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
+              ref={recipientInputRef}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('new-chat.to-placeholder')}
               className="ps-9"
-              autoFocus
             />
             {search.trim().length > 0 ? (
               <ul className="absolute z-10 mt-1 max-h-72 w-full overflow-y-auto rounded-md border border-border bg-popover p-1 shadow-lg">
@@ -159,6 +171,7 @@ export function NewChatDraft() {
       <div className="border-t border-border p-3">
         <div className="flex items-end gap-2">
           <textarea
+            ref={draftInputRef}
             value={draft}
             disabled={!recipient}
             rows={1}

@@ -14,6 +14,8 @@ test.describe('Admin /analytics page', () => {
     await expect(page.getByRole('heading', { name: 'Analytics', level: 1 })).toBeVisible();
 
     await expect(page.getByText('Avg meeting length')).toBeVisible();
+
+    await expect(page.getByText('Peak concurrency by hour')).toBeVisible();
   });
 
   test('should hide deep analytics when the admin lacks analytics.view-deep', async ({ page }) => {

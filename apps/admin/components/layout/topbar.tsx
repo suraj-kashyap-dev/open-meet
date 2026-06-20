@@ -4,7 +4,6 @@ import { ChevronRight, LogOut, Menu, PanelLeftClose, PanelLeftOpen, UserCog } fr
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
-import { Logo } from '@open-meet/ui/logo';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { Button } from '@open-meet/ui/button';
 import {
@@ -16,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@open-meet/ui/dropdown-menu';
 import { ThemeToggle } from '@open-meet/ui/theme-toggle';
+import { AppLogo } from '@/components/branding/app-logo';
 import { LanguageSwitcher } from '@/components/shared/language-switcher';
 import { useBranding } from '@/components/branding/provider';
 import { useAdminLogout, useCurrentAdmin } from '@/features/auth/hooks/use-admin-auth';
@@ -115,7 +115,7 @@ export function Topbar({
         {logoUrl ? (
           <img src={logoUrl} alt={appName} className="h-7 w-7 shrink-0 rounded-md object-contain" />
         ) : (
-          <Logo className="h-7 w-7 shrink-0" />
+          <AppLogo className="h-7 w-7 shrink-0" title={appName} />
         )}
         <span className="truncate text-sm font-semibold tracking-tight">{appName}</span>
       </Link>

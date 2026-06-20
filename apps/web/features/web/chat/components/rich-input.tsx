@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import Link from '@tiptap/extension-link';
 import Mention from '@tiptap/extension-mention';
@@ -57,8 +57,9 @@ export const RichInput = forwardRef<
     getMentionItems: () => MentionItem[];
     onChange: (markdown: string) => void;
     onSubmit: () => void;
+    autoFocusToken?: string;
   }
->(({ placeholder, getMentionItems, onChange, onSubmit }, ref) => {
+>(({ placeholder, getMentionItems, onChange, onSubmit, autoFocusToken }, ref) => {
   const t = useTranslations('chat');
   const submitRef = useRef(onSubmit);
 
@@ -105,6 +106,14 @@ export const RichInput = forwardRef<
     }),
     [editor],
   );
+
+  useEffect(() => {
+    if (!autoFocusToken || !editor) {
+      return;
+    }
+
+    editor.commands.focus();
+  }, [autoFocusToken, editor]);
 
   const run = (fn: (chain: ReturnType<Editor['chain']>) => ReturnType<Editor['chain']>) => {
     if (editor) {

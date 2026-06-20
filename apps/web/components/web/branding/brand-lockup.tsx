@@ -1,5 +1,6 @@
-import { Logo } from '@open-meet/ui/logo';
 import { cn } from '@open-meet/ui/cn';
+
+import { AppLogo } from './app-logo';
 
 interface Props {
   appName: string;
@@ -27,7 +28,7 @@ export function BrandLockup({
           className={cn('h-7 w-auto max-w-40 object-contain', logoClassName)}
         />
       ) : (
-        <Logo className={cn('h-7 w-7 shadow-sm', logoClassName)} title={appName} />
+        <AppLogo className={cn('h-7 w-7 shadow-sm', logoClassName)} title={appName} />
       )}
 
       {showName ? <span className={cn(textClassName)}>{appName}</span> : null}

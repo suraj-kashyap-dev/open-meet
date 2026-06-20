@@ -4,9 +4,9 @@ import { AtSign, Bookmark, History, MessageSquare, PanelLeftClose, Video } from 
 import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { Logo } from '@open-meet/ui/logo';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-meet/ui/tooltip';
 
+import { AppLogo } from '@/components/web/branding/app-logo';
 import { useBranding } from '@/components/web/branding/branding-provider';
 import { ChatNavBadge } from '@/features/web/chat/components/chat-nav-badge';
 import { Link, usePathname } from '@/i18n/navigation';
@@ -87,7 +87,7 @@ function SidebarLogo() {
   return logoUrl ? (
     <img src={logoUrl} alt={appName} className="h-8 w-8 rounded-xl object-contain" />
   ) : (
-    <Logo className="h-8 w-8 rounded-xl shadow-sm" title={appName} />
+    <AppLogo className="h-8 w-8 rounded-xl shadow-sm" title={appName} />
   );
 }
 
