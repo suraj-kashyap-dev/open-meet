@@ -1,4 +1,4 @@
-import type { DatagridDefinition } from '@/common/datagrid';
+import type { DatagridDefinition } from '../../../common/datagrid';
 
 export const ADMINISTRATORS_DATAGRID: DatagridDefinition = {
   resource: 'administrators',

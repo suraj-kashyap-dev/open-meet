@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { Admin, Prisma } from '@prisma/client';
 
-import { PrismaService } from '@/database/services/prisma.service';
+import { PrismaService } from '../../../../database/services/prisma.service';
 
 @Injectable()
 export class AdminRepository {

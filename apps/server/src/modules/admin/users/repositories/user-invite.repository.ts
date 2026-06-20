@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { UserInvite } from '@prisma/client';
 
-import { PrismaService } from '@/database/services/prisma.service';
+import { PrismaService } from '../../../../database/services/prisma.service';
 
 export type UserInviteWithInviter = UserInvite & { invitedBy: { name: string } | null };
 

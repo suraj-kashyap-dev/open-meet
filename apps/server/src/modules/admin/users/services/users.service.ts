@@ -22,14 +22,14 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { DatagridService, buildOrderBy, paginate } from '@/common/datagrid';
-import { StorageService } from '@/storage/services/storage.service';
+import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
+import { StorageService } from '../../../../storage/services/storage.service';
 import {
   AdminUsersRepository,
   type UserWithCounts,
-} from '@/modules/admin/users/repositories/users.repository';
-import { AdminUsersDatagridQueryDto } from '@/modules/admin/users/dto/users-datagrid-query.dto';
-import { USERS_DATAGRID } from '@/modules/admin/users/users.datagrid';
+} from '../repositories/users.repository';
+import { AdminUsersDatagridQueryDto } from '../dto/users-datagrid-query.dto';
+import { USERS_DATAGRID } from '../users.datagrid';
 
 const ALLOWED_AVATAR_MIMES: Record<string, string> = {
   'image/png': 'png',

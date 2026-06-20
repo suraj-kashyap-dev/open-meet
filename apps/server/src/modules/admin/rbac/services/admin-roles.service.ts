@@ -18,12 +18,12 @@ import {
   expandToLeaves,
 } from '@open-meet/types';
 
-import { DatagridService, buildOrderBy, paginate } from '@/common/datagrid';
+import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
 import { AdminPermissionResolver } from './admin-permission-resolver.service';
-import { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
-import type { CreateRoleBodyDto, UpdateRoleBodyDto } from '@/modules/admin/rbac/dto/role.dto';
-import { AdminRolesDatagridQueryDto } from '@/modules/admin/rbac/dto/roles-datagrid-query.dto';
-import { ROLES_DATAGRID } from '@/modules/admin/rbac/roles.datagrid';
+import { AdminRoleRepository } from '../repositories/admin-role.repository';
+import type { CreateRoleBodyDto, UpdateRoleBodyDto } from '../dto/role.dto';
+import { AdminRolesDatagridQueryDto } from '../dto/roles-datagrid-query.dto';
+import { ROLES_DATAGRID } from '../roles.datagrid';
 
 const SELF_LOCKOUT_GUARDED_KEYS = ['roles.view', 'roles.update', 'admin-accounts.update'] as const;
 

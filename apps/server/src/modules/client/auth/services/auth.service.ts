@@ -16,15 +16,15 @@ import type { UserDto, UserInviteLookupDto, UserMeResponseDto } from '@open-meet
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { RedisService } from '@/integrations/redis/services/redis.service';
-import { PresenceService } from '@/modules/client/messaging/services/presence.service';
-import { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
+import { RedisService } from '../../../../integrations/redis/services/redis.service';
+import { PresenceService } from '../../messaging/services/presence.service';
+import { AuthRepository } from '../repositories/auth.repository';
 import { AvatarsService } from './avatars.service';
-import type { AcceptUserInviteDto } from '@/modules/client/auth/dto/accept-user-invite.dto';
-import type { LoginDto } from '@/modules/client/auth/dto/login.dto';
-import type { UpdateProfileDto } from '@/modules/client/auth/dto/update-profile.dto';
-import type { ChangePasswordDto } from '@/modules/client/auth/dto/change-password.dto';
-import { UserInviteRepository } from '@/modules/client/auth/repositories/user-invite.repository';
+import type { AcceptUserInviteDto } from '../dto/accept-user-invite.dto';
+import type { LoginDto } from '../dto/login.dto';
+import type { UpdateProfileDto } from '../dto/update-profile.dto';
+import type { ChangePasswordDto } from '../dto/change-password.dto';
+import { UserInviteRepository } from '../repositories/user-invite.repository';
 
 interface AccessTokenPayload {
   sub: string;

@@ -4,9 +4,9 @@ import * as argon2 from 'argon2';
 
 import type { ApiEnv } from '@open-meet/config';
 
-import { PrismaService } from '@/database/services/prisma.service';
+import { PrismaService } from '../../../../database/services/prisma.service';
 
-import { SYSTEM_ADMIN_ROLE_ID } from '@/modules/admin/rbac/services/admin-rbac-seed.service';
+import { SYSTEM_ADMIN_ROLE_ID } from '../../rbac/services/admin-rbac-seed.service';
 
 // Must match the DEFAULT_ADMIN_PASSWORD fallback in packages/config/src/env.ts.
 const INSECURE_DEFAULT_ADMIN_PASSWORD = 'admin12345';

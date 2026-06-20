@@ -4,7 +4,7 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import type { ServerOptions } from 'socket.io';
 import type { Redis } from 'ioredis';
 
-import { RedisService } from '@/integrations/redis/services/redis.service';
+import { RedisService } from '../integrations/redis/services/redis.service';
 
 type RedisAdapter = ReturnType<typeof createAdapter>;
 

@@ -13,11 +13,11 @@ import type { ApiEnv } from '@open-meet/config';
 import type { LiveKitTokenResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
-import { AvatarsService } from '@/modules/client/auth/services/avatars.service';
-import { MeetingsService } from '@/modules/client/meetings/services/meetings.service';
-import { RecordingEvents } from '@/modules/client/recording/recording.events';
-import { RecordingService } from '@/modules/client/recording/services/recording.service';
+import { AuthRepository } from '../../../modules/client/auth/repositories/auth.repository';
+import { AvatarsService } from '../../../modules/client/auth/services/avatars.service';
+import { MeetingsService } from '../../../modules/client/meetings/services/meetings.service';
+import { RecordingEvents } from '../../../modules/client/recording/recording.events';
+import { RecordingService } from '../../../modules/client/recording/services/recording.service';
 
 const TOKEN_TTL_SECONDS = 60 * 60 * 4;
 

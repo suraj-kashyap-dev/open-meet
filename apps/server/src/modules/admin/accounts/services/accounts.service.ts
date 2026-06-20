@@ -30,24 +30,24 @@ import {
   ApiErrorCode,
 } from '@open-meet/types';
 
-import { DatagridService, buildOrderBy, paginate } from '@/common/datagrid';
-import { renderEmail } from '@/integrations/mail/email-layout';
-import { MailService } from '@/integrations/mail/services/mail.service';
-import { StorageService } from '@/storage/services/storage.service';
+import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
+import { renderEmail } from '../../../../integrations/mail/email-layout';
+import { MailService } from '../../../../integrations/mail/services/mail.service';
+import { StorageService } from '../../../../storage/services/storage.service';
 
-import { AdminRepository } from '@/modules/admin/core/repositories/admin.repository';
-import { AdminPermissionResolver } from '@/modules/admin/rbac/services/admin-permission-resolver.service';
-import { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
+import { AdminRepository } from '../../core/repositories/admin.repository';
+import { AdminPermissionResolver } from '../../rbac/services/admin-permission-resolver.service';
+import { AdminRoleRepository } from '../../rbac/repositories/admin-role.repository';
 import {
   SYSTEM_ADMIN_ROLE_ID,
   SYSTEM_MEMBER_ROLE_ID,
-} from '@/modules/admin/rbac/services/admin-rbac-seed.service';
+} from '../../rbac/services/admin-rbac-seed.service';
 import {
   AdminInviteRepository,
   type AdminInviteWithInviter,
-} from '@/modules/admin/accounts/repositories/admin-invite.repository';
-import { ADMINISTRATORS_DATAGRID } from '@/modules/admin/accounts/accounts.datagrid';
-import { AdminAccountsDatagridQueryDto } from '@/modules/admin/accounts/dto/accounts-datagrid-query.dto';
+} from '../repositories/admin-invite.repository';
+import { ADMINISTRATORS_DATAGRID } from '../accounts.datagrid';
+import { AdminAccountsDatagridQueryDto } from '../dto/accounts-datagrid-query.dto';
 
 const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 

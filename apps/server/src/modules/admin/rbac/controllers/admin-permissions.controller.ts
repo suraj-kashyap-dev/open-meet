@@ -8,11 +8,11 @@ import {
   buildCatalogTree,
 } from '@open-meet/types';
 
-import { Public } from '@/common/decorators/public.decorator';
-import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
+import { Public } from '../../../../common/decorators/public.decorator';
+import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
 
-import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
-import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
+import { AdminPermissionsGuard } from '../admin-permissions.guard';
+import { RequirePermissions } from '../decorators/require-permissions.decorator';
 
 @ApiTags('admin-permissions')
 @Controller('admin/permissions')

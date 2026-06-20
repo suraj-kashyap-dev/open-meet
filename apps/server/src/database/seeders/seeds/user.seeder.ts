@@ -1,7 +1,7 @@
 import * as argon2 from 'argon2';
 
-import { SEED_PASSWORD, USER_ROSTER_SIZE, makeUser } from '@/database/factories';
-import type { Seeder } from '@/database/seeders/seeder.types';
+import { SEED_PASSWORD, USER_ROSTER_SIZE, makeUser } from '../../factories';
+import type { Seeder } from '../seeder.types';
 
 export const userSeeder: Seeder = {
   name: 'users',

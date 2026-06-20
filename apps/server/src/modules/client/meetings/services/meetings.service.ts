@@ -23,21 +23,21 @@ import type {
 } from '@open-meet/types';
 import { ApiErrorCode, ServerEvent } from '@open-meet/types';
 
-import { DatagridService } from '@/common/datagrid';
-import { HISTORY_DATAGRID } from '@/modules/client/meetings/meetings.datagrid';
+import { DatagridService } from '../../../../common/datagrid';
+import { HISTORY_DATAGRID } from '../meetings.datagrid';
 
-import { MailService } from '@/integrations/mail/services/mail.service';
-import type { RequestUser } from '@/common/decorators/current-user.decorator';
-import { StorageService } from '@/storage/services/storage.service';
-import { MeetingBus } from '@/websocket/services/meeting-bus.service';
-import { WorkspaceConfigService } from '@/modules/config/services/workspace-config.service';
-import { AuthRepository } from '@/modules/client/auth/repositories/auth.repository';
-import { AuthService } from '@/modules/client/auth/services/auth.service';
+import { MailService } from '../../../../integrations/mail/services/mail.service';
+import type { RequestUser } from '../../../../common/decorators/current-user.decorator';
+import { StorageService } from '../../../../storage/services/storage.service';
+import { MeetingBus } from '../../../../websocket/services/meeting-bus.service';
+import { WorkspaceConfigService } from '../../../config/services/workspace-config.service';
+import { AuthRepository } from '../../auth/repositories/auth.repository';
+import { AuthService } from '../../auth/services/auth.service';
 import {
   MeetingsRepository,
   type ParticipantWithUser,
   type UpcomingMeetingRow,
-} from '@/modules/client/meetings/repositories/meetings.repository';
+} from '../repositories/meetings.repository';
 
 const DEFAULT_DURATION_MIN = 30;
 const GUEST_EMAIL_DOMAIN = 'guest.openmeet.invalid';

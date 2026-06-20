@@ -15,21 +15,21 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { AdminGroupDetailDto, AdminGroupDto, DatagridResponseDto } from '@open-meet/types';
 
-import { Public } from '@/common/decorators/public.decorator';
+import { Public } from '../../../../common/decorators/public.decorator';
 
-import { CurrentAdmin } from '@/modules/admin/auth/decorators/current-admin.decorator';
-import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
-import { type AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
-import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
-import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
+import { CurrentAdmin } from '../../auth/decorators/current-admin.decorator';
+import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
+import { type AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy';
+import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
 
 import {
   AddGroupMembersBodyDto,
   CreateGroupBodyDto,
   UpdateGroupBodyDto,
-} from '@/modules/admin/groups/dto/group.dto';
-import { AdminGroupsDatagridQueryDto } from '@/modules/admin/groups/dto/groups-datagrid-query.dto';
-import { AdminGroupsService } from '@/modules/admin/groups/services/groups.service';
+} from '../dto/group.dto';
+import { AdminGroupsDatagridQueryDto } from '../dto/groups-datagrid-query.dto';
+import { AdminGroupsService } from '../services/groups.service';
 
 @ApiTags('admin-groups')
 @Controller('admin/groups')

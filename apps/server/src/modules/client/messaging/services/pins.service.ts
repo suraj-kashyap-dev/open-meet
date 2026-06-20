@@ -4,9 +4,9 @@ import { ApiErrorCode, ChatServerEvent, type PinnedMessageListDto } from '@open-
 
 import { ChatBus, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import { MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
-import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { PinsRepository } from '@/modules/client/messaging/repositories/pins.repository';
+import { MessagesRepository } from '../repositories/messages.repository';
+import { MessagingSerializer } from '../messaging.serializer';
+import { PinsRepository } from '../repositories/pins.repository';
 
 @Injectable()
 export class PinsService {

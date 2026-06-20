@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { MailModule } from '@/integrations/mail/mail.module';
-import { MeetingBusModule } from '@/websocket/meeting-bus.module';
-import { AuthModule } from '@/modules/client/auth/auth.module';
-import { AppConfigModule } from '@/modules/config/config.module';
+import { MailModule } from '../../../integrations/mail/mail.module';
+import { MeetingBusModule } from '../../../websocket/meeting-bus.module';
+import { AuthModule } from '../auth/auth.module';
+import { AppConfigModule } from '../../config/config.module';
 
 import { MeetingsController } from './controllers/meetings.controller';
 import { MeetingsRepository } from './repositories/meetings.repository';

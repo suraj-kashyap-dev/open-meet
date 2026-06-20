@@ -18,13 +18,13 @@ import type {
   DatagridResponseDto,
 } from '@open-meet/types';
 
-import { Public } from '@/common/decorators/public.decorator';
+import { Public } from '../../../../common/decorators/public.decorator';
 
-import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
-import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
-import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
-import { AdminMeetingsDatagridQueryDto } from '@/modules/admin/meetings/dto/meetings-datagrid-query.dto';
-import { AdminMeetingsService } from '@/modules/admin/meetings/services/meetings.service';
+import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
+import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
+import { AdminMeetingsDatagridQueryDto } from '../dto/meetings-datagrid-query.dto';
+import { AdminMeetingsService } from '../services/meetings.service';
 
 @ApiTags('admin-meetings')
 @Controller('admin/meetings')

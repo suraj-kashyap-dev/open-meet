@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
-import { PrismaService } from '@/database/services/prisma.service';
+import { PrismaService } from '../../../../database/services/prisma.service';
 
-import { chatMessageInclude } from '@/modules/client/messaging/messaging.includes';
+import { chatMessageInclude } from '../messaging.includes';
 
 const savedInclude = {
   message: {

@@ -7,8 +7,8 @@ import { ChatPermissionsService } from './chat-permissions.service';
 import {
   MessagesRepository,
   type ChatMessageMeta,
-} from '@/modules/client/messaging/repositories/messages.repository';
-import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
+} from '../repositories/messages.repository';
+import { MessagingSerializer } from '../messaging.serializer';
 
 @Injectable()
 export class ReactionsService {

@@ -15,8 +15,8 @@ import {
   type ReactionSummaryDto,
 } from '@open-meet/types';
 
-import { StorageService } from '@/storage/services/storage.service';
-import { UploadsService } from '@/modules/uploads/services/uploads.service';
+import { StorageService } from '../../../storage/services/storage.service';
+import { UploadsService } from '../../uploads/services/uploads.service';
 
 import type {
   ChatMessageWithRelations,

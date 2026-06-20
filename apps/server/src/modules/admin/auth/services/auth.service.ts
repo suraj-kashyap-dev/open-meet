@@ -13,11 +13,11 @@ import type {
 import { ApiErrorCode } from '@open-meet/types';
 import type { ApiEnv } from '@open-meet/config';
 
-import { StorageService } from '@/storage/services/storage.service';
+import { StorageService } from '../../../../storage/services/storage.service';
 
-import { AdminRepository } from '@/modules/admin/core/repositories/admin.repository';
-import { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
-import type { AdminLoginDto } from '@/modules/admin/auth/dto/admin-login.dto';
+import { AdminRepository } from '../../core/repositories/admin.repository';
+import { AdminRoleRepository } from '../../rbac/repositories/admin-role.repository';
+import type { AdminLoginDto } from '../dto/admin-login.dto';
 
 interface AdminAccessPayload {
   sub: string;

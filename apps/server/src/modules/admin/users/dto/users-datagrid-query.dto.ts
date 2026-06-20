@@ -1,3 +1,3 @@
-import { DatagridQueryDto } from '@/common/datagrid';
+import { DatagridQueryDto } from '../../../../common/datagrid';
 
 export class AdminUsersDatagridQueryDto extends DatagridQueryDto {}

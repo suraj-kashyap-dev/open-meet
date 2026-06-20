@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { type Prisma, type User } from '@prisma/client';
 
-import { PrismaService } from '@/database/services/prisma.service';
+import { PrismaService } from '../../../../database/services/prisma.service';
 
 const userInclude = {
   _count: { select: { hostedMeetings: true, meetings: true } },

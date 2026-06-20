@@ -14,11 +14,11 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { ApiErrorCode, type AttachmentDto } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
-import { Public } from '@/common/decorators/public.decorator';
-import { SkipTransform } from '@/common/decorators/skip-transform.decorator';
-import { StorageService } from '@/storage/services/storage.service';
-import { UploadsService } from '@/modules/uploads/services/uploads.service';
+import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
+import { Public } from '../../../common/decorators/public.decorator';
+import { SkipTransform } from '../../../common/decorators/skip-transform.decorator';
+import { StorageService } from '../../../storage/services/storage.service';
+import { UploadsService } from '../services/uploads.service';
 
 const PUBLIC_PREFIX = '/api/uploads/public/';
 

@@ -5,10 +5,10 @@ import { I18nService } from 'nestjs-i18n';
 import type { ApiEnv } from '@open-meet/config';
 import type { PushPayloadDto } from '@open-meet/types';
 
-import { SettingsRepository } from '@/modules/client/settings/repositories/settings.repository';
-import { ChatBus, userRoom } from '@/modules/client/messaging/services/chat-bus.service';
-import { ConversationsService } from '@/modules/client/messaging/services/conversations.service';
-import { PushRepository } from '@/modules/client/push/repositories/push.repository';
+import { SettingsRepository } from '../../settings/repositories/settings.repository';
+import { ChatBus, userRoom } from '../../messaging/services/chat-bus.service';
+import { ConversationsService } from '../../messaging/services/conversations.service';
+import { PushRepository } from '../repositories/push.repository';
 import { PushService } from './push.service';
 
 export interface ChatMessageJob {

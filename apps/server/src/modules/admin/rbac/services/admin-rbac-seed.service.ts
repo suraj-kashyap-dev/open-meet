@@ -2,7 +2,7 @@ import { Injectable, Logger, type OnModuleInit } from '@nestjs/common';
 
 import { DEFAULT_ADMIN_MEMBER_PERMISSIONS, PermissionType } from '@open-meet/types';
 
-import { AdminRoleRepository } from '@/modules/admin/rbac/repositories/admin-role.repository';
+import { AdminRoleRepository } from '../repositories/admin-role.repository';
 
 export const SYSTEM_ADMIN_ROLE_ID = 'role_sys_admin';
 export const SYSTEM_MEMBER_ROLE_ID = 'role_sys_member';

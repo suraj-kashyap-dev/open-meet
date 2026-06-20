@@ -4,12 +4,12 @@ import type { FastifyRequest } from 'fastify';
 
 import type { LiveKitTokenResponseDto } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
-import { Public } from '@/common/decorators/public.decorator';
-import { SkipTransform } from '@/common/decorators/skip-transform.decorator';
+import { CurrentUser, type RequestUser } from '../../../common/decorators/current-user.decorator';
+import { Public } from '../../../common/decorators/public.decorator';
+import { SkipTransform } from '../../../common/decorators/skip-transform.decorator';
 
-import { LiveKitTokenDto } from '@/integrations/livekit/dto/livekit-token.dto';
-import { LiveKitService } from '@/integrations/livekit/services/livekit.service';
+import { LiveKitTokenDto } from '../dto/livekit-token.dto';
+import { LiveKitService } from '../services/livekit.service';
 
 @ApiTags('livekit')
 @Controller('livekit')

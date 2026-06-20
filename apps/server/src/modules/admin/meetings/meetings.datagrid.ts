@@ -1,4 +1,4 @@
-import type { DatagridDefinition } from '@/common/datagrid';
+import type { DatagridDefinition } from '../../../common/datagrid';
 
 export const MEETINGS_DATAGRID: DatagridDefinition = {
   resource: 'meetings',

@@ -5,7 +5,7 @@ import webpush from 'web-push';
 import type { ApiEnv } from '@open-meet/config';
 import type { PushPayloadDto } from '@open-meet/types';
 
-import { PushRepository } from '@/modules/client/push/repositories/push.repository';
+import { PushRepository } from '../repositories/push.repository';
 
 @Injectable()
 export class PushService {

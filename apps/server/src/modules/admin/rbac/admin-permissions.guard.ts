@@ -10,7 +10,7 @@ import { I18nContext } from 'nestjs-i18n';
 
 import { ApiErrorCode } from '@open-meet/types';
 
-import type { AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
+import type { AdminRequestUser } from '../auth/strategies/admin-jwt.strategy';
 
 import { AdminPermissionResolver } from './services/admin-permission-resolver.service';
 import { REQUIRE_ADMIN_PERMISSIONS_KEY } from './decorators/require-permissions.decorator';

@@ -16,11 +16,11 @@ import type { FastifyReply } from 'fastify';
 import type { RecordingDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
-import { SkipTransform } from '@/common/decorators/skip-transform.decorator';
-import { StorageService } from '@/storage/services/storage.service';
-import { RecordingEvents } from '@/modules/client/recording/recording.events';
-import { RecordingService } from '@/modules/client/recording/services/recording.service';
+import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import { SkipTransform } from '../../../../common/decorators/skip-transform.decorator';
+import { StorageService } from '../../../../storage/services/storage.service';
+import { RecordingEvents } from '../recording.events';
+import { RecordingService } from '../services/recording.service';
 
 const RANGE_REGEX = /^bytes=(\d*)-(\d*)$/;
 

@@ -19,20 +19,20 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import type { AdminDto, AdminLoginResponseDto, AdminMeResponseDto } from '@open-meet/types';
 import { ApiErrorCode } from '@open-meet/types';
 
-import { Public } from '@/common/decorators/public.decorator';
+import { Public } from '../../../../common/decorators/public.decorator';
 
-import { AdminAvatarsService } from '@/modules/admin/auth/services/admin-avatars.service';
-import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
+import { AdminAvatarsService } from '../services/admin-avatars.service';
+import { AdminAuthGuard } from '../guards/admin-auth.guard';
 import {
   AdminAuthService,
   type IssuedAdminTokens,
-} from '@/modules/admin/auth/services/auth.service';
-import { CurrentAdmin } from '@/modules/admin/auth/decorators/current-admin.decorator';
-import { ADMIN_ACCESS_COOKIE } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
-import type { AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
-import { AdminLoginDto } from '@/modules/admin/auth/dto/admin-login.dto';
-import { ChangeAdminPasswordDto } from '@/modules/admin/auth/dto/change-admin-password.dto';
-import { UpdateAdminProfileDto } from '@/modules/admin/auth/dto/update-admin-profile.dto';
+} from '../services/auth.service';
+import { CurrentAdmin } from '../decorators/current-admin.decorator';
+import { ADMIN_ACCESS_COOKIE } from '../strategies/admin-jwt.strategy';
+import type { AdminRequestUser } from '../strategies/admin-jwt.strategy';
+import { AdminLoginDto } from '../dto/admin-login.dto';
+import { ChangeAdminPasswordDto } from '../dto/change-admin-password.dto';
+import { UpdateAdminProfileDto } from '../dto/update-admin-profile.dto';
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 

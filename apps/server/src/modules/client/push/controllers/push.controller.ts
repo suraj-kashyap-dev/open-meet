@@ -5,10 +5,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { ApiEnv } from '@open-meet/config';
 import type { VapidPublicKeyDto } from '@open-meet/types';
 
-import { Public } from '@/common/decorators/public.decorator';
-import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
-import { SubscribePushDto, UnsubscribePushDto } from '@/modules/client/push/dto/subscribe-push.dto';
-import { PushService } from '@/modules/client/push/services/push.service';
+import { Public } from '../../../../common/decorators/public.decorator';
+import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import { SubscribePushDto, UnsubscribePushDto } from '../dto/subscribe-push.dto';
+import { PushService } from '../services/push.service';
 
 @ApiTags('push')
 @Controller('push')

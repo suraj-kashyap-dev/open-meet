@@ -1,9 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
 
-import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
+import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
 
-import { TeammatesQueryDto } from '@/modules/client/messaging/dto/messaging.dto';
-import { TeammatesService } from '@/modules/client/messaging/services/teammates.service';
+import { TeammatesQueryDto } from '../dto/messaging.dto';
+import { TeammatesService } from '../services/teammates.service';
 
 @Controller('messaging/teammates')
 export class TeammatesController {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { MeetingsModule } from '@/modules/client/meetings/meetings.module';
-import { MeetingBusModule } from '@/websocket/meeting-bus.module';
+import { MeetingsModule } from '../meetings/meetings.module';
+import { MeetingBusModule } from '../../../websocket/meeting-bus.module';
 
 import { RecordingController } from './controllers/recording.controller';
 import { RecordingEvents } from './recording.events';

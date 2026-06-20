@@ -1,6 +1,6 @@
 import { createParamDecorator, type ExecutionContext } from '@nestjs/common';
 
-import type { AdminRequestUser } from '@/modules/admin/auth/strategies/admin-jwt.strategy';
+import type { AdminRequestUser } from '../strategies/admin-jwt.strategy';
 
 export const CurrentAdmin = createParamDecorator(
   (_: unknown, ctx: ExecutionContext): AdminRequestUser => {

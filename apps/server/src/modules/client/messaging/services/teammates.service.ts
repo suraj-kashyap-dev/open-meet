@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 
 import type { TeammateListDto } from '@open-meet/types';
 
-import { StorageService } from '@/storage/services/storage.service';
+import { StorageService } from '../../../../storage/services/storage.service';
 
 import { PresenceService } from './presence.service';
-import { TeammatesRepository } from '@/modules/client/messaging/repositories/teammates.repository';
+import { TeammatesRepository } from '../repositories/teammates.repository';
 
 @Injectable()
 export class TeammatesService {

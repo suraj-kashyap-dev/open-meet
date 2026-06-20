@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConversationType } from '@prisma/client';
 
-import { PrismaService } from '@/database/services/prisma.service';
+import { PrismaService } from '../../../../database/services/prisma.service';
 
 import {
   chatMessageInclude,
@@ -10,7 +10,7 @@ import {
   type ChatMessageWithRelations,
   type ConversationListRow,
   type ConversationWithMembers,
-} from '@/modules/client/messaging/messaging.includes';
+} from '../messaging.includes';
 
 @Injectable()
 export class ConversationsRepository {

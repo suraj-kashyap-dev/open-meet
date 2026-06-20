@@ -2,11 +2,11 @@ import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common
 
 import type { UserPresenceDto } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '@/common/decorators/current-user.decorator';
+import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
 
-import { ActivityService } from '@/modules/client/messaging/services/activity.service';
-import { ConversationStateService } from '@/modules/client/messaging/services/conversation-state.service';
-import { ConversationsService } from '@/modules/client/messaging/services/conversations.service';
+import { ActivityService } from '../services/activity.service';
+import { ConversationStateService } from '../services/conversation-state.service';
+import { ConversationsService } from '../services/conversations.service';
 import {
   ConversationStateBodyDto,
   CreatePollBodyDto,
@@ -15,14 +15,14 @@ import {
   MessagesHistoryQueryDto,
   OpenDirectBodyDto,
   SendMessageBodyDto,
-} from '@/modules/client/messaging/dto/messaging.dto';
-import { GifsService } from '@/modules/client/messaging/services/gifs.service';
-import { MessagesService } from '@/modules/client/messaging/services/messages.service';
-import { PinsService } from '@/modules/client/messaging/services/pins.service';
-import { PollsService } from '@/modules/client/messaging/services/polls.service';
-import { PresenceService } from '@/modules/client/messaging/services/presence.service';
-import { ReadStateService } from '@/modules/client/messaging/services/read-state.service';
-import { SavedService } from '@/modules/client/messaging/services/saved.service';
+} from '../dto/messaging.dto';
+import { GifsService } from '../services/gifs.service';
+import { MessagesService } from '../services/messages.service';
+import { PinsService } from '../services/pins.service';
+import { PollsService } from '../services/polls.service';
+import { PresenceService } from '../services/presence.service';
+import { ReadStateService } from '../services/read-state.service';
+import { SavedService } from '../services/saved.service';
 
 @Controller('messaging')
 export class ConversationsController {

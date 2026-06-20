@@ -3,9 +3,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ApiErrorCode, type SavedMessageListDto } from '@open-meet/types';
 
 import { ChatPermissionsService } from './chat-permissions.service';
-import { MessagesRepository } from '@/modules/client/messaging/repositories/messages.repository';
-import { MessagingSerializer } from '@/modules/client/messaging/messaging.serializer';
-import { SavedRepository } from '@/modules/client/messaging/repositories/saved.repository';
+import { MessagesRepository } from '../repositories/messages.repository';
+import { MessagingSerializer } from '../messaging.serializer';
+import { SavedRepository } from '../repositories/saved.repository';
 
 @Injectable()
 export class SavedService {

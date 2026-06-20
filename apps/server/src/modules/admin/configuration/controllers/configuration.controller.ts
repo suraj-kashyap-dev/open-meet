@@ -3,12 +3,12 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { WorkspaceConfigDto } from '@open-meet/types';
 
-import { Public } from '@/common/decorators/public.decorator';
-import { WorkspaceConfigService } from '@/modules/config/services/workspace-config.service';
-import { AdminAuthGuard } from '@/modules/admin/auth/guards/admin-auth.guard';
-import { AdminPermissionsGuard } from '@/modules/admin/rbac/admin-permissions.guard';
-import { RequirePermissions } from '@/modules/admin/rbac/decorators/require-permissions.decorator';
-import { UpdateConfigurationDto } from '@/modules/admin/configuration/dto/update-configuration.dto';
+import { Public } from '../../../../common/decorators/public.decorator';
+import { WorkspaceConfigService } from '../../../config/services/workspace-config.service';
+import { AdminAuthGuard } from '../../auth/guards/admin-auth.guard';
+import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
+import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
+import { UpdateConfigurationDto } from '../dto/update-configuration.dto';
 
 @ApiTags('admin-configuration')
 @Controller('admin/configuration')
