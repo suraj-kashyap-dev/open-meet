@@ -69,7 +69,7 @@ export function EditGroupDialog({ group, onClose }: Props) {
     if (detail.data) {
       setTitle(detail.data.title);
 
-      setMemberIds(detail.data.members.map((member) => member.userId));
+      setMemberIds(Array.from(new Set(detail.data.members.map((member) => member.userId))));
     }
   }, [detail.data]);
 
@@ -80,7 +80,7 @@ export function EditGroupDialog({ group, onClose }: Props) {
       return;
     }
 
-    const current = detail.data?.members.map((member) => member.userId) ?? [];
+    const current = Array.from(new Set(detail.data?.members.map((member) => member.userId) ?? []));
     const titleDirty = title.trim() !== (detail.data?.title ?? group.title);
     const memberDirty = [...current].sort().join('|') !== [...memberIds].sort().join('|');
 

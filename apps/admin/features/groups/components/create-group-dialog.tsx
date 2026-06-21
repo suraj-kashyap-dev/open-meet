@@ -43,7 +43,7 @@ export function CreateGroupDialog({
     }
 
     try {
-      await create.mutateAsync({ title: title.trim(), memberIds });
+      await create.mutateAsync({ title: title.trim(), memberIds: Array.from(new Set(memberIds)) });
 
       toast.success(t('create.success'));
 

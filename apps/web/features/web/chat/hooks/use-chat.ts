@@ -251,9 +251,10 @@ export function useMarkRead(conversationId: string) {
   });
 }
 
-export function useTeammates(search: string) {
+export function useTeammates(search: string, opts: { enabled?: boolean } = {}) {
   return useQuery<TeammateListDto>({
     queryKey: chatKeys.teammates(search),
+    enabled: opts.enabled ?? true,
     queryFn: ({ signal }) => chatApi.teammates(search || undefined, signal),
     staleTime: 30_000,
   });

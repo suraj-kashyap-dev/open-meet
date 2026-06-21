@@ -27,7 +27,10 @@ export function NewChatDraft() {
   const [draft, setDraft] = useState('');
   const recipientInputRef = useRef<HTMLInputElement>(null);
   const draftInputRef = useRef<HTMLTextAreaElement>(null);
-  const teammates = useTeammates(recipient ? '' : search);
+  const trimmedSearch = search.trim();
+  const teammates = useTeammates(trimmedSearch, {
+    enabled: !recipient && trimmedSearch.length > 0,
+  });
 
   useEffect(() => {
     if (recipient) {
@@ -74,7 +77,9 @@ export function NewChatDraft() {
     startChat.mutate(content);
   };
 
-  const suggestions = teammates.data?.items ?? [];
+  const suggestions = Array.from(
+    new Map((teammates.data?.items ?? []).map((teammate) => [teammate.id, teammate])).values(),
+  );
 
   return (
     <div className="flex h-full flex-col bg-card">

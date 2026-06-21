@@ -1,12 +1,30 @@
 'use client';
 
-import { LogOut, MoreVertical, Pencil, Trash2, UserMinus, UserPlus, X } from 'lucide-react';
+import {
+  LogOut,
+  MoreVertical,
+  Pencil,
+  ShieldCheck,
+  ShieldMinus,
+  Trash2,
+  UserMinus,
+  UserPlus,
+  X,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 import type { ConversationDto, ConversationMemberDto } from '@open-meet/types';
 import { Button } from '@open-meet/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@open-meet/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +48,11 @@ interface Props {
   currentUserId: string | undefined;
 }
 
+type ConfirmAction =
+  | { type: 'remove'; member: ConversationMemberDto }
+  | { type: 'leave' }
+  | { type: 'delete' };
+
 export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   const t = useTranslations('chat');
   const router = useRouter();
@@ -41,11 +64,16 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
 
   const [editOpen, setEditOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const youAreAdmin = conversation.youAreAdmin;
   const adminCount = conversation.members.filter((m) => m.role === 'ADMIN').length;
 
-  const sortedMembers = [...conversation.members].sort((a, b) => {
+  const uniqueMembers = Array.from(
+    new Map(conversation.members.map((member) => [member.userId, member])).values(),
+  );
+
+  const sortedMembers = uniqueMembers.sort((a, b) => {
     if (a.role === b.role) {
       return a.name.localeCompare(b.name);
     }
@@ -79,12 +107,10 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   };
 
   const kick = async (member: ConversationMemberDto) => {
-    if (!window.confirm(t('group.remove-member-confirm', { name: member.name }))) {
-      return;
-    }
-
     try {
       await removeMember.mutateAsync(member.userId);
+
+      setConfirmAction(null);
 
       toast.success(t('group.removed'));
     } catch (err) {
@@ -97,18 +123,10 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
       return;
     }
 
-    if (isLastAdmin) {
-      toast.error(t('group.last-admin-warning'));
-
-      return;
-    }
-
-    if (!window.confirm(t('group.leave-confirm'))) {
-      return;
-    }
-
     try {
       await removeMember.mutateAsync(currentUserId);
+
+      setConfirmAction(null);
 
       toast.success(t('group.left'));
 
@@ -118,13 +136,21 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
     }
   };
 
-  const destroy = async () => {
-    if (!window.confirm(t('group.delete-confirm'))) {
+  const requestLeave = () => {
+    if (isLastAdmin) {
+      toast.error(t('group.last-admin-warning'));
+
       return;
     }
 
+    setConfirmAction({ type: 'leave' });
+  };
+
+  const destroy = async () => {
     try {
       await deleteGroup.mutateAsync(conversation.id);
+
+      setConfirmAction(null);
 
       toast.success(t('group.deleted'));
 
@@ -132,6 +158,41 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
     } catch (err) {
       handleApiError(err, t('group.action-failed'));
     }
+  };
+
+  const confirmDialog =
+    confirmAction?.type === 'remove'
+      ? {
+          title: t('group.remove-member'),
+          description: t('group.remove-member-confirm', { name: confirmAction.member.name }),
+          actionLabel: t('group.remove-member'),
+          pending: removeMember.isPending,
+          onConfirm: () => kick(confirmAction.member),
+        }
+      : confirmAction?.type === 'leave'
+        ? {
+            title: t('group.leave'),
+            description: t('group.leave-confirm'),
+            actionLabel: t('group.leave'),
+            pending: removeMember.isPending,
+            onConfirm: leave,
+          }
+        : confirmAction?.type === 'delete'
+          ? {
+              title: t('group.delete'),
+              description: t('group.delete-confirm'),
+              actionLabel: t('group.delete'),
+              pending: deleteGroup.isPending,
+              onConfirm: destroy,
+            }
+          : null;
+
+  const closeConfirm = () => {
+    if (confirmDialog?.pending) {
+      return;
+    }
+
+    setConfirmAction(null);
   };
 
   return (
@@ -233,16 +294,18 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
                             onSelect={() => demote(member)}
                             disabled={adminCount === 1}
                           >
+                            <ShieldMinus className="me-2 h-4 w-4" />
                             {t('group.demote')}
                           </DropdownMenuItem>
                         ) : (
                           <DropdownMenuItem onSelect={() => promote(member)}>
+                            <ShieldCheck className="me-2 h-4 w-4" />
                             {t('group.promote')}
                           </DropdownMenuItem>
                         )}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          onSelect={() => kick(member)}
+                          onSelect={() => setConfirmAction({ type: 'remove', member })}
                           className="text-destructive focus:text-destructive"
                         >
                           <UserMinus className="me-2 h-4 w-4" />
@@ -262,7 +325,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
         <Button
           type="button"
           variant="ghost"
-          onClick={leave}
+          onClick={requestLeave}
           className="w-full justify-start gap-2"
           disabled={removeMember.isPending}
         >
@@ -273,7 +336,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
           <Button
             type="button"
             variant="ghost"
-            onClick={destroy}
+            onClick={() => setConfirmAction({ type: 'delete' })}
             disabled={deleteGroup.isPending}
             className="w-full justify-start gap-2 text-destructive hover:text-destructive"
           >
@@ -285,6 +348,32 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
 
       <GroupEditDialog open={editOpen} onOpenChange={setEditOpen} conversation={conversation} />
       <GroupAddMembersDialog open={addOpen} onOpenChange={setAddOpen} conversation={conversation} />
+
+      <Dialog
+        open={confirmAction !== null}
+        onOpenChange={(open) => (!open ? closeConfirm() : null)}
+      >
+        {confirmDialog ? (
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>{confirmDialog.title}</DialogTitle>
+              <DialogDescription>{confirmDialog.description}</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="outline" onClick={closeConfirm} disabled={confirmDialog.pending}>
+                {t('group.cancel')}
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={confirmDialog.onConfirm}
+                disabled={confirmDialog.pending}
+              >
+                {confirmDialog.actionLabel}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        ) : null}
+      </Dialog>
     </div>
   );
 }

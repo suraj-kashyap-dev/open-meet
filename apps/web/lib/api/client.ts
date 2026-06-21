@@ -48,6 +48,10 @@ async function request<TData>(path: string, options: RequestOptions = {}): Promi
     signal,
   });
 
+  if (res.status === 204) {
+    return undefined as TData;
+  }
+
   const contentType = res.headers.get('content-type') ?? '';
 
   if (!contentType.includes('application/json')) {

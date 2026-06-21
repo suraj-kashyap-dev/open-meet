@@ -40,7 +40,8 @@ export function NewGroupDialog({
     Record<string, { id: string; name: string; avatar: string | null }>
   >({});
 
-  const teammates = useTeammates(search);
+  const trimmedSearch = search.trim();
+  const teammates = useTeammates(trimmedSearch, { enabled: trimmedSearch.length > 0 });
   const suggestions = teammates.data?.items ?? [];
   const pickedList = Object.values(picked);
 

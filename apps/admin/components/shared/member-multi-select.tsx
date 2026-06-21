@@ -1,9 +1,8 @@
 'use client';
 
-import { Check, Loader2, Search, X } from 'lucide-react';
+import { Loader2, Search, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-import { cn } from '@open-meet/ui/cn';
 import { Input } from '@open-meet/ui/input';
 import { UserAvatar } from '@open-meet/ui/user-avatar';
 
@@ -39,23 +38,28 @@ export function MemberMultiSelect({
   const debouncedSearch = useDebouncedValue(search.trim(), 250);
   const [userCache, setUserCache] = useState<Record<string, MemberOption>>({});
   const containerRef = useRef<HTMLDivElement>(null);
+  const showDropdown = open && search.trim().length > 0;
+  const isSearchPending = showDropdown && search.trim() !== debouncedSearch;
 
   const { data, isFetching } = useAdminUsers(
-    { page: 1, pageSize: PAGE_SIZE, search: debouncedSearch || undefined },
-    { enabled: open },
+    { page: 1, pageSize: PAGE_SIZE, search: debouncedSearch },
+    { enabled: showDropdown && debouncedSearch.length > 0 },
   );
 
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);
   const results = useMemo<MemberOption[]>(
     () =>
-      (data?.items ?? []).map((user) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
-      })),
+      Array.from(new Map((data?.items ?? []).map((user) => [user.id, user])).values()).map(
+        (user) => ({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+        }),
+      ),
     [data?.items],
   );
+  const availableResults = results.filter((user) => !selectedSet.has(user.id));
 
   useEffect(() => {
     const merged = [...initialSelectedUsers, ...results];
@@ -88,7 +92,7 @@ export function MemberMultiSelect({
   }, [initialSelectedUsers, results]);
 
   useEffect(() => {
-    if (!open) {
+    if (!showDropdown) {
       return;
     }
 
@@ -101,9 +105,9 @@ export function MemberMultiSelect({
     document.addEventListener('mousedown', onPointerDown);
 
     return () => document.removeEventListener('mousedown', onPointerDown);
-  }, [open]);
+  }, [showDropdown]);
 
-  const selectedUsers = selectedIds
+  const selectedUsers = Array.from(new Set(selectedIds))
     .map((id) => userCache[id])
     .filter((user): user is MemberOption => Boolean(user));
 
@@ -116,7 +120,7 @@ export function MemberMultiSelect({
       next.add(id);
     }
 
-    onSelectedIdsChange([...next]);
+    onSelectedIdsChange(Array.from(next));
   };
 
   return (
@@ -132,44 +136,46 @@ export function MemberMultiSelect({
           }}
           onFocus={() => setOpen(true)}
           placeholder={searchPlaceholder}
-          className="ps-9"
+          className="ps-9 pe-9"
         />
+        {search ? (
+          <button
+            type="button"
+            onClick={() => setSearch('')}
+            aria-label="Clear search"
+            className="absolute end-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        ) : null}
 
-        {open ? (
-          <div className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-border bg-popover shadow-lg">
+        {showDropdown ? (
+          <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-xl">
             <ul className="max-h-64 overflow-y-auto p-1">
-              {isFetching && results.length === 0 ? (
+              {(isSearchPending || isFetching) && availableResults.length === 0 ? (
                 <li className="flex items-center justify-center py-6 text-muted-foreground">
                   <Loader2 className="h-4 w-4 animate-spin" />
                 </li>
-              ) : results.length === 0 ? (
+              ) : availableResults.length === 0 ? (
                 <li className="py-6 text-center text-xs text-muted-foreground">{emptyLabel}</li>
               ) : (
-                results.map((user) => {
-                  const isSelected = selectedSet.has(user.id);
-
-                  return (
-                    <li key={user.id}>
-                      <button
-                        type="button"
-                        onClick={() => toggle(user.id)}
-                        className={cn(
-                          'flex w-full items-center gap-3 rounded-lg px-2 py-2 text-start transition-colors hover:bg-muted',
-                          isSelected && 'bg-muted',
-                        )}
-                      >
-                        <UserAvatar user={user} size="sm" />
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-sm font-medium">{user.name}</span>
-                          <span className="block truncate text-xs text-muted-foreground">
-                            {user.email}
-                          </span>
+                availableResults.map((user) => (
+                  <li key={user.id}>
+                    <button
+                      type="button"
+                      onClick={() => toggle(user.id)}
+                      className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-start transition-colors hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
+                    >
+                      <UserAvatar user={user} size="sm" />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-medium">{user.name}</span>
+                        <span className="block truncate text-xs text-muted-foreground">
+                          {user.email}
                         </span>
-                        {isSelected ? <Check className="ms-auto h-4 w-4 shrink-0" /> : null}
-                      </button>
-                    </li>
-                  );
-                })
+                      </span>
+                    </button>
+                  </li>
+                ))
               )}
             </ul>
           </div>
