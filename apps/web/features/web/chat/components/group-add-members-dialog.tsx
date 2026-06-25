@@ -1,6 +1,5 @@
 'use client';
 
-import { UserPlus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -25,9 +24,10 @@ import {
   SelectValue,
 } from '@open-meet/ui/select';
 
+import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { ApiClientError } from '@/lib/api/client';
 
-import { useAddGroupMembers, useTeammates } from '../hooks/use-chat';
+import { useAddGroupMembers, useRemoveGroupMember, useTeammates } from '../hooks/use-chat';
 import { GroupMemberPicker } from './group-member-picker';
 
 type HistoryChoice = 'none' | '7' | '30' | 'all';
@@ -54,40 +54,127 @@ export function GroupAddMembersDialog({
   conversation: ConversationDto;
 }) {
   const t = useTranslations('chat');
+  const { data: currentUser } = useCurrentUser();
   const add = useAddGroupMembers(conversation.id);
+  const remove = useRemoveGroupMember(conversation.id);
 
   const [search, setSearch] = useState('');
   const [history, setHistory] = useState<HistoryChoice>('none');
-  const [picked, setPicked] = useState<
+  const [localAdded, setLocalAdded] = useState<
     Record<string, { id: string; name: string; avatar: string | null }>
   >({});
+  const [localRemoved, setLocalRemoved] = useState<Record<string, true>>({});
 
   const trimmedSearch = search.trim();
   const teammates = useTeammates(trimmedSearch, { enabled: trimmedSearch.length > 0 });
-  const existingIds = new Set(conversation.members.map((m) => m.userId));
-  const suggestions = (teammates.data?.items ?? []).filter((tm) => !existingIds.has(tm.id));
-  const pickedList = Object.values(picked);
+  const adminCount = conversation.members.filter(
+    (member) => member.role === 'ADMIN' && !localRemoved[member.userId],
+  ).length;
+  const currentMembers = conversation.members.filter((member) => !localRemoved[member.userId]);
+  const currentMemberIds = new Set(currentMembers.map((member) => member.userId));
+  const picked = {
+    ...Object.fromEntries(
+      currentMembers.map((member) => [
+        member.userId,
+        {
+          id: member.userId,
+          name: member.name,
+          avatar: member.avatar,
+          removable:
+            member.userId !== currentUser?.id && (member.role !== 'ADMIN' || adminCount > 1),
+        },
+      ]),
+    ),
+    ...Object.fromEntries(
+      Object.values(localAdded)
+        .filter((member) => !currentMemberIds.has(member.id))
+        .map((member) => [
+          member.id,
+          {
+            ...member,
+            removable: member.id !== currentUser?.id,
+          },
+        ]),
+    ),
+  };
+  const visibleIds = new Set(Object.keys(picked));
+  const suggestions = (teammates.data?.items ?? []).filter((tm) => !visibleIds.has(tm.id));
+  const addedList = Object.values(localAdded);
+  const removedIds = Object.keys(localRemoved);
+  const hasChanges = addedList.length > 0 || removedIds.length > 0;
 
   const reset = () => {
     setSearch('');
 
     setHistory('none');
 
-    setPicked({});
+    setLocalAdded({});
+
+    setLocalRemoved({});
+  };
+
+  const handlePick = (member: { id: string; name: string; avatar: string | null }) => {
+    if (picked[member.id]) {
+      return;
+    }
+
+    const existingMember = conversation.members.find((item) => item.userId === member.id);
+
+    if (existingMember) {
+      setLocalRemoved((prev) => {
+        const next = { ...prev };
+
+        delete next[member.id];
+
+        return next;
+      });
+    } else {
+      setLocalAdded((prev) => ({ ...prev, [member.id]: member }));
+    }
+
+    setSearch('');
+  };
+
+  const handleRemove = (userId: string) => {
+    if (userId === currentUser?.id) {
+      return;
+    }
+
+    if (localAdded[userId]) {
+      setLocalAdded((prev) => {
+        const next = { ...prev };
+
+        delete next[userId];
+
+        return next;
+      });
+
+      return;
+    }
+
+    setLocalRemoved((prev) => ({ ...prev, [userId]: true }));
   };
 
   const submit = async () => {
-    if (pickedList.length === 0) {
+    if (!hasChanges) {
       return;
     }
 
     try {
-      await add.mutateAsync({
-        userIds: pickedList.map((m) => m.id),
-        history: toShareHistory(history),
-      });
+      if (addedList.length > 0) {
+        await add.mutateAsync({
+          userIds: addedList.map((member) => member.id),
+          history: toShareHistory(history),
+        });
+      }
 
-      toast.success(t('group.members-added'));
+      await Promise.all(removedIds.map((userId) => remove.mutateAsync(userId)));
+
+      if (addedList.length > 0) {
+        toast.success(t('group.members-added'));
+      } else if (removedIds.length > 0) {
+        toast.success(t('group.removed'));
+      }
 
       reset();
 
@@ -97,17 +184,26 @@ export function GroupAddMembersDialog({
     }
   };
 
-  return (
-    <Dialog
-      open={open}
-      onOpenChange={(next) => {
-        if (!next) {
-          reset();
-        }
+  const cancel = () => {
+    reset();
 
-        onOpenChange(next);
-      }}
-    >
+    onOpenChange(false);
+  };
+
+  const saveLabel = t('group.save');
+
+  const isSaving = add.isPending || remove.isPending;
+
+  const handleOpenChange = (next: boolean) => {
+    if (!next) {
+      reset();
+    }
+
+    onOpenChange(next);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>{t('group.add-members-title')}</DialogTitle>
@@ -120,20 +216,8 @@ export function GroupAddMembersDialog({
             onSearchChange={setSearch}
             suggestions={suggestions}
             picked={picked}
-            onPick={(member) => {
-              setPicked((prev) => ({ ...prev, [member.id]: member }));
-
-              setSearch('');
-            }}
-            onRemove={(userId) =>
-              setPicked((prev) => {
-                const next = { ...prev };
-
-                delete next[userId];
-
-                return next;
-              })
-            }
+            onPick={handlePick}
+            onRemove={handleRemove}
             placeholder={t('group.members-placeholder')}
             emptyLabel={t('group.no-teammates')}
             loadingLabel={t('list.loading')}
@@ -159,16 +243,11 @@ export function GroupAddMembersDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+          <Button variant="ghost" onClick={cancel} disabled={isSaving}>
             {t('group.cancel')}
           </Button>
-          <Button
-            onClick={submit}
-            disabled={pickedList.length === 0 || add.isPending}
-            className="gap-1.5"
-          >
-            <UserPlus className="h-4 w-4" />
-            {t('group.add-members')}
+          <Button onClick={() => void submit()} disabled={!hasChanges || isSaving}>
+            {saveLabel}
           </Button>
         </DialogFooter>
       </DialogContent>

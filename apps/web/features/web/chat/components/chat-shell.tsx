@@ -16,7 +16,7 @@ export function ChatShell({ children }: { children: ReactNode }) {
     <div className="flex h-full">
       <aside
         className={cn(
-          'w-full shrink-0 border-e border-border lg:w-80',
+          'w-full shrink-0 border-e border-border lg:w-96',
           conversationOpen ? 'hidden lg:block' : 'block',
         )}
       >

@@ -1,6 +1,16 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+  PayloadTooLargeException,
+  UnsupportedMediaTypeException,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ConversationMemberRole } from '@prisma/client';
+import { randomBytes } from 'node:crypto';
 
+import type { ApiEnv } from '@open-meet/config';
 import {
   ApiErrorCode,
   ChatServerEvent,
@@ -9,6 +19,7 @@ import {
 } from '@open-meet/types';
 
 import { laterDate, resolveHistoryCutoff } from '../../../../common/util/history.util';
+import { StorageService } from '../../../../storage/services/storage.service';
 
 import { ChatBus, conversationRoom, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
@@ -20,9 +31,20 @@ import { PresenceService } from './presence.service';
 const TITLE_MIN = 1;
 const TITLE_MAX = 80;
 const DESCRIPTION_MAX = 280;
+const ALLOWED_GROUP_AVATAR_MIMES: Record<string, string> = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+};
+const MAX_GROUP_AVATAR_BYTES = 5 * 1024 * 1024;
 
 @Injectable()
 export class GroupsService {
+  private readonly logger = new Logger(GroupsService.name);
+
+  private readonly maxAvatarSize: number;
+
   constructor(
     private readonly repo: GroupsRepository,
     private readonly permissions: ChatPermissionsService,
@@ -30,7 +52,13 @@ export class GroupsService {
     private readonly serializer: MessagingSerializer,
     private readonly presence: PresenceService,
     private readonly bus: ChatBus,
-  ) {}
+    private readonly storage: StorageService,
+    config: ConfigService<ApiEnv, true>,
+  ) {
+    const configured = config.get<number>('UPLOAD_MAX_SIZE_BYTES') ?? MAX_GROUP_AVATAR_BYTES;
+
+    this.maxAvatarSize = Math.min(configured, MAX_GROUP_AVATAR_BYTES);
+  }
 
   async create(
     creatorId: string,
@@ -84,6 +112,89 @@ export class GroupsService {
     if (Object.keys(data).length > 0) {
       await this.repo.update(conversationId, data);
     }
+
+    return this.broadcastUpdate(conversationId, actorId);
+  }
+
+  async uploadAvatar(
+    conversationId: string,
+    actorId: string,
+    input: { buffer: Buffer; mime: string },
+  ): Promise<ConversationDto> {
+    await this.permissions.assertGroupAdmin(conversationId, actorId);
+
+    if (!input.buffer || input.buffer.length === 0) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Group image file is empty',
+      });
+    }
+
+    if (input.buffer.length > this.maxAvatarSize) {
+      throw new PayloadTooLargeException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: `Group image exceeds maximum size of ${this.maxAvatarSize} bytes`,
+      });
+    }
+
+    const ext = ALLOWED_GROUP_AVATAR_MIMES[input.mime];
+
+    if (!ext) {
+      throw new UnsupportedMediaTypeException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: `Group image must be a PNG, JPEG, WebP, or GIF image (got ${input.mime})`,
+      });
+    }
+
+    const existing = await this.repo.findById(conversationId);
+
+    if (!existing) {
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: 'Conversation not found',
+      });
+    }
+
+    const key = `groups/${conversationId}/avatars/${randomBytes(12).toString('hex')}.${ext}`;
+
+    await this.storage.put({ key, buffer: input.buffer, mime: input.mime });
+
+    await this.repo.update(conversationId, { avatarKey: key });
+
+    if (existing.avatarKey && existing.avatarKey !== key) {
+      this.storage.delete(existing.avatarKey).catch((err: unknown) => {
+        this.logger.warn(
+          `Failed to delete previous group image "${existing.avatarKey}": ${(err as Error).message}`,
+        );
+      });
+    }
+
+    return this.broadcastUpdate(conversationId, actorId);
+  }
+
+  async removeAvatar(conversationId: string, actorId: string): Promise<ConversationDto> {
+    await this.permissions.assertGroupAdmin(conversationId, actorId);
+
+    const existing = await this.repo.findById(conversationId);
+
+    if (!existing) {
+      throw new NotFoundException({
+        code: ApiErrorCode.NOT_FOUND,
+        message: 'Conversation not found',
+      });
+    }
+
+    if (!existing.avatarKey) {
+      return this.toDto(conversationId, actorId);
+    }
+
+    const previousKey = existing.avatarKey;
+
+    await this.repo.update(conversationId, { avatarKey: null });
+
+    this.storage.delete(previousKey).catch((err: unknown) => {
+      this.logger.warn(`Failed to delete group image "${previousKey}": ${(err as Error).message}`);
+    });
 
     return this.broadcastUpdate(conversationId, actorId);
   }

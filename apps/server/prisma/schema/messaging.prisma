@@ -43,6 +43,7 @@ model Conversation {
   type             ConversationType
   title            String? // null for DIRECT, set for GROUP
   description      String? // GROUP description
+  avatarKey        String? // GROUP profile image storage key
   createdByAdminId String? // Admin who created a GROUP; null for DIRECT
   createdByAdmin   Admin?               @relation(fields: [createdByAdminId], references: [id], onDelete: SetNull)
   directKey        String?              @unique // deterministic "minUserId:maxUserId" for DIRECT; null otherwise

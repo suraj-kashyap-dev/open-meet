@@ -24,7 +24,7 @@ import { TypingIndicator } from './typing-indicator';
 export function ConversationView({ conversationId }: { conversationId: string }) {
   const t = useTranslations('chat');
   const { data: user } = useCurrentUser();
-  const { data, isLoading } = useConversations();
+  const { data, isLoading } = useConversations({ includeHidden: true });
   const setActive = useChatStore((s) => s.setActiveConversation);
   const infoOpen = useChatStore((s) => s.infoOpen);
   const { joinConversation } = useChatSocketContext();
@@ -78,6 +78,7 @@ export function ConversationView({ conversationId }: { conversationId: string })
         <MessageList
           conversationId={conversationId}
           members={conversation.members}
+          unreadCount={conversation.unreadCount}
           currentUserId={user?.id}
           canPost={canPost}
           isGroup={display.isGroup}

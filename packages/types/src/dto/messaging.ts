@@ -148,6 +148,7 @@ export interface ConversationDto {
   type: ConversationType;
   title: string | null;
   description: string | null;
+  avatar: string | null;
   members: ConversationMemberDto[];
   lastMessage: ChatMessageDto | null;
   lastMessageAt: string | null;

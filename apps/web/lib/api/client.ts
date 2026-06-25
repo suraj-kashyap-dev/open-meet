@@ -22,17 +22,18 @@ interface RequestOptions {
   body?: unknown;
   signal?: AbortSignal;
   headers?: Record<string, string>;
+  includeLocaleHeader?: boolean;
 }
 
 async function request<TData>(path: string, options: RequestOptions = {}): Promise<TData> {
-  const { method = 'GET', body, signal, headers } = options;
+  const { method = 'GET', body, signal, headers, includeLocaleHeader = true } = options;
   const url = `${env.NEXT_PUBLIC_API_URL}/api${path.startsWith('/') ? path : `/${path}`}`;
 
   const hasBody = body !== undefined;
 
   const requestHeaders: Record<string, string> = {
     Accept: 'application/json',
-    ...currentLocaleHeader(),
+    ...(includeLocaleHeader ? currentLocaleHeader() : {}),
     ...headers,
   };
 

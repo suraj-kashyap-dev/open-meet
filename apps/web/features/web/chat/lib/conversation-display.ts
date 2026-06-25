@@ -12,7 +12,12 @@ export function conversationDisplay(
   currentUserId: string | undefined,
 ): ConversationDisplay {
   if (conversation.type === 'GROUP') {
-    return { isGroup: true, peer: null, title: conversation.title ?? '', avatar: null };
+    return {
+      isGroup: true,
+      peer: null,
+      title: conversation.title ?? '',
+      avatar: conversation.avatar,
+    };
   }
 
   const peer =

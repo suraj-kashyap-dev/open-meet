@@ -31,10 +31,12 @@ import {
 } from '../hooks/use-chat';
 import { flattenMessages } from '../lib/message-cache';
 import { useFormatSize } from '../lib/use-format-size';
+import { useChatStore } from '../stores';
 
 export function MessageList({
   conversationId,
   members,
+  unreadCount,
   currentUserId,
   canPost,
   isGroup,
@@ -42,6 +44,7 @@ export function MessageList({
 }: {
   conversationId: string;
   members: ConversationMemberDto[];
+  unreadCount: number;
   currentUserId: string | undefined;
   canPost: boolean;
   isGroup: boolean;
@@ -56,6 +59,8 @@ export function MessageList({
   const pins = usePins(conversationId);
   const formatSize = useFormatSize();
   const { markDelivered } = useChatSocketContext();
+  const storedUnreadCount = useChatStore((s) => s.unreadByConversation[conversationId]);
+  const effectiveUnreadCount = storedUnreadCount ?? unreadCount;
 
   useEffect(() => {
     markDelivered(conversationId);
@@ -192,7 +197,7 @@ export function MessageList({
   useEffect(() => {
     const last = messages[messages.length - 1];
 
-    if (!last || !pinnedRef.current) {
+    if (!last || !pinnedRef.current || effectiveUnreadCount <= 0 || markRead.isPending) {
       return;
     }
 
@@ -203,7 +208,7 @@ export function MessageList({
     lastMarkedRef.current = last.id;
 
     markReadMutate(undefined);
-  }, [messages, markReadMutate]);
+  }, [effectiveUnreadCount, markRead.isPending, markReadMutate, messages]);
 
   const onScroll = () => {
     const el = scrollRef.current;

@@ -89,7 +89,7 @@ export function ConversationListItem({
         className="flex min-w-0 flex-1 items-center gap-3 px-3 py-2.5"
       >
         <div className="relative shrink-0">
-          {display.isGroup ? (
+          {display.isGroup && !display.avatar ? (
             <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
               <Users className="h-5 w-5" />
             </span>

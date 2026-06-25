@@ -164,6 +164,7 @@ export class MessagingSerializer {
       type: c.type as ConversationType,
       title: c.title,
       description: c.description,
+      avatar: this.avatar(c.avatarKey),
       members,
       lastMessage: opts.lastMessage ? this.message(opts.lastMessage, opts.viewerId) : null,
       lastMessageAt: opts.lastMessageAt?.toISOString() ?? null,

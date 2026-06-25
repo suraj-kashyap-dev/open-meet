@@ -238,6 +238,7 @@ export const dmConversation: ConversationDto = {
   type: 'DIRECT',
   title: null,
   description: null,
+  avatar: null,
   members: [
     {
       userId: currentUser.id,

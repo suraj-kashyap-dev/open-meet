@@ -18,7 +18,13 @@ import type {
   UserPresenceDto,
 } from '@open-meet/types';
 
-import { api } from '@/lib/api/client';
+import { api, ApiClientError } from '@/lib/api/client';
+import { env } from '@/lib/env';
+
+interface UploadGroupAvatarOptions {
+  signal?: AbortSignal;
+  onProgress?: (loaded: number, total: number) => void;
+}
 
 function query(params: Record<string, string | number | undefined>): string {
   const search = new URLSearchParams();
@@ -32,6 +38,91 @@ function query(params: Record<string, string | number | undefined>): string {
   const str = search.toString();
 
   return str ? `?${str}` : '';
+}
+
+function uploadGroupAvatar(
+  conversationId: string,
+  file: File,
+  options: UploadGroupAvatarOptions = {},
+): Promise<ConversationDto> {
+  return new Promise((resolve, reject) => {
+    const url = `${env.NEXT_PUBLIC_API_URL}/api/messaging/groups/${conversationId}/avatar`;
+    const form = new FormData();
+
+    form.append('file', file, file.name);
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('POST', url);
+
+    xhr.withCredentials = true;
+
+    if (options.onProgress) {
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          options.onProgress!(event.loaded, event.total);
+        }
+      };
+    }
+
+    xhr.onload = () => {
+      const isJson = (xhr.getResponseHeader('content-type') ?? '').includes('application/json');
+
+      if (!isJson) {
+        reject(
+          new ApiClientError('INVALID_RESPONSE', xhr.status, `Unexpected response: ${xhr.status}`),
+        );
+
+        return;
+      }
+
+      let body: unknown;
+
+      try {
+        body = JSON.parse(xhr.responseText);
+      } catch {
+        reject(new ApiClientError('INVALID_RESPONSE', xhr.status, 'Invalid JSON'));
+
+        return;
+      }
+
+      const envelope = body as {
+        success: boolean;
+        data?: ConversationDto;
+        error?: { code: string; message: string; statusCode: number };
+      };
+
+      if (!envelope.success || !envelope.data) {
+        const err = envelope.error;
+
+        reject(
+          new ApiClientError(
+            err?.code ?? 'UPLOAD_FAILED',
+            err?.statusCode ?? xhr.status,
+            err?.message ?? 'Upload failed',
+          ),
+        );
+
+        return;
+      }
+
+      resolve(envelope.data);
+    };
+
+    xhr.onerror = () => {
+      reject(new ApiClientError('NETWORK_ERROR', 0, 'Network error during upload'));
+    };
+
+    xhr.onabort = () => {
+      reject(new ApiClientError('UPLOAD_ABORTED', 0, 'Upload was aborted'));
+    };
+
+    if (options.signal) {
+      options.signal.addEventListener('abort', () => xhr.abort(), { once: true });
+    }
+
+    xhr.send(form);
+  });
 }
 
 export const chatApi = {
@@ -66,6 +157,10 @@ export const chatApi = {
   updateGroup: (id: string, body: { title?: string; description?: string | null }) =>
     api.patch<ConversationDto>(`/messaging/groups/${id}`, body),
 
+  uploadGroupAvatar,
+
+  deleteGroupAvatar: (id: string) => api.delete<ConversationDto>(`/messaging/groups/${id}/avatar`),
+
   addGroupMembers: (id: string, userIds: string[], history?: ShareHistoryDto) =>
     api.post<ConversationDto>(`/messaging/groups/${id}/members`, { userIds, history }),
 
@@ -77,8 +172,10 @@ export const chatApi = {
 
   deleteGroup: (id: string) => api.delete<void>(`/messaging/groups/${id}`),
 
-  markRead: (id: string, messageId?: string) =>
-    api.post<{ unread: number }>(`/messaging/conversations/${id}/read`, { messageId }),
+  markRead: (id: string) =>
+    api.post<{ unread: number }>(`/messaging/conversations/${id}/read`, undefined, {
+      includeLocaleHeader: false,
+    }),
 
   editMessage: (messageId: string, content: string) =>
     api.patch<ChatMessageDto>(`/messaging/messages/${messageId}`, { content }),

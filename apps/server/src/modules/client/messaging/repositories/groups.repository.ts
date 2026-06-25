@@ -62,7 +62,7 @@ export class GroupsRepository {
 
   async update(
     id: string,
-    fields: { title?: string; description?: string | null },
+    fields: { title?: string; description?: string | null; avatarKey?: string | null },
   ): Promise<ConversationWithMembers> {
     return this.prisma.conversation.update({
       where: { id },

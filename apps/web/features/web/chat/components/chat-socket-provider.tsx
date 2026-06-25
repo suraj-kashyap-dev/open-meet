@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { createContext, useContext, useEffect, useMemo, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react';
 
 import {
   ChatClientEvent,
@@ -106,6 +106,7 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
   const qc = useQueryClient();
   const router = useRouter();
   const { notify } = useNotification();
+  const hasConnectedRef = useRef(false);
 
   const setPresence = useChatStore((s) => s.setPresence);
   const setTyping = useChatStore((s) => s.setTyping);
@@ -139,9 +140,13 @@ export function ChatSocketProvider({ children }: { children: ReactNode }) {
     const onConnect = () => {
       setConnection('connected');
 
-      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+      if (hasConnectedRef.current) {
+        void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
 
-      void qc.invalidateQueries({ queryKey: presenceMeKey });
+        void qc.invalidateQueries({ queryKey: presenceMeKey });
+      }
+
+      hasConnectedRef.current = true;
     };
 
     const onDisconnect = () => setConnection('reconnecting');

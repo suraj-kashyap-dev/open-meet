@@ -14,6 +14,7 @@ import type {
   SavedMessageListDto,
   ShareHistoryDto,
   TeammateListDto,
+  UnreadSummaryDto,
   UserPresenceDto,
 } from '@open-meet/types';
 
@@ -240,15 +241,47 @@ export function useMarkRead(conversationId: string) {
   const clearUnread = useChatStore((s) => s.clearUnread);
 
   return useMutation({
-    mutationFn: (messageId?: string) => chatApi.markRead(conversationId, messageId),
-    onSuccess: () => {
+    mutationFn: () => chatApi.markRead(conversationId),
+    onSuccess: ({ unread }) => {
       clearUnread(conversationId);
 
-      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+      qc.setQueriesData<ConversationListDto>({ queryKey: chatKeys.conversations() }, (list) =>
+        list
+          ? {
+              items: list.items.map((conversation) =>
+                conversation.id === conversationId
+                  ? { ...conversation, unreadCount: unread }
+                  : conversation,
+              ),
+            }
+          : list,
+      );
 
-      void qc.invalidateQueries({ queryKey: ['chat', 'unread'] });
+      qc.setQueryData<UnreadSummaryDto>(['chat', 'unread'], (summary) =>
+        summary ? updateUnreadSummary(summary, conversationId, unread) : summary,
+      );
     },
   });
+}
+
+function updateUnreadSummary(
+  summary: UnreadSummaryDto,
+  conversationId: string,
+  unread: number,
+): UnreadSummaryDto {
+  const previous = summary.byConversation[conversationId] ?? 0;
+  const byConversation = { ...summary.byConversation };
+
+  if (unread > 0) {
+    byConversation[conversationId] = unread;
+  } else {
+    delete byConversation[conversationId];
+  }
+
+  return {
+    total: Math.max(0, summary.total - previous + unread),
+    byConversation,
+  };
 }
 
 export function useTeammates(search: string, opts: { enabled?: boolean } = {}) {
@@ -467,6 +500,28 @@ export function useUpdateGroup(conversationId: string) {
   return useMutation({
     mutationFn: (body: { title?: string; description?: string | null }) =>
       chatApi.updateGroup(conversationId, body),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useUploadGroupAvatar(conversationId: string) {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: (file: File) => chatApi.uploadGroupAvatar(conversationId, file),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
+export function useDeleteGroupAvatar(conversationId: string) {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => chatApi.deleteGroupAvatar(conversationId),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
     },

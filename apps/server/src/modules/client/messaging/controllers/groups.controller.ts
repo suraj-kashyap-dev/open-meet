@@ -1,7 +1,20 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import type { FastifyRequest } from 'fastify';
 
 import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import { ApiErrorCode } from '@open-meet/types';
 
 import {
   AddGroupMembersBodyDto,
@@ -32,6 +45,41 @@ export class GroupsController {
     @Body() body: UpdateGroupBodyDto,
   ) {
     return this.groups.update(id, user.id, body);
+  }
+
+  @Post(':id/avatar')
+  @ApiOperation({ summary: 'Upload or replace a group profile image' })
+  async uploadAvatar(
+    @CurrentUser() user: RequestUser,
+    @Param('id') id: string,
+    @Req() req: FastifyRequest,
+  ) {
+    if (!req.isMultipart()) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'Expected multipart/form-data',
+      });
+    }
+
+    const part = await req.file();
+
+    if (!part) {
+      throw new BadRequestException({
+        code: ApiErrorCode.VALIDATION_FAILED,
+        message: 'No file provided',
+      });
+    }
+
+    return this.groups.uploadAvatar(id, user.id, {
+      buffer: await part.toBuffer(),
+      mime: part.mimetype || 'application/octet-stream',
+    });
+  }
+
+  @Delete(':id/avatar')
+  @ApiOperation({ summary: 'Remove a group profile image' })
+  removeAvatar(@CurrentUser() user: RequestUser, @Param('id') id: string) {
+    return this.groups.removeAvatar(id, user.id);
   }
 
   @Post(':id/members')

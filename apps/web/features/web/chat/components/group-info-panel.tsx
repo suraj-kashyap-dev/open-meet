@@ -211,6 +211,11 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
 
       <div className="flex-1 overflow-y-auto">
         <div className="border-b border-border px-4 py-5 text-center">
+          <UserAvatar
+            user={{ name: conversation.title ?? t('list.untitled'), avatar: conversation.avatar }}
+            size="3xl"
+            className="mx-auto mb-3 ring-1 ring-border"
+          />
           <p className="text-base font-semibold">{conversation.title ?? t('list.untitled')}</p>
           <p className="mt-1 text-xs text-muted-foreground">
             {t('header.members', { count: conversation.members.length })}

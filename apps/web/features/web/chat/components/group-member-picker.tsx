@@ -12,6 +12,8 @@ interface PickedMember {
   id: string;
   name: string;
   avatar: string | null;
+  removable?: boolean;
+  isPending?: boolean;
 }
 
 interface GroupMemberPickerProps {
@@ -94,14 +96,17 @@ export function GroupMemberPicker({
                 >
                   <UserAvatar user={member} size="xs" />
                   <span className="max-w-36 truncate">{member.name}</span>
-                  <button
-                    type="button"
-                    onClick={() => onRemove(member.id)}
-                    aria-label="Remove"
-                    className="flex h-4 w-4 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-background hover:text-foreground"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
+                  {member.removable ?? true ? (
+                    <button
+                      type="button"
+                      onClick={() => onRemove(member.id)}
+                      aria-label="Remove"
+                      disabled={member.isPending}
+                      className="flex h-4 w-4 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-background hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  ) : null}
                 </span>
               ))}
             </div>

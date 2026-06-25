@@ -147,7 +147,7 @@ export function ConversationHeader({
         className="-mx-2 -my-1 me-auto flex min-w-0 items-center gap-3 rounded-md px-2 py-1 text-start transition-transform duration-100 hover:bg-muted active:scale-[0.98]"
       >
         <div className="relative">
-          {display.isGroup ? (
+          {display.isGroup && !display.avatar ? (
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
               <Users className="h-4 w-4" />
             </span>

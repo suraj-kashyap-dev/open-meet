@@ -140,8 +140,12 @@ export class ConversationsController {
   }
 
   @Post('conversations/:id/read')
-  read(@CurrentUser() user: RequestUser, @Param('id') id: string, @Body() body: MarkReadBodyDto) {
-    return this.readState.markRead(id, user.id, body.messageId);
+  read(
+    @CurrentUser() user: RequestUser,
+    @Param('id') id: string,
+    @Body() body?: MarkReadBodyDto,
+  ) {
+    return this.readState.markRead(id, user.id, body?.messageId);
   }
 
   @Post('conversations/:id/polls')

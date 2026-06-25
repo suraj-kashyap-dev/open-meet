@@ -15,6 +15,7 @@ import {
   conversationRoom,
   userRoom,
 } from '@/modules/client/messaging/services/chat-bus.service';
+import { type StorageService } from '@/storage/services/storage.service';
 
 function member(userId: string, role: ConversationMemberRole = ConversationMemberRole.MEMBER) {
   return {
@@ -33,6 +34,8 @@ describe('GroupsService', () => {
   let serializer: { conversation: ReturnType<typeof vi.fn> };
   let presence: { snapshot: ReturnType<typeof vi.fn> };
   let bus: { emit: ReturnType<typeof vi.fn> };
+  let storage: { put: ReturnType<typeof vi.fn>; delete: ReturnType<typeof vi.fn> };
+  let config: { get: ReturnType<typeof vi.fn> };
   let service: GroupsService;
 
   const groupConv = {
@@ -76,6 +79,15 @@ describe('GroupsService', () => {
 
     bus = { emit: vi.fn() };
 
+    storage = {
+      put: vi.fn(),
+      delete: vi.fn().mockResolvedValue(undefined),
+    };
+
+    config = {
+      get: vi.fn().mockReturnValue(undefined),
+    };
+
     service = new GroupsService(
       repo as unknown as GroupsRepository,
       permissions as unknown as ChatPermissionsService,
@@ -83,6 +95,8 @@ describe('GroupsService', () => {
       serializer as unknown as MessagingSerializer,
       presence as unknown as PresenceService,
       bus as unknown as ChatBus,
+      storage as unknown as StorageService,
+      config as never,
     );
   });
 

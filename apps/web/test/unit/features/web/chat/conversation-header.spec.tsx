@@ -136,6 +136,7 @@ function renderHeader() {
     type: 'DIRECT',
     title: null,
     description: null,
+    avatar: null,
     members: [
       {
         userId: 'u1',

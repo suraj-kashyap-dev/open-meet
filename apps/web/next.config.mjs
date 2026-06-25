@@ -3,7 +3,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   transpilePackages: ['@open-meet/ui'],
   devIndicators: {
     appIsrStatus: false,
