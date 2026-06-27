@@ -59,7 +59,7 @@ export function TopBar() {
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-4 border-b border-border bg-background/80 px-4 backdrop-blur-xl">
-      {!sidebarVisible ? (
+      {isDesktop && !sidebarVisible ? (
         <button
           type="button"
           onClick={openSidebar}

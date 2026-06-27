@@ -5,6 +5,7 @@ import type { LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@open-meet/ui/tooltip';
+import { ThemeToggle } from '@open-meet/ui/theme-toggle';
 
 import { AppLogo } from '@/components/web/branding/app-logo';
 import { useBranding } from '@/components/web/branding/branding-provider';
@@ -13,6 +14,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 
 import { cn } from '@open-meet/ui/cn';
 
+import { shouldHideMobileBottomNav } from './mobile-nav-visibility';
 import { isRailActive } from './rail-active';
 import { useShellSidebar } from './sidebar-state';
 import {
@@ -71,6 +73,8 @@ export function Sidebar() {
       >
         <SidebarSurface />
       </aside>
+
+      <MobileBottomNav hidden={mobileOpen} />
     </>
   );
 }
@@ -142,9 +146,64 @@ function CollapsedRail() {
               );
             })}
           </nav>
+
+          <div className="mt-auto flex justify-center border-t border-border/70 pt-3">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </TooltipProvider>
+  );
+}
+
+function MobileBottomNav({ hidden }: { hidden: boolean }) {
+  const tNav = useTranslations('nav');
+  const pathname = usePathname();
+
+  if (hidden || shouldHideMobileBottomNav(pathname)) {
+    return null;
+  }
+
+  return (
+    <nav
+      aria-label={tNav('rail.label')}
+      data-testid="mobile-bottom-nav"
+      className={cn(
+        'fixed inset-x-0 bottom-0 z-30 border-t border-border/80 bg-background/95 px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-transform duration-200 lg:hidden',
+        'translate-y-0',
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-md items-stretch justify-around">
+        {ITEMS.map(({ href, icon: Icon, key, badge }) => {
+          const active = isRailActive(pathname, href);
+
+          return (
+            <Link
+              key={href}
+              href={href}
+              aria-current={active ? 'page' : undefined}
+              className={cn(
+                'group flex min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-xl px-1 text-[11px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring',
+                active ? 'text-accent' : 'text-muted-foreground hover:text-foreground',
+              )}
+            >
+              <span
+                className={cn(
+                  'relative flex h-8 min-w-10 items-center justify-center rounded-full px-3 transition-colors',
+                  active
+                    ? 'bg-accent/10 text-accent'
+                    : 'group-hover:bg-muted group-focus-visible:bg-muted',
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {badge ? <ChatNavBadge /> : null}
+              </span>
+              <span className="w-full truncate text-center leading-none">{tNav(`rail.${key}`)}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
   );
 }
 

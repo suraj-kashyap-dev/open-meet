@@ -39,6 +39,32 @@ test.describe('Web app shell', () => {
     ).toBeVisible();
   });
 
+  test('should show bottom navigation on mobile', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    await mockWebApi(page);
+
+    await page.goto('/en/chat');
+
+    const bottomNav = page.getByTestId('mobile-bottom-nav');
+
+    await expect(bottomNav).toBeVisible();
+
+    await expect(page.getByTestId('sidebar-toggle')).toHaveCount(0);
+
+    for (const name of ['Chat', 'Meet', 'Activity', 'Starred', 'History']) {
+      await expect(bottomNav.getByRole('link', { name, exact: true })).toBeVisible();
+    }
+
+    await bottomNav.getByRole('link', { name: 'Meet', exact: true }).click();
+
+    await expect(page).toHaveURL(/\/en\/meet$/);
+
+    await expect(
+      page.getByRole('heading', { name: 'Start a new meeting', exact: true }),
+    ).toBeVisible();
+  });
+
   test('should open the command palette with the keyboard shortcut', async ({ page }) => {
     await mockWebApi(page);
 
