@@ -4,16 +4,16 @@
 
 html:not(.dark) [data-lk-theme='default'] {
   color-scheme: light;
-  --lk-bg: #fafafa;
-  --lk-bg2: #ffffff;
-  --lk-bg3: #f4f4f5;
-  --lk-bg4: #e4e4e7;
-  --lk-bg5: #d4d4d8;
-  --lk-fg: #09090b;
-  --lk-fg2: #18181b;
-  --lk-fg3: #27272a;
-  --lk-fg4: #3f3f46;
-  --lk-fg5: #52525b;
+  --lk-bg: #f6f7fb;
+  --lk-bg2: #fcfcfd;
+  --lk-bg3: #eef1f6;
+  --lk-bg4: #d9dee8;
+  --lk-bg5: #c8cfdb;
+  --lk-fg: #111827;
+  --lk-fg2: #1f2937;
+  --lk-fg3: #374151;
+  --lk-fg4: #4b5563;
+  --lk-fg5: #5f6673;
   --lk-border-color: rgba(0, 0, 0, 0.08);
   --lk-accent-fg: #ffffff;
   --lk-accent-bg: #3b82f6;

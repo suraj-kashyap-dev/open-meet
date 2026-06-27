@@ -36,7 +36,8 @@
     "history-none": "عدم تضمين سجل المحادثة",
     "history-days": "تضمين آخر {days} يوم",
     "history-all": "تضمين سجل المحادثة كاملاً",
-    "history-hint": "ينطبق على الأعضاء الذين تضيفهم الآن."
+    "history-hint": "ينطبق على الأعضاء الذين تضيفهم الآن.",
+    "clear-search": "مسح البحث"
   },
   "detail": {
     "rename-submit": "Save changes",

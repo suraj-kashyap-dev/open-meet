@@ -36,7 +36,8 @@
     "history-none": "Jangan sertakan riwayat obrolan",
     "history-days": "Sertakan {days} hari terakhir",
     "history-all": "Sertakan semua riwayat obrolan",
-    "history-hint": "Berlaku untuk anggota yang Anda tambahkan sekarang."
+    "history-hint": "Berlaku untuk anggota yang Anda tambahkan sekarang.",
+    "clear-search": "Hapus pencarian"
   },
   "detail": {
     "rename-submit": "Save changes",

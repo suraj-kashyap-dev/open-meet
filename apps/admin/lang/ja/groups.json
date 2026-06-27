@@ -36,7 +36,8 @@
     "history-none": "チャット履歴を含めない",
     "history-days": "直近{days}日間を含める",
     "history-all": "すべてのチャット履歴を含める",
-    "history-hint": "今追加するメンバーに適用されます。"
+    "history-hint": "今追加するメンバーに適用されます。",
+    "clear-search": "検索をクリア"
   },
   "detail": {
     "rename-submit": "Save changes",

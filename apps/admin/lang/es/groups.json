@@ -36,7 +36,8 @@
     "history-none": "No incluir historial de chat",
     "history-days": "Incluir los últimos {days} días",
     "history-all": "Incluir todo el historial de chat",
-    "history-hint": "Se aplica a los miembros que agregues ahora."
+    "history-hint": "Se aplica a los miembros que agregues ahora.",
+    "clear-search": "Borrar búsqueda"
   },
   "detail": {
     "rename-submit": "Save changes",

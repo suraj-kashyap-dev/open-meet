@@ -36,7 +36,8 @@
     "history-none": "不包含聊天记录",
     "history-days": "包含最近 {days} 天",
     "history-all": "包含全部聊天记录",
-    "history-hint": "适用于您现在添加的成员。"
+    "history-hint": "适用于您现在添加的成员。",
+    "clear-search": "清除搜索"
   },
   "detail": {
     "rename-submit": "Save changes",

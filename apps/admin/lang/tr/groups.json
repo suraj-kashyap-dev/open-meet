@@ -36,7 +36,8 @@
     "history-none": "Sohbet geçmişini dahil etme",
     "history-days": "Son {days} günü dahil et",
     "history-all": "Tüm sohbet geçmişini dahil et",
-    "history-hint": "Şimdi eklediğiniz üyeler için geçerlidir."
+    "history-hint": "Şimdi eklediğiniz üyeler için geçerlidir.",
+    "clear-search": "Aramayı temizle"
   },
   "detail": {
     "rename-submit": "Save changes",

@@ -36,7 +36,8 @@
     "history-none": "Non includere la cronologia chat",
     "history-days": "Includi gli ultimi {days} giorni",
     "history-all": "Includi tutta la cronologia chat",
-    "history-hint": "Si applica ai membri che aggiungi ora."
+    "history-hint": "Si applica ai membri che aggiungi ora.",
+    "clear-search": "Cancella ricerca"
   },
   "detail": {
     "rename-submit": "Save changes",

@@ -2,6 +2,7 @@
 
 import {
   LogOut,
+  MessageCircle,
   MoreVertical,
   Pencil,
   ShieldCheck,
@@ -37,7 +38,12 @@ import { UserAvatar } from '@open-meet/ui/user-avatar';
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
-import { useDeleteGroup, useRemoveGroupMember, useSetGroupMemberRole } from '../hooks/use-chat';
+import {
+  useDeleteGroup,
+  useOpenDirectConversation,
+  useRemoveGroupMember,
+  useSetGroupMemberRole,
+} from '../hooks/use-chat';
 import { useChatStore } from '../stores';
 import { GroupEditDialog } from './group-edit-dialog';
 import { GroupAddMembersDialog } from './group-add-members-dialog';
@@ -61,6 +67,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   const removeMember = useRemoveGroupMember(conversation.id);
   const setRole = useSetGroupMemberRole(conversation.id);
   const deleteGroup = useDeleteGroup();
+  const openDirect = useOpenDirectConversation();
 
   const [editOpen, setEditOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
@@ -113,6 +120,22 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
       setConfirmAction(null);
 
       toast.success(t('group.removed'));
+    } catch (err) {
+      handleApiError(err, t('group.action-failed'));
+    }
+  };
+
+  const startDirectChat = async (member: ConversationMemberDto) => {
+    if (member.userId === currentUserId || openDirect.isPending) {
+      return;
+    }
+
+    try {
+      const directConversation = await openDirect.mutateAsync(member.userId);
+
+      setInfoOpen(false);
+
+      router.push(`/chat/${directConversation.id}`);
     } catch (err) {
       handleApiError(err, t('group.action-failed'));
     }
@@ -261,17 +284,13 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
               const isYou = member.userId === currentUserId;
               const isAdmin = member.role === 'ADMIN';
               const canActOnRow = youAreAdmin || isYou;
-
-              return (
-                <li
-                  key={member.userId}
-                  className="flex items-center gap-3 rounded-md px-2 py-1.5 hover:bg-muted"
-                >
+              const memberDetails = (
+                <>
                   <div className="relative shrink-0">
                     <UserAvatar user={{ name: member.name, avatar: member.avatar }} size="sm" />
                     <PresenceDot userId={member.userId} className="absolute -bottom-0.5 -end-0.5" />
                   </div>
-                  <div className="min-w-0 flex-1">
+                  <div className="min-w-0 flex-1 text-start">
                     <p className="truncate text-sm font-medium">
                       {member.name}
                       {isYou ? (
@@ -284,6 +303,30 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
                       <p className="truncate text-xs text-accent">{t('group.admin-badge')}</p>
                     ) : null}
                   </div>
+                  {!isYou ? (
+                    <MessageCircle className="h-3.5 w-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                  ) : null}
+                </>
+              );
+
+              return (
+                <li
+                  key={member.userId}
+                  className="group flex items-center gap-2 rounded-md px-2 py-1.5 hover:bg-muted"
+                >
+                  {isYou ? (
+                    <div className="flex min-w-0 flex-1 items-center gap-3">{memberDetails}</div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => startDirectChat(member)}
+                      disabled={openDirect.isPending}
+                      aria-label={member.name}
+                      className="flex min-w-0 flex-1 items-center gap-3 rounded-md text-start outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-wait disabled:opacity-60"
+                    >
+                      {memberDetails}
+                    </button>
+                  )}
 
                   {canActOnRow && !isYou && youAreAdmin ? (
                     <DropdownMenu>

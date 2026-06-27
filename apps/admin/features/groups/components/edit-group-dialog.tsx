@@ -27,13 +27,17 @@ import {
   SelectValue,
 } from '@open-meet/ui/select';
 
-import { MemberMultiSelect } from '@/components/shared/member-multi-select';
 import {
+  useAddGroupMembers,
   useAdminGroup,
-  useSyncGroupMembers,
+  useRemoveGroupMember,
   useUpdateGroup,
 } from '@/features/groups/hooks/use-admin-groups';
+import { useAdminUsers } from '@/features/users/hooks/use-admin-users';
 import { ApiClientError } from '@/lib/api/client';
+import { useDebouncedValue } from '@/lib/use-debounced-value';
+
+import { GroupMemberPicker } from './group-member-picker';
 
 interface Props {
   group: AdminGroupDto | null;
@@ -59,33 +63,145 @@ export function EditGroupDialog({ group, onClose }: Props) {
   const open = group !== null;
   const detail = useAdminGroup(group?.id ?? null);
   const update = useUpdateGroup();
-  const syncMembers = useSyncGroupMembers();
+  const addMembers = useAddGroupMembers();
+  const removeMember = useRemoveGroupMember();
 
   const [title, setTitle] = useState('');
-  const [memberIds, setMemberIds] = useState<string[]>([]);
+  const [search, setSearch] = useState('');
   const [history, setHistory] = useState<HistoryChoice>('none');
+  const [localAdded, setLocalAdded] = useState<
+    Record<string, { id: string; name: string; email: string; avatar: string | null }>
+  >({});
+  const [localRemoved, setLocalRemoved] = useState<Record<string, true>>({});
+
+  const trimmedSearch = search.trim();
+  const debouncedSearch = useDebouncedValue(trimmedSearch, 250);
+  const users = useAdminUsers(
+    { page: 1, pageSize: 20, search: debouncedSearch },
+    { enabled: debouncedSearch.length > 0 },
+  );
+  const isSearchPending = trimmedSearch.length > 0 && trimmedSearch !== debouncedSearch;
+
+  const currentMembers = (detail.data?.members ?? []).filter(
+    (member) => !localRemoved[member.userId],
+  );
+  const currentMemberIds = new Set(currentMembers.map((member) => member.userId));
+  const picked = {
+    ...Object.fromEntries(
+      currentMembers.map((member) => [
+        member.userId,
+        {
+          id: member.userId,
+          name: member.name,
+          email: member.email,
+          avatar: member.avatar,
+          removable: true,
+        },
+      ]),
+    ),
+    ...Object.fromEntries(
+      Object.values(localAdded)
+        .filter((member) => !currentMemberIds.has(member.id))
+        .map((member) => [member.id, { ...member, removable: true }]),
+    ),
+  };
+  const visibleIds = new Set(Object.keys(picked));
+  const suggestions = (users.data?.items ?? []).filter((user) => !visibleIds.has(user.id));
+  const addedList = Object.values(localAdded);
+  const removedIds = Object.keys(localRemoved);
+  const memberCount = Object.keys(picked).length;
+  const membersDirty = addedList.length > 0 || removedIds.length > 0;
 
   useEffect(() => {
     if (detail.data) {
       setTitle(detail.data.title);
-
-      setMemberIds(Array.from(new Set(detail.data.members.map((member) => member.userId))));
     }
   }, [detail.data]);
 
-  const isSaving = update.isPending || syncMembers.isPending;
+  useEffect(() => {
+    if (group) {
+      setTitle(group.title);
+    }
+
+    setSearch('');
+
+    setHistory('none');
+
+    setLocalAdded({});
+
+    setLocalRemoved({});
+  }, [group?.id, group?.title]);
+
+  const resetMemberChanges = () => {
+    setSearch('');
+
+    setHistory('none');
+
+    setLocalAdded({});
+
+    setLocalRemoved({});
+  };
+
+  const close = () => {
+    resetMemberChanges();
+
+    onClose();
+  };
+
+  const handlePick = (member: {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string | null;
+  }) => {
+    if (picked[member.id]) {
+      return;
+    }
+
+    const existingMember = detail.data?.members.find((item) => item.userId === member.id);
+
+    if (existingMember) {
+      setLocalRemoved((prev) => {
+        const next = { ...prev };
+
+        delete next[member.id];
+
+        return next;
+      });
+    } else {
+      setLocalAdded((prev) => ({ ...prev, [member.id]: member }));
+    }
+
+    setSearch('');
+  };
+
+  const handleRemove = (userId: string) => {
+    if (localAdded[userId]) {
+      setLocalAdded((prev) => {
+        const next = { ...prev };
+
+        delete next[userId];
+
+        return next;
+      });
+
+      return;
+    }
+
+    setLocalRemoved((prev) => ({ ...prev, [userId]: true }));
+  };
+
+  const isSaving = update.isPending || addMembers.isPending || removeMember.isPending;
 
   const onSubmit = async () => {
     if (!group || !title.trim()) {
       return;
     }
 
-    const current = Array.from(new Set(detail.data?.members.map((member) => member.userId) ?? []));
     const titleDirty = title.trim() !== (detail.data?.title ?? group.title);
-    const memberDirty = [...current].sort().join('|') !== [...memberIds].sort().join('|');
 
-    if (!titleDirty && !memberDirty) {
-      onClose();
+    if (!titleDirty && !membersDirty) {
+      close();
 
       return;
     }
@@ -95,29 +211,32 @@ export function EditGroupDialog({ group, onClose }: Props) {
         await update.mutateAsync({ id: group.id, body: { title: title.trim() } });
       }
 
-      if (memberDirty) {
-        await syncMembers.mutateAsync({
+      if (addedList.length > 0) {
+        await addMembers.mutateAsync({
           id: group.id,
-          currentUserIds: current,
-          nextUserIds: memberIds,
+          userIds: addedList.map((member) => member.id),
           history: toShareHistory(history),
         });
       }
 
+      await Promise.all(
+        removedIds.map((userId) => removeMember.mutateAsync({ id: group.id, userId })),
+      );
+
       toast.success(t('detail.rename-success'));
 
-      onClose();
+      close();
     } catch (err) {
       toast.error(err instanceof ApiClientError ? err.message : t('detail.request-error'));
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={(o) => (!o && !isSaving ? onClose() : undefined)}>
+    <Dialog open={open} onOpenChange={(o) => (!o && !isSaving ? close() : undefined)}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <DialogTitle>{group?.title ?? t('actions.manage')}</DialogTitle>
-          <DialogDescription>{t('manage.members', { count: memberIds.length })}</DialogDescription>
+          <DialogDescription>{t('manage.members', { count: memberCount })}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -134,18 +253,18 @@ export function EditGroupDialog({ group, onClose }: Props) {
 
           <div className="space-y-1.5">
             <Label>{t('manage.title')}</Label>
-            <MemberMultiSelect
-              selectedIds={memberIds}
-              onSelectedIdsChange={setMemberIds}
-              initialSelectedUsers={(detail.data?.members ?? []).map((member) => ({
-                id: member.userId,
-                name: member.name,
-                email: member.email,
-                avatar: member.avatar,
-              }))}
-              searchPlaceholder={t('manage.search')}
+            <GroupMemberPicker
+              search={search}
+              onSearchChange={setSearch}
+              suggestions={suggestions}
+              picked={picked}
+              onPick={handlePick}
+              onRemove={handleRemove}
+              placeholder={t('manage.search')}
               emptyLabel={t('manage.no-users')}
+              clearLabel={t('manage.clear-search')}
               removeLabel={t('manage.remove')}
+              isLoading={isSearchPending || users.isFetching}
             />
           </div>
 
@@ -167,9 +286,12 @@ export function EditGroupDialog({ group, onClose }: Props) {
         </div>
 
         <DialogFooter>
+          <Button variant="ghost" onClick={close} disabled={isSaving}>
+            {t('delete-dialog.cancel')}
+          </Button>
           <Button
             onClick={() => void onSubmit()}
-            disabled={!title.trim() || isSaving}
+            disabled={!title.trim() || isSaving || detail.isLoading}
             className="gap-2"
           >
             {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}

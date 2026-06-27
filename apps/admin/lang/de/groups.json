@@ -36,7 +36,8 @@
     "history-none": "Chatverlauf nicht einbeziehen",
     "history-days": "Die letzten {days} Tage einbeziehen",
     "history-all": "Gesamten Chatverlauf einbeziehen",
-    "history-hint": "Gilt für Mitglieder, die Sie jetzt hinzufügen."
+    "history-hint": "Gilt für Mitglieder, die Sie jetzt hinzufügen.",
+    "clear-search": "Suche löschen"
   },
   "detail": {
     "rename-submit": "Save changes",

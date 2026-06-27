@@ -36,7 +36,8 @@
     "history-none": "채팅 기록을 포함하지 않음",
     "history-days": "최근 {days}일 포함",
     "history-all": "모든 채팅 기록 포함",
-    "history-hint": "지금 추가하는 멤버에게 적용됩니다."
+    "history-hint": "지금 추가하는 멤버에게 적용됩니다.",
+    "clear-search": "검색 지우기"
   },
   "detail": {
     "rename-submit": "Save changes",

@@ -494,6 +494,17 @@ export function useCreateGroup() {
   });
 }
 
+export function useOpenDirectConversation() {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: (targetUserId: string) => chatApi.openDirect(targetUserId),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: chatKeys.conversations() });
+    },
+  });
+}
+
 export function useUpdateGroup(conversationId: string) {
   const qc = useQueryClient();
 
