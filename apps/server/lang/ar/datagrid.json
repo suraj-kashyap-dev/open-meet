@@ -63,7 +63,11 @@
       "name": "الاسم",
       "members": "الأعضاء",
       "createdAt": "تاريخ الإنشاء",
-      "actions": "الإجراءات"
+      "actions": "الإجراءات",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "مجموعة جديدة",

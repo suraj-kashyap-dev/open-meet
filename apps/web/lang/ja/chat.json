@@ -205,7 +205,8 @@
     "history-hint": "新しいメンバーがこのグループの過去のメッセージをどこまで見られるかを選択します。",
     "save": "保存",
     "action-failed": "問題が発生しました",
-    "groups-disabled": "グループ作成は管理者により無効化されています。"
+    "groups-disabled": "グループ作成は管理者により無効化されています。",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "新しい会話",

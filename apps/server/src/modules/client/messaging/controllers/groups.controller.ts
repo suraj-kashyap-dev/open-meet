@@ -13,12 +13,16 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import type { FastifyRequest } from 'fastify';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 import { ApiErrorCode } from '@open-meet/types';
 
 import {
   AddGroupMembersBodyDto,
   CreateGroupBodyDto,
+  TransferGroupOwnershipBodyDto,
   UpdateGroupBodyDto,
   UpdateGroupMemberRoleBodyDto,
 } from '../dto/groups.dto';
@@ -109,6 +113,15 @@ export class GroupsController {
     @Body() body: UpdateGroupMemberRoleBodyDto,
   ) {
     return this.groups.updateMemberRole(id, user.id, userId, body.role);
+  }
+
+  @Post(':id/transfer-ownership')
+  transferOwnership(
+    @CurrentUser() user: RequestUser,
+    @Param('id') id: string,
+    @Body() body: TransferGroupOwnershipBodyDto,
+  ) {
+    return this.groups.transferOwnership(id, user.id, body.ownerUserId);
   }
 
   @Delete(':id')

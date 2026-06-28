@@ -27,7 +27,11 @@ describe('MessagesService', () => {
     updateContent: ReturnType<typeof vi.fn>;
     softDelete: ReturnType<typeof vi.fn>;
   };
-  let conversationRepo: { touch: ReturnType<typeof vi.fn> };
+  let conversationRepo: {
+    touch: ReturnType<typeof vi.fn>;
+    memberUserIds: ReturnType<typeof vi.fn>;
+    markRead: ReturnType<typeof vi.fn>;
+  };
   let conversationsService: { revealOnActivity: ReturnType<typeof vi.fn> };
   let permissions: {
     assertConversationMember: ReturnType<typeof vi.fn>;
@@ -55,7 +59,11 @@ describe('MessagesService', () => {
       softDelete: vi.fn(),
     };
 
-    conversationRepo = { touch: vi.fn() };
+    conversationRepo = {
+      touch: vi.fn(),
+      memberUserIds: vi.fn().mockResolvedValue(['u1', 'u2']),
+      markRead: vi.fn(),
+    };
 
     conversationsService = { revealOnActivity: vi.fn() };
 
@@ -142,6 +150,20 @@ describe('MessagesService', () => {
       );
 
       expect(dto).toMatchObject({ id: 'm9' });
+    });
+
+    it('should mark self-chat messages as read immediately', async () => {
+      conversationRepo.memberUserIds.mockResolvedValue(['u1']);
+
+      await service.send({ conversationId: 'c1', senderId: 'u1', content: 'note to self' });
+
+      expect(conversationRepo.markRead).toHaveBeenCalledWith('c1', 'u1', createdRow.createdAt);
+    });
+
+    it('should not auto-read messages in multi-member conversations', async () => {
+      await service.send({ conversationId: 'c1', senderId: 'u1', content: 'hi' });
+
+      expect(conversationRepo.markRead).not.toHaveBeenCalled();
     });
 
     it('should pass the clientNonce through to the broadcast payload', async () => {

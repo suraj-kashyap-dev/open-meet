@@ -63,7 +63,11 @@
       "name": "名称",
       "members": "成员",
       "createdAt": "创建时间",
-      "actions": "操作"
+      "actions": "操作",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "新建群组",

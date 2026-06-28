@@ -205,7 +205,8 @@
     "history-hint": "새 구성원이 이 그룹의 지난 메시지를 얼마나 볼 수 있는지 선택하세요.",
     "save": "저장",
     "action-failed": "문제가 발생했습니다",
-    "groups-disabled": "그룹 생성이 관리자에 의해 비활성화되었습니다."
+    "groups-disabled": "그룹 생성이 관리자에 의해 비활성화되었습니다.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "새 대화",

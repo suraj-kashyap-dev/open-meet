@@ -16,6 +16,9 @@ export type ChatMessageWithRelations = Prisma.ChatMessageGetPayload<{
 }>;
 
 export const conversationInclude = {
+  createdByUser: { select: { id: true, name: true } },
+  createdByAdmin: { select: { id: true, name: true } },
+  ownerUser: { select: { id: true, name: true } },
   members: {
     include: {
       user: { select: { id: true, name: true, avatarKey: true, chatDisabled: true } },
@@ -28,6 +31,9 @@ export type ConversationWithMembers = Prisma.ConversationGetPayload<{
 }>;
 
 export const conversationListInclude = {
+  createdByUser: { select: { id: true, name: true } },
+  createdByAdmin: { select: { id: true, name: true } },
+  ownerUser: { select: { id: true, name: true } },
   members: {
     include: {
       user: { select: { id: true, name: true, avatarKey: true, chatDisabled: true } },

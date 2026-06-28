@@ -63,7 +63,11 @@
       "name": "Nama",
       "members": "Anggota",
       "createdAt": "Dibuat",
-      "actions": "Tindakan"
+      "actions": "Tindakan",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "Grup baru",

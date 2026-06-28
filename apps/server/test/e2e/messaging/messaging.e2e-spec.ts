@@ -125,14 +125,18 @@ describe('Messaging / persistent chat (e2e)', () => {
       expect(res.body.data.type).toBe('DIRECT');
     });
 
-    it('should reject opening a DM with yourself with VALIDATION_FAILED', async () => {
+    it('should allow opening a self-chat', async () => {
       const res = await openDirect(alice.cookie, alice.id);
 
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(201);
 
-      expect(res.body.success).toBe(false);
+      expect(res.body.success).toBe(true);
 
-      expect(res.body.error.code).toBe('VALIDATION_FAILED');
+      expect(res.body.data.type).toBe('DIRECT');
+
+      expect(res.body.data.members).toHaveLength(1);
+
+      expect(res.body.data.members[0].userId).toBe(alice.id);
     });
 
     it('should require authentication', async () => {

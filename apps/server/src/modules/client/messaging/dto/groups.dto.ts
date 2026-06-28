@@ -67,3 +67,8 @@ export class UpdateGroupMemberRoleBodyDto {
   @IsEnum(ConversationMemberRole)
   role!: ConversationMemberRole;
 }
+
+export class TransferGroupOwnershipBodyDto {
+  @IsString()
+  ownerUserId!: string;
+}

@@ -30,7 +30,10 @@ import {
   type UserMeResponseDto,
 } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 import { Public } from '../../../../common/decorators/public.decorator';
 
 import { AuthService, type IssuedTokens } from '../services/auth.service';

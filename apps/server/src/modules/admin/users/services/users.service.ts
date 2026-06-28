@@ -24,10 +24,7 @@ import { ApiErrorCode } from '@open-meet/types';
 
 import { DatagridService, buildOrderBy, paginate } from '../../../../common/datagrid';
 import { StorageService } from '../../../../storage/services/storage.service';
-import {
-  AdminUsersRepository,
-  type UserWithCounts,
-} from '../repositories/users.repository';
+import { AdminUsersRepository, type UserWithCounts } from '../repositories/users.repository';
 import { AdminUsersDatagridQueryDto } from '../dto/users-datagrid-query.dto';
 import { USERS_DATAGRID } from '../users.datagrid';
 

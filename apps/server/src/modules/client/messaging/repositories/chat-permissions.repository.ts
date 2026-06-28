@@ -113,10 +113,14 @@ export class ChatPermissionsRepository {
   ): Promise<{ type: string; adminCount: number } | null> {
     const conv = await this.prisma.conversation.findUnique({
       where: { id: conversationId },
-      select: { type: true, members: { where: { role: 'ADMIN' }, select: { userId: true } } },
+      select: {
+        type: true,
+        status: true,
+        members: { where: { role: { in: ['ADMIN', 'OWNER'] } }, select: { userId: true } },
+      },
     });
 
-    if (!conv) {
+    if (!conv || conv.status !== 'ACTIVE') {
       return null;
     }
 

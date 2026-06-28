@@ -2,7 +2,10 @@ import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common
 
 import type { UserPresenceDto } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 
 import { ActivityService } from '../services/activity.service';
 import { ConversationStateService } from '../services/conversation-state.service';
@@ -140,11 +143,7 @@ export class ConversationsController {
   }
 
   @Post('conversations/:id/read')
-  read(
-    @CurrentUser() user: RequestUser,
-    @Param('id') id: string,
-    @Body() body?: MarkReadBodyDto,
-  ) {
+  read(@CurrentUser() user: RequestUser, @Param('id') id: string, @Body() body?: MarkReadBodyDto) {
     return this.readState.markRead(id, user.id, body?.messageId);
   }
 

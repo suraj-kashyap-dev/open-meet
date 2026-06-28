@@ -138,6 +138,10 @@ describe('Admin groups (e2e)', () => {
 
       expect(persisted!.type).toBe('GROUP');
 
+      expect(persisted!.origin).toBe('ADMIN_CREATED');
+
+      expect(persisted!.createdByAdminId).toBeTruthy();
+
       expect(persisted!.members).toHaveLength(2);
     });
   });
@@ -244,7 +248,7 @@ describe('Admin groups (e2e)', () => {
   });
 
   describe('DELETE /api/admin/groups/:id', () => {
-    it('should delete a group and persist the removal', async () => {
+    it('should soft-delete a group and remove it from active admin lookups', async () => {
       const { a, b } = await seedTwoUsers();
       const { cookie } = await loginAdmin(app, SUPER);
 
@@ -263,7 +267,11 @@ describe('Admin groups (e2e)', () => {
       const prisma = app.get(PrismaService);
       const persisted = await prisma.conversation.findUnique({ where: { id: groupId } });
 
-      expect(persisted).toBeNull();
+      expect(persisted).not.toBeNull();
+
+      expect(persisted!.status).toBe('DELETED');
+
+      expect(persisted!.deletedByActorType).toBe('ADMIN');
     });
 
     it('should 404 when deleting an unknown group', async () => {

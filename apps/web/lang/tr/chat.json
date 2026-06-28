@@ -205,7 +205,8 @@
     "history-hint": "Yeni üyelerin bu grubun geçmiş mesajlarından ne kadarını görebileceğini seçin.",
     "save": "Kaydet",
     "action-failed": "Bir şeyler ters gitti",
-    "groups-disabled": "Grup oluşturma şu anda yönetici tarafından devre dışı."
+    "groups-disabled": "Grup oluşturma şu anda yönetici tarafından devre dışı.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "Yeni sohbet",

@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import type { ConversationMember } from '@prisma/client';
 
 import { ApiErrorCode } from '@open-meet/types';
@@ -15,17 +10,10 @@ export class ChatPermissionsService {
   constructor(private readonly repo: ChatPermissionsRepository) {}
 
   canDirectMessage(actorId: string, targetId: string): Promise<boolean> {
-    return Promise.resolve(actorId !== targetId);
+    return Promise.resolve(Boolean(actorId && targetId));
   }
 
   async assertCanDirectMessage(actorId: string, targetId: string): Promise<void> {
-    if (actorId === targetId) {
-      throw new BadRequestException({
-        code: ApiErrorCode.VALIDATION_FAILED,
-        message: 'You cannot start a conversation with yourself.',
-      });
-    }
-
     const target = await this.repo.findUserBasics(targetId);
 
     if (!target) {
@@ -41,7 +29,7 @@ export class ChatPermissionsService {
   }
 
   filterEligibleTargets(actorId: string, candidateIds: string[]): Promise<string[]> {
-    return Promise.resolve(candidateIds.filter((id) => id !== actorId));
+    return Promise.resolve(candidateIds);
   }
 
   async assertConversationMember(
@@ -64,7 +52,16 @@ export class ChatPermissionsService {
     return this.assertConversationMember(conversationId, userId);
   }
 
-  async assertCanCreateGroup(_userId: string): Promise<void> {}
+  async assertCanCreateGroup(userId: string): Promise<void> {
+    const allowed = await this.repo.getUserCanCreateGroups(userId);
+
+    if (!allowed) {
+      throw new ForbiddenException({
+        code: ApiErrorCode.FORBIDDEN,
+        message: 'Group creation is disabled for this account.',
+      });
+    }
+  }
 
   async assertGroupAdmin(conversationId: string, userId: string): Promise<ConversationMember> {
     const meta = await this.repo.getConversationMeta(conversationId);
@@ -78,7 +75,7 @@ export class ChatPermissionsService {
 
     const membership = await this.assertConversationMember(conversationId, userId);
 
-    if (membership.role !== 'ADMIN') {
+    if (membership.role !== 'ADMIN' && membership.role !== 'OWNER') {
       throw new ForbiddenException({
         code: ApiErrorCode.NOT_GROUP_ADMIN,
         message: 'Only a group admin can perform this action.',

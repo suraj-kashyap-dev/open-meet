@@ -4,10 +4,7 @@ import { ApiErrorCode, ChatServerEvent, type ChatMessageDto } from '@open-meet/t
 
 import { ChatBus, conversationRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
-import {
-  MessagesRepository,
-  type ChatMessageMeta,
-} from '../repositories/messages.repository';
+import { MessagesRepository, type ChatMessageMeta } from '../repositories/messages.repository';
 import { MessagingSerializer } from '../messaging.serializer';
 
 @Injectable()

@@ -262,10 +262,7 @@ export function MeetingShell({ code, meeting, minimized }: Props) {
 
   return (
     <>
-      <div
-        data-lk-theme="default"
-        className="fixed inset-0 z-30 flex flex-col bg-background"
-      >
+      <div data-lk-theme="default" className="fixed inset-0 z-30 flex flex-col bg-background">
         <MeetingTopBar code={code} canEdit={isHost} />
 
         <div className="flex min-h-0 flex-1">

@@ -33,11 +33,7 @@ import {
 import { extractAccessTokenFromSocket, type SocketUser } from '../../chat/ws-auth.util';
 import { WsJwtGuard } from '../../chat/ws-jwt.guard';
 
-import {
-  ChatBus,
-  conversationRoom,
-  userRoom,
-} from '../services/chat-bus.service';
+import { ChatBus, conversationRoom, userRoom } from '../services/chat-bus.service';
 import { ChatPermissionsService } from '../services/chat-permissions.service';
 import { ConversationsRepository } from '../repositories/conversations.repository';
 import { MessagesService } from '../services/messages.service';

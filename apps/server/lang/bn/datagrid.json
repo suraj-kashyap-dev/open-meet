@@ -63,7 +63,11 @@
       "name": "নাম",
       "members": "সদস্য",
       "createdAt": "তৈরির তারিখ",
-      "actions": "পদক্ষেপ"
+      "actions": "পদক্ষেপ",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "নতুন গ্রুপ",

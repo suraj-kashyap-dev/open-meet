@@ -63,7 +63,11 @@
       "name": "Название",
       "members": "Участники",
       "createdAt": "Создано",
-      "actions": "Действия"
+      "actions": "Действия",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "Новая группа",

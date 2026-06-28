@@ -31,9 +31,18 @@ describe('leavesUnder()', () => {
     expect(leavesUnder('groups', PERMISSION_TREE_ADMIN)).toEqual([
       'groups.view',
       'groups.create',
+      'groups.create-system',
+      'groups.create-on-behalf',
       'groups.update',
       'groups.delete',
+      'groups.hard-delete',
       'groups.manage-members',
+      'groups.manage-roles',
+      'groups.transfer-ownership',
+      'groups.archive',
+      'groups.restore',
+      'groups.moderate',
+      'groups.audit.view',
     ]);
   });
 

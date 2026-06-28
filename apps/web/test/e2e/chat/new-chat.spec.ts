@@ -28,4 +28,22 @@ test.describe('Web new chat (inline "To:" composer)', () => {
 
     await expect(page).toHaveURL(/\/en\/chat\/conversation-dm$/);
   });
+
+  test('should let the current user start a self-chat', async ({ page }) => {
+    await mockWebApi(page);
+
+    await page.goto('/en/chat/new');
+
+    await page.getByPlaceholder('Enter name or email').fill('Ada');
+
+    await page.getByRole('button', { name: /Ada Lovelace/ }).click();
+
+    const box = page.getByPlaceholder('Type your first message…');
+
+    await box.fill('Note to self');
+
+    await box.press('Enter');
+
+    await expect(page).toHaveURL(/\/en\/chat\/conversation-dm$/);
+  });
 });

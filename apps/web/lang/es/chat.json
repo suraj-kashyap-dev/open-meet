@@ -205,7 +205,8 @@
     "history-hint": "Elige cuántos mensajes anteriores de este grupo pueden ver los nuevos miembros.",
     "save": "Guardar",
     "action-failed": "Algo salió mal",
-    "groups-disabled": "La creación de grupos está desactivada por el administrador."
+    "groups-disabled": "La creación de grupos está desactivada por el administrador.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "Nueva conversación",

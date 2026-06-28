@@ -46,13 +46,13 @@
     "request-error": "Could not update this group",
     "empty-title": "Group not found",
     "empty-description": "This group may have been removed or you may not have access to it.",
-    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-description": "Deleting this group removes it from active conversations for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
   },
   "delete-dialog": {
     "title": "Eliminare il gruppo?",
-    "description": "{name} verrà eliminato e rimosso immediatamente per ogni membro. Questa azione non può essere annullata.",
+    "description": "{name} will be removed from active conversations for every current member.",
     "cancel": "Annulla",
     "confirm": "Elimina gruppo",
     "deleting": "Eliminazione…"

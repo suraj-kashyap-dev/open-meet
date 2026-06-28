@@ -109,7 +109,9 @@ export function useCurrentUser() {
 }
 
 export function useCanCreateGroups(): boolean {
-  return true;
+  const { data } = useCurrentUserMe();
+
+  return data?.canCreateGroups ?? false;
 }
 
 export function useGoogleAuthEnabled() {

@@ -65,6 +65,7 @@ export class GroupsService {
     body: { title: string; description?: string | null; memberIds: string[] },
   ): Promise<ConversationDto> {
     await this.permissions.assertCanCreateGroup(creatorId);
+    const creator = await this.repo.findUserName(creatorId);
 
     const title = this.requireTitle(body.title);
     const description = this.normalizeDescription(body.description);
@@ -76,9 +77,18 @@ export class GroupsService {
 
     const conversation = await this.repo.create({
       creatorId,
+      creatorName: creator?.name ?? 'Unknown user',
       title,
       description,
       memberIds: eligible,
+    });
+
+    await this.repo.audit({
+      conversationId: conversation.id,
+      action: 'group.created',
+      actorUserId: creatorId,
+      actorLabel: creator?.name ?? null,
+      metadata: { title, memberIds: eligible },
     });
 
     const dto = await this.toDto(conversation.id, creatorId);
@@ -111,6 +121,13 @@ export class GroupsService {
 
     if (Object.keys(data).length > 0) {
       await this.repo.update(conversationId, data);
+
+      await this.repo.audit({
+        conversationId,
+        action: 'group.updated',
+        actorUserId: actorId,
+        metadata: data,
+      });
     }
 
     return this.broadcastUpdate(conversationId, actorId);
@@ -161,6 +178,13 @@ export class GroupsService {
 
     await this.repo.update(conversationId, { avatarKey: key });
 
+    await this.repo.audit({
+      conversationId,
+      action: 'group.avatar_updated',
+      actorUserId: actorId,
+      metadata: { avatarKey: key },
+    });
+
     if (existing.avatarKey && existing.avatarKey !== key) {
       this.storage.delete(existing.avatarKey).catch((err: unknown) => {
         this.logger.warn(
@@ -192,6 +216,13 @@ export class GroupsService {
 
     await this.repo.update(conversationId, { avatarKey: null });
 
+    await this.repo.audit({
+      conversationId,
+      action: 'group.avatar_removed',
+      actorUserId: actorId,
+      metadata: { previousKey },
+    });
+
     this.storage.delete(previousKey).catch((err: unknown) => {
       this.logger.warn(`Failed to delete group image "${previousKey}": ${(err as Error).message}`);
     });
@@ -220,6 +251,18 @@ export class GroupsService {
 
     await this.repo.addMembers(conversationId, invitable, historyVisibleFrom);
 
+    await Promise.all(
+      invitable.map((userId) =>
+        this.repo.audit({
+          conversationId,
+          action: 'group.member_added',
+          actorUserId: actorId,
+          targetUserId: userId,
+          metadata: { historyVisibleFrom: historyVisibleFrom?.toISOString() ?? null },
+        }),
+      ),
+    );
+
     const updatedDto = await this.broadcastUpdate(conversationId, actorId);
 
     for (const userId of invitable) {
@@ -238,7 +281,10 @@ export class GroupsService {
       targetUserId,
     );
 
-    if (membership.role === ConversationMemberRole.ADMIN && actorId === targetUserId) {
+    if (
+      (membership.role === ConversationMemberRole.ADMIN || membership.role === 'OWNER') &&
+      actorId === targetUserId
+    ) {
       const admins = await this.permissions.groupAdminCount(conversationId);
 
       if (admins <= 1) {
@@ -255,6 +301,13 @@ export class GroupsService {
 
     await this.repo.removeMember(conversationId, targetUserId);
 
+    await this.repo.audit({
+      conversationId,
+      action: actorId === targetUserId ? 'group.member_left' : 'group.member_removed',
+      actorUserId: actorId,
+      targetUserId,
+    });
+
     this.bus.emit(userRoom(targetUserId), ChatServerEvent.CONVERSATION_REMOVED, {
       conversationId,
     });
@@ -270,9 +323,20 @@ export class GroupsService {
   ): Promise<ConversationDto> {
     await this.permissions.assertGroupAdmin(conversationId, actorId);
 
+    if (role === 'OWNER') {
+      return this.transferOwnership(conversationId, actorId, targetUserId);
+    }
+
     if (role === ConversationMemberRole.MEMBER) {
       const admins = await this.permissions.groupAdminCount(conversationId);
       const target = await this.permissions.assertConversationMember(conversationId, targetUserId);
+
+      if (target.role === 'OWNER') {
+        throw new BadRequestException({
+          code: ApiErrorCode.VALIDATION_FAILED,
+          message: 'Transfer ownership before changing the owner role.',
+        });
+      }
 
       if (target.role === ConversationMemberRole.ADMIN && admins <= 1) {
         throw new BadRequestException({
@@ -284,6 +348,47 @@ export class GroupsService {
 
     await this.repo.setMemberRole(conversationId, targetUserId, role);
 
+    await this.repo.audit({
+      conversationId,
+      action: 'group.role_changed',
+      actorUserId: actorId,
+      targetUserId,
+      metadata: { role },
+    });
+
+    return this.broadcastUpdate(conversationId, actorId);
+  }
+
+  async transferOwnership(
+    conversationId: string,
+    actorId: string,
+    nextOwnerId: string,
+  ): Promise<ConversationDto> {
+    await this.permissions.assertGroupAdmin(conversationId, actorId);
+    const target = await this.permissions.assertConversationMember(conversationId, nextOwnerId);
+    const conv = await this.repo.findById(conversationId);
+
+    if (!conv) {
+      throw new NotFoundException({
+        code: ApiErrorCode.CONVERSATION_NOT_FOUND,
+        message: 'Group not found.',
+      });
+    }
+
+    if (target.role === 'OWNER' && conv.ownerUserId === nextOwnerId) {
+      return this.toDto(conversationId, actorId);
+    }
+
+    await this.repo.transferOwnership(conversationId, conv.ownerUserId, nextOwnerId);
+
+    await this.repo.audit({
+      conversationId,
+      action: 'group.owner_transferred',
+      actorUserId: actorId,
+      targetUserId: nextOwnerId,
+      metadata: { previousOwnerUserId: conv.ownerUserId },
+    });
+
     return this.broadcastUpdate(conversationId, actorId);
   }
 
@@ -291,7 +396,13 @@ export class GroupsService {
     await this.permissions.assertGroupAdmin(conversationId, actorId);
     const members = await this.repo.memberUserIds(conversationId);
 
-    await this.repo.delete(conversationId);
+    await this.repo.delete(conversationId, actorId);
+
+    await this.repo.audit({
+      conversationId,
+      action: 'group.deleted',
+      actorUserId: actorId,
+    });
 
     for (const userId of members) {
       this.bus.emit(userRoom(userId), ChatServerEvent.CONVERSATION_REMOVED, {

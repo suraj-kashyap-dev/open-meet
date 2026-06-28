@@ -63,7 +63,11 @@
       "name": "이름",
       "members": "멤버",
       "createdAt": "생성일",
-      "actions": "작업"
+      "actions": "작업",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "새 그룹",

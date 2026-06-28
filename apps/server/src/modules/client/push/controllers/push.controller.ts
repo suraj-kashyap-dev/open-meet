@@ -6,7 +6,10 @@ import type { ApiEnv } from '@open-meet/config';
 import type { VapidPublicKeyDto } from '@open-meet/types';
 
 import { Public } from '../../../../common/decorators/public.decorator';
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 import { SubscribePushDto, UnsubscribePushDto } from '../dto/subscribe-push.dto';
 import { PushService } from '../services/push.service';
 

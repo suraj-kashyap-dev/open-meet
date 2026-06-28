@@ -46,13 +46,13 @@
     "request-error": "Could not update this group",
     "empty-title": "Group not found",
     "empty-description": "This group may have been removed or you may not have access to it.",
-    "delete-description": "Deleting this group removes the conversation for every current member.",
+    "delete-description": "Deleting this group removes it from active conversations for every current member.",
     "delete-success": "Group deleted",
     "delete-error": "Could not delete group"
   },
   "delete-dialog": {
     "title": "समूह हटाएं?",
-    "description": "{name} को हटा दिया जाएगा और हर सदस्य के लिए तुरंत निकाल दिया जाएगा। इसे पूर्ववत नहीं किया जा सकता।",
+    "description": "{name} will be removed from active conversations for every current member.",
     "cancel": "रद्द करें",
     "confirm": "समूह हटाएं",
     "deleting": "हटाया जा रहा है…"

@@ -13,6 +13,7 @@ describe('GroupsRepository', () => {
   let conversation: {
     create: ReturnType<typeof vi.fn>;
     findUnique: ReturnType<typeof vi.fn>;
+    findFirst: ReturnType<typeof vi.fn>;
     update: ReturnType<typeof vi.fn>;
     delete: ReturnType<typeof vi.fn>;
   };
@@ -24,12 +25,14 @@ describe('GroupsRepository', () => {
   };
   let user: {
     findMany: ReturnType<typeof vi.fn>;
+    findUnique: ReturnType<typeof vi.fn>;
   };
 
   beforeEach(() => {
     conversation = {
       create: vi.fn().mockResolvedValue({ id: 'c1' }),
       findUnique: vi.fn().mockResolvedValue(null),
+      findFirst: vi.fn().mockResolvedValue(null),
       update: vi.fn().mockResolvedValue({ id: 'c1' }),
       delete: vi.fn().mockResolvedValue({ id: 'c1' }),
     };
@@ -43,12 +46,14 @@ describe('GroupsRepository', () => {
 
     user = {
       findMany: vi.fn().mockResolvedValue([]),
+      findUnique: vi.fn().mockResolvedValue(null),
     };
 
     repo = new GroupsRepository({
       conversation,
       conversationMember,
       user,
+      groupAuditEvent: { create: vi.fn() },
     } as unknown as PrismaService);
   });
 
@@ -56,6 +61,7 @@ describe('GroupsRepository', () => {
     it('should create a group with the creator as admin and others as members, dropping the creator from memberIds', async () => {
       await repo.create({
         creatorId: 'creator',
+        creatorName: 'Creator',
         title: 'Team',
         description: 'desc',
         memberIds: ['creator', 'm1', 'm2'],
@@ -66,9 +72,15 @@ describe('GroupsRepository', () => {
           type: ConversationType.GROUP,
           title: 'Team',
           description: 'desc',
+          origin: 'USER_CREATED',
+          createdByActorType: 'USER',
+          createdByUserId: 'creator',
+          createdByDisplayName: 'Creator',
+          createdVia: 'WEB_CHAT',
+          ownerUserId: 'creator',
           members: {
             create: [
-              { userId: 'creator', role: ConversationMemberRole.ADMIN },
+              { userId: 'creator', role: 'OWNER' },
               { userId: 'm1', role: ConversationMemberRole.MEMBER },
               { userId: 'm2', role: ConversationMemberRole.MEMBER },
             ],
@@ -105,7 +117,9 @@ describe('GroupsRepository', () => {
     it('should query the conversation by id', async () => {
       await repo.findById('c1');
 
-      expect(conversation.findUnique).toHaveBeenCalledWith({ where: { id: 'c1' } });
+      expect(conversation.findFirst).toHaveBeenCalledWith({
+        where: { id: 'c1', status: 'ACTIVE' },
+      });
     });
   });
 
@@ -192,9 +206,17 @@ describe('GroupsRepository', () => {
 
   describe('delete()', () => {
     it('should delete the conversation', async () => {
-      await repo.delete('c1');
+      await repo.delete('c1', 'u1');
 
-      expect(conversation.delete).toHaveBeenCalledWith({ where: { id: 'c1' } });
+      expect(conversation.update).toHaveBeenCalledWith({
+        where: { id: 'c1' },
+        data: {
+          status: 'DELETED',
+          deletedAt: expect.any(Date),
+          deletedByActorType: 'USER',
+          deletedByActorId: 'u1',
+        },
+      });
     });
   });
 
@@ -202,8 +224,8 @@ describe('GroupsRepository', () => {
     it('should query the conversation with the list include', async () => {
       await repo.findWithMembers('c1');
 
-      expect(conversation.findUnique).toHaveBeenCalledWith({
-        where: { id: 'c1' },
+      expect(conversation.findFirst).toHaveBeenCalledWith({
+        where: { id: 'c1', status: 'ACTIVE' },
         include: conversationListInclude,
       });
     });

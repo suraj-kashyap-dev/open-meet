@@ -89,7 +89,19 @@
       "create": "إنشاء مجموعات",
       "update": "تحديث المجموعات",
       "delete": "حذف المجموعات",
-      "manage-members": "إدارة أعضاء المجموعات"
+      "manage-members": "إدارة أعضاء المجموعات",
+      "create-system": "Create system groups",
+      "create-on-behalf": "Create groups on behalf",
+      "hard-delete": "Hard delete groups",
+      "manage-roles": "Manage group roles",
+      "transfer-ownership": "Transfer group ownership",
+      "archive": "Archive groups",
+      "restore": "Restore groups",
+      "moderate": "Moderate groups",
+      "audit": {
+        "_self": "Group audit",
+        "view": "View group audit"
+      }
     },
     "branding": {
       "_self": "العلامة التجارية",

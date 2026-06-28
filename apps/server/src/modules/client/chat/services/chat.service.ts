@@ -4,10 +4,7 @@ import type { MessageDto } from '@open-meet/types';
 
 import { StorageService } from '../../../../storage/services/storage.service';
 import { UploadsService } from '../../../uploads/services/uploads.service';
-import {
-  ChatRepository,
-  type MessageWithSender,
-} from '../repositories/chat.repository';
+import { ChatRepository, type MessageWithSender } from '../repositories/chat.repository';
 
 @Injectable()
 export class ChatService {

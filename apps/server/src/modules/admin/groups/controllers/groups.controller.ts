@@ -23,11 +23,7 @@ import { type AdminRequestUser } from '../../auth/strategies/admin-jwt.strategy'
 import { AdminPermissionsGuard } from '../../rbac/admin-permissions.guard';
 import { RequirePermissions } from '../../rbac/decorators/require-permissions.decorator';
 
-import {
-  AddGroupMembersBodyDto,
-  CreateGroupBodyDto,
-  UpdateGroupBodyDto,
-} from '../dto/group.dto';
+import { AddGroupMembersBodyDto, CreateGroupBodyDto, UpdateGroupBodyDto } from '../dto/group.dto';
 import { AdminGroupsDatagridQueryDto } from '../dto/groups-datagrid-query.dto';
 import { AdminGroupsService } from '../services/groups.service';
 
@@ -67,18 +63,23 @@ export class AdminGroupsController {
   @Patch(':id')
   @RequirePermissions('groups.update')
   @ApiOperation({ summary: 'Rename a group' })
-  update(@Param('id') id: string, @Body() dto: UpdateGroupBodyDto): Promise<AdminGroupDetailDto> {
-    return this.groups.update(id, dto.title);
+  update(
+    @CurrentAdmin() admin: AdminRequestUser,
+    @Param('id') id: string,
+    @Body() dto: UpdateGroupBodyDto,
+  ): Promise<AdminGroupDetailDto> {
+    return this.groups.update(id, dto.title, admin);
   }
 
   @Post(':id/members')
   @RequirePermissions('groups.manage-members')
   @ApiOperation({ summary: 'Add members to a group' })
   addMembers(
+    @CurrentAdmin() admin: AdminRequestUser,
     @Param('id') id: string,
     @Body() dto: AddGroupMembersBodyDto,
   ): Promise<AdminGroupDetailDto> {
-    return this.groups.addMembers(id, dto.userIds, dto.history);
+    return this.groups.addMembers(id, dto.userIds, admin, dto.history);
   }
 
   @Delete(':id/members/:userId')
@@ -86,17 +87,21 @@ export class AdminGroupsController {
   @RequirePermissions('groups.manage-members')
   @ApiOperation({ summary: 'Remove a member from a group' })
   removeMember(
+    @CurrentAdmin() admin: AdminRequestUser,
     @Param('id') id: string,
     @Param('userId') userId: string,
   ): Promise<{ removed: true }> {
-    return this.groups.removeMember(id, userId);
+    return this.groups.removeMember(id, userId, admin);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   @RequirePermissions('groups.delete')
   @ApiOperation({ summary: 'Delete a group' })
-  remove(@Param('id') id: string): Promise<{ deleted: true }> {
-    return this.groups.remove(id);
+  remove(
+    @CurrentAdmin() admin: AdminRequestUser,
+    @Param('id') id: string,
+  ): Promise<{ deleted: true }> {
+    return this.groups.remove(id, admin);
   }
 }

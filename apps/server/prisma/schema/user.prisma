@@ -20,6 +20,8 @@ model User {
   hostedMeetings  Meeting[]     @relation("host")
 
   conversationMemberships ConversationMember[]
+  conversationsCreated    Conversation[]       @relation("ConversationCreatedByUser")
+  conversationsOwned      Conversation[]       @relation("ConversationOwnedByUser")
   chatMessages            ChatMessage[]
   messageReactions        MessageReaction[]
   messageMentions         MessageMention[]

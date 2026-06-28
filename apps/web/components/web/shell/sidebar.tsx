@@ -198,7 +198,9 @@ function MobileBottomNav({ hidden }: { hidden: boolean }) {
                 <Icon className="h-4 w-4" />
                 {badge ? <ChatNavBadge /> : null}
               </span>
-              <span className="w-full truncate text-center leading-none">{tNav(`rail.${key}`)}</span>
+              <span className="w-full truncate text-center leading-none">
+                {tNav(`rail.${key}`)}
+              </span>
             </Link>
           );
         })}

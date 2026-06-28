@@ -214,7 +214,14 @@ describe('ChatPermissionsRepository', () => {
 
       expect(conversation.findUnique).toHaveBeenCalledWith({
         where: { id: 'c1' },
-        select: { type: true, members: { where: { role: 'ADMIN' }, select: { userId: true } } },
+        select: {
+          type: true,
+          status: true,
+          members: {
+            where: { role: { in: ['ADMIN', 'OWNER'] } },
+            select: { userId: true },
+          },
+        },
       });
 
       expect(result).toBeNull();
@@ -223,6 +230,7 @@ describe('ChatPermissionsRepository', () => {
     it('should return the type and the count of admin members', async () => {
       conversation.findUnique.mockResolvedValue({
         type: 'GROUP',
+        status: 'ACTIVE',
         members: [{ userId: 'a' }, { userId: 'b' }],
       });
       const result = await repo.getConversationMeta('c1');

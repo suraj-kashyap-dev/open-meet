@@ -63,7 +63,11 @@
       "name": "Name",
       "members": "Mitglieder",
       "createdAt": "Erstellt",
-      "actions": "Aktionen"
+      "actions": "Aktionen",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "Neue Gruppe",

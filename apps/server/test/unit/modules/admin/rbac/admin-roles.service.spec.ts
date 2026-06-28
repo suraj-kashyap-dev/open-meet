@@ -115,9 +115,18 @@ describe('AdminRolesService', () => {
       expect(repo.create).toHaveBeenCalledWith(
         expect.objectContaining({
           permissions: [
+            'groups.archive',
+            'groups.audit.view',
             'groups.create',
+            'groups.create-on-behalf',
+            'groups.create-system',
             'groups.delete',
+            'groups.hard-delete',
             'groups.manage-members',
+            'groups.manage-roles',
+            'groups.moderate',
+            'groups.restore',
+            'groups.transfer-ownership',
             'groups.update',
             'groups.view',
           ],

@@ -89,7 +89,19 @@
       "create": "그룹 만들기",
       "update": "그룹 업데이트",
       "delete": "그룹 삭제",
-      "manage-members": "그룹 구성원 관리"
+      "manage-members": "그룹 구성원 관리",
+      "create-system": "Create system groups",
+      "create-on-behalf": "Create groups on behalf",
+      "hard-delete": "Hard delete groups",
+      "manage-roles": "Manage group roles",
+      "transfer-ownership": "Transfer group ownership",
+      "archive": "Archive groups",
+      "restore": "Restore groups",
+      "moderate": "Moderate groups",
+      "audit": {
+        "_self": "Group audit",
+        "view": "View group audit"
+      }
     },
     "branding": {
       "_self": "브랜딩",

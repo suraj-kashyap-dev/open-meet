@@ -89,7 +89,19 @@
       "create": "Gruppen erstellen",
       "update": "Gruppen aktualisieren",
       "delete": "Gruppen löschen",
-      "manage-members": "Gruppenmitglieder verwalten"
+      "manage-members": "Gruppenmitglieder verwalten",
+      "create-system": "Create system groups",
+      "create-on-behalf": "Create groups on behalf",
+      "hard-delete": "Hard delete groups",
+      "manage-roles": "Manage group roles",
+      "transfer-ownership": "Transfer group ownership",
+      "archive": "Archive groups",
+      "restore": "Restore groups",
+      "moderate": "Moderate groups",
+      "audit": {
+        "_self": "Group audit",
+        "view": "View group audit"
+      }
     },
     "branding": {
       "_self": "Branding",

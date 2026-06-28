@@ -74,7 +74,9 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
   const [confirmAction, setConfirmAction] = useState<ConfirmAction | null>(null);
 
   const youAreAdmin = conversation.youAreAdmin;
-  const adminCount = conversation.members.filter((m) => m.role === 'ADMIN').length;
+  const adminCount = conversation.members.filter(
+    (m) => m.role === 'ADMIN' || m.role === 'OWNER',
+  ).length;
 
   const uniqueMembers = Array.from(
     new Map(conversation.members.map((member) => [member.userId, member])).values(),
@@ -85,7 +87,7 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
       return a.name.localeCompare(b.name);
     }
 
-    return a.role === 'ADMIN' ? -1 : 1;
+    return a.role === 'ADMIN' || a.role === 'OWNER' ? -1 : 1;
   });
 
   const isLastAdmin = youAreAdmin && adminCount === 1;
@@ -282,7 +284,8 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
           <ul className="space-y-0.5">
             {sortedMembers.map((member) => {
               const isYou = member.userId === currentUserId;
-              const isAdmin = member.role === 'ADMIN';
+              const isOwner = member.role === 'OWNER';
+              const isAdmin = member.role === 'ADMIN' || isOwner;
               const canActOnRow = youAreAdmin || isYou;
               const memberDetails = (
                 <>
@@ -300,7 +303,9 @@ export function GroupInfoPanel({ conversation, currentUserId }: Props) {
                       ) : null}
                     </p>
                     {isAdmin ? (
-                      <p className="truncate text-xs text-accent">{t('group.admin-badge')}</p>
+                      <p className="truncate text-xs text-accent">
+                        {isOwner ? t('group.owner-badge') : t('group.admin-badge')}
+                      </p>
                     ) : null}
                   </div>
                   {!isYou ? (

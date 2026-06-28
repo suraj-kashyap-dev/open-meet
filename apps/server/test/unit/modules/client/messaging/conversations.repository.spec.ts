@@ -61,6 +61,7 @@ describe('ConversationsRepository', () => {
         where: {
           members: { some: { userId: 'u1', removedAt: null } },
           type: { in: [ConversationType.DIRECT, ConversationType.GROUP] },
+          status: 'ACTIVE',
         },
         include: conversationListInclude,
         orderBy: [{ lastMessageAt: 'desc' }, { createdAt: 'desc' }],
@@ -99,6 +100,19 @@ describe('ConversationsRepository', () => {
           type: ConversationType.DIRECT,
           directKey: 'a:b',
           members: { create: [{ userId: 'a' }, { userId: 'b' }] },
+        },
+        include: conversationInclude,
+      });
+    });
+
+    it('should create a self direct conversation with one member', async () => {
+      await repo.createDirect('a', 'a', 'a:a');
+
+      expect(conversation.create).toHaveBeenCalledWith({
+        data: {
+          type: ConversationType.DIRECT,
+          directKey: 'a:a',
+          members: { create: [{ userId: 'a' }] },
         },
         include: conversationInclude,
       });

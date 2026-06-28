@@ -5,6 +5,9 @@ import type { PrismaService } from '@/database/services/prisma.service';
 import { AdminGroupsRepository } from '@/modules/admin/groups/repositories/groups.repository';
 
 const groupDetailInclude = {
+  createdByAdmin: { select: { id: true, name: true } },
+  createdByUser: { select: { id: true, name: true } },
+  ownerUser: { select: { id: true, name: true } },
   members: {
     include: { user: { select: { id: true, name: true, email: true, avatarKey: true } } },
     orderBy: { joinedAt: 'asc' },
@@ -13,6 +16,9 @@ const groupDetailInclude = {
 };
 
 const groupListInclude = {
+  createdByAdmin: { select: { id: true, name: true } },
+  createdByUser: { select: { id: true, name: true } },
+  ownerUser: { select: { id: true, name: true } },
   _count: { select: { members: true } },
 };
 
@@ -41,15 +47,20 @@ describe('AdminGroupsRepository', () => {
     repo = new AdminGroupsRepository({
       conversation,
       conversationMember,
+      groupAuditEvent: { create: vi.fn() },
     } as unknown as PrismaService);
   });
 
   describe('searchWhere() / listWith() / countWith()', () => {
     it('should scope to GROUP conversations and add a title filter when searching', () => {
-      expect(repo.searchWhere()).toEqual({ type: ConversationType.GROUP });
+      expect(repo.searchWhere()).toEqual({
+        type: ConversationType.GROUP,
+        status: 'ACTIVE',
+      });
 
       expect(repo.searchWhere('team')).toEqual({
         type: ConversationType.GROUP,
+        status: 'ACTIVE',
         title: { contains: 'team', mode: 'insensitive' },
       });
     });
@@ -78,7 +89,11 @@ describe('AdminGroupsRepository', () => {
       await repo.findDetail('g1');
 
       expect(conversation.findFirst).toHaveBeenCalledWith({
-        where: { id: 'g1', type: ConversationType.GROUP },
+        where: {
+          id: 'g1',
+          type: ConversationType.GROUP,
+          status: 'ACTIVE',
+        },
         include: groupDetailInclude,
       });
     });
@@ -86,13 +101,24 @@ describe('AdminGroupsRepository', () => {
 
   describe('create()', () => {
     it('should create a GROUP with nested members and the detail include', async () => {
-      await expect(repo.create('Team', 'admin1', ['u1', 'u2'])).resolves.toBe(sentinel);
+      await expect(
+        repo.create({
+          title: 'Team',
+          createdByAdminId: 'admin1',
+          createdByAdminName: 'Admin One',
+          memberIds: ['u1', 'u2'],
+        }),
+      ).resolves.toBe(sentinel);
 
       expect(conversation.create).toHaveBeenCalledWith({
         data: {
           type: ConversationType.GROUP,
           title: 'Team',
+          origin: 'ADMIN_CREATED',
+          createdByActorType: 'ADMIN',
           createdByAdminId: 'admin1',
+          createdByDisplayName: 'Admin One',
+          createdVia: 'ADMIN_PANEL',
           members: { create: [{ userId: 'u1' }, { userId: 'u2' }] },
         },
         include: groupDetailInclude,
@@ -100,13 +126,22 @@ describe('AdminGroupsRepository', () => {
     });
 
     it('should create with no nested members when the list is empty', async () => {
-      await repo.create('Empty', 'admin1', []);
+      await repo.create({
+        title: 'Empty',
+        createdByAdminId: 'admin1',
+        createdByAdminName: 'Admin One',
+        memberIds: [],
+      });
 
       expect(conversation.create).toHaveBeenCalledWith({
         data: {
           type: ConversationType.GROUP,
           title: 'Empty',
+          origin: 'ADMIN_CREATED',
+          createdByActorType: 'ADMIN',
           createdByAdminId: 'admin1',
+          createdByDisplayName: 'Admin One',
+          createdVia: 'ADMIN_PANEL',
           members: { create: [] },
         },
         include: groupDetailInclude,
@@ -162,10 +197,18 @@ describe('AdminGroupsRepository', () => {
   });
 
   describe('delete()', () => {
-    it('should delete the conversation by id', async () => {
-      await repo.delete('g1');
+    it('should lifecycle-delete the conversation by id', async () => {
+      await repo.delete('g1', 'admin1');
 
-      expect(conversation.delete).toHaveBeenCalledWith({ where: { id: 'g1' } });
+      expect(conversation.update).toHaveBeenCalledWith({
+        where: { id: 'g1' },
+        data: {
+          status: 'DELETED',
+          deletedAt: expect.any(Date),
+          deletedByActorType: 'ADMIN',
+          deletedByActorId: 'admin1',
+        },
+      });
     });
   });
 });

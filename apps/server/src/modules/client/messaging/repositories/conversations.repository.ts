@@ -21,6 +21,7 @@ export class ConversationsRepository {
       where: {
         members: { some: { userId, removedAt: null } },
         type: { in: [ConversationType.DIRECT, ConversationType.GROUP] },
+        status: 'ACTIVE',
       },
       include: conversationListInclude,
       orderBy: [{ lastMessageAt: 'desc' }, { createdAt: 'desc' }],
@@ -50,7 +51,12 @@ export class ConversationsRepository {
       data: {
         type: ConversationType.DIRECT,
         directKey,
-        members: { create: [{ userId: userAId }, { userId: userBId }] },
+        members: {
+          create:
+            userAId === userBId
+              ? [{ userId: userAId }]
+              : [{ userId: userAId }, { userId: userBId }],
+        },
       },
       include: conversationInclude,
     });

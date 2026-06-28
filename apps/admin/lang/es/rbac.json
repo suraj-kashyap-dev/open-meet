@@ -89,7 +89,19 @@
       "create": "Crear grupos",
       "update": "Actualizar grupos",
       "delete": "Eliminar grupos",
-      "manage-members": "Gestionar miembros del grupo"
+      "manage-members": "Gestionar miembros del grupo",
+      "create-system": "Create system groups",
+      "create-on-behalf": "Create groups on behalf",
+      "hard-delete": "Hard delete groups",
+      "manage-roles": "Manage group roles",
+      "transfer-ownership": "Transfer group ownership",
+      "archive": "Archive groups",
+      "restore": "Restore groups",
+      "moderate": "Moderate groups",
+      "audit": {
+        "_self": "Group audit",
+        "view": "View group audit"
+      }
     },
     "branding": {
       "_self": "Marca",

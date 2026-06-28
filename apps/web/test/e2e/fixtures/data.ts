@@ -294,6 +294,10 @@ export const dmConversation: ConversationDto = {
   pinned: false,
   hidden: false,
   youAreAdmin: false,
+  ownerUserId: null,
+  origin: 'USER_CREATED',
+  status: 'ACTIVE',
+  createdBy: null,
   createdAt: '2026-05-20T09:00:00.000Z',
 };
 

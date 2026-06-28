@@ -3,7 +3,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import type { MessagePageDto } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 import { MessagesHistoryQueryDto } from '../../meetings/dto/history-query.dto';
 import { MeetingsService } from '../../meetings/services/meetings.service';
 

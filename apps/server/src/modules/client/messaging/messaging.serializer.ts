@@ -2,13 +2,17 @@ import { Injectable } from '@nestjs/common';
 
 import {
   MentionKind,
+  type ActorType,
   type ChatMessageDto,
   type ChatMessagePriority,
   type ChatMessageType,
+  type ConversationLifecycleStatus,
   type ConversationDto,
   type ConversationMemberDto,
   type ConversationMemberRole,
+  type ConversationOrigin,
   type ConversationType,
+  type GroupActorSummaryDto,
   type MessageSenderDto,
   type PollDto,
   type PresenceStatus,
@@ -32,6 +36,11 @@ interface SenderRow {
   avatarKey: string | null;
 }
 
+interface ActorUserRow {
+  id: string;
+  name: string;
+}
+
 @Injectable()
 export class MessagingSerializer {
   constructor(
@@ -49,6 +58,25 @@ export class MessagingSerializer {
     }
 
     return { id: row.id, name: row.name, avatar: this.avatar(row.avatarKey) };
+  }
+
+  actorSummary(c: ConversationWithMembers): GroupActorSummaryDto | null {
+    if (!c.createdByActorType) {
+      return null;
+    }
+
+    const relation: ActorUserRow | null =
+      c.createdByActorType === 'USER'
+        ? (c.createdByUser ?? null)
+        : c.createdByActorType === 'ADMIN'
+          ? (c.createdByAdmin ?? null)
+          : null;
+
+    return {
+      type: c.createdByActorType as ActorType,
+      id: relation?.id ?? c.createdByUserId ?? c.createdByAdminId ?? null,
+      name: relation?.name ?? c.createdByDisplayName ?? null,
+    };
   }
 
   message(
@@ -172,7 +200,11 @@ export class MessagingSerializer {
       muted: mine?.muted ?? false,
       pinned: mine?.pinned ?? false,
       hidden: mine?.hidden ?? false,
-      youAreAdmin: mine?.role === 'ADMIN',
+      youAreAdmin: mine?.role === 'ADMIN' || mine?.role === 'OWNER',
+      ownerUserId: c.ownerUserId,
+      origin: c.origin as ConversationOrigin,
+      status: c.status as ConversationLifecycleStatus,
+      createdBy: this.actorSummary(c),
       createdAt: c.createdAt.toISOString(),
     };
   }

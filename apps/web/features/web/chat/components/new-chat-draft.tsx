@@ -12,6 +12,7 @@ import { UserAvatar } from '@open-meet/ui/user-avatar';
 
 import type { TeammateDto } from '@open-meet/types';
 
+import { useCurrentUser } from '@/features/web/auth/hooks/use-auth';
 import { useRouter } from '@/i18n/navigation';
 import { ApiClientError } from '@/lib/api/client';
 
@@ -22,6 +23,7 @@ export function NewChatDraft() {
   const t = useTranslations('chat');
   const router = useRouter();
   const qc = useQueryClient();
+  const { data: currentUser } = useCurrentUser();
   const [search, setSearch] = useState('');
   const [recipient, setRecipient] = useState<TeammateDto | null>(null);
   const [draft, setDraft] = useState('');
@@ -77,8 +79,30 @@ export function NewChatDraft() {
     startChat.mutate(content);
   };
 
+  const selfSuggestion: TeammateDto | null =
+    currentUser &&
+    trimmedSearch.length > 0 &&
+    `${currentUser.name} ${currentUser.email}`.toLowerCase().includes(trimmedSearch.toLowerCase())
+      ? {
+          id: currentUser.id,
+          name: currentUser.name,
+          email: currentUser.email,
+          avatar: currentUser.avatar,
+          chatDisabled: false,
+          allowDirectMessages: true,
+          online: true,
+          status: null,
+          lastSeen: null,
+          conversationId: null,
+        }
+      : null;
+
   const suggestions = Array.from(
-    new Map((teammates.data?.items ?? []).map((teammate) => [teammate.id, teammate])).values(),
+    new Map(
+      [...(selfSuggestion ? [selfSuggestion] : []), ...(teammates.data?.items ?? [])].map(
+        (teammate) => [teammate.id, teammate],
+      ),
+    ).values(),
   );
 
   return (

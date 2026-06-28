@@ -1,6 +1,9 @@
 import { Body, Controller, Param, Post } from '@nestjs/common';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 
 import { VotePollBodyDto } from '../dto/messaging.dto';
 import { PollsService } from '../services/polls.service';

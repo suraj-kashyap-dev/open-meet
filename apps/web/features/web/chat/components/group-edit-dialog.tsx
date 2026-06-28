@@ -156,7 +156,7 @@ export function GroupEditDialog({
     }
   };
 
-  const displayedAvatar = removeImage ? null : previewImage ?? conversation.avatar;
+  const displayedAvatar = removeImage ? null : (previewImage ?? conversation.avatar);
   const hasDisplayedAvatar = Boolean(displayedAvatar);
   const editImageLabel = hasDisplayedAvatar
     ? accountT('avatar.edit-label')

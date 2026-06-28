@@ -13,7 +13,9 @@ test.describe('Admin dashboard page', () => {
 
     await expect(page.getByText('Total registered accounts')).toBeVisible();
 
-    await expect(page.getByText('128', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('Total registered accounts').locator('..').getByText('128', { exact: true }),
+    ).toBeVisible();
 
     await expect(page.getByText('New signups', { exact: true })).toBeVisible();
   });
@@ -51,7 +53,7 @@ test.describe('Admin dashboard page', () => {
 
     await expect(page.getByText('Avg meeting length', { exact: true })).toBeVisible();
 
-    await expect(page.getByText('Top hosts', { exact: true })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Top hosts' }).first()).toBeVisible();
 
     await expect(page.getByText('Grace Hopper').first()).toBeVisible();
   });

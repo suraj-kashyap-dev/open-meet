@@ -24,7 +24,10 @@ import type {
   UpcomingMeetingDto,
 } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 import { Public } from '../../../../common/decorators/public.decorator';
 import { CreateMeetingDto } from '../dto/create-meeting.dto';
 import { CreateGuestSessionDto } from '../dto/create-guest-session.dto';

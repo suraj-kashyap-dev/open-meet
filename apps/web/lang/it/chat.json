@@ -205,7 +205,8 @@
     "history-hint": "Scegli quanti messaggi passati di questo gruppo possono vedere i nuovi membri.",
     "save": "Salva",
     "action-failed": "Qualcosa è andato storto",
-    "groups-disabled": "La creazione di gruppi è disabilitata dall'amministratore."
+    "groups-disabled": "La creazione di gruppi è disabilitata dall'amministratore.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "Nuova conversazione",

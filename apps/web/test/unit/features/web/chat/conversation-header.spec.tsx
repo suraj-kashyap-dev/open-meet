@@ -172,6 +172,10 @@ function renderHeader() {
     pinned: false,
     hidden: false,
     youAreAdmin: false,
+    ownerUserId: null,
+    origin: 'USER_CREATED',
+    status: 'ACTIVE',
+    createdBy: null,
     createdAt: '2026-05-31T10:00:00.000Z',
   };
 

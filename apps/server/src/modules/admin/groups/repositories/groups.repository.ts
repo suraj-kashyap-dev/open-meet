@@ -4,6 +4,9 @@ import { ConversationType, Prisma } from '@prisma/client';
 import { PrismaService } from '../../../../database/services/prisma.service';
 
 const groupDetailInclude = {
+  createdByAdmin: { select: { id: true, name: true } },
+  createdByUser: { select: { id: true, name: true } },
+  ownerUser: { select: { id: true, name: true } },
   members: {
     include: { user: { select: { id: true, name: true, email: true, avatarKey: true } } },
     orderBy: { joinedAt: 'asc' },
@@ -12,6 +15,9 @@ const groupDetailInclude = {
 } satisfies Prisma.ConversationInclude;
 
 const groupListInclude = {
+  createdByAdmin: { select: { id: true, name: true } },
+  createdByUser: { select: { id: true, name: true } },
+  ownerUser: { select: { id: true, name: true } },
   _count: { select: { members: true } },
 } satisfies Prisma.ConversationInclude;
 
@@ -23,7 +29,10 @@ export class AdminGroupsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   searchWhere(search?: string): Prisma.ConversationWhereInput {
-    const base: Prisma.ConversationWhereInput = { type: ConversationType.GROUP };
+    const base: Prisma.ConversationWhereInput = {
+      type: ConversationType.GROUP,
+      status: 'ACTIVE',
+    };
 
     if (!search) {
       return base;
@@ -53,18 +62,27 @@ export class AdminGroupsRepository {
 
   findDetail(id: string): Promise<GroupDetail | null> {
     return this.prisma.conversation.findFirst({
-      where: { id, type: ConversationType.GROUP },
+      where: { id, type: ConversationType.GROUP, status: 'ACTIVE' },
       include: groupDetailInclude,
     });
   }
 
-  async create(title: string, createdByAdminId: string, memberIds: string[]): Promise<GroupDetail> {
+  async create(input: {
+    title: string;
+    createdByAdminId: string;
+    createdByAdminName: string;
+    memberIds: string[];
+  }): Promise<GroupDetail> {
     const conversation = await this.prisma.conversation.create({
       data: {
         type: ConversationType.GROUP,
-        title,
-        createdByAdminId,
-        members: { create: memberIds.map((userId) => ({ userId })) },
+        title: input.title,
+        origin: 'ADMIN_CREATED',
+        createdByActorType: 'ADMIN',
+        createdByAdminId: input.createdByAdminId,
+        createdByDisplayName: input.createdByAdminName,
+        createdVia: 'ADMIN_PANEL',
+        members: { create: input.memberIds.map((userId) => ({ userId })) },
       },
       include: groupDetailInclude,
     });
@@ -91,7 +109,38 @@ export class AdminGroupsRepository {
     await this.prisma.conversationMember.deleteMany({ where: { conversationId: id, userId } });
   }
 
-  async delete(id: string): Promise<void> {
-    await this.prisma.conversation.delete({ where: { id } });
+  async delete(id: string, adminId: string): Promise<void> {
+    await this.prisma.conversation.update({
+      where: { id },
+      data: {
+        status: 'DELETED',
+        deletedAt: new Date(),
+        deletedByActorType: 'ADMIN',
+        deletedByActorId: adminId,
+      },
+    });
+  }
+
+  async audit(input: {
+    conversationId: string;
+    action: string;
+    actorAdminId: string;
+    actorLabel?: string | null;
+    targetUserId?: string | null;
+    metadata?: Prisma.InputJsonValue;
+    reason?: string | null;
+  }): Promise<void> {
+    await this.prisma.groupAuditEvent.create({
+      data: {
+        conversationId: input.conversationId,
+        action: input.action,
+        actorType: 'ADMIN',
+        actorAdminId: input.actorAdminId,
+        actorLabel: input.actorLabel ?? null,
+        targetUserId: input.targetUserId ?? null,
+        metadata: input.metadata ?? Prisma.JsonNull,
+        reason: input.reason ?? null,
+      },
+    });
   }
 }

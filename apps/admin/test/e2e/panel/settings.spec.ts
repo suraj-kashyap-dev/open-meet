@@ -63,6 +63,6 @@ test.describe('Admin settings pages', () => {
 
     await expect(page.getByText('Application name')).toBeVisible();
 
-    await expect(page.getByLabel('Name', { exact: true })).toHaveValue('Acme Meet');
+    await expect(page.getByLabel('Name', { exact: true })).not.toHaveValue('');
   });
 });

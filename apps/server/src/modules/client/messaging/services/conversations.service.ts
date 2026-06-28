@@ -11,10 +11,7 @@ import {
 import { ChatBus, userRoom } from './chat-bus.service';
 import { ChatPermissionsService } from './chat-permissions.service';
 import { ConversationsRepository } from '../repositories/conversations.repository';
-import type {
-  ChatMessageWithRelations,
-  ConversationWithMembers,
-} from '../messaging.includes';
+import type { ChatMessageWithRelations, ConversationWithMembers } from '../messaging.includes';
 import { MessagingSerializer } from '../messaging.serializer';
 import { PresenceService } from './presence.service';
 

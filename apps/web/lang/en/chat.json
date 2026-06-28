@@ -205,7 +205,8 @@
     "history-hint": "Choose how much of this group's past messages new members can see.",
     "save": "Save",
     "action-failed": "Something went wrong",
-    "groups-disabled": "Group creation is currently disabled by the workspace admin."
+    "groups-disabled": "Group creation is currently disabled by the workspace admin.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "New conversation",

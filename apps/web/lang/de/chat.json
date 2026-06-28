@@ -205,7 +205,8 @@
     "history-hint": "Wählen Sie, wie viele frühere Nachrichten dieser Gruppe neue Mitglieder sehen können.",
     "save": "Speichern",
     "action-failed": "Etwas ist schiefgelaufen",
-    "groups-disabled": "Die Gruppenerstellung ist derzeit vom Admin deaktiviert."
+    "groups-disabled": "Die Gruppenerstellung ist derzeit vom Admin deaktiviert.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "Neue Unterhaltung",

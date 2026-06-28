@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
-
 import {
-  EditMessageBodyDto,
-  ForwardMessageBodyDto,
-  ReactionBodyDto,
-} from '../dto/messaging.dto';
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
+
+import { EditMessageBodyDto, ForwardMessageBodyDto, ReactionBodyDto } from '../dto/messaging.dto';
 import { MessagesService } from '../services/messages.service';
 import { PinsService } from '../services/pins.service';
 import { ReactionsService } from '../services/reactions.service';

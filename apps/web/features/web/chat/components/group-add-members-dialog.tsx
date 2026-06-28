@@ -68,7 +68,8 @@ export function GroupAddMembersDialog({
   const trimmedSearch = search.trim();
   const teammates = useTeammates(trimmedSearch, { enabled: trimmedSearch.length > 0 });
   const adminCount = conversation.members.filter(
-    (member) => member.role === 'ADMIN' && !localRemoved[member.userId],
+    (member) =>
+      (member.role === 'ADMIN' || member.role === 'OWNER') && !localRemoved[member.userId],
   ).length;
   const currentMembers = conversation.members.filter((member) => !localRemoved[member.userId]);
   const currentMemberIds = new Set(currentMembers.map((member) => member.userId));
@@ -81,7 +82,9 @@ export function GroupAddMembersDialog({
           name: member.name,
           avatar: member.avatar,
           removable:
-            member.userId !== currentUser?.id && (member.role !== 'ADMIN' || adminCount > 1),
+            member.userId !== currentUser?.id &&
+            (member.role !== 'ADMIN' || adminCount > 1) &&
+            (member.role !== 'OWNER' || adminCount > 1),
         },
       ]),
     ),

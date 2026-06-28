@@ -9,14 +9,26 @@ function makeGroup(over: Record<string, unknown> = {}) {
   return {
     id: 'g1',
     title: 'A Group',
+    origin: 'USER_CREATED',
+    status: 'ACTIVE',
+    ownerUserId: 'u1',
+    createdByActorType: 'USER',
+    createdByUserId: 'u1',
+    createdByAdminId: null,
+    createdByDisplayName: 'One',
+    createdByUser: { id: 'u1', name: 'One' },
+    createdByAdmin: null,
+    ownerUser: { id: 'u1', name: 'One' },
     createdAt: new Date('2026-06-01T00:00:00Z'),
     _count: { members: 2 },
     members: [
       {
+        role: 'OWNER',
         user: { id: 'u1', name: 'One', email: 'one@x.com', avatarKey: null },
         joinedAt: new Date('2026-06-01T00:00:00Z'),
       },
       {
+        role: 'MEMBER',
         user: { id: 'u2', name: 'Two', email: 'two@x.com', avatarKey: null },
         joinedAt: new Date('2026-06-01T00:00:00Z'),
       },
@@ -41,6 +53,7 @@ describe('AdminGroupsService', () => {
       addMembers: vi.fn().mockResolvedValue(undefined),
       removeMember: vi.fn().mockResolvedValue(undefined),
       delete: vi.fn().mockResolvedValue(undefined),
+      audit: vi.fn().mockResolvedValue(undefined),
     };
 
     grid = { build: vi.fn().mockReturnValue({ ok: true }) };

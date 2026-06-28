@@ -41,7 +41,7 @@ describe('GroupsService', () => {
   const groupConv = {
     id: 'c1',
     createdAt: '2026-01-01',
-    members: [member('creator', ConversationMemberRole.ADMIN), member('u2')],
+    members: [member('creator', 'OWNER' as ConversationMemberRole), member('u2')],
   };
 
   beforeEach(() => {
@@ -55,6 +55,10 @@ describe('GroupsService', () => {
       setMemberRole: vi.fn(),
       delete: vi.fn(),
       findWithMembers: vi.fn().mockResolvedValue(groupConv),
+      findById: vi.fn().mockResolvedValue({ id: 'c1', ownerUserId: 'creator' }),
+      findUserName: vi.fn().mockResolvedValue({ id: 'creator', name: 'Creator' }),
+      audit: vi.fn().mockResolvedValue(undefined),
+      transferOwnership: vi.fn().mockResolvedValue(groupConv),
     };
 
     permissions = {
@@ -119,6 +123,7 @@ describe('GroupsService', () => {
 
       expect(repo.create).toHaveBeenCalledWith({
         creatorId: 'creator',
+        creatorName: 'Creator',
         title: 'Team',
         description: 'hi',
         memberIds: ['u2'],
@@ -366,7 +371,7 @@ describe('GroupsService', () => {
 
       expect(permissions.assertGroupAdmin).toHaveBeenCalledWith('c1', 'creator');
 
-      expect(repo.delete).toHaveBeenCalledWith('c1');
+      expect(repo.delete).toHaveBeenCalledWith('c1', 'creator');
 
       expect(bus.emit).toHaveBeenCalledWith(
         userRoom('creator'),

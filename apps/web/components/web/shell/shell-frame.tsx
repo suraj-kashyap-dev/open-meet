@@ -24,9 +24,7 @@ export function ShellFrame({ children }: { children: ReactNode }) {
           <main
             className={cn(
               'min-h-0 flex-1 overflow-y-auto',
-              hideMobileBottomNav
-                ? 'pb-0'
-                : 'pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0',
+              hideMobileBottomNav ? 'pb-0' : 'pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0',
             )}
           >
             {children}

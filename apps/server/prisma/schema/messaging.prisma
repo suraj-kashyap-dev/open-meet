@@ -8,8 +8,34 @@ enum ConversationType {
 }
 
 enum ConversationMemberRole {
+  OWNER
   MEMBER
   ADMIN
+}
+
+enum ConversationOrigin {
+  USER_CREATED
+  ADMIN_CREATED
+  ADMIN_ON_BEHALF
+  SYSTEM_MANAGED
+  IMPORTED
+  AUTOMATION_CREATED
+  AI_CREATED
+}
+
+enum ActorType {
+  USER
+  ADMIN
+  SYSTEM
+  MIGRATION
+  AUTOMATION
+  AI
+}
+
+enum ConversationLifecycleStatus {
+  ACTIVE
+  ARCHIVED
+  DELETED
 }
 
 enum PresenceStatus {
@@ -39,22 +65,43 @@ enum MentionKind {
 }
 
 model Conversation {
-  id               String               @id @default(cuid())
-  type             ConversationType
-  title            String? // null for DIRECT, set for GROUP
-  description      String? // GROUP description
-  avatarKey        String? // GROUP profile image storage key
-  createdByAdminId String? // Admin who created a GROUP; null for DIRECT
-  createdByAdmin   Admin?               @relation(fields: [createdByAdminId], references: [id], onDelete: SetNull)
-  directKey        String?              @unique // deterministic "minUserId:maxUserId" for DIRECT; null otherwise
-  lastMessageAt    DateTime?
-  createdAt        DateTime             @default(now())
-  updatedAt        DateTime             @updatedAt
-  members          ConversationMember[]
-  messages         ChatMessage[]
-  pinnedMessages   PinnedMessage[]
+  id                    String                      @id @default(cuid())
+  type                  ConversationType
+  title                 String? // null for DIRECT, set for GROUP
+  description           String? // GROUP description
+  avatarKey             String? // GROUP profile image storage key
+  origin                ConversationOrigin          @default(USER_CREATED)
+  createdByActorType    ActorType?
+  createdByUserId       String?
+  createdByUser         User?                       @relation("ConversationCreatedByUser", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  createdByAdminId      String? // Admin who created a GROUP; null for DIRECT
+  createdByAdmin        Admin?                      @relation("ConversationCreatedByAdmin", fields: [createdByAdminId], references: [id], onDelete: SetNull)
+  createdByDisplayName  String?
+  createdVia            String?
+  ownerUserId           String?
+  ownerUser             User?                       @relation("ConversationOwnedByUser", fields: [ownerUserId], references: [id], onDelete: SetNull)
+  status                ConversationLifecycleStatus @default(ACTIVE)
+  archivedAt            DateTime?
+  archivedByActorType   ActorType?
+  archivedByActorId     String?
+  deletedAt             DateTime?
+  deletedByActorType    ActorType?
+  deletedByActorId      String?
+  directKey             String?                     @unique // deterministic "minUserId:maxUserId" for DIRECT; null otherwise
+  lastMessageAt         DateTime?
+  createdAt             DateTime                    @default(now())
+  updatedAt             DateTime                    @updatedAt
+  members               ConversationMember[]
+  messages              ChatMessage[]
+  pinnedMessages        PinnedMessage[]
+  auditEvents           GroupAuditEvent[]
 
   @@index([type])
+  @@index([origin])
+  @@index([status])
+  @@index([ownerUserId])
+  @@index([createdByUserId])
+  @@index([createdByAdminId])
 }
 
 model ConversationMember {
@@ -220,4 +267,23 @@ model UserInvite {
   updatedAt   DateTime @updatedAt
 
   @@index([email])
+}
+
+model GroupAuditEvent {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  action         String
+  actorType      ActorType
+  actorUserId    String?
+  actorAdminId   String?
+  actorLabel     String?
+  targetUserId   String?
+  metadata       Json?
+  reason         String?
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId, createdAt])
+  @@index([actorType, createdAt])
+  @@index([action, createdAt])
 }

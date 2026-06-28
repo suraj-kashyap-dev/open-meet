@@ -20,6 +20,7 @@ export function MessageTicks({
   const sentMs = new Date(messageSentAt).getTime();
 
   const others = members.filter((m) => m.userId !== currentUserId);
+  const isSelfConversation = members.length === 1 && members[0]?.userId === currentUserId;
 
   const allReached = (pick: (m: ConversationMemberDto) => string | null) =>
     others.length > 0 &&
@@ -29,7 +30,7 @@ export function MessageTicks({
       return at !== null && new Date(at).getTime() >= sentMs;
     });
 
-  const seen = allReached((m) => m.lastReadAt);
+  const seen = isSelfConversation || allReached((m) => m.lastReadAt);
   const delivered = seen || allReached((m) => m.lastDeliveredAt);
 
   const label = seen ? t('ticks.seen') : delivered ? t('ticks.delivered') : t('ticks.sent');

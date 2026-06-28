@@ -1,4 +1,4 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ChatPermissionsService } from '@/modules/client/messaging/services/chat-permissions.service';
@@ -10,6 +10,7 @@ describe('ChatPermissionsService', () => {
     getMembership: ReturnType<typeof vi.fn>;
     getDirectPeer: ReturnType<typeof vi.fn>;
     getConversationMeta: ReturnType<typeof vi.fn>;
+    getUserCanCreateGroups: ReturnType<typeof vi.fn>;
   };
   let service: ChatPermissionsService;
 
@@ -26,16 +27,17 @@ describe('ChatPermissionsService', () => {
       getMembership: vi.fn(),
       getDirectPeer: vi.fn().mockResolvedValue(null),
       getConversationMeta: vi.fn(),
+      getUserCanCreateGroups: vi.fn().mockResolvedValue(true),
     };
 
     service = new ChatPermissionsService(repo as unknown as ChatPermissionsRepository);
   });
 
   describe('assertCanDirectMessage()', () => {
-    it('should reject messaging yourself', async () => {
-      await expect(service.assertCanDirectMessage('u1', 'u1')).rejects.toBeInstanceOf(
-        BadRequestException,
-      );
+    it('should allow messaging yourself when the user exists', async () => {
+      repo.findUserBasics.mockResolvedValue(enabled('u1'));
+
+      await expect(service.assertCanDirectMessage('u1', 'u1')).resolves.toBeUndefined();
     });
 
     it('should reject when the target does not exist', async () => {
@@ -54,8 +56,8 @@ describe('ChatPermissionsService', () => {
   });
 
   describe('canDirectMessage()', () => {
-    it('should be false for self', async () => {
-      await expect(service.canDirectMessage('u1', 'u1')).resolves.toBe(false);
+    it('should be true for self', async () => {
+      await expect(service.canDirectMessage('u1', 'u1')).resolves.toBe(true);
     });
 
     it('should be true for any other user (chat is open)', async () => {
@@ -70,15 +72,18 @@ describe('ChatPermissionsService', () => {
   });
 
   describe('filterEligibleTargets()', () => {
-    it('should keep every candidate except the actor (chat is open)', async () => {
+    it('should keep every candidate (chat is open)', async () => {
       await expect(service.filterEligibleTargets('u1', ['u2', 'u3'])).resolves.toEqual([
         'u2',
         'u3',
       ]);
     });
 
-    it('should drop the actor itself', async () => {
-      await expect(service.filterEligibleTargets('u1', ['u1', 'u2'])).resolves.toEqual(['u2']);
+    it('should keep the actor itself', async () => {
+      await expect(service.filterEligibleTargets('u1', ['u1', 'u2'])).resolves.toEqual([
+        'u1',
+        'u2',
+      ]);
     });
   });
 
@@ -117,8 +122,14 @@ describe('ChatPermissionsService', () => {
   });
 
   describe('assertCanCreateGroup()', () => {
-    it('should allow any user to create a group', async () => {
+    it('should allow users with the canCreateGroups flag', async () => {
       await expect(service.assertCanCreateGroup('u1')).resolves.toBeUndefined();
+    });
+
+    it('should reject users without the canCreateGroups flag', async () => {
+      repo.getUserCanCreateGroups.mockResolvedValue(false);
+
+      await expect(service.assertCanCreateGroup('u1')).rejects.toBeInstanceOf(ForbiddenException);
     });
   });
 });

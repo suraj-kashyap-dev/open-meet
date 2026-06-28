@@ -3,7 +3,10 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { type PublicUserDto } from '@open-meet/types';
 
-import { CurrentUser, type RequestUser } from '../../../../common/decorators/current-user.decorator';
+import {
+  CurrentUser,
+  type RequestUser,
+} from '../../../../common/decorators/current-user.decorator';
 import { ChatPermissionsRepository } from '../../messaging/repositories/chat-permissions.repository';
 
 import { AuthService } from '../services/auth.service';

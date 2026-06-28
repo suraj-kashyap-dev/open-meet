@@ -2,10 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../../../../database/services/prisma.service';
 
-import {
-  chatMessageInclude,
-  type ChatMessageWithRelations,
-} from '../messaging.includes';
+import { chatMessageInclude, type ChatMessageWithRelations } from '../messaging.includes';
 
 @Injectable()
 export class PinsRepository {

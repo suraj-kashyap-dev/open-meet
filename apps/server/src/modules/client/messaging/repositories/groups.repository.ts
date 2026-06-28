@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   ConversationMemberRole,
   ConversationType,
+  Prisma,
   type Conversation,
   type ConversationMember,
 } from '@prisma/client';
@@ -21,12 +22,13 @@ export class GroupsRepository {
 
   async create(input: {
     creatorId: string;
+    creatorName: string;
     title: string;
     description: string | null;
     memberIds: string[];
   }): Promise<ConversationWithMembers> {
-    const memberRows = [
-      { userId: input.creatorId, role: ConversationMemberRole.ADMIN },
+    const memberRows: Prisma.ConversationMemberUncheckedCreateWithoutConversationInput[] = [
+      { userId: input.creatorId, role: 'OWNER' },
       ...input.memberIds
         .filter((id) => id !== input.creatorId)
         .map((userId) => ({ userId, role: ConversationMemberRole.MEMBER })),
@@ -37,6 +39,12 @@ export class GroupsRepository {
         type: ConversationType.GROUP,
         title: input.title,
         description: input.description,
+        origin: 'USER_CREATED',
+        createdByActorType: 'USER',
+        createdByUserId: input.creatorId,
+        createdByDisplayName: input.creatorName,
+        createdVia: 'WEB_CHAT',
+        ownerUserId: input.creatorId,
         members: { create: memberRows },
       },
       include: conversationInclude,
@@ -57,7 +65,9 @@ export class GroupsRepository {
   }
 
   findById(id: string): Promise<Conversation | null> {
-    return this.prisma.conversation.findUnique({ where: { id } });
+    return this.prisma.conversation.findFirst({
+      where: { id, status: 'ACTIVE' },
+    });
   }
 
   async update(
@@ -93,6 +103,28 @@ export class GroupsRepository {
     });
   }
 
+  async transferOwnership(id: string, currentOwnerId: string | null, nextOwnerId: string) {
+    return this.prisma.$transaction(async (tx) => {
+      if (currentOwnerId) {
+        await tx.conversationMember.updateMany({
+          where: { conversationId: id, userId: currentOwnerId, role: 'OWNER' },
+          data: { role: ConversationMemberRole.ADMIN },
+        });
+      }
+
+      await tx.conversationMember.update({
+        where: { conversationId_userId: { conversationId: id, userId: nextOwnerId } },
+        data: { role: 'OWNER' },
+      });
+
+      return tx.conversation.update({
+        where: { id },
+        data: { ownerUserId: nextOwnerId },
+        include: conversationInclude,
+      });
+    });
+  }
+
   async setMemberRole(
     id: string,
     userId: string,
@@ -104,13 +136,21 @@ export class GroupsRepository {
     });
   }
 
-  async delete(id: string): Promise<void> {
-    await this.prisma.conversation.delete({ where: { id } });
+  async delete(id: string, actorId: string): Promise<void> {
+    await this.prisma.conversation.update({
+      where: { id },
+      data: {
+        status: 'DELETED',
+        deletedAt: new Date(),
+        deletedByActorType: 'USER',
+        deletedByActorId: actorId,
+      },
+    });
   }
 
   findWithMembers(id: string): Promise<ConversationListRow | null> {
-    return this.prisma.conversation.findUnique({
-      where: { id },
+    return this.prisma.conversation.findFirst({
+      where: { id, status: 'ACTIVE' },
       include: conversationListInclude,
     });
   }
@@ -122,5 +162,32 @@ export class GroupsRepository {
     });
 
     return rows.map((r) => r.userId);
+  }
+
+  findUserName(id: string): Promise<{ id: string; name: string } | null> {
+    return this.prisma.user.findUnique({ where: { id }, select: { id: true, name: true } });
+  }
+
+  async audit(input: {
+    conversationId: string;
+    action: string;
+    actorUserId: string;
+    actorLabel?: string | null;
+    targetUserId?: string | null;
+    metadata?: Prisma.InputJsonValue;
+    reason?: string | null;
+  }): Promise<void> {
+    await this.prisma.groupAuditEvent.create({
+      data: {
+        conversationId: input.conversationId,
+        action: input.action,
+        actorType: 'USER',
+        actorUserId: input.actorUserId,
+        actorLabel: input.actorLabel ?? null,
+        targetUserId: input.targetUserId ?? null,
+        metadata: input.metadata ?? Prisma.JsonNull,
+        reason: input.reason ?? null,
+      },
+    });
   }
 }

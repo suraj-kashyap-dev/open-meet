@@ -23,10 +23,7 @@ import { Public } from '../../../../common/decorators/public.decorator';
 
 import { AdminAvatarsService } from '../services/admin-avatars.service';
 import { AdminAuthGuard } from '../guards/admin-auth.guard';
-import {
-  AdminAuthService,
-  type IssuedAdminTokens,
-} from '../services/auth.service';
+import { AdminAuthService, type IssuedAdminTokens } from '../services/auth.service';
 import { CurrentAdmin } from '../decorators/current-admin.decorator';
 import { ADMIN_ACCESS_COOKIE } from '../strategies/admin-jwt.strategy';
 import type { AdminRequestUser } from '../strategies/admin-jwt.strategy';

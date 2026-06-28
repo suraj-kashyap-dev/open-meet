@@ -1,8 +1,23 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 import { mockWebApi } from '../fixtures/api';
 
 test.describe('Web app shell', () => {
+  const openCommandPalette = async (page: Page) => {
+    await page.evaluate(() => {
+      window.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          bubbles: true,
+          cancelable: true,
+          code: 'KeyK',
+          ctrlKey: true,
+          key: 'k',
+        }),
+      );
+    });
+  };
+
   test('should redirect the authenticated root to chat', async ({ page }) => {
     await mockWebApi(page);
 
@@ -70,7 +85,9 @@ test.describe('Web app shell', () => {
 
     await page.goto('/en/chat');
 
-    await page.keyboard.press('ControlOrMeta+KeyK');
+    await expect(page.getByTestId('app-sidebar')).toBeVisible();
+
+    await openCommandPalette(page);
 
     const dialog = page.getByRole('dialog');
 
@@ -90,7 +107,9 @@ test.describe('Web app shell', () => {
 
     await page.goto('/en/chat');
 
-    await page.keyboard.press('ControlOrMeta+KeyK');
+    await expect(page.getByTestId('app-sidebar')).toBeVisible();
+
+    await openCommandPalette(page);
 
     const dialog = page.getByRole('dialog');
 

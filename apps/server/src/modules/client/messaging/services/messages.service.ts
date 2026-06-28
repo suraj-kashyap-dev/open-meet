@@ -25,10 +25,7 @@ import { ChatPermissionsService } from './chat-permissions.service';
 import { ConversationsRepository } from '../repositories/conversations.repository';
 import { ConversationsService } from './conversations.service';
 import type { ChatMessageWithRelations } from '../messaging.includes';
-import {
-  MessagesRepository,
-  type MentionInput,
-} from '../repositories/messages.repository';
+import { MessagesRepository, type MentionInput } from '../repositories/messages.repository';
 import { MessagingSerializer } from '../messaging.serializer';
 import { parseMentions } from '../mentions.util';
 import { PinsRepository } from '../repositories/pins.repository';
@@ -160,6 +157,7 @@ export class MessagesService {
     const full = (await this.messages.findById(created.id)) ?? created;
 
     await this.conversationRepo.touch(input.conversationId, full.createdAt);
+    await this.markSelfConversationRead(input.conversationId, input.senderId, full.createdAt);
 
     if (input.parentId) {
       await this.messages.bumpReplyCount(input.parentId, full.createdAt);
@@ -168,6 +166,18 @@ export class MessagesService {
     await this.conversations.revealOnActivity(input.conversationId, input.senderId);
 
     return this.broadcastNew(full, input.senderId, input.clientNonce);
+  }
+
+  private async markSelfConversationRead(
+    conversationId: string,
+    senderId: string,
+    readAt: Date,
+  ): Promise<void> {
+    const memberUserIds = await this.conversationRepo.memberUserIds(conversationId);
+
+    if (memberUserIds.length === 1 && memberUserIds[0] === senderId) {
+      await this.conversationRepo.markRead(conversationId, senderId, readAt);
+    }
   }
 
   broadcastNew(

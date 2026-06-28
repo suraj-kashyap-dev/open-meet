@@ -38,12 +38,12 @@ export function MemberMultiSelect({
   const debouncedSearch = useDebouncedValue(search.trim(), 250);
   const [userCache, setUserCache] = useState<Record<string, MemberOption>>({});
   const containerRef = useRef<HTMLDivElement>(null);
-  const showDropdown = open && search.trim().length > 0;
+  const showDropdown = open;
   const isSearchPending = showDropdown && search.trim() !== debouncedSearch;
 
   const { data, isFetching } = useAdminUsers(
     { page: 1, pageSize: PAGE_SIZE, search: debouncedSearch },
-    { enabled: showDropdown && debouncedSearch.length > 0 },
+    { enabled: showDropdown },
   );
 
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);

@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL('http://localhost:3000'),
     title: {
-      default: `${appName} · Live video for teams that ship`,
+      default: `${appName} · Connect & Collaborate`,
       template: `%s · ${appName}`,
     },
     description:

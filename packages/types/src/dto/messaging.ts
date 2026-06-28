@@ -7,6 +7,7 @@ export const ConversationType = {
 export type ConversationType = (typeof ConversationType)[keyof typeof ConversationType];
 
 export const ConversationMemberRole = {
+  OWNER: 'OWNER',
   MEMBER: 'MEMBER',
   ADMIN: 'ADMIN',
 } as const;
@@ -39,6 +40,35 @@ export const ShareHistoryMode = {
   ALL: 'ALL',
 } as const;
 export type ShareHistoryMode = (typeof ShareHistoryMode)[keyof typeof ShareHistoryMode];
+
+export const ConversationOrigin = {
+  USER_CREATED: 'USER_CREATED',
+  ADMIN_CREATED: 'ADMIN_CREATED',
+  ADMIN_ON_BEHALF: 'ADMIN_ON_BEHALF',
+  SYSTEM_MANAGED: 'SYSTEM_MANAGED',
+  IMPORTED: 'IMPORTED',
+  AUTOMATION_CREATED: 'AUTOMATION_CREATED',
+  AI_CREATED: 'AI_CREATED',
+} as const;
+export type ConversationOrigin = (typeof ConversationOrigin)[keyof typeof ConversationOrigin];
+
+export const ActorType = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  SYSTEM: 'SYSTEM',
+  MIGRATION: 'MIGRATION',
+  AUTOMATION: 'AUTOMATION',
+  AI: 'AI',
+} as const;
+export type ActorType = (typeof ActorType)[keyof typeof ActorType];
+
+export const ConversationLifecycleStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED',
+  DELETED: 'DELETED',
+} as const;
+export type ConversationLifecycleStatus =
+  (typeof ConversationLifecycleStatus)[keyof typeof ConversationLifecycleStatus];
 
 export interface ShareHistoryDto {
   mode: ShareHistoryMode;
@@ -157,7 +187,17 @@ export interface ConversationDto {
   pinned: boolean;
   hidden: boolean;
   youAreAdmin: boolean;
+  ownerUserId: string | null;
+  origin: ConversationOrigin;
+  status: ConversationLifecycleStatus;
+  createdBy: GroupActorSummaryDto | null;
   createdAt: string;
+}
+
+export interface GroupActorSummaryDto {
+  type: ActorType;
+  id: string | null;
+  name: string | null;
 }
 
 export interface CreateGroupBodyDto {
@@ -286,12 +326,22 @@ export interface AdminGroupMemberDto {
   name: string;
   email: string;
   avatar: string | null;
+  role: ConversationMemberRole;
 }
 
 export interface AdminGroupDto {
   id: string;
   title: string;
   memberCount: number;
+  origin: ConversationOrigin;
+  status: ConversationLifecycleStatus;
+  ownerUserId: string | null;
+  ownerName: string | null;
+  createdBy: GroupActorSummaryDto | null;
+  sourceLabel: string;
+  statusLabel: string;
+  ownerLabel: string;
+  createdByLabel: string;
   createdAt: string;
 }
 
@@ -311,6 +361,10 @@ export interface AdminUpdateGroupDto {
 export interface AdminAddGroupMembersDto {
   userIds: string[];
   history?: ShareHistoryDto;
+}
+
+export interface TransferGroupOwnershipDto {
+  ownerUserId: string;
 }
 
 export const UserInviteStatus = {

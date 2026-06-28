@@ -97,7 +97,7 @@ export function GroupMemberPicker({
                 >
                   <UserAvatar user={member} size="xs" />
                   <span className="max-w-36 truncate">{member.name}</span>
-                  {member.removable ?? true ? (
+                  {(member.removable ?? true) ? (
                     <button
                       type="button"
                       onClick={() => onRemove(member.id)}

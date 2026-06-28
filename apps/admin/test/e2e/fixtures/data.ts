@@ -193,10 +193,41 @@ export const inviteLookup: AdminInviteLookupDto = {
   expiresAt: '2026-06-01T00:00:00.000Z',
 };
 
+function adminGroup(overrides: Partial<AdminGroupDto> = {}): AdminGroupDto {
+  return {
+    id: 'g-1',
+    title: 'Product launch',
+    memberCount: 2,
+    origin: 'USER_CREATED',
+    status: 'ACTIVE',
+    ownerUserId: 'u-1',
+    ownerName: 'Ada Lovelace',
+    createdBy: { type: 'USER', id: 'u-1', name: 'Ada Lovelace' },
+    sourceLabel: 'User Created',
+    statusLabel: 'Active',
+    ownerLabel: 'Ada Lovelace',
+    createdByLabel: 'Ada Lovelace (user)',
+    createdAt: '2026-02-10T09:00:00.000Z',
+    ...overrides,
+  };
+}
+
 export const groupsList: { items: AdminGroupDto[] } = {
   items: [
-    { id: 'g-1', title: 'Product launch', memberCount: 2, createdAt: '2026-02-10T09:00:00.000Z' },
-    { id: 'g-2', title: 'Design crit', memberCount: 1, createdAt: '2026-02-12T09:00:00.000Z' },
+    adminGroup(),
+    adminGroup({
+      id: 'g-2',
+      title: 'Design crit',
+      memberCount: 1,
+      origin: 'ADMIN_CREATED',
+      ownerUserId: null,
+      ownerName: null,
+      createdBy: { type: 'ADMIN', id: 'admin-root', name: 'Root Admin' },
+      sourceLabel: 'Admin Created',
+      ownerLabel: 'No owner',
+      createdByLabel: 'Root Admin (admin)',
+      createdAt: '2026-02-12T09:00:00.000Z',
+    }),
   ],
 };
 
@@ -424,6 +455,10 @@ export function groupsDatagrid(items: AdminGroupDto[]): DatagridResponseDto {
     columns: [
       { key: 'name', label: 'Name', type: 'text', sortable: true },
       { key: 'members', label: 'Members', type: 'number', sortable: true, align: 'right' },
+      { key: 'source', label: 'Source', type: 'badge', sortable: false },
+      { key: 'owner', label: 'Owner', type: 'text', sortable: false },
+      { key: 'createdBy', label: 'Created by', type: 'text', sortable: false },
+      { key: 'status', label: 'Status', type: 'badge', sortable: false },
       { key: 'createdAt', label: 'Created', type: 'datetime', sortable: true },
       { key: 'actions', label: 'Actions', type: 'custom', sortable: false, align: 'right' },
     ],
@@ -448,7 +483,15 @@ export function groupsDatagrid(items: AdminGroupDto[]): DatagridResponseDto {
         permission: 'groups.delete',
       },
     ],
-    rows: items.map((g) => ({ ...g, name: g.title, members: g.memberCount })),
+    rows: items.map((g) => ({
+      ...g,
+      name: g.title,
+      members: g.memberCount,
+      source: g.sourceLabel,
+      owner: g.ownerLabel,
+      createdBy: g.createdByLabel,
+      status: g.statusLabel,
+    })),
     pagination: { page: 1, pageSize: 20, total: items.length, totalPages: 1 },
     sort: { key: 'createdAt', dir: 'desc' },
     searchable: true,
@@ -457,13 +500,10 @@ export function groupsDatagrid(items: AdminGroupDto[]): DatagridResponseDto {
 }
 
 export const groupDetail: AdminGroupDetailDto = {
-  id: 'g-1',
-  title: 'Product launch',
-  memberCount: 2,
-  createdAt: '2026-02-10T09:00:00.000Z',
+  ...adminGroup(),
   members: [
-    { userId: 'u-1', name: 'Ada Lovelace', email: 'ada@example.com', avatar: null },
-    { userId: 'u-2', name: 'Alan Turing', email: 'alan@example.com', avatar: null },
+    { userId: 'u-1', name: 'Ada Lovelace', email: 'ada@example.com', avatar: null, role: 'OWNER' },
+    { userId: 'u-2', name: 'Alan Turing', email: 'alan@example.com', avatar: null, role: 'MEMBER' },
   ],
 };
 

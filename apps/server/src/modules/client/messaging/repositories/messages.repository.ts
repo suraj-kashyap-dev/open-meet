@@ -3,10 +3,7 @@ import { ChatMessagePriority, ChatMessageType, type MentionKind } from '@prisma/
 
 import { PrismaService } from '../../../../database/services/prisma.service';
 
-import {
-  chatMessageInclude,
-  type ChatMessageWithRelations,
-} from '../messaging.includes';
+import { chatMessageInclude, type ChatMessageWithRelations } from '../messaging.includes';
 
 export interface ChatMessageMeta {
   id: string;

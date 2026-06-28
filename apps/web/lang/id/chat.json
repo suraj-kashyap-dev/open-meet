@@ -205,7 +205,8 @@
     "history-hint": "Pilih seberapa banyak pesan lama grup ini yang dapat dilihat anggota baru.",
     "save": "Simpan",
     "action-failed": "Terjadi kesalahan",
-    "groups-disabled": "Pembuatan grup dinonaktifkan oleh admin."
+    "groups-disabled": "Pembuatan grup dinonaktifkan oleh admin.",
+    "owner-badge": "Owner"
   },
   "new-dm": {
     "title": "Percakapan baru",

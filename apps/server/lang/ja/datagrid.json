@@ -63,7 +63,11 @@
       "name": "名前",
       "members": "メンバー",
       "createdAt": "作成日",
-      "actions": "操作"
+      "actions": "操作",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "新規グループ",

@@ -20,9 +20,20 @@ export const PERMISSION_TREE_ADMIN = {
   groups: {
     view: null,
     create: null,
+    'create-system': null,
+    'create-on-behalf': null,
     update: null,
     delete: null,
+    'hard-delete': null,
     'manage-members': null,
+    'manage-roles': null,
+    'transfer-ownership': null,
+    archive: null,
+    restore: null,
+    moderate: null,
+    audit: {
+      view: null,
+    },
   },
   branding: {
     view: null,

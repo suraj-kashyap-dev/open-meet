@@ -63,7 +63,11 @@
       "name": "नाम",
       "members": "सदस्य",
       "createdAt": "बनाने की तारीख",
-      "actions": "कार्रवाइयाँ"
+      "actions": "कार्रवाइयाँ",
+      "source": "Source",
+      "owner": "Owner",
+      "createdBy": "Created by",
+      "status": "Status"
     },
     "actions": {
       "create": "नया समूह",
